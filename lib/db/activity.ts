@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { DATA_DIR } from "./content";
 import { getPool, isPostgresEnabled } from "./postgres";
+import { isServerlessReadonly, safeWriteJson, writableDataDir } from "./safe-fs";
 
 export interface ActivityLogEntry {
   id: string;
@@ -14,27 +15,26 @@ export interface ActivityLogEntry {
   ip?: string;
 }
 
-const LOG_FILE = path.join(DATA_DIR, "activity-log.json");
+const LOG_DIR = writableDataDir(DATA_DIR);
+const LOG_FILE = path.join(LOG_DIR, "activity-log.json");
 const MAX_ENTRIES = 500;
 
 function readLogs(): ActivityLogEntry[] {
-  try {
-    const raw = JSON.parse(fs.readFileSync(LOG_FILE, "utf8"));
-    if (Array.isArray(raw)) return raw as ActivityLogEntry[];
-    if (raw && Array.isArray(raw.entries)) return raw.entries as ActivityLogEntry[];
-  } catch {
-    /* empty */
+  const files = [LOG_FILE, path.join(DATA_DIR, "activity-log.json")];
+  for (const file of files) {
+    try {
+      const raw = JSON.parse(fs.readFileSync(file, "utf8"));
+      if (Array.isArray(raw)) return raw as ActivityLogEntry[];
+      if (raw && Array.isArray(raw.entries)) return raw.entries as ActivityLogEntry[];
+    } catch {
+      /* try next */
+    }
   }
   return [];
 }
 
 function writeLogs(entries: ActivityLogEntry[]) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(
-    LOG_FILE,
-    JSON.stringify({ entries: entries.slice(0, MAX_ENTRIES) }, null, 2),
-    "utf8"
-  );
+  safeWriteJson(LOG_FILE, { entries: entries.slice(0, MAX_ENTRIES) });
 }
 
 export async function appendActivity(
@@ -51,9 +51,15 @@ export async function appendActivity(
     ip: entry.ip,
   };
 
-  const list = readLogs();
-  list.unshift(full);
-  writeLogs(list);
+  try {
+    if (!isServerlessReadonly() || isPostgresEnabled()) {
+      const list = readLogs();
+      list.unshift(full);
+      writeLogs(list);
+    }
+  } catch (err) {
+    console.warn("[activity] file write skipped:", (err as Error).message);
+  }
 
   if (isPostgresEnabled()) {
     try {
@@ -124,7 +130,7 @@ export async function listActivity(limit = 100): Promise<ActivityLogEntry[]> {
         }));
       }
     } catch {
-      /* fallback JSON */
+      /* fall through to file */
     }
   }
   return readLogs().slice(0, limit);

@@ -25,19 +25,25 @@ export async function POST(request: Request) {
     }>(request);
     const result = await login(email, password);
     await setAuthCookie(result.token);
-    await appendActivity({
-      userId: result.user.id,
-      email: result.user.email,
-      name: result.user.name,
-      action: "auth.login",
-      detail: "Başarılı giriş",
-      ip,
-    });
+    try {
+      await appendActivity({
+        userId: result.user.id,
+        email: result.user.email,
+        name: result.user.name,
+        action: "auth.login",
+        detail: "Başarılı giriş",
+        ip,
+      });
+    } catch (logErr) {
+      console.warn("[auth] activity log skipped:", (logErr as Error).message);
+    }
     return jsonResponse({ success: true, user: result.user });
   } catch (error) {
-    return errorResponse(
-      error instanceof Error ? error.message : "Giriş başarısız.",
-      401
-    );
+    const msg = error instanceof Error ? error.message : "Giriş başarısız.";
+    // Never surface filesystem/infra noise as login failure text
+    if (/EROFS|EACCES|read-only|activity-log/i.test(msg)) {
+      return errorResponse("Giriş başarısız. E-posta veya şifre hatalı.", 401);
+    }
+    return errorResponse(msg, 401);
   }
 }

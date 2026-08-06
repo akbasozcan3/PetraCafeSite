@@ -9,14 +9,18 @@ export async function POST(request: Request) {
   if (session) {
     const ip =
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-    await appendActivity({
-      userId: session.id,
-      email: session.email,
-      name: session.name,
-      action: "auth.logout",
-      detail: "Çıkış yapıldı",
-      ip,
-    });
+    try {
+      await appendActivity({
+        userId: session.id,
+        email: session.email,
+        name: session.name,
+        action: "auth.logout",
+        detail: "Çıkış yapıldı",
+        ip,
+      });
+    } catch (err) {
+      console.warn("[auth] logout log skipped:", (err as Error).message);
+    }
   }
   return jsonResponse({ success: true });
 }

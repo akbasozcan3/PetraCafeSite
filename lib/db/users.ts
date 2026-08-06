@@ -9,6 +9,7 @@ import { getPool, isPostgresEnabled } from "./postgres";
 import type { AdminRole } from "@/lib/admin/roles";
 import { isAdminRole } from "@/lib/admin/roles";
 import { AUTH_FILE, DATA_DIR, type AuthRecord } from "./content";
+import { safeWriteJson } from "./safe-fs";
 
 export interface AdminUserRecord {
   id: string;
@@ -35,8 +36,7 @@ function readUsersFile(): AdminUserRecord[] {
 }
 
 function writeUsersFile(users: AdminUserRecord[]) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(USERS_FILE, JSON.stringify({ users }, null, 2), "utf8");
+  safeWriteJson(USERS_FILE, { users });
 }
 
 function migrateFromLegacyAuth(): AdminUserRecord[] {
@@ -166,15 +166,11 @@ export async function createUser(input: {
   writeUsersFile(next);
   // Keep legacy auth.json in sync for primary owner
   if (user.role === "owner" || existing.length === 0) {
-    fs.writeFileSync(
-      AUTH_FILE,
-      JSON.stringify(
-        { email: user.email, passwordHash: user.passwordHash, name: user.name },
-        null,
-        2
-      ),
-      "utf8"
-    );
+    safeWriteJson(AUTH_FILE, {
+      email: user.email,
+      passwordHash: user.passwordHash,
+      name: user.name,
+    });
   }
   return user;
 }
@@ -231,19 +227,11 @@ export async function updateUser(
   writeUsersFile(users);
 
   if (next.role === "owner") {
-    try {
-      fs.writeFileSync(
-        AUTH_FILE,
-        JSON.stringify(
-          { email: next.email, passwordHash: next.passwordHash, name: next.name },
-          null,
-          2
-        ),
-        "utf8"
-      );
-    } catch {
-      /* ignore */
-    }
+    safeWriteJson(AUTH_FILE, {
+      email: next.email,
+      passwordHash: next.passwordHash,
+      name: next.name,
+    });
   }
 
   return next;
