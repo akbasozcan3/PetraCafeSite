@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronLeft, LogOut } from "lucide-react";
 import { cn } from "@/lib/admin/cn";
-import { filterNavByPermission } from "@/lib/admin/navigation";
+import { adminNavGroups, filterNavByPermission } from "@/lib/admin/navigation";
 import { ROLE_LABELS } from "@/lib/admin/roles";
 import { api } from "@/lib/api/client";
 import { useAdminSession } from "@/lib/context/AdminSessionContext";
@@ -57,8 +57,8 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
       </div>
 
       <nav className="flex-1 space-y-4 overflow-y-auto p-3">
-        {(["Genel", "İçerik", "Sistem"] as const).map((group) => {
-          const items = navItems.filter((i) => (i.group || "İçerik") === group);
+        {adminNavGroups.map((group) => {
+          const items = navItems.filter((i) => (i.group || "Ana Sayfa") === group);
           if (!items.length) return null;
           return (
             <div key={group} className="space-y-1">

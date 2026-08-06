@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { cn } from "@/lib/admin/cn";
-import { adminNavItems, filterNavByPermission } from "@/lib/admin/navigation";
+import { adminNavGroups, adminNavItems, filterNavByPermission } from "@/lib/admin/navigation";
 import { useAdminSession } from "@/lib/context/AdminSessionContext";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
 
@@ -110,26 +110,38 @@ export function MobileSidebar({
             <X className="h-5 w-5" />
           </button>
         </div>
-        <nav className="flex-1 space-y-1 overflow-y-auto p-3">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive =
-              pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
+        <nav className="flex-1 space-y-4 overflow-y-auto p-3">
+          {adminNavGroups.map((group) => {
+            const items = navItems.filter((i) => (i.group || "Ana Sayfa") === group);
+            if (!items.length) return null;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onClose}
-                className={cn(
-                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition",
-                  isActive
-                    ? "bg-[#C8703A]/10 text-[#C8703A] border border-[#C8703A]/20"
-                    : "text-[#8A9BB0] hover:bg-white/[0.04] hover:text-[#EEE9E0]"
-                )}
-              >
-                <Icon className="h-4 w-4" />
-                {item.label}
-              </Link>
+              <div key={group} className="space-y-1">
+                <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#4A5568]">
+                  {group}
+                </p>
+                {items.map((item) => {
+                  const Icon = item.icon;
+                  const isActive =
+                    pathname === item.href ||
+                    (item.href !== "/admin" && pathname.startsWith(item.href));
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={onClose}
+                      className={cn(
+                        "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition",
+                        isActive
+                          ? "border border-[#C8703A]/20 bg-[#C8703A]/10 text-[#C8703A]"
+                          : "text-[#8A9BB0] hover:bg-white/[0.04] hover:text-[#EEE9E0]"
+                      )}
+                    >
+                      <Icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
             );
           })}
         </nav>

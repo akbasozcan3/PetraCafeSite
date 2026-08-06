@@ -10,6 +10,8 @@ import Button from "@/components/admin/ui/Button";
 import SaveBar from "@/components/admin/ui/SaveBar";
 import AdminPageHeader, { AdminAlert, AdminLoading } from "@/components/admin/AdminPageHeader";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
+import SectionHint from "@/components/admin/ui/SectionHint";
+import BolumBaslikFields from "@/components/admin/ui/BolumBaslikFields";
 
 function ListPanel<T>({
   title,
@@ -82,7 +84,10 @@ export function GaleriPanel() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await api.updateContent({ galeri: content.galeri });
+      const res = await api.updateContent({
+        galeri: content.galeri,
+        bolumlar: content.bolumlar,
+      });
       setContent(res.data);
       setMessage("Galeri kaydedildi.");
     } catch (e) {
@@ -95,27 +100,50 @@ export function GaleriPanel() {
   return (
     <ListPanel
       title="Galeri"
-      description="Ana sayfa galeri görsellerini yönetin."
+      description="Ana sayfa galeri başlığı ve fotoğrafları."
       items={content.galeri}
       message={message}
       saving={saving}
       newItem={() => ({ src: "", baslik: "", boy: "third" as const })}
       onChange={(galeri) => setContent({ ...content, galeri })}
       onSave={handleSave}
-      topNode={<div className="mb-4">
-        <label className="mb-2 block text-sm text-[#8A9BB0]">Galeriye Toplu Görsel Ekle</label>
-        <Upload
-          accept="image/*"
-          multiple
-          onComplete={(results) => {
-            if (!results || !results.length) return;
-            const additions = results.map((r) => ({ src: r.url, baslik: "", boy: "third" as const }));
-            setContent({ ...content, galeri: [...content.galeri, ...additions] });
-            setMessage(`${additions.length} görsel eklendi.`);
-          }}
-          onError={(err) => setMessage(err.message)}
-        />
-      </div>}
+      topNode={
+        <div className="mb-4 space-y-4">
+          <SectionHint anchor="galeri" label="Galeri" />
+          <BolumBaslikFields
+            value={content.bolumlar.galeri}
+            onChange={(galeri) =>
+              setContent({
+                ...content,
+                bolumlar: { ...content.bolumlar, galeri },
+              })
+            }
+          />
+          <div>
+            <label className="mb-2 block text-sm text-[#8A9BB0]">
+              Galeriye toplu görsel ekle
+            </label>
+            <Upload
+              accept="image/*"
+              multiple
+              onComplete={(results) => {
+                if (!results || !results.length) return;
+                const additions = results.map((r) => ({
+                  src: r.url,
+                  baslik: "",
+                  boy: "third" as const,
+                }));
+                setContent({
+                  ...content,
+                  galeri: [...content.galeri, ...additions],
+                });
+                setMessage(`${additions.length} görsel eklendi.`);
+              }}
+              onError={(err) => setMessage(err.message)}
+            />
+          </div>
+        </div>
+      }
       renderItem={(item, i, update) => (
         <div className="grid gap-4 md:grid-cols-[140px_1fr]">
           <div className="aspect-[4/3] overflow-hidden rounded-xl bg-[#0D1117]">
@@ -203,6 +231,7 @@ export function YorumlarPanel() {
             yorumlar: content.yorumlar,
             yorumlarSource: source,
             yorumlarMeta: meta,
+            bolumlar: content.bolumlar,
           };
           if (source === "external") payload.yorumlarApi = apiUrl;
           const res = await api.updateContent(payload);
@@ -225,6 +254,16 @@ export function YorumlarPanel() {
         </div>
       )}
       topNode={<div className="mb-4 space-y-4">
+        <SectionHint anchor="yorumlar" label="Yorumlar" />
+        <BolumBaslikFields
+          value={content.bolumlar.yorumlar}
+          onChange={(yorumlar) =>
+            setContent({
+              ...content,
+              bolumlar: { ...content.bolumlar, yorumlar },
+            })
+          }
+        />
         <div className="rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-4 space-y-3">
           <h3 className="text-sm font-semibold text-[#F8F8F8]">Google rozeti</h3>
           <div className="grid gap-3 md:grid-cols-2">
@@ -275,8 +314,8 @@ export function MakalelerPanel() {
   if (loading || !content) return <AdminLoading />;
   return (
     <ListPanel
-      title="Makaleler / Blog"
-      description="Başlık, özet, okuma süresi ve yazı gövdesi siteye yansır. Yeni yazılar için HTML gövdeyi buraya yapıştırın."
+      title="Fırın Günlüğü"
+      description="Blog yazıları — başlık, özet, okuma süresi ve HTML gövde."
       items={content.makaleler}
       message={message}
       saving={saving}
@@ -301,13 +340,18 @@ export function MakalelerPanel() {
         try {
           const res = await api.updateContent({ makaleler: content.makaleler });
           setContent(res.data);
-          setMessage("Makaleler kaydedildi.");
+          setMessage("Fırın Günlüğü kaydedildi.");
         } catch (e) {
           setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
         } finally {
           setSaving(false);
         }
       }}
+      topNode={
+        <div className="mb-4">
+          <SectionHint href="/blog/blog" label="Fırın Günlüğü (blog)" />
+        </div>
+      }
       renderItem={(item, _i, update) => (
         <div className="grid gap-3 md:grid-cols-2">
           <Input label="Slug (URL)" value={item.slug} onChange={(e) => update({ ...item, slug: e.target.value })} placeholder="ornek-makale" />
@@ -352,7 +396,7 @@ export function SssPanel() {
   return (
     <ListPanel
       title="S.S.S."
-      description="Sıkça Sorulan Sorular (soru/cevap)"
+      description="Ana sayfa sıkça sorulan sorular — başlık ve soru/cevap listesi."
       items={items}
       message={message}
       saving={saving}
@@ -361,7 +405,10 @@ export function SssPanel() {
       onSave={async () => {
         setSaving(true);
         try {
-          const res = await api.updateContent({ sss: { items } });
+          const res = await api.updateContent({
+            sss: content.sss,
+            bolumlar: content.bolumlar,
+          });
           setContent(res.data);
           setMessage("SSS kaydedildi.");
         } catch (e) {
@@ -370,6 +417,21 @@ export function SssPanel() {
           setSaving(false);
         }
       }}
+      topNode={
+        <div className="mb-4 space-y-4">
+          <SectionHint anchor="sss" label="S.S.S." />
+          <BolumBaslikFields
+            value={content.bolumlar.sss}
+            lead={false}
+            onChange={(sss) =>
+              setContent({
+                ...content,
+                bolumlar: { ...content.bolumlar, sss },
+              })
+            }
+          />
+        </div>
+      }
       renderItem={(item: any, _i, update) => (
         <div className="grid gap-3">
           <Input label="Soru" value={item.soru} onChange={(e) => update({ ...item, soru: e.target.value })} />

@@ -1,2 +1,6 @@
-import HakkimizdaPanel from "@/components/admin/panels/HakkimizdaPanel";
-export default function Page() { return <HakkimizdaPanel />; }
+import { redirect } from "next/navigation";
+
+/** Eski “Metinler” yolu → Hakkımızda */
+export default function Page() {
+  redirect("/admin/hakkimizda");
+}

@@ -657,18 +657,34 @@
     var sec = $("#hakkimizda");
     if (!sec) return;
     setText("#hakkimizda .eyebrow", h.eyebrow);
-    setText("#hakkimizda .h2", h.baslik);
+    setText("#hakkimizda .h2, #hakkimizda h1.h2, #hakkimizda h1", h.baslik);
     var ans = $("#hakkimizda .answer b");
     if (ans && h.answerBaslik) ans.textContent = h.answerBaslik;
     setText("#hakkimizda .answer p", h.answerMetin);
     setText("#hakkimizda .lead", h.lead);
-    var bodies = $all("#hakkimizda .body", sec);
-    if (h.body && h.body.length) {
-      bodies.forEach(function (el, i) {
-        if (h.body[i]) el.textContent = h.body[i];
+
+    var ozet = $(".ozet", sec);
+    var leftCol = ozet ? ozet.parentElement : sec.querySelector(".grid-2 > div") || sec;
+
+    if (Array.isArray(h.body)) {
+      $all("#hakkimizda .body", sec).forEach(function (el) {
+        el.remove();
+      });
+      var insertBefore = ozet || null;
+      h.body.forEach(function (text) {
+        if (!text && text !== "") return;
+        var p = document.createElement("p");
+        p.className = "body";
+        p.setAttribute("data-fade", "");
+        p.textContent = text || "";
+        if (insertBefore && insertBefore.parentNode) {
+          insertBefore.parentNode.insertBefore(p, insertBefore);
+        } else if (leftCol) {
+          leftCol.appendChild(p);
+        }
       });
     }
-    var ozet = $(".ozet", sec);
+
     if (ozet && h.ozet && h.ozet.length) {
       ozet.innerHTML = "";
       h.ozet.forEach(function (item) {

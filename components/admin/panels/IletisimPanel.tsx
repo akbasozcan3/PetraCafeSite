@@ -14,6 +14,7 @@ import {
   phoneToTelHref,
   phoneToWaDigits,
 } from "@/lib/content/contact-utils";
+import SectionHint from "@/components/admin/ui/SectionHint";
 
 export default function IletisimPanel() {
   const { content, loading, setContent } = useAdminContent();
@@ -94,9 +95,10 @@ export default function IletisimPanel() {
   return (
     <>
       <AdminPageHeader
-        title="İletişim Bilgileri"
-        description="Telefonu değiştirince WhatsApp ve navbar numarası da otomatik güncellenir. Instagram ve e-posta da buradan yönetilir."
+        title="İletişim"
+        description="Ana sayfa iletişim bölümü + telefon, WhatsApp, Instagram, e-posta. Telefon değişince tüm site numaraları güncellenir."
       />
+      <SectionHint anchor="iletisim" label="İletişim" />
       <AdminAlert message={message} />
 
       <section className="mb-6 space-y-4 rounded-2xl border border-[#C8703A]/25 bg-[#141E2E]/80 p-6">

@@ -25,6 +25,8 @@ import AdminPageHeader, {
 import { SITE_PAGE_URLS } from "@/lib/admin/page-urls";
 import Upload from "@/components/admin/ui/Upload";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
+import SectionHint from "@/components/admin/ui/SectionHint";
+import BolumBaslikFields from "@/components/admin/ui/BolumBaslikFields";
 
 export default function MenuPanel() {
   const { content, setContent, loading } = useAdminContent();
@@ -143,25 +145,28 @@ export default function MenuPanel() {
   return (
     <>
       <AdminPageHeader
-        title="Ürün Menüsü Yönetimi"
-        description={`${menu.gruplar.length} kategori · ${totalProducts} ürün — Tüm ürünleri, kategorileri ve bağlantılarını kolayca düzenleyin.`}
+        title="Ürünler"
+        description={`${menu.gruplar.length} kategori · ${totalProducts} ürün — Ana sayfa menü bölümü ve kategori sayfaları.`}
       />
+      <SectionHint anchor="menu" label="Ürünler / Menü" />
       <AdminAlert message={message} type={messageType} />
 
       <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-        <h3 className="font-semibold text-[#F8F8F8]">Menü Başlık ve Açıklamaları</h3>
-        <Input
-          label="Ana başlık"
-          value={menu.baslik || ""}
-          onChange={(e) => updateMenu({ baslik: e.target.value })}
+        <BolumBaslikFields
+          value={content.bolumlar.menu}
+          onChange={(menuBolum) => {
+            setContent({
+              ...content,
+              bolumlar: { ...content.bolumlar, menu: menuBolum },
+              menu: {
+                ...menu,
+                baslik: menuBolum.baslik,
+                giris: menuBolum.lead || menu.giris,
+              },
+            });
+          }}
         />
-        <textarea
-          value={menu.giris || ""}
-          onChange={(e) => updateMenu({ giris: e.target.value })}
-          rows={2}
-          className="w-full rounded-2xl border border-white/[0.06] bg-[#0D1117] px-4 py-3 text-sm text-[#EEE9E0] focus:border-[#C8703A]/40 focus:outline-none focus:ring-1 focus:ring-[#C8703A]/20"
-          placeholder="Giriş metni"
-        />
+        <h3 className="pt-2 font-semibold text-[#F8F8F8]">Menü ekstra metinler</h3>
         <Input
           label="Yıldız açıklaması"
           value={menu.legend || ""}
