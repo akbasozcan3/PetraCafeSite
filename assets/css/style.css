@@ -548,6 +548,8 @@ body.page a.wa-float {
     object-fit: cover !important;
     object-position: center center !important;
   }
+  /* JS poster modu da bunu açar; dar ekranda 3B kapı yok */
+  html.scene-poster #scene,
   #scene {
     display: none !important;
   }
