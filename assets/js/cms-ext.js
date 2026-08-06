@@ -1654,8 +1654,11 @@ if (list) {
   }
 
 
-  fetch("/api/content", { headers: { Accept: "application/json" } })
-    .then(function (r) { return r.ok ? r.json() : null; })
+  (window.__firinciContentPromise ||
+    fetch("/api/content", { headers: { Accept: "application/json" } }).then(function (r) {
+      return r.ok ? r.json() : null;
+    })
+  )
     .then(function (payload) {
       if (!payload || payload.kaynak !== "db" || !payload.data) {
         initReviewsSlider();

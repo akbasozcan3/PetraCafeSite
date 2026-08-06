@@ -100,6 +100,7 @@ function bumpCache(html) {
     .replace(/assets\/js\/site-loader\.js(\?v=[^"'&\s]+)?/g, `assets/js/site-loader.js?v=${CACHE}`)
     .replace(/assets\/js\/cms-ext\.js(\?v=[^"'&\s]+)?/g, `assets/js/cms-ext.js?v=${CACHE}`)
     .replace(/assets\/js\/content\.js(\?v=[^"'&\s]+)?/g, `assets/js/content.js?v=${CACHE}`)
+    .replace(/assets\/js\/content-api\.js(\?v=[^"'&\s]+)?/g, `assets/js/content-api.js?v=${CACHE}`)
     .replace(/assets\/js\/main\.js(\?v=[^"'&\s]+)?/g, `assets/js/main.js?v=${CACHE}`)
     .replace(/assets\/js\/hero\/index\.js(\?v=[^"'&\s]+)?/g, `assets/js/hero/index.js?v=${CACHE}`);
 }
@@ -168,6 +169,7 @@ const assetPairs = [
   ["assets/js/cms-ext.js", "public/assets/js/cms-ext.js"],
   ["assets/js/site-loader.js", "public/assets/js/site-loader.js"],
   ["assets/js/content.js", "public/assets/js/content.js"],
+  ["assets/js/content-api.js", "public/assets/js/content-api.js"],
   ["assets/js/main.js", "public/assets/js/main.js"],
 ];
 for (const [a, b] of assetPairs) {

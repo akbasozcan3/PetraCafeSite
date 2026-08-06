@@ -48,18 +48,35 @@
     }
     images = safe;
 
+    var isMobileHero =
+      (typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 860px)').matches) ||
+      window.innerWidth <= 860;
+    var mobileHeroUrl = images.heroMobile || '/assets/img/hero-mobile.webp';
+    if (mobileHeroUrl.indexOf('http') !== 0 && mobileHeroUrl.indexOf('/') !== 0) {
+      mobileHeroUrl = '/' + mobileHeroUrl.replace(/^\//, '');
+    }
+
     document.querySelectorAll('[data-site]').forEach(function (el) {
       var key = el.getAttribute('data-site');
       var url = images[key];
       if (!url) return;
       url = url.indexOf("http") === 0 || url.indexOf("/") === 0 ? url : "/" + url.replace(/^\//, "");
 
+      // Mobilde yatay heroPoster tabela/kapıyı kesiyor → dikey kadrajı koru
+      if (isMobileHero && (key === 'heroPoster' || (el.classList && el.classList.contains('gate__poster')))) {
+        url = mobileHeroUrl;
+      }
+
       if (el.tagName === 'IMG') {
         el.src = url;
         el.removeAttribute('hidden');
         el.hidden = false;
         if (url.indexOf('/uploads/') === 0 || /\.svg(\?|$)/i.test(url)) el.removeAttribute('srcset');
+      } else if (el.tagName === 'SOURCE' && el.parentElement && el.parentElement.tagName === 'PICTURE') {
+        el.srcset = url;
       } else if (el.tagName === 'LINK' && el.rel === 'preload') {
+        // Mobil preload satırını yatay görselle ezme
+        if (isMobileHero && key === 'heroPoster') return;
         el.href = url;
       } else if (el.tagName === 'LINK' && (el.rel === 'icon' || el.rel === 'shortcut icon' || el.rel === 'apple-touch-icon')) {
         el.href = url;
@@ -152,8 +169,11 @@
     }
   }
 
-  fetch('/api/content', { headers: { Accept: 'application/json' } })
-    .then(function (r) { return r.ok ? r.json() : null; })
+  (window.__firinciContentPromise ||
+    fetch('/api/content', { headers: { Accept: 'application/json' } }).then(function (r) {
+      return r.ok ? r.json() : null;
+    })
+  )
     .then(function (payload) {
       if (!payload || payload.kaynak !== 'db' || !payload.data) return;
       window.__FIRINCI_CONTENT = Object.assign({}, window.__FIRINCI_CONTENT || {}, payload.data);
