@@ -539,7 +539,7 @@ body.page a.wa-float {
 }
 @media (max-width: 860px) {
   .gate__stage {
-    background: #0a0c08 !important;
+    background: #0a0c08 url("/assets/img/hero-mobile.webp") center center / cover no-repeat !important;
   }
   .gate__poster {
     inset: 0 !important;
@@ -552,8 +552,7 @@ body.page a.wa-float {
     max-width: none !important;
     max-height: none !important;
     transform: none !important;
-    /* Bilgisayardaki aynı tam cephe — cover yakınlaştırıp kesiyordu */
-    object-fit: contain !important;
+    object-fit: cover !important;
     object-position: center center !important;
     opacity: 1 !important;
     visibility: visible !important;

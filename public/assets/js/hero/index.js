@@ -55,8 +55,9 @@ function showPoster(reason) {
   const poster = document.querySelector('.gate__poster');
   const images = window.__FIRINCI_CONTENT?.images || {};
   if (poster) {
-    // Mobil = bilgisayardaki aynı tam cephe (contain CSS ile)
-    poster.src = safeHeroUrl(images.heroPoster, images.heroCephe || ASSETS.cephe);
+    const mobileUrl = absUrl(ASSETS.mobile) || '/assets/img/hero-mobile.webp';
+    const desktopSafe = safeHeroUrl(images.heroPoster, images.heroCephe || ASSETS.cephe);
+    poster.src = isPosterMode() ? mobileUrl : desktopSafe;
     poster.style.opacity = '1';
     poster.style.visibility = 'visible';
     poster.removeAttribute('hidden');

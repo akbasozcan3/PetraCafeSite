@@ -138,7 +138,7 @@
      tüm ortamlara açılır. Üçüncü taraf isteği ilk boyamayı bekletmiyor. -->
 <link href="css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all';this.onload=null">
 <noscript><link href="css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/css/style.css?v=20260806contain">
+<link rel="stylesheet" href="assets/css/style.css?v=20260806mobile2">
 <style id="brand-critical">
   .nav__logo.has-logo .nav__logo-text,
   .nav__logo.has-logo .nav__logo-fallback,
@@ -163,11 +163,18 @@ html.scene-ready #scene{opacity:1}
   pointer-events:none;z-index:1;
   opacity:1;visibility:visible;
 }
+.gate__stage > picture{
+  position:absolute;inset:0;display:block;width:100%;height:100%;
+  pointer-events:none;z-index:1;
+}
+.gate__stage > picture .gate__poster{
+  position:absolute;inset:0;width:100%;height:100%;
+}
 html.scene-ready .gate__poster{opacity:0;transition:opacity .9s var(--ease)}
-/* Telefon: bilgisayardaki aynı cephe kadrajı — contain ile tam tabela+kapı */
+/* Telefon: dikey hero-mobile + cover — tam tabela/kapı, siyah şerit yok */
 @media (max-width:860px){
   .gate__stage{
-    background:#0a0c08 !important;
+    background:#0a0c08 url("/assets/img/hero-mobile.webp") center center / cover no-repeat !important;
   }
   .gate__poster{
     inset:0!important;
@@ -175,7 +182,7 @@ html.scene-ready .gate__poster{opacity:0;transition:opacity .9s var(--ease)}
     width:100%!important;height:100%!important;min-width:0!important;
     max-width:none!important;max-height:none!important;
     transform:none!important;
-    object-fit:contain!important;object-position:center center!important;
+    object-fit:cover!important;object-position:center center!important;
     opacity:1!important;visibility:visible!important;z-index:2!important;
   }
   html.scene-ready .gate__poster{opacity:1!important}
@@ -254,6 +261,7 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
      büyük içerik boyaması (LCP) ve 0.9 sn sonra 3B sahne devraldığı
      için kalite 66 yeterli. Galeri hâlâ kalite 78 sürümleri kullanır. -->
 <link rel="preload" as="image" href="/assets/img/hero-cephe.webp" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/img/hero-mobile.webp" media="(max-width: 860px)" fetchpriority="high">
 </head>
 <body>
 
@@ -308,7 +316,10 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
          Three.js inip doku yüklenene kadar hero karanlık kalıyordu ve
          en büyük içerik boyaması buna takılıyordu. Sahne hazır olunca
          karşılıklı geçişle devralır. -->
-    <img class="gate__poster" data-site="heroPoster" src="/assets/img/hero-cephe.webp" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1200" height="900" onerror="this.onerror=null;this.src='/assets/img/hero-cephe.webp'">
+    <picture>
+      <source media="(max-width: 860px)" srcset="/assets/img/hero-mobile.webp" type="image/webp">
+      <img class="gate__poster" data-site="heroPoster" src="/assets/img/hero-cephe.webp" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1200" height="900" onerror="this.onerror=null;this.src='/assets/img/hero-cephe.webp'">
+    </picture>
     <canvas id="scene" aria-hidden="true"></canvas>
     <div class="gate__fallback" id="fallback" hidden="">
       <div class="gate__fallback-inner"><div class="gate__mark">FIRINCI</div><p>Taze · Lezzetli · Doğal</p></div>
@@ -888,11 +899,11 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
 <script src="assets/vendor/lenis.min.js" defer=""></script>
 <script src="assets/vendor/gsap.min.js" defer=""></script>
 <script src="assets/vendor/ScrollTrigger.min.js" defer=""></script>
-<script type="module" src="assets/js/hero/index.js?v=20260806contain"></script>
-<script src="assets/js/content-api.js?v=20260806contain" defer=""></script>
-<script src="assets/js/site-loader.js?v=20260806contain" defer=""></script>
-<script src="assets/js/main.js?v=20260806contain" defer=""></script>
-<script src="assets/js/content.js?v=20260806contain" defer=""></script>
-<script src="assets/js/cms-ext.js?v=20260806contain" defer=""></script>
+<script type="module" src="assets/js/hero/index.js?v=20260806mobile2"></script>
+<script src="assets/js/content-api.js?v=20260806mobile2" defer=""></script>
+<script src="assets/js/site-loader.js?v=20260806mobile2" defer=""></script>
+<script src="assets/js/main.js?v=20260806mobile2" defer=""></script>
+<script src="assets/js/content.js?v=20260806mobile2" defer=""></script>
+<script src="assets/js/cms-ext.js?v=20260806mobile2" defer=""></script>
 </body>
 </html>
