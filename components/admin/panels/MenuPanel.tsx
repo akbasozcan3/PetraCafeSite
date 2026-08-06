@@ -149,11 +149,19 @@ export default function MenuPanel() {
   return (
     <>
       <AdminPageHeader
-        title="Ürünler"
-        description={`${menu.gruplar.length} kategori · ${totalProducts} ürün — Ana sayfa menü bölümü ve kategori sayfaları.`}
+        title="Ürünler / Kategori"
+        description={`${menu.gruplar.length} kategori · ${totalProducts} ürün — Ana sayfa menüsü, ürünler grid’i ve kategori sayfaları.`}
       />
-      <SectionHint anchor="menu" label="Ürünler / Menü" />
+      <SectionHint anchor="menu" label="Ürünler / Kategori" />
       <AdminAlert message={message} type={messageType} />
+
+      <div className="mb-4 rounded-xl border border-[#C8703A]/25 bg-[#C8703A]/5 px-4 py-3 text-sm text-[#C8D0DC]">
+        <p className="font-medium text-[#EEE9E0]">Kategori silmek</p>
+        <p className="mt-1 text-xs text-[#8A9BB0]">
+          Her satırdaki kırmızı çöp kutusuna bas → onayla → alttaki{" "}
+          <span className="text-[#EEE9E0]">Kaydet</span>. Silinen kategorinin ürünleri de gider.
+        </p>
+      </div>
 
       <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
         <BolumBaslikFields
@@ -255,7 +263,7 @@ export default function MenuPanel() {
                 </div>
               </button>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <button
                   type="button"
                   title="Yukarı taşı"
@@ -273,6 +281,32 @@ export default function MenuPanel() {
                   className="rounded-lg p-1.5 text-[#6B7A94] hover:bg-white/[0.06] hover:text-[#EEE9E0] disabled:opacity-30"
                 >
                   <ArrowDown className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  title={`“${grup.ad || "Kategori"}” kategorisini sil`}
+                  aria-label="Kategoriyi sil"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (
+                      confirm(
+                        `"${grup.ad || "Bu kategori"}" silinsin mi?\n\nAltındaki ${grup.urunler.length} ürün de silinir. Kaydet’e basmayı unutma.`
+                      )
+                    ) {
+                      updateMenu({
+                        gruplar: menu.gruplar.filter((_, j) => j !== gi),
+                      });
+                      if (open === gi) setOpen(null);
+                      showMessage(
+                        `"${grup.ad || "Kategori"}" kaldırıldı — kaydetmeyi unutma.`,
+                        "success"
+                      );
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-red-500/35 bg-red-500/15 px-2.5 py-1.5 text-xs font-semibold text-red-300 hover:bg-red-500/25 hover:text-red-200"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  Sil
                 </button>
                 <button
                   type="button"
@@ -629,25 +663,33 @@ export default function MenuPanel() {
                   </div>
                 </div>
 
-                {/* Kategori Sil */}
-                <div className="pt-4 border-t border-white/[0.04]">
+                {/* Kategori Sil — belirgin alan */}
+                <div className="mt-2 rounded-xl border border-red-500/25 bg-red-500/[0.07] p-4">
+                  <p className="mb-3 text-xs text-red-200/80">
+                    Bu kategori siteden kalkar; içindeki ürünler de silinir. Geri almak için Kaydet’ten önce sayfayı yenileme.
+                  </p>
                   <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                    variant="danger"
+                    size="md"
+                    className="w-full sm:w-auto"
                     onClick={() => {
                       if (
                         confirm(
-                          `"${grup.ad}" kategorisini ve altındaki ürünleri silmek istediğinizden emin misiniz?`
+                          `"${grup.ad}" kategorisini ve altındaki ${grup.urunler.length} ürünü silmek istediğinizden emin misiniz?`
                         )
                       ) {
                         updateMenu({
                           gruplar: menu.gruplar.filter((_, j) => j !== gi),
                         });
+                        setOpen(null);
+                        showMessage(
+                          `"${grup.ad}" kaldırıldı — kaydetmeyi unutma.`,
+                          "success"
+                        );
                       }
                     }}
                   >
-                    <Trash2 className="h-4 w-4" /> Bu Kategoriyi Sil
+                    <Trash2 className="h-4 w-4" /> Bu kategoriyi sil
                   </Button>
                 </div>
               </div>

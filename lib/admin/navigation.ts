@@ -73,8 +73,8 @@ export const adminNavItems: AdminNavItem[] = [
   },
   {
     href: "/admin/menu",
-    label: "Ürünler",
-    description: "Menü kategorileri, ürünler, SSS",
+    label: "Ürünler / Kategori",
+    description: "Kategoriler, ürün listeleri, görseller, SSS",
     icon: LayoutList,
     group: "Ana Sayfa",
     permission: "content:read",

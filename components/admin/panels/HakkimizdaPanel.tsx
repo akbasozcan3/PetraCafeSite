@@ -782,7 +782,7 @@ export function BolumlarPanel() {
 
   const keys = ["menu", "galeri", "yorumlar", "sss"] as const;
   const labels = {
-    menu: "Ürünler (Menü)",
+    menu: "Ürünler / Kategori",
     galeri: "Galeri",
     yorumlar: "Yorumlar",
     sss: "S.S.S.",
