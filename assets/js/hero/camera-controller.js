@@ -29,21 +29,15 @@ export class CameraController {
       ? CAMERA_PRESETS.dikey
       : CAMERA_PRESETS.yatay;
 
-    if (isPortrait) {
-      // In mobile portrait, adjust camera distance so full storefront width is visible like desktop
-      const fitW = (SCENE_W * 0.95) / (2 * Math.tan(fovRad / 2) * aspect);
-      const fitH = SCENE_H / (2 * Math.tan(fovRad / 2));
-      this.baseDistance = Math.max(fitH, fitW) * preset.zoom;
-      this.baseY = 0;
-    } else {
-      this.baseDistance =
-        Math.min(SCENE_H / (2 * Math.tan(fovRad / 2)), SCENE_W / (2 * Math.tan(fovRad / 2) * aspect)) *
-        preset.zoom;
+    // Cover (masaüstüyle aynı): ekranı doldur.
+    // Eski mobil max() = contain → FRAME_PAD şeritleri esneyip üstte çizgili bozulma + altta siyah boşluk.
+    const fitH = SCENE_H / (2 * Math.tan(fovRad / 2));
+    const fitW = SCENE_W / (2 * Math.tan(fovRad / 2) * aspect);
+    this.baseDistance = Math.min(fitH, fitW) * preset.zoom;
 
-      const halfH = Math.tan(fovRad / 2) * this.baseDistance;
-      const maxY = Math.max(0, SCENE_H / 2 + 6 - halfH - PARALLAX.y - 0.3);
-      this.baseY = clamp(preset.y, -maxY, maxY);
-    }
+    const halfH = Math.tan(fovRad / 2) * this.baseDistance;
+    const maxY = Math.max(0, SCENE_H / 2 + 6 - halfH - PARALLAX.y - 0.3);
+    this.baseY = clamp(preset.y, -maxY, maxY);
   }
 
 

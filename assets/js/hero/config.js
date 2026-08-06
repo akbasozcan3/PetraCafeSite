@@ -17,7 +17,8 @@ export const DOOR_UV = { u0: 0.368, u1: 0.633, v0: 0.552, v1: 1 };
 
 export const CAMERA_PRESETS = {
   yatay: { zoom: 0.96, y: -0.95 },
-  dikey: { zoom: 1, y: -0.6 },
+  /** Mobil dikey: cover + kapı/tabela odaklı (masaüstüyle aynı dolu kadraj) */
+  dikey: { zoom: 0.98, y: -0.72 },
 };
 
 export const PARALLAX = { x: 0.3, y: 0.13, z: 0.22 };
