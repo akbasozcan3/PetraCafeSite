@@ -546,7 +546,10 @@ body.page a.wa-float {
     max-width: none !important;
     transform: none !important;
     object-fit: cover !important;
-    object-position: center bottom !important;
+    object-position: center center !important;
+  }
+  #scene {
+    display: none !important;
   }
 }
 

@@ -35,6 +35,19 @@
   function applyImages(images) {
     if (!images) return;
 
+    // Vercel'de gitignore'lu /uploads yolları 404 olur — hero poster'ı kırık bırakma
+    var safe = Object.assign({}, images);
+    if (safe.heroPoster && /\/uploads\//i.test(safe.heroPoster)) {
+      safe.heroPoster = safe.heroCephe || "/assets/img/hero-cephe.webp";
+    }
+    if (safe.heroCephe && /\/uploads\//i.test(safe.heroCephe)) {
+      safe.heroCephe = "/assets/img/hero-cephe.webp";
+    }
+    if (safe.heroIc && /\/uploads\//i.test(safe.heroIc)) {
+      safe.heroIc = "/assets/img/hero-ic.webp";
+    }
+    images = safe;
+
     document.querySelectorAll('[data-site]').forEach(function (el) {
       var key = el.getAttribute('data-site');
       var url = images[key];

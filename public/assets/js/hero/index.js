@@ -129,10 +129,30 @@ async function boot() {
   if (isMobile) {
     window.__FIRINCI_SCENE = 'poster';
     if (canvas) {
+      canvas.style.display = 'none';
       canvas.style.opacity = '0';
       canvas.style.pointerEvents = 'none';
+      canvas.setAttribute('aria-hidden', 'true');
     }
     document.documentElement.classList.remove('scene-ready');
+    document.documentElement.classList.add('scene-poster');
+
+    const poster = document.querySelector('.gate__poster');
+    if (poster) {
+      const fromCms = window.__FIRINCI_CONTENT?.images?.heroPoster;
+      const fromCephe = window.__FIRINCI_CONTENT?.images?.heroCephe;
+      const safe =
+        (fromCms && !/\/uploads\//i.test(fromCms) && fromCms) ||
+        (fromCephe && !/\/uploads\//i.test(fromCephe) && fromCephe) ||
+        ASSETS.cephe ||
+        '/assets/img/hero-cephe.webp';
+      poster.src = safe;
+      poster.style.opacity = '1';
+      poster.style.visibility = 'visible';
+      poster.removeAttribute('hidden');
+    }
+    if (fallback) fallback.hidden = true;
+
     if (scrollHint) {
       scrollHint.style.opacity = '1';
       scrollHint.style.visibility = 'visible';
