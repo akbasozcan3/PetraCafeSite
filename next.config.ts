@@ -63,7 +63,25 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/assets/img/hero-:name*",
+        source: "/assets/img/hero-cephe.webp",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=300, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/assets/img/hero-mobile.webp",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=300, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/assets/img/hero-ic.webp",
         headers: [
           {
             key: "Cache-Control",
