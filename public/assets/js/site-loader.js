@@ -48,12 +48,18 @@
     }
     images = safe;
 
+    var sceneLive =
+      window.__FIRINCI_SCENE === 'ok' ||
+      document.documentElement.classList.contains('scene-ready');
     var isMobileHero =
-      (typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 860px)').matches) ||
-      window.innerWidth <= 860;
-    var mobileHeroUrl = images.heroMobile || '/assets/img/hero-mobile.webp';
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(max-width: 860px)').matches;
+    var mobileHeroUrl = images.heroMobile || '/assets/img/hero-mobile.webp?v=20260806r1';
     if (mobileHeroUrl.indexOf('http') !== 0 && mobileHeroUrl.indexOf('/') !== 0) {
       mobileHeroUrl = '/' + mobileHeroUrl.replace(/^\//, '');
+    }
+    if (mobileHeroUrl.indexOf('hero-mobile') !== -1 && mobileHeroUrl.indexOf('?v=') === -1) {
+      mobileHeroUrl += (mobileHeroUrl.indexOf('?') > -1 ? '&' : '?') + 'v=20260806r1';
     }
 
     document.querySelectorAll('[data-site]').forEach(function (el) {
@@ -61,6 +67,14 @@
       var url = images[key];
       if (!url) return;
       url = url.indexOf("http") === 0 || url.indexOf("/") === 0 ? url : "/" + url.replace(/^\//, "");
+
+      // 3B sahne açıkken poster'ı yatay cepheyle ezme (kesik tabela bug'ı)
+      if (
+        sceneLive &&
+        (key === 'heroPoster' || (el.classList && el.classList.contains('gate__poster')))
+      ) {
+        return;
+      }
 
       if (isMobileHero && (key === 'heroPoster' || (el.classList && el.classList.contains('gate__poster')))) {
         url = mobileHeroUrl;

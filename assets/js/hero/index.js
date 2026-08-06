@@ -1,6 +1,6 @@
-﻿import { CanvasEngine } from './canvas-engine.js';
-import { ASSETS } from './config.js';
-import { range } from './utils.js';
+﻿import { CanvasEngine } from './canvas-engine.js?v=20260806r1';
+import { ASSETS } from './config.js?v=20260806r1';
+import { range } from './utils.js?v=20260806r1';
 
 window.__FIRINCI_SCENE = 'loading';
 
@@ -12,9 +12,9 @@ const scrollHint = document.getElementById('scrollHint');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch = matchMedia('(pointer: coarse)').matches;
 
-/** Dar ekran — performans / fallback için */
+/** Dar ekran — DevTools device mode dahil (yalnız matchMedia) */
 function isNarrow() {
-  return matchMedia('(max-width: 860px)').matches || window.innerWidth <= 860;
+  return matchMedia('(max-width: 860px)').matches;
 }
 
 function absUrl(url) {
@@ -177,7 +177,10 @@ async function start3D() {
   try {
     await engine.init();
     window.__FIRINCI_SCENE = 'ok';
-    window.__firinciHeroRefresh = () => engine.refreshScroll();
+    window.__firinciHeroRefresh = () => {
+      engine.onResize();
+      engine.refreshScroll();
+    };
     markReady();
     console.info('[Fırıncı] 3B kapı sahnesi aktif.', isNarrow() ? '(mobil)' : '(masaüstü)');
 
@@ -209,11 +212,17 @@ async function boot() {
   await start3D();
 }
 
-// DevTools mobil ↔ masaüstü: WebGL boyutu için yenile
+// Genişlik değişince kamera fitView (engine.onResize) yeter — tam reload yarış/bozulma yapıyordu
 try {
   const mq = matchMedia('(max-width: 860px)');
-  mq.addEventListener('change', () => {
-    window.location.reload();
+  let lastNarrow = mq.matches;
+  mq.addEventListener('change', (e) => {
+    if (e.matches === lastNarrow) return;
+    lastNarrow = e.matches;
+    // Yalnızca dar↔geniş geçişinde bir kez yenile (DevTools device toggle)
+    if (window.__firinciHeroRefresh) {
+      window.__firinciHeroRefresh();
+    }
   });
 } catch {
   /* eski tarayıcı */

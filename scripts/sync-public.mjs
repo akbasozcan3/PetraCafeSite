@@ -9,7 +9,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const CACHE = "20260806cam";
+const CACHE = "20260806r1";
 
 function isReparsePoint(p) {
   try {
@@ -102,7 +102,67 @@ function bumpCache(html) {
     .replace(/assets\/js\/content\.js(\?v=[^"'&\s]+)?/g, `assets/js/content.js?v=${CACHE}`)
     .replace(/assets\/js\/content-api\.js(\?v=[^"'&\s]+)?/g, `assets/js/content-api.js?v=${CACHE}`)
     .replace(/assets\/js\/main\.js(\?v=[^"'&\s]+)?/g, `assets/js/main.js?v=${CACHE}`)
-    .replace(/assets\/js\/hero\/index\.js(\?v=[^"'&\s]+)?/g, `assets/js/hero/index.js?v=${CACHE}`);
+    .replace(/assets\/js\/hero\/index\.js(\?v=[^"'&\s]+)?/g, `assets/js/hero/index.js?v=${CACHE}`)
+    .replace(/\/assets\/img\/hero-cephe\.webp(\?v=[^"'&\s]+)?/g, `/assets/img/hero-cephe.webp?v=${CACHE}`)
+    .replace(/\/assets\/img\/hero-mobile\.webp(\?v=[^"'&\s]+)?/g, `/assets/img/hero-mobile.webp?v=${CACHE}`)
+    .replace(/\/assets\/img\/hero-ic\.webp(\?v=[^"'&\s]+)?/g, `/assets/img/hero-ic.webp?v=${CACHE}`);
+}
+
+function bumpStyleHeroUrls() {
+  const files = [
+    path.join(root, "assets", "css", "style.css"),
+    path.join(root, "public", "assets", "css", "style.css"),
+  ];
+  for (const full of files) {
+    if (!fs.existsSync(full)) continue;
+    let code = fs.readFileSync(full, "utf8");
+    const next = code.replace(
+      /\/assets\/img\/hero-mobile\.webp(\?v=[^"'&\s)]*)?/g,
+      `/assets/img/hero-mobile.webp?v=${CACHE}`,
+    );
+    if (next !== code) fs.writeFileSync(full, next, "utf8");
+  }
+}
+
+function bumpSiteLoaderHeroUrls() {
+  const files = [
+    path.join(root, "assets", "js", "site-loader.js"),
+    path.join(root, "public", "assets", "js", "site-loader.js"),
+  ];
+  for (const full of files) {
+    if (!fs.existsSync(full)) continue;
+    let code = fs.readFileSync(full, "utf8");
+    const next = code.replace(
+      /\/assets\/img\/hero-mobile\.webp(\?v=[^"'&\s]*)?/g,
+      `/assets/img/hero-mobile.webp?v=${CACHE}`,
+    );
+    if (next !== code) fs.writeFileSync(full, next, "utf8");
+  }
+}
+
+/** ES modül alt import'larına ?v= — yoksa eski camera-controller cache'te kalır */
+function bustHeroModuleImports() {
+  const dir = path.join(root, "assets", "js", "hero");
+  if (!fs.existsSync(dir)) return;
+  for (const name of fs.readdirSync(dir)) {
+    if (!name.endsWith(".js")) continue;
+    const full = path.join(dir, name);
+    let code = fs.readFileSync(full, "utf8");
+    const next = code
+      .replace(
+        /(from\s+['"])(\.[^'"]+\.js)(?:\?v=[^'"]*)?(['"])/g,
+        `$1$2?v=${CACHE}$3`,
+      )
+      .replace(
+        /(from\s+['"])(\.\.\/\.\.\/vendor\/[^'"]+\.js)(?:\?v=[^'"]*)?(['"])/g,
+        `$1$2?v=${CACHE}$3`,
+      )
+      .replace(
+        /export const CACHE_V = ['"][^'"]*['"]/,
+        `export const CACHE_V = '${CACHE}'`,
+      );
+    if (next !== code) fs.writeFileSync(full, next, "utf8");
+  }
 }
 
 function ensureScripts(html, depth) {
@@ -157,6 +217,7 @@ for (const [srcRel, destRel] of materialize) {
 }
 
 // Hero modules (ensure latest)
+bustHeroModuleImports();
 copyDirFiles(
   path.join(root, "assets/js/hero"),
   path.join(root, "public/assets/js/hero"),
@@ -176,6 +237,8 @@ for (const [a, b] of assetPairs) {
   const src = path.join(root, a);
   if (fs.existsSync(src)) copyFile(src, path.join(root, b));
 }
+bumpSiteLoaderHeroUrls();
+bumpStyleHeroUrls();
 
 // index.htm cache bump + mirror
 const pubIndex = path.join(root, "public", "index.htm");

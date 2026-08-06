@@ -1,9 +1,12 @@
 ﻿/** Hero sahne sabitleri — orijinal scene.js ile aynı değerler */
+/** sync-public.mjs bu değeri CACHE ile senkronlar */
+export const CACHE_V = '20260806r1';
+
 export const ASSETS = {
-  cephe: '/assets/img/hero-cephe.webp',
-  ic: '/assets/img/hero-ic.webp',
-  /** Telefon için dikey kadraj (kapı + tabela tam) */
-  mobile: '/assets/img/hero-mobile.webp',
+  cephe: `/assets/img/hero-cephe.webp?v=${CACHE_V}`,
+  ic: `/assets/img/hero-ic.webp?v=${CACHE_V}`,
+  /** Telefon fallback / preload — dikey kompozit */
+  mobile: `/assets/img/hero-mobile.webp?v=${CACHE_V}`,
 };
 
 export const FOV = 52;
@@ -17,8 +20,8 @@ export const DOOR_UV = { u0: 0.368, u1: 0.633, v0: 0.552, v1: 1 };
 
 export const CAMERA_PRESETS = {
   yatay: { zoom: 0.96, y: -0.95 },
-  /** Mobil dikey: cover + kapı/tabela odaklı (masaüstüyle aynı dolu kadraj) */
-  dikey: { zoom: 0.98, y: -0.72 },
+  /** Mobil: cover + hafif geri — tabela+kapı dolu, kenar şerit yok */
+  dikey: { zoom: 1.12, y: -0.68 },
 };
 
 export const PARALLAX = { x: 0.3, y: 0.13, z: 0.22 };

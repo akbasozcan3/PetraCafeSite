@@ -63,11 +63,29 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: "/assets/img/hero-:name*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=300, must-revalidate",
+          },
+        ],
+      },
+      {
         source: "/assets/img/(.*)",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
+            value: "public, max-age=86400, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/assets/js/hero/(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=60, must-revalidate",
           },
         ],
       },
