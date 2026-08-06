@@ -1115,3 +1115,12 @@ body.page a.wa-float {
     font-size: clamp(1.85rem, 8vw, 2.6rem);
   }
 }
+
+/* Desktop: hamburger asla görünmesin (inline style override) */
+@media (min-width: 861px) {
+  .nav__burger {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}

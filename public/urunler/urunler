@@ -42,7 +42,7 @@
     <a href="../index.htm#iletisim">İletişim</a>
   </nav>
   <a href="tel:+905523400202" class="btn btn--sm nav__cta">0552 340 02 02</a>
-  <button class="nav__burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobileMenu" style="display:flex !important; opacity:1 !important; visibility:visible !important;">
+  <button class="nav__burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobileMenu">
     <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#12150E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:block !important; color:#12150E !important;">
       <line x1="3" y1="6" x2="21" y2="6"></line>
       <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -179,7 +179,17 @@
 </main>
 
 <footer class="foot">
-  <div class="wrap foot__bar"><span>© 2026 Taşdelen Fırıncı</span><span>Tüm hakları saklıdır.</span></div>
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <img class="foot__mark" data-site="logo" src="../assets/img/logo.webp" alt="Logo" width="160" height="160" loading="lazy" decoding="async">
+      </div>
+      <div><h4>Fırın</h4><a href="../index.htm#hakkimizda">Hakkımızda</a><a href="urunler">Ürünler</a><a href="../index.htm#pasta">Özel Pastalar</a><a href="../index.htm#galeri">Galeri</a><a href="../blog/blog">Fırın Günlüğü</a></div>
+      <div><h4>Adres</h4><a href="../index.htm#iletisim">Turgut Özal Cad. No:108/C</a><a href="../index.htm#iletisim">Bulvar Rezidans A Blok</a><a href="../index.htm#iletisim">Çekmeköy / İstanbul</a><a href="../index.htm#iletisim">7/24 açık</a></div>
+      <div><h4>İletişim</h4><a href="tel:+905523400202">0552 340 02 02</a><a href="https://wa.me/905523400202" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://www.instagram.com/firincitasdelenn/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="mailto:info@firincitasdelen.com.tr">info@firincitasdelen.com.tr</a></div>
+    </div>
+  </div>
+  <div class="wrap foot__bar"><span>© <span id="yil">2026</span> Taşdelen Fırıncı</span><span>Tüm hakları saklıdır.</span></div>
 </footer>
 
 <script src="../assets/js/main.js?v=20260806prod" defer=""></script>

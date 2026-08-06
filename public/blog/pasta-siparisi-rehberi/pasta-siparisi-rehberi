@@ -211,16 +211,17 @@
 </main>
 
 <footer class="foot">
-  <div class="wrap foot__grid">
-    <div>
-      <img class="foot__mark" src="../../assets/img/urun/logo.jpg" alt="Taşdelen Fırıncı logosu" width="160" height="160" loading="lazy" decoding="async">
-      <p>Taze • Lezzetli • Doğal<br>Çekmeköy Taşdelen’de her gün taptaze.</p>
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <img class="foot__mark" data-site="logo" src="../../assets/img/logo.webp" alt="Logo" width="160" height="160" loading="lazy" decoding="async">
+      </div>
+      <div><h4>Fırın</h4><a href="../../index.htm#hakkimizda">Hakkımızda</a><a href="../../urunler/urunler">Ürünler</a><a href="../../index.htm#pasta">Özel Pastalar</a><a href="../../index.htm#galeri">Galeri</a><a href="../../blog/blog">Fırın Günlüğü</a></div>
+      <div><h4>Adres</h4><a href="../../index.htm#iletisim">Turgut Özal Cad. No:108/C</a><a href="../../index.htm#iletisim">Bulvar Rezidans A Blok</a><a href="../../index.htm#iletisim">Çekmeköy / İstanbul</a><a href="../../index.htm#iletisim">7/24 açık</a></div>
+      <div><h4>İletişim</h4><a href="tel:+905523400202">0552 340 02 02</a><a href="https://wa.me/905523400202" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://www.instagram.com/firincitasdelenn/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="mailto:info@firincitasdelen.com.tr">info@firincitasdelen.com.tr</a></div>
     </div>
-    <div><h4>Fırın</h4><a href="../../index.htm#hikaye">Hikâyemiz</a><a href="../../index.htm#menu">Menü</a><a href="../blog">Fırın Günlüğü</a></div>
-    <div><h4>Adres</h4><a href="../../index.htm#ziyaret">Turgut Özal Cad. No:108/C, Taşdelen</a><a href="../../index.htm#ziyaret">Çekmeköy / İstanbul</a><a href="../../index.htm#ziyaret">7/24 açık</a></div>
-    <div><h4>İletişim</h4><a href="tel:+905523400202">0552 340 02 02</a><a href="mailto:info@firincitasdelen.com.tr">info@firincitasdelen.com.tr</a></div>
   </div>
-  <div class="wrap foot__bar"><span>© 2026 Taşdelen Fırıncı</span><span>Tüm hakları saklıdır.</span></div>
+  <div class="wrap foot__bar"><span>© <span id="yil">2026</span> Taşdelen Fırıncı</span><span>Tüm hakları saklıdır.</span></div>
 </footer>
 
 <!-- Yüzen WhatsApp sipariş butonu (her sayfada) -->
