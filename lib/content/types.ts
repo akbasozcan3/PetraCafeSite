@@ -70,6 +70,11 @@ export interface MenuUrun {
   kategori?: string;
 }
 
+export interface MenuSssItem {
+  soru: string;
+  cevap: string;
+}
+
 export interface MenuGrup {
   ad: string;
   slug?: string;
@@ -78,6 +83,8 @@ export interface MenuGrup {
   aciklama?: string;
   /** Kategori sayfasındaki uzun makale HTML */
   govdeHtml?: string;
+  /** Kategori sayfasındaki "Sık sorulanlar" (accordion) */
+  sss?: MenuSssItem[];
   link?: string;
   adet?: string;
   tumLink?: string;

@@ -937,6 +937,80 @@ if (list) {
     }) || null;
   }
 
+  function stripCategoryFaq(html) {
+    return String(html || "")
+      .replace(
+        /<h2[^>]*>\s*Sık\s*sorulanlar\s*<\/h2>\s*<div class="faq">[\s\S]*?<\/div>/gi,
+        ""
+      )
+      .trim();
+  }
+
+  function stripCategoryFaqDom(article) {
+    if (!article) return;
+    var nodes = article.querySelectorAll("h2, .faq");
+    Array.prototype.forEach.call(nodes, function (el) {
+      if (el.classList && el.classList.contains("faq")) {
+        el.remove();
+        return;
+      }
+      if (
+        el.tagName === "H2" &&
+        /sık\s*sorulanlar/i.test((el.textContent || "").trim())
+      ) {
+        el.remove();
+      }
+    });
+  }
+
+  function buildFaqHtml(items) {
+    var html =
+      '<h2>Sık sorulanlar</h2>\n        <div class="faq">\n';
+    items.forEach(function (it) {
+      if (!it || !it.soru) return;
+      html +=
+        '<details class="faq__item"><summary>' +
+        escapeHtml(it.soru) +
+        "</summary><p>" +
+        escapeHtml(it.cevap || "") +
+        "</p></details>\n";
+    });
+    html += "        </div>";
+    return html;
+  }
+
+  function appendCategoryFaq(article, items) {
+    if (!article || !items || !items.length) return;
+    var wrap = document.createElement("div");
+    wrap.innerHTML = buildFaqHtml(items);
+    while (wrap.firstChild) article.appendChild(wrap.firstChild);
+  }
+
+  function replaceCategoryFaq(faqEl, items) {
+    if (!faqEl || !items || !items.length) return;
+    faqEl.innerHTML = "";
+    items.forEach(function (it) {
+      if (!it || !it.soru) return;
+      var d = document.createElement("details");
+      d.className = "faq__item";
+      var s = document.createElement("summary");
+      s.textContent = it.soru;
+      var p = document.createElement("p");
+      p.textContent = it.cevap || "";
+      d.appendChild(s);
+      d.appendChild(p);
+      faqEl.appendChild(d);
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   function applyUrunKategori(menu) {
     var group = matchCurrentCategoryGroup(menu);
     if (!group) return;
@@ -958,7 +1032,24 @@ if (list) {
 
     if (group.govdeHtml) {
       var article = $(".urun-govde .article, .article");
-      if (article) article.innerHTML = group.govdeHtml;
+      if (article) {
+        var bodyHtml = group.govdeHtml;
+        if (Array.isArray(group.sss)) {
+          bodyHtml = stripCategoryFaq(bodyHtml);
+        }
+        article.innerHTML = bodyHtml;
+        if (Array.isArray(group.sss) && group.sss.length) {
+          appendCategoryFaq(article, group.sss);
+        }
+      }
+    } else if (Array.isArray(group.sss) && group.sss.length) {
+      var artOnly = $(".urun-govde .article, .article");
+      if (artOnly) {
+        stripCategoryFaqDom(artOnly);
+        appendCategoryFaq(artOnly, group.sss);
+      } else {
+        replaceCategoryFaq($(".faq"), group.sss);
+      }
     }
 
     var heroImg = $(".urun-gorsel img");

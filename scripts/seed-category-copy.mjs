@@ -14,6 +14,29 @@ function stripTags(html) {
   return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
 
+function extractFaqFromHtml(html) {
+  const items = [];
+  const re =
+    /<details[^>]*class="faq__item"[^>]*>\s*<summary>([\s\S]*?)<\/summary>\s*<p>([\s\S]*?)<\/p>\s*<\/details>/gi;
+  let m;
+  while ((m = re.exec(html))) {
+    const soru = stripTags(m[1]);
+    const cevap = stripTags(m[2]);
+    if (soru && cevap) items.push({ soru, cevap });
+  }
+  return items;
+}
+
+function stripFaqBlock(html) {
+  return String(html || "")
+    .replace(
+      /<h2[^>]*>\s*Sık\s*sorulanlar\s*<\/h2>\s*<div class="faq">[\s\S]*?<\/div>/gi,
+      ""
+    )
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 function extractFromCategoryFile(filePath) {
   const html = fs.readFileSync(filePath, "utf8");
   let aciklama = "";
@@ -24,7 +47,10 @@ function extractFromCategoryFile(filePath) {
   const art = html.match(/<div class="article"[^>]*>([\s\S]*?)<\/div>\s*(?:<div class="urun-cta|<aside|<section class="related)/i);
   if (art) govdeHtml = art[1].trim();
 
-  return { aciklama, govdeHtml };
+  const sss = extractFaqFromHtml(govdeHtml || html);
+  if (sss.length) govdeHtml = stripFaqBlock(govdeHtml);
+
+  return { aciklama, govdeHtml, sss };
 }
 
 function slugFromGroup(g) {
@@ -59,19 +85,36 @@ for (const g of raw.menu.gruplar) {
     console.warn("yok:", slug);
     continue;
   }
-  const { aciklama, govdeHtml } = extractFromCategoryFile(file);
+  const { aciklama, govdeHtml, sss } = extractFromCategoryFile(file);
+  const force = process.argv.includes("--force");
   let changed = false;
-  if (aciklama && !g.aciklama) {
+  if (aciklama && (!g.aciklama || force)) {
     g.aciklama = aciklama;
     changed = true;
   }
-  if (govdeHtml && !g.govdeHtml) {
+  if (govdeHtml && (!g.govdeHtml || force)) {
     g.govdeHtml = govdeHtml;
+    changed = true;
+  } else if (g.govdeHtml && /class="faq"/i.test(g.govdeHtml)) {
+    g.govdeHtml = stripFaqBlock(g.govdeHtml);
+    changed = true;
+  }
+  if (sss.length && (!Array.isArray(g.sss) || !g.sss.length || force)) {
+    g.sss = sss;
     changed = true;
   }
   if (changed) {
     updated += 1;
-    console.log("ok", slug, "aciklama=", Boolean(g.aciklama), "govde=", (g.govdeHtml || "").length);
+    console.log(
+      "ok",
+      slug,
+      "aciklama=",
+      Boolean(g.aciklama),
+      "govde=",
+      (g.govdeHtml || "").length,
+      "sss=",
+      (g.sss || []).length
+    );
   }
 }
 

@@ -323,8 +323,87 @@ export default function MenuPanel() {
                         placeholder="<h2>...</h2><p>...</p> — kategori sayfasındaki makale gövdesi"
                       />
                       <p className="mt-1 text-xs text-[#6B7A94]">
-                        Boş bırakılırsa sayfadaki mevcut HTML korunur. Doldurulursa admin metni geçerlidir.
+                        FAQ hariç makale gövdesi. Sık sorulanlar aşağıdan ayrı düzenlenir.
                       </p>
+                    </div>
+                    <div className="md:col-span-2 space-y-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <h4 className="text-xs font-semibold uppercase tracking-wider text-[#8A9BB0]">
+                          Sık sorulanlar (kategori SSS)
+                        </h4>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            updateGroup(gi, {
+                              ...grup,
+                              sss: [
+                                ...(grup.sss || []),
+                                { soru: "", cevap: "" },
+                              ],
+                            })
+                          }
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] px-2.5 py-1.5 text-xs text-[#EEE9E0] hover:bg-white/[0.04]"
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                          Soru ekle
+                        </button>
+                      </div>
+                      {(grup.sss || []).length === 0 ? (
+                        <p className="text-xs text-[#6B7A94]">
+                          Bu kategoride henüz SSS yok. Eklemek için “Soru ekle”ye tıklayın.
+                        </p>
+                      ) : (
+                        (grup.sss || []).map((item, si) => (
+                          <div
+                            key={si}
+                            className="space-y-2 rounded-xl border border-white/[0.06] bg-[#0D1117] p-3"
+                          >
+                            <div className="flex items-start gap-2">
+                              <div className="flex-1 space-y-2">
+                                <Input
+                                  label={`Soru ${si + 1}`}
+                                  value={item.soru}
+                                  onChange={(e) => {
+                                    const sss = [...(grup.sss || [])];
+                                    sss[si] = {
+                                      ...sss[si],
+                                      soru: e.target.value,
+                                    };
+                                    updateGroup(gi, { ...grup, sss });
+                                  }}
+                                />
+                                <textarea
+                                  value={item.cevap}
+                                  onChange={(e) => {
+                                    const sss = [...(grup.sss || [])];
+                                    sss[si] = {
+                                      ...sss[si],
+                                      cevap: e.target.value,
+                                    };
+                                    updateGroup(gi, { ...grup, sss });
+                                  }}
+                                  rows={3}
+                                  className="w-full rounded-2xl border border-white/[0.06] bg-[#0A0E14] px-4 py-3 text-sm text-[#EEE9E0] focus:border-[#C8703A]/40 focus:outline-none focus:ring-1 focus:ring-[#C8703A]/20"
+                                  placeholder="Cevap"
+                                />
+                              </div>
+                              <button
+                                type="button"
+                                title="Sil"
+                                onClick={() => {
+                                  const sss = (grup.sss || []).filter(
+                                    (_, i) => i !== si
+                                  );
+                                  updateGroup(gi, { ...grup, sss });
+                                }}
+                                className="mt-7 rounded-lg p-2 text-[#6B7A94] hover:bg-red-500/10 hover:text-red-400"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
                 </div>

@@ -245,14 +245,12 @@
           {
             "ad": "Ekmek",
             "fav": true,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri",
-            "image": "/uploads/site/1785939453219-4eabae2839b2.webp"
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
           },
           {
             "ad": "Tam Buğdaylı Ekmek",
             "fav": true,
-            "link": "/urunler/urunler",
-            "image": "/uploads/site/1785944226620-9304867900694df9.webp"
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
           },
           {
             "ad": "Çavdar Ekmek",
@@ -309,7 +307,21 @@
         ],
         "image": "",
         "aciklama": "Fırınımızda on iki çeşit günlük ekmek bulunuyor. Klasik somun ve francalanın yanında tam buğday, çavdar, kepek ve çok tahıllı seçenekler; ayrıca baget, lavaş, tandır lavaş ve tava ekmeği yer alıyor. Ramazan ayında sade ve yumurtalı ramazan pidesi üretilir.",
-        "govdeHtml": "<h2>Hangi ekmek nasıl bir tada sahip?</h2>\n      <p><strong>Sade ekmek ve francala</strong> nötr tatlıdır, her yemeğin yanına gider. Kahvaltı sofrasında ve çocuklu evlerde en çok tercih edilen ekmek budur.</p>\n      <p><strong>Tam buğdaylı ve kepek ekmek</strong> daha yoğun ve doyurucudur; buğdayın kepeği ekmeğe hafif fındıkımsı bir tat ve daha koyu bir renk verir.</p>\n      <p><strong>Çavdar ekmeği</strong> nemli ve yoğun bir iç yapıya sahiptir, tadı hafif toprakımsıdır. Peynir ve zeytinyağlı ürünlerle çok iyi gider.</p>\n      <p><strong>Papatya ekmeği</strong> adını dilimlenmeye hazır papatya biçimli formundan alır; yumuşak dokusuyla kahvaltıda ve ikramlarda kullanılır.</p>\n      <p><strong>Çok tahıllı ekmek</strong> içine katılan tohum ve çekirdeklerle hem daha doyurucu hem aromatiktir.</p>\n\n      <h2>Baget, lavaş ve tava ekmeği</h2>\n      <p><strong>Baget</strong> ince kabuklu, uzun formlu ekmektir; sandviç ve tost için en uygun olanıdır. Aynı gün tüketilmesi önerilir, çünkü ince kabuk nemi hızlı kaybeder.</p>\n      <p><strong>Lavaş ve tandır lavaş</strong> yumuşak ve katlanabilir olduğu için dürüm, kebap ve kahvaltı sofralarında kullanılır.</p>\n      <p><strong>Tava ekmeği</strong> susamlı ve çörekotlu olarak hazırlanır; ikili paket hâlinde satılır, kahvaltıda bölünerek yenir.</p>\n\n      <h2>Ne kadar taze kalır?</h2>\n      <p>Kabuğu ince ekmekler (baget, francala) aynı gün, kalın kabuklu ve tam tahıllı ekmekler iki-üç gün tazeliğini korur. Ekmeği buzdolabında değil, oda sıcaklığında bez ya da kâğıt torbada saklamak gerekir — buzdolabı sıcaklığı bayatlamayı hızlandırır.</p>\n      <p>Uzun süre saklamak istiyorsanız aldığınız gün dilimleyip dondurun; dondurulmuş dilimler çözdürülmeden doğrudan tost makinesinde ısıtılabilir.</p>\n\n        <h2>Sık sorulanlar</h2>\n        <div class=\"faq\">\n        <details class=\"faq__item\"><summary>Ekmekler günün hangi saatinde taze olur?</summary><p>Ekmekler her gün taze üretilir. Sabah saatlerinde çeşit en geniştir; gün içinde tükenen ürünler yeniden üretime girer. Belirli bir çeşit için önceden telefonla sorabilirsiniz.</p></details>\n        <details class=\"faq__item\"><summary>Hangi ekmek en sağlıklıdır?</summary><p>Tek bir en sağlıklı ekmek yoktur. Tam tahıllı ve ekşi mayalı ekmekler beyaz una göre daha fazla lif ve mineral içerir, kan şekerini daha yavaş yükseltir. Kan şekeri kontrolü için çavdar, günlük dengeli tüketim için tam buğday öne çıkar.</p></details>\n        <details class=\"faq__item\"><summary>Ekmek siparişi verilebilir mi?</summary><p>Evet. Toplu ihtiyaç veya belirli bir çeşit için bir gün önceden telefonla haber vermeniz yeterlidir.</p></details>\n        </div>"
+        "govdeHtml": "<h2>Hangi ekmek nasıl bir tada sahip?</h2>\n      <p><strong>Sade ekmek ve francala</strong> nötr tatlıdır, her yemeğin yanına gider. Kahvaltı sofrasında ve çocuklu evlerde en çok tercih edilen ekmek budur.</p>\n      <p><strong>Tam buğdaylı ve kepek ekmek</strong> daha yoğun ve doyurucudur; buğdayın kepeği ekmeğe hafif fındıkımsı bir tat ve daha koyu bir renk verir.</p>\n      <p><strong>Çavdar ekmeği</strong> nemli ve yoğun bir iç yapıya sahiptir, tadı hafif toprakımsıdır. Peynir ve zeytinyağlı ürünlerle çok iyi gider.</p>\n      <p><strong>Papatya ekmeği</strong> adını dilimlenmeye hazır papatya biçimli formundan alır; yumuşak dokusuyla kahvaltıda ve ikramlarda kullanılır.</p>\n      <p><strong>Çok tahıllı ekmek</strong> içine katılan tohum ve çekirdeklerle hem daha doyurucu hem aromatiktir.</p>\n\n      <h2>Baget, lavaş ve tava ekmeği</h2>\n      <p><strong>Baget</strong> ince kabuklu, uzun formlu ekmektir; sandviç ve tost için en uygun olanıdır. Aynı gün tüketilmesi önerilir, çünkü ince kabuk nemi hızlı kaybeder.</p>\n      <p><strong>Lavaş ve tandır lavaş</strong> yumuşak ve katlanabilir olduğu için dürüm, kebap ve kahvaltı sofralarında kullanılır.</p>\n      <p><strong>Tava ekmeği</strong> susamlı ve çörekotlu olarak hazırlanır; ikili paket hâlinde satılır, kahvaltıda bölünerek yenir.</p>\n\n      <h2>Ne kadar taze kalır?</h2>\n      <p>Kabuğu ince ekmekler (baget, francala) aynı gün, kalın kabuklu ve tam tahıllı ekmekler iki-üç gün tazeliğini korur. Ekmeği buzdolabında değil, oda sıcaklığında bez ya da kâğıt torbada saklamak gerekir — buzdolabı sıcaklığı bayatlamayı hızlandırır.</p>\n      <p>Uzun süre saklamak istiyorsanız aldığınız gün dilimleyip dondurun; dondurulmuş dilimler çözdürülmeden doğrudan tost makinesinde ısıtılabilir.</p>",
+        "sss": [
+          {
+            "soru": "Ekmekler günün hangi saatinde taze olur?",
+            "cevap": "Ekmekler her gün taze üretilir. Sabah saatlerinde çeşit en geniştir; gün içinde tükenen ürünler yeniden üretime girer. Belirli bir çeşit için önceden telefonla sorabilirsiniz."
+          },
+          {
+            "soru": "Hangi ekmek en sağlıklıdır?",
+            "cevap": "Tek bir en sağlıklı ekmek yoktur. Tam tahıllı ve ekşi mayalı ekmekler beyaz una göre daha fazla lif ve mineral içerir, kan şekerini daha yavaş yükseltir. Kan şekeri kontrolü için çavdar, günlük dengeli tüketim için tam buğday öne çıkar."
+          },
+          {
+            "soru": "Ekmek siparişi verilebilir mi?",
+            "cevap": "Evet. Toplu ihtiyaç veya belirli bir çeşit için bir gün önceden telefonla haber vermeniz yeterlidir."
+          }
+        ]
       },
       {
         "ad": "Ekşi Mayalı Ekmekler",
@@ -349,7 +361,21 @@
           }
         ],
         "aciklama": "Ekşi mayalı ekmek, paket maya yerine doğal maya kültürüyle kabartılan ekmektir. Fermantasyon saatler yerine uzun sürer; bu süreçte oluşan laktik asit ekmeğe kendine özgü aromasını verir, glüteni kısmen parçalar ve raf ömrünü katkı maddesi olmadan uzatır. Fırınımızda altı çeşit ekşi mayalı ekmek bulunuyor.",
-        "govdeHtml": "<h2>Ekşi maya neden farklı?</h2>\r\n      <p>Ticari maya tek bir mantar türüdür ve yalnızca karbondioksit üretip hamuru bir-iki saatte kabartır. Ekşi mayada ise onlarca mikroorganizma birlikte çalışır; karbondioksitin yanında laktik ve asetik asit de üretilir.</p>\r\n      <p>Bu asitler üç iş yapar: ekmeğe tanıdık hafif ekşi aromayı verir, glütenin bir kısmını parçalayarak hamuru daha sindirilebilir hâle getirir ve küf oluşumunu geciktirir. Yani ekşi mayalı ekmek hiçbir koruyucu içermeden daha uzun taze kalır.</p>\r\n\r\n      <h2>Çeşitler arasındaki fark</h2>\r\n      <p><strong>Ekşi mayalı tam buğday</strong> en dengeli seçenektir; günlük tüketim için en çok tercih edileni.</p>\r\n      <p><strong>Osmanlı ekşi mayalı ekmek</strong> daha yoğun ve iri gözeneklidir, kabuğu kalındır.</p>\r\n      <p><strong>Trabzon ekmeği</strong> geleneksel olarak büyük somun formunda, nemli iç yapılı ve uzun ömürlüdür.</p>\r\n      <p><strong>Ekşi mayalı baget</strong> ince kabuklu ve hafiftir; sandviç için uygundur.</p>\r\n      <p><strong>Chia tohumlu</strong> ve <strong>üzümlü cevizli</strong> çeşitler ise kahvaltıda peynirle ya da tek başına tüketilmek üzere hazırlanır.</p>\r\n\r\n      <h2>Gerçek ekşi maya nasıl anlaşılır?</h2>\r\n      <p>Kabuk kalın ve koyu renkli olmalı. İç yapıdaki gözenekler düzensiz, farklı boyutlarda olmalı — her deliğin aynı olduğu tertipli bir kesit hızlı üretim işaretidir.</p>\r\n      <p>Taze kesildiğinde hafif yoğurt veya sirke benzeri bir asidik nota gelmeli; ancak bu keskin olmamalı. Üçüncü günde bile dilimlenebiliyor ve yumuşak kalıyorsa ekşi maya çalışmış demektir.</p>\r\n      <p>Bir yanlış anlaşılma: ekşi mayalı ekmeğin <em>ekşi</em> tatması gerekmez. İyi dengelenmiş bir ekmekte asidik nota arka planda kalır, öne çıkan buğdayın kendi tatlılığıdır.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Ekşi mayalı ekmek glütensiz mi?</summary><p>Hayır. Fermantasyon glütenin bir kısmını parçalar ama tamamını yok etmez. Çölyak hastaları için uygun değildir.</p></details>\r\n        <details class=\"faq__item\"><summary>Ekşi mayalı ekmek neden daha pahalı?</summary><p>Üretim süresi çok daha uzundur ve ana mayanın her gün beslenmesi gerekir. Aynı fırında aynı sürede yapılabilecek ekmek sayısı belirgin biçimde düşer.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaç gün taze kalır?</summary><p>Ekşi mayalı ekmek üç-dört gün tazeliğini korur. Bez torbada, oda sıcaklığında ve kesik yüzü aşağı bakacak şekilde saklanmalıdır.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Ekşi maya neden farklı?</h2>\r\n      <p>Ticari maya tek bir mantar türüdür ve yalnızca karbondioksit üretip hamuru bir-iki saatte kabartır. Ekşi mayada ise onlarca mikroorganizma birlikte çalışır; karbondioksitin yanında laktik ve asetik asit de üretilir.</p>\r\n      <p>Bu asitler üç iş yapar: ekmeğe tanıdık hafif ekşi aromayı verir, glütenin bir kısmını parçalayarak hamuru daha sindirilebilir hâle getirir ve küf oluşumunu geciktirir. Yani ekşi mayalı ekmek hiçbir koruyucu içermeden daha uzun taze kalır.</p>\r\n\r\n      <h2>Çeşitler arasındaki fark</h2>\r\n      <p><strong>Ekşi mayalı tam buğday</strong> en dengeli seçenektir; günlük tüketim için en çok tercih edileni.</p>\r\n      <p><strong>Osmanlı ekşi mayalı ekmek</strong> daha yoğun ve iri gözeneklidir, kabuğu kalındır.</p>\r\n      <p><strong>Trabzon ekmeği</strong> geleneksel olarak büyük somun formunda, nemli iç yapılı ve uzun ömürlüdür.</p>\r\n      <p><strong>Ekşi mayalı baget</strong> ince kabuklu ve hafiftir; sandviç için uygundur.</p>\r\n      <p><strong>Chia tohumlu</strong> ve <strong>üzümlü cevizli</strong> çeşitler ise kahvaltıda peynirle ya da tek başına tüketilmek üzere hazırlanır.</p>\r\n\r\n      <h2>Gerçek ekşi maya nasıl anlaşılır?</h2>\r\n      <p>Kabuk kalın ve koyu renkli olmalı. İç yapıdaki gözenekler düzensiz, farklı boyutlarda olmalı — her deliğin aynı olduğu tertipli bir kesit hızlı üretim işaretidir.</p>\r\n      <p>Taze kesildiğinde hafif yoğurt veya sirke benzeri bir asidik nota gelmeli; ancak bu keskin olmamalı. Üçüncü günde bile dilimlenebiliyor ve yumuşak kalıyorsa ekşi maya çalışmış demektir.</p>\r\n      <p>Bir yanlış anlaşılma: ekşi mayalı ekmeğin <em>ekşi</em> tatması gerekmez. İyi dengelenmiş bir ekmekte asidik nota arka planda kalır, öne çıkan buğdayın kendi tatlılığıdır.</p>",
+        "sss": [
+          {
+            "soru": "Ekşi mayalı ekmek glütensiz mi?",
+            "cevap": "Hayır. Fermantasyon glütenin bir kısmını parçalar ama tamamını yok etmez. Çölyak hastaları için uygun değildir."
+          },
+          {
+            "soru": "Ekşi mayalı ekmek neden daha pahalı?",
+            "cevap": "Üretim süresi çok daha uzundur ve ana mayanın her gün beslenmesi gerekir. Aynı fırında aynı sürede yapılabilecek ekmek sayısı belirgin biçimde düşer."
+          },
+          {
+            "soru": "Kaç gün taze kalır?",
+            "cevap": "Ekşi mayalı ekmek üç-dört gün tazeliğini korur. Bez torbada, oda sıcaklığında ve kesik yüzü aşağı bakacak şekilde saklanmalıdır."
+          }
+        ]
       },
       {
         "ad": "Simit, Poğaça & Açma",
@@ -470,7 +496,21 @@
           }
         ],
         "aciklama": "Kahvaltı ve ikram grubunda simit, poğaça, açma, çörek ve kol böreği çeşitleri bulunuyor. Sade, peynirli, kaşarlı, patatesli, zeytinli ve dereotlu poğaçalar; sade, peynirli, kaşarlı, zeytinli ve çikolatalı açmalar; tereyağlı kol böreği peynirli, patatesli ve kıymalı olarak hazırlanıyor.",
-        "govdeHtml": "<h2>Poğaça, açma ve çörek arasındaki fark</h2>\r\n      <p><strong>Poğaça</strong> yumuşak, kabarık ve genellikle içi dolgulu bir hamur işidir. Hamurunda yağ ve süt bulunur, bu yüzden dokusu keke yakın yumuşaklıktadır.</p>\r\n      <p><strong>Açma</strong> daha elastik ve lifli bir dokuya sahiptir; hamuru katlanarak açıldığı için el ile koparıldığında lif lif ayrılır. Tereyağı oranı poğaçadan yüksektir.</p>\r\n      <p><strong>Çörek</strong> (ay çöreği, tahinli çörek) tatlıya yakın bir hamurdur ve genellikle tahin, şeker veya kakao ile şekillendirilir.</p>\r\n\r\n      <h2>Simit çeşitleri</h2>\r\n      <p>Klasik susamlı simidin yanında büyük simit, Rize simidi, tahinli simit, tereyağlı simit, kaşarlı ve kaşarlı sucuklu simit bulunuyor.</p>\r\n      <p><strong>Rize simidi</strong> daha küçük ve yoğun bir hamurdan yapılır. <strong>Tereyağlı simit</strong> ise hamuruna tereyağı katıldığı için daha yumuşak ve zengin bir tada sahiptir.</p>\r\n      <p>Kaşarlı ve sucuklu çeşitler fırından çıktıktan sonra hazırlandığı için sabah ve öğle saatlerinde bulunur.</p>\r\n\r\n      <h2>Tereyağlı kol böreği</h2>\r\n      <p>Kol böreği, yufkanın rulo hâlinde sarılıp kesilmesiyle hazırlanır. Fırınımızda peynirli, patatesli ve kıymalı olarak üretiliyor ve gramaj olarak satılıyor.</p>\r\n      <p>İkram ve toplantı için en çok tercih edilen ürün gruplarından biridir. Toplu ihtiyaç hâlinde bir gün önceden haber vermeniz yeterlidir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Poğaça ve simit günün hangi saatinde taze olur?</summary><p>Sabah saatlerinde çeşit en geniştir. Gün içinde tükenen ürünler yeniden fırına verilir; belirli bir çeşit için telefonla sorabilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Toplu poğaça siparişi verilebilir mi?</summary><p>Evet. Toplantı, mevlit, açılış ve benzeri organizasyonlar için bir gün önceden telefon veya WhatsApp ile sipariş verebilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Ponçik nedir?</summary><p>Ponçik, küçük ve yumuşak, genellikle onluk paketler hâlinde satılan mini bir hamur işidir. Çocuklu evlerde ve ikramlarda çok tercih edilir.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Poğaça, açma ve çörek arasındaki fark</h2>\r\n      <p><strong>Poğaça</strong> yumuşak, kabarık ve genellikle içi dolgulu bir hamur işidir. Hamurunda yağ ve süt bulunur, bu yüzden dokusu keke yakın yumuşaklıktadır.</p>\r\n      <p><strong>Açma</strong> daha elastik ve lifli bir dokuya sahiptir; hamuru katlanarak açıldığı için el ile koparıldığında lif lif ayrılır. Tereyağı oranı poğaçadan yüksektir.</p>\r\n      <p><strong>Çörek</strong> (ay çöreği, tahinli çörek) tatlıya yakın bir hamurdur ve genellikle tahin, şeker veya kakao ile şekillendirilir.</p>\r\n\r\n      <h2>Simit çeşitleri</h2>\r\n      <p>Klasik susamlı simidin yanında büyük simit, Rize simidi, tahinli simit, tereyağlı simit, kaşarlı ve kaşarlı sucuklu simit bulunuyor.</p>\r\n      <p><strong>Rize simidi</strong> daha küçük ve yoğun bir hamurdan yapılır. <strong>Tereyağlı simit</strong> ise hamuruna tereyağı katıldığı için daha yumuşak ve zengin bir tada sahiptir.</p>\r\n      <p>Kaşarlı ve sucuklu çeşitler fırından çıktıktan sonra hazırlandığı için sabah ve öğle saatlerinde bulunur.</p>\r\n\r\n      <h2>Tereyağlı kol böreği</h2>\r\n      <p>Kol böreği, yufkanın rulo hâlinde sarılıp kesilmesiyle hazırlanır. Fırınımızda peynirli, patatesli ve kıymalı olarak üretiliyor ve gramaj olarak satılıyor.</p>\r\n      <p>İkram ve toplantı için en çok tercih edilen ürün gruplarından biridir. Toplu ihtiyaç hâlinde bir gün önceden haber vermeniz yeterlidir.</p>",
+        "sss": [
+          {
+            "soru": "Poğaça ve simit günün hangi saatinde taze olur?",
+            "cevap": "Sabah saatlerinde çeşit en geniştir. Gün içinde tükenen ürünler yeniden fırına verilir; belirli bir çeşit için telefonla sorabilirsiniz."
+          },
+          {
+            "soru": "Toplu poğaça siparişi verilebilir mi?",
+            "cevap": "Evet. Toplantı, mevlit, açılış ve benzeri organizasyonlar için bir gün önceden telefon veya WhatsApp ile sipariş verebilirsiniz."
+          },
+          {
+            "soru": "Ponçik nedir?",
+            "cevap": "Ponçik, küçük ve yumuşak, genellikle onluk paketler hâlinde satılan mini bir hamur işidir. Çocuklu evlerde ve ikramlarda çok tercih edilir."
+          }
+        ]
       },
       {
         "ad": "Kurabiye Çeşitleri",
@@ -520,7 +560,21 @@
           }
         ],
         "aciklama": "Kurabiyeler gramajla satılır ve 250 gr, 500 gr ile 1 kg olarak hazırlanır. Tuzlu grupta minik dereotlu peynirli, beyaz peynirli ve patatesli kurabiyeler; tatlı grupta acıbadem, İzmir bomba ve tahinli bomba bulunur. İkram ve misafir için en çok tercih edilen ürün grubudur.",
-        "govdeHtml": "<h2>Tuzlu mu tatlı mı?</h2>\r\n      <p><strong>Tuzlu kurabiyeler</strong> çay saati ve ikram için hazırlanır. Minik dereotlu peynirli, beyaz peynirli ve patatesli çeşitler küçük boyutlu olduğu için tabakta hem şık durur hem tek lokmada yenir.</p>\r\n      <p><strong>Tatlı kurabiyeler</strong> daha çok misafir ikramında ve bayramlarda tercih edilir. Acıbadem, badem ununun yoğun kullanıldığı, dışı çıtır içi yumuşak klasik bir kurabiyedir.</p>\r\n      <p><strong>İzmir bomba</strong> ve <strong>tahinli bomba</strong> adet olarak satılır; içi akışkan çikolata veya tahin dolgulu, sıcak tüketildiğinde en iyi olan ürünlerdir.</p>\r\n\r\n      <h2>Ne kadar dayanır?</h2>\r\n      <p>Kurabiyeler nem almadığı sürece uzun süre dayanır. Hava almayan cam kavanoz veya kapaklı kutuda oda sıcaklığında bir-iki hafta tazeliğini korur.</p>\r\n      <p>Buzdolabına konulması önerilmez; nem çekip yumuşarlar. Yumuşadıysa 150 °C fırında beş dakika ısıtmak çıtırlığını geri getirir.</p>\r\n\r\n      <h2>Gramaj seçimi</h2>\r\n      <p>İkram için kişi başı 40–60 gram yeterlidir. On kişilik bir çay saati için 500 gr, yirmi kişilik için 1 kg uygun olur.</p>\r\n      <p>Karışık talep edebilirsiniz; farklı çeşitleri aynı gramaj içinde birlikte hazırlıyoruz.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Kurabiyeler nasıl satılıyor?</summary><p>Gramajla: 250 gr, 500 gr ve 1 kg olarak. İzmir bomba ve tahinli bomba ile acıbadem ayrıca adet olarak da satılır.</p></details>\r\n        <details class=\"faq__item\"><summary>Karışık kurabiye hazırlanır mı?</summary><p>Evet. Farklı çeşitleri aynı gramaj içinde karışık olarak hazırlayabiliriz; tezgâhta belirtmeniz yeterli.</p></details>\r\n        <details class=\"faq__item\"><summary>Kurabiyelerde kuruyemiş var mı?</summary><p>Bazı çeşitlerde badem, fındık ve ceviz kullanılır. Aynı mutfakta kuruyemişli üretim yapıldığı için ciddi alerji durumunda çapraz bulaşma riski bulunur; lütfen personelimize bildirin.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Tuzlu mu tatlı mı?</h2>\r\n      <p><strong>Tuzlu kurabiyeler</strong> çay saati ve ikram için hazırlanır. Minik dereotlu peynirli, beyaz peynirli ve patatesli çeşitler küçük boyutlu olduğu için tabakta hem şık durur hem tek lokmada yenir.</p>\r\n      <p><strong>Tatlı kurabiyeler</strong> daha çok misafir ikramında ve bayramlarda tercih edilir. Acıbadem, badem ununun yoğun kullanıldığı, dışı çıtır içi yumuşak klasik bir kurabiyedir.</p>\r\n      <p><strong>İzmir bomba</strong> ve <strong>tahinli bomba</strong> adet olarak satılır; içi akışkan çikolata veya tahin dolgulu, sıcak tüketildiğinde en iyi olan ürünlerdir.</p>\r\n\r\n      <h2>Ne kadar dayanır?</h2>\r\n      <p>Kurabiyeler nem almadığı sürece uzun süre dayanır. Hava almayan cam kavanoz veya kapaklı kutuda oda sıcaklığında bir-iki hafta tazeliğini korur.</p>\r\n      <p>Buzdolabına konulması önerilmez; nem çekip yumuşarlar. Yumuşadıysa 150 °C fırında beş dakika ısıtmak çıtırlığını geri getirir.</p>\r\n\r\n      <h2>Gramaj seçimi</h2>\r\n      <p>İkram için kişi başı 40–60 gram yeterlidir. On kişilik bir çay saati için 500 gr, yirmi kişilik için 1 kg uygun olur.</p>\r\n      <p>Karışık talep edebilirsiniz; farklı çeşitleri aynı gramaj içinde birlikte hazırlıyoruz.</p>",
+        "sss": [
+          {
+            "soru": "Kurabiyeler nasıl satılıyor?",
+            "cevap": "Gramajla: 250 gr, 500 gr ve 1 kg olarak. İzmir bomba ve tahinli bomba ile acıbadem ayrıca adet olarak da satılır."
+          },
+          {
+            "soru": "Karışık kurabiye hazırlanır mı?",
+            "cevap": "Evet. Farklı çeşitleri aynı gramaj içinde karışık olarak hazırlayabiliriz; tezgâhta belirtmeniz yeterli."
+          },
+          {
+            "soru": "Kurabiyelerde kuruyemiş var mı?",
+            "cevap": "Bazı çeşitlerde badem, fındık ve ceviz kullanılır. Aynı mutfakta kuruyemişli üretim yapıldığı için ciddi alerji durumunda çapraz bulaşma riski bulunur; lütfen personelimize bildirin."
+          }
+        ]
       },
       {
         "ad": "Adet Büyük Kurabiyeler",
@@ -580,7 +634,17 @@
           }
         ],
         "aciklama": "Büyük kurabiyeler gramajla değil adet olarak satılır. Tek başına bir ara öğün yerine geçecek boyutta hazırlanır; kahve yanında ve çocuk ikramında tercih edilir. On çeşit bulunur.",
-        "govdeHtml": "<h2>Hangi kurabiye kime?</h2>\r\n      <p><strong>Bonibonlu</strong> ve <strong>damla çikolatalı</strong> kurabiyeler çocukların en çok sevdiği çeşitlerdir.</p>\r\n      <p><strong>Parça çikolatalı fındıklı</strong> kurabiye daha yoğun ve doyurucudur; kahve yanında iyi gider.</p>\r\n      <p><strong>Kayısılı</strong>, <strong>incirli makas</strong> ve <strong>elmalı</strong> kurabiyeler meyve dolgulu olduğu için daha hafif tatlıdır.</p>\r\n      <p><strong>Pürüzyen</strong> ve <strong>emili</strong> kurabiyeler klasik pastane kurabiyeleridir; çay saatinde tercih edilir.</p>\r\n      <p><strong>İran poğaçası</strong> tatlı hamurlu, iri ve yumuşak bir üründür; ismi poğaça olsa da tatlı grubunda yer alır.</p>\r\n\r\n      <h2>Adet satışın avantajı</h2>\r\n      <p>Gramajlı kurabiyeler ikram için uygundur; büyük kurabiyeler ise tek kişilik tüketim için hazırlanır. Bir tanesi genellikle bir ara öğüne yeter.</p>\r\n      <p>Bu grup vitrinde günlük olarak bulunur, çeşit gün içinde değişebilir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Büyük kurabiyeler nasıl satılıyor?</summary><p>Adet olarak. Gramaj hesabı yapılmaz; vitrinden seçtiğiniz kadar alabilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Her çeşit her gün bulunur mu?</summary><p>Çeşit gün içinde değişebilir. Belirli bir kurabiye için telefonla sorup ayırtabilirsiniz.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Hangi kurabiye kime?</h2>\r\n      <p><strong>Bonibonlu</strong> ve <strong>damla çikolatalı</strong> kurabiyeler çocukların en çok sevdiği çeşitlerdir.</p>\r\n      <p><strong>Parça çikolatalı fındıklı</strong> kurabiye daha yoğun ve doyurucudur; kahve yanında iyi gider.</p>\r\n      <p><strong>Kayısılı</strong>, <strong>incirli makas</strong> ve <strong>elmalı</strong> kurabiyeler meyve dolgulu olduğu için daha hafif tatlıdır.</p>\r\n      <p><strong>Pürüzyen</strong> ve <strong>emili</strong> kurabiyeler klasik pastane kurabiyeleridir; çay saatinde tercih edilir.</p>\r\n      <p><strong>İran poğaçası</strong> tatlı hamurlu, iri ve yumuşak bir üründür; ismi poğaça olsa da tatlı grubunda yer alır.</p>\r\n\r\n      <h2>Adet satışın avantajı</h2>\r\n      <p>Gramajlı kurabiyeler ikram için uygundur; büyük kurabiyeler ise tek kişilik tüketim için hazırlanır. Bir tanesi genellikle bir ara öğüne yeter.</p>\r\n      <p>Bu grup vitrinde günlük olarak bulunur, çeşit gün içinde değişebilir.</p>",
+        "sss": [
+          {
+            "soru": "Büyük kurabiyeler nasıl satılıyor?",
+            "cevap": "Adet olarak. Gramaj hesabı yapılmaz; vitrinden seçtiğiniz kadar alabilirsiniz."
+          },
+          {
+            "soru": "Her çeşit her gün bulunur mu?",
+            "cevap": "Çeşit gün içinde değişebilir. Belirli bir kurabiye için telefonla sorup ayırtabilirsiniz."
+          }
+        ]
       },
       {
         "ad": "Galeta, Çubuk & Kokteyl",
@@ -635,7 +699,17 @@
           }
         ],
         "aciklama": "Bu grup uzun ömürlü, kuru unlu mamullerden oluşur. Galeta dilimlenip kurutulmuş ekmek dokusundadır; kokteyl ve çubuklar ise çay yanında ve ikramda tüketilen tuzlu çıtır ürünlerdir. Gramajla satılır.",
-        "govdeHtml": "<h2>Galeta nedir, nasıl tüketilir?</h2>\r\n      <p>Galeta, hamurun pişirildikten sonra dilimlenip tekrar kurutulmasıyla elde edilir. Bu nedenle çok uzun ömürlüdür ve nem almadığı sürece haftalarca dayanır.</p>\r\n      <p>Çay ve kahve yanında tüketilir; ayrıca çorbaya ve süte batırılarak yenir. Sade, susamlı ve çekirdekli çeşitleri bulunur.</p>\r\n\r\n      <h2>Kokteyl ve çubuk</h2>\r\n      <p>Kokteyl, küçük parçalı tuzlu çıtır ürün grubudur; susamlı, çörekotlu ve çekirdekli olarak hazırlanır. Misafir ikramında tabakta sunulur.</p>\r\n      <p>Çubuk ise uzun ve ince formdadır; çörekotlu ve çekirdekli olarak paketlenir. İkisi de gramajla satılır.</p>\r\n      <p><strong>Selanik gevreği</strong> daha yoğun ve iri dokulu, geleneksel bir çıtır üründür; paket hâlinde satılır.</p>\r\n\r\n      <h2>Saklama</h2>\r\n      <p>Bu grubun tek düşmanı nemdir. Hava almayan kavanoz veya kapaklı kutuda oda sıcaklığında saklanmalıdır.</p>\r\n      <p>Yumuşadıklarında 150 °C fırında beş dakika ısıtmak çıtırlığı geri getirir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Galeta ne kadar dayanır?</summary><p>Nem almadığı sürece haftalarca. Hava almayan kapaklı bir kapta oda sıcaklığında saklanmalıdır.</p></details>\r\n        <details class=\"faq__item\"><summary>Kokteyl ve çubuk nasıl satılıyor?</summary><p>Gramajla: 250 gr, 500 gr ve 1 kg olarak. Selanik gevreği ve bazı çubuk çeşitleri paket hâlinde satılır.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Galeta nedir, nasıl tüketilir?</h2>\r\n      <p>Galeta, hamurun pişirildikten sonra dilimlenip tekrar kurutulmasıyla elde edilir. Bu nedenle çok uzun ömürlüdür ve nem almadığı sürece haftalarca dayanır.</p>\r\n      <p>Çay ve kahve yanında tüketilir; ayrıca çorbaya ve süte batırılarak yenir. Sade, susamlı ve çekirdekli çeşitleri bulunur.</p>\r\n\r\n      <h2>Kokteyl ve çubuk</h2>\r\n      <p>Kokteyl, küçük parçalı tuzlu çıtır ürün grubudur; susamlı, çörekotlu ve çekirdekli olarak hazırlanır. Misafir ikramında tabakta sunulur.</p>\r\n      <p>Çubuk ise uzun ve ince formdadır; çörekotlu ve çekirdekli olarak paketlenir. İkisi de gramajla satılır.</p>\r\n      <p><strong>Selanik gevreği</strong> daha yoğun ve iri dokulu, geleneksel bir çıtır üründür; paket hâlinde satılır.</p>\r\n\r\n      <h2>Saklama</h2>\r\n      <p>Bu grubun tek düşmanı nemdir. Hava almayan kavanoz veya kapaklı kutuda oda sıcaklığında saklanmalıdır.</p>\r\n      <p>Yumuşadıklarında 150 °C fırında beş dakika ısıtmak çıtırlığı geri getirir.</p>",
+        "sss": [
+          {
+            "soru": "Galeta ne kadar dayanır?",
+            "cevap": "Nem almadığı sürece haftalarca. Hava almayan kapaklı bir kapta oda sıcaklığında saklanmalıdır."
+          },
+          {
+            "soru": "Kokteyl ve çubuk nasıl satılıyor?",
+            "cevap": "Gramajla: 250 gr, 500 gr ve 1 kg olarak. Selanik gevreği ve bazı çubuk çeşitleri paket hâlinde satılır."
+          }
+        ]
       },
       {
         "ad": "Baklava & Şerbetli Tatlılar",
@@ -701,7 +775,21 @@
           }
         ],
         "aciklama": "Baklava ve şerbetli tatlılar gramajla satılır; 500 gr ve 1 kg olarak hazırlanır. Cevizli ve fıstıklı klasik baklavanın yanında şöbiyet, midye baklava, Ankara sarma, kuru baklava, fıstıklı kadayıf, şekerpare ve mevsiminde güllaç bulunur.",
-        "govdeHtml": "<h2>Cevizli mi fıstıklı mı?</h2>\r\n      <p><strong>Cevizli baklava</strong> daha yoğun ve topraki bir tada sahiptir, fiyat olarak da daha uygundur. Günlük tüketim ve kalabalık ikram için en çok tercih edilendir.</p>\r\n      <p><strong>Fıstıklı baklava</strong> daha aromatik ve hafiftir. Özel gün ve hediye için genellikle fıstıklı seçilir.</p>\r\n      <p><strong>Özel fıstıklı baklava</strong> daha yüksek fıstık oranıyla hazırlanır.</p>\r\n\r\n      <h2>Şöbiyet, midye ve sarma</h2>\r\n      <p><strong>Şöbiyet</strong> içine kaymak konularak üçgen biçiminde kapatılan baklava türüdür; daha yumuşak ve zengin bir dokuya sahiptir.</p>\r\n      <p><strong>Midye baklava</strong> ismini kapalı, midye benzeri formundan alır; içi fıstık dolgulu ve çıtırdır.</p>\r\n      <p><strong>Ankara sarma</strong> ince yufkanın fıstıkla rulo hâlinde sarılmasıyla yapılır, uzun ve silindirik formdadır.</p>\r\n      <p><strong>Kuru baklava</strong> daha az şerbetlidir; bu yüzden daha uzun dayanır ve yolculukta taşımaya uygundur.</p>\r\n\r\n      <h2>Kaç kişiye yeter, nasıl saklanır?</h2>\r\n      <p>İkramda kişi başı 80–100 gram baklava yeterlidir. On kişilik bir ikram için 1 kg rahatça yeter.</p>\r\n      <p>Baklava buzdolabına konulmaz — soğuk şerbeti şekerlendirir ve yufkayı sertleştirir. Oda sıcaklığında, kapağı hafif aralık kutusunda iki-üç gün tazeliğini korur.</p>\r\n      <p>Kuru baklava daha uzun dayanır. Güllaç ise sütlü olduğu için buzdolabında saklanır ve iki gün içinde tüketilmelidir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Baklava buzdolabında saklanır mı?</summary><p>Hayır. Soğuk, şerbeti şekerlendirir ve yufkayı sertleştirir. Baklava oda sıcaklığında, kapağı hafif aralık bir kapta saklanmalıdır. Güllaç ise sütlü olduğu için buzdolabında tutulur.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaç kilo baklava almalıyım?</summary><p>İkramda kişi başı 80–100 gram hesaplanır. On kişi için 1 kg yeterlidir; tatlı tek ikram değilse 500 gr da yeter.</p></details>\r\n        <details class=\"faq__item\"><summary>Baklava siparişi kaç gün önceden verilmeli?</summary><p>Vitrinde günlük olarak bulunur. Büyük miktar veya belirli bir çeşit için bir gün önceden haber vermeniz yeterlidir.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Cevizli mi fıstıklı mı?</h2>\r\n      <p><strong>Cevizli baklava</strong> daha yoğun ve topraki bir tada sahiptir, fiyat olarak da daha uygundur. Günlük tüketim ve kalabalık ikram için en çok tercih edilendir.</p>\r\n      <p><strong>Fıstıklı baklava</strong> daha aromatik ve hafiftir. Özel gün ve hediye için genellikle fıstıklı seçilir.</p>\r\n      <p><strong>Özel fıstıklı baklava</strong> daha yüksek fıstık oranıyla hazırlanır.</p>\r\n\r\n      <h2>Şöbiyet, midye ve sarma</h2>\r\n      <p><strong>Şöbiyet</strong> içine kaymak konularak üçgen biçiminde kapatılan baklava türüdür; daha yumuşak ve zengin bir dokuya sahiptir.</p>\r\n      <p><strong>Midye baklava</strong> ismini kapalı, midye benzeri formundan alır; içi fıstık dolgulu ve çıtırdır.</p>\r\n      <p><strong>Ankara sarma</strong> ince yufkanın fıstıkla rulo hâlinde sarılmasıyla yapılır, uzun ve silindirik formdadır.</p>\r\n      <p><strong>Kuru baklava</strong> daha az şerbetlidir; bu yüzden daha uzun dayanır ve yolculukta taşımaya uygundur.</p>\r\n\r\n      <h2>Kaç kişiye yeter, nasıl saklanır?</h2>\r\n      <p>İkramda kişi başı 80–100 gram baklava yeterlidir. On kişilik bir ikram için 1 kg rahatça yeter.</p>\r\n      <p>Baklava buzdolabına konulmaz — soğuk şerbeti şekerlendirir ve yufkayı sertleştirir. Oda sıcaklığında, kapağı hafif aralık kutusunda iki-üç gün tazeliğini korur.</p>\r\n      <p>Kuru baklava daha uzun dayanır. Güllaç ise sütlü olduğu için buzdolabında saklanır ve iki gün içinde tüketilmelidir.</p>",
+        "sss": [
+          {
+            "soru": "Baklava buzdolabında saklanır mı?",
+            "cevap": "Hayır. Soğuk, şerbeti şekerlendirir ve yufkayı sertleştirir. Baklava oda sıcaklığında, kapağı hafif aralık bir kapta saklanmalıdır. Güllaç ise sütlü olduğu için buzdolabında tutulur."
+          },
+          {
+            "soru": "Kaç kilo baklava almalıyım?",
+            "cevap": "İkramda kişi başı 80–100 gram hesaplanır. On kişi için 1 kg yeterlidir; tatlı tek ikram değilse 500 gr da yeter."
+          },
+          {
+            "soru": "Baklava siparişi kaç gün önceden verilmeli?",
+            "cevap": "Vitrinde günlük olarak bulunur. Büyük miktar veya belirli bir çeşit için bir gün önceden haber vermeniz yeterlidir."
+          }
+        ]
       },
       {
         "ad": "Sütlü Tatlılar",
@@ -759,7 +847,21 @@
           }
         ],
         "aciklama": "Sütlü tatlılar soğuk zincirde hazırlanır ve buzdolabında saklanır. Ekler, sütlaç, profiterol, trileçe ve magnolia çeşitleri porsiyon olarak; soğuk baklava ve fıstıklı soğuk kadayıf gramajla satılır. Hepsi 24 saat içinde tüketilmelidir.",
-        "govdeHtml": "<h2>Porsiyon tatlılar</h2>\r\n      <p><strong>Ekler</strong> çikolatalı ve beyaz çikolatalı olarak hazırlanır; içi krema dolgulu, üstü çikolata kaplı klasik pastane tatlısıdır. Gramajla da satılır.</p>\r\n      <p><strong>Sütlaç</strong> fırınlanmış olarak sunulur, üstü hafif karamelizedir.</p>\r\n      <p><strong>Profiterol</strong> küçük hamur toplarının krema ve çikolata sosuyla birleşmesiyle hazırlanır.</p>\r\n      <p><strong>Trileçe</strong> karamelli ve frambuazlı olarak bulunur; süt emmiş kek dokusuyla çok hafiftir.</p>\r\n      <p><strong>Magnolia</strong> çilekli, muzlu, fıstıklı ve frambuazlı çeşitleriyle bardak tatlısı olarak hazırlanır. Oreo & çilekli versiyonu da bulunur.</p>\r\n\r\n      <h2>Soğuk baklava ve soğuk kadayıf</h2>\r\n      <p>Soğuk baklava, şerbet yerine sütle hazırlanan bir baklava türüdür; buzdolabında servis edilir ve klasik baklavadan çok daha hafiftir.</p>\r\n      <p>Fıstıklı soğuk kadayıf da aynı mantıkla hazırlanır: kadayıf sütlü karışımla buluşur ve soğuk tüketilir. İkisi de gramajla satılır.</p>\r\n\r\n      <h2>Saklama ve servis</h2>\r\n      <p>Sütlü tatlılar buzdolabında +4 santigrat derecede saklanır ve 24 saat içinde tüketilmelidir.</p>\r\n      <p>Servisten yirmi-otuz dakika önce buzdolabından çıkarmak kremanın aromasının açılmasını sağlar; buzdolabı soğukluğu tadı bastırır.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Sütlü tatlılar ne kadar dayanır?</summary><p>Buzdolabında +4 °C'de saklanmalı ve 24 saat içinde tüketilmelidir. Soğuk zincirin dışında bırakılmamalıdır.</p></details>\r\n        <details class=\"faq__item\"><summary>Soğuk baklava ile normal baklava arasındaki fark ne?</summary><p>Soğuk baklava şerbet yerine sütle hazırlanır, buzdolabında servis edilir ve klasik baklavadan çok daha hafiftir.</p></details>\r\n        <details class=\"faq__item\"><summary>Toplu sipariş verilebilir mi?</summary><p>Evet, ancak sütlü tatlılar günlük hazırlandığı için bir gün önceden haber verilmesi gerekir.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Porsiyon tatlılar</h2>\r\n      <p><strong>Ekler</strong> çikolatalı ve beyaz çikolatalı olarak hazırlanır; içi krema dolgulu, üstü çikolata kaplı klasik pastane tatlısıdır. Gramajla da satılır.</p>\r\n      <p><strong>Sütlaç</strong> fırınlanmış olarak sunulur, üstü hafif karamelizedir.</p>\r\n      <p><strong>Profiterol</strong> küçük hamur toplarının krema ve çikolata sosuyla birleşmesiyle hazırlanır.</p>\r\n      <p><strong>Trileçe</strong> karamelli ve frambuazlı olarak bulunur; süt emmiş kek dokusuyla çok hafiftir.</p>\r\n      <p><strong>Magnolia</strong> çilekli, muzlu, fıstıklı ve frambuazlı çeşitleriyle bardak tatlısı olarak hazırlanır. Oreo & çilekli versiyonu da bulunur.</p>\r\n\r\n      <h2>Soğuk baklava ve soğuk kadayıf</h2>\r\n      <p>Soğuk baklava, şerbet yerine sütle hazırlanan bir baklava türüdür; buzdolabında servis edilir ve klasik baklavadan çok daha hafiftir.</p>\r\n      <p>Fıstıklı soğuk kadayıf da aynı mantıkla hazırlanır: kadayıf sütlü karışımla buluşur ve soğuk tüketilir. İkisi de gramajla satılır.</p>\r\n\r\n      <h2>Saklama ve servis</h2>\r\n      <p>Sütlü tatlılar buzdolabında +4 santigrat derecede saklanır ve 24 saat içinde tüketilmelidir.</p>\r\n      <p>Servisten yirmi-otuz dakika önce buzdolabından çıkarmak kremanın aromasının açılmasını sağlar; buzdolabı soğukluğu tadı bastırır.</p>",
+        "sss": [
+          {
+            "soru": "Sütlü tatlılar ne kadar dayanır?",
+            "cevap": "Buzdolabında +4 °C'de saklanmalı ve 24 saat içinde tüketilmelidir. Soğuk zincirin dışında bırakılmamalıdır."
+          },
+          {
+            "soru": "Soğuk baklava ile normal baklava arasındaki fark ne?",
+            "cevap": "Soğuk baklava şerbet yerine sütle hazırlanır, buzdolabında servis edilir ve klasik baklavadan çok daha hafiftir."
+          },
+          {
+            "soru": "Toplu sipariş verilebilir mi?",
+            "cevap": "Evet, ancak sütlü tatlılar günlük hazırlandığı için bir gün önceden haber verilmesi gerekir."
+          }
+        ]
       },
       {
         "ad": "Zeytinyağlı Ürünler",
@@ -784,7 +886,21 @@
           }
         ],
         "aciklama": "Zeytinyağlı grupta yaprak sarma, beyaz lahana sarma ve zeytinyağlı patlıcan bulunur. Üçü de gramajla satılır; 250 gr, 500 gr ve 1 kg olarak hazırlanır. Soğuk tüketilir ve buzdolabında saklanır.",
-        "govdeHtml": "<h2>Yaprak sarma ve lahana sarma</h2>\r\n      <p><strong>Zeytinyağlı yaprak sarma</strong> asma yaprağının pirinç, soğan ve baharatlı iç harçla sarılmasıyla hazırlanır. İnce sarılmış olması kalite göstergesidir.</p>\r\n      <p><strong>Beyaz lahana sarma</strong> daha büyük lokmalıdır ve lahananın kendine özgü hafif tatlılığını taşır. Kışın daha çok tercih edilir.</p>\r\n      <p>İkisi de soğuk tüketilir; limon sıkarak servis edilmesi önerilir.</p>\r\n\r\n      <h2>Zeytinyağlı patlıcan</h2>\r\n      <p>Patlıcanın zeytinyağı, domates ve sarımsakla pişirilmesiyle hazırlanır. Ana yemek yanında meze olarak veya ekmekle birlikte tüketilir.</p>\r\n\r\n      <h2>Ne kadar dayanır?</h2>\r\n      <p>Zeytinyağlı ürünler buzdolabında kapalı kapta iki-üç gün dayanır. Servisten bir süre önce çıkarılırsa zeytinyağı donukluğu geçer ve aroma açılır.</p>\r\n      <p>Dondurulmaları önerilmez; çözüldüğünde doku bozulur.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Zeytinyağlılar nasıl satılıyor?</summary><p>Gramajla: 250 gr, 500 gr ve 1 kg olarak.</p></details>\r\n        <details class=\"faq__item\"><summary>Ne kadar dayanır?</summary><p>Buzdolabında kapalı kapta iki-üç gün. Dondurulmaları önerilmez.</p></details>\r\n        <details class=\"faq__item\"><summary>Toplu sipariş verilebilir mi?</summary><p>Evet. Günlük hazırlandığı için bir gün önceden telefonla haber vermeniz gerekir.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Yaprak sarma ve lahana sarma</h2>\r\n      <p><strong>Zeytinyağlı yaprak sarma</strong> asma yaprağının pirinç, soğan ve baharatlı iç harçla sarılmasıyla hazırlanır. İnce sarılmış olması kalite göstergesidir.</p>\r\n      <p><strong>Beyaz lahana sarma</strong> daha büyük lokmalıdır ve lahananın kendine özgü hafif tatlılığını taşır. Kışın daha çok tercih edilir.</p>\r\n      <p>İkisi de soğuk tüketilir; limon sıkarak servis edilmesi önerilir.</p>\r\n\r\n      <h2>Zeytinyağlı patlıcan</h2>\r\n      <p>Patlıcanın zeytinyağı, domates ve sarımsakla pişirilmesiyle hazırlanır. Ana yemek yanında meze olarak veya ekmekle birlikte tüketilir.</p>\r\n\r\n      <h2>Ne kadar dayanır?</h2>\r\n      <p>Zeytinyağlı ürünler buzdolabında kapalı kapta iki-üç gün dayanır. Servisten bir süre önce çıkarılırsa zeytinyağı donukluğu geçer ve aroma açılır.</p>\r\n      <p>Dondurulmaları önerilmez; çözüldüğünde doku bozulur.</p>",
+        "sss": [
+          {
+            "soru": "Zeytinyağlılar nasıl satılıyor?",
+            "cevap": "Gramajla: 250 gr, 500 gr ve 1 kg olarak."
+          },
+          {
+            "soru": "Ne kadar dayanır?",
+            "cevap": "Buzdolabında kapalı kapta iki-üç gün. Dondurulmaları önerilmez."
+          },
+          {
+            "soru": "Toplu sipariş verilebilir mi?",
+            "cevap": "Evet. Günlük hazırlandığı için bir gün önceden telefonla haber vermeniz gerekir."
+          }
+        ]
       },
       {
         "ad": "Pastalar",
@@ -878,7 +994,25 @@
           }
         ],
         "aciklama": "Pastalar 4–6 kişilik ve 6–8 kişilik olmak üzere iki boyda hazırlanır. On üç çeşit yaş pasta ile şeker hamurlu figürlü özel tasarım pasta bulunur. Kişi başı 100–120 gram hesaplanır: 4–6 kişi için küçük boy, 6–8 kişi için orta boy yeterlidir.",
-        "govdeHtml": "<h2>Kaç kişilik pasta almalıyım?</h2>\r\n      <p>Genel kural kişi başı 100–120 gramdır. Ancak boy seçimi davetli sayısından çok <strong>ikramın kurgusuna</strong> bağlıdır.</p>\r\n      <p>Pasta masadaki tek tatlıysa kişi başı payı yüksek tutun. Yanında kurabiye, baklava veya meyve varsa bir küçük boy rahatça yeter.</p>\r\n      <p>Kalabalık organizasyonlarda tek büyük pasta yerine <strong>iki farklı orta boy</strong> almak daha iyi sonuç verir: hem çeşit sunarsınız hem servis sırası oluşmaz. Otuz kişiyi geçen davetlerde kesme pasta en pratik çözümdür.</p>\r\n\r\n      <h2>Çeşitler</h2>\r\n      <p>Meyveli grupta çilek, frambuaz, böğürtlen, muz, orman meyveli ve karışık meyveli seçenekler var; hepsi çikolatalı versiyonuyla da hazırlanıyor.</p>\r\n      <p>Kuruyemişli grupta fıstık & çikolatalı, muz & fındıklı ve krokan & fındıklı bulunuyor.</p>\r\n      <p>Çikolata ağırlıklı isteyenler için çikolata parçacıklı ve profiterol & çikolatalı seçenekler var.</p>\r\n      <p><strong>Mois</strong> tipi pastalar daha nemli ve yoğun kek dokusuna sahiptir.</p>\r\n\r\n      <h2>Özel tasarım ve figürlü pastalar</h2>\r\n      <p>Şeker hamurlu, figürlü ve temalı pastalar ayrıca hazırlanır. Doğum günü, nişan, söz, baby shower ve mezuniyet için istediğiniz tema uygulanabilir.</p>\r\n      <p>Figürler elde şekillendirilip kurumaya bırakıldığı için bu pastalarda birkaç gün önceden sipariş gerekir. Referans görsel getirmeniz işi çok kolaylaştırır — telefonunuzdaki bir fotoğrafı göstermeniz yeterli.</p>\r\n      <p>Açıkça söyleyelim: elde şekillendirilen figürler referans görselin birebir kopyası olmaz, benzeri olur.</p>\r\n\r\n      <h2>Teslim aldıktan sonra</h2>\r\n      <p>Yaş pasta buzdolabında +4 °C'de saklanır ve 24 saat içinde tüketilmelidir.</p>\r\n      <p>Servisten 20–30 dakika önce buzdolabından çıkarın; krema aroması böyle açılır.</p>\r\n      <p>Kutuyu araçta koltuğa değil tabana koyun — eğimli yüzeyde krema kayar.</p>\r\n      <p>Şeker hamurlu pastalar nem çeker; buzdolabında kutusu kapalı durmalıdır.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Pasta siparişi kaç gün önceden verilmeli?</summary><p>Standart yaş pastalar için birkaç gün önceden haber vermeniz yeterlidir. Şeker hamurlu ve figürlü pastalarda hazırlık süresi daha uzundur; özel günlerde bir hafta önceden görüşmek en güvenlisidir.</p></details>\r\n        <details class=\"faq__item\"><summary>Pasta üzerine yazı yazdırılabilir mi?</summary><p>Evet, isim ve kısa mesaj yazılabilir. Üç-dört kelimeyi aşan metinler pasta yüzeyinde okunmadığı için kısa tutulması önerilir.</p></details>\r\n        <details class=\"faq__item\"><summary>Glütensiz veya şekersiz pasta var mı?</summary><p>Bulunmuyor. Ayrıca aynı mutfakta un ve kuruyemiş kullanıldığı için çölyak ve ciddi kuruyemiş alerjisi durumunda çapraz bulaşma riski vardır.</p></details>\r\n        <details class=\"faq__item\"><summary>Pasta nasıl saklanmalı?</summary><p>Buzdolabında +4 °C'de ve 24 saat içinde tüketilmek üzere. Servisten 20–30 dakika önce çıkarılması tadı belirgin biçimde açar.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Kaç kişilik pasta almalıyım?</h2>\r\n      <p>Genel kural kişi başı 100–120 gramdır. Ancak boy seçimi davetli sayısından çok <strong>ikramın kurgusuna</strong> bağlıdır.</p>\r\n      <p>Pasta masadaki tek tatlıysa kişi başı payı yüksek tutun. Yanında kurabiye, baklava veya meyve varsa bir küçük boy rahatça yeter.</p>\r\n      <p>Kalabalık organizasyonlarda tek büyük pasta yerine <strong>iki farklı orta boy</strong> almak daha iyi sonuç verir: hem çeşit sunarsınız hem servis sırası oluşmaz. Otuz kişiyi geçen davetlerde kesme pasta en pratik çözümdür.</p>\r\n\r\n      <h2>Çeşitler</h2>\r\n      <p>Meyveli grupta çilek, frambuaz, böğürtlen, muz, orman meyveli ve karışık meyveli seçenekler var; hepsi çikolatalı versiyonuyla da hazırlanıyor.</p>\r\n      <p>Kuruyemişli grupta fıstık & çikolatalı, muz & fındıklı ve krokan & fındıklı bulunuyor.</p>\r\n      <p>Çikolata ağırlıklı isteyenler için çikolata parçacıklı ve profiterol & çikolatalı seçenekler var.</p>\r\n      <p><strong>Mois</strong> tipi pastalar daha nemli ve yoğun kek dokusuna sahiptir.</p>\r\n\r\n      <h2>Özel tasarım ve figürlü pastalar</h2>\r\n      <p>Şeker hamurlu, figürlü ve temalı pastalar ayrıca hazırlanır. Doğum günü, nişan, söz, baby shower ve mezuniyet için istediğiniz tema uygulanabilir.</p>\r\n      <p>Figürler elde şekillendirilip kurumaya bırakıldığı için bu pastalarda birkaç gün önceden sipariş gerekir. Referans görsel getirmeniz işi çok kolaylaştırır — telefonunuzdaki bir fotoğrafı göstermeniz yeterli.</p>\r\n      <p>Açıkça söyleyelim: elde şekillendirilen figürler referans görselin birebir kopyası olmaz, benzeri olur.</p>\r\n\r\n      <h2>Teslim aldıktan sonra</h2>\r\n      <p>Yaş pasta buzdolabında +4 °C'de saklanır ve 24 saat içinde tüketilmelidir.</p>\r\n      <p>Servisten 20–30 dakika önce buzdolabından çıkarın; krema aroması böyle açılır.</p>\r\n      <p>Kutuyu araçta koltuğa değil tabana koyun — eğimli yüzeyde krema kayar.</p>\r\n      <p>Şeker hamurlu pastalar nem çeker; buzdolabında kutusu kapalı durmalıdır.</p>",
+        "sss": [
+          {
+            "soru": "Pasta siparişi kaç gün önceden verilmeli?",
+            "cevap": "Standart yaş pastalar için birkaç gün önceden haber vermeniz yeterlidir. Şeker hamurlu ve figürlü pastalarda hazırlık süresi daha uzundur; özel günlerde bir hafta önceden görüşmek en güvenlisidir."
+          },
+          {
+            "soru": "Pasta üzerine yazı yazdırılabilir mi?",
+            "cevap": "Evet, isim ve kısa mesaj yazılabilir. Üç-dört kelimeyi aşan metinler pasta yüzeyinde okunmadığı için kısa tutulması önerilir."
+          },
+          {
+            "soru": "Glütensiz veya şekersiz pasta var mı?",
+            "cevap": "Bulunmuyor. Ayrıca aynı mutfakta un ve kuruyemiş kullanıldığı için çölyak ve ciddi kuruyemiş alerjisi durumunda çapraz bulaşma riski vardır."
+          },
+          {
+            "soru": "Pasta nasıl saklanmalı?",
+            "cevap": "Buzdolabında +4 °C'de ve 24 saat içinde tüketilmek üzere. Servisten 20–30 dakika önce çıkarılması tadı belirgin biçimde açar."
+          }
+        ]
       },
       {
         "ad": "Tek Pasta & Dilim",
@@ -944,7 +1078,21 @@
           }
         ],
         "aciklama": "Tek pastalar tek kişilik porsiyon olarak hazırlanır; bütün pasta almak istemeyenler için uygundur. On bir çeşit bulunur. Kaşık pasta ise bardak veya kâse içinde, çatal gerektirmeyen bir sunumla hazırlanır.",
-        "govdeHtml": "<h2>Kimler için uygun?</h2>\r\n      <p>Tek pasta, tatlı isteyip bütün pasta almak istemeyenler için hazırlanır. Ofiste, evde tek kişilik tüketimde ya da farklı çeşitleri denemek isteyenler için idealdir.</p>\r\n      <p>İki-üç kişilik küçük kutlamalarda birkaç farklı tek pasta almak, küçük boy pastadan daha çeşit sunar.</p>\r\n\r\n      <h2>Çeşitler</h2>\r\n      <p>Meyveli grupta çilek, muz, frambuaz, böğürtlen, vişne ve karışık meyveli; çikolata ağırlıklı grupta fıstık & çikolatalı ve parça çikolatalı bulunur.</p>\r\n      <p><strong>Çilek & Oreolu</strong> ve <strong>muz & frambuazlı</strong> çeşitler daha yeni kombinasyonlardır.</p>\r\n      <p><strong>Kaşık pasta</strong> orman meyveli, karamelli ve çilek çikolatalı olarak hazırlanır; kâse içinde katmanlı sunulduğu için kaşıkla yenir.</p>\r\n\r\n      <h2>Saklama</h2>\r\n      <p>Tek pastalar da yaş pasta grubundadır: buzdolabında saklanır ve 24 saat içinde tüketilmelidir.</p>\r\n      <p>Servisten kısa süre önce buzdolabından çıkarmak tadı belirgin biçimde iyileştirir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Tek pasta kaç kişilik?</summary><p>Tek kişilik porsiyon olarak hazırlanır.</p></details>\r\n        <details class=\"faq__item\"><summary>Her çeşit her gün bulunur mu?</summary><p>Vitrindeki çeşit gün içinde değişir. Belirli bir çeşit için telefonla sorabilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaşık pasta nedir?</summary><p>Kâse veya bardak içinde katmanlı olarak hazırlanan, kaşıkla yenen pasta türüdür. Orman meyveli, karamelli ve çilek çikolatalı olarak bulunur.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Kimler için uygun?</h2>\r\n      <p>Tek pasta, tatlı isteyip bütün pasta almak istemeyenler için hazırlanır. Ofiste, evde tek kişilik tüketimde ya da farklı çeşitleri denemek isteyenler için idealdir.</p>\r\n      <p>İki-üç kişilik küçük kutlamalarda birkaç farklı tek pasta almak, küçük boy pastadan daha çeşit sunar.</p>\r\n\r\n      <h2>Çeşitler</h2>\r\n      <p>Meyveli grupta çilek, muz, frambuaz, böğürtlen, vişne ve karışık meyveli; çikolata ağırlıklı grupta fıstık & çikolatalı ve parça çikolatalı bulunur.</p>\r\n      <p><strong>Çilek & Oreolu</strong> ve <strong>muz & frambuazlı</strong> çeşitler daha yeni kombinasyonlardır.</p>\r\n      <p><strong>Kaşık pasta</strong> orman meyveli, karamelli ve çilek çikolatalı olarak hazırlanır; kâse içinde katmanlı sunulduğu için kaşıkla yenir.</p>\r\n\r\n      <h2>Saklama</h2>\r\n      <p>Tek pastalar da yaş pasta grubundadır: buzdolabında saklanır ve 24 saat içinde tüketilmelidir.</p>\r\n      <p>Servisten kısa süre önce buzdolabından çıkarmak tadı belirgin biçimde iyileştirir.</p>",
+        "sss": [
+          {
+            "soru": "Tek pasta kaç kişilik?",
+            "cevap": "Tek kişilik porsiyon olarak hazırlanır."
+          },
+          {
+            "soru": "Her çeşit her gün bulunur mu?",
+            "cevap": "Vitrindeki çeşit gün içinde değişir. Belirli bir çeşit için telefonla sorabilirsiniz."
+          },
+          {
+            "soru": "Kaşık pasta nedir?",
+            "cevap": "Kâse veya bardak içinde katmanlı olarak hazırlanan, kaşıkla yenen pasta türüdür. Orman meyveli, karamelli ve çilek çikolatalı olarak bulunur."
+          }
+        ]
       },
       {
         "ad": "Tartolet, Rulo & Lezzet Topları",
@@ -979,7 +1127,21 @@
           }
         ],
         "aciklama": "Bu grup ikram ve organizasyon için hazırlanan küçük porsiyonlu tatlılardan oluşur. Tartolet, rulo pasta, kesme pasta ve lezzet topları gramajla satılır; 250 gr, 500 gr ve 1 kg olarak hazırlanır. Kalabalık davetlerde bütün pastaya göre çok daha pratiktir.",
-        "govdeHtml": "<h2>Neden ikram için ideal?</h2>\r\n      <p>Bütün pasta kesme, dağıtma ve tabak gerektirir. Bu gruptaki ürünler ise tek lokmalık veya küçük dilimli hazırlandığı için elde tüketilebilir; servis derdi yoktur.</p>\r\n      <p>Otuz kişiyi geçen davetlerde kesme pasta ya da rulo pasta, kişi başı maliyeti de düşürür.</p>\r\n\r\n      <h2>Çeşitler</h2>\r\n      <p><strong>Tartolet</strong> küçük tart kabuğunun krema ve meyveyle doldurulmasıyla hazırlanır; şık durur ve tek lokmadır.</p>\r\n      <p><strong>Çilekli ve muzlu rulo pasta</strong> ince kek katmanının krema ile sarılmasıyla yapılır, dilimlenerek servis edilir.</p>\r\n      <p><strong>Kesme pasta</strong> tepsiye hazırlanıp kare dilimler hâlinde kesilir; en pratik ikram seçeneğidir.</p>\r\n      <p><strong>Lezzet topları</strong> kek ve krema karışımının yuvarlanıp kaplanmasıyla hazırlanan tek lokmalık tatlılardır.</p>\r\n\r\n      <h2>Gramaj hesabı</h2>\r\n      <p>İkramda kişi başı 80–120 gram hesaplayabilirsiniz. Yirmi kişilik bir organizasyon için 2 kg karışık rahatça yeter.</p>\r\n      <p>Farklı çeşitleri karışık olarak hazırlayabiliriz; siparişte belirtmeniz yeterlidir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Nasıl satılıyor?</summary><p>Gramajla: 250 gr, 500 gr ve 1 kg olarak. Karışık talep edilebilir.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaç kişiye yeter?</summary><p>İkramda kişi başı 80–120 gram hesaplanır. Yirmi kişi için 2 kg karışık yeterlidir.</p></details>\r\n        <details class=\"faq__item\"><summary>Nasıl saklanır?</summary><p>Kremalı olduğu için buzdolabında saklanmalı ve 24 saat içinde tüketilmelidir.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Neden ikram için ideal?</h2>\r\n      <p>Bütün pasta kesme, dağıtma ve tabak gerektirir. Bu gruptaki ürünler ise tek lokmalık veya küçük dilimli hazırlandığı için elde tüketilebilir; servis derdi yoktur.</p>\r\n      <p>Otuz kişiyi geçen davetlerde kesme pasta ya da rulo pasta, kişi başı maliyeti de düşürür.</p>\r\n\r\n      <h2>Çeşitler</h2>\r\n      <p><strong>Tartolet</strong> küçük tart kabuğunun krema ve meyveyle doldurulmasıyla hazırlanır; şık durur ve tek lokmadır.</p>\r\n      <p><strong>Çilekli ve muzlu rulo pasta</strong> ince kek katmanının krema ile sarılmasıyla yapılır, dilimlenerek servis edilir.</p>\r\n      <p><strong>Kesme pasta</strong> tepsiye hazırlanıp kare dilimler hâlinde kesilir; en pratik ikram seçeneğidir.</p>\r\n      <p><strong>Lezzet topları</strong> kek ve krema karışımının yuvarlanıp kaplanmasıyla hazırlanan tek lokmalık tatlılardır.</p>\r\n\r\n      <h2>Gramaj hesabı</h2>\r\n      <p>İkramda kişi başı 80–120 gram hesaplayabilirsiniz. Yirmi kişilik bir organizasyon için 2 kg karışık rahatça yeter.</p>\r\n      <p>Farklı çeşitleri karışık olarak hazırlayabiliriz; siparişte belirtmeniz yeterlidir.</p>",
+        "sss": [
+          {
+            "soru": "Nasıl satılıyor?",
+            "cevap": "Gramajla: 250 gr, 500 gr ve 1 kg olarak. Karışık talep edilebilir."
+          },
+          {
+            "soru": "Kaç kişiye yeter?",
+            "cevap": "İkramda kişi başı 80–120 gram hesaplanır. Yirmi kişi için 2 kg karışık yeterlidir."
+          },
+          {
+            "soru": "Nasıl saklanır?",
+            "cevap": "Kremalı olduğu için buzdolabında saklanmalı ve 24 saat içinde tüketilmelidir."
+          }
+        ]
       },
       {
         "ad": "Donut",
@@ -1014,7 +1176,17 @@
           }
         ],
         "aciklama": "Donutlar beş dolgu seçeneğiyle hazırlanır: çikolata, muz, frambuaz, çilek ve karamel. Adet olarak satılır ve günlük üretilir. Aynı gün tüketilmesi önerilir; dolgulu olduğu için ertesi güne bırakıldığında hamur nem çeker.",
-        "govdeHtml": "<h2>Dolgu seçenekleri</h2>\r\n      <p><strong>Çikolata dolgulu</strong> en çok tercih edilendir; yoğun ve doyurucudur.</p>\r\n      <p><strong>Karamel dolgulu</strong> daha tatlı, <strong>frambuaz</strong> ve <strong>çilek dolgulu</strong> ise meyve asitliği sayesinde daha hafif hissettirir.</p>\r\n      <p><strong>Muz dolgulu</strong> çocukların en çok sevdiği çeşittir.</p>\r\n\r\n      <h2>Aynı gün tüketin</h2>\r\n      <p>Donut kızartılmış hamur ürünüdür ve dolgu içerdiği için nem dengesi hassastır. Aldığınız gün tüketilmesi önerilir.</p>\r\n      <p>Buzdolabına konulması önerilmez; hamur sertleşir. Oda sıcaklığında kapalı kapta bekletin.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Donutlar günlük mü hazırlanıyor?</summary><p>Evet, günlük hazırlanır ve aynı gün tüketilmesi önerilir.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaç çeşit dolgu var?</summary><p>Beş çeşit: çikolata, muz, frambuaz, çilek ve karamel.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Dolgu seçenekleri</h2>\r\n      <p><strong>Çikolata dolgulu</strong> en çok tercih edilendir; yoğun ve doyurucudur.</p>\r\n      <p><strong>Karamel dolgulu</strong> daha tatlı, <strong>frambuaz</strong> ve <strong>çilek dolgulu</strong> ise meyve asitliği sayesinde daha hafif hissettirir.</p>\r\n      <p><strong>Muz dolgulu</strong> çocukların en çok sevdiği çeşittir.</p>\r\n\r\n      <h2>Aynı gün tüketin</h2>\r\n      <p>Donut kızartılmış hamur ürünüdür ve dolgu içerdiği için nem dengesi hassastır. Aldığınız gün tüketilmesi önerilir.</p>\r\n      <p>Buzdolabına konulması önerilmez; hamur sertleşir. Oda sıcaklığında kapalı kapta bekletin.</p>",
+        "sss": [
+          {
+            "soru": "Donutlar günlük mü hazırlanıyor?",
+            "cevap": "Evet, günlük hazırlanır ve aynı gün tüketilmesi önerilir."
+          },
+          {
+            "soru": "Kaç çeşit dolgu var?",
+            "cevap": "Beş çeşit: çikolata, muz, frambuaz, çilek ve karamel."
+          }
+        ]
       },
       {
         "ad": "İçecekler",
@@ -1063,7 +1235,17 @@
           }
         ],
         "aciklama": "Fırınımızda kola, Çamlıca portakal, meyve suyu (vişne, şeftali, kayısı, karışık), limonata, sade ve limonlu soda ile süt (sade, çikolatalı, çilekli, muzlu) bulunur. Farklı hacim seçenekleri mevcuttur.",
-        "govdeHtml": "<h2>Neler var?</h2>\r\n      <p>Gazlı grupta kola, sade ve limonlu soda; farklı hacimlerde bulunur.</p>\r\n      <p>Meyve suyu grubunda vişne, şeftali, kayısı ve karışık çeşitleri ile Çamlıca portakal ve limonata yer alır.</p>\r\n      <p>Süt grubunda sade, çikolatalı, çilekli ve muzlu seçenekler küçük kutu olarak bulunur — özellikle çocuklar için simit ve poğaça yanında tercih edilir.</p>\r\n\r\n      <h2>Ne ile iyi gider?</h2>\r\n      <p>Simit ve poğaça yanında en klasik eşleşme çaydır; ancak soğuk içecek isteyenler için soda ve limonata da iyi bir denge kurar.</p>\r\n      <p>Tatlı ve pasta yanında sade soda, damaktaki ağırlığı azaltır.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Sıcak içecek var mı?</summary><p>Menümüzde çay ve kahve bulunmaktadır; güncel durum için tezgâha danışabilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Hangi hacimler mevcut?</summary><p>Ürüne göre değişir; kutu, küçük şişe ve büyük şişe seçenekleri bulunur.</p></details>\r\n        </div>"
+        "govdeHtml": "<h2>Neler var?</h2>\r\n      <p>Gazlı grupta kola, sade ve limonlu soda; farklı hacimlerde bulunur.</p>\r\n      <p>Meyve suyu grubunda vişne, şeftali, kayısı ve karışık çeşitleri ile Çamlıca portakal ve limonata yer alır.</p>\r\n      <p>Süt grubunda sade, çikolatalı, çilekli ve muzlu seçenekler küçük kutu olarak bulunur — özellikle çocuklar için simit ve poğaça yanında tercih edilir.</p>\r\n\r\n      <h2>Ne ile iyi gider?</h2>\r\n      <p>Simit ve poğaça yanında en klasik eşleşme çaydır; ancak soğuk içecek isteyenler için soda ve limonata da iyi bir denge kurar.</p>\r\n      <p>Tatlı ve pasta yanında sade soda, damaktaki ağırlığı azaltır.</p>",
+        "sss": [
+          {
+            "soru": "Sıcak içecek var mı?",
+            "cevap": "Menümüzde çay ve kahve bulunmaktadır; güncel durum için tezgâha danışabilirsiniz."
+          },
+          {
+            "soru": "Hangi hacimler mevcut?",
+            "cevap": "Ürüne göre değişir; kutu, küçük şişe ve büyük şişe seçenekleri bulunur."
+          }
+        ]
       }
     ]
   },
