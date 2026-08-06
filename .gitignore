@@ -18,7 +18,7 @@ server/data/uploads/*
 tsconfig.tsbuildinfo
 webcopy-origin.txt
 _live-head.txt
-hero/
-maps/
-send/
-firincitasdelenn/
+/hero/
+/maps/
+/send/
+/firincitasdelenn/
