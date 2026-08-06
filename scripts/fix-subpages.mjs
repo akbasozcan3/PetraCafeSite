@@ -48,7 +48,7 @@ function fullFooter(file, depth) {
       <div>
         <img class="foot__mark" data-site="logo" src="${logo}" alt="Logo" width="160" height="160" loading="lazy" decoding="async">
       </div>
-      <div><h4>Fırın</h4><a href="${home}#hakkimizda">Hakkımızda</a><a href="${urunlerHref}">Ürünler</a><a href="${home}#pasta">Özel Pastalar</a><a href="${home}#galeri">Galeri</a><a href="${blogHref}">Fırın Günlüğü</a></div>
+      <div><h4>Fırın</h4><a href="${home}#hakkimizda">Hakkımızda</a><a href="${urunlerHref}">Ürünler</a><a href="${home}#pasta">Özel Pastalar</a><a href="${home}#galeri">Galeri</a><a href="${blogHref}">Blog</a></div>
       <div><h4>Adres</h4><a href="${home}#iletisim">Turgut Özal Cad. No:108/C</a><a href="${home}#iletisim">Bulvar Rezidans A Blok</a><a href="${home}#iletisim">Çekmeköy / İstanbul</a><a href="${home}#iletisim">7/24 açık</a></div>
       <div><h4>İletişim</h4><a href="tel:+905523400202">0552 340 02 02</a><a href="https://wa.me/905523400202" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://www.instagram.com/firincitasdelenn/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="mailto:info@firincitasdelen.com.tr">info@firincitasdelen.com.tr</a></div>
     </div>

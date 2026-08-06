@@ -113,8 +113,8 @@ export const adminNavItems: AdminNavItem[] = [
   },
   {
     href: "/admin/makaleler",
-    label: "Fırın Günlüğü",
-    description: "Blog yazıları",
+    label: "Blog",
+    description: "Yazılar, özetler ve yayın durumu",
     icon: BookOpen,
     group: "Ana Sayfa",
     permission: "content:read",

@@ -21,7 +21,7 @@ function articleShell(m: MakaleItem, brand: string, siteUrl: string): string {
   const title = m.baslik || slug;
   const desc = m.ozet || title;
   const okuma = m.okumaSuresi || "5 dakika okuma";
-  const kategori = m.kategori || "Fırın Günlüğü";
+  const kategori = m.kategori || "Blog";
   const tarih = m.tarih || "";
   const body =
     m.govdeHtml?.trim() ||
@@ -59,7 +59,7 @@ function articleShell(m: MakaleItem, brand: string, siteUrl: string): string {
     <article class="article">
       <nav class="crumbs" aria-label="Sayfa yolu">
         <a href="../../index.htm">Ana Sayfa</a><span>/</span>
-        <a href="../blog">Fırın Günlüğü</a><span>/</span>
+        <a href="../blog">Blog</a><span>/</span>
         <span aria-current="page">${escapeHtml(title)}</span>
       </nav>
       <header class="article__head">

@@ -54,7 +54,7 @@ const PRESET_LINKS = [
   { label: "Galeri", href: "#galeri" },
   { label: "Yorumlar", href: "#yorumlar" },
   { label: "S.S.S.", href: "#sss" },
-  { label: "Fırın Günlüğü", href: "/blog/blog" },
+  { label: "Blog", href: "/blog/blog" },
   { label: "İletişim", href: "#iletisim" },
 ];
 

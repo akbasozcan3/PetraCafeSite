@@ -136,7 +136,7 @@ if (!raw.sayfalar) {
       relatedHepsi: "Tüm ürün kategorileri",
     },
     blog: {
-      eyebrow: "Fırın Günlüğü",
+      eyebrow: "Blog",
       baslik: "Ekmeğin ardındaki bilgi",
       lead: "Pasta siparişi, ekmek saklama, un çeşitleri ve fırın mutfağından pratik yazılar.",
       ctaBaslik: "Aklınıza takılan bir şey mi var?",

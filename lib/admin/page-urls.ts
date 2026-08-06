@@ -25,5 +25,5 @@ export const SITE_PAGE_URLS: PageUrlOption[] = [
   { label: "Ana Sayfa - Yorumlar (#yorumlar)", value: "#yorumlar" },
   { label: "Ana Sayfa - S.S.S. (#sss)", value: "#sss" },
   { label: "Ana Sayfa - İletişim (#iletisim)", value: "#iletisim" },
-  { label: "Fırın Günlüğü (Blog)", value: "blog/blog" },
+  { label: "Blog", value: "blog/blog" },
 ];

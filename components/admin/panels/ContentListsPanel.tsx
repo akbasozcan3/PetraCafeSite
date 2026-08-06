@@ -314,8 +314,8 @@ export function MakalelerPanel() {
   if (loading || !content) return <AdminLoading />;
   return (
     <ListPanel
-      title="Fırın Günlüğü"
-      description="Blog yazıları — başlık, özet, okuma süresi ve HTML gövde."
+      title="Blog"
+      description="Yazı listesi — başlık, özet, kategori, okuma süresi ve HTML gövde. Markadan bağımsız; her mağaza tipi için kullanılabilir."
       items={content.makaleler}
       message={message}
       saving={saving}
@@ -323,7 +323,7 @@ export function MakalelerPanel() {
         slug: "yeni-makale",
         baslik: "",
         ozet: "",
-        kategori: "Fırın Günlüğü",
+        kategori: "Genel",
         tarih: new Date().toLocaleDateString("tr-TR", {
           day: "numeric",
           month: "long",
@@ -340,7 +340,7 @@ export function MakalelerPanel() {
         try {
           const res = await api.updateContent({ makaleler: content.makaleler });
           setContent(res.data);
-          setMessage("Fırın Günlüğü kaydedildi.");
+          setMessage("Blog kaydedildi.");
         } catch (e) {
           setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
         } finally {
@@ -348,8 +348,12 @@ export function MakalelerPanel() {
         }
       }}
       topNode={
-        <div className="mb-4">
-          <SectionHint href="/blog/blog" label="Fırın Günlüğü (blog)" />
+        <div className="mb-4 space-y-3">
+          <SectionHint href="/blog/blog" label="Blog" />
+          <p className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-xs text-[#8A9BB0]">
+            Site menüsündeki “Blog” yazısı: <span className="text-[#C8D0DC]">Üst Menü & Logo</span> veya{" "}
+            <span className="text-[#C8D0DC]">Alt Sayfa Metinleri → Blog</span>. Yazılar burada yönetilir.
+          </p>
         </div>
       }
       renderItem={(item, _i, update) => (

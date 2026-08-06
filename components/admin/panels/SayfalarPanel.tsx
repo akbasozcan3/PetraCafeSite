@@ -144,7 +144,10 @@ export default function SayfalarPanel() {
       </section>
 
       <section className="mb-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[#EEE9E0]">Blog (Fırın Günlüğü)</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[#EEE9E0]">Blog</h2>
+        <p className="mb-4 text-xs text-[#6B7A94]">
+          Blog listesi sayfasındaki üst yazı, başlık ve giriş metinleri. Marka adı geçmez — her mağaza için uygundur.
+        </p>
         <div className="grid gap-4 md:grid-cols-2">
           <Input
             label="Üst yazı"

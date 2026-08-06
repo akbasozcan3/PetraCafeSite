@@ -1,15 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Fırın Günlüğü — Ekmek, Maya ve Pastane Rehberi | Taşdelen Fırıncı</title>
+<title>Blog — Ekmek, Maya ve Pastane Rehberi | Taşdelen Fırıncı</title>
 <meta name="description" content="Ekşi maya, ekmek saklama, un çeşitleri ve pasta siparişi üzerine fırıncı ustalarımızın kaleme aldığı pratik rehberler. Çekmeköy Taşdelen’den pratik fırın bilgisi.">
 <link rel="canonical" href="https://www.firincitasdelen.com.tr/urunler/blog/blog">
 <meta name="theme-color" content="#12140E">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Taşdelen Fırıncı">
-<meta property="og:title" content="Fırın Günlüğü — Ekmek, Maya ve Pastane Rehberi">
+<meta property="og:title" content="Blog — Ekmek, Maya ve Pastane Rehberi">
 <meta property="og:description" content="Ekşi maya, ekmek saklama, un çeşitleri ve pasta siparişi üzerine pratik rehberler.">
 <meta property="og:url" content="https://www.firincitasdelen.com.tr/blog/">
 <meta property="og:image" content="https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-hamur.jpg">
@@ -29,7 +29,7 @@
   "@context": "https://schema.org",
   "@type": "Blog",
   "@id": "https://www.firincitasdelen.com.tr/blog/#blog",
-  "name": "Fırın Günlüğü",
+  "name": "Blog",
   "description": "Ekşi maya, ekmek saklama, un çeşitleri ve pastane üzerine pratik rehberler.",
   "inLanguage": "tr-TR",
   "publisher": {
@@ -51,7 +51,7 @@
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.firincitasdelen.com.tr/" },
-    { "@type": "ListItem", "position": 2, "name": "Fırın Günlüğü", "item": "https://www.firincitasdelen.com.tr/blog/" }
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.firincitasdelen.com.tr/blog/" }
   ]
 }
 </script>
@@ -69,7 +69,7 @@
   <nav class="nav__links" aria-label="Ana menü">
     <a href="../index.htm#hikaye">Hikâyemiz</a>
     <a href="../index.htm#menu">Menü</a>
-    <a href="blog">Fırın Günlüğü</a>
+    <a href="blog">Blog</a>
     <a href="../index.htm#ziyaret">Ziyaret</a>
   </nav>
   <a href="tel:+905523400202" class="btn btn--sm nav__cta">0552 340 02 02</a>
@@ -78,11 +78,11 @@
 <main class="section">
   <div class="wrap">
     <nav class="crumbs" aria-label="Sayfa yolu">
-      <a href="../index.htm">Ana Sayfa</a><span>/</span><span aria-current="page">Fırın Günlüğü</span>
+      <a href="../index.htm">Ana Sayfa</a><span>/</span><span aria-current="page">Blog</span>
     </nav>
 
     <div class="section__head">
-      <p class="eyebrow">Fırın Günlüğü</p>
+      <p class="eyebrow">Blog</p>
       <h1 class="h2">Ekmeğin ardındaki bilgi</h1>
       <p class="lead">Fırınımızda her gün hamurla uğraşıyoruz. Müşterilerimizin en çok sorduğu şeyleri burada, sade ve doğru biçimde yazıyoruz.</p>
     </div>
@@ -154,7 +154,7 @@
       <div>
         <img class="foot__mark" data-site="logo" src="../assets/img/logo.webp" alt="Logo" width="160" height="160" loading="lazy" decoding="async">
       </div>
-      <div><h4>Fırın</h4><a href="../index.htm#hakkimizda">Hakkımızda</a><a href="../urunler/urunler">Ürünler</a><a href="../index.htm#pasta">Özel Pastalar</a><a href="../index.htm#galeri">Galeri</a><a href="../blog/blog">Fırın Günlüğü</a></div>
+      <div><h4>Fırın</h4><a href="../index.htm#hakkimizda">Hakkımızda</a><a href="../urunler/urunler">Ürünler</a><a href="../index.htm#pasta">Özel Pastalar</a><a href="../index.htm#galeri">Galeri</a><a href="../blog/blog">Blog</a></div>
       <div><h4>Adres</h4><a href="../index.htm#iletisim">Turgut Özal Cad. No:108/C</a><a href="../index.htm#iletisim">Bulvar Rezidans A Blok</a><a href="../index.htm#iletisim">Çekmeköy / İstanbul</a><a href="../index.htm#iletisim">7/24 açık</a></div>
       <div><h4>İletişim</h4><a href="tel:+905523400202">0552 340 02 02</a><a href="https://wa.me/905523400202" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://www.instagram.com/firincitasdelenn/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="mailto:info@firincitasdelen.com.tr">info@firincitasdelen.com.tr</a></div>
     </div>

@@ -125,6 +125,40 @@ function normalizeContent(raw: Partial<SiteContent>): SiteContent {
   if (!Array.isArray(merged.yorumlar)) merged.yorumlar = DEFAULT_CONTENT.yorumlar;
   if (!merged.sss || !Array.isArray(merged.sss.items)) merged.sss = DEFAULT_CONTENT.sss;
   if (!Array.isArray(merged.makaleler)) merged.makaleler = DEFAULT_CONTENT.makaleler;
+
+  // Legacy section name → generic Blog (multi-store ready)
+  const rename = (label?: string) =>
+    label && /^fırın\s*günlüğü$/i.test(label.trim()) ? "Blog" : label;
+
+  if (merged.navbar?.links) {
+    merged.navbar = {
+      ...merged.navbar,
+      links: merged.navbar.links.map((l) => ({ ...l, label: rename(l.label) || l.label })),
+    };
+  }
+  if (merged.footer?.kolonlar) {
+    merged.footer = {
+      ...merged.footer,
+      kolonlar: merged.footer.kolonlar.map((col) => ({
+        ...col,
+        links: (col.links || []).map((l) => ({ ...l, label: rename(l.label) || l.label })),
+      })),
+    };
+  }
+  if (merged.sayfalar?.blog?.eyebrow && rename(merged.sayfalar.blog.eyebrow) === "Blog") {
+    merged.sayfalar = {
+      ...merged.sayfalar,
+      blog: { ...merged.sayfalar.blog, eyebrow: "Blog" },
+    };
+  }
+  if (Array.isArray(merged.makaleler)) {
+    merged.makaleler = merged.makaleler.map((m) =>
+      m.kategori && /^fırın\s*günlüğü$/i.test(m.kategori.trim())
+        ? { ...m, kategori: "Blog" }
+        : m
+    );
+  }
+
   return merged;
 }
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
@@ -92,7 +92,7 @@
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.firincitasdelen.com.tr/" },
-    { "@type": "ListItem", "position": 2, "name": "Fırın Günlüğü", "item": "https://www.firincitasdelen.com.tr/blog/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.firincitasdelen.com.tr/blog/" },
     { "@type": "ListItem", "position": 3, "name": "Ekşi maya ekmek nedir?", "item": "https://www.firincitasdelen.com.tr/blog/eksi-maya-ekmek-nedir/" }
   ]
 }
@@ -111,7 +111,7 @@
   <nav class="nav__links" aria-label="Ana menü">
     <a href="../../index.htm#hikaye">Hikâyemiz</a>
     <a href="../../index.htm#menu">Menü</a>
-    <a href="../blog">Fırın Günlüğü</a>
+    <a href="../blog">Blog</a>
     <a href="../../index.htm#ziyaret">Ziyaret</a>
   </nav>
   <a href="tel:+905523400202" class="btn btn--sm nav__cta">0552 340 02 02</a>
@@ -123,7 +123,7 @@
 
       <nav class="crumbs" aria-label="Sayfa yolu">
         <a href="../../index.htm">Ana Sayfa</a><span>/</span>
-        <a href="../blog">Fırın Günlüğü</a><span>/</span>
+        <a href="../blog">Blog</a><span>/</span>
         <span aria-current="page">Ekşi maya ekmek nedir?</span>
       </nav>
 
@@ -216,7 +216,7 @@
       <div>
         <img class="foot__mark" data-site="logo" src="../../assets/img/logo.webp" alt="Logo" width="160" height="160" loading="lazy" decoding="async">
       </div>
-      <div><h4>Fırın</h4><a href="../../index.htm#hakkimizda">Hakkımızda</a><a href="../../urunler/urunler">Ürünler</a><a href="../../index.htm#pasta">Özel Pastalar</a><a href="../../index.htm#galeri">Galeri</a><a href="../../blog/blog">Fırın Günlüğü</a></div>
+      <div><h4>Fırın</h4><a href="../../index.htm#hakkimizda">Hakkımızda</a><a href="../../urunler/urunler">Ürünler</a><a href="../../index.htm#pasta">Özel Pastalar</a><a href="../../index.htm#galeri">Galeri</a><a href="../../blog/blog">Blog</a></div>
       <div><h4>Adres</h4><a href="../../index.htm#iletisim">Turgut Özal Cad. No:108/C</a><a href="../../index.htm#iletisim">Bulvar Rezidans A Blok</a><a href="../../index.htm#iletisim">Çekmeköy / İstanbul</a><a href="../../index.htm#iletisim">7/24 açık</a></div>
       <div><h4>İletişim</h4><a href="tel:+905523400202">0552 340 02 02</a><a href="https://wa.me/905523400202" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://www.instagram.com/firincitasdelenn/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="mailto:info@firincitasdelen.com.tr">info@firincitasdelen.com.tr</a></div>
     </div>
