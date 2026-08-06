@@ -539,7 +539,7 @@ body.page a.wa-float {
 }
 @media (max-width: 860px) {
   .gate__stage {
-    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260806wa1") center center / cover no-repeat !important;
+    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260806prod1") center center / cover no-repeat !important;
   }
   .gate__poster {
     inset: 0 !important;

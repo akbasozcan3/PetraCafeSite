@@ -922,15 +922,15 @@ if (list) {
     "simit-pogaca-acma": "/assets/img/urun/simit.jpg",
     "kurabiye-cesitleri": "/assets/img/urun/tatli-bufe.jpg",
     "buyuk-kurabiyeler": "/assets/img/urun/cupcake.jpg",
-    "galeta-cubuk-kokteyl": "/assets/img/urun/galeta.jpg",
-    "baklava-serbetli": "/assets/img/urun/baklava.jpg",
-    "sutlu-tatlilar": "/assets/img/urun/sutlac.jpg",
-    "zeytinyagli-urunler": "/assets/img/urun/zeytinyagli.jpg",
+    "galeta-cubuk-kokteyl": "/assets/img/urun/pogaca-tepsi.jpg",
+    "baklava-serbetli": "/assets/img/urun/tatli-bufe.jpg",
+    "sutlu-tatlilar": "/assets/img/urun/vitrin-pasta.jpg",
+    "zeytinyagli-urunler": "/assets/img/urun/vitrin-hamur.jpg",
     "pastalar": "/assets/img/urun/pasta-safari.jpg",
     "tek-pasta-dilim": "/assets/img/urun/pasta-drip.jpg",
-    "tartolet-rulo-lezzet-toplari": "/assets/img/urun/rulo-pasta.jpg",
-    "donut": "/assets/img/urun/donut.jpg",
-    "icecekler": "/assets/img/urun/icecek.jpg"
+    "tartolet-rulo-lezzet-toplari": "/assets/img/urun/pasta-gul.jpg",
+    "donut": "/assets/img/urun/cupcake.jpg",
+    "icecekler": "/assets/img/urun/simit.jpg"
   };
 
   function groupSlugFromHref(href) {

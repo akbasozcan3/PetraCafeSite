@@ -310,7 +310,7 @@
             "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
           }
         ],
-        "image": "",
+        "image": "/assets/img/urun/ekmek-cesit.jpg",
         "aciklama": "Fırınımızda on iki çeşit günlük ekmek bulunuyor. Klasik somun ve francalanın yanında tam buğday, çavdar, kepek ve çok tahıllı seçenekler; ayrıca baget, lavaş, tandır lavaş ve tava ekmeği yer alıyor. Ramazan ayında sade ve yumurtalı ramazan pidesi üretilir.",
         "govdeHtml": "<h2>Hangi ekmek nasıl bir tada sahip?</h2>\n      <p><strong>Sade ekmek ve francala</strong> nötr tatlıdır, her yemeğin yanına gider. Kahvaltı sofrasında ve çocuklu evlerde en çok tercih edilen ekmek budur.</p>\n      <p><strong>Tam buğdaylı ve kepek ekmek</strong> daha yoğun ve doyurucudur; buğdayın kepeği ekmeğe hafif fındıkımsı bir tat ve daha koyu bir renk verir.</p>\n      <p><strong>Çavdar ekmeği</strong> nemli ve yoğun bir iç yapıya sahiptir, tadı hafif toprakımsıdır. Peynir ve zeytinyağlı ürünlerle çok iyi gider.</p>\n      <p><strong>Papatya ekmeği</strong> adını dilimlenmeye hazır papatya biçimli formundan alır; yumuşak dokusuyla kahvaltıda ve ikramlarda kullanılır.</p>\n      <p><strong>Çok tahıllı ekmek</strong> içine katılan tohum ve çekirdeklerle hem daha doyurucu hem aromatiktir.</p>\n\n      <h2>Baget, lavaş ve tava ekmeği</h2>\n      <p><strong>Baget</strong> ince kabuklu, uzun formlu ekmektir; sandviç ve tost için en uygun olanıdır. Aynı gün tüketilmesi önerilir, çünkü ince kabuk nemi hızlı kaybeder.</p>\n      <p><strong>Lavaş ve tandır lavaş</strong> yumuşak ve katlanabilir olduğu için dürüm, kebap ve kahvaltı sofralarında kullanılır.</p>\n      <p><strong>Tava ekmeği</strong> susamlı ve çörekotlu olarak hazırlanır; ikili paket hâlinde satılır, kahvaltıda bölünerek yenir.</p>\n\n      <h2>Ne kadar taze kalır?</h2>\n      <p>Kabuğu ince ekmekler (baget, francala) aynı gün, kalın kabuklu ve tam tahıllı ekmekler iki-üç gün tazeliğini korur. Ekmeği buzdolabında değil, oda sıcaklığında bez ya da kâğıt torbada saklamak gerekir — buzdolabı sıcaklığı bayatlamayı hızlandırır.</p>\n      <p>Uzun süre saklamak istiyorsanız aldığınız gün dilimleyip dondurun; dondurulmuş dilimler çözdürülmeden doğrudan tost makinesinde ısıtılabilir.</p>",
         "sss": [
@@ -380,7 +380,8 @@
             "soru": "Kaç gün taze kalır?",
             "cevap": "Ekşi mayalı ekmek üç-dört gün tazeliğini korur. Bez torbada, oda sıcaklığında ve kesik yüzü aşağı bakacak şekilde saklanmalıdır."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/ekmek-rustik.jpg"
       },
       {
         "ad": "Simit, Poğaça & Açma",
@@ -515,7 +516,8 @@
             "soru": "Ponçik nedir?",
             "cevap": "Ponçik, küçük ve yumuşak, genellikle onluk paketler hâlinde satılan mini bir hamur işidir. Çocuklu evlerde ve ikramlarda çok tercih edilir."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/simit.jpg"
       },
       {
         "ad": "Kurabiye Çeşitleri",
@@ -579,7 +581,8 @@
             "soru": "Kurabiyelerde kuruyemiş var mı?",
             "cevap": "Bazı çeşitlerde badem, fındık ve ceviz kullanılır. Aynı mutfakta kuruyemişli üretim yapıldığı için ciddi alerji durumunda çapraz bulaşma riski bulunur; lütfen personelimize bildirin."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/tatli-bufe.jpg"
       },
       {
         "ad": "Adet Büyük Kurabiyeler",
@@ -649,7 +652,8 @@
             "soru": "Her çeşit her gün bulunur mu?",
             "cevap": "Çeşit gün içinde değişebilir. Belirli bir kurabiye için telefonla sorup ayırtabilirsiniz."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/cupcake.jpg"
       },
       {
         "ad": "Galeta, Çubuk & Kokteyl",
@@ -714,7 +718,8 @@
             "soru": "Kokteyl ve çubuk nasıl satılıyor?",
             "cevap": "Gramajla: 250 gr, 500 gr ve 1 kg olarak. Selanik gevreği ve bazı çubuk çeşitleri paket hâlinde satılır."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/pogaca-tepsi.jpg"
       },
       {
         "ad": "Baklava & Şerbetli Tatlılar",
@@ -794,7 +799,8 @@
             "soru": "Baklava siparişi kaç gün önceden verilmeli?",
             "cevap": "Vitrinde günlük olarak bulunur. Büyük miktar veya belirli bir çeşit için bir gün önceden haber vermeniz yeterlidir."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/tatli-bufe.jpg"
       },
       {
         "ad": "Sütlü Tatlılar",
@@ -866,7 +872,8 @@
             "soru": "Toplu sipariş verilebilir mi?",
             "cevap": "Evet, ancak sütlü tatlılar günlük hazırlandığı için bir gün önceden haber verilmesi gerekir."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/vitrin-pasta.jpg"
       },
       {
         "ad": "Zeytinyağlı Ürünler",
@@ -905,7 +912,8 @@
             "soru": "Toplu sipariş verilebilir mi?",
             "cevap": "Evet. Günlük hazırlandığı için bir gün önceden telefonla haber vermeniz gerekir."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/vitrin-hamur.jpg"
       },
       {
         "ad": "Pastalar",
@@ -1017,7 +1025,8 @@
             "soru": "Pasta nasıl saklanmalı?",
             "cevap": "Buzdolabında +4 °C'de ve 24 saat içinde tüketilmek üzere. Servisten 20–30 dakika önce çıkarılması tadı belirgin biçimde açar."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/pasta-safari.jpg"
       },
       {
         "ad": "Tek Pasta & Dilim",
@@ -1097,7 +1106,8 @@
             "soru": "Kaşık pasta nedir?",
             "cevap": "Kâse veya bardak içinde katmanlı olarak hazırlanan, kaşıkla yenen pasta türüdür. Orman meyveli, karamelli ve çilek çikolatalı olarak bulunur."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/pasta-drip.jpg"
       },
       {
         "ad": "Tartolet, Rulo & Lezzet Topları",
@@ -1146,7 +1156,8 @@
             "soru": "Nasıl saklanır?",
             "cevap": "Kremalı olduğu için buzdolabında saklanmalı ve 24 saat içinde tüketilmelidir."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/pasta-gul.jpg"
       },
       {
         "ad": "Donut",
@@ -1191,7 +1202,8 @@
             "soru": "Kaç çeşit dolgu var?",
             "cevap": "Beş çeşit: çikolata, muz, frambuaz, çilek ve karamel."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/cupcake.jpg"
       },
       {
         "ad": "İçecekler",
@@ -1250,7 +1262,8 @@
             "soru": "Hangi hacimler mevcut?",
             "cevap": "Ürüne göre değişir; kutu, küçük şişe ve büyük şişe seçenekleri bulunur."
           }
-        ]
+        ],
+        "image": "/assets/img/urun/simit.jpg"
       }
     ]
   },

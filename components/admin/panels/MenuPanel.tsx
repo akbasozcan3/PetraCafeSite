@@ -192,24 +192,25 @@ export default function MenuPanel() {
           value={menu.kartNot || content.sayfalar?.urunKategori?.kartNot || ""}
           onChange={(e) => {
             const kartNot = e.target.value;
+            const urunKategori = {
+              ...(content.sayfalar?.urunKategori || {
+                eyebrow: "Ürünler",
+                answerBaslik: "Kısa bilgi",
+                listeBaslikSablon: "{ad} listesi",
+                kartNot: "",
+                ctaBaslik: "Sipariş & bilgi",
+                ctaWaLabel: "WhatsApp’tan yazın",
+                relatedBaslik: "Diğer kategoriler",
+                relatedHepsi: "Tüm ürün kategorileri",
+              }),
+              kartNot,
+            };
             setContent({
               ...content,
               menu: { ...menu, kartNot },
-              sayfalar: {
-                ...content.sayfalar,
-                urunKategori: {
-                  ...(content.sayfalar?.urunKategori || {
-                    eyebrow: "Ürünler",
-                    answerBaslik: "Kısa bilgi",
-                    listeBaslikSablon: "{ad} listesi",
-                    kartNot: "",
-                    relatedBaslik: "Diğer kategoriler",
-                    ctaBaslik: "Sipariş & bilgi",
-                    ctaLead: "",
-                  }),
-                  kartNot,
-                },
-              },
+              sayfalar: content.sayfalar
+                ? { ...content.sayfalar, urunKategori }
+                : undefined,
             });
           }}
         />

@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="../css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=20260806wa1">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260806prod1">
 </head>
 <body class="page">
 
@@ -112,28 +112,28 @@
         </div>
       </a>
       <a class="kat" href="galeta-cubuk-kokteyl/galeta-cubuk-kokteyl">
-        <div class="kat__img"><img src="../assets/img/urun/galeta.jpg" alt="Galeta, Çubuk & Kokteyl" loading="lazy" decoding="async" width="1280" height="960" sizes="(max-width:860px) 94vw, 31vw"></div>
+        <div class="kat__img"><img src="../assets/img/urun/pogaca-tepsi.jpg" alt="Galeta, Çubuk & Kokteyl" loading="lazy" decoding="async" width="1280" height="960" sizes="(max-width:860px) 94vw, 31vw"></div>
         <div class="kat__ic">
           <h2>Galeta, Çubuk & Kokteyl</h2>
           <p>9 çeşit</p>
         </div>
       </a>
       <a class="kat" href="baklava-serbetli/baklava-serbetli">
-        <div class="kat__img"><img src="../assets/img/urun/baklava.jpg" alt="Baklava & Şerbetli Tatlılar" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
+        <div class="kat__img"><img src="../assets/img/urun/tatli-bufe.jpg" alt="Baklava & Şerbetli Tatlılar" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
         <div class="kat__ic">
           <h2>Baklava & Şerbetli Tatlılar</h2>
           <p>11 çeşit</p>
         </div>
       </a>
       <a class="kat" href="sutlu-tatlilar/sutlu-tatlilar">
-        <div class="kat__img"><img src="../assets/img/urun/sutlac.jpg" alt="Sütlü Tatlılar" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
+        <div class="kat__img"><img src="../assets/img/urun/vitrin-pasta.jpg" alt="Sütlü Tatlılar" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
         <div class="kat__ic">
           <h2>Sütlü Tatlılar</h2>
           <p>9 çeşit</p>
         </div>
       </a>
       <a class="kat" href="zeytinyagli-urunler/zeytinyagli-urunler">
-        <div class="kat__img"><img src="../assets/img/urun/zeytinyagli.jpg" alt="Zeytinyağlı Ürünler" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
+        <div class="kat__img"><img src="../assets/img/urun/vitrin-hamur.jpg" alt="Zeytinyağlı Ürünler" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
         <div class="kat__ic">
           <h2>Zeytinyağlı Ürünler</h2>
           <p>3 çeşit</p>
@@ -154,21 +154,21 @@
         </div>
       </a>
       <a class="kat" href="tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari">
-        <div class="kat__img"><img src="../assets/img/urun/rulo-pasta.jpg" alt="Tartolet, Rulo Pasta & Lezzet Topları" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
+        <div class="kat__img"><img src="../assets/img/urun/pasta-gul.jpg" alt="Tartolet, Rulo Pasta & Lezzet Topları" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
         <div class="kat__ic">
           <h2>Tartolet, Rulo Pasta & Lezzet Topları</h2>
           <p>5 çeşit</p>
         </div>
       </a>
       <a class="kat" href="donut/donut">
-        <div class="kat__img"><img src="../assets/img/urun/donut.jpg" alt="Donut" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
+        <div class="kat__img"><img src="../assets/img/urun/cupcake.jpg" alt="Donut" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
         <div class="kat__ic">
           <h2>Donut</h2>
           <p>5 çeşit</p>
         </div>
       </a>
       <a class="kat" href="icecekler/icecekler">
-        <div class="kat__img"><img src="../assets/img/urun/icecek.jpg" alt="İçecekler" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
+        <div class="kat__img"><img src="../assets/img/urun/simit.jpg" alt="İçecekler" loading="lazy" decoding="async" width="1280" height="853" sizes="(max-width:860px) 94vw, 31vw"></div>
         <div class="kat__ic">
           <h2>İçecekler</h2>
           <p>7 çeşit</p>
@@ -192,8 +192,8 @@
   <div class="wrap foot__bar"><span>© <span id="yil">2026</span> Taşdelen Fırıncı</span><span>Tüm hakları saklıdır.</span></div>
 </footer>
 
-<script src="../assets/js/main.js?v=20260806wa1" defer=""></script>
-<script src="../assets/js/site-loader.js?v=20260806wa1" defer=""></script>
-<script src="../assets/js/cms-ext.js?v=20260806wa1" defer=""></script>
+<script src="../assets/js/main.js?v=20260806prod1" defer=""></script>
+<script src="../assets/js/site-loader.js?v=20260806prod1" defer=""></script>
+<script src="../assets/js/cms-ext.js?v=20260806prod1" defer=""></script>
 </body>
 </html>

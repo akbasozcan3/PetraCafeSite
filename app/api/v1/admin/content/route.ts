@@ -95,6 +95,10 @@ export async function PUT(request: Request) {
       return errorResponse(error.message, 400);
     }
     console.error("[PUT /admin/content]", error);
-    return errorResponse("İçerik kaydedilemedi.", 500);
+    const msg =
+      error instanceof Error && /DATABASE_URL|Postgres|Neon|yazılamadı|Vercel/i.test(error.message)
+        ? error.message
+        : "İçerik kaydedilemedi.";
+    return errorResponse(msg, 500);
   }
 }
