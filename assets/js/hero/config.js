@@ -2,6 +2,8 @@
 export const ASSETS = {
   cephe: '/assets/img/hero-cephe.webp',
   ic: '/assets/img/hero-ic.webp',
+  /** Telefon için dikey kadraj (kapı + tabela tam) */
+  mobile: '/assets/img/hero-mobile.webp',
 };
 
 export const FOV = 52;

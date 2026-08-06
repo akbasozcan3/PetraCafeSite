@@ -167,7 +167,7 @@ html.scene-ready .gate__poster{opacity:0;transition:opacity .9s var(--ease)}
 /* Telefon: poster HER ZAMAN görünsün (scene-ready olsa bile siyah kalmasın) */
 @media (max-width:860px){
   .gate__stage{
-    background:#0a0c08 url("/assets/img/hero-cephe.webp") center center / cover no-repeat !important;
+    background:#0a0c08 url("/assets/img/hero-mobile.webp") center center / cover no-repeat !important;
   }
   .gate__poster{
     inset:0!important;
@@ -254,6 +254,7 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
      büyük içerik boyaması (LCP) ve 0.9 sn sonra 3B sahne devraldığı
      için kalite 66 yeterli. Galeri hâlâ kalite 78 sürümleri kullanır. -->
 <link rel="preload" as="image" href="/assets/img/hero-cephe.webp" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/img/hero-mobile.webp" media="(max-width: 860px)" fetchpriority="high">
 </head>
 <body>
 
