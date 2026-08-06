@@ -12,8 +12,8 @@ const scrollHint = document.getElementById('scrollHint');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch = matchMedia('(pointer: coarse)').matches;
 
-/** Sadece genişlik — touch laptop’ta kapıyı kapatma; DevTools mobil = poster */
-function isPosterMode() {
+/** Dar ekran — performans / fallback için */
+function isNarrow() {
   return matchMedia('(max-width: 860px)').matches || window.innerWidth <= 860;
 }
 
@@ -55,9 +55,10 @@ function showPoster(reason) {
   const poster = document.querySelector('.gate__poster');
   const images = window.__FIRINCI_CONTENT?.images || {};
   if (poster) {
+    // WebGL yoksa: mobilde dikey kompozit, masaüstünde cephe
     const mobileUrl = absUrl(ASSETS.mobile) || '/assets/img/hero-mobile.webp';
     const desktopSafe = safeHeroUrl(images.heroPoster, images.heroCephe || ASSETS.cephe);
-    poster.src = isPosterMode() ? mobileUrl : desktopSafe;
+    poster.src = isNarrow() ? mobileUrl : desktopSafe;
     poster.style.opacity = '1';
     poster.style.visibility = 'visible';
     poster.removeAttribute('hidden');
@@ -158,7 +159,7 @@ async function start3D() {
     return;
   }
 
-  // Önceki poster/mobil stillerini temizle
+  // Önceki poster stillerini temizle — canvas görünsün
   canvas.style.display = '';
   canvas.style.opacity = '';
   canvas.style.pointerEvents = '';
@@ -167,7 +168,7 @@ async function start3D() {
 
   const assets = await resolveAssets();
   const engine = new CanvasEngine(canvas, gate, {
-    isMobile: false,
+    isMobile: isNarrow(),
     isTouch,
     reducedMotion,
     assets,
@@ -178,7 +179,7 @@ async function start3D() {
     window.__FIRINCI_SCENE = 'ok';
     window.__firinciHeroRefresh = () => engine.refreshScroll();
     markReady();
-    console.info('[Fırıncı] 3B kapı sahnesi aktif.');
+    console.info('[Fırıncı] 3B kapı sahnesi aktif.', isNarrow() ? '(mobil)' : '(masaüstü)');
 
     const tickUi = () => {
       updateUi(engine.smoothProgress);
@@ -187,6 +188,7 @@ async function start3D() {
     tickUi();
   } catch (err) {
     fail(err?.message || String(err));
+    bindPosterScroll();
   }
 }
 
@@ -196,27 +198,22 @@ async function boot() {
     return;
   }
 
-  // Dar ekran / telefon: sabit poster (kapı fotoğrafta, animasyon yok)
-  if (isPosterMode()) {
-    showPoster('mobile');
+  // Erişilebilirlik: hareket azaltılmışsa statik poster
+  if (reducedMotion) {
+    showPoster('reduced-motion');
     bindPosterScroll();
     return;
   }
 
+  // Mobil + masaüstü: aynı 3B kapı animasyonu
   await start3D();
 }
 
-// DevTools mobil ↔ masaüstü: reload yok (siyah flash); hemen poster’a geç
+// DevTools mobil ↔ masaüstü: WebGL boyutu için yenile
 try {
   const mq = matchMedia('(max-width: 860px)');
-  mq.addEventListener('change', (e) => {
-    if (e.matches) {
-      showPoster('resize-mobile');
-      bindPosterScroll();
-    } else {
-      // Masaüstüne dönünce temiz 3D için bir kez yenile
-      window.location.reload();
-    }
+  mq.addEventListener('change', () => {
+    window.location.reload();
   });
 } catch {
   /* eski tarayıcı */

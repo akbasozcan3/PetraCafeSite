@@ -554,20 +554,31 @@ body.page a.wa-float {
     transform: none !important;
     object-fit: cover !important;
     object-position: center center !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    z-index: 1 !important;
+  }
+  #scene {
+    display: block !important;
     z-index: 2 !important;
   }
-  /* scene-ready poster'ı gizlemesin — mobilde siyah ekran sebebi buydu */
-  html.scene-ready .gate__poster {
+  html.scene-ready #scene {
     opacity: 1 !important;
   }
+  /* 3B hazır: poster gizlenir — kapı animasyonu görünür */
+  html.scene-ready .gate__poster {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
   html.scene-poster #scene,
-  html.scene-ready #scene,
-  #scene {
+  html.scene-failed #scene {
     display: none !important;
     opacity: 0 !important;
     pointer-events: none !important;
+  }
+  html.scene-poster .gate__poster,
+  html.scene-failed .gate__poster {
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 2 !important;
   }
 }
 
