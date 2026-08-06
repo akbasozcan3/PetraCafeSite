@@ -2,12 +2,12 @@ import type { SiteContent, MenuContent } from "./types";
 
 export const DEFAULT_CONTENT: SiteContent = {
   images: {
-    heroPoster: "/assets/img/poster-1200.jpg",
-    heroCephe: "/assets/img/cephe.jpg",
-    heroIc: "/assets/img/ic-mekan.jpg",
+    heroPoster: "/assets/img/hero-cephe.webp",
+    heroCephe: "/assets/img/hero-cephe.webp",
+    heroIc: "/assets/img/hero-ic.webp",
     aboutInterior: "/assets/img/ic-mekan.jpg",
     ogImage: "/assets/img/urun/vitrin-hamur.jpg",
-    logo: "/assets/img/urun/logo.jpg",
+    logo: "/assets/img/logo.webp",
     favicon: "/assets/img/favicon-96.png",
   },
   navbar: {

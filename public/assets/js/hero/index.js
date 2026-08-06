@@ -21,9 +21,21 @@ function markReady() {
 function fail(reason) {
   window.__FIRINCI_SCENE = 'fail';
   console.warn('[Fırıncı] 3B sahne devre dışı:', reason);
-  if (canvas) canvas.style.display = 'none';
-  if (fallback) fallback.hidden = false;
-  markReady();
+  if (canvas) {
+    canvas.style.display = 'none';
+    canvas.style.opacity = '0';
+  }
+  // Poster kalsın — scene-ready poster'ı gizler; fail'de göstermek zorundayız
+  document.documentElement.classList.remove('scene-ready');
+  document.documentElement.classList.add('scene-failed');
+  const poster = document.querySelector('.gate__poster');
+  if (poster) {
+    poster.style.opacity = '1';
+    poster.style.visibility = 'visible';
+    if (fallback) fallback.hidden = true;
+  } else if (fallback) {
+    fallback.hidden = false;
+  }
 }
 
 function updateUi(progress) {
@@ -68,11 +80,24 @@ function updateUi(progress) {
 }
 
 async function resolveAssets() {
+  const pick = async (preferred, fallback) => {
+    const candidates = [preferred, fallback].filter(Boolean);
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url, { method: 'HEAD' });
+        if (res.ok) return url;
+      } catch {
+        /* try next */
+      }
+    }
+    return fallback || preferred || ASSETS.cephe;
+  };
+
   const cached = window.__FIRINCI_CONTENT?.images;
   if (cached) {
     return {
-      cephe: cached.heroCephe || ASSETS.cephe,
-      ic: cached.heroIc || ASSETS.ic,
+      cephe: await pick(cached.heroCephe, ASSETS.cephe),
+      ic: await pick(cached.heroIc, ASSETS.ic),
     };
   }
   try {
@@ -82,8 +107,8 @@ async function resolveAssets() {
       const img = json?.data?.images;
       if (img) {
         return {
-          cephe: img.heroCephe || ASSETS.cephe,
-          ic: img.heroIc || ASSETS.ic,
+          cephe: await pick(img.heroCephe, ASSETS.cephe),
+          ic: await pick(img.heroIc, ASSETS.ic),
         };
       }
     }

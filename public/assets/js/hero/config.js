@@ -1,7 +1,7 @@
 ﻿/** Hero sahne sabitleri — orijinal scene.js ile aynı değerler */
 export const ASSETS = {
-  cephe: 'assets/img/cephe.jpg',
-  ic: 'assets/img/ic-mekan.jpg',
+  cephe: 'assets/img/hero-cephe.webp',
+  ic: 'assets/img/hero-ic.webp',
 };
 
 export const FOV = 52;
