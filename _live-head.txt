@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<!-- Başlık ve açıklama, İşletme Profili'ndeki gerçek arama verisine göre
+     yazıldı: "fırın" (82), "pastane" (63), "Çekmeköy" ve "Taşdelen" (194)
+     güçlü alanlarda geçiyor. "pastane" önceden yalnızca gövdedeydi. -->
+<title>Taşdelen Fırıncı — Fırın ve Pastane | Çekmeköy Taşdelen</title>
+<meta name="description" content="Çekmeköy Taşdelen'de 7/24 açık fırın ve pastane. Her gün taze ekmek, simit, poğaça, börek, kurabiye, baklava, tatlı ve yaş pasta; şeker hamurlu özel tasarım pastalar. Sipariş: 0552 340 02 02" />
+<meta name="theme-color" content="#12140E" />
+<meta property="og:title" content="Taşdelen Fırıncı — Fırın ve Pastane | Çekmeköy" />
+<meta property="og:description" content="Çekmeköy Taşdelen'de 7/24 açık fırın ve pastane. Taze ekmek, simit, poğaça, börek, tatlı, yaş pasta ve özel tasarım pastalar." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Taşdelen Fırıncı" />
+<meta property="og:url" content="https://www.firincitasdelen.com.tr/" />
+<meta property="og:image" content="https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-hamur.jpg" />
+<meta property="og:locale" content="tr_TR" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://www.firincitasdelen.com.tr/" />
+
+<!-- Yapılandırılmış veri: arama motorlarının ve yapay zekâ yanıt
+     motorlarının işletmeyi bir VARLIK olarak tanıması için. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Bakery",
+  "@id": "https://www.firincitasdelen.com.tr/#bakery",
+  "name": "Taşdelen Fırıncı",
+  "slogan": "Taze · Lezzetli · Doğal",
+  "description": "Çekmeköy Taşdelen'de her gün taze üretilen ekmek, simit, poğaça, börek, pasta ve tatlı çeşitleri. Şeker hamurlu özel tasarım pasta siparişi alınır.",
+  "url": "https://www.firincitasdelen.com.tr/",
+  "telephone": "+90-552-340-02-02",
+  "email": "info@firincitasdelen.com.tr",
+  "image": "https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-hamur.jpg",
+  "logo": "https://www.firincitasdelen.com.tr/assets/img/urun/logo.jpg",
+  "priceRange": "₺₺",
+  "currenciesAccepted": "TRY",
+  "paymentAccepted": "Nakit, Kredi Kartı",
+  "sameAs": ["https://www.instagram.com/firincitasdelenn/"],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Taşdelen Mahallesi, Turgut Özal Caddesi No:108/C, Bulvar Rezidans A Blok",
+    "addressLocality": "Çekmeköy",
+    "addressRegion": "İstanbul",
+    "addressCountry": "TR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 41.031267,
+    "longitude": 29.229361
+  },
+  "hasMap": "https://www.google.com/maps/search/?api=1&query=41.031267%2C29.229361",
+  "areaServed": [
+    { "@type": "Place", "name": "Taşdelen, Çekmeköy" },
+    { "@type": "Place", "name": "Alemdağ, Çekmeköy" },
+    { "@type": "Place", "name": "Çekmeköy" },
+    { "@type": "Place", "name": "Sancaktepe" },
+    { "@type": "Place", "name": "Ümraniye" },
+    { "@type": "Place", "name": "İstanbul Anadolu Yakası" }
+  ],
+  "knowsLanguage": "tr",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "00:00", "closes": "23:59"
+    }
+  ],
+  "servesCuisine": "Fırın ve pastane ürünleri",
+  "hasMenu": {
+    "@type": "Menu",
+    "name": "Taşdelen Fırıncı Menüsü",
+    "url": "https://www.firincitasdelen.com.tr/#menu",
+    "hasMenuSection": [
+      { "@type": "MenuSection", "name": "Ekmek Çeşitleri", "url": "https://www.firincitasdelen.com.tr/urunler/ekmek-cesitleri/", "numberOfItems": 12 },
+      { "@type": "MenuSection", "name": "Ekşi Mayalı Ekmekler", "url": "https://www.firincitasdelen.com.tr/urunler/eksi-mayali-ekmekler/", "numberOfItems": 6 },
+      { "@type": "MenuSection", "name": "Simit, Poğaça & Açma", "url": "https://www.firincitasdelen.com.tr/urunler/simit-pogaca-acma/", "numberOfItems": 22 },
+      { "@type": "MenuSection", "name": "Kurabiye Çeşitleri", "url": "https://www.firincitasdelen.com.tr/urunler/kurabiye-cesitleri/", "numberOfItems": 8 },
+      { "@type": "MenuSection", "name": "Adet Büyük Kurabiyeler", "url": "https://www.firincitasdelen.com.tr/urunler/buyuk-kurabiyeler/", "numberOfItems": 10 },
+      { "@type": "MenuSection", "name": "Galeta, Çubuk & Kokteyl", "url": "https://www.firincitasdelen.com.tr/urunler/galeta-cubuk-kokteyl/", "numberOfItems": 9 },
+      { "@type": "MenuSection", "name": "Baklava & Şerbetli Tatlılar", "url": "https://www.firincitasdelen.com.tr/urunler/baklava-serbetli/", "numberOfItems": 11 },
+      { "@type": "MenuSection", "name": "Sütlü Tatlılar", "url": "https://www.firincitasdelen.com.tr/urunler/sutlu-tatlilar/", "numberOfItems": 9 },
+      { "@type": "MenuSection", "name": "Zeytinyağlı Ürünler", "url": "https://www.firincitasdelen.com.tr/urunler/zeytinyagli-urunler/", "numberOfItems": 3 },
+      { "@type": "MenuSection", "name": "Pastalar", "url": "https://www.firincitasdelen.com.tr/urunler/pastalar/", "numberOfItems": 14 },
+      { "@type": "MenuSection", "name": "Tek Pasta & Dilim", "url": "https://www.firincitasdelen.com.tr/urunler/tek-pasta-dilim/", "numberOfItems": 11 },
+      { "@type": "MenuSection", "name": "Tartolet, Rulo & Lezzet Topları", "url": "https://www.firincitasdelen.com.tr/urunler/tartolet-rulo-lezzet-toplari/", "numberOfItems": 5 },
+      { "@type": "MenuSection", "name": "Donut", "url": "https://www.firincitasdelen.com.tr/urunler/donut/", "numberOfItems": 5 },
+      { "@type": "MenuSection", "name": "İçecekler", "url": "https://www.firincitasdelen.com.tr/urunler/icecekler/", "numberOfItems": 7 }
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Taşdelen Fırıncı nerede?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Fırın, Taşdelen Mahallesi, Turgut Özal Caddesi No:108/C adresinde, Bulvar Rezidans A Blok'un önünde yer alır (Çekmeköy / İstanbul). Cadde üzerinde ücretsiz park imkânı bulunur." } },
+    { "@type": "Question", "name": "Taşdelen Fırıncı'nın çalışma saatleri nedir?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Fırınımız 7 gün 24 saat açıktır; gece de hizmet veriyoruz. Ekmekler sabah saatlerinde en geniş çeşitle bulunur, gün içinde tükenen ürünler yeniden üretime girer." } },
+    { "@type": "Question", "name": "Özel tasarım pasta siparişi nasıl verilir?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Siparişler telefon (0552 340 02 02) veya WhatsApp ile alınır. Tema, kişi sayısı ve teslim gününün belirtilmesi yeterlidir. Şeker hamurlu ve figürlü pastalarda hazırlık süresi gerektiği için birkaç gün önceden haber verilmesi gerekir." } },
+    { "@type": "Question", "name": "Kaç kişilik pasta almalıyım?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Kişi başı 100–120 gram hesaplanır. 4–6 kişi için küçük boy, 6–8 kişi için orta boy yeterlidir. Yirmi kişiyi geçen organizasyonlarda kesme pasta veya rulo pasta daha pratiktir." } },
+    { "@type": "Question", "name": "Taşdelen Fırıncı'da kahvaltılık ne alabilirim?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Kahvaltı sofrası için susamlı ve tereyağlı simit, sade, peynirli, kaşarlı ve patatesli poğaça, kaşarlı ve peynirli açma, tereyağlı kol böreği ile günlük ekmek çeşitleri bulunur. Yanına süt ve meyve suyu seçenekleri vardır. Fırın 7 gün 24 saat açıktır." } },
+    { "@type": "Question", "name": "Fiyatlar sitede yazıyor mu?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Menüde fiyat yayınlanmıyor. Güncel fiyat bilgisi için tezgâha danışılabilir veya fırın telefonla aranabilir." } },
+    { "@type": "Question", "name": "Online sipariş veya kargo var mı?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Site üzerinden online sipariş alınmıyor.

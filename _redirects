@@ -1,0 +1,4 @@
+# Netlify / Cloudflare Pages redirects
+/urunler/     /urunler/urunler   200
+/blog/        /blog/blog         200
+/             /index.htm         200

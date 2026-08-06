@@ -1,0 +1,412 @@
+Uri: https://www.firincitasdelen.com.tr/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\index.htm
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/favicon.ico
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\favicon.ico
+Content Type: image/vnd.microsoft.icon
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/favicon-96.png
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\favicon-96.png
+Content Type: image/png
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/apple-touch-icon.png
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\apple-touch-icon.png
+Content Type: image/png
+
+Uri: https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\css2.css
+Content Type: text/css
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/poster-1200.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\poster-1200.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/urunler/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\urunler
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/blog/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\blog\blog
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/ekmek-cesitleri/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\ekmek-cesitleri\ekmek-cesitleri
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/eksi-mayali-ekmekler/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\eksi-mayali-ekmekler\eksi-mayali-ekmekler
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/simit-pogaca-acma/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\simit-pogaca-acma\simit-pogaca-acma
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/kurabiye-cesitleri/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\kurabiye-cesitleri\kurabiye-cesitleri
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/buyuk-kurabiyeler/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\buyuk-kurabiyeler\buyuk-kurabiyeler
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/galeta-cubuk-kokteyl/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\galeta-cubuk-kokteyl\galeta-cubuk-kokteyl
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/baklava-serbetli/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\baklava-serbetli\baklava-serbetli
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/sutlu-tatlilar/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\sutlu-tatlilar\sutlu-tatlilar
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/zeytinyagli-urunler/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\zeytinyagli-urunler\zeytinyagli-urunler
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/pastalar/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\pastalar\pastalar
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/tek-pasta-dilim/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\tek-pasta-dilim\tek-pasta-dilim
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/tartolet-rulo-lezzet-toplari/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\tartolet-rulo-lezzet-toplari\tartolet-rulo-lezzet-toplari
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/donut/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\donut\donut
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/urunler/icecekler/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\urunler\icecekler\icecekler
+Content Type: text/html
+
+Uri: https://www.instagram.com/firincitasdelenn/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\firincitasdelenn\index.htm
+Content Type: text/html
+
+Uri: https://www.google.com/maps/dir/?api=1&destination=41.031267%2C29.229361
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\maps\dir\index.htm
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/ic-mekan.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\ic-mekan.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-gul.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-gul.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-safari.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-safari.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-kanat.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-kanat.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-drip.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-drip.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-cocuk-1.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-cocuk-1.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-cocuk-2.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-cocuk-2.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-marka.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-marka.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-tac.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-tac.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/cephe.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\cephe.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/kapi.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\kapi.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-pasta.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\vitrin-pasta.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/ekmek-rustik.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\ekmek-rustik.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-hamur.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\vitrin-hamur.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/simit.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\simit.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pogaca-tepsi.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pogaca-tepsi.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/tatli-bufe.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\tatli-bufe.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/ekmek-cesit.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\ekmek-cesit.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/logo.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\logo.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/vendor/lenis.min.js
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\vendor\lenis.min.js
+Content Type: application/javascript
+
+Uri: https://www.firincitasdelen.com.tr/assets/vendor/gsap.min.js
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\vendor\gsap.min.js
+Content Type: application/javascript
+
+Uri: https://www.firincitasdelen.com.tr/assets/vendor/ScrollTrigger.min.js
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\vendor\ScrollTrigger.min.js
+Content Type: application/javascript
+
+Uri: https://www.firincitasdelen.com.tr/assets/js/scene.js
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\js\scene.js
+Content Type: application/javascript
+
+Uri: https://www.firincitasdelen.com.tr/assets/js/main.js
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\js\main.js
+Content Type: application/javascript
+
+Uri: https://www.firincitasdelen.com.tr/assets/js/content.js
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\js\content.js
+Content Type: application/javascript
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/poster-720.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\poster-720.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/ic-mekan-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\ic-mekan-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/ic-mekan-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\ic-mekan-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/ic-mekan-1100.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\ic-mekan-1100.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-gul-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-gul-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-gul-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-gul-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-safari-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-safari-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-safari-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-safari-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-kanat-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-kanat-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-kanat-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-kanat-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-drip-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-drip-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-drip-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-drip-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-cocuk-1-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-cocuk-1-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-cocuk-1-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-cocuk-1-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-cocuk-2-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-cocuk-2-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-cocuk-2-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-cocuk-2-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-marka-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-marka-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-marka-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-marka-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-tac-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-tac-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pasta-tac-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pasta-tac-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/cephe-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\cephe-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/cephe-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\cephe-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/cephe-1100.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\cephe-1100.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/kapi-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\kapi-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/kapi-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\kapi-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-pasta-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\vitrin-pasta-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-pasta-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\vitrin-pasta-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/ekmek-rustik-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\ekmek-rustik-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/ekmek-rustik-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\ekmek-rustik-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/ekmek-rustik-1100.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\ekmek-rustik-1100.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-hamur-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\vitrin-hamur-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-hamur-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\vitrin-hamur-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/vitrin-hamur-1100.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\vitrin-hamur-1100.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/simit-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\simit-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/simit-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\simit-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/simit-1100.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\simit-1100.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pogaca-tepsi-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pogaca-tepsi-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pogaca-tepsi-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pogaca-tepsi-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/pogaca-tepsi-1100.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\pogaca-tepsi-1100.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/tatli-bufe-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\tatli-bufe-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/tatli-bufe-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\tatli-bufe-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/ekmek-cesit-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\ekmek-cesit-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/ekmek-cesit-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\ekmek-cesit-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/ekmek-cesit-1100.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\ekmek-cesit-1100.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/css/style.css
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\css\style.css
+Content Type: text/css
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/cupcake.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\cupcake.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/cupcake-400.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\cupcake-400.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/assets/img/urun/cupcake-700.jpg
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\assets\img\urun\cupcake-700.jpg
+Content Type: image/jpeg
+
+Uri: https://www.firincitasdelen.com.tr/blog/pasta-siparisi-rehberi/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\blog\pasta-siparisi-rehberi\pasta-siparisi-rehberi
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/blog/hangi-ekmek-kime-uygun/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\blog\hangi-ekmek-kime-uygun\hangi-ekmek-kime-uygun
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/blog/ekmek-nasil-saklanir/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\blog\ekmek-nasil-saklanir\ekmek-nasil-saklanir
+Content Type: text/html
+
+Uri: https://www.firincitasdelen.com.tr/blog/eksi-maya-ekmek-nedir/
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\blog\eksi-maya-ekmek-nedir\eksi-maya-ekmek-nedir
+Content Type: text/html
+
+Uri: https://api.whatsapp.com/send/?phone=905523400202&text&type=phone_number&app_absent=0
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\send\index.htm
+Content Type: text/html
+
+Uri: https://api.whatsapp.com/send/?phone=905523400202&text=Merhaba%2C+Taşdelen+Fırıncı’ya+sipariş+vermek+istiyorum.&type=phone_number&app_absent=0
+File Name: C:\Downloaded Web Sites\www.firincitasdelen.com.tr\send\index-1.htm
+Content Type: text/html
+

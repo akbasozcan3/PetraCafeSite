@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.local
+.next/
+out/
+data/auth.json
+data/users.json
+data/activity-log.json
+data/backups/
+public/uploads/*
+!public/uploads/.gitkeep
+server/data/auth.json
+server/data/uploads/*
+!server/data/uploads/.gitkeep
+.DS_Store
+*.log
+.vercel

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/v1/admin/
+Disallow: /api/admin/
+
+Sitemap: https://www.firincitasdelen.com.tr/sitemap.xml

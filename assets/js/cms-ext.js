@@ -1,0 +1,1562 @@
+(function () {
+  "use strict";
+
+  function $(sel, root) {
+    return (root || document).querySelector(sel);
+  }
+  function $all(sel, root) {
+    return Array.prototype.slice.call((root || document).querySelectorAll(sel));
+  }
+  function setText(sel, val) {
+    var el = $(sel);
+    if (el && val != null && val !== "") el.textContent = val;
+  }
+  function mediaUrl(path) {
+    if (!path) return "";
+    if (path.indexOf("http") === 0 || path.indexOf("/") === 0) return path;
+    return "/" + path.replace(/^\//, "");
+  }
+
+  function brandName() {
+    var c = window.__FIRINCI_CONTENT || {};
+    return (
+      (c.brand && c.brand.displayName) ||
+      (c.seo && c.seo.siteName) ||
+      (c.footer && c.footer.markaAdi) ||
+      (c.navbar && c.navbar.logoText) ||
+      "Fırıncı"
+    );
+  }
+
+  function brandShort() {
+    var c = window.__FIRINCI_CONTENT || {};
+    return (c.brand && c.brand.shortName) || (c.navbar && c.navbar.logoText) || brandName();
+  }
+
+  function sitePrefix() {
+    var parts = window.location.pathname.replace(/^\//, "").split("/").filter(Boolean);
+    if (parts.length <= 1) return "";
+    return "../".repeat(parts.length - 1);
+  }
+
+  function resolveHref(href) {
+    if (!href) return "#";
+    if (/^(https?:|tel:|mailto:|whatsapp:)/i.test(href)) return href;
+    if (href.charAt(0) === "#") return "/index.htm" + href;
+    var clean = String(href).replace(/^\.\//, "").replace(/^(\.\.\/)+/, "");
+    // Always absolute for site sections — relative + sitePrefix broke category clicks
+    if (/^(urunler|blog|assets|uploads)\//i.test(clean) || /^index\.htm/i.test(clean)) {
+      return "/" + clean.replace(/^\//, "");
+    }
+    if (href.charAt(0) === "/") return href;
+    return "/" + clean.replace(/^\//, "");
+  }
+
+  function toCategoryHref(href, groupName) {
+    var resolved = resolveHref(href || "");
+    if (!resolved || resolved === "#" || /wa\.me|whatsapp/i.test(resolved)) {
+      resolved = getGroupCategoryHref(groupName || "");
+    }
+    if (/^urunler\//i.test(resolved)) resolved = "/" + resolved.replace(/^\//, "");
+    return resolved;
+  }
+
+  function ensureMobileNav() {
+    var header = $("header.nav") || $(".nav");
+    if (!header) return;
+
+    var burger = $("#burger") || $(".nav__burger", header);
+    if (!burger) {
+      burger = document.createElement("button");
+      burger.className = "nav__burger";
+      burger.id = "burger";
+      burger.setAttribute("aria-label", "Menüyü aç");
+      burger.setAttribute("aria-expanded", "false");
+      burger.setAttribute("aria-controls", "mobileMenu");
+      header.appendChild(burger);
+    }
+    if (!burger.querySelector("span")) {
+      burger.innerHTML = "<span></span><span></span><span></span>";
+    }
+
+    var menu = $("#mobileMenu") || $(".mobile-menu");
+    if (!menu) {
+      menu = document.createElement("div");
+      menu.className = "mobile-menu";
+      menu.id = "mobileMenu";
+      menu.hidden = true;
+      if (header.nextSibling) header.parentNode.insertBefore(menu, header.nextSibling);
+      else header.parentNode.appendChild(menu);
+    }
+    if (!menu.querySelector(".mobile-menu__links")) {
+      var panel = document.createElement("div");
+      panel.className = "mobile-menu__panel";
+      panel.innerHTML =
+        '<p class="mobile-menu__label">Menü</p><nav class="mobile-menu__links" aria-label="Mobil menü"></nav>' +
+        '<a href="tel:" class="btn btn--lg mobile-menu__cta">Sipariş</a>';
+      while (menu.firstChild) {
+        var child = menu.firstChild;
+        if (child.tagName === "A" && !child.classList.contains("btn")) {
+          panel.querySelector(".mobile-menu__links").appendChild(child);
+        } else if (child.tagName === "A") {
+          var oldCta = panel.querySelector(".mobile-menu__cta");
+          if (oldCta) oldCta.replaceWith(child);
+          else panel.appendChild(child);
+          child.className = "btn btn--lg mobile-menu__cta";
+        } else {
+          menu.removeChild(child);
+        }
+      }
+      menu.appendChild(panel);
+    }
+
+    function closeMenu() {
+      menu.hidden = true;
+      burger.setAttribute("aria-expanded", "false");
+      burger.setAttribute("aria-label", "Menüyü aç");
+      document.documentElement.classList.remove("menu-open");
+      try {
+        if (window.__firinciLenis && window.__firinciLenis.start) window.__firinciLenis.start();
+      } catch (e) {}
+    }
+
+    function openMenu() {
+      menu.hidden = false;
+      burger.setAttribute("aria-expanded", "true");
+      burger.setAttribute("aria-label", "Menüyü kapat");
+      document.documentElement.classList.add("menu-open");
+      try {
+        if (window.__firinciLenis && window.__firinciLenis.stop) window.__firinciLenis.stop();
+      } catch (e) {}
+    }
+
+    function toggleMenu(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      }
+      if (burger.getAttribute("aria-expanded") === "true") closeMenu();
+      else openMenu();
+    }
+
+    if (!burger.dataset.navBound) {
+      burger.dataset.navBound = "1";
+      burger.addEventListener("click", toggleMenu, true);
+      menu.addEventListener("click", function (ev) {
+        var a = ev.target.closest("a");
+        if (a) closeMenu();
+      });
+      document.addEventListener("keydown", function (ev) {
+        if (ev.key === "Escape") closeMenu();
+      });
+      window.addEventListener(
+        "resize",
+        function () {
+          if (window.innerWidth > 860) closeMenu();
+        },
+        { passive: true }
+      );
+    }
+
+    window.__firinciCloseMenu = closeMenu;
+    window.__firinciOpenMenu = openMenu;
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ensureMobileNav);
+  } else {
+    ensureMobileNav();
+  }
+
+
+
+  function setMeta(sel, attr, val) {
+    if (!val) return;
+    var el = document.querySelector(sel);
+    if (el) el.setAttribute(attr, val);
+  }
+
+  function isHomePage() {
+    return !document.body.classList.contains("page");
+  }
+
+  function applySeo(seo) {
+    if (!seo) return;
+    // Alt sayfa title/canonical'ını ana sayfa SEO ile ezme
+    if (!isHomePage()) {
+      if (seo.siteName) setMeta('meta[property="og:site_name"]', "content", seo.siteName);
+      if (seo.themeColor) setMeta('meta[name="theme-color"]', "content", seo.themeColor);
+      return;
+    }
+    if (seo.title) document.title = seo.title;
+    setMeta('meta[name="description"]', "content", seo.description);
+    setMeta('meta[property="og:title"]', "content", seo.ogTitle || seo.title);
+    setMeta('meta[property="og:description"]', "content", seo.ogDescription || seo.description);
+    setMeta('meta[property="og:site_name"]', "content", seo.siteName);
+    setMeta('meta[property="og:url"]', "content", seo.canonicalUrl);
+    setMeta('meta[name="theme-color"]', "content", seo.themeColor);
+    var can = document.querySelector('link[rel="canonical"]');
+    if (can && seo.canonicalUrl) can.setAttribute("href", seo.canonicalUrl);
+  }
+
+  function ensureNavLogoImg() {
+    var logoLink = $(".nav__logo");
+    if (!logoLink) return null;
+    var navImg = $(".nav__logo-img", logoLink);
+    if (navImg) return navImg;
+    navImg = document.createElement("img");
+    navImg.className = "nav__logo-img";
+    navImg.setAttribute("data-site", "logo");
+    navImg.alt = "Logo";
+    navImg.width = 64;
+    navImg.height = 64;
+    navImg.decoding = "async";
+    navImg.hidden = true;
+    var svg = logoLink.querySelector("svg");
+    if (svg) {
+      svg.classList.add("nav__logo-fallback");
+      logoLink.insertBefore(navImg, svg);
+    } else {
+      logoLink.insertBefore(navImg, logoLink.firstChild);
+    }
+    var span = logoLink.querySelector("span:not(.nav__logo-text)");
+    if (span && !span.classList.contains("nav__logo-text")) span.classList.add("nav__logo-text");
+    return navImg;
+  }
+
+  function applyFooter(footer, images) {
+    if (!footer) return;
+    var foot = $(".foot");
+    if (!foot) return;
+    var mark = $(".foot__mark", foot);
+    if (mark && images && images.logo) {
+      var url = images.logo;
+      mark.src = url.indexOf("http") === 0 || url.indexOf("/") === 0 ? url : "/" + url.replace(/^\//, "");
+      if (footer.markaAdi) mark.alt = footer.markaAdi + " logosu";
+    }
+    var brandP = foot.querySelector(".foot__grid > div:first-child p");
+    if (brandP && footer.slogan) {
+      brandP.innerHTML = "";
+      footer.slogan.split(/\n/).forEach(function (line, i) {
+        if (i) brandP.appendChild(document.createElement("br"));
+        brandP.appendChild(document.createTextNode(line));
+      });
+    }
+    var cols = foot.querySelectorAll(".foot__grid > div");
+    // cols[0] = logo, then footer columns
+    if (footer.kolonlar && footer.kolonlar.length && cols.length > 1) {
+      footer.kolonlar.forEach(function (col, i) {
+        var box = cols[i + 1];
+        if (!box) return;
+        box.innerHTML = "";
+        var h4 = document.createElement("h4");
+        h4.textContent = col.baslik || "";
+        box.appendChild(h4);
+        (col.links || []).forEach(function (link) {
+          var a = document.createElement("a");
+          a.href = resolveHref(link.href || "#");
+          a.textContent = link.label || "";
+          if (/^https?:/i.test(link.href || "") && /wa\.me|instagram|maps/i.test(link.href || "")) {
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+          }
+          box.appendChild(a);
+        });
+      });
+    }
+    var bar = $(".foot__bar", foot);
+    if (bar) {
+      var spans = bar.querySelectorAll("span");
+      if (spans[0] && footer.markaAdi) {
+        var yil = document.getElementById("yil");
+        var year = yil ? yil.textContent : String(new Date().getFullYear());
+        spans[0].innerHTML = "© <span id=\"yil\">" + year + "</span> " + footer.markaAdi;
+      }
+      if (spans[1] && footer.yasalMetin) spans[1].textContent = footer.yasalMetin;
+    }
+  }
+
+  function applyWaFloat(wa, iletisim) {
+    var a = $(".wa-float");
+    if (!a) return;
+    var base = (iletisim && iletisim.whatsapp) || a.getAttribute("href") || "";
+    if (!base && iletisim) {
+      var dig = String(iletisim.telefonHam || iletisim.telefon || "").replace(/\D/g, "");
+      if (dig.charAt(0) === "0" && dig.length === 11) dig = "90" + dig.slice(1);
+      if (dig) base = "https://wa.me/" + dig;
+    }
+    if (!base) return;
+    base = base.split("?")[0];
+    if (wa && wa.onYazi) {
+      a.href = base + "?text=" + encodeURIComponent(wa.onYazi);
+    } else if (iletisim && iletisim.whatsapp) {
+      a.href = iletisim.whatsapp.indexOf("?") > -1 ? iletisim.whatsapp : iletisim.whatsapp + "?text=" + encodeURIComponent("Merhaba");
+    }
+    if (wa && wa.ariaLabel) a.setAttribute("aria-label", wa.ariaLabel);
+    if (wa && wa.baslik) {
+      var t = $(".wa-float__title", a);
+      if (t) t.textContent = wa.baslik;
+    }
+    if (wa && wa.alt) {
+      var s = $(".wa-float__sub", a);
+      if (s) {
+        var dot = s.querySelector(".wa-dot");
+        s.textContent = "";
+        if (dot) s.appendChild(dot);
+        else {
+          var i = document.createElement("i");
+          i.className = "wa-dot";
+          s.appendChild(i);
+        }
+        s.appendChild(document.createTextNode(" " + wa.alt));
+      }
+    }
+  }
+
+  function applyYorumlarMeta(meta) {
+    if (!meta) return;
+    var skor = $(".reviews-score");
+    if (skor && meta.googleSkor) skor.textContent = meta.googleSkor;
+    var sayac = $(".reviews-count");
+    if (sayac && meta.googleSayacMetin) sayac.textContent = meta.googleSayacMetin;
+    var cta = $(".reviews-badge-cta");
+    if (cta && meta.badgeCta) cta.textContent = meta.badgeCta;
+    var badge = $("#reviewsBadge") || $(".reviews-badge");
+    if (badge && meta.googleUrl) {
+      badge.setAttribute("href", meta.googleUrl);
+      if (badge.tagName === "A") {
+        badge.setAttribute("target", "_blank");
+        badge.setAttribute("rel", "noopener noreferrer");
+      }
+    }
+  }
+
+  function applyLegal(legal) {
+    if (!legal) return;
+    var box = document.getElementById("legalNote");
+    if (!box) {
+      var foot = $(".foot");
+      if (!foot) return;
+      box = document.createElement("div");
+      box.id = "legalNote";
+      box.className = "wrap";
+      box.style.cssText = "padding:8px 0 20px;font-size:12px;color:var(--muted);line-height:1.5";
+      foot.appendChild(box);
+    }
+    var parts = [legal.kvkk, legal.gizlilik, legal.cerez].filter(Boolean);
+    box.textContent = parts.join(" · ");
+  }
+
+  function applyIletisim(c) {
+    if (!c) return;
+    var sec = $("#iletisim");
+    if (sec) {
+      if (c.baslik) setText("#iletisim .h2", c.baslik);
+      if (c.giris) setText("#iletisim .lead", c.giris);
+      if (c.metin) setText("#iletisim .body", c.metin);
+      var rows = sec.querySelectorAll(".corp__row");
+      if (rows.length >= 5) {
+        var labelMap = [
+          c.etiketAdres || "Adres",
+          c.etiketSaatler || "Çalışma saatleri",
+          c.etiketTelefon || "Telefon",
+          c.etiketWhatsapp || "WhatsApp",
+          c.etiketOzelPasta || "Özel pasta",
+        ];
+        rows.forEach(function (row, i) {
+          var b = $("b", row);
+          if (b && labelMap[i]) b.textContent = labelMap[i];
+        });
+        var adresSpan = $("span", rows[0]);
+        if (adresSpan && (c.adresSatir1 || c.adres)) {
+          adresSpan.textContent = "";
+          var lines = [c.adresSatir1, c.adresSatir2, c.adresSatir3].filter(Boolean);
+          if (!lines.length && c.adres) lines = [c.adres];
+          lines.forEach(function (line, i) {
+            if (i) adresSpan.appendChild(document.createElement("br"));
+            adresSpan.appendChild(document.createTextNode(line));
+          });
+        }
+        if (c.saatler) {
+          var saat = $("span", rows[1]);
+          if (saat) saat.textContent = c.saatler;
+        }
+        if (c.telefon || c.telefonHam) {
+          var telRow = $("a", rows[2]) || $("span", rows[2]);
+          if (telRow) {
+            if (telRow.tagName === "A") {
+              telRow.href = "tel:" + String(c.telefonHam || c.telefon).replace(/\s/g, "");
+              telRow.textContent = c.telefon || telRow.textContent;
+            } else {
+              var telA = $("a", rows[2]);
+              if (telA) {
+                telA.href = "tel:" + String(c.telefonHam || c.telefon).replace(/\s/g, "");
+                if (c.telefon) telA.textContent = c.telefon;
+              }
+            }
+          }
+        }
+        if (c.whatsapp || c.telefon) {
+          var waA = $("a", rows[3]);
+          if (waA) {
+            waA.href = (c.whatsapp || "").indexOf("?") > -1
+              ? c.whatsapp
+              : (c.whatsapp || ("https://wa.me/" + waPhoneDigits())) + "?text=Merhaba%2C%20sipari%C5%9F%20vermek%20istiyorum.";
+            if (c.telefon) waA.textContent = c.telefon;
+          }
+        }
+        if (c.ozelPastaNot) {
+          var pastaNot = $("span", rows[4]);
+          if (pastaNot) pastaNot.textContent = c.ozelPastaNot;
+        }
+      }
+      var mapBtn = $(".map-btn", sec);
+      if (mapBtn && (c.koordinat || c.haritaSorgu)) {
+        mapBtn.href = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(c.koordinat || c.haritaSorgu);
+      }
+      var contacts = sec.querySelectorAll(".contact-lines a");
+      if (c.eyebrow) {
+        var eye = $("#iletisim .eyebrow");
+        if (eye) eye.textContent = c.eyebrow;
+      }
+      if (contacts.length >= 4) {
+        if (c.telefonHam || c.telefon) {
+          contacts[0].href = "tel:" + String(c.telefonHam || c.telefon).replace(/\s/g, "");
+          var b0 = $("b", contacts[0]);
+          if (b0 && c.telefon) b0.textContent = c.telefon;
+          var s0 = $("span", contacts[0]);
+          if (s0 && c.telefonAlt) s0.textContent = c.telefonAlt;
+        }
+        if (c.whatsapp) {
+          contacts[1].href = c.whatsapp.indexOf("?") > -1 ? c.whatsapp : c.whatsapp + "?text=Merhaba%2C%20sipari%C5%9F%20vermek%20istiyorum.";
+        }
+        var b1 = $("b", contacts[1]);
+        if (b1 && c.whatsappBaslik) b1.textContent = c.whatsappBaslik;
+        var s1 = $("span", contacts[1]);
+        if (s1 && c.whatsappAlt) s1.textContent = c.whatsappAlt;
+        if (c.instagramUrl) {
+          contacts[2].href = c.instagramUrl;
+          var b2 = $("b", contacts[2]);
+          if (b2 && c.instagram) b2.textContent = c.instagram;
+          var s2 = $("span", contacts[2]);
+          if (s2 && c.instagramAlt) s2.textContent = c.instagramAlt;
+        }
+        if (c.eposta) {
+          contacts[3].href = "mailto:" + c.eposta;
+          var b3 = $("b", contacts[3]);
+          if (b3) b3.textContent = c.eposta;
+          var s3 = $("span", contacts[3]);
+          if (s3 && c.epostaAlt) s3.textContent = c.epostaAlt;
+        }
+      }
+      var mapBtnLabel = $(".map-btn span", sec);
+      if (mapBtnLabel && c.haritaButonMetin) mapBtnLabel.textContent = c.haritaButonMetin;
+    }
+    var tel = c.telefonHam || c.telefon;
+    if (tel) {
+      $all('a[href^="tel:"]').forEach(function (a) {
+        a.href = "tel:" + String(tel).replace(/\s/g, "");
+        if (
+          (a.classList.contains("nav__cta") ||
+            a.classList.contains("mobile-menu__cta") ||
+            a.closest(".foot")) &&
+          c.telefon
+        ) {
+          a.textContent = c.telefon;
+        }
+      });
+    }
+    var waHref = c.whatsapp
+      ? c.whatsapp.indexOf("?") > -1
+        ? c.whatsapp
+        : c.whatsapp + "?text=Merhaba%2C%20sipari%C5%9F%20vermek%20istiyorum."
+      : "https://wa.me/" + waPhoneDigits() + "?text=Merhaba%2C%20sipari%C5%9F%20vermek%20istiyorum.";
+    $all(".wa-float").forEach(function (a) {
+      a.href = waHref;
+    });
+    $all("a[href*='wa.me']").forEach(function (a) {
+      if (a.classList.contains("wa-float")) return;
+      if (a.closest(".menu__list, .urun-yan, .urun-kart, .menu__group")) return;
+      a.href = waHref;
+    });
+    // Product / menu WA links: keep message, swap number
+    $all("a[href*='wa.me']").forEach(function (a) {
+      if (!a.closest(".menu__list, .urun-yan, .urun-kart, .menu__group, .cta-box")) return;
+      var digits = waPhoneDigits();
+      if (!digits) return;
+      var textMatch = String(a.getAttribute("href") || "").match(/[?&]text=([^&]*)/);
+      var q = textMatch ? "?text=" + textMatch[1] : "";
+      a.href = "https://wa.me/" + digits + q;
+    });
+    if (c.instagramUrl) {
+      $all('a[href*="instagram.com"]').forEach(function (a) {
+        a.href = c.instagramUrl;
+        if (a.closest(".foot") && c.instagram && !a.querySelector("b")) {
+          if (/instagram/i.test(a.textContent || "") || /^@/.test((a.textContent || "").trim())) {
+            /* keep "Instagram" label in footer */
+          }
+        }
+      });
+    }
+    if (c.eposta) {
+      $all('a[href^="mailto:"]').forEach(function (a) {
+        a.href = "mailto:" + c.eposta;
+        if (a.closest(".foot") || a.querySelector("b")) {
+          var b = $("b", a);
+          if (b) b.textContent = c.eposta;
+          else if (/@/.test(a.textContent || "")) a.textContent = c.eposta;
+        }
+      });
+    }
+    var foot = $(".foot");
+    if (foot && c.telefon) {
+      $all('a[href^="tel:"]', foot).forEach(function (a) {
+        a.textContent = c.telefon;
+      });
+    }
+  }
+
+  function applyNavbar(nav) {
+    if (!nav) return;
+    ensureMobileNav();
+    var label = $(".mobile-menu__label");
+    if (label && nav.mobileLabel) label.textContent = nav.mobileLabel;
+    ensureNavLogoImg();
+    var logoTextEl = $(".nav__logo-text") || $(".nav__logo span");
+    if (logoTextEl && nav.logoText) logoTextEl.textContent = nav.logoText;
+    var cta = $(".nav__cta");
+    if (cta) {
+      if (nav.ctaHref) cta.href = resolveHref(nav.ctaHref);
+      if (nav.ctaLabel) cta.textContent = nav.ctaLabel;
+    }
+    var mobileCta = $(".mobile-menu__cta");
+    if (mobileCta) {
+      if (nav.ctaHref) mobileCta.href = resolveHref(nav.ctaHref);
+      if (nav.ctaLabel) mobileCta.textContent = nav.ctaLabel;
+    }
+    var images = (window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.images) || {};
+    var size = Math.max(32, Math.min(120, Number(nav.logoSize) || 64));
+    var hideText = nav.logoTextGizle !== false;
+    var logoLink = $(".nav__logo");
+    var navImg = $(".nav__logo-img");
+    var fallback = $(".nav__logo-fallback") || (logoLink && logoLink.querySelector("svg"));
+
+    if (images.logo) {
+      if (window.__firinciApplySiteImages) {
+        window.__firinciApplySiteImages(images);
+      } else if (navImg) {
+        var logoSrc = mediaUrl(images.logo);
+        var isSvg = /\.svg(\?|$)/i.test(logoSrc);
+        navImg.src = logoSrc;
+        navImg.alt = (nav.logoText || brandName()) + " logosu";
+        navImg.classList.toggle("is-svg", isSvg);
+        navImg.hidden = false;
+        navImg.removeAttribute("hidden");
+        if (fallback) fallback.setAttribute("hidden", "");
+      }
+      if (navImg) {
+        navImg.removeAttribute("width");
+        navImg.removeAttribute("height");
+        navImg.style.setProperty("--nav-logo-size", size + "px");
+        navImg.style.height = size + "px";
+        navImg.style.width = "auto";
+      }
+      if (logoLink) logoLink.classList.add("has-logo");
+      if (hideText && logoTextEl) {
+        logoTextEl.setAttribute("hidden", "");
+        logoTextEl.style.display = "none";
+      }
+      document.documentElement.style.setProperty("--nav-h", Math.max(72, size + 20) + "px");
+    } else {
+      if (logoLink) logoLink.classList.remove("has-logo");
+      if (logoTextEl) {
+        logoTextEl.removeAttribute("hidden");
+        logoTextEl.style.display = "";
+      }
+    }
+    if (!nav.links || !nav.links.length) return;
+    function fillNav(container, includeCta) {
+      if (!container) return;
+      container.innerHTML = "";
+      nav.links.forEach(function (link) {
+        var a = document.createElement("a");
+        a.href = resolveHref(link.href || "#");
+        a.textContent = link.label || "";
+        container.appendChild(a);
+      });
+      if (includeCta && nav.ctaLabel) {
+        var btn = document.createElement("a");
+        btn.href = resolveHref(nav.ctaHref || "#");
+        btn.className = "btn";
+        btn.textContent = nav.ctaLabel;
+        container.appendChild(btn);
+      }
+    }
+    fillNav($(".nav__links"), false);
+    fillNav($(".mobile-menu__links") || $("#mobileMenu"), false);
+  }
+
+  function applyHero(hero) {
+    if (!hero) return;
+    setText(".gate__mark", hero.fallbackMark);
+    var fb = $(".gate__fallback p");
+    if (fb && hero.fallbackTagline) fb.textContent = hero.fallbackTagline;
+    var scroll = $(".gate__scroll-text") || $(".gate__scroll span");
+    if (scroll && hero.scrollHint) scroll.textContent = hero.scrollHint;
+    var hint = $("#scrollHint") || $(".gate__scroll");
+    if (hint) {
+      hint.style.visibility = "visible";
+      if (!hint.style.opacity) hint.style.opacity = "1";
+    }
+    setText('[data-hero="welcomeEyebrow"]', hero.welcomeEyebrow);
+    setText('[data-hero="welcomeTitle"]', hero.welcomeTitle);
+    setText('[data-hero="welcomeLead"]', hero.welcomeLead);
+
+    var welcome = $("#heroWelcome");
+    if (welcome) {
+      var on = hero.welcomeAktif === true;
+      welcome.setAttribute("data-welcome-aktif", on ? "1" : "0");
+      welcome.classList.toggle("is-off", !on);
+      if (!on) {
+        welcome.hidden = true;
+        welcome.style.opacity = "0";
+        welcome.style.visibility = "hidden";
+        welcome.setAttribute("aria-hidden", "true");
+      } else {
+        welcome.hidden = false;
+        welcome.removeAttribute("hidden");
+      }
+    }
+  }
+
+  function applyMarquee(items) {
+    if (!items || !items.length) return;
+    var track = $("#mqTrack") || $("#marqueeTrack");
+    if (!track) return;
+    // Prefer rebuilding the inner flex row(s) used by the animated marquee
+    var rows = track.querySelectorAll(":scope > div");
+    var targets = rows.length ? Array.prototype.slice.call(rows) : [track];
+    targets.forEach(function (row) {
+      row.innerHTML = "";
+      items.forEach(function (word, i) {
+        var span = document.createElement("span");
+        span.style.cssText = "font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;";
+        span.textContent = word;
+        row.appendChild(span);
+        var sep = document.createElement("span");
+        sep.style.cssText = "color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;";
+        sep.textContent = i % 2 === 0 ? "✦" : "◆";
+        row.appendChild(sep);
+      });
+    });
+  }
+
+  function applyHakkimizda(h) {
+    if (!h) return;
+    var sec = $("#hakkimizda");
+    if (!sec) return;
+    setText("#hakkimizda .eyebrow", h.eyebrow);
+    setText("#hakkimizda .h2", h.baslik);
+    var ans = $("#hakkimizda .answer b");
+    if (ans && h.answerBaslik) ans.textContent = h.answerBaslik;
+    setText("#hakkimizda .answer p", h.answerMetin);
+    setText("#hakkimizda .lead", h.lead);
+    var bodies = $all("#hakkimizda .body", sec);
+    if (h.body && h.body.length) {
+      bodies.forEach(function (el, i) {
+        if (h.body[i]) el.textContent = h.body[i];
+      });
+    }
+    var ozet = $(".ozet", sec);
+    if (ozet && h.ozet && h.ozet.length) {
+      ozet.innerHTML = "";
+      h.ozet.forEach(function (item) {
+        var div = document.createElement("div");
+        div.className = "ozet__i";
+        div.appendChild(document.createElement("b")).textContent = item.b || "";
+        div.appendChild(document.createElement("span")).textContent = item.span || "";
+        ozet.appendChild(div);
+      });
+    }
+    var badge = $(".tilt-card__badge", sec);
+    if (badge && h.badgeBaslik) {
+      var bb = $("b", badge);
+      var bs = $("span", badge);
+      if (bb) bb.textContent = h.badgeBaslik;
+      if (bs && h.badgeAlt) bs.textContent = h.badgeAlt;
+    }
+  }
+
+  function applyBolum(id, b) {
+    if (!b) return;
+    var sec = $("#" + id);
+    var el = $("#" + id);
+    if (!el) return;
+    setText("#" + id + " .eyebrow", b.eyebrow);
+    setText("#" + id + " .h2", b.baslik);
+    if (b.lead) setText("#" + id + " .lead", b.lead);
+    // render SSS items if present in global data
+    if (id === "sss" && window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.sss && Array.isArray(window.__FIRINCI_CONTENT.sss.items)) {
+     var list = $("#sss .faq");
+
+if (list) {
+    list.innerHTML = "";
+
+    window.__FIRINCI_CONTENT.sss.items.forEach(function (it) {
+
+        var details = document.createElement("details");
+        details.className = "faq__item";
+
+        var summary = document.createElement("summary");
+        summary.textContent = it.soru || "";
+
+        var p = document.createElement("p");
+        p.textContent = it.cevap || "";
+
+        details.appendChild(summary);
+        details.appendChild(p);
+
+        list.appendChild(details);
+    });
+}
+    }
+
+  }
+  function applyPasta(p) {
+    if (!p) return;
+    var sec = $("#pasta");
+    if (!sec) return;
+    setText("#pasta .eyebrow", p.eyebrow);
+    setText("#pasta .h2", p.baslik);
+    setText("#pasta .lead", p.lead);
+    setText("#pasta .body", p.body);
+    var ticks = $(".ticks", sec);
+    if (ticks && p.maddeler && p.maddeler.length) {
+      ticks.innerHTML = "";
+      p.maddeler.forEach(function (m) {
+        ticks.appendChild(document.createElement("li")).textContent = m;
+      });
+    }
+    var cta = $(".btn--lg", sec);
+    if (cta) {
+      if (p.ctaHref) cta.href = p.ctaHref;
+      if (p.ctaLabel) cta.textContent = p.ctaLabel;
+    }
+    var grid = $(".pasta-grid", sec);
+    if (grid && p.gorseller && p.gorseller.length) {
+      grid.innerHTML = "";
+      p.gorseller.forEach(function (g) {
+        var fig = document.createElement("figure");
+        fig.setAttribute("data-reveal-mask", "");
+        var img = document.createElement("img");
+        img.src = mediaUrl(g.src);
+        img.alt = g.alt || "";
+        img.loading = "lazy";
+        fig.appendChild(img);
+        grid.appendChild(fig);
+      });
+    }
+  }
+
+  function applyMenu(menu) {
+    if (!menu || !menu.gruplar || !menu.gruplar.length) return;
+    var sec = $("#menu");
+    if (!sec) return;
+    if (menu.baslik) {
+      var h2 = sec.querySelector(".h2");
+      if (h2) h2.textContent = menu.baslik;
+    }
+    setText("#menu .section__head .lead", menu.giris);
+    setText("#menu .menu__note", menu.not);
+    var legend = $(".menu__legend", sec);
+    if (legend && menu.legend) legend.innerHTML = "<i aria-hidden=\"true\">★</i> " + menu.legend.replace(/^★\s*/, "");
+    var hepsi = $(".menu__hepsi a", sec);
+    if (hepsi) {
+      if (menu.hepsiLink) hepsi.href = resolveHref(menu.hepsiLink);
+      if (menu.hepsiMetin) hepsi.textContent = menu.hepsiMetin;
+    }
+    var container = $(".menu", sec);
+    if (!container) return;
+    container.innerHTML = "";
+    menu.gruplar.forEach(function (grup) {
+      var urunler = (grup.urunler || []).filter(function (u) { return u.ad && u.ad.trim(); });
+      if (!grup.ad || !urunler.length) return;
+      var group = document.createElement("div");
+      group.className = "menu__group";
+      group.setAttribute("data-fade", "");
+      var catHref = toCategoryHref(grup.link || grup.tumLink, grup.ad);
+      var h3 = document.createElement("h3");
+      var ha = document.createElement("a");
+      ha.href = catHref;
+      ha.setAttribute("data-cat-link", "1");
+      ha.textContent = grup.ad;
+      h3.appendChild(ha);
+      if (grup.adet) {
+        var adet = document.createElement("span");
+        adet.className = "menu__adet";
+        adet.textContent = grup.adet;
+        h3.appendChild(adet);
+      }
+      group.appendChild(h3);
+      var ul = document.createElement("ul");
+      ul.className = "menu__list";
+      urunler.forEach(function (u) {
+        var li = document.createElement("li");
+        if (u.fav) li.className = "is-fav";
+        var la = document.createElement("a");
+        la.href = toCategoryHref(u.link || grup.link || grup.tumLink, grup.ad);
+        la.setAttribute("data-cat-link", "1");
+        var span = document.createElement("span");
+        span.className = "menu__name";
+        var label = document.createElement("span");
+        label.className = "menu__name__label";
+        label.textContent = u.ad;
+        span.appendChild(label);
+        if (u.not) {
+          var em = document.createElement("em");
+          em.textContent = u.not;
+          span.appendChild(em);
+        }
+        la.appendChild(span);
+        li.appendChild(la);
+        ul.appendChild(li);
+      });
+
+      group.appendChild(ul);
+      var tum = document.createElement("a");
+      tum.className = "menu__tum";
+      tum.href = toCategoryHref(grup.tumLink || grup.link, grup.ad);
+      tum.setAttribute("data-cat-link", "1");
+      tum.textContent = (menu.tumMetinSablon || "{ad} hakkında bilgi →").replace("{ad}", grup.ad);
+      group.appendChild(tum);
+      container.appendChild(group);
+    });
+  }
+
+  var KAT_FALLBACK_IMG = {
+    "ekmek-cesitleri": "/assets/img/urun/ekmek-cesit.jpg",
+    "eksi-mayali-ekmekler": "/assets/img/urun/ekmek-rustik.jpg",
+    "simit-pogaca-acma": "/assets/img/urun/simit.jpg",
+    "kurabiye-cesitleri": "/assets/img/urun/tatli-bufe.jpg",
+    "buyuk-kurabiyeler": "/assets/img/urun/cupcake.jpg",
+    "galeta-cubuk-kokteyl": "/assets/img/urun/galeta.jpg",
+    "baklava-serbetli": "/assets/img/urun/baklava.jpg",
+    "sutlu-tatlilar": "/assets/img/urun/sutlac.jpg",
+    "zeytinyagli-urunler": "/assets/img/urun/zeytinyagli.jpg",
+    "pastalar": "/assets/img/urun/pasta-safari.jpg",
+    "tek-pasta-dilim": "/assets/img/urun/pasta-drip.jpg",
+    "tartolet-rulo-lezzet-toplari": "/assets/img/urun/rulo-pasta.jpg",
+    "donut": "/assets/img/urun/donut.jpg",
+    "icecekler": "/assets/img/urun/icecek.jpg"
+  };
+
+  function groupSlugFromHref(href) {
+    var m = String(href || "").match(/\/urunler\/([^/]+)/i);
+    return m ? m[1] : "";
+  }
+
+  function groupImage(group) {
+    if (group.image) return mediaUrl(group.image);
+    if (group.banner) return mediaUrl(group.banner);
+    var withImg = (group.urunler || []).find(function (u) { return u && u.image; });
+    if (withImg) return mediaUrl(withImg.image);
+    var href = toCategoryHref(group.link || group.tumLink, group.ad);
+    var slug = group.slug || groupSlugFromHref(href);
+    return KAT_FALLBACK_IMG[slug] || "/assets/img/urun/vitrin-hamur.jpg";
+  }
+
+  function waPhoneDigits() {
+    var c = (window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.iletisim) || {};
+    var raw = String(c.whatsapp || c.telefonHam || c.telefon || "").replace(/\D/g, "");
+    if (raw.charAt(0) === "0" && raw.length === 11) raw = "90" + raw.slice(1);
+    if (raw.indexOf("90") !== 0 && raw.length === 10) raw = "90" + raw;
+    return raw;
+  }
+
+  function waOrderHref(productName) {
+    return "https://wa.me/" + waPhoneDigits() + "?text=" + encodeURIComponent("Merhaba, " + (productName || "ürün") + " sipariş vermek istiyorum.");
+  }
+
+  function applyKatlar(menu) {
+    if (!menu || !menu.gruplar || !menu.gruplar.length) return;
+    var container = $(".katlar");
+    if (!container) return;
+
+    var sayfa = (window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.sayfalar) || {};
+    var u = sayfa.urunler || {};
+    var head = $(".section__head");
+    if (head && document.body.classList.contains("page")) {
+      var eye = head.querySelector(".eyebrow");
+      if (eye && u.eyebrow) eye.textContent = u.eyebrow;
+      var lead = head.querySelector(".lead");
+      if (lead && (u.lead || menu.giris)) lead.textContent = u.lead || menu.giris;
+    }
+
+    container.innerHTML = "";
+    var urunTotal = 0;
+    menu.gruplar.forEach(function (g) {
+      if (!g || !g.ad) return;
+      var urunler = (g.urunler || []).filter(function (u0) { return u0 && u0.ad && String(u0.ad).trim(); });
+      if (!urunler.length) return;
+      urunTotal += urunler.length;
+      var href = toCategoryHref(g.link || g.tumLink, g.ad);
+      var imgSrc = groupImage(g);
+      var adet = g.adet || (urunler.length + " çeşit");
+      var a = document.createElement("a");
+      a.className = "kat";
+      a.href = href;
+      a.innerHTML =
+        '<div class="kat__img"><img src="' + imgSrc + '" alt="' + (g.ad || "").replace(/"/g, "&quot;") + '" loading="lazy" decoding="async" width="1280" height="720"></div>' +
+        '<div class="kat__ic"><h2></h2><p></p></div>';
+      a.querySelector("h2").textContent = g.ad;
+      a.querySelector("p").textContent = adet;
+      container.appendChild(a);
+    });
+
+    if (document.body.classList.contains("page") && head) {
+      var visible = container.querySelectorAll(".kat").length;
+      var h1 = head.querySelector(".h2, h1");
+      if (h1 && visible) {
+        var tpl = u.baslikSablon || "{n} kategoride {m} çeşit";
+        h1.textContent = tpl.replace("{n}", String(visible)).replace("{m}", String(urunTotal));
+      }
+    }
+  }
+
+  function matchCurrentCategoryGroup(menu) {
+    if (!menu || !menu.gruplar) return null;
+    var path = window.location.pathname || "";
+    var slug = "";
+    var m = path.match(/\/urunler\/([^/]+)/i);
+    if (m && m[1] !== "urunler") slug = m[1];
+    if (!slug) return null;
+    return menu.gruplar.find(function (g) {
+      var href = toCategoryHref(g.link || g.tumLink, g.ad);
+      return groupSlugFromHref(href) === slug || g.slug === slug;
+    }) || null;
+  }
+
+  function applyUrunKategori(menu) {
+    var group = matchCurrentCategoryGroup(menu);
+    if (!group) return;
+
+    var sayfa = ((window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.sayfalar) || {}).urunKategori || {};
+    var eye = $(".urun-ust .eyebrow");
+    if (eye && sayfa.eyebrow) eye.textContent = sayfa.eyebrow;
+
+    var h1 = $(".urun-ust .h2, .urun-ust h1");
+    if (h1) h1.textContent = group.ad;
+
+    var answerB = $(".urun-ust .answer b, .urun-ust .answer strong");
+    if (answerB && sayfa.answerBaslik) answerB.textContent = sayfa.answerBaslik;
+
+    if (group.aciklama) {
+      var answerP = $(".urun-ust .answer p");
+      if (answerP) answerP.textContent = group.aciklama;
+    }
+
+    if (group.govdeHtml) {
+      var article = $(".urun-govde .article, .article");
+      if (article) article.innerHTML = group.govdeHtml;
+    }
+
+    var heroImg = $(".urun-gorsel img");
+    if (heroImg) {
+      heroImg.src = groupImage(group);
+      heroImg.alt = group.ad + " — " + brandName();
+      heroImg.removeAttribute("srcset");
+    }
+
+    var list = $(".urun-kart .menu__list");
+    if (list && group.urunler && group.urunler.length) {
+      list.innerHTML = "";
+      group.urunler.forEach(function (u) {
+        if (!u || !u.ad) return;
+        var li = document.createElement("li");
+        if (u.fav) li.className = "is-fav";
+        var a = document.createElement("a");
+        a.href = u.link && /wa\.me|whatsapp/i.test(u.link) ? u.link : waOrderHref(u.ad);
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        var name = document.createElement("span");
+        name.className = "menu__name";
+        var label = document.createElement("span");
+        label.className = "menu__name__label";
+        label.textContent = u.ad;
+        name.appendChild(label);
+        if (u.not) {
+          var em = document.createElement("em");
+          em.textContent = u.not;
+          name.appendChild(em);
+        }
+        a.appendChild(name);
+        if (u.fiyat) {
+          var price = document.createElement("span");
+          price.className = "menu__price";
+          price.textContent = u.fiyat;
+          a.appendChild(price);
+        }
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+      var kartH2 = $(".urun-kart h2");
+      if (kartH2) {
+        var listeTpl = sayfa.listeBaslikSablon || "{ad} listesi";
+        kartH2.textContent = listeTpl.replace("{ad}", group.ad);
+      }
+      var not = $(".urun-kart__not");
+      if (not) {
+        not.textContent =
+          sayfa.kartNot ||
+          menu.kartNot ||
+          "★ işaretliler en çok tercih edilenler. Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.";
+      }
+    }
+
+    var relatedHead = $(".related h2, .related .h3");
+    if (relatedHead && sayfa.relatedBaslik) relatedHead.textContent = sayfa.relatedBaslik;
+
+    var related = $(".related ul");
+    if (related && menu.gruplar) {
+      related.innerHTML = "";
+      var shown = 0;
+      menu.gruplar.forEach(function (g) {
+        if (!g || !g.ad || g.ad === group.ad || shown >= 2) return;
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = toCategoryHref(g.link || g.tumLink, g.ad);
+        a.textContent = g.ad;
+        li.appendChild(a);
+        related.appendChild(li);
+        shown += 1;
+      });
+      var all = document.createElement("li");
+      var allA = document.createElement("a");
+      allA.href = "/urunler/urunler";
+      allA.textContent = sayfa.relatedHepsi || "Tüm ürün kategorileri";
+      all.appendChild(allA);
+      related.appendChild(all);
+    }
+
+    var ctaTitle = $(".cta-box h2, .cta-box .h3");
+    if (ctaTitle && sayfa.ctaBaslik) ctaTitle.textContent = sayfa.ctaBaslik;
+
+    var ctaTel = $(".cta-box a[href^='tel']");
+    var iletisim = (window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.iletisim) || {};
+    if (ctaTel && iletisim.telefonHam) {
+      ctaTel.href = "tel:" + iletisim.telefonHam;
+      ctaTel.textContent = iletisim.telefon || ctaTel.textContent;
+    }
+    var ctaWa = $(".cta-box a[href*='wa.me'], .cta-box__wa");
+    if (ctaWa) {
+      ctaWa.href = "https://wa.me/" + waPhoneDigits() + "?text=" + encodeURIComponent("Merhaba, sipariş bilgisi almak istiyorum.");
+      if (sayfa.ctaWaLabel) ctaWa.textContent = sayfa.ctaWaLabel;
+    }
+  }
+
+  function applySayfalar(sayfalar) {
+    if (!sayfalar) return;
+    var path = window.location.pathname || "";
+    var isBlog = /\/blog(\/|$)/i.test(path) && !/\/blog\/[^/]+\/[^/]+/i.test(path);
+    if (isBlog || $(".posts")) {
+      var b = sayfalar.blog || {};
+      var head = $(".section__head") || $("main .section__head");
+      if (head) {
+        var eye = head.querySelector(".eyebrow");
+        if (eye && b.eyebrow) eye.textContent = b.eyebrow;
+        var h = head.querySelector(".h2, h1");
+        if (h && b.baslik) h.textContent = b.baslik;
+        var lead = head.querySelector(".lead");
+        if (lead && b.lead) lead.textContent = b.lead;
+      }
+      var cta = $(".cta-box, .blog-cta, .section--cta");
+      if (cta) {
+        var ctaH = cta.querySelector("h2, .h2, .h3");
+        if (ctaH && b.ctaBaslik) ctaH.textContent = b.ctaBaslik;
+        var ctaP = cta.querySelector("p");
+        if (ctaP && b.ctaMetin) ctaP.textContent = b.ctaMetin;
+      }
+    }
+  }
+
+  function applyGaleri(list) {
+    var gallery = $(".gallery");
+    if (!gallery || !list || !list.length) return;
+    gallery.innerHTML = "";
+    list.forEach(function (item) {
+      if (!item || !item.src) return;
+      var fig = document.createElement("figure");
+      var boy = item.boy || "third";
+      fig.className = "shot shot--" + boy;
+      fig.setAttribute("data-reveal-mask", "");
+      var img = document.createElement("img");
+      img.src = mediaUrl(item.src);
+      img.alt = item.baslik || "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      fig.appendChild(img);
+      if (item.baslik) {
+        var cap = document.createElement("figcaption");
+        cap.textContent = item.baslik;
+        fig.appendChild(cap);
+      }
+      gallery.appendChild(fig);
+    });
+  }
+
+  function applyDuyuru(d) {
+    var old = $("#duyuru");
+    if (old) old.remove();
+    document.documentElement.classList.remove("duyuru-acik");
+    if (!d || !d.aktif || !d.metin) return;
+    var el = document.createElement("div");
+    el.className = "duyuru";
+    el.id = "duyuru";
+    el.textContent = d.metin;
+    document.body.insertBefore(el, document.body.firstChild);
+    document.documentElement.classList.add("duyuru-acik");
+  }
+
+  function applyMakaleler(list) {
+    var posts = $(".posts");
+    if (!posts || !list || !list.length) return;
+    var existing = {};
+    $all("a.post", posts).forEach(function (a) {
+      var href = a.getAttribute("href") || "";
+      var parts = href.split("/").filter(Boolean);
+      var slug = parts[parts.length - 1] || "";
+      if (slug) existing[slug] = a;
+    });
+    list.forEach(function (m) {
+      if (!m || !m.slug) return;
+      var a = existing[m.slug];
+      if (m.yayinda === false) {
+        if (a) a.style.display = "none";
+        return;
+      }
+      if (a) {
+        a.style.display = "";
+        var h2 = a.querySelector("h2");
+        if (h2 && m.baslik) h2.textContent = m.baslik;
+        var p = a.querySelector("p");
+        if (p && m.ozet != null) p.textContent = m.ozet;
+        var b = a.querySelector(".post__meta b");
+        if (b && m.kategori) b.textContent = m.kategori;
+        var time = a.querySelector("time");
+        if (time && m.tarih) time.textContent = m.tarih;
+        var okuma = a.querySelector(".post__okuma, .post__meta span");
+        if (okuma && m.okumaSuresi) okuma.textContent = m.okumaSuresi;
+        return;
+      }
+      if (m.statik) return;
+      var card = document.createElement("a");
+      card.className = "post";
+      card.href = "/blog/" + encodeURIComponent(m.slug) + "/" + encodeURIComponent(m.slug);
+      var meta = document.createElement("div");
+      meta.className = "post__meta";
+      if (m.kategori) {
+        var kb = document.createElement("b");
+        kb.textContent = m.kategori;
+        meta.appendChild(kb);
+      }
+      if (m.tarih) {
+        var t = document.createElement("time");
+        t.textContent = m.tarih;
+        meta.appendChild(t);
+      }
+      var body = document.createElement("div");
+      var title = document.createElement("h2");
+      title.textContent = m.baslik || "";
+      body.appendChild(title);
+      if (m.ozet) {
+        var ozet = document.createElement("p");
+        ozet.textContent = m.ozet;
+        body.appendChild(ozet);
+      }
+      card.appendChild(meta);
+      card.appendChild(body);
+      posts.insertBefore(card, posts.firstChild);
+    });
+  }
+
+  function applyMakaleDetay(list) {
+    var path = (location.pathname || "").replace(/\/+$/, "");
+    var m = path.match(/\/blog\/([^/]+)/);
+    if (!m || m[1] === "blog") return;
+    var slug = decodeURIComponent(m[1]);
+    var article = null;
+    (list || []).forEach(function (x) {
+      if (x && x.slug === slug) article = x;
+    });
+    if (!article) return;
+    var root = $(".article");
+    if (!root) return;
+
+    var h1 = root.querySelector(".article__head h1") || root.querySelector("h1");
+    if (h1 && article.baslik) h1.textContent = article.baslik;
+
+    var lead = root.querySelector(".article__lead");
+    if (lead && article.ozet != null && article.ozet !== "") lead.textContent = article.ozet;
+
+    var crumbCurrent = root.querySelector('.crumbs [aria-current="page"]');
+    if (crumbCurrent && article.baslik) crumbCurrent.textContent = article.baslik;
+
+    var meta = root.querySelector(".article__meta");
+    if (meta) {
+      var time = meta.querySelector("time");
+      if (time && article.tarih) time.textContent = article.tarih;
+      var spans = Array.prototype.slice.call(meta.querySelectorAll("span"));
+      spans.forEach(function (sp) {
+        var t = (sp.textContent || "").trim();
+        if (article.okumaSuresi && /okuma/i.test(t)) sp.textContent = article.okumaSuresi;
+        else if (article.kategori && t && t !== "·" && !/okuma/i.test(t) && !/^\d/.test(t)) {
+          // kategori span (son anlamlı metin)
+        }
+      });
+      if (article.okumaSuresi) {
+        var okumaEl = spans.filter(function (sp) {
+          return /okuma/i.test(sp.textContent || "");
+        })[0];
+        if (okumaEl) okumaEl.textContent = article.okumaSuresi;
+        else if (spans.length >= 2) {
+          var candidate = spans[1];
+          if (candidate && (candidate.textContent || "").trim() !== "·") {
+            candidate.textContent = article.okumaSuresi;
+          }
+        }
+      }
+      if (article.kategori) {
+        var katEl = spans.filter(function (sp) {
+          var t = (sp.textContent || "").trim();
+          return t && t !== "·" && !/okuma/i.test(t);
+        }).pop();
+        if (katEl) katEl.textContent = article.kategori;
+      }
+    }
+
+    if (!article.govdeHtml) return;
+    var head = root.querySelector(".article__head");
+    var related = root.querySelector("aside.related");
+    if (!head) return;
+    var node = head.nextSibling;
+    while (node && node !== related) {
+      var next = node.nextSibling;
+      root.removeChild(node);
+      node = next;
+    }
+    var wrap = document.createElement("div");
+    // Guard: older seeds may include a full article__head — strip it
+    var raw = String(article.govdeHtml);
+    raw = raw.replace(/<nav class="crumbs"[\s\S]*?<\/nav>/i, "");
+    raw = raw.replace(/<header class="article__head"[\s\S]*?<\/header>/i, "");
+    wrap.innerHTML = raw.trim();
+    var before = related || null;
+    while (wrap.firstChild) {
+      root.insertBefore(wrap.firstChild, before);
+    }
+  }
+
+  function initReviewsSlider() {
+    var track = $("#yorumlarTrack");
+    if (!track) return;
+    if (typeof track._reviewsCleanup === "function") {
+      track._reviewsCleanup();
+      track._reviewsCleanup = null;
+    }
+
+    var cards = Array.prototype.slice.call(track.querySelectorAll(":scope > .yorum, :scope > figure"));
+    if (!cards.length) cards = Array.prototype.slice.call(track.children);
+    if (!cards.length) return;
+
+    var currentIndex = 0;
+    var prevBtn = $("#reviewPrev");
+    var nextBtn = $("#reviewNext");
+    var currentEl = $("#reviewCurrent");
+    var totalEl = $("#reviewTotal");
+    var dotsContainer = $("#reviewsDots");
+    var stage = track.closest(".reviews-stage") || track;
+    var autoTimer = null;
+    var startX = 0;
+    var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function pad(n) {
+      return (n < 10 ? "0" : "") + n;
+    }
+
+    var progressEl = $("#reviewsProgress");
+    var AUTO_MS = 5500;
+
+    track.style.transform = "";
+    if (totalEl) totalEl.textContent = pad(cards.length);
+
+    if (dotsContainer) {
+      dotsContainer.innerHTML = "";
+      cards.forEach(function (_, idx) {
+        var dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "reviews-dot" + (idx === 0 ? " is-active" : "");
+        dot.setAttribute("aria-label", "Yorum " + (idx + 1));
+        dot.onclick = function () { goToSlide(idx); resetTimer(); };
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function restartProgress() {
+      if (!progressEl) return;
+      progressEl.style.transition = "none";
+      progressEl.style.width = "0%";
+      void progressEl.offsetWidth;
+      if (reducedMotion || cards.length < 2) return;
+      progressEl.style.transition = "width " + AUTO_MS + "ms linear";
+      progressEl.style.width = "100%";
+    }
+
+    function updateSlider() {
+      if (currentEl) currentEl.textContent = pad(currentIndex + 1);
+      cards.forEach(function (card, idx) {
+        var active = idx === currentIndex;
+        card.classList.toggle("is-active", active);
+        card.setAttribute("aria-hidden", active ? "false" : "true");
+      });
+      if (dotsContainer) {
+        Array.prototype.forEach.call(dotsContainer.children, function (d, i) {
+          d.classList.toggle("is-active", i === currentIndex);
+        });
+      }
+    }
+
+    function goToSlide(index) {
+      if (index < 0) index = cards.length - 1;
+      if (index >= cards.length) index = 0;
+      currentIndex = index;
+      updateSlider();
+    }
+
+    function onPrev() { goToSlide(currentIndex - 1); resetTimer(); }
+    function onNext() { goToSlide(currentIndex + 1); resetTimer(); }
+    function onTouchStart(e) { startX = e.touches[0].clientX; }
+    function onTouchEnd(e) {
+      var diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0) goToSlide(currentIndex + 1);
+        else goToSlide(currentIndex - 1);
+        resetTimer();
+      }
+    }
+    function onEnter() {
+      if (autoTimer) clearInterval(autoTimer);
+      if (progressEl) {
+        progressEl.style.transition = "none";
+        progressEl.style.width = "0%";
+      }
+    }
+    function onLeave() { resetTimer(); }
+
+    if (prevBtn) prevBtn.onclick = onPrev;
+    if (nextBtn) nextBtn.onclick = onNext;
+    stage.addEventListener("touchstart", onTouchStart, { passive: true });
+    stage.addEventListener("touchend", onTouchEnd, { passive: true });
+    stage.addEventListener("mouseenter", onEnter);
+    stage.addEventListener("mouseleave", onLeave);
+
+    function resetTimer() {
+      if (autoTimer) clearInterval(autoTimer);
+      restartProgress();
+      if (reducedMotion || cards.length < 2) return;
+      autoTimer = setInterval(function () {
+        goToSlide(currentIndex + 1);
+        restartProgress();
+      }, AUTO_MS);
+    }
+
+    track._reviewsCleanup = function () {
+      if (autoTimer) clearInterval(autoTimer);
+      stage.removeEventListener("touchstart", onTouchStart);
+      stage.removeEventListener("touchend", onTouchEnd);
+      stage.removeEventListener("mouseenter", onEnter);
+      stage.removeEventListener("mouseleave", onLeave);
+      if (prevBtn) prevBtn.onclick = null;
+      if (nextBtn) nextBtn.onclick = null;
+    };
+
+    goToSlide(0);
+    resetTimer();
+  }
+
+  function getGroupCategoryHref(groupName) {
+    if (!groupName) return "/urunler/urunler";
+    var g = groupName.toLowerCase()
+      .replace(/ı/g, "i").replace(/İ/g, "i")
+      .replace(/ş/g, "s").replace(/ğ/g, "g")
+      .replace(/ü/g, "u").replace(/ö/g, "o").replace(/ç/g, "c");
+    if (g.indexOf("eksi maya") > -1) return "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler";
+    if (g.indexOf("ekmek") > -1) return "/urunler/ekmek-cesitleri/ekmek-cesitleri";
+    if (g.indexOf("galeta") > -1 || g.indexOf("cubuk") > -1 || g.indexOf("kokteyl") > -1) return "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl";
+    if (g.indexOf("simit") > -1 || g.indexOf("pogaca") > -1 || g.indexOf("acma") > -1) return "/urunler/simit-pogaca-acma/simit-pogaca-acma";
+    if (g.indexOf("buyuk kurabiye") > -1) return "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler";
+    if (g.indexOf("kurabiye") > -1) return "/urunler/kurabiye-cesitleri/kurabiye-cesitleri";
+    if (g.indexOf("tek pasta") > -1 || g.indexOf("dilim") > -1) return "/urunler/tek-pasta-dilim/tek-pasta-dilim";
+    if (g.indexOf("tartolet") > -1 || g.indexOf("rulo") > -1 || g.indexOf("lezzet") > -1) return "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari";
+    if (g.indexOf("baklava") > -1 || g.indexOf("serbetli") > -1) return "/urunler/baklava-serbetli/baklava-serbetli";
+    if (g.indexOf("sutlu") > -1) return "/urunler/sutlu-tatlilar/sutlu-tatlilar";
+    if (g.indexOf("zeytinyag") > -1) return "/urunler/zeytinyagli-urunler/zeytinyagli-urunler";
+    if (g.indexOf("icecek") > -1) return "/urunler/icecekler/icecekler";
+    if (g.indexOf("donut") > -1) return "/urunler/donut/donut";
+    if (g.indexOf("pasta") > -1) return "/urunler/pastalar/pastalar";
+    return "/urunler/urunler";
+  }
+
+  // Homepage menu: force category navigation (Lenis / overlays / relative hrefs broke clicks)
+  document.addEventListener("click", function (e) {
+    if (document.body.classList.contains("page")) return;
+    if (e.target.closest(".related, .urun-kart, aside.urun-yan, .cta-box, .foot, .wa-float, .nav, .mobile-menu")) return;
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+    var a = e.target.closest("#menu a[data-cat-link], #menu .menu__list a, #menu .menu__group h3 a, #menu .menu__tum");
+    if (a) {
+      var href = a.getAttribute("href") || "";
+      if (href && href !== "#" && !/wa\.me|whatsapp/i.test(href)) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.assign(resolveHref(href));
+        return;
+      }
+    }
+
+    var item = e.target.closest("#menu .menu__group .menu__list li");
+    if (!item) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var container = item.closest(".menu__group");
+    var titleLink = container ? container.querySelector("h3 a, a.menu__tum") : null;
+    var targetUrl = titleLink ? titleLink.getAttribute("href") : null;
+    if (!targetUrl || /wa\.me|whatsapp/i.test(targetUrl)) {
+      var hTitle = container ? ((container.querySelector("h3") || {}).textContent || "") : "";
+      targetUrl = getGroupCategoryHref(hTitle);
+    }
+    if (targetUrl) window.location.assign(resolveHref(targetUrl));
+  }, true);
+
+  function applyYorumlarData(list) {
+    if (!list || !list.length) {
+      initReviewsSlider();
+      return;
+    }
+    var track = $("#yorumlarTrack");
+    if (!track) return;
+    var dogrulama = (window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.yorumlarMeta && window.__FIRINCI_CONTENT.yorumlarMeta.dogrulamaEtiketi) || "Doğrulanmış Google Yorumu";
+    track.innerHTML = "";
+    list.forEach(function (y, idx) {
+      var fig = document.createElement("figure");
+      fig.className = "yorum" + (idx === 0 ? " is-active" : "");
+
+      var stars = Math.max(1, Math.min(5, Number(y.yildiz) || 5));
+      var yildiz = document.createElement("div");
+      yildiz.className = "yorum__yildiz";
+      yildiz.setAttribute("aria-label", "5 üzerinden " + stars + " yıldız");
+      yildiz.textContent = "★".repeat(stars);
+      fig.appendChild(yildiz);
+
+      var bq = document.createElement("blockquote");
+      var text = String(y.metin || "").trim().replace(/^[“"']+|[”"']+$/g, "");
+      bq.textContent = text;
+      fig.appendChild(bq);
+
+      var fc = document.createElement("figcaption");
+      var name = y.ad || y.isim || "Müşteri";
+      var initials = name.split(/\s+/).filter(Boolean).map(function (w) { return w.charAt(0); }).join("").toUpperCase().slice(0, 2) || "M";
+      var avatar = document.createElement("div");
+      avatar.className = "yorum__avatar";
+      avatar.setAttribute("aria-hidden", "true");
+      avatar.textContent = initials;
+      fc.appendChild(avatar);
+
+      var meta = document.createElement("div");
+      meta.className = "yorum__meta";
+      var b = document.createElement("b");
+      b.textContent = name;
+      var span = document.createElement("span");
+      span.textContent = (y.unvan || ((window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.yorumlarMeta && window.__FIRINCI_CONTENT.yorumlarMeta.unvanVarsayilan) || "Müşteri")) + " · " + dogrulama;
+      meta.appendChild(b);
+      meta.appendChild(span);
+      fc.appendChild(meta);
+
+      fig.appendChild(fc);
+      track.appendChild(fig);
+    });
+    initReviewsSlider();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initReviewsSlider);
+  } else {
+    initReviewsSlider();
+  }
+
+  function applyAll(data) {
+    if (!data) return;
+    window.__FIRINCI_CONTENT = data;
+    applyDuyuru(data.duyuru);
+    applyNavbar(data.navbar);
+    applyHero(data.hero);
+    applyMarquee(data.marquee);
+    applyHakkimizda(data.hakkimizda);
+    if (data.bolumlar) {
+      applyBolum("menu", data.bolumlar.menu);
+      applyBolum("galeri", data.bolumlar.galeri);
+      applyBolum("yorumlar", data.bolumlar.yorumlar);
+      applyBolum("sss", data.bolumlar.sss);
+    }
+    applyMenu(data.menu);
+    if (data.menu) {
+      applyKatlar(data.menu);
+      applyUrunKategori(data.menu);
+    }
+    applySayfalar(data.sayfalar);
+    applyGaleri(data.galeri);
+    applyMakaleler(data.makaleler);
+    applyMakaleDetay(data.makaleler);
+    if (data.yorumlar) applyYorumlarData(data.yorumlar);
+    else initReviewsSlider();
+    applyPasta(data.pasta);
+    applyIletisim(data.iletisim);
+    applySeo(data.seo);
+    applyFooter(data.footer, data.images);
+    applyWaFloat(data.waFloat, data.iletisim);
+    applyYorumlarMeta(data.yorumlarMeta);
+    applyLegal(data.legal);
+    if (window.__firinciApplySiteImages && data.images) {
+      window.__firinciApplySiteImages(data.images);
+    } else if (data.images && data.images.logo) {
+      ensureNavLogoImg();
+      var navImg = $(".nav__logo-img");
+      if (navImg) {
+        navImg.src = mediaUrl(data.images.logo);
+        navImg.hidden = false;
+        navImg.removeAttribute("hidden");
+        var logoLink = $(".nav__logo");
+        if (logoLink) logoLink.classList.add("has-logo");
+      }
+    }
+    if (typeof window.__firinciEfekt === "function") {
+      window.__firinciEfekt(document);
+    } else if (window.ScrollTrigger) {
+      window.ScrollTrigger.refresh();
+    }
+  }
+
+
+  fetch("/api/content", { headers: { Accept: "application/json" } })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (payload) {
+      if (!payload || payload.kaynak !== "db" || !payload.data) {
+        initReviewsSlider();
+        return;
+      }
+      applyAll(payload.data);
+    })
+    .catch(function () { initReviewsSlider(); });
+
+window.__firinciApplyCms = applyAll;
+})();

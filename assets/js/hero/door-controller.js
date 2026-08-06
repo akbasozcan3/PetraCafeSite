@@ -1,0 +1,231 @@
+﻿import * as THREE from '../../vendor/three.module.js';
+import {
+  DOOR_UV,
+  SCENE_W,
+  SCENE_H,
+  DEPTH,
+  FRAME_PAD,
+} from './config.js';
+import { easeInOut, range } from './utils.js';
+
+function remapUV(geo, u0, u1, v0, v1) {
+  const uv = geo.attributes.uv;
+  for (let i = 0; i < uv.count; i++) {
+    const u = uv.getX(i);
+    const v = uv.getY(i);
+    uv.setXY(i, u0 + u * (u1 - u0), 1 - v1 + v * (v1 - v0));
+  }
+  uv.needsUpdate = true;
+}
+
+function texturedQuad(material, u0, u1, vTop, vBot) {
+  const x0 = (u0 - 0.5) * SCENE_W;
+  const x1 = (u1 - 0.5) * SCENE_W;
+  const y0 = (0.5 - vBot) * SCENE_H;
+  const y1 = (0.5 - vTop) * SCENE_H;
+  const geo = new THREE.PlaneGeometry(x1 - x0, y1 - y0);
+  remapUV(geo, u0, u1, vTop, vBot);
+  const mesh = new THREE.Mesh(geo, material);
+  mesh.position.set((x0 + x1) / 2, (y0 + y1) / 2, 0);
+  return mesh;
+}
+
+function stripH(material, y0, y1, v) {
+  const geo = new THREE.PlaneGeometry(SCENE_W + FRAME_PAD * 2, y1 - y0);
+  remapUV(geo, 0, 1, v, v);
+  const mesh = new THREE.Mesh(geo, material);
+  mesh.position.set(0, (y0 + y1) / 2, 0);
+  return mesh;
+}
+
+function stripV(material, x0, x1, u) {
+  const geo = new THREE.PlaneGeometry(x1 - x0, SCENE_H);
+  remapUV(geo, u, u, 0, 1);
+  const mesh = new THREE.Mesh(geo, material);
+  mesh.position.set((x0 + x1) / 2, 0, 0);
+  return mesh;
+}
+
+function addShadowQuad(group, mat, a, b, c, d) {
+  const positions = new Float32Array([
+    a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z,
+    a.x, a.y, a.z, c.x, c.y, c.z, d.x, d.y, d.z,
+  ]);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  group.add(new THREE.Mesh(geo, mat));
+}
+
+/** Cephe, kapı kanatları, iç mekân ve altın ışıltı huzmesi */
+export class DoorController {
+  constructor(scene, units) {
+    this.scene = scene;
+    this.units = units;
+    this.leftLeaf = null;
+    this.rightLeaf = null;
+    this.interiorGroup = null;
+    this.glow = null;
+  }
+
+  buildFacade(facadeTexture) {
+    const mat = new THREE.MeshBasicMaterial({ map: facadeTexture });
+    const u = DOOR_UV;
+
+    this.scene.add(
+      texturedQuad(mat, 0, 1, 0, u.v0),
+      texturedQuad(mat, 0, 1, u.v1, 1),
+      texturedQuad(mat, 0, u.u0, u.v0, u.v1),
+      texturedQuad(mat, u.u1, 1, u.v0, u.v1),
+      stripH(mat, -SCENE_H / 2 - FRAME_PAD, -SCENE_H / 2, 1),
+      stripH(mat, SCENE_H / 2, SCENE_H / 2 + FRAME_PAD, 0),
+      stripV(mat, -SCENE_W / 2 - FRAME_PAD, -SCENE_W / 2, 0),
+      stripV(mat, SCENE_W / 2, SCENE_W / 2 + FRAME_PAD, 1),
+    );
+  }
+
+  buildInterior(interiorTexture, aspect) {
+    if (this.interiorGroup) {
+      this.interiorGroup.traverse((o) => o.geometry?.dispose());
+      this.scene.remove(this.interiorGroup);
+    }
+
+    const group = new THREE.Group();
+    this.interiorGroup = group;
+    const z = -DEPTH;
+    const { cx, cy, x0, x1, y0, y1 } = this.units;
+    const leftX = cx - aspect / 2;
+    const rightX = cx + aspect / 2;
+    const topY = cy + (aspect * 0.75) / 2;
+    const botY = cy - (aspect * 0.75) / 2;
+
+    const plane = new THREE.Mesh(
+      new THREE.PlaneGeometry(aspect, aspect * 0.75),
+      new THREE.MeshBasicMaterial({ map: interiorTexture }),
+    );
+    plane.position.set(cx, cy, z);
+    group.add(plane);
+
+    const shadowMat = new THREE.MeshBasicMaterial({ color: '#0A0C07', side: THREE.DoubleSide });
+    const p = (x, y, z2) => ({ x, y, z: z2 });
+    const inset = -0.05;
+
+    addShadowQuad(group, shadowMat,
+      p(x0, y1, inset), p(x1, y1, inset), p(rightX, topY, z), p(leftX, topY, z));
+    addShadowQuad(group, shadowMat,
+      p(x0, y0, inset), p(leftX, botY, z), p(rightX, botY, z), p(x1, y0, inset));
+    addShadowQuad(group, shadowMat,
+      p(x0, y1, inset), p(leftX, topY, z), p(leftX, botY, z), p(x0, y0, inset));
+    addShadowQuad(group, shadowMat,
+      p(x1, y1, inset), p(x1, y0, inset), p(rightX, botY, z), p(rightX, topY, z));
+
+    this.scene.add(group);
+  }
+
+  buildDoorFrames() {
+    // 3B Lüks Cam Kapı Kanatları & Pirinç (Gold) Kollar — Görsel 2 Tasarımı
+    const glassMat = new THREE.MeshBasicMaterial({
+      color: '#B0CDE0',
+      transparent: true,
+      opacity: 0.18,
+      depthWrite: false,
+    });
+    const frameMat = new THREE.MeshBasicMaterial({ color: '#0C0F08' });
+    const brassMat = new THREE.MeshBasicMaterial({ color: '#E8B84B' });
+    const goldHighlightMat = new THREE.MeshBasicMaterial({ color: '#FFF8E7' });
+    const bracketMat = new THREE.MeshBasicMaterial({ color: '#B8842C' });
+
+    const makeLeaf = (isLeft) => {
+      const halfW = (this.units.x1 - this.units.x0) / 2;
+      const h = this.units.y1 - this.units.y0;
+      const group = new THREE.Group();
+      
+      // Cam panel
+      group.add(new THREE.Mesh(new THREE.PlaneGeometry(halfW, h), glassMat));
+
+      const bar = (w, ht, x, y, mat = frameMat, zOffset = 0.01) => {
+        const m = new THREE.Mesh(new THREE.PlaneGeometry(w, ht), mat);
+        m.position.set(x, y, zOffset);
+        group.add(m);
+      };
+
+      // Kapı koyu siyah ana dış profilleri
+      bar(0.045, h, -halfW / 2 + 0.022, 0);
+      bar(0.045, h, halfW / 2 - 0.022, 0);
+      bar(halfW, 0.045, 0, h / 2 - 0.022);
+      bar(halfW, 0.045, 0, -h / 2 + 0.022);
+
+      // Üst ve Alt Altın/Pirinç Çıta Detayı (Görsel 2'deki gibi üstte sarı lüks çizgi)
+      bar(halfW * 0.96, 0.022, 0, h / 2 - 0.075, brassMat, 0.015);
+      bar(halfW * 0.96, 0.022, 0, -h / 2 + 0.075, brassMat, 0.015);
+
+      // Orta Birleşimdeki Lüks Dikey Altın Kapı Kolu (Görsel 2)
+      const handleX = isLeft ? halfW / 2 - 0.055 : -halfW / 2 + 0.055;
+      const handleH = h * 0.38;
+      const handleY = -h * 0.02;
+
+      // Kapı kolu montaj bağlantı parçaları (Üst ve alt bağlantı)
+      bar(0.05, 0.025, handleX, handleY + handleH / 2 - 0.015, bracketMat, 0.018);
+      bar(0.05, 0.025, handleX, handleY - handleH / 2 + 0.015, bracketMat, 0.018);
+
+      // Ana dikey pirinç kol gövdesi
+      bar(0.034, handleH, handleX, handleY, brassMat, 0.022);
+      // Kol üzerindeki parlak altın yansıma çizgisi
+      bar(0.014, handleH * 0.92, handleX, handleY, goldHighlightMat, 0.026);
+
+      group.position.z = -0.06;
+      this.scene.add(group);
+      return group;
+    };
+
+    this.leftLeaf = makeLeaf(true);
+    this.rightLeaf = makeLeaf(false);
+  }
+
+  buildGlow() {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+    const g = ctx.createRadialGradient(128, 128, 4, 128, 128, 128);
+    g.addColorStop(0, 'rgba(255, 215, 140, 0.85)');
+    g.addColorStop(0.45, 'rgba(235, 170, 80, 0.35)');
+    g.addColorStop(1, 'rgba(215, 140, 40, 0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 256, 256);
+
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+
+    const w = (this.units.x1 - this.units.x0) * 1.35;
+    const h = (this.units.y1 - this.units.y0) * 1.2;
+    this.glow = new THREE.Mesh(
+      new THREE.PlaneGeometry(w, h),
+      new THREE.MeshBasicMaterial({
+        map: tex,
+        transparent: true,
+        opacity: 0,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      }),
+    );
+    this.glow.position.set(this.units.cx, this.units.cy, -1.2);
+    this.scene.add(this.glow);
+  }
+
+  update(progress, timing) {
+    if (!this.leftLeaf || !this.rightLeaf) return;
+
+    const halfW = (this.units.x1 - this.units.x0) / 2;
+    const open = easeInOut(range(progress, timing.ac0, timing.ac1)) * halfW;
+
+    this.leftLeaf.position.set(this.units.cx - halfW / 2 - open, this.units.cy, -0.06);
+    this.rightLeaf.position.set(this.units.cx + halfW / 2 + open, this.units.cy, -0.06);
+
+    const visible = 1 - range(progress, timing.son0, timing.son1);
+    this.leftLeaf.visible = this.rightLeaf.visible = visible > 0.02;
+
+    if (this.glow) {
+      this.glow.material.opacity =
+        0.35 * range(progress, 0.1, 0.6) * (1 - range(progress, 0.8, 1));
+    }
+  }
+}

@@ -1,0 +1,1307 @@
+{
+  "images": {
+    "heroPoster": "/uploads/site/1786003701268-1768d5028b8b717a.webp",
+    "heroCephe": "/uploads/site/1786003701268-1768d5028b8b717a.webp",
+    "heroIc": "/uploads/site/1786007144282-6964f78c35fe9f80.webp",
+    "aboutInterior": "/assets/img/ic-mekan.jpg",
+    "ogImage": "/assets/img/urun/vitrin-hamur.jpg",
+    "logo": "/uploads/site/1785964884027-6fa8244728f18d4a.webp",
+    "favicon": "/assets/img/favicon-96.png"
+  },
+  "navbar": {
+    "logoText": "FIRINCI",
+    "logoSize": 64,
+    "logoTextGizle": true,
+    "ctaLabel": "0552 340 02 02",
+    "ctaHref": "tel:+905523400202",
+    "links": [
+      {
+        "label": "Hakkımızda",
+        "href": "#hakkimizda"
+      },
+      {
+        "label": "Ürünler",
+        "href": "/urunler/urunler"
+      },
+      {
+        "label": "Özel Pastalar",
+        "href": "#pasta"
+      },
+      {
+        "label": "Galeri",
+        "href": "#galeri"
+      },
+      {
+        "label": "Yorumlar",
+        "href": "#yorumlar"
+      },
+      {
+        "label": "S.S.S.",
+        "href": "#sss"
+      },
+      {
+        "label": "Fırın Günlüğü",
+        "href": "/blog/blog"
+      },
+      {
+        "label": "İletişim",
+        "href": "#iletisim"
+      }
+    ],
+    "mobileLabel": "Menü"
+  },
+  "hero": {
+    "fallbackMark": "FIRINCI",
+    "fallbackTagline": "Taze · Lezzetli · Doğal",
+    "scrollHint": "Aşağı kaydırın",
+    "welcomeAktif": false,
+    "welcomeEyebrow": "Taşdelen Fırıncı",
+    "welcomeTitle": "Hoş Geldiniz",
+    "welcomeLead": "Her gün taze ekmek, sıcak poğaça ve özenle hazırlanan lezzetler.",
+    "doorUv": {
+      "u0": 0.368,
+      "u1": 0.633,
+      "v0": 0.552,
+      "v1": 1
+    }
+  },
+  "marquee": [
+    "TAZE",
+    "LEZZETLİ",
+    "DOĞAL",
+    "HER GÜN TAPTAZE",
+    "ÖZEL TASARIM PASTA",
+    "ÇEKMEKÖY TAŞDELEN"
+  ],
+  "duyuru": {
+    "aktif": false,
+    "metin": ""
+  },
+  "hakkimizda": {
+    "eyebrow": "Hakkımızda",
+    "baslik": "Taşdelen'in fırını ve pastanesi",
+    "answerBaslik": "Kısaca",
+    "answerMetin": "Taşdelen Fırıncı, Çekmeköy Taşdelen'de bulunan bir fırın ve pastanedir. Her gün taze üretilen ekmek, simit, poğaça, börek, kurabiye, baklava ve pasta çeşitleri sunar; şeker hamurlu özel tasarım pasta siparişi alır.",
+    "lead": "Çekmeköy Taşdelen'de yer alan fırınımızda, doğal ve taze ürünlerle müşterilerimize kaliteli hizmet sunmayı amaçlıyoruz.",
+    "body": [
+      "Geleneksel lezzetleri kaliteli malzemelerle buluşturuyor, her gün sıcak ve taze ürünlerimizi sizlerle paylaşıyoruz.",
+      "Fırınımız Taşdelen Mahallesi'nde, Turgut Özal Caddesi üzerindeki Bulvar Rezidans'ın önünde yer alıyor."
+    ],
+    "ozet": [
+      {
+        "b": "Her gün",
+        "span": "taze üretim"
+      },
+      {
+        "b": "14",
+        "span": "ürün kategorisi"
+      },
+      {
+        "b": "Özel tasarım",
+        "span": "pasta siparişi"
+      },
+      {
+        "b": "Taşdelen",
+        "span": "Çekmeköy / İstanbul"
+      }
+    ],
+    "badgeBaslik": "Taze",
+    "badgeAlt": "Lezzetli · Doğal"
+  },
+  "bolumlar": {
+    "menu": {
+      "eyebrow": "Menü",
+      "baslik": "Taşdelen'de taptaze fırın lezzetleri",
+      "lead": "Fırınımızda günlük olarak hazırlanan ekmek, simit, poğaça, börek, pasta ve tatlı çeşitlerimizi keşfedin."
+    },
+    "galeri": {
+      "eyebrow": "Galeri",
+      "baslik": "Lezzet galerimiz",
+      "lead": "Fırınımızda günlük olarak hazırlanan ürünlerimizi keşfedin."
+    },
+    "yorumlar": {
+      "eyebrow": "Müşteri Yorumları",
+      "baslik": "Deneyimleyenlerin Gözünden",
+      "lead": "Taşdelen Fırıncı’yı tercih edenlerin gerçek deneyimleri."
+    },
+    "sss": {
+      "eyebrow": "Sık Sorulanlar",
+      "baslik": "Merak edilenler"
+    }
+  },
+  "pasta": {
+    "eyebrow": "Özel Tasarım",
+    "baslik": "Şeker hamurlu özel tasarım pastalar",
+    "lead": "Hayal ettiğiniz pastayı birlikte tasarlıyoruz. Doğum günü, nişan ve tüm özel günleriniz için tamamen size özel pastalar.",
+    "maddeler": [
+      "Kişiye özel tasarım",
+      "Taze ve kaliteli malzemeler",
+      "İstenilen tema ve figürler",
+      "Lezzet ve görselliğin mükemmel uyumu"
+    ],
+    "body": "Sipariş ve detaylı bilgi için bizimle iletişime geçebilirsiniz.",
+    "ctaLabel": "Pasta Siparişi İçin Arayın",
+    "ctaHref": "tel:+905523400202",
+    "gorseller": [
+      {
+        "src": "/assets/img/urun/pasta-gul.jpg",
+        "alt": "Güllerle süslenmiş özel tasarım pasta"
+      },
+      {
+        "src": "/assets/img/urun/pasta-safari.jpg",
+        "alt": "Safari temalı figürlü pasta"
+      },
+      {
+        "src": "/assets/img/urun/pasta-kanat.jpg",
+        "alt": "Altın kanat detaylı pasta"
+      },
+      {
+        "src": "/assets/img/urun/pasta-drip.jpg",
+        "alt": "Pembe akıtmalı doğum günü pastası"
+      },
+      {
+        "src": "/assets/img/urun/pasta-cocuk-1.jpg",
+        "alt": "Çizgi film karakterli çocuk pastası"
+      },
+      {
+        "src": "/assets/img/urun/pasta-cocuk-2.jpg",
+        "alt": "Süper kahraman temalı çocuk pastası"
+      },
+      {
+        "src": "/assets/img/urun/pasta-marka.jpg",
+        "alt": "Marka detaylı özel pasta"
+      },
+      {
+        "src": "/assets/img/urun/pasta-tac.jpg",
+        "alt": "Altın taç detaylı pasta"
+      }
+    ]
+  },
+  "makaleler": [
+    {
+      "slug": "pasta-siparisi-rehberi",
+      "baslik": "Doğum günü pastası siparişi: kaç kişilik, ne zaman verilir?",
+      "ozet": "Kişi sayısına göre pasta boyu, kaç saat önceden sipariş vermeniz gerektiği, yazı ve figür seçenekleri.",
+      "kategori": "Pastane",
+      "tarih": "21 Temmuz 2026",
+      "yayinda": true,
+      "statik": true,
+      "okumaSuresi": "5 dakika okuma",
+      "govdeHtml": "<div class=\"answer\">\r\n        <b>Kısa cevap</b>\r\n        <p>Standart pastalar için <strong>en az 48 saat</strong> önceden sipariş verin; şeker hamurlu ve figürlü pastalarda bu süre <strong>3–4 gün</strong>. Boy seçiminde kural kişi başı <strong>100–120 gram</strong>: 4–6 kişi için küçük boy, 6–8 kişi için orta boy yeterlidir.</p>\r\n      </div>\r\n\r\n      <h2>Kaç kişilik pasta almalıyım?</h2>\r\n      <p>Pasta boyu, davetli sayısından çok <strong>ikramın kurgusuna</strong> bağlıdır. Pasta masadaki tek tatlıysa kişi başı payı yüksek tutmanız gerekir. Yanında kurabiye, baklava ya da meyve varsa daha küçük bir boy rahatça yeter.</p>\r\n\r\n      <div class=\"tbl-wrap\">\r\n        <table class=\"tbl\">\r\n          <caption>Kişi sayısına göre pasta boyu</caption>\r\n          <thead>\r\n            <tr><th>Kişi</th><th>Boy</th><th>Pasta tek tatlıysa</th><th>Yanında başka tatlı varsa</th></tr>\r\n          </thead>\r\n          <tbody>\r\n            <tr><td>2–3 kişi</td><td>Tek pasta / dilim</td><td>2 dilim kişi başı</td><td>1 dilim kişi başı</td></tr>\r\n            <tr><td>4–6 kişi</td><td>Küçük boy</td><td>Yeterli</td><td>Bir miktar artar</td></tr>\r\n            <tr><td>6–8 kişi</td><td>Orta boy</td><td>Yeterli</td><td>Küçük boya inebilirsiniz</td></tr>\r\n            <tr><td>10–14 kişi</td><td>İki orta boy</td><td>Farklı çeşit seçin</td><td>Tek orta boy + kurabiye</td></tr>\r\n            <tr><td>20+ kişi</td><td>Kesme pasta / rulo</td><td>Porsiyonlama kolaylaşır</td><td>Kesme pasta + lezzet topları</td></tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n\r\n      <p>Kalabalık organizasyonlarda tek büyük pasta yerine <strong>iki farklı orta boy</strong> almak genellikle daha iyi sonuç verir: hem çeşit sunarsınız hem de servis sırasında sıra beklenmez. Otuz kişiyi geçen davetlerde kesme pasta ya da rulo pasta en pratik çözümdür; dilimleme dertsizdir ve kişi başı maliyet düşer.</p>\r\n\r\n      <h2>Ne kadar önceden sipariş vermeli?</h2>\r\n      <ul>\r\n        <li><strong>Standart yaş pasta:</strong> 48 saat. Vitrinde hazır çeşit varsa aynı gün da alabilirsiniz, ancak garanti vermeyiz.</li>\r\n        <li><strong>Belirli bir çeşit istiyorsanız:</strong> 48 saat. Frambuazlı, fıstıklı gibi çeşitlerde malzeme hazırlığı gerekir.</li>\r\n        <li><strong>Şeker hamurlu ve figürlü pasta:</strong> 3–4 gün. Şeker hamuru elde şekillendirilip kurumaya bırakılır; acele edilirse figürler oturmaz.</li>\r\n        <li><strong>Özel tasarım, çok katlı pasta:</strong> 1 hafta. Taşıma iskeleti ve kalıp hazırlığı gerekir.</li>\r\n        <li><strong>Yoğun dönemler:</strong> Anneler günü, sevgililer günü, yılbaşı ve mezuniyet haftalarında <strong>bir hafta</strong> önceden haber verin. Bu günlerde kapasitemiz dolar.</li>\r\n      </ul>\r\n\r\n      <h2>Yazı, figür ve görsel talepleri</h2>\r\n      <p>Pasta üzerine isim ve kısa bir mesaj yazdırabilirsiniz. Yazı çikolata veya şeker hamuruyla uygulanır. Pratik bir sınır var: <strong>3–4 kelimeyi aşan metinler</strong> pasta yüzeyinde okunmuyor ve görüntüyü dağıtıyor. \"İyi ki doğdun Elif\" gibi kısa mesajlar en iyi sonucu verir.</p>\r\n      <p>Figürlü pastalarda referans görsel getirmeniz işi çok kolaylaştırır. Telefonunuzdaki bir fotoğrafı göstermeniz yeterli. Şunu da açıkça söyleyelim: elde şekillendirilen figürler referans görselin birebir kopyası olmaz, benzeri olur. Beklentiyi baştan netleştirmek herkes için daha iyi.</p>\r\n      <p>Yenilebilir baskı (fotoğraflı pasta) için görselin yüksek çözünürlüklü olması gerekir. Sosyal medyadan indirilmiş küçük görüntüler baskıda bulanık çıkar.</p>\r\n\r\n      <h2>Alerji ve özel istekler</h2>\r\n      <p>Sipariş verirken alerji durumunu <strong>mutlaka belirtin</strong>. Pastalarımızda yumurta, süt ve glüten standart olarak bulunur; fındık, fıstık ve ceviz ise çeşide göre değişir.</p>\r\n      <p>Dürüst olmak gerekirse: aynı mutfakta kuruyemişli üretim yaptığımız için <strong>ciddi kuruyemiş alerjisi</strong> olan biri için çapraz bulaşma riskini sıfırlayamayız. Bu durumu gizlemek yerine önceden söylemeyi tercih ediyoruz. Hayati alerji varsa alerjen üretimi olmayan özel bir pastaneye yönlendirmemiz daha doğru olur.</p>\r\n      <p>Şekersiz veya glütensiz pasta üretimimiz bulunmuyor.</p>\r\n\r\n      <h2>Pastayı aldıktan sonra</h2>\r\n      <ol>\r\n        <li><strong>Buzdolabına koyun.</strong> Yaş pasta +4 °C'de saklanır ve 24 saat içinde tüketilmelidir. Oda sıcaklığında bırakılan krema hem bozulur hem şeklini kaybeder.</li>\r\n        <li><strong>Servisten 20–30 dakika önce çıkarın.</strong> Buzdolabı soğukluğu kremanın aromasını bastırır. Kısa bir bekleme tadı belirgin biçimde açar.</li>\r\n        <li><strong>Kutuyu düz tutun.</strong> Araçta koltuğa değil, tabana veya bagajın düz kısmına yerleştirin. Eğimli yüzeyde krema kayar.</li>\r\n        <li><strong>Şeker hamurluysa kapalı tutun.</strong> Şeker hamuru nemi çeker ve yapış yapış olur. Buzdolabında mutlaka kutusu kapalı dursun.</li>\r\n        <li><strong>Bıçağı ısıtın.</strong> Dilimlemeden önce bıçağı sıcak suya tutup kurulayın; kesitler temiz çıkar.</li>\r\n      </ol>\r\n\r\n      <h2>Taşdelen Fırıncı'da pasta çeşitleri</h2>\r\n      <p>Pastalarımız 4–6 kişilik ve 6–8 kişilik olarak hazırlanıyor. Çeşitler arasında çilek & çikolatalı, fıstık & çikolatalı, frambuaz & çikolatalı, muz & fındıklı, karışık meyveli, böğürtlen & çikolatalı, orman meyveli, krokan & fındıklı ve profiterol & çikolatalı bulunuyor. Tek dilim tercih edenler için tek pasta çeşitleri, kalabalık organizasyonlar için kesme pasta ve rulo pasta seçenekleri var.</p>\r\n      <p>Şeker hamurlu ve figürlü pasta talepleri için önceden görüşmek gerekiyor.</p>\r\n\r\n      <div class=\"cta-box\">\r\n        <h2>Sipariş için arayın</h2>\r\n        <p>Pasta siparişlerini telefonla alıyoruz. Kaç kişilik olduğunu, hangi çeşidi istediğinizi ve teslim gününü söylemeniz yeterli — gerisini biz planlarız.</p>\r\n        <a href=\"tel:+905523400202\" class=\"btn btn--lg\">0552 340 02 02</a>\n          <a href=\"https://wa.me/905523400202?text=Merhaba%2C%20sipari%C5%9F%20bilgisi%20almak%20istiyorum.\" class=\"btn btn--lg cta-box__wa\" target=\"_blank\" rel=\"noopener noreferrer\">WhatsApp</a>\r\n      </div>"
+    },
+    {
+      "slug": "hangi-ekmek-kime-uygun",
+      "baslik": "Tam buğday, çavdar, siyez: hangi ekmek kime uygun?",
+      "ozet": "Un çeşitlerinin lif, mineral ve glüten farkları; kan şekeri ve sindirim açısından karşılaştırma.",
+      "kategori": "Ekmek",
+      "tarih": "9 Temmuz 2026",
+      "yayinda": true,
+      "statik": true,
+      "okumaSuresi": "7 dakika okuma",
+      "govdeHtml": "<div class=\"answer\">\r\n        <b>Kısa cevap</b>\r\n        <p>Tek bir \"en sağlıklı ekmek\" yoktur. Genel kural: <strong>tam tahıllı ve ekşi mayalı</strong> ekmekler, beyaz undan yapılmışlara göre daha fazla lif ve mineral içerir, kan şekerini daha yavaş yükseltir. Seçimi daraltırsak — kan şekeri kontrolü için <strong>çavdar</strong>, sindirim hassasiyeti için <strong>siyez</strong>, günlük dengeli tüketim için <strong>tam buğday</strong>, yoğun fiziksel aktivite için <strong>çok tahıllı</strong>.</p>\r\n      </div>\r\n\r\n      <h2>Önce şu ayrımı netleştirelim: tam tahıl nedir?</h2>\r\n      <p>Bir buğday tanesi üç katmandan oluşur. <strong>Kepek</strong> en dışta, lif ve mineral açısından zengin. <strong>Ruşeym</strong> tanenin embriyosu; E vitamini ve sağlıklı yağ asitleri burada. <strong>Endosperm</strong> ise nişasta deposu, yani tanenin en büyük ve en yalın kısmı.</p>\r\n      <p>Beyaz un yapılırken kepek ve ruşeym ayrılır, geriye sadece endosperm kalır. Tam tahıllı unda ise üçü birlikte öğütülür. Bu yüzden aynı gramda tam buğday unu, beyaz una göre yaklaşık <strong>üç kat fazla lif</strong> içerir.</p>\r\n      <p>Burada sık karıştırılan bir nokta var: <em>kepekli ekmek</em> ile <em>tam buğday ekmeği</em> aynı şey değildir. Kepekli ekmek genellikle beyaz una sonradan kepek eklenerek yapılır — lif geri gelir ama ruşeymdeki vitamin ve yağ asitleri gelmez. Etiketi okurken \"tam buğday unu\" ile \"buğday unu + kepek\" ifadelerini ayırt etmek gerekir.</p>\r\n\r\n      <h2>Ekmek çeşitlerinin karşılaştırması</h2>\r\n      <div class=\"tbl-wrap\">\r\n        <table class=\"tbl\">\r\n          <caption>Ekmek türlerinin öne çıkan özellikleri</caption>\r\n          <thead>\r\n            <tr><th>Ekmek</th><th>Öne çıkan yönü</th><th>Kan şekeri etkisi</th><th>Kime uygun</th></tr>\r\n          </thead>\r\n          <tbody>\r\n            <tr>\r\n              <td>Tam buğday</td>\r\n              <td>Dengeli lif, B vitaminleri, magnezyum</td>\r\n              <td>Orta</td>\r\n              <td>Günlük tüketim, aile geneli</td>\r\n            </tr>\r\n            <tr>\r\n              <td>Çavdar</td>\r\n              <td>Arabinoksilan lifi, yüksek doygunluk</td>\r\n              <td>Düşük</td>\r\n              <td>İnsülin direnci, kilo kontrolü</td>\r\n            </tr>\r\n            <tr>\r\n              <td>Siyez</td>\r\n              <td>Zayıf glüten yapısı, yüksek protein</td>\r\n              <td>Orta-düşük</td>\r\n              <td>Sindirim hassasiyeti olanlar</td>\r\n            </tr>\r\n            <tr>\r\n              <td>Çok tahıllı</td>\r\n              <td>Tohum ve çekirdek kaynaklı yağ asitleri</td>\r\n              <td>Düşük-orta</td>\r\n              <td>Sporcular, uzun tokluk arayanlar</td>\r\n            </tr>\r\n            <tr>\r\n              <td>Kepekli</td>\r\n              <td>Yalnızca lif takviyesi</td>\r\n              <td>Orta</td>\r\n              <td>Bağırsak düzeni</td>\r\n            </tr>\r\n            <tr>\r\n              <td>Beyaz (francala)</td>\r\n              <td>Yumuşak doku, nötr tat</td>\r\n              <td>Yüksek</td>\r\n              <td>Çocuklar, hassas mide dönemleri</td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n\r\n      <h2>Çavdar: kan şekeri için en güçlü seçenek</h2>\r\n      <p>Çavdarın ayırt edici özelliği <strong>arabinoksilan</strong> adlı çözünür liftir. Bu lif suyla jel benzeri bir yapı oluşturur, mide boşalmasını geciktirir ve glikozun kana geçişini yavaşlatır. Pratikte bu, aynı miktarda karbonhidrat almanıza rağmen kan şekerinizin daha yumuşak bir eğri çizmesi anlamına gelir.</p>\r\n      <p>Çavdar ekmeği bu nedenle insülin direnci ve tip 2 diyabette sık önerilir. Ek bir avantajı: doygunluk hissi belirgin biçimde daha uzun sürer, bu da porsiyon kontrolünü kolaylaştırır.</p>\r\n      <p>Dezavantajı tat ve doku. Çavdar glüteni zayıf olduğu için ekmek daha yoğun ve nemli olur, tadı hafif toprakımsıdır. Alışmak zaman alabilir; %100 çavdar yerine buğdayla karışık başlamak genellikle daha kolay geçiş sağlar.</p>\r\n\r\n      <h2>Siyez: eski bir buğday, farklı bir glüten</h2>\r\n      <p>Siyez (einkorn), insanlığın ilk kültüre aldığı buğday türlerinden biridir; on bin yıldır neredeyse hiç değişmemiştir. Modern buğdaydan iki önemli farkı var: protein oranı daha yüksek ve <strong>glüten yapısı daha zayıf</strong>.</p>\r\n      <p>Zayıf glüten, fırıncı için zorluk demek — hamur zor tutar, ekmek daha az kabarır. Ama bazı kişiler için sindirim kolaylığı demek. Burada dikkatli olmak gerekiyor: bu, siyezin glütensiz olduğu anlamına <em>gelmez</em>. Siyez glüten içerir ve <strong>çölyak hastaları tüketemez</strong>. Glüten hassasiyeti ile çölyak farklı şeylerdir; çölyak tanısı varsa hiçbir buğday türü uygun değildir.</p>\r\n\r\n      <h2>Fermantasyon, un seçiminden daha belirleyici olabilir</h2>\r\n      <p>Şunu vurgulamak isteriz: <strong>hangi un olduğu kadar, nasıl fermente edildiği de önemlidir.</strong> Ekşi mayayla 24 saat fermente edilmiş beyaz bir ekmek, hızlı ticari mayayla yapılmış tam buğday ekmeğinden daha düşük glisemik indekse sahip olabilir.</p>\r\n      <p>Sebebi şu: uzun fermantasyon sırasında bakteriler nişastanın bir kısmını tüketir, organik asitler üretir ve bu asitler nişasta sindirimini yavaşlatan bir etki yaratır. Aynı süreç fitik asidi de parçalayarak demir, çinko ve magnezyum emilimini artırır.</p>\r\n      <p>Yani etiketi okurken iki şeye birlikte bakın: unun tam tahıllı olup olmadığı <em>ve</em> ekmeğin uzun fermantasyon görüp görmediği.</p>\r\n\r\n      <h2>Pratik seçim rehberi</h2>\r\n      <ul>\r\n        <li><strong>Kan şekerim yüksek / insülin direncim var:</strong> Ekşi mayalı çavdar ya da ekşi mayalı tam buğday. Dilim kalınlığını da düşürün.</li>\r\n        <li><strong>Kilo vermeye çalışıyorum:</strong> Çavdar. Uzun tokluk sağlayan lif yapısı, gün içi atıştırmayı azaltıyor.</li>\r\n        <li><strong>Ekmek yedikçe şişkinlik oluyor:</strong> Ekşi mayalı siyez deneyin. Fermantasyon ve zayıf glüten birleşimi çoğu kişide fark yaratıyor.</li>\r\n        <li><strong>Ağır antrenman yapıyorum:</strong> Çok tahıllı veya tohumlu ekmek. Tohumlardan gelen yağ asitleri ve ek protein enerji ihtiyacını destekler.</li>\r\n        <li><strong>Küçük çocuğum var:</strong> Tam buğday, ince dilim. Çok yoğun lifli ekmekler küçük çocuklarda tokluk yapıp diğer besinleri yemesini engelleyebilir.</li>\r\n        <li><strong>Çölyak hastasıyım:</strong> Fırınımızdaki ekmeklerin hiçbiri uygun değildir. Aynı ortamda un kullanıldığı için çapraz bulaşma riski de vardır; bunu açıkça belirtmek isteriz.</li>\r\n      </ul>\r\n\r\n      <h2>Taşdelen Fırıncı'da hangi çeşitler var?</h2>\r\n      <p>Ekmek rafımızda tam buğdaylı, çavdar, çok tahıllı, kepek ve papatya ekmeği bulunuyor. Ekşi mayalı grupta ise tam buğday, Osmanlı, Trabzon, baget, chia tohumlu ve üzümlü cevizli çeşitler var. Hangisinin size uyduğundan emin değilseniz, tezgâhta ustamıza durumunuzu anlatın — birkaç dilim deneyerek karar vermek en sağlıklısı.</p>\r\n\r\n      <div class=\"cta-box\">\r\n        <h2>Emin olamadınız mı?</h2>\r\n        <p>Ekmek seçimi kişisel bir şey. Fırına uğrayın, ne aradığınızı anlatın; ustalarımız birkaç çeşit tattırıp size uygun olanı bulmanıza yardımcı olsun.</p>\r\n        <a href=\"../../index.htm#ziyaret\" class=\"btn btn--lg\">Adres ve Saatler</a>\r\n      </div>"
+    },
+    {
+      "slug": "ekmek-nasil-saklanir",
+      "baslik": "Ekmek nasıl saklanır? Taze kalması için 7 kural",
+      "ozet": "Buzdolabı neden ekmeği bayatlatır, poşet mi bez mi, dilimlenmiş ekmek nasıl dondurulur.",
+      "kategori": "Pratik Bilgi",
+      "tarih": "28 Haziran 2026",
+      "yayinda": true,
+      "statik": true,
+      "okumaSuresi": "4 dakika okuma",
+      "govdeHtml": "<div class=\"answer\">\r\n        <b>Kısa cevap</b>\r\n        <p>Ekmek <strong>buzdolabında saklanmaz</strong>. Buzdolabının 4 °C'lik sıcaklığı, nişastanın kristalleşmesi için en hızlı aralıktır; ekmek burada oda sıcaklığına göre yaklaşık üç kat hızlı bayatlar. Doğru yöntem: iki gün içinde tüketilecekse oda sıcaklığında bez ya da kâğıt torbada, daha uzun süre saklanacaksa dilimlenip <strong>−18 °C'de dondurulmuş</strong> olarak.</p>\r\n      </div>\r\n\r\n      <h2>Ekmek neden bayatlar?</h2>\r\n      <p>Yaygın inanış, ekmeğin kuruduğu için bayatladığıdır. Gerçek biraz farklıdır. Pişirme sırasında nişasta granülleri suyu emip jelleşir; ekmeğin yumuşaklığı buradan gelir. Ekmek soğumaya başladığında bu nişasta molekülleri yeniden düzenli bir yapıya dönmeye çalışır. Bu olaya <em>retrogradasyon</em> denir ve ekmeği sertleştiren de tam olarak budur.</p>\r\n      <p>Kritik nokta şu: retrogradasyon <strong>0 ile 10 °C arasında en hızlıdır</strong>. Buzdolabı tam bu aralıkta çalışır. Dondurucu ise −18 °C'de olduğu için süreci neredeyse tamamen durdurur. Yani ekmek için buzdolabı en kötü, dondurucu en iyi seçenektir.</p>\r\n\r\n      <h2>Yedi kural</h2>\r\n      <ol>\r\n        <li><strong>Buzdolabına koymayın.</strong> Tek istisna: havanın çok nemli ve sıcak olduğu günlerde küf riski bayatlamadan daha büyük bir sorun hâline gelirse, buzdolabı kısa süreli tercih edilebilir.</li>\r\n        <li><strong>Kabuğa göre kap seçin.</strong> Kabuğu kalın ekşi mayalı somunları bez ya da kâğıt torbada saklayın. Naylon poşet nemi içeride tutar, çıtır kabuk yumuşar ve küf hızlanır. Kabuğu ince yumuşak ekmekler ise naylon poşette daha iyi korunur.</li>\r\n        <li><strong>Kesik yüzeyi aşağı çevirin.</strong> Somunu dilimledikten sonra kesik tarafını tahtaya bakacak şekilde bırakın. Böylece nem kesitten kaçmaz.</li>\r\n        <li><strong>Tamamen soğumadan poşetlemeyin.</strong> Sıcak ekmeğin buharı poşette birikir, kabuğu yumuşatır ve küfün önünü açar. Soğumasını bekleyin.</li>\r\n        <li><strong>Aldığınız gün dilimleyip dondurun.</strong> En etkili yöntem budur. Hava almayacak şekilde poşetleyin, üzerine tarih yazın. Üç aya kadar tazeliğini korur.</li>\r\n        <li><strong>Dondurulmuş dilimi çözdürmeyin.</strong> Doğrudan tost makinesine veya 180 °C fırına atın. Çözdürme sırasında dilim nem kaybeder ve lastik gibi olur.</li>\r\n        <li><strong>Ekmek kutusunu havalandırın.</strong> Tamamen kapalı bir kutu nem hapseder. Küçük delikleri olan ahşap veya emaye ekmek kutuları bu dengeyi en iyi kuran çözümdür.</li>\r\n      </ol>\r\n\r\n      <div class=\"tbl-wrap\">\r\n        <table class=\"tbl\">\r\n          <caption>Saklama yöntemine göre tazelik süresi</caption>\r\n          <thead>\r\n            <tr><th>Yöntem</th><th>Süre</th><th>Uygun olduğu ekmek</th></tr>\r\n          </thead>\r\n          <tbody>\r\n            <tr><td>Bez torba, oda sıcaklığı</td><td>2–3 gün</td><td>Ekşi mayalı, kalın kabuklu</td></tr>\r\n            <tr><td>Kâğıt torba, oda sıcaklığı</td><td>1–2 gün</td><td>Baget, çıtır kabuklu</td></tr>\r\n            <tr><td>Naylon poşet, oda sıcaklığı</td><td>2–3 gün</td><td>Tava ekmeği, sandviç ekmeği</td></tr>\r\n            <tr><td>Buzdolabı (4 °C)</td><td>Önerilmez</td><td>—</td></tr>\r\n            <tr><td>Dondurucu (−18 °C)</td><td>3 aya kadar</td><td>Her çeşit, dilimlenmiş</td></tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n\r\n      <h2>Bayat ekmeği canlandırma</h2>\r\n      <p>Sertleşmiş bir somun çöp değildir. Retrogradasyon <strong>geri döndürülebilir</strong> bir süreçtir: nişasta 60 °C üzerinde yeniden jelleşir.</p>\r\n      <p>Yöntem şu: somunun kabuğunu elinizle hafifçe ıslatın — ıslatın, suya batırmayın. Önceden 200 °C'ye ısıtılmış fırına koyup 8–10 dakika bekletin. Kabuk yeniden çıtırdar, iç yapı yumuşar. Küçük somunlar için 6 dakika yeterlidir.</p>\r\n      <p>Bir uyarı: bu işlem <strong>yalnızca bir kez</strong> işe yarar. İkinci ısıtmada ekmekte canlandırılacak nem kalmadığı için tamamen kurur.</p>\r\n\r\n      <h2>Gerçekten bayatlamışsa</h2>\r\n      <p>Üçüncü günü geçmiş ekmeği atmak yerine değerlendirebilirsiniz:</p>\r\n      <ul>\r\n        <li><strong>Galeta unu:</strong> Rendeleyip 150 °C fırında kurutun, kavanozda aylarca durur.</li>\r\n        <li><strong>Kruton:</strong> Küp küp kesip zeytinyağı ve tuzla karıştırın, 180 °C'de 12 dakika kızartın.</li>\r\n        <li><strong>Papara ve tirit:</strong> Anadolu mutfağının bayat ekmek için geliştirdiği yemekleri; ekmek ne kadar bayatsa o kadar iyi tutar.</li>\r\n      </ul>\r\n      <p>Küf görürseniz durum farklıdır: küflü kısmı kesip kalanını yemek güvenli değildir. Küf ipliklerini gözle görünmeyen biçimde ekmeğin içine yayar. O somunu tamamen atın.</p>\r\n\r\n      <div class=\"cta-box\">\r\n        <h2>Her gün taptaze</h2>\r\n        <p>Fırınımızda ekmekler her gün taze üretilir. Günlük üretim yaptığımız için saklama sorununu en baştan küçültüyoruz — aldığınız ekmek o günün ekmeğidir.</p>\r\n        <a href=\"../../index.htm#menu\" class=\"btn btn--lg\">Menüye Bakın</a>\r\n      </div>"
+    },
+    {
+      "slug": "eksi-maya-ekmek-nedir",
+      "baslik": "Ekşi mayalı ekmek nedir? Neden tercih edilir?",
+      "ozet": "Ekşi mayanın fermantasyon süreci, sindirim ve lezzet farkları, hangi ürünlerimizde kullanıldığı.",
+      "kategori": "Maya",
+      "tarih": "12 Haziran 2026",
+      "yayinda": true,
+      "statik": true,
+      "okumaSuresi": "6 dakika okuma",
+      "govdeHtml": "<div class=\"answer\">\r\n        <b>Kısa cevap</b>\r\n        <p>Ekşi maya ekmek, paket hâlindeki ticari maya kullanılmadan; un ve suyun kendiliğinden barındırdığı yabani mayalar ile laktik asit bakterilerinin çoğaltılmasıyla elde edilen bir başlatıcıyla kabartılan ekmektir. Kabarma saatler yerine <strong>12–24 saat</strong> sürer ve hamur bu sürede asitlenerek kendine özgü aromasını kazanır.</p>\r\n      </div>\r\n\r\n      <h2>Ekşi maya tam olarak nedir?</h2>\r\n      <p>Ekşi maya, mağazadan alınan bir ürün değil, <strong>canlı bir kültürdür</strong>. Un ve suyu karıştırıp günlerce düzenli olarak beslediğinizde, unun içinde ve havada bulunan yabani mayalar ile laktik asit bakterileri bu karışımda çoğalır. Ortaya çıkan ekşimiş, köpüklü hamura fırıncılar <em>ana maya</em> veya <em>başlatıcı</em> der.</p>\r\n      <p>Ana maya bir kez kurulduktan sonra düzenli beslendiği sürece yıllarca yaşar. Fırınlar her gün bu kültürün bir kısmını hamura katar, kalanına un ve su ekleyip yaşamasını sürdürür.</p>\r\n\r\n      <h2>Ticari mayadan farkı ne?</h2>\r\n      <p>Ticari maya tek bir mantar türüdür: <em>Saccharomyces cerevisiae</em>. Görevi tektir ve bunu çok hızlı yapar — şekeri karbondioksite çevirip hamuru kabartır. Bu yüzden ticari mayalı bir hamur 1–2 saatte hazır olur.</p>\r\n      <p>Ekşi mayada ise onlarca mikroorganizma birlikte çalışır. Karbondioksitin yanında <strong>laktik asit ve asetik asit</strong> de üretilir. Bu asitler üç şey yapar: ekmeğe o tanıdık hafif ekşi aromayı verir, glütenin bir kısmını parçalayarak hamuru daha sindirilebilir hâle getirir ve küf oluşumunu geciktirerek raf ömrünü <em>hiçbir katkı maddesi olmadan</em> uzatır.</p>\r\n\r\n      <div class=\"tbl-wrap\">\r\n        <table class=\"tbl\">\r\n          <caption>Ekşi maya ile ticari mayanın karşılaştırması</caption>\r\n          <thead>\r\n            <tr><th>Ölçüt</th><th>Ekşi maya</th><th>Ticari maya</th></tr>\r\n          </thead>\r\n          <tbody>\r\n            <tr><td>Mikroorganizma</td><td>Onlarca yabani maya ve bakteri</td><td>Tek tür maya</td></tr>\r\n            <tr><td>Fermantasyon süresi</td><td>12–24 saat</td><td>1–2 saat</td></tr>\r\n            <tr><td>Aroma</td><td>Katmanlı, hafif asidik</td><td>Yalın, maya kokulu</td></tr>\r\n            <tr><td>Kabuk</td><td>Kalın, koyu, çıtır</td><td>İnce, açık renkli, yumuşak</td></tr>\r\n            <tr><td>Gözenek yapısı</td><td>Düzensiz, farklı boyutlarda</td><td>Düzenli, birbirine benzer</td></tr>\r\n            <tr><td>Tazelik</td><td>3–4 gün</td><td>1–2 gün</td></tr>\r\n            <tr><td>Glisemik indeks</td><td>Daha düşük</td><td>Daha yüksek</td></tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n\r\n      <h2>Soğuk fermantasyon ne işe yarar?</h2>\r\n      <p>Ekşi mayalı hamur genellikle mayalandıktan sonra doğrudan fırına verilmez; buzdolabı sıcaklığında uzun bir dinlenmeye bırakılır. Soğukta maya yavaşlar ama bakteriler çalışmaya devam eder. Sonuç: hamur fazla kabarmadan <strong>aroma geliştirir</strong>.</p>\r\n      <p>Bu bekleme aynı zamanda buğdaydaki <em>fitik asidi</em> kısmen parçalar. Fitik asit, demir ve çinko gibi minerallere bağlanıp vücudun bunları emmesini zorlaştıran bir bileşiktir. Uzun fermantasyon bu bağı gevşetir; yani aynı undan yapılmış iki ekmekten uzun fermente edileni, mineral açısından size daha fazlasını verir.</p>\r\n\r\n      <h2>Gerçek ekşi maya nasıl anlaşılır? 5 işaret</h2>\r\n      <ol>\r\n        <li><strong>İçerik listesine bakın.</strong> Gerçek ekşi mayalı ekmeğin içeriği un, su, tuz ve ekşi mayadan oluşur. \"Maya\" veya \"instant maya\" yazıyorsa, ekşi maya en iyi hâlde aroma için eklenmiş demektir.</li>\r\n        <li><strong>Kabuğu inceleyin.</strong> Uzun fermantasyon ve yüksek sıcaklıkta pişirme kalın, koyu renkli, elinizde çıtırdayan bir kabuk verir. Soluk ve yumuşak kabuk hızlı üretim işaretidir.</li>\r\n        <li><strong>Kesite bakın.</strong> Gözenekler düzensiz olmalı; bir yerde iri, bir yerde ince. Her deliğin aynı boyutta olduğu tertipli bir kesit, ticari maya ve makine yoğurmasının izidir.</li>\r\n        <li><strong>Koklayın.</strong> Taze kesilmiş ekşi maya ekmeği hafif yoğurt veya sirke benzeri bir asidik nota taşır. Bu koku keskin olmamalı; keskinlik aşırı fermantasyon demektir.</li>\r\n        <li><strong>Üçüncü günü bekleyin.</strong> Ekşi maya ekmeği üçüncü günde bile dilimlenebilir ve yumuşak kalır. Ticari mayalı ekmek ikinci gün kurur ve ufalanır.</li>\r\n      </ol>\r\n\r\n      <h2>Ekşi maya ekmek herkese uygun mu?</h2>\r\n      <p>Çoğu insan için evet, hatta sindirimi daha kolaydır. Ancak iki noktayı net söylemek gerekir:</p>\r\n      <ul>\r\n        <li><strong>Çölyak hastaları için uygun değildir.</strong> Fermantasyon glütenin bir kısmını parçalar ama tamamını yok etmez. Ekşi maya ekmeği glütensiz değildir.</li>\r\n        <li><strong>Reflü şikâyeti olanlar</strong> ekmeğin asitliğinden rahatsız olabilir. Bu kişisel bir hassasiyettir; az miktarla deneyip kendi tepkinizi gözlemlemek en doğrusudur.</li>\r\n      </ul>\r\n      <p>Bir de yaygın bir yanlış var: ekşi maya ekmeğin <em>ekşi</em> tadması gerekmez. İyi dengelenmiş bir ekşi maya ekmeğinde asidik nota arka planda kalır, öne çıkan şey buğdayın kendi tatlılığıdır. Ağzınızı buruşturan bir ekşilik, hamurun fazla beklediğini gösterir.</p>\r\n\r\n      <h2>Taşdelen Fırıncı'da ekşi maya</h2>\r\n      <p>Fırınımızda altı çeşit ekşi mayalı ekmek bulunuyor: tam buğday, Osmanlı, Trabzon, baget, chia tohumlu ve üzümlü cevizli. Hangisinin size uyduğundan emin değilseniz tezgâhta ustamıza sorabilirsiniz.</p>\r\n\r\n      <div class=\"cta-box\">\r\n        <h2>Tadına bakmak en iyi yöntem</h2>\r\n        <p>Hangi ekşi mayalı ekmeğin size uyduğunu anlamanın en kısa yolu, ustamıza sorup küçük bir dilim denemektir. Taşdelen’deki fırınımız 7/24 açık.</p>\r\n        <a href=\"../../index.htm#ziyaret\" class=\"btn btn--lg\">Adres ve Saatler</a>\r\n      </div>"
+    }
+  ],
+  "manifesto": {
+    "ustBaslik": "Lezzet geleneği",
+    "satirlar": []
+  },
+  "hikaye": null,
+  "menu": {
+    "baslik": "Taşdelen'de taptaze fırın lezzetleri",
+    "giris": "Fırınımızda günlük olarak hazırlanan ekmek, simit, poğaça, börek, pasta ve tatlı çeşitlerimizi keşfedin.",
+    "legend": "★ işaretliler en çok tercih edilenler.",
+    "hepsiMetin": "15 kategoride 132 çeşidin tamamını inceleyin →",
+    "hepsiLink": "/urunler/urunler",
+    "not": "Ürünler gramaj seçeneğine göre 250 gr, 500 gr ve 1 kg olarak hazırlanır. Güncel fiyatlar için tezgâhımıza danışabilir veya bizi arayabilirsiniz. Gluten, süt, yumurta ve kuruyemiş içeren ürünler hakkında personelimizden bilgi alabilirsiniz.",
+    "gruplar": [
+      {
+        "ad": "Ekmek Çeşitleri",
+        "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri",
+        "adet": "12 çeşit",
+        "tumLink": "/urunler/ekmek-cesitleri/ekmek-cesitleri",
+        "urunler": [
+          {
+            "ad": "Ekmek",
+            "fav": true,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri",
+            "image": "/uploads/site/1785939453219-4eabae2839b2.webp"
+          },
+          {
+            "ad": "Tam Buğdaylı Ekmek",
+            "fav": true,
+            "link": "/urunler/urunler",
+            "image": "/uploads/site/1785944226620-9304867900694df9.webp"
+          },
+          {
+            "ad": "Çavdar Ekmek",
+            "fav": true,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          },
+          {
+            "ad": "Papatya Ekmeği",
+            "fav": true,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          },
+          {
+            "ad": "Kepek Ekmek",
+            "fav": false,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          },
+          {
+            "ad": "Çok Tahıllı Ekmek",
+            "fav": false,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          },
+          {
+            "ad": "Cevizli Alman Çavdarı",
+            "fav": false,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          },
+          {
+            "ad": "Baget Ekmek",
+            "fav": false,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          },
+          {
+            "ad": "Tava Ekmeği",
+            "not": "susamlı  ·  çörekotlu",
+            "fav": false,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          },
+          {
+            "ad": "Lavaş",
+            "fav": false,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          },
+          {
+            "ad": "Tandır Lavaş",
+            "fav": false,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          },
+          {
+            "ad": "Ramazan Pidesi",
+            "not": "sade  ·  yumurtalı",
+            "fav": false,
+            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+          }
+        ],
+        "image": "",
+        "aciklama": "Fırınımızda on iki çeşit günlük ekmek bulunuyor. Klasik somun ve francalanın yanında tam buğday, çavdar, kepek ve çok tahıllı seçenekler; ayrıca baget, lavaş, tandır lavaş ve tava ekmeği yer alıyor. Ramazan ayında sade ve yumurtalı ramazan pidesi üretilir.",
+        "govdeHtml": "<h2>Hangi ekmek nasıl bir tada sahip?</h2>\n      <p><strong>Sade ekmek ve francala</strong> nötr tatlıdır, her yemeğin yanına gider. Kahvaltı sofrasında ve çocuklu evlerde en çok tercih edilen ekmek budur.</p>\n      <p><strong>Tam buğdaylı ve kepek ekmek</strong> daha yoğun ve doyurucudur; buğdayın kepeği ekmeğe hafif fındıkımsı bir tat ve daha koyu bir renk verir.</p>\n      <p><strong>Çavdar ekmeği</strong> nemli ve yoğun bir iç yapıya sahiptir, tadı hafif toprakımsıdır. Peynir ve zeytinyağlı ürünlerle çok iyi gider.</p>\n      <p><strong>Papatya ekmeği</strong> adını dilimlenmeye hazır papatya biçimli formundan alır; yumuşak dokusuyla kahvaltıda ve ikramlarda kullanılır.</p>\n      <p><strong>Çok tahıllı ekmek</strong> içine katılan tohum ve çekirdeklerle hem daha doyurucu hem aromatiktir.</p>\n\n      <h2>Baget, lavaş ve tava ekmeği</h2>\n      <p><strong>Baget</strong> ince kabuklu, uzun formlu ekmektir; sandviç ve tost için en uygun olanıdır. Aynı gün tüketilmesi önerilir, çünkü ince kabuk nemi hızlı kaybeder.</p>\n      <p><strong>Lavaş ve tandır lavaş</strong> yumuşak ve katlanabilir olduğu için dürüm, kebap ve kahvaltı sofralarında kullanılır.</p>\n      <p><strong>Tava ekmeği</strong> susamlı ve çörekotlu olarak hazırlanır; ikili paket hâlinde satılır, kahvaltıda bölünerek yenir.</p>\n\n      <h2>Ne kadar taze kalır?</h2>\n      <p>Kabuğu ince ekmekler (baget, francala) aynı gün, kalın kabuklu ve tam tahıllı ekmekler iki-üç gün tazeliğini korur. Ekmeği buzdolabında değil, oda sıcaklığında bez ya da kâğıt torbada saklamak gerekir — buzdolabı sıcaklığı bayatlamayı hızlandırır.</p>\n      <p>Uzun süre saklamak istiyorsanız aldığınız gün dilimleyip dondurun; dondurulmuş dilimler çözdürülmeden doğrudan tost makinesinde ısıtılabilir.</p>\n\n        <h2>Sık sorulanlar</h2>\n        <div class=\"faq\">\n        <details class=\"faq__item\"><summary>Ekmekler günün hangi saatinde taze olur?</summary><p>Ekmekler her gün taze üretilir. Sabah saatlerinde çeşit en geniştir; gün içinde tükenen ürünler yeniden üretime girer. Belirli bir çeşit için önceden telefonla sorabilirsiniz.</p></details>\n        <details class=\"faq__item\"><summary>Hangi ekmek en sağlıklıdır?</summary><p>Tek bir en sağlıklı ekmek yoktur. Tam tahıllı ve ekşi mayalı ekmekler beyaz una göre daha fazla lif ve mineral içerir, kan şekerini daha yavaş yükseltir. Kan şekeri kontrolü için çavdar, günlük dengeli tüketim için tam buğday öne çıkar.</p></details>\n        <details class=\"faq__item\"><summary>Ekmek siparişi verilebilir mi?</summary><p>Evet. Toplu ihtiyaç veya belirli bir çeşit için bir gün önceden telefonla haber vermeniz yeterlidir.</p></details>\n        </div>"
+      },
+      {
+        "ad": "Ekşi Mayalı Ekmekler",
+        "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler",
+        "adet": "6 çeşit",
+        "tumLink": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler",
+        "urunler": [
+          {
+            "ad": "Ekşi Mayalı Tam Buğday Ekmek",
+            "fav": true,
+            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+          },
+          {
+            "ad": "Osmanlı Ekşi Mayalı Ekmek",
+            "fav": false,
+            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+          },
+          {
+            "ad": "Chia Tohumlu Ekşi Mayalı Ekmek",
+            "fav": false,
+            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+          },
+          {
+            "ad": "Üzümlü Cevizli Ekşi Mayalı Ekmek",
+            "fav": false,
+            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+          },
+          {
+            "ad": "Ekşi Mayalı Trabzon Ekmek",
+            "fav": false,
+            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+          },
+          {
+            "ad": "Ekşi Mayalı Baget Ekmek",
+            "fav": false,
+            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+          }
+        ],
+        "aciklama": "Ekşi mayalı ekmek, paket maya yerine doğal maya kültürüyle kabartılan ekmektir. Fermantasyon saatler yerine uzun sürer; bu süreçte oluşan laktik asit ekmeğe kendine özgü aromasını verir, glüteni kısmen parçalar ve raf ömrünü katkı maddesi olmadan uzatır. Fırınımızda altı çeşit ekşi mayalı ekmek bulunuyor.",
+        "govdeHtml": "<h2>Ekşi maya neden farklı?</h2>\r\n      <p>Ticari maya tek bir mantar türüdür ve yalnızca karbondioksit üretip hamuru bir-iki saatte kabartır. Ekşi mayada ise onlarca mikroorganizma birlikte çalışır; karbondioksitin yanında laktik ve asetik asit de üretilir.</p>\r\n      <p>Bu asitler üç iş yapar: ekmeğe tanıdık hafif ekşi aromayı verir, glütenin bir kısmını parçalayarak hamuru daha sindirilebilir hâle getirir ve küf oluşumunu geciktirir. Yani ekşi mayalı ekmek hiçbir koruyucu içermeden daha uzun taze kalır.</p>\r\n\r\n      <h2>Çeşitler arasındaki fark</h2>\r\n      <p><strong>Ekşi mayalı tam buğday</strong> en dengeli seçenektir; günlük tüketim için en çok tercih edileni.</p>\r\n      <p><strong>Osmanlı ekşi mayalı ekmek</strong> daha yoğun ve iri gözeneklidir, kabuğu kalındır.</p>\r\n      <p><strong>Trabzon ekmeği</strong> geleneksel olarak büyük somun formunda, nemli iç yapılı ve uzun ömürlüdür.</p>\r\n      <p><strong>Ekşi mayalı baget</strong> ince kabuklu ve hafiftir; sandviç için uygundur.</p>\r\n      <p><strong>Chia tohumlu</strong> ve <strong>üzümlü cevizli</strong> çeşitler ise kahvaltıda peynirle ya da tek başına tüketilmek üzere hazırlanır.</p>\r\n\r\n      <h2>Gerçek ekşi maya nasıl anlaşılır?</h2>\r\n      <p>Kabuk kalın ve koyu renkli olmalı. İç yapıdaki gözenekler düzensiz, farklı boyutlarda olmalı — her deliğin aynı olduğu tertipli bir kesit hızlı üretim işaretidir.</p>\r\n      <p>Taze kesildiğinde hafif yoğurt veya sirke benzeri bir asidik nota gelmeli; ancak bu keskin olmamalı. Üçüncü günde bile dilimlenebiliyor ve yumuşak kalıyorsa ekşi maya çalışmış demektir.</p>\r\n      <p>Bir yanlış anlaşılma: ekşi mayalı ekmeğin <em>ekşi</em> tatması gerekmez. İyi dengelenmiş bir ekmekte asidik nota arka planda kalır, öne çıkan buğdayın kendi tatlılığıdır.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Ekşi mayalı ekmek glütensiz mi?</summary><p>Hayır. Fermantasyon glütenin bir kısmını parçalar ama tamamını yok etmez. Çölyak hastaları için uygun değildir.</p></details>\r\n        <details class=\"faq__item\"><summary>Ekşi mayalı ekmek neden daha pahalı?</summary><p>Üretim süresi çok daha uzundur ve ana mayanın her gün beslenmesi gerekir. Aynı fırında aynı sürede yapılabilecek ekmek sayısı belirgin biçimde düşer.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaç gün taze kalır?</summary><p>Ekşi mayalı ekmek üç-dört gün tazeliğini korur. Bez torbada, oda sıcaklığında ve kesik yüzü aşağı bakacak şekilde saklanmalıdır.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Simit, Poğaça & Açma",
+        "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma",
+        "adet": "22 çeşit",
+        "tumLink": "/urunler/simit-pogaca-acma/simit-pogaca-acma",
+        "urunler": [
+          {
+            "ad": "Simit",
+            "fav": true,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Tereyağlı Simit",
+            "fav": true,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Büyük Simit",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Rize Simidi",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Tahinli Simit",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Kaşarlı Simit",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Kaşarlı Sucuklu Simit",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Sade Poğaça",
+            "fav": true,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Kaşarlı Poğaça",
+            "fav": true,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Peynirli Poğaça",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Patatesli Poğaça",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Zeytinli Poğaça",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Dereotlu Poğaça",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Sade Açma",
+            "fav": true,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Çikolatalı Açma",
+            "fav": true,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Peynirli Açma",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Kaşarlı Açma",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Zeytinli Açma",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Ponçik",
+            "fav": true,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Tereyağlı Kol Böreği",
+            "not": "peynirli  ·  patatesli  ·  kıymalı",
+            "fav": true,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Ay Çöreği",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          },
+          {
+            "ad": "Tahinli Çörek",
+            "fav": false,
+            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+          }
+        ],
+        "aciklama": "Kahvaltı ve ikram grubunda simit, poğaça, açma, çörek ve kol böreği çeşitleri bulunuyor. Sade, peynirli, kaşarlı, patatesli, zeytinli ve dereotlu poğaçalar; sade, peynirli, kaşarlı, zeytinli ve çikolatalı açmalar; tereyağlı kol böreği peynirli, patatesli ve kıymalı olarak hazırlanıyor.",
+        "govdeHtml": "<h2>Poğaça, açma ve çörek arasındaki fark</h2>\r\n      <p><strong>Poğaça</strong> yumuşak, kabarık ve genellikle içi dolgulu bir hamur işidir. Hamurunda yağ ve süt bulunur, bu yüzden dokusu keke yakın yumuşaklıktadır.</p>\r\n      <p><strong>Açma</strong> daha elastik ve lifli bir dokuya sahiptir; hamuru katlanarak açıldığı için el ile koparıldığında lif lif ayrılır. Tereyağı oranı poğaçadan yüksektir.</p>\r\n      <p><strong>Çörek</strong> (ay çöreği, tahinli çörek) tatlıya yakın bir hamurdur ve genellikle tahin, şeker veya kakao ile şekillendirilir.</p>\r\n\r\n      <h2>Simit çeşitleri</h2>\r\n      <p>Klasik susamlı simidin yanında büyük simit, Rize simidi, tahinli simit, tereyağlı simit, kaşarlı ve kaşarlı sucuklu simit bulunuyor.</p>\r\n      <p><strong>Rize simidi</strong> daha küçük ve yoğun bir hamurdan yapılır. <strong>Tereyağlı simit</strong> ise hamuruna tereyağı katıldığı için daha yumuşak ve zengin bir tada sahiptir.</p>\r\n      <p>Kaşarlı ve sucuklu çeşitler fırından çıktıktan sonra hazırlandığı için sabah ve öğle saatlerinde bulunur.</p>\r\n\r\n      <h2>Tereyağlı kol böreği</h2>\r\n      <p>Kol böreği, yufkanın rulo hâlinde sarılıp kesilmesiyle hazırlanır. Fırınımızda peynirli, patatesli ve kıymalı olarak üretiliyor ve gramaj olarak satılıyor.</p>\r\n      <p>İkram ve toplantı için en çok tercih edilen ürün gruplarından biridir. Toplu ihtiyaç hâlinde bir gün önceden haber vermeniz yeterlidir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Poğaça ve simit günün hangi saatinde taze olur?</summary><p>Sabah saatlerinde çeşit en geniştir. Gün içinde tükenen ürünler yeniden fırına verilir; belirli bir çeşit için telefonla sorabilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Toplu poğaça siparişi verilebilir mi?</summary><p>Evet. Toplantı, mevlit, açılış ve benzeri organizasyonlar için bir gün önceden telefon veya WhatsApp ile sipariş verebilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Ponçik nedir?</summary><p>Ponçik, küçük ve yumuşak, genellikle onluk paketler hâlinde satılan mini bir hamur işidir. Çocuklu evlerde ve ikramlarda çok tercih edilir.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Kurabiye Çeşitleri",
+        "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri",
+        "adet": "8 çeşit",
+        "tumLink": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri",
+        "urunler": [
+          {
+            "ad": "Minik Dereotlu Peynirli Kurabiye",
+            "fav": true,
+            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+          },
+          {
+            "ad": "Minik Beyaz Peynirli Kurabiye",
+            "fav": false,
+            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+          },
+          {
+            "ad": "Minik Patatesli Kurabiye",
+            "fav": false,
+            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+          },
+          {
+            "ad": "Tuzlu Kurabiye",
+            "fav": false,
+            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+          },
+          {
+            "ad": "Tatlı Kurabiye",
+            "fav": false,
+            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+          },
+          {
+            "ad": "Acıbadem",
+            "fav": false,
+            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+          },
+          {
+            "ad": "İzmir Bomba",
+            "fav": false,
+            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+          },
+          {
+            "ad": "Tahinli Bomba",
+            "fav": false,
+            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+          }
+        ],
+        "aciklama": "Kurabiyeler gramajla satılır ve 250 gr, 500 gr ile 1 kg olarak hazırlanır. Tuzlu grupta minik dereotlu peynirli, beyaz peynirli ve patatesli kurabiyeler; tatlı grupta acıbadem, İzmir bomba ve tahinli bomba bulunur. İkram ve misafir için en çok tercih edilen ürün grubudur.",
+        "govdeHtml": "<h2>Tuzlu mu tatlı mı?</h2>\r\n      <p><strong>Tuzlu kurabiyeler</strong> çay saati ve ikram için hazırlanır. Minik dereotlu peynirli, beyaz peynirli ve patatesli çeşitler küçük boyutlu olduğu için tabakta hem şık durur hem tek lokmada yenir.</p>\r\n      <p><strong>Tatlı kurabiyeler</strong> daha çok misafir ikramında ve bayramlarda tercih edilir. Acıbadem, badem ununun yoğun kullanıldığı, dışı çıtır içi yumuşak klasik bir kurabiyedir.</p>\r\n      <p><strong>İzmir bomba</strong> ve <strong>tahinli bomba</strong> adet olarak satılır; içi akışkan çikolata veya tahin dolgulu, sıcak tüketildiğinde en iyi olan ürünlerdir.</p>\r\n\r\n      <h2>Ne kadar dayanır?</h2>\r\n      <p>Kurabiyeler nem almadığı sürece uzun süre dayanır. Hava almayan cam kavanoz veya kapaklı kutuda oda sıcaklığında bir-iki hafta tazeliğini korur.</p>\r\n      <p>Buzdolabına konulması önerilmez; nem çekip yumuşarlar. Yumuşadıysa 150 °C fırında beş dakika ısıtmak çıtırlığını geri getirir.</p>\r\n\r\n      <h2>Gramaj seçimi</h2>\r\n      <p>İkram için kişi başı 40–60 gram yeterlidir. On kişilik bir çay saati için 500 gr, yirmi kişilik için 1 kg uygun olur.</p>\r\n      <p>Karışık talep edebilirsiniz; farklı çeşitleri aynı gramaj içinde birlikte hazırlıyoruz.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Kurabiyeler nasıl satılıyor?</summary><p>Gramajla: 250 gr, 500 gr ve 1 kg olarak. İzmir bomba ve tahinli bomba ile acıbadem ayrıca adet olarak da satılır.</p></details>\r\n        <details class=\"faq__item\"><summary>Karışık kurabiye hazırlanır mı?</summary><p>Evet. Farklı çeşitleri aynı gramaj içinde karışık olarak hazırlayabiliriz; tezgâhta belirtmeniz yeterli.</p></details>\r\n        <details class=\"faq__item\"><summary>Kurabiyelerde kuruyemiş var mı?</summary><p>Bazı çeşitlerde badem, fındık ve ceviz kullanılır. Aynı mutfakta kuruyemişli üretim yapıldığı için ciddi alerji durumunda çapraz bulaşma riski bulunur; lütfen personelimize bildirin.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Adet Büyük Kurabiyeler",
+        "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler",
+        "adet": "10 çeşit",
+        "tumLink": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler",
+        "urunler": [
+          {
+            "ad": "Bonibonlu Kurabiye",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          },
+          {
+            "ad": "Damla Çikolatalı Kurabiye",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          },
+          {
+            "ad": "Parça Çikolatalı Fındıklı Kurabiye",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          },
+          {
+            "ad": "Kayısılı Kurabiye",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          },
+          {
+            "ad": "İncirli Makas Kurabiye",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          },
+          {
+            "ad": "Emili Kurabiye",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          },
+          {
+            "ad": "Elmalı Kurabiye",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          },
+          {
+            "ad": "Çatal Kurabiye",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          },
+          {
+            "ad": "Pürüzyen Kurabiye",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          },
+          {
+            "ad": "İran Poğaçası",
+            "fav": false,
+            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+          }
+        ],
+        "aciklama": "Büyük kurabiyeler gramajla değil adet olarak satılır. Tek başına bir ara öğün yerine geçecek boyutta hazırlanır; kahve yanında ve çocuk ikramında tercih edilir. On çeşit bulunur.",
+        "govdeHtml": "<h2>Hangi kurabiye kime?</h2>\r\n      <p><strong>Bonibonlu</strong> ve <strong>damla çikolatalı</strong> kurabiyeler çocukların en çok sevdiği çeşitlerdir.</p>\r\n      <p><strong>Parça çikolatalı fındıklı</strong> kurabiye daha yoğun ve doyurucudur; kahve yanında iyi gider.</p>\r\n      <p><strong>Kayısılı</strong>, <strong>incirli makas</strong> ve <strong>elmalı</strong> kurabiyeler meyve dolgulu olduğu için daha hafif tatlıdır.</p>\r\n      <p><strong>Pürüzyen</strong> ve <strong>emili</strong> kurabiyeler klasik pastane kurabiyeleridir; çay saatinde tercih edilir.</p>\r\n      <p><strong>İran poğaçası</strong> tatlı hamurlu, iri ve yumuşak bir üründür; ismi poğaça olsa da tatlı grubunda yer alır.</p>\r\n\r\n      <h2>Adet satışın avantajı</h2>\r\n      <p>Gramajlı kurabiyeler ikram için uygundur; büyük kurabiyeler ise tek kişilik tüketim için hazırlanır. Bir tanesi genellikle bir ara öğüne yeter.</p>\r\n      <p>Bu grup vitrinde günlük olarak bulunur, çeşit gün içinde değişebilir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Büyük kurabiyeler nasıl satılıyor?</summary><p>Adet olarak. Gramaj hesabı yapılmaz; vitrinden seçtiğiniz kadar alabilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Her çeşit her gün bulunur mu?</summary><p>Çeşit gün içinde değişebilir. Belirli bir kurabiye için telefonla sorup ayırtabilirsiniz.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Galeta, Çubuk & Kokteyl",
+        "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl",
+        "adet": "9 çeşit",
+        "tumLink": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl",
+        "urunler": [
+          {
+            "ad": "Sade Galeta",
+            "fav": false,
+            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+          },
+          {
+            "ad": "Susamlı Galeta",
+            "fav": false,
+            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+          },
+          {
+            "ad": "Çekirdekli Galeta",
+            "fav": false,
+            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+          },
+          {
+            "ad": "Susamlı Kokteyl",
+            "fav": false,
+            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+          },
+          {
+            "ad": "Çörekotlu Kokteyl",
+            "fav": false,
+            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+          },
+          {
+            "ad": "Çekirdekli Kokteyl",
+            "fav": false,
+            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+          },
+          {
+            "ad": "Çörekotlu Çubuk",
+            "fav": false,
+            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+          },
+          {
+            "ad": "Çekirdekli Çubuk",
+            "fav": false,
+            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+          },
+          {
+            "ad": "Selanik Gevreği",
+            "fav": false,
+            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+          }
+        ],
+        "aciklama": "Bu grup uzun ömürlü, kuru unlu mamullerden oluşur. Galeta dilimlenip kurutulmuş ekmek dokusundadır; kokteyl ve çubuklar ise çay yanında ve ikramda tüketilen tuzlu çıtır ürünlerdir. Gramajla satılır.",
+        "govdeHtml": "<h2>Galeta nedir, nasıl tüketilir?</h2>\r\n      <p>Galeta, hamurun pişirildikten sonra dilimlenip tekrar kurutulmasıyla elde edilir. Bu nedenle çok uzun ömürlüdür ve nem almadığı sürece haftalarca dayanır.</p>\r\n      <p>Çay ve kahve yanında tüketilir; ayrıca çorbaya ve süte batırılarak yenir. Sade, susamlı ve çekirdekli çeşitleri bulunur.</p>\r\n\r\n      <h2>Kokteyl ve çubuk</h2>\r\n      <p>Kokteyl, küçük parçalı tuzlu çıtır ürün grubudur; susamlı, çörekotlu ve çekirdekli olarak hazırlanır. Misafir ikramında tabakta sunulur.</p>\r\n      <p>Çubuk ise uzun ve ince formdadır; çörekotlu ve çekirdekli olarak paketlenir. İkisi de gramajla satılır.</p>\r\n      <p><strong>Selanik gevreği</strong> daha yoğun ve iri dokulu, geleneksel bir çıtır üründür; paket hâlinde satılır.</p>\r\n\r\n      <h2>Saklama</h2>\r\n      <p>Bu grubun tek düşmanı nemdir. Hava almayan kavanoz veya kapaklı kutuda oda sıcaklığında saklanmalıdır.</p>\r\n      <p>Yumuşadıklarında 150 °C fırında beş dakika ısıtmak çıtırlığı geri getirir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Galeta ne kadar dayanır?</summary><p>Nem almadığı sürece haftalarca. Hava almayan kapaklı bir kapta oda sıcaklığında saklanmalıdır.</p></details>\r\n        <details class=\"faq__item\"><summary>Kokteyl ve çubuk nasıl satılıyor?</summary><p>Gramajla: 250 gr, 500 gr ve 1 kg olarak. Selanik gevreği ve bazı çubuk çeşitleri paket hâlinde satılır.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Baklava & Şerbetli Tatlılar",
+        "link": "/urunler/baklava-serbetli/baklava-serbetli",
+        "adet": "11 çeşit",
+        "tumLink": "/urunler/baklava-serbetli/baklava-serbetli",
+        "urunler": [
+          {
+            "ad": "Cevizli Baklava",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Fıstıklı Baklava",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Özel Fıstıklı Baklava",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Meşhur Fındıklı Cemil Usta Baklavası",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Şöbiyet",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Midye Baklava",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Ankara Sarma",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Kuru Baklava",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Fıstıklı Kadayıf",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Şekerpare",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          },
+          {
+            "ad": "Güllaç",
+            "not": "çilekli  ·  cevizli  ·  fındıklı kivili",
+            "fav": false,
+            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+          }
+        ],
+        "aciklama": "Baklava ve şerbetli tatlılar gramajla satılır; 500 gr ve 1 kg olarak hazırlanır. Cevizli ve fıstıklı klasik baklavanın yanında şöbiyet, midye baklava, Ankara sarma, kuru baklava, fıstıklı kadayıf, şekerpare ve mevsiminde güllaç bulunur.",
+        "govdeHtml": "<h2>Cevizli mi fıstıklı mı?</h2>\r\n      <p><strong>Cevizli baklava</strong> daha yoğun ve topraki bir tada sahiptir, fiyat olarak da daha uygundur. Günlük tüketim ve kalabalık ikram için en çok tercih edilendir.</p>\r\n      <p><strong>Fıstıklı baklava</strong> daha aromatik ve hafiftir. Özel gün ve hediye için genellikle fıstıklı seçilir.</p>\r\n      <p><strong>Özel fıstıklı baklava</strong> daha yüksek fıstık oranıyla hazırlanır.</p>\r\n\r\n      <h2>Şöbiyet, midye ve sarma</h2>\r\n      <p><strong>Şöbiyet</strong> içine kaymak konularak üçgen biçiminde kapatılan baklava türüdür; daha yumuşak ve zengin bir dokuya sahiptir.</p>\r\n      <p><strong>Midye baklava</strong> ismini kapalı, midye benzeri formundan alır; içi fıstık dolgulu ve çıtırdır.</p>\r\n      <p><strong>Ankara sarma</strong> ince yufkanın fıstıkla rulo hâlinde sarılmasıyla yapılır, uzun ve silindirik formdadır.</p>\r\n      <p><strong>Kuru baklava</strong> daha az şerbetlidir; bu yüzden daha uzun dayanır ve yolculukta taşımaya uygundur.</p>\r\n\r\n      <h2>Kaç kişiye yeter, nasıl saklanır?</h2>\r\n      <p>İkramda kişi başı 80–100 gram baklava yeterlidir. On kişilik bir ikram için 1 kg rahatça yeter.</p>\r\n      <p>Baklava buzdolabına konulmaz — soğuk şerbeti şekerlendirir ve yufkayı sertleştirir. Oda sıcaklığında, kapağı hafif aralık kutusunda iki-üç gün tazeliğini korur.</p>\r\n      <p>Kuru baklava daha uzun dayanır. Güllaç ise sütlü olduğu için buzdolabında saklanır ve iki gün içinde tüketilmelidir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Baklava buzdolabında saklanır mı?</summary><p>Hayır. Soğuk, şerbeti şekerlendirir ve yufkayı sertleştirir. Baklava oda sıcaklığında, kapağı hafif aralık bir kapta saklanmalıdır. Güllaç ise sütlü olduğu için buzdolabında tutulur.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaç kilo baklava almalıyım?</summary><p>İkramda kişi başı 80–100 gram hesaplanır. On kişi için 1 kg yeterlidir; tatlı tek ikram değilse 500 gr da yeter.</p></details>\r\n        <details class=\"faq__item\"><summary>Baklava siparişi kaç gün önceden verilmeli?</summary><p>Vitrinde günlük olarak bulunur. Büyük miktar veya belirli bir çeşit için bir gün önceden haber vermeniz yeterlidir.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Sütlü Tatlılar",
+        "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar",
+        "adet": "9 çeşit",
+        "tumLink": "/urunler/sutlu-tatlilar/sutlu-tatlilar",
+        "urunler": [
+          {
+            "ad": "Ekler",
+            "not": "çikolatalı  ·  beyaz çikolatalı",
+            "fav": true,
+            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+          },
+          {
+            "ad": "Sütlaç",
+            "fav": false,
+            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+          },
+          {
+            "ad": "Profiterol",
+            "fav": false,
+            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+          },
+          {
+            "ad": "Trileçe",
+            "not": "karamelli  ·  frambuazlı",
+            "fav": false,
+            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+          },
+          {
+            "ad": "Magnolia",
+            "not": "çilekli  ·  muzlu  ·  fıstıklı  ·  frambuazlı",
+            "fav": false,
+            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+          },
+          {
+            "ad": "Oreo & Çilekli Magnolia",
+            "fav": false,
+            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+          },
+          {
+            "ad": "Muzlu Malaga",
+            "fav": false,
+            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+          },
+          {
+            "ad": "Soğuk Baklava",
+            "fav": false,
+            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+          },
+          {
+            "ad": "Fıstıklı Soğuk Kadayıf",
+            "fav": false,
+            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+          }
+        ],
+        "aciklama": "Sütlü tatlılar soğuk zincirde hazırlanır ve buzdolabında saklanır. Ekler, sütlaç, profiterol, trileçe ve magnolia çeşitleri porsiyon olarak; soğuk baklava ve fıstıklı soğuk kadayıf gramajla satılır. Hepsi 24 saat içinde tüketilmelidir.",
+        "govdeHtml": "<h2>Porsiyon tatlılar</h2>\r\n      <p><strong>Ekler</strong> çikolatalı ve beyaz çikolatalı olarak hazırlanır; içi krema dolgulu, üstü çikolata kaplı klasik pastane tatlısıdır. Gramajla da satılır.</p>\r\n      <p><strong>Sütlaç</strong> fırınlanmış olarak sunulur, üstü hafif karamelizedir.</p>\r\n      <p><strong>Profiterol</strong> küçük hamur toplarının krema ve çikolata sosuyla birleşmesiyle hazırlanır.</p>\r\n      <p><strong>Trileçe</strong> karamelli ve frambuazlı olarak bulunur; süt emmiş kek dokusuyla çok hafiftir.</p>\r\n      <p><strong>Magnolia</strong> çilekli, muzlu, fıstıklı ve frambuazlı çeşitleriyle bardak tatlısı olarak hazırlanır. Oreo & çilekli versiyonu da bulunur.</p>\r\n\r\n      <h2>Soğuk baklava ve soğuk kadayıf</h2>\r\n      <p>Soğuk baklava, şerbet yerine sütle hazırlanan bir baklava türüdür; buzdolabında servis edilir ve klasik baklavadan çok daha hafiftir.</p>\r\n      <p>Fıstıklı soğuk kadayıf da aynı mantıkla hazırlanır: kadayıf sütlü karışımla buluşur ve soğuk tüketilir. İkisi de gramajla satılır.</p>\r\n\r\n      <h2>Saklama ve servis</h2>\r\n      <p>Sütlü tatlılar buzdolabında +4 santigrat derecede saklanır ve 24 saat içinde tüketilmelidir.</p>\r\n      <p>Servisten yirmi-otuz dakika önce buzdolabından çıkarmak kremanın aromasının açılmasını sağlar; buzdolabı soğukluğu tadı bastırır.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Sütlü tatlılar ne kadar dayanır?</summary><p>Buzdolabında +4 °C'de saklanmalı ve 24 saat içinde tüketilmelidir. Soğuk zincirin dışında bırakılmamalıdır.</p></details>\r\n        <details class=\"faq__item\"><summary>Soğuk baklava ile normal baklava arasındaki fark ne?</summary><p>Soğuk baklava şerbet yerine sütle hazırlanır, buzdolabında servis edilir ve klasik baklavadan çok daha hafiftir.</p></details>\r\n        <details class=\"faq__item\"><summary>Toplu sipariş verilebilir mi?</summary><p>Evet, ancak sütlü tatlılar günlük hazırlandığı için bir gün önceden haber verilmesi gerekir.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Zeytinyağlı Ürünler",
+        "link": "/urunler/zeytinyagli-urunler/zeytinyagli-urunler",
+        "adet": "3 çeşit",
+        "tumLink": "/urunler/zeytinyagli-urunler/zeytinyagli-urunler",
+        "urunler": [
+          {
+            "ad": "Zeytinyağlı Yaprak Sarma",
+            "fav": true,
+            "link": "/urunler/zeytinyagli-urunler/zeytinyagli-urunler"
+          },
+          {
+            "ad": "Beyaz Lahana Sarma",
+            "fav": true,
+            "link": "/urunler/zeytinyagli-urunler/zeytinyagli-urunler"
+          },
+          {
+            "ad": "Zeytinyağlı Patlıcan",
+            "fav": false,
+            "link": "/urunler/zeytinyagli-urunler/zeytinyagli-urunler"
+          }
+        ],
+        "aciklama": "Zeytinyağlı grupta yaprak sarma, beyaz lahana sarma ve zeytinyağlı patlıcan bulunur. Üçü de gramajla satılır; 250 gr, 500 gr ve 1 kg olarak hazırlanır. Soğuk tüketilir ve buzdolabında saklanır.",
+        "govdeHtml": "<h2>Yaprak sarma ve lahana sarma</h2>\r\n      <p><strong>Zeytinyağlı yaprak sarma</strong> asma yaprağının pirinç, soğan ve baharatlı iç harçla sarılmasıyla hazırlanır. İnce sarılmış olması kalite göstergesidir.</p>\r\n      <p><strong>Beyaz lahana sarma</strong> daha büyük lokmalıdır ve lahananın kendine özgü hafif tatlılığını taşır. Kışın daha çok tercih edilir.</p>\r\n      <p>İkisi de soğuk tüketilir; limon sıkarak servis edilmesi önerilir.</p>\r\n\r\n      <h2>Zeytinyağlı patlıcan</h2>\r\n      <p>Patlıcanın zeytinyağı, domates ve sarımsakla pişirilmesiyle hazırlanır. Ana yemek yanında meze olarak veya ekmekle birlikte tüketilir.</p>\r\n\r\n      <h2>Ne kadar dayanır?</h2>\r\n      <p>Zeytinyağlı ürünler buzdolabında kapalı kapta iki-üç gün dayanır. Servisten bir süre önce çıkarılırsa zeytinyağı donukluğu geçer ve aroma açılır.</p>\r\n      <p>Dondurulmaları önerilmez; çözüldüğünde doku bozulur.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Zeytinyağlılar nasıl satılıyor?</summary><p>Gramajla: 250 gr, 500 gr ve 1 kg olarak.</p></details>\r\n        <details class=\"faq__item\"><summary>Ne kadar dayanır?</summary><p>Buzdolabında kapalı kapta iki-üç gün. Dondurulmaları önerilmez.</p></details>\r\n        <details class=\"faq__item\"><summary>Toplu sipariş verilebilir mi?</summary><p>Evet. Günlük hazırlandığı için bir gün önceden telefonla haber vermeniz gerekir.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Pastalar",
+        "link": "/urunler/pastalar/pastalar",
+        "adet": "14 çeşit",
+        "tumLink": "/urunler/pastalar/pastalar",
+        "urunler": [
+          {
+            "ad": "Frambuaz & Çikolatalı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": true,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Çilek & Çikolatalı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Çilek & Çikolatalı Mois",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Fıstık & Çikolatalı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Çikolata Parçacıklı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Profiterol & Çikolatalı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Muz & Çikolatalı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Muz & Fındıklı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Böğürtlen & Çikolatalı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Orman Meyveli & Çikolatalı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Karışık Meyveli",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Karışık Meyveli & Çikolatalı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Krokan & Fındıklı",
+            "not": "4–6  ·  6–8 kişilik",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          },
+          {
+            "ad": "Şeker Hamurlu & Figürlü Pasta",
+            "not": "özel tasarım",
+            "fav": false,
+            "link": "/urunler/pastalar/pastalar"
+          }
+        ],
+        "aciklama": "Pastalar 4–6 kişilik ve 6–8 kişilik olmak üzere iki boyda hazırlanır. On üç çeşit yaş pasta ile şeker hamurlu figürlü özel tasarım pasta bulunur. Kişi başı 100–120 gram hesaplanır: 4–6 kişi için küçük boy, 6–8 kişi için orta boy yeterlidir.",
+        "govdeHtml": "<h2>Kaç kişilik pasta almalıyım?</h2>\r\n      <p>Genel kural kişi başı 100–120 gramdır. Ancak boy seçimi davetli sayısından çok <strong>ikramın kurgusuna</strong> bağlıdır.</p>\r\n      <p>Pasta masadaki tek tatlıysa kişi başı payı yüksek tutun. Yanında kurabiye, baklava veya meyve varsa bir küçük boy rahatça yeter.</p>\r\n      <p>Kalabalık organizasyonlarda tek büyük pasta yerine <strong>iki farklı orta boy</strong> almak daha iyi sonuç verir: hem çeşit sunarsınız hem servis sırası oluşmaz. Otuz kişiyi geçen davetlerde kesme pasta en pratik çözümdür.</p>\r\n\r\n      <h2>Çeşitler</h2>\r\n      <p>Meyveli grupta çilek, frambuaz, böğürtlen, muz, orman meyveli ve karışık meyveli seçenekler var; hepsi çikolatalı versiyonuyla da hazırlanıyor.</p>\r\n      <p>Kuruyemişli grupta fıstık & çikolatalı, muz & fındıklı ve krokan & fındıklı bulunuyor.</p>\r\n      <p>Çikolata ağırlıklı isteyenler için çikolata parçacıklı ve profiterol & çikolatalı seçenekler var.</p>\r\n      <p><strong>Mois</strong> tipi pastalar daha nemli ve yoğun kek dokusuna sahiptir.</p>\r\n\r\n      <h2>Özel tasarım ve figürlü pastalar</h2>\r\n      <p>Şeker hamurlu, figürlü ve temalı pastalar ayrıca hazırlanır. Doğum günü, nişan, söz, baby shower ve mezuniyet için istediğiniz tema uygulanabilir.</p>\r\n      <p>Figürler elde şekillendirilip kurumaya bırakıldığı için bu pastalarda birkaç gün önceden sipariş gerekir. Referans görsel getirmeniz işi çok kolaylaştırır — telefonunuzdaki bir fotoğrafı göstermeniz yeterli.</p>\r\n      <p>Açıkça söyleyelim: elde şekillendirilen figürler referans görselin birebir kopyası olmaz, benzeri olur.</p>\r\n\r\n      <h2>Teslim aldıktan sonra</h2>\r\n      <p>Yaş pasta buzdolabında +4 °C'de saklanır ve 24 saat içinde tüketilmelidir.</p>\r\n      <p>Servisten 20–30 dakika önce buzdolabından çıkarın; krema aroması böyle açılır.</p>\r\n      <p>Kutuyu araçta koltuğa değil tabana koyun — eğimli yüzeyde krema kayar.</p>\r\n      <p>Şeker hamurlu pastalar nem çeker; buzdolabında kutusu kapalı durmalıdır.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Pasta siparişi kaç gün önceden verilmeli?</summary><p>Standart yaş pastalar için birkaç gün önceden haber vermeniz yeterlidir. Şeker hamurlu ve figürlü pastalarda hazırlık süresi daha uzundur; özel günlerde bir hafta önceden görüşmek en güvenlisidir.</p></details>\r\n        <details class=\"faq__item\"><summary>Pasta üzerine yazı yazdırılabilir mi?</summary><p>Evet, isim ve kısa mesaj yazılabilir. Üç-dört kelimeyi aşan metinler pasta yüzeyinde okunmadığı için kısa tutulması önerilir.</p></details>\r\n        <details class=\"faq__item\"><summary>Glütensiz veya şekersiz pasta var mı?</summary><p>Bulunmuyor. Ayrıca aynı mutfakta un ve kuruyemiş kullanıldığı için çölyak ve ciddi kuruyemiş alerjisi durumunda çapraz bulaşma riski vardır.</p></details>\r\n        <details class=\"faq__item\"><summary>Pasta nasıl saklanmalı?</summary><p>Buzdolabında +4 °C'de ve 24 saat içinde tüketilmek üzere. Servisten 20–30 dakika önce çıkarılması tadı belirgin biçimde açar.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Tek Pasta & Dilim",
+        "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim",
+        "adet": "11 çeşit",
+        "tumLink": "/urunler/tek-pasta-dilim/tek-pasta-dilim",
+        "urunler": [
+          {
+            "ad": "Çilek & Çikolatalı",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Muz & Çikolatalı",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Frambuaz & Çikolatalı",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Böğürtlen & Çikolatalı",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Vişne & Çikolatalı",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Fıstık & Çikolatalı",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Parça Çikolatalı",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Karışık Meyveli",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Çilek & Oreolu",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Muz & Frambuazlı",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          },
+          {
+            "ad": "Kaşık Pasta",
+            "not": "orman meyveli  ·  karamelli  ·  çilek çikolatalı",
+            "fav": false,
+            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+          }
+        ],
+        "aciklama": "Tek pastalar tek kişilik porsiyon olarak hazırlanır; bütün pasta almak istemeyenler için uygundur. On bir çeşit bulunur. Kaşık pasta ise bardak veya kâse içinde, çatal gerektirmeyen bir sunumla hazırlanır.",
+        "govdeHtml": "<h2>Kimler için uygun?</h2>\r\n      <p>Tek pasta, tatlı isteyip bütün pasta almak istemeyenler için hazırlanır. Ofiste, evde tek kişilik tüketimde ya da farklı çeşitleri denemek isteyenler için idealdir.</p>\r\n      <p>İki-üç kişilik küçük kutlamalarda birkaç farklı tek pasta almak, küçük boy pastadan daha çeşit sunar.</p>\r\n\r\n      <h2>Çeşitler</h2>\r\n      <p>Meyveli grupta çilek, muz, frambuaz, böğürtlen, vişne ve karışık meyveli; çikolata ağırlıklı grupta fıstık & çikolatalı ve parça çikolatalı bulunur.</p>\r\n      <p><strong>Çilek & Oreolu</strong> ve <strong>muz & frambuazlı</strong> çeşitler daha yeni kombinasyonlardır.</p>\r\n      <p><strong>Kaşık pasta</strong> orman meyveli, karamelli ve çilek çikolatalı olarak hazırlanır; kâse içinde katmanlı sunulduğu için kaşıkla yenir.</p>\r\n\r\n      <h2>Saklama</h2>\r\n      <p>Tek pastalar da yaş pasta grubundadır: buzdolabında saklanır ve 24 saat içinde tüketilmelidir.</p>\r\n      <p>Servisten kısa süre önce buzdolabından çıkarmak tadı belirgin biçimde iyileştirir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Tek pasta kaç kişilik?</summary><p>Tek kişilik porsiyon olarak hazırlanır.</p></details>\r\n        <details class=\"faq__item\"><summary>Her çeşit her gün bulunur mu?</summary><p>Vitrindeki çeşit gün içinde değişir. Belirli bir çeşit için telefonla sorabilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaşık pasta nedir?</summary><p>Kâse veya bardak içinde katmanlı olarak hazırlanan, kaşıkla yenen pasta türüdür. Orman meyveli, karamelli ve çilek çikolatalı olarak bulunur.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Tartolet, Rulo & Lezzet Topları",
+        "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari",
+        "adet": "5 çeşit",
+        "tumLink": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari",
+        "urunler": [
+          {
+            "ad": "Çilekli Rulo Pasta",
+            "fav": true,
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+          },
+          {
+            "ad": "Muzlu Rulo Pasta",
+            "fav": true,
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+          },
+          {
+            "ad": "Tartolet",
+            "fav": true,
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+          },
+          {
+            "ad": "Kesme Pasta",
+            "fav": false,
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+          },
+          {
+            "ad": "Lezzet Topları",
+            "fav": false,
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+          }
+        ],
+        "aciklama": "Bu grup ikram ve organizasyon için hazırlanan küçük porsiyonlu tatlılardan oluşur. Tartolet, rulo pasta, kesme pasta ve lezzet topları gramajla satılır; 250 gr, 500 gr ve 1 kg olarak hazırlanır. Kalabalık davetlerde bütün pastaya göre çok daha pratiktir.",
+        "govdeHtml": "<h2>Neden ikram için ideal?</h2>\r\n      <p>Bütün pasta kesme, dağıtma ve tabak gerektirir. Bu gruptaki ürünler ise tek lokmalık veya küçük dilimli hazırlandığı için elde tüketilebilir; servis derdi yoktur.</p>\r\n      <p>Otuz kişiyi geçen davetlerde kesme pasta ya da rulo pasta, kişi başı maliyeti de düşürür.</p>\r\n\r\n      <h2>Çeşitler</h2>\r\n      <p><strong>Tartolet</strong> küçük tart kabuğunun krema ve meyveyle doldurulmasıyla hazırlanır; şık durur ve tek lokmadır.</p>\r\n      <p><strong>Çilekli ve muzlu rulo pasta</strong> ince kek katmanının krema ile sarılmasıyla yapılır, dilimlenerek servis edilir.</p>\r\n      <p><strong>Kesme pasta</strong> tepsiye hazırlanıp kare dilimler hâlinde kesilir; en pratik ikram seçeneğidir.</p>\r\n      <p><strong>Lezzet topları</strong> kek ve krema karışımının yuvarlanıp kaplanmasıyla hazırlanan tek lokmalık tatlılardır.</p>\r\n\r\n      <h2>Gramaj hesabı</h2>\r\n      <p>İkramda kişi başı 80–120 gram hesaplayabilirsiniz. Yirmi kişilik bir organizasyon için 2 kg karışık rahatça yeter.</p>\r\n      <p>Farklı çeşitleri karışık olarak hazırlayabiliriz; siparişte belirtmeniz yeterlidir.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Nasıl satılıyor?</summary><p>Gramajla: 250 gr, 500 gr ve 1 kg olarak. Karışık talep edilebilir.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaç kişiye yeter?</summary><p>İkramda kişi başı 80–120 gram hesaplanır. Yirmi kişi için 2 kg karışık yeterlidir.</p></details>\r\n        <details class=\"faq__item\"><summary>Nasıl saklanır?</summary><p>Kremalı olduğu için buzdolabında saklanmalı ve 24 saat içinde tüketilmelidir.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "Donut",
+        "link": "/urunler/donut/donut",
+        "adet": "5 çeşit",
+        "tumLink": "/urunler/donut/donut",
+        "urunler": [
+          {
+            "ad": "Çikolata Dolgulu",
+            "fav": false,
+            "link": "/urunler/donut/donut"
+          },
+          {
+            "ad": "Muz Dolgulu",
+            "fav": false,
+            "link": "/urunler/donut/donut"
+          },
+          {
+            "ad": "Frambuaz Dolgulu",
+            "fav": false,
+            "link": "/urunler/donut/donut"
+          },
+          {
+            "ad": "Çilek Dolgulu",
+            "fav": false,
+            "link": "/urunler/donut/donut"
+          },
+          {
+            "ad": "Karamel Dolgulu",
+            "fav": false,
+            "link": "/urunler/donut/donut"
+          }
+        ],
+        "aciklama": "Donutlar beş dolgu seçeneğiyle hazırlanır: çikolata, muz, frambuaz, çilek ve karamel. Adet olarak satılır ve günlük üretilir. Aynı gün tüketilmesi önerilir; dolgulu olduğu için ertesi güne bırakıldığında hamur nem çeker.",
+        "govdeHtml": "<h2>Dolgu seçenekleri</h2>\r\n      <p><strong>Çikolata dolgulu</strong> en çok tercih edilendir; yoğun ve doyurucudur.</p>\r\n      <p><strong>Karamel dolgulu</strong> daha tatlı, <strong>frambuaz</strong> ve <strong>çilek dolgulu</strong> ise meyve asitliği sayesinde daha hafif hissettirir.</p>\r\n      <p><strong>Muz dolgulu</strong> çocukların en çok sevdiği çeşittir.</p>\r\n\r\n      <h2>Aynı gün tüketin</h2>\r\n      <p>Donut kızartılmış hamur ürünüdür ve dolgu içerdiği için nem dengesi hassastır. Aldığınız gün tüketilmesi önerilir.</p>\r\n      <p>Buzdolabına konulması önerilmez; hamur sertleşir. Oda sıcaklığında kapalı kapta bekletin.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Donutlar günlük mü hazırlanıyor?</summary><p>Evet, günlük hazırlanır ve aynı gün tüketilmesi önerilir.</p></details>\r\n        <details class=\"faq__item\"><summary>Kaç çeşit dolgu var?</summary><p>Beş çeşit: çikolata, muz, frambuaz, çilek ve karamel.</p></details>\r\n        </div>"
+      },
+      {
+        "ad": "İçecekler",
+        "link": "/urunler/icecekler/icecekler",
+        "adet": "7 çeşit",
+        "tumLink": "/urunler/icecekler/icecekler",
+        "urunler": [
+          {
+            "ad": "Kola",
+            "fav": false,
+            "link": "/urunler/icecekler/icecekler"
+          },
+          {
+            "ad": "Çamlıca Portakal",
+            "fav": false,
+            "link": "/urunler/icecekler/icecekler"
+          },
+          {
+            "ad": "Meyve Suyu",
+            "not": "vişne  ·  şeftali  ·  kayısı  ·  karışık",
+            "fav": false,
+            "link": "/urunler/icecekler/icecekler"
+          },
+          {
+            "ad": "Limonata",
+            "fav": false,
+            "link": "/urunler/icecekler/icecekler"
+          },
+          {
+            "ad": "Didi",
+            "not": "şeftali  ·  limon",
+            "fav": false,
+            "link": "/urunler/icecekler/icecekler"
+          },
+          {
+            "ad": "Soda",
+            "not": "sade  ·  limonlu",
+            "fav": false,
+            "link": "/urunler/icecekler/icecekler"
+          },
+          {
+            "ad": "Süt",
+            "not": "sade  ·  çikolatalı  ·  çilekli  ·  muzlu",
+            "fav": false,
+            "link": "/urunler/icecekler/icecekler"
+          }
+        ],
+        "aciklama": "Fırınımızda kola, Çamlıca portakal, meyve suyu (vişne, şeftali, kayısı, karışık), limonata, sade ve limonlu soda ile süt (sade, çikolatalı, çilekli, muzlu) bulunur. Farklı hacim seçenekleri mevcuttur.",
+        "govdeHtml": "<h2>Neler var?</h2>\r\n      <p>Gazlı grupta kola, sade ve limonlu soda; farklı hacimlerde bulunur.</p>\r\n      <p>Meyve suyu grubunda vişne, şeftali, kayısı ve karışık çeşitleri ile Çamlıca portakal ve limonata yer alır.</p>\r\n      <p>Süt grubunda sade, çikolatalı, çilekli ve muzlu seçenekler küçük kutu olarak bulunur — özellikle çocuklar için simit ve poğaça yanında tercih edilir.</p>\r\n\r\n      <h2>Ne ile iyi gider?</h2>\r\n      <p>Simit ve poğaça yanında en klasik eşleşme çaydır; ancak soğuk içecek isteyenler için soda ve limonata da iyi bir denge kurar.</p>\r\n      <p>Tatlı ve pasta yanında sade soda, damaktaki ağırlığı azaltır.</p>\r\n\r\n        <h2>Sık sorulanlar</h2>\r\n        <div class=\"faq\">\r\n        <details class=\"faq__item\"><summary>Sıcak içecek var mı?</summary><p>Menümüzde çay ve kahve bulunmaktadır; güncel durum için tezgâha danışabilirsiniz.</p></details>\r\n        <details class=\"faq__item\"><summary>Hangi hacimler mevcut?</summary><p>Ürüne göre değişir; kutu, küçük şişe ve büyük şişe seçenekleri bulunur.</p></details>\r\n        </div>"
+      }
+    ]
+  },
+  "galeri": [
+    {
+      "src": "/assets/img/cephe.jpg",
+      "baslik": "Fırınımız · Taşdelen",
+      "boy": "wide"
+    },
+    {
+      "src": "/assets/img/kapi.jpg",
+      "baslik": "Giriş",
+      "boy": "half"
+    },
+    {
+      "src": "/assets/img/urun/vitrin-pasta.jpg",
+      "baslik": "Pasta vitrini",
+      "boy": "half"
+    },
+    {
+      "src": "/assets/img/urun/ekmek-rustik.jpg",
+      "baslik": "Somunlar",
+      "boy": "third"
+    },
+    {
+      "src": "/assets/img/urun/vitrin-hamur.jpg",
+      "baslik": "Hamur işleri",
+      "boy": "third"
+    },
+    {
+      "src": "/assets/img/urun/simit.jpg",
+      "baslik": "Sıcacık simit",
+      "boy": "third"
+    }
+  ],
+  "yorumlar": [
+    {
+      "metin": "Ekibinizin sıcak ve samimi hizmeti sayesinde unutulmaz bir tatlı anı yaşadığımı belirtmek isterim.",
+      "ad": "Ayşe Yılmaz",
+      "unvan": "Öğretmen",
+      "yildiz": 5
+    },
+    {
+      "metin": "Her ürününde kalite ve özen gözeten Taşdelen Fırıncı, beklentilerimi fazlasıyla karşıladı.",
+      "ad": "Mehmet Demir",
+      "unvan": "Mühendis",
+      "yildiz": 5
+    },
+    {
+      "metin": "Kızımın doğum günü için istediğimiz temada pasta hazırladılar, hem görüntüsü hem lezzeti çok beğenildi.",
+      "ad": "Zeynep Kaya",
+      "unvan": "Taşdelen sakini",
+      "yildiz": 5
+    },
+    {
+      "metin": "Sabahları taze simit ve poğaça için uğruyoruz; lezzet hiç düşmüyor, personel her zaman güler yüzlü.",
+      "ad": "Elif Arslan",
+      "unvan": "Çekmeköy",
+      "yildiz": 5
+    },
+    {
+      "metin": "Özel gün pastamız zamanında ve istediğimiz gibi geldi. Taşdelen’de güvenle sipariş verdiğimiz adres.",
+      "ad": "Burak Özkan",
+      "unvan": "İşletmeci",
+      "yildiz": 5
+    }
+  ],
+  "sss": {
+    "items": [
+      {
+        "soru": "Sipariş nasıl verilir?",
+        "cevap": "Telefon veya WhatsApp ile 0552 340 02 02 üzerinden sipariş verebilirsiniz."
+      },
+      {
+        "soru": "Hangi saatlerde açıksınız?",
+        "cevap": "7 gün, sabah ve öğle saatlerinde taze ürünlerimiz olur; özel günlerde farklılık gösterebilir."
+      }
+    ]
+  },
+  "iletisim": {
+    "baslik": "Her gün taze, sıcak ve lezzetli",
+    "giris": "Sipariş, özel tasarım pasta ve tüm sorularınız için bizi arayabilir ya da WhatsApp'tan yazabilirsiniz.",
+    "metin": "Doğum günü, nişan, söz, baby shower ve tüm özel günleriniz için kişiye özel pasta siparişleri alınır.",
+    "eyebrow": "İletişim",
+    "telefon": "0552 340 02 02",
+    "telefonHam": "+905523400202",
+    "telefonAlt": "Sipariş & İletişim - 7/24",
+    "whatsapp": "https://wa.me/905523400202",
+    "whatsappBaslik": "WhatsApp'tan yazın",
+    "whatsappAlt": "Hızlı Sipariş ve Bilgi",
+    "instagram": "@firincitasdelenn",
+    "instagramUrl": "https://www.instagram.com/firincitasdelenn/",
+    "instagramAlt": "Günün Fotoğrafları Instagram'da",
+    "eposta": "info@firincitasdelen.com.tr",
+    "epostaAlt": "E-posta",
+    "adresSatir1": "Taşdelen Mah. Turgut Özal Cad. No:108/C",
+    "adresSatir2": "Bulvar Rezidans A Blok",
+    "adresSatir3": "Çekmeköy / İstanbul",
+    "saatler": "7 gün 24 saat açık",
+    "ozelPastaNot": "Özel pasta siparişleri alınır",
+    "koordinat": "41.031267,29.229361",
+    "haritaSorgu": "41.031267,29.229361",
+    "haritaButonMetin": "Yol Tarifi Al",
+    "etiketAdres": "Adres",
+    "etiketSaatler": "Çalışma saatleri",
+    "etiketTelefon": "Telefon",
+    "etiketWhatsapp": "WhatsApp",
+    "etiketOzelPasta": "Özel pasta"
+  },
+  "seo": {
+    "title": "Taşdelen Fırıncı — Fırın ve Pastane | Çekmeköy Taşdelen",
+    "description": "Çekmeköy Taşdelen'de 7/24 açık fırın ve pastane. Her gün taze ekmek, simit, poğaça, börek, kurabiye, baklava, tatlı ve yaş pasta; şeker hamurlu özel tasarım pastalar. Sipariş: 0552 340 02 02",
+    "ogTitle": "Taşdelen Fırıncı — Fırın ve Pastane | Çekmeköy",
+    "ogDescription": "Çekmeköy Taşdelen'de 7/24 açık fırın ve pastane. Taze ekmek, simit, poğaça, börek, tatlı, yaş pasta ve özel tasarım pastalar.",
+    "siteName": "Taşdelen Fırıncı",
+    "canonicalUrl": "https://www.firincitasdelen.com.tr/",
+    "themeColor": "#12140E"
+  },
+  "footer": {
+    "markaAdi": "Taşdelen Fırıncı",
+    "yasalMetin": "Tüm hakları saklıdır.",
+    "slogan": "Taze • Lezzetli • Doğal\nÇekmeköy Taşdelen'de her gün taptaze.",
+    "kolonlar": [
+      {
+        "baslik": "Fırın",
+        "links": [
+          {
+            "label": "Hakkımızda",
+            "href": "#hakkimizda"
+          },
+          {
+            "label": "Ürünler",
+            "href": "/urunler/urunler"
+          },
+          {
+            "label": "Özel Pastalar",
+            "href": "#pasta"
+          },
+          {
+            "label": "Galeri",
+            "href": "#galeri"
+          },
+          {
+            "label": "Fırın Günlüğü",
+            "href": "/blog/blog"
+          }
+        ]
+      },
+      {
+        "baslik": "Adres",
+        "links": [
+          {
+            "label": "Turgut Özal Cad. No:108/C",
+            "href": "#iletisim"
+          },
+          {
+            "label": "Bulvar Rezidans A Blok",
+            "href": "#iletisim"
+          },
+          {
+            "label": "Çekmeköy / İstanbul",
+            "href": "#iletisim"
+          },
+          {
+            "label": "7/24 açık",
+            "href": "#iletisim"
+          }
+        ]
+      },
+      {
+        "baslik": "İletişim",
+        "links": [
+          {
+            "label": "0552 340 02 02",
+            "href": "tel:+905523400202"
+          },
+          {
+            "label": "WhatsApp",
+            "href": "https://wa.me/905523400202"
+          },
+          {
+            "label": "Instagram",
+            "href": "https://www.instagram.com/firincitasdelenn/"
+          },
+          {
+            "label": "info@firincitasdelen.com.tr",
+            "href": "mailto:info@firincitasdelen.com.tr"
+          }
+        ]
+      }
+    ]
+  },
+  "waFloat": {
+    "baslik": "WhatsApp Sipariş",
+    "alt": "7/24 Hızlı Yanıt",
+    "onYazi": "Merhaba, Taşdelen Fırıncı’ya sipariş vermek istiyorum.",
+    "ariaLabel": "WhatsApp ile sipariş verin"
+  },
+  "legal": {
+    "kvkk": "Kişisel verileriniz 6698 sayılı KVKK kapsamında yalnızca sipariş ve iletişim amaçlı işlenir.",
+    "gizlilik": "Gizlilik politikamız: iletişim bilgileriniz üçüncü taraflarla paylaşılmaz.",
+    "cerez": "Bu site temel işlevler için zorunlu çerezler kullanır."
+  },
+  "yorumlarMeta": {
+    "googleSayacMetin": "30+ Google Yorumu",
+    "googleSkor": "4.87 / 5.0",
+    "dogrulamaEtiketi": "Doğrulanmış Google Yorumu",
+    "googleUrl": "https://www.google.com/maps/search/?api=1&query=Ta%C5%9Fdelen+F%C4%B1r%C4%B1nc%C4%B1+%C3%87ekmek%C3%B6y",
+    "badgeCta": "Google’da gör"
+  },
+  "yorumlarSource": "manual",
+  "yorumlarApi": "",
+  "sayfalar": {
+    "urunler": {
+      "eyebrow": "Ürünler",
+      "baslikSablon": "{n} kategoride {m} çeşit",
+      "lead": "Her gün taze pişen ekmek, simit, poğaça, börek, tatlı ve pasta çeşitlerimiz."
+    },
+    "urunKategori": {
+      "eyebrow": "Ürünler",
+      "answerBaslik": "Kısa bilgi",
+      "listeBaslikSablon": "{ad} listesi",
+      "kartNot": "★ işaretliler en çok tercih edilenler. Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.",
+      "ctaBaslik": "Sipariş & bilgi",
+      "ctaWaLabel": "WhatsApp’tan yazın",
+      "relatedBaslik": "Diğer kategoriler",
+      "relatedHepsi": "Tüm ürün kategorileri"
+    },
+    "blog": {
+      "eyebrow": "Fırın Günlüğü",
+      "baslik": "Ekmeğin ardındaki bilgi",
+      "lead": "Pasta siparişi, ekmek saklama, un çeşitleri ve fırın mutfağından pratik yazılar.",
+      "ctaBaslik": "Aklınıza takılan bir şey mi var?",
+      "ctaMetin": "Sipariş ve sorularınız için bizi arayın veya WhatsApp’tan yazın."
+    }
+  },
+  "brand": {
+    "displayName": "Taşdelen Fırıncı",
+    "shortName": "FIRINCI"
+  }
+}
