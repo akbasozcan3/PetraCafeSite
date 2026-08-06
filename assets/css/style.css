@@ -529,12 +529,18 @@ body.page a.wa-float {
 /* HERO POSTER — ekranı doldur, alta boşluk yok */
 .gate__poster {
   object-fit: cover !important;
-  object-position: center bottom !important;
+  object-position: center center !important;
   width: 100% !important;
   height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
   background: #0a0c08;
+  z-index: 1;
 }
 @media (max-width: 860px) {
+  .gate__stage {
+    background: #0a0c08 url("/assets/img/hero-cephe.webp") center center / cover no-repeat !important;
+  }
   .gate__poster {
     inset: 0 !important;
     left: 0 !important;
@@ -544,14 +550,24 @@ body.page a.wa-float {
     height: 100% !important;
     min-width: 0 !important;
     max-width: none !important;
+    max-height: none !important;
     transform: none !important;
     object-fit: cover !important;
     object-position: center center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 2 !important;
   }
-  /* JS poster modu da bunu açar; dar ekranda 3B kapı yok */
+  /* scene-ready poster'ı gizlemesin — mobilde siyah ekran sebebi buydu */
+  html.scene-ready .gate__poster {
+    opacity: 1 !important;
+  }
   html.scene-poster #scene,
+  html.scene-ready #scene,
   #scene {
     display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 }
 

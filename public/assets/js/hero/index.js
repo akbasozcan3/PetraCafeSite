@@ -137,8 +137,10 @@ async function resolveAssets() {
   };
 }
 
+let posterScrollBound = false;
 function bindPosterScroll() {
-  if (!gate) return;
+  if (!gate || posterScrollBound) return;
+  posterScrollBound = true;
   const onScroll = () => {
     const max = Math.max(1, gate.offsetHeight - window.innerHeight);
     const progress = Math.min(1, Math.max(0, window.scrollY / max));
@@ -202,15 +204,17 @@ async function boot() {
   await start3D();
 }
 
-// DevTools mobil ↔ masaüstü geçişinde yarım kalmış durum olmasın
+// DevTools mobil ↔ masaüstü: reload yok (siyah flash); hemen poster’a geç
 try {
   const mq = matchMedia('(max-width: 860px)');
-  let last = mq.matches;
   mq.addEventListener('change', (e) => {
-    if (e.matches === last) return;
-    last = e.matches;
-    // Mod değişince temiz yeniden başlat
-    window.location.reload();
+    if (e.matches) {
+      showPoster('resize-mobile');
+      bindPosterScroll();
+    } else {
+      // Masaüstüne dönünce temiz 3D için bir kez yenile
+      window.location.reload();
+    }
   });
 } catch {
   /* eski tarayıcı */
