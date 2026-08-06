@@ -631,26 +631,94 @@
   }
 
   function applyMarquee(items) {
-    if (!items || !items.length) return;
+    var band = $("#mqBand");
     var track = $("#mqTrack") || $("#marqueeTrack");
-    if (!track) return;
-    // Prefer rebuilding the inner flex row(s) used by the animated marquee
-    var rows = track.querySelectorAll(":scope > div");
-    var targets = rows.length ? Array.prototype.slice.call(rows) : [track];
-    targets.forEach(function (row) {
-      row.innerHTML = "";
-      items.forEach(function (word, i) {
+    if (!band || !track) return;
+
+    var words = (items && items.length ? items : []).map(function (w) {
+      return String(w || "").trim();
+    }).filter(Boolean);
+    if (!words.length) {
+      words = [
+        "TAZE EKMEK",
+        "GÜNLÜK ÜRETİM",
+        "ÖZEL TASARIM PASTA",
+        "SİMİT & POĞAÇA",
+        "ÇEKMEKÖY TAŞDELEN",
+        "DOĞAL MALZEME",
+        "BAKLAVA & BÖREK",
+        "HER GÜN TAPTAZE",
+        "EL YAPIMI LEZZETLER",
+        "GELENEKSEL TARİF",
+      ];
+    }
+
+    function makeSeg() {
+      var seg = document.createElement("div");
+      seg.className = "mq-seg";
+      seg.setAttribute("aria-hidden", "true");
+      words.forEach(function (word, i) {
         var span = document.createElement("span");
-        span.style.cssText = "font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;";
+        span.className = "mq-word";
         span.textContent = word;
-        row.appendChild(span);
+        seg.appendChild(span);
         var sep = document.createElement("span");
-        sep.style.cssText = "color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;";
+        sep.className = "mq-sep";
         sep.textContent = i % 2 === 0 ? "✦" : "◆";
-        row.appendChild(sep);
+        seg.appendChild(sep);
       });
-    });
+      return seg;
+    }
+
+    track.classList.remove("is-on");
+    track.style.animation = "none";
+    track.innerHTML = "";
+
+    // 1) Tek segment — viewport'tan kısa kalmasın diye kelimeleri çoğalt
+    var seed = makeSeg();
+    track.appendChild(seed);
+    var guard = 0;
+    while (seed.scrollWidth < band.clientWidth + 40 && guard < 8) {
+      words.forEach(function (word, i) {
+        var span = document.createElement("span");
+        span.className = "mq-word";
+        span.textContent = word;
+        seed.appendChild(span);
+        var sep = document.createElement("span");
+        sep.className = "mq-sep";
+        sep.textContent = i % 2 === 0 ? "✦" : "◆";
+        seed.appendChild(sep);
+      });
+      guard++;
+    }
+
+    // 2) Aynı segmenti birebir kopyala → -50% ile dikişsiz sonsuz döngü
+    var clone = seed.cloneNode(true);
+    track.appendChild(clone);
+
+    var segW = seed.scrollWidth || 1;
+    var duration = Math.max(18, Math.min(55, segW / 42));
+    track.style.setProperty("--mq-dur", duration + "s");
+    // reflow sonra animasyonu aç
+    void track.offsetWidth;
+    track.classList.add("is-on");
+    track.style.animation = "";
   }
+
+  // Genişlik değişince şeridi yeniden kur (DevTools / rotate)
+  var _mqResizeTimer = 0;
+  window.addEventListener(
+    "resize",
+    function () {
+      clearTimeout(_mqResizeTimer);
+      _mqResizeTimer = setTimeout(function () {
+        var items =
+          (window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.marquee) || null;
+        if ($("#mqTrack")) applyMarquee(items);
+      }, 180);
+    },
+    { passive: true }
+  );
 
   function applyHakkimizda(h) {
     if (!h) return;

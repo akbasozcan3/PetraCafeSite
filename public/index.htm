@@ -138,7 +138,7 @@
      tüm ortamlara açılır. Üçüncü taraf isteği ilk boyamayı bekletmiyor. -->
 <link href="css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all';this.onload=null">
 <noscript><link href="css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/css/style.css?v=20260806r1">
+<link rel="stylesheet" href="assets/css/style.css?v=20260806mq1">
 <style id="brand-critical">
   .nav__logo.has-logo .nav__logo-text,
   .nav__logo.has-logo .nav__logo-fallback,
@@ -174,7 +174,7 @@ html.scene-ready .gate__poster{opacity:0;transition:opacity .9s var(--ease)}
 /* Telefon: yüklenirken poster; 3B hazır olunca canvas (masaüstüyle aynı kapı) */
 @media (max-width:860px){
   .gate__stage{
-    background:#0a0c08 url("/assets/img/hero-mobile.webp?v=20260806r1") center center / cover no-repeat !important;
+    background:#0a0c08 url("/assets/img/hero-mobile.webp?v=20260806mq1") center center / cover no-repeat !important;
   }
   .gate__poster{
     inset:0!important;
@@ -268,8 +268,8 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
 <!-- Poster için ayrı, daha sıkı sıkıştırılmış sürümler: bu görsel en
      büyük içerik boyaması (LCP) ve 0.9 sn sonra 3B sahne devraldığı
      için kalite 66 yeterli. Galeri hâlâ kalite 78 sürümleri kullanır. -->
-<link rel="preload" as="image" href="/assets/img/hero-cephe.webp?v=20260806r1" fetchpriority="high">
-<link rel="preload" as="image" href="/assets/img/hero-mobile.webp?v=20260806r1" media="(max-width: 860px)" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/img/hero-cephe.webp?v=20260806mq1" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/img/hero-mobile.webp?v=20260806mq1" media="(max-width: 860px)" fetchpriority="high">
 </head>
 <body>
 
@@ -325,8 +325,8 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
          en büyük içerik boyaması buna takılıyordu. Sahne hazır olunca
          karşılıklı geçişle devralır. -->
     <picture>
-      <source media="(max-width: 860px)" srcset="/assets/img/hero-mobile.webp?v=20260806r1" type="image/webp">
-      <img class="gate__poster" data-site="heroPoster" src="/assets/img/hero-cephe.webp?v=20260806r1" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1200" height="900" onerror="this.onerror=null;this.src='/assets/img/hero-cephe.webp?v=20260806r1'">
+      <source media="(max-width: 860px)" srcset="/assets/img/hero-mobile.webp?v=20260806mq1" type="image/webp">
+      <img class="gate__poster" data-site="heroPoster" src="/assets/img/hero-cephe.webp?v=20260806mq1" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1200" height="900" onerror="this.onerror=null;this.src='/assets/img/hero-cephe.webp?v=20260806mq1'">
     </picture>
     <canvas id="scene" aria-hidden="true"></canvas>
     <div class="gate__fallback" id="fallback" hidden="">
@@ -379,37 +379,49 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
 
 
 <!-- ══════════ ŞERİT — SONSUZ DÖNGÜ MARQUEE ══════════ -->
-<div id="mqBand" aria-hidden="true" style="background:#0D1008;border-top:1.5px solid rgba(217,164,65,0.45);border-bottom:1.5px solid rgba(217,164,65,0.45);overflow:hidden;position:relative;min-height:58px;display:flex;align-items:center;box-shadow:0 4px 24px rgba(0,0,0,0.5);">
-  <div style="position:absolute;left:0;top:0;bottom:0;width:120px;background:linear-gradient(90deg,#0D1008 0%,transparent 100%);z-index:3;pointer-events:none;"></div>
-  <div style="position:absolute;right:0;top:0;bottom:0;width:120px;background:linear-gradient(-90deg,#0D1008 0%,transparent 100%);z-index:3;pointer-events:none;"></div>
-  <div id="mqTrack" style="display:flex;align-items:center;white-space:nowrap;will-change:transform;animation:mqScroll 30s linear infinite;">
-    <div style="display:flex;align-items:center;flex:0 0 auto;">
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">TAZE EKMEK</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">GÜNLÜK ÜRETİM</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">ÖZEL TASARIM PASTA</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">SİMİT &amp; POĞAÇA</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">ÇEKMEKÖY TAŞDELEN</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">DOĞAL MALZEME</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">BAKLAVA &amp; BÖREK</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">HER GÜN TAPTAZE</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">EL YAPIMI LEZZETLER</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">GELENEKSEL TARİF</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
+<div id="mqBand" class="mq-band" aria-hidden="true">
+  <div class="mq-fade mq-fade--l"></div>
+  <div class="mq-fade mq-fade--r"></div>
+  <div id="mqTrack" class="mq-track is-on">
+    <div class="mq-seg">
+      <span class="mq-word">TAZE EKMEK</span><span class="mq-sep">✦</span>
+      <span class="mq-word">GÜNLÜK ÜRETİM</span><span class="mq-sep">◆</span>
+      <span class="mq-word">ÖZEL TASARIM PASTA</span><span class="mq-sep">✦</span>
+      <span class="mq-word">SİMİT &amp; POĞAÇA</span><span class="mq-sep">◆</span>
+      <span class="mq-word">ÇEKMEKÖY TAŞDELEN</span><span class="mq-sep">✦</span>
+      <span class="mq-word">DOĞAL MALZEME</span><span class="mq-sep">◆</span>
+      <span class="mq-word">BAKLAVA &amp; BÖREK</span><span class="mq-sep">✦</span>
+      <span class="mq-word">HER GÜN TAPTAZE</span><span class="mq-sep">◆</span>
+      <span class="mq-word">EL YAPIMI LEZZETLER</span><span class="mq-sep">✦</span>
+      <span class="mq-word">GELENEKSEL TARİF</span><span class="mq-sep">◆</span>
     </div>
-    <div style="display:flex;align-items:center;flex:0 0 auto;" aria-hidden="true">
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">TAZE EKMEK</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">GÜNLÜK ÜRETİM</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">ÖZEL TASARIM PASTA</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">SİMİT &amp; POĞAÇA</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">ÇEKMEKÖY TAŞDELEN</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">DOĞAL MALZEME</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">BAKLAVA &amp; BÖREK</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">HER GÜN TAPTAZE</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">EL YAPIMI LEZZETLER</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">✦</span>
-      <span style="font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,0.5);padding:0 4px;">GELENEKSEL TARİF</span><span style="color:#C8972A;padding:0 20px;font-size:9px;opacity:.8;">◆</span>
+    <div class="mq-seg" aria-hidden="true">
+      <span class="mq-word">TAZE EKMEK</span><span class="mq-sep">✦</span>
+      <span class="mq-word">GÜNLÜK ÜRETİM</span><span class="mq-sep">◆</span>
+      <span class="mq-word">ÖZEL TASARIM PASTA</span><span class="mq-sep">✦</span>
+      <span class="mq-word">SİMİT &amp; POĞAÇA</span><span class="mq-sep">◆</span>
+      <span class="mq-word">ÇEKMEKÖY TAŞDELEN</span><span class="mq-sep">✦</span>
+      <span class="mq-word">DOĞAL MALZEME</span><span class="mq-sep">◆</span>
+      <span class="mq-word">BAKLAVA &amp; BÖREK</span><span class="mq-sep">✦</span>
+      <span class="mq-word">HER GÜN TAPTAZE</span><span class="mq-sep">◆</span>
+      <span class="mq-word">EL YAPIMI LEZZETLER</span><span class="mq-sep">✦</span>
+      <span class="mq-word">GELENEKSEL TARİF</span><span class="mq-sep">◆</span>
     </div>
   </div>
 </div>
-<style>@keyframes mqScroll{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-50%,0,0)}}</style>
+<style>
+.mq-band{--mq-dur:32s;background:#0D1008;border-top:1.5px solid rgba(217,164,65,.45);border-bottom:1.5px solid rgba(217,164,65,.45);overflow:hidden;position:relative;min-height:58px;display:flex;align-items:center;box-shadow:0 4px 24px rgba(0,0,0,.5)}
+.mq-fade{position:absolute;top:0;bottom:0;width:min(120px,18vw);z-index:3;pointer-events:none}
+.mq-fade--l{left:0;background:linear-gradient(90deg,#0D1008,transparent)}
+.mq-fade--r{right:0;background:linear-gradient(-90deg,#0D1008,transparent)}
+.mq-track{display:flex;align-items:center;width:max-content;white-space:nowrap;will-change:transform;transform:translate3d(0,0,0)}
+.mq-track.is-on{animation:mqScroll var(--mq-dur,32s) linear infinite}
+.mq-seg{display:flex;align-items:center;flex:0 0 auto}
+.mq-word{font-size:11px;letter-spacing:.26em;font-weight:900;color:#F0C84A;text-transform:uppercase;text-shadow:0 0 14px rgba(240,200,74,.5);padding:0 4px}
+.mq-sep{color:#C8972A;padding:0 20px;font-size:9px;opacity:.8}
+@keyframes mqScroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@media (prefers-reduced-motion:reduce){.mq-track.is-on{animation:none}}
+</style>
 <!-- ══════════ HOŞ GELDİNİZ ══════════ -->
 <section class="section" id="hakkimizda">
   <div class="wrap grid-2">
@@ -907,11 +919,11 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
 <script src="assets/vendor/lenis.min.js" defer=""></script>
 <script src="assets/vendor/gsap.min.js" defer=""></script>
 <script src="assets/vendor/ScrollTrigger.min.js" defer=""></script>
-<script type="module" src="assets/js/hero/index.js?v=20260806r1"></script>
-<script src="assets/js/content-api.js?v=20260806r1" defer=""></script>
-<script src="assets/js/site-loader.js?v=20260806r1" defer=""></script>
-<script src="assets/js/main.js?v=20260806r1" defer=""></script>
-<script src="assets/js/content.js?v=20260806r1" defer=""></script>
-<script src="assets/js/cms-ext.js?v=20260806r1" defer=""></script>
+<script type="module" src="assets/js/hero/index.js?v=20260806mq1"></script>
+<script src="assets/js/content-api.js?v=20260806mq1" defer=""></script>
+<script src="assets/js/site-loader.js?v=20260806mq1" defer=""></script>
+<script src="assets/js/main.js?v=20260806mq1" defer=""></script>
+<script src="assets/js/content.js?v=20260806mq1" defer=""></script>
+<script src="assets/js/cms-ext.js?v=20260806mq1" defer=""></script>
 </body>
 </html>

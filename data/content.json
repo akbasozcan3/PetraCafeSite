@@ -66,12 +66,16 @@
     }
   },
   "marquee": [
-    "TAZE",
-    "LEZZETLİ",
-    "DOĞAL",
-    "HER GÜN TAPTAZE",
+    "TAZE EKMEK",
+    "GÜNLÜK ÜRETİM",
     "ÖZEL TASARIM PASTA",
-    "ÇEKMEKÖY TAŞDELEN"
+    "SİMİT & POĞAÇA",
+    "ÇEKMEKÖY TAŞDELEN",
+    "DOĞAL MALZEME",
+    "BAKLAVA & BÖREK",
+    "HER GÜN TAPTAZE",
+    "EL YAPIMI LEZZETLER",
+    "GELENEKSEL TARİF"
   ],
   "duyuru": {
     "aktif": false,
