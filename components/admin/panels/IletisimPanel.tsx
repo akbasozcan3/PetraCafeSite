@@ -104,7 +104,7 @@ export default function IletisimPanel() {
       <section className="mb-6 space-y-4 rounded-2xl border border-[#C8703A]/25 bg-[#141E2E]/80 p-6">
         <h3 className="font-semibold text-[#F8F8F8]">Telefon & WhatsApp</h3>
         <p className="text-xs text-[#6B7A94]">
-          Tek numarayı yazın — arama linki, yüzen WhatsApp butonu, menü ürün siparişleri ve footer birlikte değişir.
+          Tek numarayı yazın — arama linki, yüzen WhatsApp butonu, kategori ürün listeleri ve footer birlikte güncellenir.
         </p>
         <div className="grid gap-4 md:grid-cols-2">
           <Input
@@ -148,6 +148,27 @@ export default function IletisimPanel() {
             onChange={(e) => update("whatsapp", e.target.value)}
             placeholder="https://wa.me/905..."
           />
+        </div>
+        {phoneToWaDigits(content.iletisim?.telefonHam || content.iletisim?.telefon || waPreview) ? (
+          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-sm text-[#C8D0DC]">
+            <span className="text-[#6B7A94]">Ürün sipariş numarası: </span>
+            <a
+              href={buildWhatsappUrl(
+                content.iletisim?.telefonHam || content.iletisim?.telefon || waPreview,
+                "Merhaba, sipariş vermek istiyorum."
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-emerald-400 underline-offset-2 hover:underline"
+            >
+              wa.me/{phoneToWaDigits(content.iletisim?.telefonHam || content.iletisim?.telefon || waPreview)}
+            </a>
+            <p className="mt-1 text-xs text-[#6B7A94]">
+              Kategori ürün listeleri bu numaraya gider. Yanlış numarada WhatsApp “bulunamadı” gösterir — kaydettikten sonra siteyi hard-refresh edin.
+            </p>
+          </div>
+        ) : null}
+        <div className="grid gap-4 md:grid-cols-2">
           <Input
             label="WhatsApp başlık"
             value={content.iletisim?.whatsappBaslik ?? ""}

@@ -467,11 +467,10 @@
         }
       });
     }
-    var waHref = c.whatsapp
-      ? c.whatsapp.indexOf("?") > -1
-        ? c.whatsapp
-        : c.whatsapp + "?text=Merhaba%2C%20sipari%C5%9F%20vermek%20istiyorum."
-      : "https://wa.me/" + waPhoneDigits() + "?text=Merhaba%2C%20sipari%C5%9F%20vermek%20istiyorum.";
+    var dig = waPhoneDigits();
+    var waHref = dig
+      ? "https://wa.me/" + dig + "?text=Merhaba%2C%20sipari%C5%9F%20vermek%20istiyorum."
+      : c.whatsapp || "#";
     $all(".wa-float").forEach(function (a) {
       a.href = waHref;
     });
@@ -480,14 +479,13 @@
       if (a.closest(".menu__list, .urun-yan, .urun-kart, .menu__group")) return;
       a.href = waHref;
     });
-    // Product / menu WA links: keep message, swap number
+    // Ürün / menü WA: mesajı koru, numarayı admin telefonuna çek
     $all("a[href*='wa.me']").forEach(function (a) {
       if (!a.closest(".menu__list, .urun-yan, .urun-kart, .menu__group, .cta-box")) return;
-      var digits = waPhoneDigits();
-      if (!digits) return;
+      if (!dig) return;
       var textMatch = String(a.getAttribute("href") || "").match(/[?&]text=([^&]*)/);
       var q = textMatch ? "?text=" + textMatch[1] : "";
-      a.href = "https://wa.me/" + digits + q;
+      a.href = "https://wa.me/" + dig + q;
     });
     if (c.instagramUrl) {
       $all('a[href*="instagram.com"]').forEach(function (a) {
@@ -952,14 +950,22 @@ if (list) {
 
   function waPhoneDigits() {
     var c = (window.__FIRINCI_CONTENT && window.__FIRINCI_CONTENT.iletisim) || {};
-    var raw = String(c.whatsapp || c.telefonHam || c.telefon || "").replace(/\D/g, "");
+    // Admin telefon alanı kaynak — wa.me URL'sindeki eski/yanlış numarayı kullanma
+    var raw = String(c.telefonHam || c.telefon || "").replace(/\D/g, "");
+    if (!raw && c.whatsapp) {
+      var m = String(c.whatsapp).match(/wa\.me\/(\d{10,15})/i);
+      raw = m ? m[1] : "";
+    }
+    if (!raw) return "";
     if (raw.charAt(0) === "0" && raw.length === 11) raw = "90" + raw.slice(1);
     if (raw.indexOf("90") !== 0 && raw.length === 10) raw = "90" + raw;
     return raw;
   }
 
   function waOrderHref(productName) {
-    return "https://wa.me/" + waPhoneDigits() + "?text=" + encodeURIComponent("Merhaba, " + (productName || "ürün") + " sipariş vermek istiyorum.");
+    var dig = waPhoneDigits();
+    if (!dig) return "#";
+    return "https://wa.me/" + dig + "?text=" + encodeURIComponent("Merhaba, " + (productName || "ürün") + " sipariş vermek istiyorum.");
   }
 
   function applyKatlar(menu) {
@@ -1151,9 +1157,16 @@ if (list) {
         var li = document.createElement("li");
         if (u.fav) li.className = "is-fav";
         var a = document.createElement("a");
-        a.href = u.link && /wa\.me|whatsapp/i.test(u.link) ? u.link : waOrderHref(u.ad);
+        // Her zaman iletişim adminindeki güncel WhatsApp numarası
+        a.href = waOrderHref(u.ad);
         a.target = "_blank";
         a.rel = "noopener noreferrer";
+        if (!waPhoneDigits()) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            alert("WhatsApp numarası tanımlı değil. Admin → İletişim'den telefon ekleyin.");
+          });
+        }
         var name = document.createElement("span");
         name.className = "menu__name";
         var label = document.createElement("span");
@@ -1182,9 +1195,14 @@ if (list) {
       }
       var not = $(".urun-kart__not");
       if (not) {
+        var legendBase = (menu.legend || "").replace(/^★\s*/, "").trim();
+        var fromLegend = legendBase
+          ? "★ " + legendBase + ( /whatsapp/i.test(legendBase) ? "" : " Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.")
+          : "";
         not.textContent =
           sayfa.kartNot ||
           menu.kartNot ||
+          fromLegend ||
           "★ işaretliler en çok tercih edilenler. Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.";
       }
     }

@@ -4,6 +4,11 @@ import type { IletisimContent, SiteContent } from "@/lib/content/types";
 export function phoneToWaDigits(raw: string): string {
   let d = String(raw || "").replace(/\D/g, "");
   if (!d) return "";
+  // Extract from wa.me / api.whatsapp.com if a full URL was passed
+  if (d.length > 15) {
+    const m = String(raw).match(/(?:wa\.me\/|phone=)(\d{10,15})/i);
+    d = m ? m[1] : d.slice(0, 15);
+  }
   if (d.startsWith("0") && d.length === 11) d = "90" + d.slice(1);
   if (d.length === 10 && d.startsWith("5")) d = "90" + d;
   return d;
@@ -25,13 +30,7 @@ export function formatDisplayPhone(raw: string): string {
 }
 
 export function buildWhatsappUrl(phoneOrUrl: string, presetText?: string): string {
-  const existing = String(phoneOrUrl || "").trim();
-  if (/^https?:\/\/(wa\.me|api\.whatsapp\.com)\//i.test(existing)) {
-    const base = existing.split("?")[0];
-    if (presetText) return `${base}?text=${encodeURIComponent(presetText)}`;
-    return existing;
-  }
-  const digits = phoneToWaDigits(existing);
+  const digits = phoneToWaDigits(phoneOrUrl);
   if (!digits) return "";
   const base = `https://wa.me/${digits}`;
   if (presetText) return `${base}?text=${encodeURIComponent(presetText)}`;
@@ -74,7 +73,6 @@ export function cascadeIletisimFields(iletisim: IletisimContent): IletisimConten
     const m = next.instagramUrl.match(/instagram\.com\/([^/?#]+)/i);
     if (m) next.instagram = `@${m[1]}`;
   } else if (next.instagram) {
-    // Keep URL aligned with handle when handle looks like a username
     if (!/^https?:\/\//i.test(next.instagram)) {
       next.instagramUrl = buildInstagramUrl(next.instagram);
     }
@@ -90,7 +88,6 @@ export function applyIletisimCascade(content: SiteContent): SiteContent {
   let navbar = content.navbar;
   if (digits && navbar) {
     const telHref = `tel:${iletisim.telefonHam || phoneToTelHref(digits)}`;
-    // Sync navbar CTA when it is (or was) a phone link
     if (!navbar.ctaHref || /^tel:/i.test(navbar.ctaHref) || /wa\.me/i.test(navbar.ctaHref)) {
       navbar = {
         ...navbar,

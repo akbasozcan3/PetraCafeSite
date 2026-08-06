@@ -9,7 +9,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const CACHE = "20260806mq1";
+const CACHE = "20260806wa1";
 
 function isReparsePoint(p) {
   try {

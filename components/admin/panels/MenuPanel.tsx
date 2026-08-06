@@ -95,7 +95,11 @@ export default function MenuPanel() {
           adet: count ? `${count} çeşit` : g.adet,
           urunler: g.urunler.map((u) => ({
             ...u,
-            link: absSitePath(u.link),
+            // WhatsApp numarası İletişim admininden gelir; eski wa.me ürün linklerini temizle
+            link:
+              u.link && /wa\.me|whatsapp/i.test(u.link)
+                ? undefined
+                : absSitePath(u.link),
           })),
         };
       });
@@ -167,10 +171,39 @@ export default function MenuPanel() {
           }}
         />
         <h3 className="pt-2 font-semibold text-[#F8F8F8]">Menü ekstra metinler</h3>
+        <p className="text-xs text-[#6B7A94]">
+          Ürün satırına tıklayınca WhatsApp, Admin → İletişim’deki telefon numarasına gider. Liste başlığı kategori adından üretilir.
+        </p>
         <Input
-          label="Yıldız açıklaması"
+          label="Yıldız açıklaması (ana menü + kategori kart notu)"
           value={menu.legend || ""}
           onChange={(e) => updateMenu({ legend: e.target.value })}
+        />
+        <Input
+          label="Kategori ürün kartı notu (opsiyonel, yıldız metnini ezer)"
+          value={menu.kartNot || content.sayfalar?.urunKategori?.kartNot || ""}
+          onChange={(e) => {
+            const kartNot = e.target.value;
+            setContent({
+              ...content,
+              menu: { ...menu, kartNot },
+              sayfalar: {
+                ...content.sayfalar,
+                urunKategori: {
+                  ...(content.sayfalar?.urunKategori || {
+                    eyebrow: "Ürünler",
+                    answerBaslik: "Kısa bilgi",
+                    listeBaslikSablon: "{ad} listesi",
+                    kartNot: "",
+                    relatedBaslik: "Diğer kategoriler",
+                    ctaBaslik: "Sipariş & bilgi",
+                    ctaLead: "",
+                  }),
+                  kartNot,
+                },
+              },
+            });
+          }}
         />
         <div className="grid gap-4 md:grid-cols-2">
           <Input
