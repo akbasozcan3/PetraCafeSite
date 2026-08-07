@@ -539,7 +539,7 @@ body.page a.wa-float {
 }
 @media (max-width: 860px) {
   .gate__stage {
-    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260806prod1") center center / cover no-repeat !important;
+    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260807menu1") center center / cover no-repeat !important;
   }
   .gate__poster {
     inset: 0 !important;
@@ -1030,7 +1030,7 @@ body.page a.wa-float {
     height: 100%;
     background: #12150E;
     color: #F3F1EB;
-    padding: calc(var(--nav-h) + 18px) 24px max(32px, env(safe-area-inset-bottom));
+    padding: calc(var(--nav-h) + 8px) 24px max(32px, env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -1039,13 +1039,67 @@ body.page a.wa-float {
     box-shadow: -18px 0 48px rgba(0, 0, 0, 0.35);
     animation: menuSlide 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
   }
+  .mobile-menu__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 8px;
+    min-height: 48px;
+  }
   .mobile-menu__label {
-    margin: 0 0 12px;
+    margin: 0;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(243, 241, 235, 0.45);
+  }
+  .mobile-menu__close {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid rgba(243, 241, 235, 0.22);
+    border-radius: 999px;
+    background: rgba(243, 241, 235, 0.08);
+    color: #F3F1EB;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .mobile-menu__close:hover,
+  .mobile-menu__close:focus-visible {
+    background: rgba(243, 241, 235, 0.16);
+    border-color: rgba(217, 164, 65, 0.7);
+    outline: none;
+  }
+  .mobile-menu__close:active {
+    transform: scale(0.96);
+  }
+  .mobile-menu__close span {
+    position: absolute;
+    width: 16px;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+  }
+  .mobile-menu__close span:first-child {
+    transform: rotate(45deg);
+  }
+  .mobile-menu__close span:last-child {
+    transform: rotate(-45deg);
+  }
+  html.menu-open .nav__burger {
+    color: #F3F1EB !important;
+  }
+  html.menu-open .nav__burger span {
+    background: #F3F1EB !important;
   }
   .mobile-menu__links {
     display: flex;

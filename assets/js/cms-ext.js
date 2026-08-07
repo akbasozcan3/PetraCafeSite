@@ -92,7 +92,11 @@
       var panel = document.createElement("div");
       panel.className = "mobile-menu__panel";
       panel.innerHTML =
-        '<p class="mobile-menu__label">Menü</p><nav class="mobile-menu__links" aria-label="Mobil menü"></nav>' +
+        '<div class="mobile-menu__top">' +
+        '<p class="mobile-menu__label">Menü</p>' +
+        '<button type="button" class="mobile-menu__close" aria-label="Menüyü kapat"><span aria-hidden="true"></span><span aria-hidden="true"></span></button>' +
+        "</div>" +
+        '<nav class="mobile-menu__links" aria-label="Mobil menü"></nav>' +
         '<a href="tel:" class="btn btn--lg mobile-menu__cta">Sipariş</a>';
       while (menu.firstChild) {
         var child = menu.firstChild;
@@ -108,6 +112,30 @@
         }
       }
       menu.appendChild(panel);
+    } else if (!menu.querySelector(".mobile-menu__close")) {
+      var existingPanel = menu.querySelector(".mobile-menu__panel") || menu;
+      var labelEl = existingPanel.querySelector(".mobile-menu__label");
+      var top = existingPanel.querySelector(".mobile-menu__top");
+      if (!top) {
+        top = document.createElement("div");
+        top.className = "mobile-menu__top";
+        if (labelEl) {
+          labelEl.parentNode.insertBefore(top, labelEl);
+          top.appendChild(labelEl);
+        } else {
+          existingPanel.insertBefore(top, existingPanel.firstChild);
+          var lab = document.createElement("p");
+          lab.className = "mobile-menu__label";
+          lab.textContent = "Menü";
+          top.appendChild(lab);
+        }
+      }
+      var closeBtn = document.createElement("button");
+      closeBtn.type = "button";
+      closeBtn.className = "mobile-menu__close";
+      closeBtn.setAttribute("aria-label", "Menüyü kapat");
+      closeBtn.innerHTML = '<span aria-hidden="true"></span><span aria-hidden="true"></span>';
+      top.appendChild(closeBtn);
     }
 
     function closeMenu() {
@@ -144,6 +172,15 @@
       burger.dataset.navBound = "1";
       burger.addEventListener("click", toggleMenu, true);
       menu.addEventListener("click", function (ev) {
+        if (ev.target === menu) {
+          closeMenu();
+          return;
+        }
+        if (ev.target.closest(".mobile-menu__close")) {
+          ev.preventDefault();
+          closeMenu();
+          return;
+        }
         var a = ev.target.closest("a");
         if (a) closeMenu();
       });
