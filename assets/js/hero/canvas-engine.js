@@ -1,10 +1,16 @@
-import * as THREE from '../../vendor/three.module.js?v=20260807x3';
-import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807x3';
-import { ASSETS, doorTiming } from './config.js?v=20260807x3';
-import { ScrollController } from './scroll-controller.js?v=20260807x3';
-import { DoorController } from './door-controller.js?v=20260807x3';
-import { Particles } from './particles.js?v=20260807x3';
-import { CameraController, createUnits } from './camera-controller.js?v=20260807x3';
+import * as THREE from '../../vendor/three.module.js?v=20260807x4';
+import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807x4';
+import { ASSETS, doorTiming } from './config.js?v=20260807x4';
+import { ScrollController } from './scroll-controller.js?v=20260807x4';
+import { DoorController } from './door-controller.js?v=20260807x4';
+import { Particles } from './particles.js?v=20260807x4';
+import { CameraController, createUnits } from './camera-controller.js?v=20260807x4';
+
+function yieldFrame() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
+}
 
 /** WebGL canvas motoru — render döngüsü ve sahne yaşam döngüsü */
 export class CanvasEngine {
@@ -15,6 +21,8 @@ export class CanvasEngine {
     this.isTouch = options.isTouch;
     this.reducedMotion = options.reducedMotion;
     this.assets = options.assets || ASSETS;
+    this.onContextLost = options.onContextLost || null;
+    this.onProgress = typeof options.onProgress === 'function' ? options.onProgress : null;
     this.timing = doorTiming(this.isTouch);
 
     this.units = createUnits();
@@ -23,8 +31,11 @@ export class CanvasEngine {
     this.smoothProgress = 0;
     this.time = 0;
     this.visible = true;
+    this.pageVisible = document.visibilityState !== 'hidden';
     this.lastInput = performance.now();
-    this.idleMs = 500;
+    this.idleMs = 480;
+    this.ambientMs = this.isMobile ? 40 : 33; // ~25–30 fps idle
+    this._lastAmbient = 0;
     this.dpr = this.isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5);
     this.maxDpr = Math.min(window.devicePixelRatio, this.isMobile ? 1.25 : 1.5);
     this.qualityReady = !this.isMobile;
@@ -40,17 +51,25 @@ export class CanvasEngine {
     this.particles = null;
     this.rafId = 0;
     this._lastFrame = performance.now();
+    this._boundVisibility = () => {
+      this.pageVisible = document.visibilityState !== 'hidden';
+      if (this.pageVisible) this.wake(true);
+    };
   }
 
   async init() {
     const images = await loadHeroAssets(this.assets);
+    await yieldFrame();
+
     this.interiorImage = downscaleImage(images.ic, this.isMobile);
+    await yieldFrame();
     const facadeImage = downscaleImage(images.cephe, this.isMobile);
+    await yieldFrame();
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
-      antialias: true,
-      powerPreference: 'high-performance',
+      antialias: !this.isMobile,
+      powerPreference: this.isMobile ? 'default' : 'high-performance',
     });
     this.renderer.setPixelRatio(this.dpr);
     const { w, h } = this.viewportSize();
@@ -59,8 +78,11 @@ export class CanvasEngine {
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.setClearColor('#070903');
+    await yieldFrame();
 
-    const aniso = this.renderer.capabilities.getMaxAnisotropy();
+    const aniso = this.isMobile
+      ? Math.min(4, this.renderer.capabilities.getMaxAnisotropy())
+      : this.renderer.capabilities.getMaxAnisotropy();
     const facade = this.makeTexture(facadeImage, aniso);
     const interior = this.makeTexture(this.interiorImage, aniso);
 
@@ -77,6 +99,7 @@ export class CanvasEngine {
     this.door = new DoorController(this.scene, this.units);
     this.door.buildFacade(facade);
     this.rebuildInterior(interior);
+    await yieldFrame();
 
     this.door.buildDoorFrames();
     this.door.buildGlow();
@@ -88,7 +111,8 @@ export class CanvasEngine {
 
     this.canvas.addEventListener('webglcontextlost', (e) => {
       e.preventDefault();
-      throw new Error('WebGL context lost');
+      this.destroy();
+      if (this.onContextLost) this.onContextLost();
     });
 
     if (!this.reducedMotion) {
@@ -97,6 +121,7 @@ export class CanvasEngine {
 
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
     window.addEventListener('resize', () => this.onResize(), { passive: true });
+    document.addEventListener('visibilitychange', this._boundVisibility);
 
     if (!this.isTouch) {
       window.addEventListener(
@@ -113,7 +138,8 @@ export class CanvasEngine {
       new IntersectionObserver(
         (entries) => {
           this.visible = entries[0].isIntersecting;
-          if (this.visible) this.wake();
+          // fromScroll:true → idle/DPR bump tetikleme
+          if (this.visible) this.wake(true);
         },
         { threshold: 0 },
       ).observe(this.gate);
@@ -215,14 +241,24 @@ export class CanvasEngine {
 
   loop = () => {
     this.rafId = requestAnimationFrame(this.loop);
-    if (!this.visible) return;
+    if (!this.visible || !this.pageVisible) return;
 
     const now = performance.now();
     const dt = Math.min(50, now - this._lastFrame);
     this._lastFrame = now;
 
-    // Idle olsa bile time ilerlesin — partikül / kamera sway donmasın
     this.time += dt / 1000;
+    const settling = Math.abs(this.targetProgress - this.smoothProgress) >= 0.0005;
+    const active = settling || now - this.lastInput <= this.idleMs;
+
+    if (!active) {
+      // Idle: yıldız/sway devam, ama ~25–30 fps — ısı/batarya
+      if (now - this._lastAmbient < this.ambientMs) return;
+      this._lastAmbient = now;
+      this.renderFrame(this.smoothProgress);
+      return;
+    }
+
     const lerpSpeed = this.isTouch ? 0.2 : 0.085;
     this.smoothProgress += (this.targetProgress - this.smoothProgress) * lerpSpeed;
     this.renderFrame(this.smoothProgress);
@@ -237,10 +273,13 @@ export class CanvasEngine {
     this.door.update(progress, this.timing);
     this.particles.update(progress, this.time);
     this.renderer.render(this.scene, this.camera);
+    if (this.onProgress) this.onProgress(progress);
   }
 
   destroy() {
     cancelAnimationFrame(this.rafId);
+    this.rafId = 0;
+    document.removeEventListener('visibilitychange', this._boundVisibility);
     this.scroll.unmount();
     this.renderer?.dispose();
   }

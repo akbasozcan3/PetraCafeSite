@@ -1,5 +1,5 @@
-import * as THREE from '../../vendor/three.module.js?v=20260807x3';
-import { range } from './utils.js?v=20260807x3';
+import * as THREE from '../../vendor/three.module.js?v=20260807x4';
+import { range } from './utils.js?v=20260807x4';
 
 /** Toz partikülleri */
 export class Particles {

@@ -305,7 +305,18 @@
     if (wa && wa.onYazi) {
       a.href = base + "?text=" + encodeURIComponent(wa.onYazi);
     } else if (iletisim && iletisim.whatsapp) {
-      a.href = iletisim.whatsapp.indexOf("?") > -1 ? iletisim.whatsapp : iletisim.whatsapp + "?text=" + encodeURIComponent("Merhaba");
+      // Query varsa koru; yoksa sipariş metni (kısa "Merhaba"ye düşürme)
+      a.href =
+        iletisim.whatsapp.indexOf("?") > -1
+          ? iletisim.whatsapp
+          : iletisim.whatsapp +
+            "?text=" +
+            encodeURIComponent("Merhaba, sipariş vermek istiyorum.");
+    } else if (base) {
+      a.href =
+        base +
+        "?text=" +
+        encodeURIComponent("Merhaba, sipariş vermek istiyorum.");
     }
     if (wa && wa.ariaLabel) a.setAttribute("aria-label", wa.ariaLabel);
     if (wa && wa.baslik) {

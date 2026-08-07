@@ -54,12 +54,12 @@
     var isMobileHero =
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(max-width: 860px)').matches;
-    var mobileHeroUrl = images.heroMobile || '/assets/img/hero-mobile.webp?v=20260807x3';
+    var mobileHeroUrl = images.heroMobile || '/assets/img/hero-mobile.webp?v=20260807x4';
     if (mobileHeroUrl.indexOf('http') !== 0 && mobileHeroUrl.indexOf('/') !== 0) {
       mobileHeroUrl = '/' + mobileHeroUrl.replace(/^\//, '');
     }
     if (mobileHeroUrl.indexOf('hero-mobile') !== -1 && mobileHeroUrl.indexOf('?v=') === -1) {
-      mobileHeroUrl += (mobileHeroUrl.indexOf('?') > -1 ? '&' : '?') + 'v=20260807x1';
+      mobileHeroUrl += (mobileHeroUrl.indexOf('?') > -1 ? '&' : '?') + 'v=20260807x4';
     }
 
     document.querySelectorAll('[data-site]').forEach(function (el) {
@@ -119,8 +119,8 @@
 
     if (window.__firinciHeroSetAssets) {
       window.__firinciHeroSetAssets({
-        cephe: images.heroCephe || 'assets/img/cephe.jpg',
-        ic: images.heroIc || 'assets/img/ic-mekan.jpg',
+        cephe: images.heroCephe || '/assets/img/hero-cephe.webp',
+        ic: images.heroIc || '/assets/img/hero-ic.webp',
       });
     }
   }

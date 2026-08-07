@@ -526,6 +526,53 @@ body.page a.wa-float {
   }
 }
 
+/* HERO BOOT OVERLAY */
+.gate__boot {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(7, 9, 3, 0.5), rgba(7, 9, 3, 0.18) 42%, transparent 72%);
+  transition: opacity 0.4s ease, visibility 0.4s;
+}
+.gate__boot[hidden],
+html.scene-ready .gate__boot,
+html.scene-poster .gate__boot,
+html.scene-failed .gate__boot {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+.gate__boot-spin {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(217, 164, 65, 0.22);
+  border-top-color: #D9A441;
+  animation: gateBootSpin 0.75s linear infinite;
+}
+.gate__boot-text {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 254, 250, 0.78);
+}
+@keyframes gateBootSpin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gate__boot-spin {
+    animation: none;
+    border-top-color: rgba(217, 164, 65, 0.55);
+  }
+}
+
 /* HERO POSTER — ekranı doldur, alta boşluk yok */
 .gate__poster {
   object-fit: cover !important;
@@ -539,7 +586,7 @@ body.page a.wa-float {
 }
 @media (max-width: 860px) {
   .gate__stage {
-    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260807x3") center center / cover no-repeat !important;
+    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260807x4") center center / cover no-repeat !important;
   }
   .gate__poster {
     inset: 0 !important;
