@@ -1,10 +1,10 @@
-﻿import * as THREE from '../../vendor/three.module.js?v=20260807mfix1';
-import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807mfix1';
-import { ASSETS, doorTiming } from './config.js?v=20260807mfix1';
-import { ScrollController } from './scroll-controller.js?v=20260807mfix1';
-import { DoorController } from './door-controller.js?v=20260807mfix1';
-import { Particles } from './particles.js?v=20260807mfix1';
-import { CameraController, createUnits } from './camera-controller.js?v=20260807mfix1';
+import * as THREE from '../../vendor/three.module.js?v=20260807door1';
+import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807door1';
+import { ASSETS, doorTiming } from './config.js?v=20260807door1';
+import { ScrollController } from './scroll-controller.js?v=20260807door1';
+import { DoorController } from './door-controller.js?v=20260807door1';
+import { Particles } from './particles.js?v=20260807door1';
+import { CameraController, createUnits } from './camera-controller.js?v=20260807door1';
 
 /** WebGL canvas motoru — render döngüsü ve sahne yaşam döngüsü */
 export class CanvasEngine {
@@ -158,17 +158,22 @@ export class CanvasEngine {
 
   viewportSize() {
     const stage = this.canvas?.parentElement;
-    const w = Math.max(1, Math.floor(stage?.clientWidth || window.innerWidth || 1));
-    const h = Math.max(1, Math.floor(stage?.clientHeight || window.innerHeight || 1));
-    return { w, h };
+    // Sticky stage hazır değilse window'a düş — 0x0 aspect kamerayı bozar
+    let w = stage?.clientWidth || 0;
+    let h = stage?.clientHeight || 0;
+    if (w < 2 || h < 2) {
+      w = window.innerWidth || 1;
+      h = window.innerHeight || 1;
+    }
+    return { w: Math.max(1, Math.floor(w)), h: Math.max(1, Math.floor(h)) };
   }
 
   applyCanvasCss() {
     if (!this.canvas) return;
-    // Three setSize(false) CSS yazmaz; layout taşmasını önlemek için her zaman %100
     this.canvas.style.width = '100%';
     this.canvas.style.height = '100%';
     this.canvas.style.maxWidth = '100%';
+    this.canvas.style.maxHeight = '100%';
     this.canvas.style.display = 'block';
   }
 
@@ -195,6 +200,7 @@ export class CanvasEngine {
     this.renderer.setSize(w, h, false);
     this.applyCanvasCss();
     this.cameraCtrl.fitView();
+    this.refreshScroll();
 
     if (!this.isMobile || dw > 0 || dh >= 140) {
       const aniso = this.renderer.capabilities.getMaxAnisotropy();

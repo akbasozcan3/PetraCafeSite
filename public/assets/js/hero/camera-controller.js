@@ -1,4 +1,4 @@
-﻿import * as THREE from '../../vendor/three.module.js?v=20260807mfix1';
+import * as THREE from '../../vendor/three.module.js?v=20260807door1';
 import {
   FOV,
   SCENE_W,
@@ -8,8 +8,8 @@ import {
   PARALLAX,
   sceneUnitsFromUV,
   DOOR_UV,
-} from './config.js?v=20260807mfix1';
-import { clamp, easeInOut, lerp, range } from './utils.js?v=20260807mfix1';
+} from './config.js?v=20260807door1';
+import { clamp, easeInOut, lerp, range } from './utils.js?v=20260807door1';
 
 /** Kamera konumu ve projeksiyon */
 export class CameraController {
@@ -23,8 +23,11 @@ export class CameraController {
 
   fitView() {
     const fovRad = THREE.MathUtils.degToRad(FOV);
-    const aspect = window.innerWidth / window.innerHeight;
-    const isPortrait = window.innerHeight > window.innerWidth;
+    const aspect =
+      this.camera?.aspect > 0
+        ? this.camera.aspect
+        : window.innerWidth / Math.max(1, window.innerHeight);
+    const isPortrait = aspect < 1;
     const preset = isPortrait
       ? CAMERA_PRESETS.dikey
       : CAMERA_PRESETS.yatay;
@@ -43,7 +46,10 @@ export class CameraController {
 
   fitInterior(aspectInterior) {
     const fovRad = THREE.MathUtils.degToRad(FOV);
-    const aspect = window.innerWidth / window.innerHeight;
+    const aspect =
+      this.camera?.aspect > 0
+        ? this.camera.aspect
+        : window.innerWidth / Math.max(1, window.innerHeight);
     const doorW = this.units.x1 - this.units.x0;
     const doorH = this.units.y1 - this.units.y0;
     const needW = doorW + 2 * DEPTH * Math.tan(fovRad / 2) * aspect;

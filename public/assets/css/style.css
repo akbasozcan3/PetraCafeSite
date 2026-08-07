@@ -539,7 +539,7 @@ body.page a.wa-float {
 }
 @media (max-width: 860px) {
   .gate__stage {
-    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260807mfix1") center center / cover no-repeat !important;
+    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260807door1") center center / cover no-repeat !important;
   }
   .gate__poster {
     inset: 0 !important;
@@ -1213,15 +1213,15 @@ body.page a.wa-float {
 
 /* ═══════════════════════════════════════════════════════════
    MOBILE LOCK — yatay kaydırma = hamburger kayboluyor (iPhone 12)
+   NOT: overflow-x:hidden sticky .gate__stage'i bozar → clip kullan
    ═══════════════════════════════════════════════════════════ */
 html {
-  overflow-x: hidden !important;
-  max-width: 100% !important;
+  overflow-x: clip !important;
+  max-width: 100%;
 }
 body {
-  overflow-x: hidden !important;
-  max-width: 100% !important;
-  position: relative;
+  overflow-x: clip !important;
+  max-width: 100%;
 }
 #scene {
   max-width: 100% !important;
@@ -1232,7 +1232,7 @@ body {
   html,
   body {
     width: 100% !important;
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
   }
 
   /* Nav her zaman viewport genişliğinde — sticky + overflow hamburger'ı kaçırıyordu */
@@ -1306,11 +1306,9 @@ body {
     stroke: #12150E !important;
   }
 
-  /* Taşma kaynaklarını kilitle */
+  /* Taşma kaynaklarını kilitle — .gate sticky'ye dokunma */
   .mq-band,
   .marquee,
-  .gate,
-  .gate__stage,
   .section,
   .wrap,
   main,
@@ -1331,7 +1329,7 @@ body {
   }
   .mq-track,
   .marquee__track {
-    max-width: none; /* animasyon için içeride geniş olabilir */
+    max-width: none;
   }
   .hs__track {
     width: 100% !important;
@@ -1345,8 +1343,6 @@ body {
   }
   img,
   video,
-  canvas,
-  svg,
   iframe,
   table {
     max-width: 100% !important;

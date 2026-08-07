@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="../css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=20260807mfix1">
+<link rel="stylesheet" href="../assets/css/style.css?v=20260807door1">
 </head>
 <body class="page">
 
@@ -192,8 +192,8 @@
   <div class="wrap foot__bar"><span>© <span id="yil">2026</span> Taşdelen Fırıncı</span><span>Tüm hakları saklıdır.</span></div>
 </footer>
 
-<script src="../assets/js/main.js?v=20260807mfix1" defer=""></script>
-<script src="../assets/js/site-loader.js?v=20260807mfix1" defer=""></script>
-<script src="../assets/js/cms-ext.js?v=20260807mfix1" defer=""></script>
+<script src="../assets/js/main.js?v=20260807door1" defer=""></script>
+<script src="../assets/js/site-loader.js?v=20260807door1" defer=""></script>
+<script src="../assets/js/cms-ext.js?v=20260807door1" defer=""></script>
 </body>
 </html>
