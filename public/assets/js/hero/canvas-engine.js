@@ -1,10 +1,10 @@
-﻿import * as THREE from '../../vendor/three.module.js?v=20260807menu1';
-import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807menu1';
-import { ASSETS, doorTiming } from './config.js?v=20260807menu1';
-import { ScrollController } from './scroll-controller.js?v=20260807menu1';
-import { DoorController } from './door-controller.js?v=20260807menu1';
-import { Particles } from './particles.js?v=20260807menu1';
-import { CameraController, createUnits } from './camera-controller.js?v=20260807menu1';
+﻿import * as THREE from '../../vendor/three.module.js?v=20260807mfix1';
+import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807mfix1';
+import { ASSETS, doorTiming } from './config.js?v=20260807mfix1';
+import { ScrollController } from './scroll-controller.js?v=20260807mfix1';
+import { DoorController } from './door-controller.js?v=20260807mfix1';
+import { Particles } from './particles.js?v=20260807mfix1';
+import { CameraController, createUnits } from './camera-controller.js?v=20260807mfix1';
 
 /** WebGL canvas motoru — render döngüsü ve sahne yaşam döngüsü */
 export class CanvasEngine {
@@ -53,7 +53,9 @@ export class CanvasEngine {
       powerPreference: 'high-performance',
     });
     this.renderer.setPixelRatio(this.dpr);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    const { w, h } = this.viewportSize();
+    this.renderer.setSize(w, h, false);
+    this.applyCanvasCss();
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.setClearColor('#070903');
@@ -65,7 +67,7 @@ export class CanvasEngine {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
       52,
-      window.innerWidth / window.innerHeight,
+      w / Math.max(1, h),
       0.05,
       300,
     );
@@ -154,17 +156,34 @@ export class CanvasEngine {
     }
   }
 
+  viewportSize() {
+    const stage = this.canvas?.parentElement;
+    const w = Math.max(1, Math.floor(stage?.clientWidth || window.innerWidth || 1));
+    const h = Math.max(1, Math.floor(stage?.clientHeight || window.innerHeight || 1));
+    return { w, h };
+  }
+
+  applyCanvasCss() {
+    if (!this.canvas) return;
+    // Three setSize(false) CSS yazmaz; layout taşmasını önlemek için her zaman %100
+    this.canvas.style.width = '100%';
+    this.canvas.style.height = '100%';
+    this.canvas.style.maxWidth = '100%';
+    this.canvas.style.display = 'block';
+  }
+
   setDpr(value) {
     if (Math.abs(value - this.dpr) < 0.05) return;
     this.dpr = value;
     this.renderer.setPixelRatio(this.dpr);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    const { w, h } = this.viewportSize();
+    this.renderer.setSize(w, h, false);
+    this.applyCanvasCss();
   }
 
   onResize() {
     this.wake();
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    const { w, h } = this.viewportSize();
     const dw = Math.abs(w - this.lastWidth);
     const dh = Math.abs(h - this.lastHeight);
     this.lastWidth = w;
@@ -173,7 +192,8 @@ export class CanvasEngine {
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
     this.renderer.setPixelRatio(this.dpr);
-    this.renderer.setSize(w, h);
+    this.renderer.setSize(w, h, false);
+    this.applyCanvasCss();
     this.cameraCtrl.fitView();
 
     if (!this.isMobile || dw > 0 || dh >= 140) {

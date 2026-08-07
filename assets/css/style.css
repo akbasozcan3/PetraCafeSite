@@ -539,7 +539,7 @@ body.page a.wa-float {
 }
 @media (max-width: 860px) {
   .gate__stage {
-    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260807menu1") center center / cover no-repeat !important;
+    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260807mfix1") center center / cover no-repeat !important;
   }
   .gate__poster {
     inset: 0 !important;
@@ -1096,10 +1096,10 @@ body.page a.wa-float {
     transform: rotate(-45deg);
   }
   html.menu-open .nav__burger {
-    color: #F3F1EB !important;
+    color: #12150E !important;
   }
   html.menu-open .nav__burger span {
-    background: #F3F1EB !important;
+    background: #12150E !important;
   }
   .mobile-menu__links {
     display: flex;
@@ -1208,5 +1208,155 @@ body.page a.wa-float {
     display: none !important;
     visibility: hidden !important;
     pointer-events: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE LOCK — yatay kaydırma = hamburger kayboluyor (iPhone 12)
+   ═══════════════════════════════════════════════════════════ */
+html {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+}
+body {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  position: relative;
+}
+#scene {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+@media (max-width: 860px) {
+  html,
+  body {
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Nav her zaman viewport genişliğinde — sticky + overflow hamburger'ı kaçırıyordu */
+  .nav,
+  .nav.is-hero,
+  .nav.is-solid,
+  .page .nav,
+  body.page .nav,
+  body.page .nav.is-solid,
+  body.page .nav.is-hero {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: var(--nav-h) !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    padding-left: max(12px, env(safe-area-inset-left)) !important;
+    padding-right: max(12px, env(safe-area-inset-right)) !important;
+    box-sizing: border-box !important;
+    z-index: 200 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+
+  body.page,
+  body.page.page {
+    padding-top: var(--nav-h) !important;
+  }
+
+  .nav__logo {
+    margin-right: auto !important;
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 56px) !important;
+  }
+
+  .nav__links,
+  .nav__cta {
+    display: none !important;
+  }
+
+  .nav__burger {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    flex: 0 0 48px !important;
+    width: 48px !important;
+    height: 48px !important;
+    margin: 0 !important;
+    margin-left: 4px !important;
+    z-index: 201 !important;
+    color: #12150E !important;
+  }
+  .nav__burger span {
+    background: #12150E !important;
+  }
+  .nav__burger svg {
+    display: block !important;
+    width: 26px !important;
+    height: 26px !important;
+    stroke: #12150E !important;
+  }
+
+  /* Taşma kaynaklarını kilitle */
+  .mq-band,
+  .marquee,
+  .gate,
+  .gate__stage,
+  .section,
+  .wrap,
+  main,
+  .katlar,
+  .urun-ust,
+  .urun-govde,
+  .hs,
+  .hs__pin,
+  .hs__track,
+  .foot,
+  .foot__grid {
+    max-width: 100% !important;
+  }
+  .mq-band,
+  .marquee {
+    overflow: hidden !important;
+    width: 100% !important;
+  }
+  .mq-track,
+  .marquee__track {
+    max-width: none; /* animasyon için içeride geniş olabilir */
+  }
+  .hs__track {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-direction: column !important;
+  }
+  .wrap {
+    width: calc(100% - 32px) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  img,
+  video,
+  canvas,
+  svg,
+  iframe,
+  table {
+    max-width: 100% !important;
+  }
+  .tbl-wrap {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+  }
+  .wa-float {
+    right: max(12px, env(safe-area-inset-right)) !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
   }
 }

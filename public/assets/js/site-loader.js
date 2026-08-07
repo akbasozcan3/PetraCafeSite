@@ -54,12 +54,12 @@
     var isMobileHero =
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(max-width: 860px)').matches;
-    var mobileHeroUrl = images.heroMobile || '/assets/img/hero-mobile.webp?v=20260807menu1';
+    var mobileHeroUrl = images.heroMobile || '/assets/img/hero-mobile.webp?v=20260807mfix1';
     if (mobileHeroUrl.indexOf('http') !== 0 && mobileHeroUrl.indexOf('/') !== 0) {
       mobileHeroUrl = '/' + mobileHeroUrl.replace(/^\//, '');
     }
     if (mobileHeroUrl.indexOf('hero-mobile') !== -1 && mobileHeroUrl.indexOf('?v=') === -1) {
-      mobileHeroUrl += (mobileHeroUrl.indexOf('?') > -1 ? '&' : '?') + 'v=20260807menu1';
+      mobileHeroUrl += (mobileHeroUrl.indexOf('?') > -1 ? '&' : '?') + 'v=20260807mfix1';
     }
 
     document.querySelectorAll('[data-site]').forEach(function (el) {
