@@ -1,5 +1,5 @@
-import * as THREE from '../../vendor/three.module.js?v=20260807x2';
-import { range } from './utils.js?v=20260807x2';
+import * as THREE from '../../vendor/three.module.js?v=20260807x3';
+import { range } from './utils.js?v=20260807x3';
 
 /** Toz partikülleri */
 export class Particles {
@@ -39,8 +39,10 @@ export class Particles {
 
   update(progress, time) {
     if (!this.points) return;
-    this.points.material.opacity = 0.1 + 0.28 * range(progress, 0.25, 0.8);
-    this.points.position.y = Math.sin(time * 0.26) * 0.16;
-    this.points.position.x = Math.cos(time * 0.19) * 0.13;
+    this.points.material.opacity = 0.12 + 0.32 * range(progress, 0.25, 0.8);
+    // Yavaş drift — idle render açıkken sürekli oynar
+    this.points.position.y = Math.sin(time * 0.45) * 0.28;
+    this.points.position.x = Math.cos(time * 0.32) * 0.22;
+    this.points.rotation.z = Math.sin(time * 0.08) * 0.04;
   }
 }

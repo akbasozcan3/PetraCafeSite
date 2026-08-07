@@ -1,10 +1,10 @@
-import * as THREE from '../../vendor/three.module.js?v=20260807x2';
-import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807x2';
-import { ASSETS, doorTiming } from './config.js?v=20260807x2';
-import { ScrollController } from './scroll-controller.js?v=20260807x2';
-import { DoorController } from './door-controller.js?v=20260807x2';
-import { Particles } from './particles.js?v=20260807x2';
-import { CameraController, createUnits } from './camera-controller.js?v=20260807x2';
+import * as THREE from '../../vendor/three.module.js?v=20260807x3';
+import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807x3';
+import { ASSETS, doorTiming } from './config.js?v=20260807x3';
+import { ScrollController } from './scroll-controller.js?v=20260807x3';
+import { DoorController } from './door-controller.js?v=20260807x3';
+import { Particles } from './particles.js?v=20260807x3';
+import { CameraController, createUnits } from './camera-controller.js?v=20260807x3';
 
 /** WebGL canvas motoru — render döngüsü ve sahne yaşam döngüsü */
 export class CanvasEngine {
@@ -221,13 +221,7 @@ export class CanvasEngine {
     const dt = Math.min(50, now - this._lastFrame);
     this._lastFrame = now;
 
-    if (
-      Math.abs(this.targetProgress - this.smoothProgress) < 0.0005 &&
-      now - this.lastInput > this.idleMs
-    ) {
-      return;
-    }
-
+    // Idle olsa bile time ilerlesin — partikül / kamera sway donmasın
     this.time += dt / 1000;
     const lerpSpeed = this.isTouch ? 0.2 : 0.085;
     this.smoothProgress += (this.targetProgress - this.smoothProgress) * lerpSpeed;
