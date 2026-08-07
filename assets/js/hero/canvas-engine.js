@@ -1,10 +1,10 @@
-import * as THREE from '../../vendor/three.module.js?v=20260807x1';
-import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807x1';
-import { ASSETS, doorTiming } from './config.js?v=20260807x1';
-import { ScrollController } from './scroll-controller.js?v=20260807x1';
-import { DoorController } from './door-controller.js?v=20260807x1';
-import { Particles } from './particles.js?v=20260807x1';
-import { CameraController, createUnits } from './camera-controller.js?v=20260807x1';
+import * as THREE from '../../vendor/three.module.js?v=20260807x2';
+import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260807x2';
+import { ASSETS, doorTiming } from './config.js?v=20260807x2';
+import { ScrollController } from './scroll-controller.js?v=20260807x2';
+import { DoorController } from './door-controller.js?v=20260807x2';
+import { Particles } from './particles.js?v=20260807x2';
+import { CameraController, createUnits } from './camera-controller.js?v=20260807x2';
 
 /** WebGL canvas motoru — render döngüsü ve sahne yaşam döngüsü */
 export class CanvasEngine {

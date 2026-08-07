@@ -54,7 +54,7 @@
     var isMobileHero =
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(max-width: 860px)').matches;
-    var mobileHeroUrl = images.heroMobile || '/assets/img/hero-mobile.webp?v=20260807x1';
+    var mobileHeroUrl = images.heroMobile || '/assets/img/hero-mobile.webp?v=20260807x2';
     if (mobileHeroUrl.indexOf('http') !== 0 && mobileHeroUrl.indexOf('/') !== 0) {
       mobileHeroUrl = '/' + mobileHeroUrl.replace(/^\//, '');
     }
