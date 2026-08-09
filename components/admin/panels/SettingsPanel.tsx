@@ -107,6 +107,8 @@ export default function SettingsPanel() {
         </p>
       </section>
 
+      <SmtpCard />
+
       {message && (
         <div className="mt-6">
           <AdminAlert message={message} />
@@ -150,5 +152,64 @@ export default function SettingsPanel() {
         </Button>
       </form>
     </>
+  );
+}
+
+function SmtpCard() {
+  const [info, setInfo] = useState<{ configured: boolean; host?: string; from?: string } | null>(
+    null
+  );
+  const [msg, setMsg] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    void fetch("/api/v1/admin/smtp", { credentials: "include" })
+      .then((r) => r.json())
+      .then((d) => setInfo(d))
+      .catch(() => setInfo({ configured: false }));
+  }, []);
+
+  async function test() {
+    setBusy(true);
+    setMsg("");
+    try {
+      const res = await fetch("/api/v1/admin/smtp", {
+        method: "POST",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "SMTP test başarısız");
+      setMsg(`SMTP OK — ${data.host} / ${data.from}`);
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Hata");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section className="mt-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
+      <h3 className="text-lg font-semibold text-[#F8F8F8]">SMTP / E-posta</h3>
+      <p className="mt-2 text-sm text-[#8A9BB0]">
+        Müşteri e-posta doğrulama ve sipariş onayı için `.env.local` içinde SMTP_HOST, SMTP_PORT,
+        SMTP_USER, SMTP_PASS, SMTP_FROM tanımlayın.
+      </p>
+      <p className="mt-3 text-sm text-[#EEE9E0]">
+        Durum:{" "}
+        {info?.configured ? (
+          <span className="text-emerald-300">
+            Yapılandırıldı ({info.host} → {info.from})
+          </span>
+        ) : (
+          <span className="text-amber-300">Yapılandırılmadı</span>
+        )}
+      </p>
+      {msg ? <p className="mt-2 text-xs text-[#8A9BB0]">{msg}</p> : null}
+      <div className="mt-4">
+        <Button type="button" variant="outline" disabled={busy || !info?.configured} onClick={() => void test()}>
+          Bağlantıyı Test Et
+        </Button>
+      </div>
+    </section>
   );
 }

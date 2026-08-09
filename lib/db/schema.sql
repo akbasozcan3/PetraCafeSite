@@ -86,3 +86,60 @@ INSERT INTO migrations (name) VALUES ('001_initial_schema')
   ON CONFLICT (name) DO NOTHING;
 INSERT INTO migrations (name) VALUES ('002_integration_settings')
   ON CONFLICT (name) DO NOTHING;
+
+-- ── Müşteri hesapları (admin'den ayrı) ───────────────────────
+CREATE TABLE IF NOT EXISTS customers (
+  id                 SERIAL PRIMARY KEY,
+  public_id          TEXT NOT NULL UNIQUE,
+  email              TEXT NOT NULL UNIQUE,
+  password_hash      TEXT NOT NULL,
+  name               TEXT NOT NULL DEFAULT '',
+  phone              TEXT NOT NULL DEFAULT '',
+  email_verified_at  TIMESTAMPTZ,
+  verify_token_hash  TEXT,
+  verify_expires_at  TIMESTAMPTZ,
+  reset_token_hash   TEXT,
+  reset_expires_at   TIMESTAMPTZ,
+  addresses          JSONB NOT NULL DEFAULT '[]',
+  active             BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS customers_email_idx ON customers (lower(email));
+
+DROP TRIGGER IF EXISTS customers_updated_at ON customers;
+CREATE TRIGGER customers_updated_at
+  BEFORE UPDATE ON customers
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+-- ── Web siparişleri ─────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS web_orders (
+  id              SERIAL PRIMARY KEY,
+  public_id       TEXT NOT NULL UNIQUE,
+  public_code     TEXT NOT NULL UNIQUE,
+  access_token    TEXT NOT NULL,
+  customer_id     TEXT,
+  guest_email     TEXT,
+  guest_name      TEXT,
+  guest_phone     TEXT,
+  items           JSONB NOT NULL DEFAULT '[]',
+  address         JSONB,
+  payment_method  TEXT NOT NULL DEFAULT 'cash_on_delivery',
+  note            TEXT,
+  status          TEXT NOT NULL DEFAULT 'pending',
+  total_text      TEXT,
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS web_orders_customer_idx ON web_orders (customer_id);
+CREATE INDEX IF NOT EXISTS web_orders_created_idx ON web_orders (created_at DESC);
+
+DROP TRIGGER IF EXISTS web_orders_updated_at ON web_orders;
+CREATE TRIGGER web_orders_updated_at
+  BEFORE UPDATE ON web_orders
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+INSERT INTO migrations (name) VALUES ('003_customers_web_orders')
+  ON CONFLICT (name) DO NOTHING;

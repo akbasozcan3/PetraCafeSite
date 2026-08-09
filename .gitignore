@@ -5,6 +5,8 @@ node_modules/
 out/
 data/auth.json
 data/users.json
+data/customers.json
+data/web-orders.json
 data/activity-log.json
 data/backups/
 data/integrations/

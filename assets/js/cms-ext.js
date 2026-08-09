@@ -608,6 +608,22 @@
         a.textContent = link.label || "";
         container.appendChild(a);
       });
+      // Storefront hesap / sepet (CMS linklerinden bağımsız)
+      [
+        { href: "/hesabim", label: "Hesabım" },
+        { href: "/sepet", label: "Sepet" },
+      ].forEach(function (extra) {
+        var exists = false;
+        Array.prototype.forEach.call(container.querySelectorAll("a"), function (el) {
+          if ((el.getAttribute("href") || "").indexOf(extra.href) === 0) exists = true;
+        });
+        if (exists) return;
+        var x = document.createElement("a");
+        x.href = extra.href;
+        x.textContent = extra.label;
+        x.setAttribute("data-shop-link", "1");
+        container.appendChild(x);
+      });
       if (includeCta && nav.ctaLabel) {
         var btn = document.createElement("a");
         btn.href = resolveHref(nav.ctaHref || "#");
@@ -1134,7 +1150,8 @@ if (list) {
       "</div>" +
       '<div class="cart-drawer__body" data-cart-body></div>' +
       '<div class="cart-drawer__foot">' +
-      '<button type="button" class="btn btn--lg" data-cart-wa>WhatsApp ile Sipariş Ver</button>' +
+      '<a class="btn btn--lg" href="/sepet" data-cart-checkout>Sepete Git / Checkout</a>' +
+      '<button type="button" class="btn btn--ghost" data-cart-wa>WhatsApp ile Hızlı Sipariş</button>' +
       '<button type="button" class="btn btn--ghost" data-cart-clear>Sepeti Temizle</button>' +
       "</div>";
 

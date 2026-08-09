@@ -1,6 +1,6 @@
 /** Hero sahne sabitleri — orijinal scene.js ile aynı değerler */
 /** sync-public.mjs bu değeri CACHE ile senkronlar */
-export const CACHE_V = '20260810x2';
+export const CACHE_V = '20260810x3';
 
 export const ASSETS = {
   cephe: `/assets/img/hero-cephe.webp?v=${CACHE_V}`,
