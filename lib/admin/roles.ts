@@ -9,7 +9,8 @@ export type Permission =
   | "backup:manage"
   | "settings:password"
   | "seo:write"
-  | "system:read";
+  | "system:read"
+  | "integrations:manage";
 
 const ROLE_PERMISSIONS: Record<AdminRole, Permission[]> = {
   owner: [
@@ -22,6 +23,7 @@ const ROLE_PERMISSIONS: Record<AdminRole, Permission[]> = {
     "settings:password",
     "seo:write",
     "system:read",
+    "integrations:manage",
   ],
   admin: [
     "content:read",
@@ -32,6 +34,7 @@ const ROLE_PERMISSIONS: Record<AdminRole, Permission[]> = {
     "settings:password",
     "seo:write",
     "system:read",
+    "integrations:manage",
   ],
   editor: [
     "content:read",

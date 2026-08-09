@@ -67,6 +67,14 @@ CREATE TABLE IF NOT EXISTS activity_logs (
 );
 
 CREATE INDEX IF NOT EXISTS activity_logs_at_idx ON activity_logs (at DESC);
+
+-- ── Entegrasyon ayarları (şifreli credential JSON) ──────────
+CREATE TABLE IF NOT EXISTS integration_settings (
+  key         TEXT PRIMARY KEY,
+  payload     JSONB NOT NULL,
+  updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 -- ── Geçiş Kaydı ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS migrations (
   id         SERIAL PRIMARY KEY,
@@ -75,4 +83,6 @@ CREATE TABLE IF NOT EXISTS migrations (
 );
 
 INSERT INTO migrations (name) VALUES ('001_initial_schema')
+  ON CONFLICT (name) DO NOTHING;
+INSERT INTO migrations (name) VALUES ('002_integration_settings')
   ON CONFLICT (name) DO NOTHING;

@@ -20,6 +20,7 @@ import {
   BookOpen,
   DoorOpen,
   Info,
+  Truck,
   type LucideIcon,
 } from "lucide-react";
 import type { Permission } from "@/lib/admin/roles";
@@ -218,6 +219,14 @@ export const adminNavItems: AdminNavItem[] = [
     icon: DatabaseBackup,
     group: "Sistem",
     permission: "backup:manage",
+  },
+  {
+    href: "/admin/trendyol-go",
+    label: "Trendyol Go",
+    description: "Yemek API, menü sync, siparişler",
+    icon: Truck,
+    group: "Sistem",
+    permission: "integrations:manage",
   },
   {
     href: "/admin/settings",

@@ -7,6 +7,7 @@ data/auth.json
 data/users.json
 data/activity-log.json
 data/backups/
+data/integrations/
 public/uploads/*
 !public/uploads/.gitkeep
 server/data/auth.json

@@ -68,6 +68,11 @@ export interface MenuUrun {
   fiyat?: string;
   link?: string;
   kategori?: string;
+  /** Trendyol Go / Meal product id — sync upsert anahtarı */
+  trendyolId?: string;
+  /** Örn. "trendyol" | "local" */
+  source?: string;
+  aktif?: boolean;
 }
 
 export interface MenuSssItem {
@@ -89,6 +94,8 @@ export interface MenuGrup {
   adet?: string;
   tumLink?: string;
   urunler: MenuUrun[];
+  trendyolCategoryId?: string;
+  source?: string;
 }
 
 export interface MenuContent {
