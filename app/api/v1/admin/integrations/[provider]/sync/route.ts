@@ -5,28 +5,33 @@ import { requireProvider } from "@/lib/integrations/registry";
 
 export const runtime = "nodejs";
 
-export async function POST(request: Request) {
+type Ctx = { params: Promise<{ provider: string }> };
+
+export async function POST(request: Request, ctx: Ctx) {
   try {
     const session = await requirePermission("integrations:manage");
     assertSameOrigin(request);
-    const p = requireProvider("trendyol_go");
-    if (!p.syncMenu) return errorResponse("Senkron desteklenmiyor.", 400);
-    const result = await p.syncMenu();
+    const { provider: id } = await ctx.params;
+    const provider = requireProvider(id);
+    if (!provider.syncMenu) {
+      return errorResponse("Bu entegrasyon senkron desteklemiyor.", 400);
+    }
+    const result = await provider.syncMenu();
     await appendActivity({
       userId: session.id,
       email: session.email,
       name: session.name,
-      action: "trendyol.sync",
-      detail: `Menü senkron: ${result.productCount} ürün (yeni ${result.created}, güncellenen ${result.updated})`,
+      action: "integrations.sync",
+      detail: `${provider.meta.name}: ${result.productCount} ürün`,
     });
     return jsonResponse({ success: true, result });
   } catch (error) {
     if (error instanceof Error && /unauthorized/i.test(error.message)) {
       return errorResponse("Unauthorized", 401);
     }
-    return errorResponse(
-      error instanceof Error ? error.message : "Senkronizasyon başarısız.",
-      500
-    );
+    if (error instanceof Error && /forbidden/i.test(error.message)) {
+      return errorResponse("Bu işlem için yetkiniz yok.", 403);
+    }
+    return errorResponse(error instanceof Error ? error.message : "Senkron başarısız.", 400);
   }
 }

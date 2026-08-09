@@ -1,13 +1,11 @@
-import { NextResponse } from "next/server";
 import { errorResponse, jsonResponse } from "@/lib/api/helpers";
 import { requireProvider } from "@/lib/integrations/registry";
 import { integrationLog } from "@/lib/integrations/logger";
 
 export const runtime = "nodejs";
 
-/** Legacy path — providers trendyol_go */
 export async function POST(request: Request) {
-  const provider = requireProvider("trendyol_go");
+  const provider = requireProvider("yemeksepeti");
   try {
     const body = await request.json().catch(() => null);
     if (!body) return errorResponse("Geçersiz gövde.", 400);
@@ -16,13 +14,13 @@ export async function POST(request: Request) {
     }
     const auth = await provider.validateWebhook(request, body);
     if (!auth.ok) {
-      integrationLog("Trendyol Go", "warn", auth.reason || "Webhook rejected", { status: 401 });
+      integrationLog("Yemeksepeti", "warn", auth.reason || "Webhook rejected", { status: 401 });
       return errorResponse(auth.reason || "Yetkisiz webhook.", 401);
     }
     const result = await provider.ingestWebhook(body);
     return jsonResponse({ success: true, ...result });
   } catch (error) {
-    integrationLog("Trendyol Go", "error", error instanceof Error ? error.message : "Webhook error", {
+    integrationLog("Yemeksepeti", "error", error instanceof Error ? error.message : "Webhook error", {
       status: 500,
     });
     return errorResponse("Webhook işlenemedi.", 500);
@@ -30,5 +28,5 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  return NextResponse.json({ ok: true, service: "trendyol-go-webhook", auth: "Basic" });
+  return jsonResponse({ ok: true, service: "yemeksepeti-webhook", auth: "secret" });
 }

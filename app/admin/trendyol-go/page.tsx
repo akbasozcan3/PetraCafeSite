@@ -1,5 +1,6 @@
-import TrendyolGoPanel from "@/components/admin/panels/TrendyolGoPanel";
+import { redirect } from "next/navigation";
 
-export default function TrendyolGoPage() {
-  return <TrendyolGoPanel />;
+/** Eski yol — yeni Entegrasyonlar hub'ına yönlendir */
+export default function LegacyTrendyolGoPage() {
+  redirect("/admin/integrations/trendyol-go");
 }

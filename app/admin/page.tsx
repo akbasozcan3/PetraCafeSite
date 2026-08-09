@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   ExternalLink,
   Phone,
+  Plug,
 } from "lucide-react";
 import { useAdminSession } from "@/lib/context/AdminSessionContext";
 import { adminNavItems, adminNavGroups } from "@/lib/admin/navigation";
@@ -23,8 +25,41 @@ const SITE_SECTIONS = [
   "/admin/iletisim",
 ];
 
+type IntegrationSummary = {
+  id: string;
+  name: string;
+  settings: {
+    enabled: boolean;
+    connected: boolean;
+    lastTestOk?: boolean;
+    lastSyncAt?: string;
+    lastTestMessage?: string;
+  };
+};
+
 export default function DashboardPage() {
   const { user } = useAdminSession();
+  const [integrations, setIntegrations] = useState<IntegrationSummary[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch("/api/v1/admin/integrations", {
+          credentials: "include",
+          cache: "no-store",
+        });
+        if (!res.ok) return;
+        const data = (await res.json()) as { providers?: IntegrationSummary[] };
+        if (!cancelled) setIntegrations(data.providers || []);
+      } catch {
+        /* yetkisiz veya hata — sessizce atla */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <AdminGate>
@@ -73,6 +108,68 @@ export default function DashboardPage() {
                 hint={content.brand?.displayName || content.seo?.siteName || "Marka"}
               />
             </div>
+
+            {integrations.length > 0 && (
+              <section className="mb-8 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <h2 className="flex items-center gap-2 text-lg font-semibold text-[#F8F8F8]">
+                      <Plug className="h-5 w-5 text-[#C8703A]" />
+                      Entegrasyonlar
+                    </h2>
+                    <p className="mt-1 text-sm text-[#8A9BB0]">
+                      Bağlantı ve son senkron özeti
+                    </p>
+                  </div>
+                  <Link
+                    href="/admin/integrations"
+                    className="text-sm font-medium text-[#C8703A] hover:underline"
+                  >
+                    Yönet →
+                  </Link>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {integrations.map((p) => {
+                    const linked =
+                      p.settings.enabled && p.settings.lastTestOk === true;
+                    return (
+                      <div
+                        key={p.id}
+                        className="rounded-xl border border-white/[0.06] bg-[#0D1117]/70 p-4"
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="font-medium text-[#EEE9E0]">{p.name}</p>
+                          <span
+                            className={
+                              linked
+                                ? "text-xs text-emerald-300"
+                                : "text-xs text-[#8A9BB0]"
+                            }
+                          >
+                            {linked ? "● Connected" : "○ Not connected"}
+                          </span>
+                        </div>
+                        <p className="mt-2 text-xs text-[#8A9BB0]">
+                          Son senkronizasyon:{" "}
+                          {p.settings.lastSyncAt
+                            ? new Date(p.settings.lastSyncAt).toLocaleString(
+                                "tr-TR"
+                              )
+                            : "—"}
+                        </p>
+                        <p className="mt-1 text-xs text-[#8A9BB0]">
+                          Son API:{" "}
+                          {p.settings.lastTestMessage ||
+                            (p.settings.lastTestOk === false
+                              ? "Hata"
+                              : "Yok")}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
 
             <section className="mb-8 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">

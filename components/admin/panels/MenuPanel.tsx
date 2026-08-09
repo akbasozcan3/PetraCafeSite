@@ -797,17 +797,38 @@ function ProductRow({
         />
       </div>
 
-      <Input
-        label="Ürün Adı"
-        value={urun.ad}
-        onChange={(e) =>
-          onChange({
-            ...urun,
-            ad: e.target.value,
-          })
-        }
-        placeholder="Ör: Papatya Ekmeği"
-      />
+      <div className="space-y-2">
+        <Input
+          label="Ürün Adı"
+          value={urun.ad}
+          onChange={(e) =>
+            onChange({
+              ...urun,
+              ad: e.target.value,
+            })
+          }
+          placeholder="Ör: Papatya Ekmeği"
+        />
+        <div className="flex flex-wrap gap-1.5">
+          <span className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] text-[#8A9BB0]">
+            ✓ Web Sitesi
+          </span>
+          {(urun.trendyolId ||
+            urun.source === "trendyol_go" ||
+            urun.externalId?.startsWith("trendyol_go:")) && (
+            <span className="rounded-md bg-orange-500/15 px-2 py-0.5 text-[10px] text-orange-300">
+              ✓ Trendyol Go
+            </span>
+          )}
+          {(urun.yemeksepetiId ||
+            urun.source === "yemeksepeti" ||
+            urun.externalId?.startsWith("yemeksepeti:")) && (
+            <span className="rounded-md bg-pink-500/15 px-2 py-0.5 text-[10px] text-pink-300">
+              ✓ Yemeksepeti
+            </span>
+          )}
+        </div>
+      </div>
 
       <Input
         label="Alt Not / Çeşit"

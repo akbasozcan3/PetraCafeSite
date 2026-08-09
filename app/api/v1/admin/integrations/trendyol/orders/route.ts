@@ -1,22 +1,9 @@
 import { requirePermission } from "@/lib/auth";
 import { assertSameOrigin, errorResponse, jsonResponse, parseBody } from "@/lib/api/helpers";
 import { appendActivity } from "@/lib/db/activity";
-import { TrendyolMealClient } from "@/lib/trendyol/client";
-import { listOrders, upsertOrders } from "@/lib/trendyol/orders-store";
-import { getDecryptedCredentials, patchMeta } from "@/lib/trendyol/store";
+import { requireProvider } from "@/lib/integrations/registry";
 
 export const runtime = "nodejs";
-
-function asOrderArray(data: unknown): unknown[] {
-  if (Array.isArray(data)) return data;
-  if (data && typeof data === "object") {
-    const o = data as Record<string, unknown>;
-    if (Array.isArray(o.content)) return o.content;
-    if (Array.isArray(o.packages)) return o.packages;
-    if (Array.isArray(o.items)) return o.items;
-  }
-  return [];
-}
 
 export async function GET(request: Request) {
   try {
@@ -24,25 +11,13 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const refresh = searchParams.get("refresh") === "1";
     const status = searchParams.get("status") || "";
-
-    if (refresh) {
-      const creds = await getDecryptedCredentials();
-      if (!creds?.enabled) {
-        return errorResponse("Trendyol Go entegrasyonu kapalı.", 400);
-      }
-      const client = new TrendyolMealClient(creds);
-      const raw = await client.getPackages(status || "Created");
-      await upsertOrders(asOrderArray(raw), "poll");
-      await patchMeta({ lastOrderPollAt: new Date().toISOString() });
-    }
-
-    return jsonResponse({ orders: await listOrders(100) });
+    const p = requireProvider("trendyol_go");
+    if (!p.getOrders) return errorResponse("Sipariş API desteklenmiyor.", 400);
+    const orders = await p.getOrders({ refresh, status });
+    return jsonResponse({ orders });
   } catch (error) {
     if (error instanceof Error && /unauthorized/i.test(error.message)) {
       return errorResponse("Unauthorized", 401);
-    }
-    if (error instanceof Error && /forbidden/i.test(error.message)) {
-      return errorResponse("Bu işlem için yetkiniz yok.", 403);
     }
     return errorResponse(
       error instanceof Error ? error.message : "Siparişler alınamadı.",
@@ -56,7 +31,7 @@ export async function POST(request: Request) {
     const session = await requirePermission("integrations:manage");
     assertSameOrigin(request);
     const body = await parseBody<{
-      action: "picked" | "invoiced" | "ship" | "deliver" | "cancel";
+      action: string;
       packageId: string;
       preparationTime?: number;
       itemIdList?: string[];
@@ -67,26 +42,15 @@ export async function POST(request: Request) {
       return errorResponse("packageId ve action gerekli.", 400);
     }
 
-    const client = await TrendyolMealClient.fromStore();
-    switch (body.action) {
-      case "picked":
-        await client.pickPackage(body.packageId, body.preparationTime ?? 30);
-        break;
-      case "invoiced":
-        await client.invoicePackage(body.packageId);
-        break;
-      case "ship":
-        await client.manualShip(body.packageId);
-        break;
-      case "deliver":
-        await client.manualDeliver(body.packageId);
-        break;
-      case "cancel":
-        await client.unsupplyPackage(body.packageId, body.itemIdList || [], body.reasonId);
-        break;
-      default:
-        return errorResponse("Desteklenmeyen aksiyon.", 400);
+    const p = requireProvider("trendyol_go");
+    if (!p.updateOrderStatus) {
+      return errorResponse("Sipariş durumu güncelleme desteklenmiyor.", 400);
     }
+    await p.updateOrderStatus(body.action, body.packageId, {
+      preparationTime: body.preparationTime,
+      itemIdList: body.itemIdList,
+      reasonId: body.reasonId,
+    });
 
     await appendActivity({
       userId: session.id,
@@ -100,9 +64,6 @@ export async function POST(request: Request) {
   } catch (error) {
     if (error instanceof Error && /unauthorized/i.test(error.message)) {
       return errorResponse("Unauthorized", 401);
-    }
-    if (error instanceof Error && /forbidden/i.test(error.message)) {
-      return errorResponse("Bu işlem için yetkiniz yok.", 403);
     }
     return errorResponse(
       error instanceof Error ? error.message : "Sipariş işlemi başarısız.",

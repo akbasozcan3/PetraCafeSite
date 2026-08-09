@@ -70,7 +70,11 @@ export interface MenuUrun {
   kategori?: string;
   /** Trendyol Go / Meal product id — sync upsert anahtarı */
   trendyolId?: string;
-  /** Örn. "trendyol" | "local" */
+  /** Yemeksepeti Partner catalog product/sku id */
+  yemeksepetiId?: string;
+  /** Genel: provider:externalId */
+  externalId?: string;
+  /** Örn. "trendyol_go" | "yemeksepeti" | "local" */
   source?: string;
   aktif?: boolean;
 }
@@ -95,6 +99,7 @@ export interface MenuGrup {
   tumLink?: string;
   urunler: MenuUrun[];
   trendyolCategoryId?: string;
+  integrationCategoryId?: string;
   source?: string;
 }
 

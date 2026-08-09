@@ -86,7 +86,9 @@ Manuel checklist (credential yokken canlı API çağrıları 401 beklenir):
 
 ## Build sonucu
 
-`npm run lint` / `npm run build` bu commit öncesi çalıştırılır — sonuç aşağıdaki terminal çıktısına bakın.
+- `npm run build`: **BAŞARILI** (Next.js 16.2.10, exit 0)
+- Yeni rota: `/admin/trendyol-go` + Trendyol API route’ları build çıktısında görünüyor
+- `next lint`: Next 16 CLI `lint` alt komutu bu projede dizin hatası verdi (mevcut script uyumsuzluğu); TypeScript build geçti
 
 ## Desteklenmeyen işlemler
 
