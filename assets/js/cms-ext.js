@@ -1520,6 +1520,151 @@ if (list) {
       .replace(/"/g, "&quot;");
   }
 
+  function ensureYsMenuHost() {
+    var existing = $("[data-ys-menu]");
+    if (existing) return existing;
+    var wrap = $("main.section > .wrap") || $("main .wrap") || $("main");
+    if (!wrap) return null;
+    var section = document.createElement("section");
+    section.className = "ys-menu";
+    section.setAttribute("data-ys-menu", "1");
+    section.id = "menu-urunler";
+    var ust = $(".urun-ust");
+    if (ust && ust.parentNode === wrap) {
+      if (ust.nextSibling) wrap.insertBefore(section, ust.nextSibling);
+      else wrap.appendChild(section);
+    } else {
+      var govde = $(".urun-govde");
+      if (govde) wrap.insertBefore(section, govde);
+      else wrap.appendChild(section);
+    }
+    return section;
+  }
+
+  function renderYsCategoryMenu(menu, group, sayfa) {
+    var host = ensureYsMenuHost();
+    if (!host || !group) return;
+
+    var urunler = (group.urunler || []).filter(function (u) {
+      return u && u.ad && String(u.ad).trim() && u.aktif !== false;
+    });
+
+    host.innerHTML = "";
+
+    var head = document.createElement("div");
+    head.className = "ys-menu__head";
+    var h2 = document.createElement("h2");
+    h2.textContent = (sayfa.listeBaslikSablon || "{ad}").replace("{ad}", group.ad);
+    var count = document.createElement("p");
+    count.textContent = urunler.length + " ürün";
+    head.appendChild(h2);
+    head.appendChild(count);
+    host.appendChild(head);
+
+    // Kategori çipleri
+    var chips = document.createElement("nav");
+    chips.className = "ys-chips";
+    chips.setAttribute("aria-label", "Kategoriler");
+    (menu.gruplar || []).forEach(function (g) {
+      if (!g || !g.ad) return;
+      var has = (g.urunler || []).some(function (u) {
+        return u && u.ad && String(u.ad).trim();
+      });
+      if (!has) return;
+      var a = document.createElement("a");
+      a.className = "ys-chip" + (g.ad === group.ad ? " is-active" : "");
+      a.href = toCategoryHref(g.link || g.tumLink, g.ad);
+      a.textContent = g.ad;
+      chips.appendChild(a);
+    });
+    host.appendChild(chips);
+
+    var ul = document.createElement("ul");
+    ul.className = "ys-products";
+
+    urunler.forEach(function (u) {
+      var li = document.createElement("li");
+      li.className = "ys-product" + (u.fav ? " is-fav" : "");
+
+      var body = document.createElement("div");
+      body.className = "ys-product__body";
+
+      var titleLink = document.createElement("a");
+      titleLink.href = productHref(u, group);
+      titleLink.setAttribute("data-product-link", "1");
+      titleLink.className = "ys-product__title";
+      var h3 = document.createElement("h3");
+      h3.textContent = u.ad;
+      titleLink.appendChild(h3);
+      body.appendChild(titleLink);
+
+      var descText = (u.aciklama || u.not || "").trim();
+      if (descText) {
+        var desc = document.createElement("p");
+        desc.className = "ys-product__desc";
+        desc.textContent = descText;
+        body.appendChild(desc);
+      }
+
+      var meta = document.createElement("div");
+      meta.className = "ys-product__meta";
+      var price = document.createElement("span");
+      price.className = "ys-product__price";
+      price.textContent = u.fiyat ? u.fiyat : "Fiyat için detay / sipariş";
+      if (!u.fiyat) price.classList.add("is-muted");
+      meta.appendChild(price);
+
+      var add = document.createElement("button");
+      add.type = "button";
+      add.className = "ys-product__add";
+      add.setAttribute("aria-label", u.ad + " sepete ekle");
+      add.textContent = "+";
+      add.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        addToCart({
+          ad: u.ad,
+          slug: productSlug(u),
+          fiyat: u.fiyat || "",
+        });
+        add.classList.add("is-added");
+        add.textContent = "✓";
+        setTimeout(function () {
+          add.classList.remove("is-added");
+          add.textContent = "+";
+        }, 1200);
+      });
+      meta.appendChild(add);
+      body.appendChild(meta);
+
+      var imgWrap = document.createElement("a");
+      imgWrap.className = "ys-product__img";
+      imgWrap.href = productHref(u, group);
+      imgWrap.setAttribute("data-product-link", "1");
+      var img = document.createElement("img");
+      img.src = mediaUrl(u.image || groupImage(group));
+      img.alt = u.ad;
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.width = 160;
+      img.height = 160;
+      imgWrap.appendChild(img);
+
+      li.appendChild(body);
+      li.appendChild(imgWrap);
+      ul.appendChild(li);
+    });
+
+    host.appendChild(ul);
+
+    var hint = document.createElement("p");
+    hint.className = "ys-menu__hint";
+    hint.textContent =
+      sayfa.kartNot ||
+      "Ürüne tıklayınca detay açılır. + ile sepete ekleyip checkout’tan sipariş verebilirsiniz.";
+    host.appendChild(hint);
+  }
+
   function applyUrunKategori(menu) {
     var group = matchCurrentCategoryGroup(menu);
     if (!group) return;
@@ -1568,50 +1713,13 @@ if (list) {
       heroImg.removeAttribute("srcset");
     }
 
-    var list = $(".urun-kart .menu__list");
-    if (list && group.urunler && group.urunler.length) {
-      list.innerHTML = "";
-      group.urunler.forEach(function (u) {
-        if (!u || !u.ad) return;
-        var li = document.createElement("li");
-        if (u.fav) li.className = "is-fav";
-        var a = document.createElement("a");
-        a.href = productHref(u, group);
-        a.setAttribute("data-product-link", "1");
-        var name = document.createElement("span");
-        name.className = "menu__name";
-        var label = document.createElement("span");
-        label.className = "menu__name__label";
-        label.textContent = u.ad;
-        name.appendChild(label);
-        if (u.not) {
-          var em = document.createElement("em");
-          em.textContent = u.not;
-          name.appendChild(em);
-        }
-        a.appendChild(name);
-        if (u.fiyat) {
-          var price = document.createElement("span");
-          price.className = "menu__price";
-          price.textContent = u.fiyat;
-          a.appendChild(price);
-        }
-        li.appendChild(a);
-        list.appendChild(li);
-      });
-      var kartH2 = $(".urun-kart h2");
-      if (kartH2) {
-        var listeTpl = sayfa.listeBaslikSablon || "{ad} listesi";
-        kartH2.textContent = listeTpl.replace("{ad}", group.ad);
-      }
-      var not = $(".urun-kart__not");
-      if (not) {
-        not.textContent =
-          sayfa.kartNot ||
-          menu.kartNot ||
-          "★ işaretliler en çok tercih edilenler. Ürüne tıklayarak detay sayfasını açabilirsiniz.";
-      }
-    }
+    // Yemeksepeti tarzı menü: hero'dan sonra tam genişlik ürün kartları
+    renderYsCategoryMenu(menu, group, sayfa);
+
+    // Eski yan listeyi gizle (ürünler ys-menu'de)
+    var oldKart = $(".urun-kart");
+    if (oldKart) oldKart.hidden = true;
+    document.body.classList.add("page--ys-menu");
 
     var relatedHead = $(".related h2, .related .h3");
     if (relatedHead && sayfa.relatedBaslik) relatedHead.textContent = sayfa.relatedBaslik;

@@ -289,6 +289,193 @@ body.page .urun-govde .article h2:first-child {
 }
 .urun-yan .related a:hover { color: var(--brass-lo); }
 
+/* —— Yemeksepeti tarzı kategori menü —— */
+.ys-menu {
+  margin: 28px 0 36px;
+  scroll-margin-top: calc(var(--nav-h) + 12px);
+}
+.ys-menu__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.ys-menu__head h2 {
+  margin: 0;
+  font-family: var(--f-head);
+  font-size: clamp(22px, 3vw, 28px);
+  letter-spacing: -0.02em;
+}
+.ys-menu__head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.ys-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 14px;
+  margin: 0 0 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.ys-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.ys-chip:hover {
+  border-color: var(--brass-lo);
+  color: var(--brass-lo);
+}
+.ys-chip.is-active {
+  background: var(--char);
+  border-color: var(--char);
+  color: var(--cream);
+}
+.ys-products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ys-product {
+  display: grid;
+  grid-template-columns: 1fr 112px;
+  gap: 14px;
+  align-items: stretch;
+  background: #fff;
+  border: 1px solid rgba(13, 15, 10, 0.1);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 28px -22px rgba(13, 15, 10, 0.45);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.ys-product:hover {
+  border-color: rgba(184, 132, 44, 0.45);
+  box-shadow: 0 14px 34px -20px rgba(13, 15, 10, 0.5);
+}
+.ys-product__body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ys-product__title {
+  text-decoration: none;
+  color: inherit;
+}
+.ys-product__title h3 {
+  margin: 0;
+  font-family: var(--f-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.ys-product.is-fav .ys-product__title h3:after {
+  content: " ★";
+  color: #c4a035;
+  font-size: 0.85em;
+}
+.ys-product__desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ys-product__meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 8px;
+}
+.ys-product__price {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.98rem;
+}
+.ys-product__price.is-muted {
+  font-weight: 500;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.ys-product__add {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--brass);
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 18px -10px rgba(184, 132, 44, 0.9);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.ys-product__add:hover {
+  transform: scale(1.06);
+  background: var(--brass-lo);
+}
+.ys-product__add.is-added {
+  background: #2f7d46;
+}
+.ys-product__img {
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--cream-2);
+  aspect-ratio: 1;
+}
+.ys-product__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ys-menu__hint {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+body.page--ys-menu .urun-kart[hidden] {
+  display: none !important;
+}
+@media (max-width: 720px) {
+  .ys-product {
+    grid-template-columns: 1fr 88px;
+    gap: 10px;
+    padding: 12px;
+  }
+  .ys-product__title h3 {
+    font-size: 0.98rem;
+  }
+  .ys-product__add {
+    width: 36px;
+    height: 36px;
+  }
+}
+
 body.page .foot {
   padding-top: 36px;
   padding-bottom: max(20px, env(safe-area-inset-bottom));
@@ -299,7 +486,7 @@ body.page .foot {
   .urun-govde { grid-template-columns: 1fr; }
   .urun-yan { position: static; gap: 16px; }
 
-  /* Mobil: breadcrumb → başlık → LİSTE → yazı → görsel */
+  /* Mobil: breadcrumb → başlık → YS MENÜ → yazı → görsel → yan */
   body.page main.section > .wrap {
     display: flex !important;
     flex-direction: column !important;
@@ -310,12 +497,13 @@ body.page .foot {
   }
   body.page .crumbs { order: 0 !important; }
   body.page .urun-ust > div:first-child { order: 1 !important; }
-  body.page .urun-yan { order: 2 !important; }
+  body.page .ys-menu { order: 2 !important; }
   body.page .urun-govde .article { order: 3 !important; }
   body.page .urun-gorsel {
     order: 4 !important;
     margin: 20px 0 0 !important;
   }
+  body.page .urun-yan { order: 5 !important; }
   body.page .urun-gorsel img {
     max-height: 220px !important;
   }
@@ -586,7 +774,7 @@ html.scene-failed .gate__boot {
 }
 @media (max-width: 860px) {
   .gate__stage {
-    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260810x3") center center / cover no-repeat !important;
+    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260810x4") center center / cover no-repeat !important;
   }
   .gate__poster {
     inset: 0 !important;

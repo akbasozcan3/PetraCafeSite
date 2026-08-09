@@ -11,7 +11,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const CONTENT_FILE = path.join(ROOT, "data", "content.json");
-const CACHE = "20260810x3";
+const CACHE = "20260810x4";
 
 const RESERVED = new Set([
   "urunler",
