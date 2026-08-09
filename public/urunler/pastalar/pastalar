@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="../../css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/style.css?v=20260807x4">
+<link rel="stylesheet" href="../../assets/css/style.css?v=20260810x2">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -151,22 +151,22 @@
         <div class="urun-kart">
           <h2>Pastalar — 4–6 ve 6–8 Kişilik listesi</h2>
           <ul class="menu__list menu__list--tek">
-        <li class="is-fav"><a href="https://wa.me/905523400202?text=Merhaba%2C%20Frambuaz%20%26%20%C3%87ikolatal%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Frambuaz & Çikolatalı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C3%87ilek%20%26%20%C3%87ikolatal%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Çilek & Çikolatalı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C3%87ilek%20%26%20%C3%87ikolatal%C4%B1%20Mois%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Çilek & Çikolatalı Mois</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20F%C4%B1st%C4%B1k%20%26%20%C3%87ikolatal%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Fıstık & Çikolatalı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C3%87ikolata%20Par%C3%A7ac%C4%B1kl%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Çikolata Parçacıklı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Profiterol%20%26%20%C3%87ikolatal%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Profiterol & Çikolatalı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Muz%20%26%20%C3%87ikolatal%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Muz & Çikolatalı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Muz%20%26%20F%C4%B1nd%C4%B1kl%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Muz & Fındıklı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20B%C3%B6%C4%9F%C3%BCrtlen%20%26%20%C3%87ikolatal%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Böğürtlen & Çikolatalı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Orman%20Meyveli%20%26%20%C3%87ikolatal%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Orman Meyveli & Çikolatalı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Kar%C4%B1%C5%9F%C4%B1k%20Meyveli%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Karışık Meyveli</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Kar%C4%B1%C5%9F%C4%B1k%20Meyveli%20%26%20%C3%87ikolatal%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Karışık Meyveli & Çikolatalı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Krokan%20%26%20F%C4%B1nd%C4%B1kl%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Krokan & Fındıklı</span><em>4–6 · 6–8 kişilik</em></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C5%9Eeker%20Hamurlu%20%26%20Fig%C3%BCrl%C3%BC%20Pasta%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Şeker Hamurlu & Figürlü Pasta</span><em>özel tasarım</em></span></a></li>
+            <li class="is-fav"><a href="/urunler/frambuaz-cikolatali" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Frambuaz &amp; Çikolatalı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/cilek-cikolatali" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Çilek &amp; Çikolatalı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/cilek-cikolatali-mois" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Çilek &amp; Çikolatalı Mois</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/fistik-cikolatali" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Fıstık &amp; Çikolatalı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/cikolata-parcacikli" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Çikolata Parçacıklı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/profiterol-cikolatali" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Profiterol &amp; Çikolatalı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/muz-cikolatali" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Muz &amp; Çikolatalı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/muz-findikli" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Muz &amp; Fındıklı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/bogurtlen-cikolatali" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Böğürtlen &amp; Çikolatalı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/orman-meyveli-cikolatali" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Orman Meyveli &amp; Çikolatalı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/karisik-meyveli" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Karışık Meyveli</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/karisik-meyveli-cikolatali" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Karışık Meyveli &amp; Çikolatalı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/krokan-findikli" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Krokan &amp; Fındıklı</span><em>4–6  ·  6–8 kişilik</em></span></a></li>
+            <li><a href="/urunler/seker-hamurlu-figurlu-pasta" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Şeker Hamurlu &amp; Figürlü Pasta</span><em>özel tasarım</em></span></a></li>
           </ul>
-          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.</p>
+          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak detay sayfasını açabilirsiniz.</p>
         </div>
 
         <div class="cta-box">
@@ -210,8 +210,8 @@
 </a>
 
 
-<script src="../../assets/js/site-loader.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/content.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/cms-ext.js?v=20260807x4" defer=""></script>
+<script src="../../assets/js/site-loader.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/content.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/cms-ext.js?v=20260810x2" defer=""></script>
 </body>
 </html>

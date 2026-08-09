@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="../../css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/style.css?v=20260807x4">
+<link rel="stylesheet" href="../../assets/css/style.css?v=20260810x2">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -134,16 +134,16 @@
         <div class="urun-kart">
           <h2>Kurabiye Çeşitleri listesi</h2>
           <ul class="menu__list menu__list--tek">
-        <li class="is-fav"><a href="https://wa.me/905523400202?text=Merhaba%2C%20Minik%20Dereotlu%20Peynirli%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Minik Dereotlu Peynirli Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Minik%20Beyaz%20Peynirli%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Minik Beyaz Peynirli Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Minik%20Patatesli%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Minik Patatesli Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Tuzlu%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Tuzlu Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Tatl%C4%B1%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Tatlı Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Ac%C4%B1badem%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Acıbadem</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C4%B0zmir%20Bomba%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">İzmir Bomba</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Tahinli%20Bomba%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Tahinli Bomba</span></span></a></li>
+            <li class="is-fav"><a href="/urunler/minik-dereotlu-peynirli-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Minik Dereotlu Peynirli Kurabiye</span></span></a></li>
+            <li><a href="/urunler/minik-beyaz-peynirli-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Minik Beyaz Peynirli Kurabiye</span></span></a></li>
+            <li><a href="/urunler/minik-patatesli-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Minik Patatesli Kurabiye</span></span></a></li>
+            <li><a href="/urunler/tuzlu-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Tuzlu Kurabiye</span></span></a></li>
+            <li><a href="/urunler/tatli-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Tatlı Kurabiye</span></span></a></li>
+            <li><a href="/urunler/acibadem" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Acıbadem</span></span></a></li>
+            <li><a href="/urunler/izmir-bomba" data-product-link="1"><span class="menu__name"><span class="menu__name__label">İzmir Bomba</span></span></a></li>
+            <li><a href="/urunler/tahinli-bomba" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Tahinli Bomba</span></span></a></li>
           </ul>
-          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.</p>
+          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak detay sayfasını açabilirsiniz.</p>
         </div>
 
         <div class="cta-box">
@@ -187,8 +187,8 @@
 </a>
 
 
-<script src="../../assets/js/site-loader.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/content.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/cms-ext.js?v=20260807x4" defer=""></script>
+<script src="../../assets/js/site-loader.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/content.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/cms-ext.js?v=20260810x2" defer=""></script>
 </body>
 </html>

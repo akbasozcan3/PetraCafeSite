@@ -2,14 +2,10 @@ import type { MenuContent, MenuGrup, MenuUrun, SiteContent } from "@/lib/content
 import { getContentAsync, saveContentAsync } from "@/lib/db/content";
 import type { IntegrationId, NormalizedProduct, SyncReport } from "./types";
 
+import { slugifyTr } from "@/lib/content/slugify";
+
 function slugify(input: string): string {
-  return input
-    .toLocaleLowerCase("tr-TR")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "")
-    .slice(0, 80);
+  return slugifyTr(input);
 }
 
 function priceText(price: string | number | null | undefined): string | undefined {

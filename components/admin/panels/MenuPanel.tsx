@@ -809,6 +809,29 @@ function ProductRow({
           }
           placeholder="Ör: Papatya Ekmeği"
         />
+        <Input
+          label="Ürün slug (SEO)"
+          value={urun.slug || ""}
+          onChange={(e) =>
+            onChange({
+              ...urun,
+              slug: e.target.value
+                .toLocaleLowerCase("tr-TR")
+                .replace(/ğ/g, "g")
+                .replace(/ü/g, "u")
+                .replace(/ş/g, "s")
+                .replace(/ı/g, "i")
+                .replace(/ö/g, "o")
+                .replace(/ç/g, "c")
+                .replace(/[^a-z0-9-]+/g, "-")
+                .replace(/-+/g, "-"),
+              link: e.target.value
+                ? `/urunler/${e.target.value.replace(/^\/+|\/+$/g, "")}`
+                : urun.link,
+            })
+          }
+          placeholder="cavdar-ekmegi"
+        />
         <div className="flex flex-wrap gap-1.5">
           <span className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] text-[#8A9BB0]">
             ✓ Web Sitesi
@@ -830,29 +853,49 @@ function ProductRow({
         </div>
       </div>
 
-      <Input
-        label="Alt Not / Çeşit"
-        value={urun.not || ""}
-        onChange={(e) =>
-          onChange({
-            ...urun,
-            not: e.target.value,
-          })
-        }
-        placeholder="susamlı · çörekotlu"
-      />
+      <div className="space-y-2">
+        <Input
+          label="Alt Not / Çeşit"
+          value={urun.not || ""}
+          onChange={(e) =>
+            onChange({
+              ...urun,
+              not: e.target.value,
+            })
+          }
+          placeholder="susamlı · çörekotlu"
+        />
+        <Input
+          label="Fiyat"
+          value={urun.fiyat || ""}
+          onChange={(e) =>
+            onChange({
+              ...urun,
+              fiyat: e.target.value,
+            })
+          }
+          placeholder="Ör: 45 TL"
+        />
+        <Input
+          label="Açıklama"
+          value={urun.aciklama || ""}
+          onChange={(e) =>
+            onChange({
+              ...urun,
+              aciklama: e.target.value,
+            })
+          }
+          placeholder="Ürün açıklaması"
+        />
+      </div>
 
-      <Select
-        label="Ürün sayfa adresi"
-        value={urun.link || ""}
-        options={SITE_PAGE_URLS}
-        onChange={(e) =>
-          onChange({
-            ...urun,
-            link: e.target.value,
-          })
-        }
-      />
+      <div className="space-y-1 text-xs text-[#8A9BB0]">
+        <p>Detay adresi</p>
+        <code className="block rounded-lg bg-black/30 px-2 py-1.5 text-[11px] text-[#C8703A]">
+          {urun.slug ? `/urunler/${urun.slug}` : "Kayıtta otomatik slug üretilir"}
+        </code>
+        <p className="pt-1">Kategori sayfası ürün listesinden bu adrese gider.</p>
+      </div>
 
       <div className="flex items-end justify-end gap-2 pb-0.5">
         <button

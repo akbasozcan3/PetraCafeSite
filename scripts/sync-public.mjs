@@ -9,7 +9,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const CACHE = "20260807x4";
+const CACHE = "20260810x2";
 
 function isReparsePoint(p) {
   try {
@@ -136,7 +136,7 @@ function bumpSiteLoaderHeroUrls() {
       /\/assets\/img\/hero-mobile\.webp(\?v=[^"'&\s]*)?/g,
       `/assets/img/hero-mobile.webp?v=${CACHE}`,
     ).replace(
-      /v=20260807x\w+/g,
+      /v=20260810x\w+/g,
       `v=${CACHE}`,
     );
     if (next !== code) fs.writeFileSync(full, next, "utf8");

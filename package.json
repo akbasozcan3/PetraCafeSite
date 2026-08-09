@@ -5,9 +5,10 @@
   "description": "Taşdelen Fırıncı — Next.js web + admin",
   "scripts": {
     "dev": "next dev -p 3010",
-    "build": "node scripts/sync-public.mjs && next build && node scripts/prepare-standalone.mjs",
-    "build:vercel": "node scripts/sync-public.mjs && next build",
+    "build": "node scripts/sync-product-pages.mjs && node scripts/sync-public.mjs && next build && node scripts/prepare-standalone.mjs",
+    "build:vercel": "node scripts/sync-product-pages.mjs && node scripts/sync-public.mjs && next build",
     "sync-public": "node scripts/sync-public.mjs",
+    "sync-products": "node scripts/sync-product-pages.mjs",
     "prepare-standalone": "node scripts/prepare-standalone.mjs",
     "start": "next start -p 3010",
     "start:standalone": "node .next/standalone/server.js",

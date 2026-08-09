@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meyve Suyu — Taşdelen Fırıncı | Çekmeköy</title>
+<meta name="description" content="Meyve Suyu — vişne  ·  şeftali  ·  kayısı  ·  karışık">
+<link rel="canonical" href="https://www.firincitasdelen.com.tr/urunler/meyve-suyu">
+<meta name="theme-color" content="#12140E">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Taşdelen Fırıncı">
+<meta property="og:title" content="Meyve Suyu — Taşdelen Fırıncı">
+<meta property="og:description" content="Meyve Suyu — vişne  ·  şeftali  ·  kayısı  ·  karışık">
+<meta property="og:url" content="https://www.firincitasdelen.com.tr/urunler/meyve-suyu">
+<meta property="og:image" content="https://www.firincitasdelen.com.tr/assets/img/urun/simit.jpg">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="96x96" href="../../assets/img/favicon-96.png">
+<link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="../../css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/style.css?v=20260810x2">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Product","name":"Meyve Suyu","description":"Meyve Suyu — vişne  ·  şeftali  ·  kayısı  ·  karışık","image":"https://www.firincitasdelen.com.tr/assets/img/urun/simit.jpg","sku":"meyve-suyu","brand":{"@type":"Brand","name":"Taşdelen Fırıncı"},"category":"İçecekler","offers":{"@type":"Offer","url":"https://www.firincitasdelen.com.tr/urunler/meyve-suyu","priceCurrency":"TRY","availability":"https://schema.org/InStock","seller":{"@type":"Bakery","name":"Taşdelen Fırıncı"}}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://www.firincitasdelen.com.tr/"},
+{"@type":"ListItem","position":2,"name":"Ürünler","item":"https://www.firincitasdelen.com.tr/urunler/urunler"},
+{"@type":"ListItem","position":3,"name":"İçecekler","item":"https://www.firincitasdelen.com.tr/urunler/icecekler"},
+{"@type":"ListItem","position":4,"name":"Meyve Suyu"}
+]}
+</script>
+</head>
+<body class="page page--urun" data-product-slug="meyve-suyu">
+<a class="skip" href="#icerik">İçeriğe geç</a>
+<header class="nav is-solid">
+  <a class="nav__logo" href="../../index.htm" aria-label="Taşdelen Fırıncı ana sayfa">
+    <svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true">
+      <path d="M8 30c0-8 7-14 16-14s16 6 16 14v4a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="2.5"></path>
+      <path d="M16 22c2-3 4-4 8-4s6 1 8 4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+    </svg>
+    <span>FIRINCI</span>
+  </a>
+  <nav class="nav__links" aria-label="Ana menü">
+    <a href="../../index.htm#hakkimizda">Hakkımızda</a>
+    <a href="/urunler/urunler">Ürünler</a>
+    <a href="../../index.htm#pasta">Özel Pastalar</a>
+    <a href="../../blog/blog">Blog</a>
+    <a href="../../index.htm#iletisim">İletişim</a>
+  </nav>
+  <a href="tel:+905523400202" class="btn btn--sm nav__cta">0552 340 02 02</a>
+</header>
+
+<main class="section" id="icerik">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Sayfa yolu" data-urun-crumbs>
+      <a href="../../index.htm">Ana Sayfa</a><span>/</span>
+      <a href="/urunler/urunler">Ürünler</a><span>/</span>
+      <a href="/urunler/icecekler" data-crumb-cat>İçecekler</a><span>/</span>
+      <span aria-current="page" data-crumb-product>Meyve Suyu</span>
+    </nav>
+
+    <div class="urun-ust urun-detay" data-urun-detay>
+      <div>
+        <p class="eyebrow">Ürün</p>
+        <h1 class="h2" data-urun-ad>Meyve Suyu</h1>
+        <p class="urun-detay__kat"><a href="/urunler/icecekler" data-urun-kat-link data-urun-kat>İçecekler</a></p>
+        <p class="urun-detay__fiyat" data-urun-fiyat hidden></p>
+        <p class="urun-detay__not" data-urun-not>vişne  ·  şeftali  ·  kayısı  ·  karışık</p>
+        <div class="answer" data-urun-aciklama>
+          <b>Açıklama</b>
+          <p>vişne  ·  şeftali  ·  kayısı  ·  karışık</p>
+        </div>
+        <p class="urun-detay__durum" data-urun-durum hidden></p>
+        <div class="urun-detay__actions">
+          <button type="button" class="btn btn--lg" data-add-cart>Sepete Ekle</button>
+          <a class="btn btn--lg btn--ghost" data-wa-order href="#" target="_blank" rel="noopener noreferrer">WhatsApp ile Sipariş</a>
+        </div>
+        <p class="urun-detay__hint">Sepetinizdeki ürünleri WhatsApp üzerinden tek mesajla sipariş edebilirsiniz.</p>
+      </div>
+      <figure class="urun-gorsel" data-reveal-mask="">
+        <img data-urun-img src="/assets/img/urun/simit.jpg" alt="Meyve Suyu — Taşdelen Fırıncı" loading="eager" decoding="async" width="1280" height="720">
+      </figure>
+    </div>
+
+    <section class="urun-related" data-urun-related >
+      <h2 class="h3">Aynı kategoriden</h2>
+      <ul>
+          <li><a href="/urunler/kola" data-product-link="1">Kola</a></li>
+          <li><a href="/urunler/camlica-portakal" data-product-link="1">Çamlıca Portakal</a></li>
+          <li><a href="/urunler/limonata" data-product-link="1">Limonata</a></li>
+          <li><a href="/urunler/didi" data-product-link="1">Didi</a></li>
+          <li><a href="/urunler/soda" data-product-link="1">Soda</a></li>
+          <li><a href="/urunler/sut" data-product-link="1">Süt</a></li>
+      </ul>
+      <p><a class="menu__tum" href="/urunler/icecekler">İçecekler kategorisine dön →</a></p>
+    </section>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <img class="foot__mark" data-site="logo" src="../../assets/img/logo.webp" alt="Logo" width="160" height="160" loading="lazy" decoding="async">
+      </div>
+      <div><h4>Fırın</h4><a href="../../index.htm#hakkimizda">Hakkımızda</a><a href="/urunler/urunler">Ürünler</a><a href="../../index.htm#pasta">Özel Pastalar</a><a href="../../blog/blog">Blog</a></div>
+      <div><h4>Adres</h4><a href="../../index.htm#iletisim">Turgut Özal Cad. No:108/C</a><a href="../../index.htm#iletisim">Çekmeköy / İstanbul</a></div>
+      <div><h4>İletişim</h4><a href="tel:+905523400202">0552 340 02 02</a><a href="https://wa.me/905523400202" target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
+    </div>
+  </div>
+  <div class="wrap foot__bar"><span>© 2026 Taşdelen Fırıncı</span><span>Tüm hakları saklıdır.</span></div>
+</footer>
+
+<script src="../../assets/js/site-loader.js?v=20260810x2" defer></script>
+<script src="../../assets/js/cms-ext.js?v=20260810x2" defer></script>
+</body>
+</html>

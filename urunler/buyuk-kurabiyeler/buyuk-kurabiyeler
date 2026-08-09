@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="../../css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/style.css?v=20260807x4">
+<link rel="stylesheet" href="../../assets/css/style.css?v=20260810x2">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -132,18 +132,18 @@
         <div class="urun-kart">
           <h2>Adet Büyük Kurabiyeler listesi</h2>
           <ul class="menu__list menu__list--tek">
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Bonibonlu%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Bonibonlu Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Damla%20%C3%87ikolatal%C4%B1%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Damla Çikolatalı Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Par%C3%A7a%20%C3%87ikolatal%C4%B1%20F%C4%B1nd%C4%B1kl%C4%B1%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Parça Çikolatalı Fındıklı Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Kay%C4%B1s%C4%B1l%C4%B1%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Kayısılı Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C4%B0ncirli%20Makas%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">İncirli Makas Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Emili%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Emili Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Elmal%C4%B1%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Elmalı Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C3%87atal%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Çatal Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20P%C3%BCr%C3%BCzyen%20Kurabiye%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Pürüzyen Kurabiye</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C4%B0ran%20Po%C4%9Fa%C3%A7as%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">İran Poğaçası</span></span></a></li>
+            <li><a href="/urunler/bonibonlu-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Bonibonlu Kurabiye</span></span></a></li>
+            <li><a href="/urunler/damla-cikolatali-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Damla Çikolatalı Kurabiye</span></span></a></li>
+            <li><a href="/urunler/parca-cikolatali-findikli-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Parça Çikolatalı Fındıklı Kurabiye</span></span></a></li>
+            <li><a href="/urunler/kayisili-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Kayısılı Kurabiye</span></span></a></li>
+            <li><a href="/urunler/incirli-makas-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">İncirli Makas Kurabiye</span></span></a></li>
+            <li><a href="/urunler/emili-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Emili Kurabiye</span></span></a></li>
+            <li><a href="/urunler/elmali-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Elmalı Kurabiye</span></span></a></li>
+            <li><a href="/urunler/catal-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Çatal Kurabiye</span></span></a></li>
+            <li><a href="/urunler/puruzyen-kurabiye" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Pürüzyen Kurabiye</span></span></a></li>
+            <li><a href="/urunler/iran-pogacasi" data-product-link="1"><span class="menu__name"><span class="menu__name__label">İran Poğaçası</span></span></a></li>
           </ul>
-          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.</p>
+          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak detay sayfasını açabilirsiniz.</p>
         </div>
 
         <div class="cta-box">
@@ -187,8 +187,8 @@
 </a>
 
 
-<script src="../../assets/js/site-loader.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/content.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/cms-ext.js?v=20260807x4" defer=""></script>
+<script src="../../assets/js/site-loader.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/content.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/cms-ext.js?v=20260810x2" defer=""></script>
 </body>
 </html>

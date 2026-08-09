@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="../../css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/style.css?v=20260807x4">
+<link rel="stylesheet" href="../../assets/css/style.css?v=20260810x2">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -140,19 +140,19 @@
         <div class="urun-kart">
           <h2>Baklava & Şerbetli Tatlılar listesi</h2>
           <ul class="menu__list menu__list--tek">
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Cevizli%20Baklava%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Cevizli Baklava</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20F%C4%B1st%C4%B1kl%C4%B1%20Baklava%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Fıstıklı Baklava</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C3%96zel%20F%C4%B1st%C4%B1kl%C4%B1%20Baklava%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Özel Fıstıklı Baklava</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Me%C5%9Fhur%20F%C4%B1nd%C4%B1kl%C4%B1%20Cemil%20Usta%20Baklavas%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Meşhur Fındıklı Cemil Usta Baklavası</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C5%9E%C3%B6biyet%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Şöbiyet</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Midye%20Baklava%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Midye Baklava</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Ankara%20Sarma%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Ankara Sarma</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Kuru%20Baklava%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Kuru Baklava</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20F%C4%B1st%C4%B1kl%C4%B1%20Kaday%C4%B1f%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Fıstıklı Kadayıf</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C5%9Eekerpare%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Şekerpare</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20G%C3%BClla%C3%A7%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Güllaç</span><em>çilekli · cevizli · fındıklı kivili</em></span></a></li>
+            <li><a href="/urunler/cevizli-baklava" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Cevizli Baklava</span></span></a></li>
+            <li><a href="/urunler/fistikli-baklava" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Fıstıklı Baklava</span></span></a></li>
+            <li><a href="/urunler/ozel-fistikli-baklava" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Özel Fıstıklı Baklava</span></span></a></li>
+            <li><a href="/urunler/meshur-findikli-cemil-usta-baklavasi" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Meşhur Fındıklı Cemil Usta Baklavası</span></span></a></li>
+            <li><a href="/urunler/sobiyet" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Şöbiyet</span></span></a></li>
+            <li><a href="/urunler/midye-baklava" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Midye Baklava</span></span></a></li>
+            <li><a href="/urunler/ankara-sarma" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Ankara Sarma</span></span></a></li>
+            <li><a href="/urunler/kuru-baklava" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Kuru Baklava</span></span></a></li>
+            <li><a href="/urunler/fistikli-kadayif" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Fıstıklı Kadayıf</span></span></a></li>
+            <li><a href="/urunler/sekerpare" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Şekerpare</span></span></a></li>
+            <li><a href="/urunler/gullac" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Güllaç</span><em>çilekli  ·  cevizli  ·  fındıklı kivili</em></span></a></li>
           </ul>
-          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.</p>
+          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak detay sayfasını açabilirsiniz.</p>
         </div>
 
         <div class="cta-box">
@@ -196,8 +196,8 @@
 </a>
 
 
-<script src="../../assets/js/site-loader.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/content.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/cms-ext.js?v=20260807x4" defer=""></script>
+<script src="../../assets/js/site-loader.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/content.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/cms-ext.js?v=20260810x2" defer=""></script>
 </body>
 </html>

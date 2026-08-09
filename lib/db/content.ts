@@ -13,7 +13,9 @@ import { cascadeBrandFields, syncStaticBrand } from "@/lib/content/sync-static-b
 import { syncStaticContact } from "@/lib/content/sync-static-contact";
 import { applyIletisimCascade } from "@/lib/content/contact-utils";
 import { syncBlogPages } from "@/lib/content/sync-blog-pages";
+import { ensureProductSlugs } from "@/lib/content/ensure-product-slugs";
 import { getPool, isPostgresEnabled } from "./postgres";
+import { execFileSync } from "child_process";
 
 function runPostSaveHooks(partial: Partial<SiteContent>, next: SiteContent): void {
   try {
@@ -33,6 +35,17 @@ function runPostSaveHooks(partial: Partial<SiteContent>, next: SiteContent): voi
       syncBlogPages(next);
     } catch (err) {
       console.warn("[DB] Blog page sync:", (err as Error).message);
+    }
+  }
+  if (partial.menu) {
+    try {
+      execFileSync(process.execPath, [path.join(process.cwd(), "scripts", "sync-product-pages.mjs")], {
+        cwd: process.cwd(),
+        stdio: "pipe",
+        timeout: 120_000,
+      });
+    } catch (err) {
+      console.warn("[DB] Product page sync:", (err as Error).message);
     }
   }
 }
@@ -69,6 +82,9 @@ function applySaveCascades(partial: Partial<SiteContent>, next: SiteContent): Si
   let out = applyBrandCascade(partial, next);
   if (partial.iletisim) {
     out = applyIletisimCascade(out);
+  }
+  if (partial.menu) {
+    out = ensureProductSlugs(out);
   }
   return out;
 }

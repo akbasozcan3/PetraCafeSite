@@ -250,64 +250,88 @@
           {
             "ad": "Ekmek",
             "fav": true,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/ekmek",
+            "slug": "ekmek",
+            "aktif": true
           },
           {
             "ad": "Tam Buğdaylı Ekmek",
             "fav": true,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/tam-bugdayli-ekmek",
+            "slug": "tam-bugdayli-ekmek",
+            "aktif": true
           },
           {
             "ad": "Çavdar Ekmek",
             "fav": true,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/cavdar-ekmek",
+            "slug": "cavdar-ekmek",
+            "aktif": true
           },
           {
             "ad": "Papatya Ekmeği",
             "fav": true,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/papatya-ekmegi",
+            "slug": "papatya-ekmegi",
+            "aktif": true
           },
           {
             "ad": "Kepek Ekmek",
             "fav": false,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/kepek-ekmek",
+            "slug": "kepek-ekmek",
+            "aktif": true
           },
           {
             "ad": "Çok Tahıllı Ekmek",
             "fav": false,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/cok-tahilli-ekmek",
+            "slug": "cok-tahilli-ekmek",
+            "aktif": true
           },
           {
             "ad": "Cevizli Alman Çavdarı",
             "fav": false,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/cevizli-alman-cavdari",
+            "slug": "cevizli-alman-cavdari",
+            "aktif": true
           },
           {
             "ad": "Baget Ekmek",
             "fav": false,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/baget-ekmek",
+            "slug": "baget-ekmek",
+            "aktif": true
           },
           {
             "ad": "Tava Ekmeği",
             "not": "susamlı  ·  çörekotlu",
             "fav": false,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/tava-ekmegi",
+            "slug": "tava-ekmegi",
+            "aktif": true
           },
           {
             "ad": "Lavaş",
             "fav": false,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/lavas",
+            "slug": "lavas",
+            "aktif": true
           },
           {
             "ad": "Tandır Lavaş",
             "fav": false,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/tandir-lavas",
+            "slug": "tandir-lavas",
+            "aktif": true
           },
           {
             "ad": "Ramazan Pidesi",
             "not": "sade  ·  yumurtalı",
             "fav": false,
-            "link": "/urunler/ekmek-cesitleri/ekmek-cesitleri"
+            "link": "/urunler/ramazan-pidesi",
+            "slug": "ramazan-pidesi",
+            "aktif": true
           }
         ],
         "image": "/assets/img/urun/ekmek-cesit.jpg",
@@ -326,7 +350,8 @@
             "soru": "Ekmek siparişi verilebilir mi?",
             "cevap": "Evet. Toplu ihtiyaç veya belirli bir çeşit için bir gün önceden telefonla haber vermeniz yeterlidir."
           }
-        ]
+        ],
+        "slug": "ekmek-cesitleri"
       },
       {
         "ad": "Ekşi Mayalı Ekmekler",
@@ -337,32 +362,44 @@
           {
             "ad": "Ekşi Mayalı Tam Buğday Ekmek",
             "fav": true,
-            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+            "link": "/urunler/eksi-mayali-tam-bugday-ekmek",
+            "slug": "eksi-mayali-tam-bugday-ekmek",
+            "aktif": true
           },
           {
             "ad": "Osmanlı Ekşi Mayalı Ekmek",
             "fav": false,
-            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+            "link": "/urunler/osmanli-eksi-mayali-ekmek",
+            "slug": "osmanli-eksi-mayali-ekmek",
+            "aktif": true
           },
           {
             "ad": "Chia Tohumlu Ekşi Mayalı Ekmek",
             "fav": false,
-            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+            "link": "/urunler/chia-tohumlu-eksi-mayali-ekmek",
+            "slug": "chia-tohumlu-eksi-mayali-ekmek",
+            "aktif": true
           },
           {
             "ad": "Üzümlü Cevizli Ekşi Mayalı Ekmek",
             "fav": false,
-            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+            "link": "/urunler/uzumlu-cevizli-eksi-mayali-ekmek",
+            "slug": "uzumlu-cevizli-eksi-mayali-ekmek",
+            "aktif": true
           },
           {
             "ad": "Ekşi Mayalı Trabzon Ekmek",
             "fav": false,
-            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+            "link": "/urunler/eksi-mayali-trabzon-ekmek",
+            "slug": "eksi-mayali-trabzon-ekmek",
+            "aktif": true
           },
           {
             "ad": "Ekşi Mayalı Baget Ekmek",
             "fav": false,
-            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler"
+            "link": "/urunler/eksi-mayali-baget-ekmek",
+            "slug": "eksi-mayali-baget-ekmek",
+            "aktif": true
           }
         ],
         "aciklama": "Ekşi mayalı ekmek, paket maya yerine doğal maya kültürüyle kabartılan ekmektir. Fermantasyon saatler yerine uzun sürer; bu süreçte oluşan laktik asit ekmeğe kendine özgü aromasını verir, glüteni kısmen parçalar ve raf ömrünü katkı maddesi olmadan uzatır. Fırınımızda altı çeşit ekşi mayalı ekmek bulunuyor.",
@@ -381,7 +418,8 @@
             "cevap": "Ekşi mayalı ekmek üç-dört gün tazeliğini korur. Bez torbada, oda sıcaklığında ve kesik yüzü aşağı bakacak şekilde saklanmalıdır."
           }
         ],
-        "image": "/assets/img/urun/ekmek-rustik.jpg"
+        "image": "/assets/img/urun/ekmek-rustik.jpg",
+        "slug": "eksi-mayali-ekmekler"
       },
       {
         "ad": "Simit, Poğaça & Açma",
@@ -392,113 +430,157 @@
           {
             "ad": "Simit",
             "fav": true,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/simit",
+            "slug": "simit",
+            "aktif": true
           },
           {
             "ad": "Tereyağlı Simit",
             "fav": true,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/tereyagli-simit",
+            "slug": "tereyagli-simit",
+            "aktif": true
           },
           {
             "ad": "Büyük Simit",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/buyuk-simit",
+            "slug": "buyuk-simit",
+            "aktif": true
           },
           {
             "ad": "Rize Simidi",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/rize-simidi",
+            "slug": "rize-simidi",
+            "aktif": true
           },
           {
             "ad": "Tahinli Simit",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/tahinli-simit",
+            "slug": "tahinli-simit",
+            "aktif": true
           },
           {
             "ad": "Kaşarlı Simit",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/kasarli-simit",
+            "slug": "kasarli-simit",
+            "aktif": true
           },
           {
             "ad": "Kaşarlı Sucuklu Simit",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/kasarli-sucuklu-simit",
+            "slug": "kasarli-sucuklu-simit",
+            "aktif": true
           },
           {
             "ad": "Sade Poğaça",
             "fav": true,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/sade-pogaca",
+            "slug": "sade-pogaca",
+            "aktif": true
           },
           {
             "ad": "Kaşarlı Poğaça",
             "fav": true,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/kasarli-pogaca",
+            "slug": "kasarli-pogaca",
+            "aktif": true
           },
           {
             "ad": "Peynirli Poğaça",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/peynirli-pogaca",
+            "slug": "peynirli-pogaca",
+            "aktif": true
           },
           {
             "ad": "Patatesli Poğaça",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/patatesli-pogaca",
+            "slug": "patatesli-pogaca",
+            "aktif": true
           },
           {
             "ad": "Zeytinli Poğaça",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/zeytinli-pogaca",
+            "slug": "zeytinli-pogaca",
+            "aktif": true
           },
           {
             "ad": "Dereotlu Poğaça",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/dereotlu-pogaca",
+            "slug": "dereotlu-pogaca",
+            "aktif": true
           },
           {
             "ad": "Sade Açma",
             "fav": true,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/sade-acma",
+            "slug": "sade-acma",
+            "aktif": true
           },
           {
             "ad": "Çikolatalı Açma",
             "fav": true,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/cikolatali-acma",
+            "slug": "cikolatali-acma",
+            "aktif": true
           },
           {
             "ad": "Peynirli Açma",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/peynirli-acma",
+            "slug": "peynirli-acma",
+            "aktif": true
           },
           {
             "ad": "Kaşarlı Açma",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/kasarli-acma",
+            "slug": "kasarli-acma",
+            "aktif": true
           },
           {
             "ad": "Zeytinli Açma",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/zeytinli-acma",
+            "slug": "zeytinli-acma",
+            "aktif": true
           },
           {
             "ad": "Ponçik",
             "fav": true,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/poncik",
+            "slug": "poncik",
+            "aktif": true
           },
           {
             "ad": "Tereyağlı Kol Böreği",
             "not": "peynirli  ·  patatesli  ·  kıymalı",
             "fav": true,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/tereyagli-kol-boregi",
+            "slug": "tereyagli-kol-boregi",
+            "aktif": true
           },
           {
             "ad": "Ay Çöreği",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/ay-coregi",
+            "slug": "ay-coregi",
+            "aktif": true
           },
           {
             "ad": "Tahinli Çörek",
             "fav": false,
-            "link": "/urunler/simit-pogaca-acma/simit-pogaca-acma"
+            "link": "/urunler/tahinli-corek",
+            "slug": "tahinli-corek",
+            "aktif": true
           }
         ],
         "aciklama": "Kahvaltı ve ikram grubunda simit, poğaça, açma, çörek ve kol böreği çeşitleri bulunuyor. Sade, peynirli, kaşarlı, patatesli, zeytinli ve dereotlu poğaçalar; sade, peynirli, kaşarlı, zeytinli ve çikolatalı açmalar; tereyağlı kol böreği peynirli, patatesli ve kıymalı olarak hazırlanıyor.",
@@ -517,7 +599,8 @@
             "cevap": "Ponçik, küçük ve yumuşak, genellikle onluk paketler hâlinde satılan mini bir hamur işidir. Çocuklu evlerde ve ikramlarda çok tercih edilir."
           }
         ],
-        "image": "/assets/img/urun/simit.jpg"
+        "image": "/assets/img/urun/simit.jpg",
+        "slug": "simit-pogaca-acma"
       },
       {
         "ad": "Kurabiye Çeşitleri",
@@ -528,42 +611,58 @@
           {
             "ad": "Minik Dereotlu Peynirli Kurabiye",
             "fav": true,
-            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+            "link": "/urunler/minik-dereotlu-peynirli-kurabiye",
+            "slug": "minik-dereotlu-peynirli-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Minik Beyaz Peynirli Kurabiye",
             "fav": false,
-            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+            "link": "/urunler/minik-beyaz-peynirli-kurabiye",
+            "slug": "minik-beyaz-peynirli-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Minik Patatesli Kurabiye",
             "fav": false,
-            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+            "link": "/urunler/minik-patatesli-kurabiye",
+            "slug": "minik-patatesli-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Tuzlu Kurabiye",
             "fav": false,
-            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+            "link": "/urunler/tuzlu-kurabiye",
+            "slug": "tuzlu-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Tatlı Kurabiye",
             "fav": false,
-            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+            "link": "/urunler/tatli-kurabiye",
+            "slug": "tatli-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Acıbadem",
             "fav": false,
-            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+            "link": "/urunler/acibadem",
+            "slug": "acibadem",
+            "aktif": true
           },
           {
             "ad": "İzmir Bomba",
             "fav": false,
-            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+            "link": "/urunler/izmir-bomba",
+            "slug": "izmir-bomba",
+            "aktif": true
           },
           {
             "ad": "Tahinli Bomba",
             "fav": false,
-            "link": "/urunler/kurabiye-cesitleri/kurabiye-cesitleri"
+            "link": "/urunler/tahinli-bomba",
+            "slug": "tahinli-bomba",
+            "aktif": true
           }
         ],
         "aciklama": "Kurabiyeler gramajla satılır ve 250 gr, 500 gr ile 1 kg olarak hazırlanır. Tuzlu grupta minik dereotlu peynirli, beyaz peynirli ve patatesli kurabiyeler; tatlı grupta acıbadem, İzmir bomba ve tahinli bomba bulunur. İkram ve misafir için en çok tercih edilen ürün grubudur.",
@@ -582,7 +681,8 @@
             "cevap": "Bazı çeşitlerde badem, fındık ve ceviz kullanılır. Aynı mutfakta kuruyemişli üretim yapıldığı için ciddi alerji durumunda çapraz bulaşma riski bulunur; lütfen personelimize bildirin."
           }
         ],
-        "image": "/assets/img/urun/tatli-bufe.jpg"
+        "image": "/assets/img/urun/tatli-bufe.jpg",
+        "slug": "kurabiye-cesitleri"
       },
       {
         "ad": "Adet Büyük Kurabiyeler",
@@ -593,52 +693,72 @@
           {
             "ad": "Bonibonlu Kurabiye",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/bonibonlu-kurabiye",
+            "slug": "bonibonlu-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Damla Çikolatalı Kurabiye",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/damla-cikolatali-kurabiye",
+            "slug": "damla-cikolatali-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Parça Çikolatalı Fındıklı Kurabiye",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/parca-cikolatali-findikli-kurabiye",
+            "slug": "parca-cikolatali-findikli-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Kayısılı Kurabiye",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/kayisili-kurabiye",
+            "slug": "kayisili-kurabiye",
+            "aktif": true
           },
           {
             "ad": "İncirli Makas Kurabiye",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/incirli-makas-kurabiye",
+            "slug": "incirli-makas-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Emili Kurabiye",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/emili-kurabiye",
+            "slug": "emili-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Elmalı Kurabiye",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/elmali-kurabiye",
+            "slug": "elmali-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Çatal Kurabiye",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/catal-kurabiye",
+            "slug": "catal-kurabiye",
+            "aktif": true
           },
           {
             "ad": "Pürüzyen Kurabiye",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/puruzyen-kurabiye",
+            "slug": "puruzyen-kurabiye",
+            "aktif": true
           },
           {
             "ad": "İran Poğaçası",
             "fav": false,
-            "link": "/urunler/buyuk-kurabiyeler/buyuk-kurabiyeler"
+            "link": "/urunler/iran-pogacasi",
+            "slug": "iran-pogacasi",
+            "aktif": true
           }
         ],
         "aciklama": "Büyük kurabiyeler gramajla değil adet olarak satılır. Tek başına bir ara öğün yerine geçecek boyutta hazırlanır; kahve yanında ve çocuk ikramında tercih edilir. On çeşit bulunur.",
@@ -653,7 +773,8 @@
             "cevap": "Çeşit gün içinde değişebilir. Belirli bir kurabiye için telefonla sorup ayırtabilirsiniz."
           }
         ],
-        "image": "/assets/img/urun/cupcake.jpg"
+        "image": "/assets/img/urun/cupcake.jpg",
+        "slug": "buyuk-kurabiyeler"
       },
       {
         "ad": "Galeta, Çubuk & Kokteyl",
@@ -664,47 +785,65 @@
           {
             "ad": "Sade Galeta",
             "fav": false,
-            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+            "link": "/urunler/sade-galeta",
+            "slug": "sade-galeta",
+            "aktif": true
           },
           {
             "ad": "Susamlı Galeta",
             "fav": false,
-            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+            "link": "/urunler/susamli-galeta",
+            "slug": "susamli-galeta",
+            "aktif": true
           },
           {
             "ad": "Çekirdekli Galeta",
             "fav": false,
-            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+            "link": "/urunler/cekirdekli-galeta",
+            "slug": "cekirdekli-galeta",
+            "aktif": true
           },
           {
             "ad": "Susamlı Kokteyl",
             "fav": false,
-            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+            "link": "/urunler/susamli-kokteyl",
+            "slug": "susamli-kokteyl",
+            "aktif": true
           },
           {
             "ad": "Çörekotlu Kokteyl",
             "fav": false,
-            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+            "link": "/urunler/corekotlu-kokteyl",
+            "slug": "corekotlu-kokteyl",
+            "aktif": true
           },
           {
             "ad": "Çekirdekli Kokteyl",
             "fav": false,
-            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+            "link": "/urunler/cekirdekli-kokteyl",
+            "slug": "cekirdekli-kokteyl",
+            "aktif": true
           },
           {
             "ad": "Çörekotlu Çubuk",
             "fav": false,
-            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+            "link": "/urunler/corekotlu-cubuk",
+            "slug": "corekotlu-cubuk",
+            "aktif": true
           },
           {
             "ad": "Çekirdekli Çubuk",
             "fav": false,
-            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+            "link": "/urunler/cekirdekli-cubuk",
+            "slug": "cekirdekli-cubuk",
+            "aktif": true
           },
           {
             "ad": "Selanik Gevreği",
             "fav": false,
-            "link": "/urunler/galeta-cubuk-kokteyl/galeta-cubuk-kokteyl"
+            "link": "/urunler/selanik-gevregi",
+            "slug": "selanik-gevregi",
+            "aktif": true
           }
         ],
         "aciklama": "Bu grup uzun ömürlü, kuru unlu mamullerden oluşur. Galeta dilimlenip kurutulmuş ekmek dokusundadır; kokteyl ve çubuklar ise çay yanında ve ikramda tüketilen tuzlu çıtır ürünlerdir. Gramajla satılır.",
@@ -719,7 +858,8 @@
             "cevap": "Gramajla: 250 gr, 500 gr ve 1 kg olarak. Selanik gevreği ve bazı çubuk çeşitleri paket hâlinde satılır."
           }
         ],
-        "image": "/assets/img/urun/pogaca-tepsi.jpg"
+        "image": "/assets/img/urun/pogaca-tepsi.jpg",
+        "slug": "galeta-cubuk-kokteyl"
       },
       {
         "ad": "Baklava & Şerbetli Tatlılar",
@@ -730,58 +870,80 @@
           {
             "ad": "Cevizli Baklava",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/cevizli-baklava",
+            "slug": "cevizli-baklava",
+            "aktif": true
           },
           {
             "ad": "Fıstıklı Baklava",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/fistikli-baklava",
+            "slug": "fistikli-baklava",
+            "aktif": true
           },
           {
             "ad": "Özel Fıstıklı Baklava",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/ozel-fistikli-baklava",
+            "slug": "ozel-fistikli-baklava",
+            "aktif": true
           },
           {
             "ad": "Meşhur Fındıklı Cemil Usta Baklavası",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/meshur-findikli-cemil-usta-baklavasi",
+            "slug": "meshur-findikli-cemil-usta-baklavasi",
+            "aktif": true
           },
           {
             "ad": "Şöbiyet",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/sobiyet",
+            "slug": "sobiyet",
+            "aktif": true
           },
           {
             "ad": "Midye Baklava",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/midye-baklava",
+            "slug": "midye-baklava",
+            "aktif": true
           },
           {
             "ad": "Ankara Sarma",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/ankara-sarma",
+            "slug": "ankara-sarma",
+            "aktif": true
           },
           {
             "ad": "Kuru Baklava",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/kuru-baklava",
+            "slug": "kuru-baklava",
+            "aktif": true
           },
           {
             "ad": "Fıstıklı Kadayıf",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/fistikli-kadayif",
+            "slug": "fistikli-kadayif",
+            "aktif": true
           },
           {
             "ad": "Şekerpare",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/sekerpare",
+            "slug": "sekerpare",
+            "aktif": true
           },
           {
             "ad": "Güllaç",
             "not": "çilekli  ·  cevizli  ·  fındıklı kivili",
             "fav": false,
-            "link": "/urunler/baklava-serbetli/baklava-serbetli"
+            "link": "/urunler/gullac",
+            "slug": "gullac",
+            "aktif": true
           }
         ],
         "aciklama": "Baklava ve şerbetli tatlılar gramajla satılır; 500 gr ve 1 kg olarak hazırlanır. Cevizli ve fıstıklı klasik baklavanın yanında şöbiyet, midye baklava, Ankara sarma, kuru baklava, fıstıklı kadayıf, şekerpare ve mevsiminde güllaç bulunur.",
@@ -800,7 +962,8 @@
             "cevap": "Vitrinde günlük olarak bulunur. Büyük miktar veya belirli bir çeşit için bir gün önceden haber vermeniz yeterlidir."
           }
         ],
-        "image": "/assets/img/urun/tatli-bufe.jpg"
+        "image": "/assets/img/urun/tatli-bufe.jpg",
+        "slug": "baklava-serbetli"
       },
       {
         "ad": "Sütlü Tatlılar",
@@ -812,49 +975,67 @@
             "ad": "Ekler",
             "not": "çikolatalı  ·  beyaz çikolatalı",
             "fav": true,
-            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+            "link": "/urunler/ekler",
+            "slug": "ekler",
+            "aktif": true
           },
           {
             "ad": "Sütlaç",
             "fav": false,
-            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+            "link": "/urunler/sutlac",
+            "slug": "sutlac",
+            "aktif": true
           },
           {
             "ad": "Profiterol",
             "fav": false,
-            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+            "link": "/urunler/profiterol",
+            "slug": "profiterol",
+            "aktif": true
           },
           {
             "ad": "Trileçe",
             "not": "karamelli  ·  frambuazlı",
             "fav": false,
-            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+            "link": "/urunler/trilece",
+            "slug": "trilece",
+            "aktif": true
           },
           {
             "ad": "Magnolia",
             "not": "çilekli  ·  muzlu  ·  fıstıklı  ·  frambuazlı",
             "fav": false,
-            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+            "link": "/urunler/magnolia",
+            "slug": "magnolia",
+            "aktif": true
           },
           {
             "ad": "Oreo & Çilekli Magnolia",
             "fav": false,
-            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+            "link": "/urunler/oreo-cilekli-magnolia",
+            "slug": "oreo-cilekli-magnolia",
+            "aktif": true
           },
           {
             "ad": "Muzlu Malaga",
             "fav": false,
-            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+            "link": "/urunler/muzlu-malaga",
+            "slug": "muzlu-malaga",
+            "aktif": true
           },
           {
             "ad": "Soğuk Baklava",
             "fav": false,
-            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+            "link": "/urunler/soguk-baklava",
+            "slug": "soguk-baklava",
+            "aktif": true
           },
           {
             "ad": "Fıstıklı Soğuk Kadayıf",
             "fav": false,
-            "link": "/urunler/sutlu-tatlilar/sutlu-tatlilar"
+            "link": "/urunler/fistikli-soguk-kadayif",
+            "slug": "fistikli-soguk-kadayif",
+            "aktif": true
           }
         ],
         "aciklama": "Sütlü tatlılar soğuk zincirde hazırlanır ve buzdolabında saklanır. Ekler, sütlaç, profiterol, trileçe ve magnolia çeşitleri porsiyon olarak; soğuk baklava ve fıstıklı soğuk kadayıf gramajla satılır. Hepsi 24 saat içinde tüketilmelidir.",
@@ -873,7 +1054,8 @@
             "cevap": "Evet, ancak sütlü tatlılar günlük hazırlandığı için bir gün önceden haber verilmesi gerekir."
           }
         ],
-        "image": "/assets/img/urun/vitrin-pasta.jpg"
+        "image": "/assets/img/urun/vitrin-pasta.jpg",
+        "slug": "sutlu-tatlilar"
       },
       {
         "ad": "Zeytinyağlı Ürünler",
@@ -884,17 +1066,23 @@
           {
             "ad": "Zeytinyağlı Yaprak Sarma",
             "fav": true,
-            "link": "/urunler/zeytinyagli-urunler/zeytinyagli-urunler"
+            "link": "/urunler/zeytinyagli-yaprak-sarma",
+            "slug": "zeytinyagli-yaprak-sarma",
+            "aktif": true
           },
           {
             "ad": "Beyaz Lahana Sarma",
             "fav": true,
-            "link": "/urunler/zeytinyagli-urunler/zeytinyagli-urunler"
+            "link": "/urunler/beyaz-lahana-sarma",
+            "slug": "beyaz-lahana-sarma",
+            "aktif": true
           },
           {
             "ad": "Zeytinyağlı Patlıcan",
             "fav": false,
-            "link": "/urunler/zeytinyagli-urunler/zeytinyagli-urunler"
+            "link": "/urunler/zeytinyagli-patlican",
+            "slug": "zeytinyagli-patlican",
+            "aktif": true
           }
         ],
         "aciklama": "Zeytinyağlı grupta yaprak sarma, beyaz lahana sarma ve zeytinyağlı patlıcan bulunur. Üçü de gramajla satılır; 250 gr, 500 gr ve 1 kg olarak hazırlanır. Soğuk tüketilir ve buzdolabında saklanır.",
@@ -913,7 +1101,8 @@
             "cevap": "Evet. Günlük hazırlandığı için bir gün önceden telefonla haber vermeniz gerekir."
           }
         ],
-        "image": "/assets/img/urun/vitrin-hamur.jpg"
+        "image": "/assets/img/urun/vitrin-hamur.jpg",
+        "slug": "zeytinyagli-urunler"
       },
       {
         "ad": "Pastalar",
@@ -925,85 +1114,113 @@
             "ad": "Frambuaz & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": true,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/frambuaz-cikolatali",
+            "slug": "frambuaz-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Çilek & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/cilek-cikolatali",
+            "slug": "cilek-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Çilek & Çikolatalı Mois",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/cilek-cikolatali-mois",
+            "slug": "cilek-cikolatali-mois",
+            "aktif": true
           },
           {
             "ad": "Fıstık & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/fistik-cikolatali",
+            "slug": "fistik-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Çikolata Parçacıklı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/cikolata-parcacikli",
+            "slug": "cikolata-parcacikli",
+            "aktif": true
           },
           {
             "ad": "Profiterol & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/profiterol-cikolatali",
+            "slug": "profiterol-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Muz & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/muz-cikolatali",
+            "slug": "muz-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Muz & Fındıklı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/muz-findikli",
+            "slug": "muz-findikli",
+            "aktif": true
           },
           {
             "ad": "Böğürtlen & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/bogurtlen-cikolatali",
+            "slug": "bogurtlen-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Orman Meyveli & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/orman-meyveli-cikolatali",
+            "slug": "orman-meyveli-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Karışık Meyveli",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/karisik-meyveli",
+            "slug": "karisik-meyveli",
+            "aktif": true
           },
           {
             "ad": "Karışık Meyveli & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/karisik-meyveli-cikolatali",
+            "slug": "karisik-meyveli-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Krokan & Fındıklı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/krokan-findikli",
+            "slug": "krokan-findikli",
+            "aktif": true
           },
           {
             "ad": "Şeker Hamurlu & Figürlü Pasta",
             "not": "özel tasarım",
             "fav": false,
-            "link": "/urunler/pastalar/pastalar"
+            "link": "/urunler/seker-hamurlu-figurlu-pasta",
+            "slug": "seker-hamurlu-figurlu-pasta",
+            "aktif": true
           }
         ],
         "aciklama": "Pastalar 4–6 kişilik ve 6–8 kişilik olmak üzere iki boyda hazırlanır. On üç çeşit yaş pasta ile şeker hamurlu figürlü özel tasarım pasta bulunur. Kişi başı 100–120 gram hesaplanır: 4–6 kişi için küçük boy, 6–8 kişi için orta boy yeterlidir.",
@@ -1026,7 +1243,8 @@
             "cevap": "Buzdolabında +4 °C'de ve 24 saat içinde tüketilmek üzere. Servisten 20–30 dakika önce çıkarılması tadı belirgin biçimde açar."
           }
         ],
-        "image": "/assets/img/urun/pasta-safari.jpg"
+        "image": "/assets/img/urun/pasta-safari.jpg",
+        "slug": "pastalar"
       },
       {
         "ad": "Tek Pasta & Dilim",
@@ -1037,58 +1255,80 @@
           {
             "ad": "Çilek & Çikolatalı",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/cilek-cikolatali-2",
+            "slug": "cilek-cikolatali-2",
+            "aktif": true
           },
           {
             "ad": "Muz & Çikolatalı",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/muz-cikolatali-2",
+            "slug": "muz-cikolatali-2",
+            "aktif": true
           },
           {
             "ad": "Frambuaz & Çikolatalı",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/frambuaz-cikolatali-2",
+            "slug": "frambuaz-cikolatali-2",
+            "aktif": true
           },
           {
             "ad": "Böğürtlen & Çikolatalı",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/bogurtlen-cikolatali-2",
+            "slug": "bogurtlen-cikolatali-2",
+            "aktif": true
           },
           {
             "ad": "Vişne & Çikolatalı",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/visne-cikolatali",
+            "slug": "visne-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Fıstık & Çikolatalı",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/fistik-cikolatali-2",
+            "slug": "fistik-cikolatali-2",
+            "aktif": true
           },
           {
             "ad": "Parça Çikolatalı",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/parca-cikolatali",
+            "slug": "parca-cikolatali",
+            "aktif": true
           },
           {
             "ad": "Karışık Meyveli",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/karisik-meyveli-2",
+            "slug": "karisik-meyveli-2",
+            "aktif": true
           },
           {
             "ad": "Çilek & Oreolu",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/cilek-oreolu",
+            "slug": "cilek-oreolu",
+            "aktif": true
           },
           {
             "ad": "Muz & Frambuazlı",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/muz-frambuazli",
+            "slug": "muz-frambuazli",
+            "aktif": true
           },
           {
             "ad": "Kaşık Pasta",
             "not": "orman meyveli  ·  karamelli  ·  çilek çikolatalı",
             "fav": false,
-            "link": "/urunler/tek-pasta-dilim/tek-pasta-dilim"
+            "link": "/urunler/kasik-pasta",
+            "slug": "kasik-pasta",
+            "aktif": true
           }
         ],
         "aciklama": "Tek pastalar tek kişilik porsiyon olarak hazırlanır; bütün pasta almak istemeyenler için uygundur. On bir çeşit bulunur. Kaşık pasta ise bardak veya kâse içinde, çatal gerektirmeyen bir sunumla hazırlanır.",
@@ -1107,7 +1347,8 @@
             "cevap": "Kâse veya bardak içinde katmanlı olarak hazırlanan, kaşıkla yenen pasta türüdür. Orman meyveli, karamelli ve çilek çikolatalı olarak bulunur."
           }
         ],
-        "image": "/assets/img/urun/pasta-drip.jpg"
+        "image": "/assets/img/urun/pasta-drip.jpg",
+        "slug": "tek-pasta-dilim"
       },
       {
         "ad": "Tartolet, Rulo & Lezzet Topları",
@@ -1118,27 +1359,37 @@
           {
             "ad": "Çilekli Rulo Pasta",
             "fav": true,
-            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+            "link": "/urunler/cilekli-rulo-pasta",
+            "slug": "cilekli-rulo-pasta",
+            "aktif": true
           },
           {
             "ad": "Muzlu Rulo Pasta",
             "fav": true,
-            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+            "link": "/urunler/muzlu-rulo-pasta",
+            "slug": "muzlu-rulo-pasta",
+            "aktif": true
           },
           {
             "ad": "Tartolet",
             "fav": true,
-            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+            "link": "/urunler/tartolet",
+            "slug": "tartolet",
+            "aktif": true
           },
           {
             "ad": "Kesme Pasta",
             "fav": false,
-            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+            "link": "/urunler/kesme-pasta",
+            "slug": "kesme-pasta",
+            "aktif": true
           },
           {
             "ad": "Lezzet Topları",
             "fav": false,
-            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet-rulo-lezzet-toplari"
+            "link": "/urunler/lezzet-toplari",
+            "slug": "lezzet-toplari",
+            "aktif": true
           }
         ],
         "aciklama": "Bu grup ikram ve organizasyon için hazırlanan küçük porsiyonlu tatlılardan oluşur. Tartolet, rulo pasta, kesme pasta ve lezzet topları gramajla satılır; 250 gr, 500 gr ve 1 kg olarak hazırlanır. Kalabalık davetlerde bütün pastaya göre çok daha pratiktir.",
@@ -1157,7 +1408,8 @@
             "cevap": "Kremalı olduğu için buzdolabında saklanmalı ve 24 saat içinde tüketilmelidir."
           }
         ],
-        "image": "/assets/img/urun/pasta-gul.jpg"
+        "image": "/assets/img/urun/pasta-gul.jpg",
+        "slug": "tartolet-rulo-lezzet-toplari"
       },
       {
         "ad": "Donut",
@@ -1168,27 +1420,37 @@
           {
             "ad": "Çikolata Dolgulu",
             "fav": false,
-            "link": "/urunler/donut/donut"
+            "link": "/urunler/cikolata-dolgulu",
+            "slug": "cikolata-dolgulu",
+            "aktif": true
           },
           {
             "ad": "Muz Dolgulu",
             "fav": false,
-            "link": "/urunler/donut/donut"
+            "link": "/urunler/muz-dolgulu",
+            "slug": "muz-dolgulu",
+            "aktif": true
           },
           {
             "ad": "Frambuaz Dolgulu",
             "fav": false,
-            "link": "/urunler/donut/donut"
+            "link": "/urunler/frambuaz-dolgulu",
+            "slug": "frambuaz-dolgulu",
+            "aktif": true
           },
           {
             "ad": "Çilek Dolgulu",
             "fav": false,
-            "link": "/urunler/donut/donut"
+            "link": "/urunler/cilek-dolgulu",
+            "slug": "cilek-dolgulu",
+            "aktif": true
           },
           {
             "ad": "Karamel Dolgulu",
             "fav": false,
-            "link": "/urunler/donut/donut"
+            "link": "/urunler/karamel-dolgulu",
+            "slug": "karamel-dolgulu",
+            "aktif": true
           }
         ],
         "aciklama": "Donutlar beş dolgu seçeneğiyle hazırlanır: çikolata, muz, frambuaz, çilek ve karamel. Adet olarak satılır ve günlük üretilir. Aynı gün tüketilmesi önerilir; dolgulu olduğu için ertesi güne bırakıldığında hamur nem çeker.",
@@ -1203,7 +1465,8 @@
             "cevap": "Beş çeşit: çikolata, muz, frambuaz, çilek ve karamel."
           }
         ],
-        "image": "/assets/img/urun/cupcake.jpg"
+        "image": "/assets/img/urun/cupcake.jpg",
+        "slug": "donut"
       },
       {
         "ad": "İçecekler",
@@ -1214,41 +1477,55 @@
           {
             "ad": "Kola",
             "fav": false,
-            "link": "/urunler/icecekler/icecekler"
+            "link": "/urunler/kola",
+            "slug": "kola",
+            "aktif": true
           },
           {
             "ad": "Çamlıca Portakal",
             "fav": false,
-            "link": "/urunler/icecekler/icecekler"
+            "link": "/urunler/camlica-portakal",
+            "slug": "camlica-portakal",
+            "aktif": true
           },
           {
             "ad": "Meyve Suyu",
             "not": "vişne  ·  şeftali  ·  kayısı  ·  karışık",
             "fav": false,
-            "link": "/urunler/icecekler/icecekler"
+            "link": "/urunler/meyve-suyu",
+            "slug": "meyve-suyu",
+            "aktif": true
           },
           {
             "ad": "Limonata",
             "fav": false,
-            "link": "/urunler/icecekler/icecekler"
+            "link": "/urunler/limonata",
+            "slug": "limonata",
+            "aktif": true
           },
           {
             "ad": "Didi",
             "not": "şeftali  ·  limon",
             "fav": false,
-            "link": "/urunler/icecekler/icecekler"
+            "link": "/urunler/didi",
+            "slug": "didi",
+            "aktif": true
           },
           {
             "ad": "Soda",
             "not": "sade  ·  limonlu",
             "fav": false,
-            "link": "/urunler/icecekler/icecekler"
+            "link": "/urunler/soda",
+            "slug": "soda",
+            "aktif": true
           },
           {
             "ad": "Süt",
             "not": "sade  ·  çikolatalı  ·  çilekli  ·  muzlu",
             "fav": false,
-            "link": "/urunler/icecekler/icecekler"
+            "link": "/urunler/sut",
+            "slug": "sut",
+            "aktif": true
           }
         ],
         "aciklama": "Fırınımızda kola, Çamlıca portakal, meyve suyu (vişne, şeftali, kayısı, karışık), limonata, sade ve limonlu soda ile süt (sade, çikolatalı, çilekli, muzlu) bulunur. Farklı hacim seçenekleri mevcuttur.",
@@ -1263,7 +1540,8 @@
             "cevap": "Ürüne göre değişir; kutu, küçük şişe ve büyük şişe seçenekleri bulunur."
           }
         ],
-        "image": "/assets/img/urun/simit.jpg"
+        "image": "/assets/img/urun/simit.jpg",
+        "slug": "icecekler"
       }
     ]
   },

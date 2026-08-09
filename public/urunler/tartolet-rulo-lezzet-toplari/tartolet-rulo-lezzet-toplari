@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="../../css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/style.css?v=20260807x4">
+<link rel="stylesheet" href="../../assets/css/style.css?v=20260810x2">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -132,13 +132,13 @@
         <div class="urun-kart">
           <h2>Tartolet, Rulo Pasta & Lezzet Topları listesi</h2>
           <ul class="menu__list menu__list--tek">
-        <li class="is-fav"><a href="https://wa.me/905523400202?text=Merhaba%2C%20%C3%87ilekli%20Rulo%20Pasta%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Çilekli Rulo Pasta</span></span></a></li>
-        <li class="is-fav"><a href="https://wa.me/905523400202?text=Merhaba%2C%20Muzlu%20Rulo%20Pasta%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Muzlu Rulo Pasta</span></span></a></li>
-        <li class="is-fav"><a href="https://wa.me/905523400202?text=Merhaba%2C%20Tartolet%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Tartolet</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Kesme%20Pasta%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Kesme Pasta</span></span></a></li>
-        <li><a href="https://wa.me/905523400202?text=Merhaba%2C%20Lezzet%20Toplar%C4%B1%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener noreferrer"><span class="menu__name"><span class="menu__name__label">Lezzet Topları</span></span></a></li>
+            <li class="is-fav"><a href="/urunler/cilekli-rulo-pasta" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Çilekli Rulo Pasta</span></span></a></li>
+            <li class="is-fav"><a href="/urunler/muzlu-rulo-pasta" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Muzlu Rulo Pasta</span></span></a></li>
+            <li class="is-fav"><a href="/urunler/tartolet" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Tartolet</span></span></a></li>
+            <li><a href="/urunler/kesme-pasta" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Kesme Pasta</span></span></a></li>
+            <li><a href="/urunler/lezzet-toplari" data-product-link="1"><span class="menu__name"><span class="menu__name__label">Lezzet Topları</span></span></a></li>
           </ul>
-          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.</p>
+          <p class="urun-kart__not">★ işaretliler en çok tercih edilenler. Ürüne tıklayarak detay sayfasını açabilirsiniz.</p>
         </div>
 
         <div class="cta-box">
@@ -182,8 +182,8 @@
 </a>
 
 
-<script src="../../assets/js/site-loader.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/content.js?v=20260807x4" defer=""></script>
-<script src="../../assets/js/cms-ext.js?v=20260807x4" defer=""></script>
+<script src="../../assets/js/site-loader.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/content.js?v=20260810x2" defer=""></script>
+<script src="../../assets/js/cms-ext.js?v=20260810x2" defer=""></script>
 </body>
 </html>

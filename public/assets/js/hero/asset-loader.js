@@ -1,4 +1,4 @@
-import { maxTextureSize } from './config.js?v=20260807x4';
+import { maxTextureSize } from './config.js?v=20260810x2';
 
 export function loadImage(src) {
   return new Promise((resolve, reject) => {
