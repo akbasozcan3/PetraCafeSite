@@ -23,8 +23,14 @@ export async function POST(request: Request) {
     const password = String(body.password || "");
     const password2 = String(body.passwordConfirm || body.password2 || "");
 
-    if (!name || !email || !phone) {
-      return NextResponse.json({ error: "Ad, e-posta ve telefon zorunlu." }, { status: 400 });
+    if (!name || !email) {
+      return NextResponse.json({ error: "Ad ve e-posta zorunlu." }, { status: 400 });
+    }
+    if (password.length < 8) {
+      return NextResponse.json(
+        { error: "Şifre en az 8 karakter olmalı." },
+        { status: 400 }
+      );
     }
     if (password !== password2) {
       return NextResponse.json({ error: "Şifreler eşleşmiyor." }, { status: 400 });
@@ -33,7 +39,7 @@ export async function POST(request: Request) {
     const { customer, verifyToken } = await registerCustomer({
       name,
       email,
-      phone,
+      phone: phone || "",
       password,
     });
     const mail = await sendVerificationEmail(customer.email, verifyToken);
@@ -45,7 +51,7 @@ export async function POST(request: Request) {
       emailSent: mail.ok,
       emailSkipped: mail.skipped,
       message: mail.skipped
-        ? "Kayıt oluştu. SMTP ayarlanmadığı için doğrulama e-postası gönderilemedi — Admin → Ayarlar."
+        ? "Kayıt oluştu. Doğrulama e-postası şu an gönderilemedi — gelen kutunuzu daha sonra kontrol edin veya Hesabım’dan yeniden gönderin."
         : "Kayıt oluştu. E-posta kutunuzu doğrulayın.",
     });
   } catch (error) {

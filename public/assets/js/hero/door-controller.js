@@ -1,12 +1,12 @@
-import * as THREE from '../../vendor/three.module.js?v=20260810x3';
+import * as THREE from '../../vendor/three.module.js?v=20260810x7';
 import {
-  DOOR_UV,
+  resolveDoorUv,
   SCENE_W,
   SCENE_H,
   DEPTH,
   FRAME_PAD,
-} from './config.js?v=20260810x3';
-import { easeInOut, range } from './utils.js?v=20260810x3';
+} from './config.js?v=20260810x7';
+import { easeInOut, range } from './utils.js?v=20260810x7';
 
 function remapUV(geo, u0, u1, v0, v1) {
   const uv = geo.attributes.uv;
@@ -69,7 +69,7 @@ export class DoorController {
 
   buildFacade(facadeTexture) {
     const mat = new THREE.MeshBasicMaterial({ map: facadeTexture });
-    const u = DOOR_UV;
+    const u = resolveDoorUv();
 
     this.scene.add(
       texturedQuad(mat, 0, 1, 0, u.v0),

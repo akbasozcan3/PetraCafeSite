@@ -11,7 +11,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const CONTENT_FILE = path.join(ROOT, "data", "content.json");
-const CACHE = "20260810x4";
+const CACHE = "20260810x7";
 
 const RESERVED = new Set([
   "urunler",
@@ -286,7 +286,7 @@ for (const g of content.menu?.gruplar || []) {
     } else {
       u.slug = uniqueSlug(slugifyTr(u.ad) || "urun", used);
     }
-    u.link = `/urunler/${u.slug}`;
+    u.link = g.slug ? `/urunler/${g.slug}/${u.slug}` : `/urunler/${u.slug}`;
     if (u.aktif === undefined) u.aktif = true;
     products += 1;
   }
@@ -294,37 +294,29 @@ for (const g of content.menu?.gruplar || []) {
 
 fs.writeFileSync(CONTENT_FILE, JSON.stringify(content, null, 2) + "\n", "utf8");
 
-let written = 0;
-let patchedCats = 0;
-
-for (const g of content.menu?.gruplar || []) {
-  const siblings = (g.urunler || []).filter((u) => u?.slug && u.aktif !== false);
-  for (const u of siblings) {
-    if (RESERVED.has(u.slug)) continue;
-    const html = productShell(u, g, brand, siteUrl, siblings);
-    for (const file of [
-      path.join(ROOT, "public", "urunler", u.slug, u.slug),
-      path.join(ROOT, "urunler", u.slug, u.slug),
-    ]) {
-      fs.mkdirSync(path.dirname(file), { recursive: true });
-      fs.writeFileSync(file, html, "utf8");
-      written += 1;
+/**
+ * App Router owns /urunler — do NOT write extensionless HTML into public/.
+ * Those files are served as application/octet-stream and browsers download them.
+ */
+function removeExtensionless(dir) {
+  if (!fs.existsSync(dir)) return 0;
+  let n = 0;
+  for (const name of fs.readdirSync(dir)) {
+    const full = path.join(dir, name);
+    const st = fs.lstatSync(full);
+    if (st.isDirectory()) n += removeExtensionless(full);
+    else if (!path.extname(name) && !name.startsWith(".")) {
+      fs.unlinkSync(full);
+      n += 1;
     }
   }
-
-  if (g.slug && RESERVED.has(g.slug)) {
-    for (const file of categoryFileCandidates(g.slug)) {
-      if (!fs.existsSync(file)) continue;
-      const prev = fs.readFileSync(file, "utf8");
-      const next = patchCategoryHtml(prev, g);
-      if (next !== prev) {
-        fs.writeFileSync(file, next, "utf8");
-        patchedCats += 1;
-      }
-    }
-  }
+  return n;
 }
 
+const cleaned =
+  removeExtensionless(path.join(ROOT, "public", "urunler")) +
+  removeExtensionless(path.join(ROOT, "urunler"));
+
 console.log(
-  `sync-product-pages: ${products} products, ${written} files, ${patchedCats} category pages patched`
+  `sync-product-pages: ${products} products, slugs updated, cleaned ${cleaned} extensionless shells (App Router serves /urunler)`
 );

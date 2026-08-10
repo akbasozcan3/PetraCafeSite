@@ -191,7 +191,7 @@ function SmtpCard() {
     <section className="mt-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
       <h3 className="text-lg font-semibold text-[#F8F8F8]">SMTP / E-posta</h3>
       <p className="mt-2 text-sm text-[#8A9BB0]">
-        Müşteri e-posta doğrulama ve sipariş onayı için `.env.local` içinde SMTP_HOST, SMTP_PORT,
+        Admin bildirimleri ve sistem e-postaları için `.env.local` içinde SMTP_HOST, SMTP_PORT,
         SMTP_USER, SMTP_PASS, SMTP_FROM tanımlayın.
       </p>
       <p className="mt-3 text-sm text-[#EEE9E0]">

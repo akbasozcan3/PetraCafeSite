@@ -138,7 +138,8 @@
      tüm ortamlara açılır. Üçüncü taraf isteği ilk boyamayı bekletmiyor. -->
 <link href="css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all';this.onload=null">
 <noscript><link href="css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="assets/css/style.css?v=20260810x3">
+<link rel="stylesheet" href="assets/css/style.css?v=20260810x7">
+<link rel="stylesheet" href="assets/css/nav-actions.css?v=6">
 <style id="brand-critical">
   .nav__logo.has-logo .nav__logo-text,
   .nav__logo.has-logo .nav__logo-fallback,
@@ -202,7 +203,7 @@ html.scene-failed .gate__boot{
 /* Telefon: yüklenirken poster; 3B hazır olunca canvas (masaüstüyle aynı kapı) */
 @media (max-width:860px){
   .gate__stage{
-    background:#0a0c08 url("/assets/img/hero-mobile.webp?v=20260810x3") center center / cover no-repeat !important;
+    background:#0a0c08 url("/assets/img/hero-mobile.webp?v=20260810x7") center center / cover no-repeat !important;
   }
   .gate__poster{
     inset:0!important;
@@ -296,8 +297,8 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
 <!-- Poster için ayrı, daha sıkı sıkıştırılmış sürümler: bu görsel en
      büyük içerik boyaması (LCP) ve 0.9 sn sonra 3B sahne devraldığı
      için kalite 66 yeterli. Galeri hâlâ kalite 78 sürümleri kullanır. -->
-<link rel="preload" as="image" href="/assets/img/hero-cephe.webp?v=20260810x3" fetchpriority="high">
-<link rel="preload" as="image" href="/assets/img/hero-mobile.webp?v=20260810x3" media="(max-width: 860px)" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/img/hero-cephe.webp?v=20260810x7" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/img/hero-mobile.webp?v=20260810x7" media="(max-width: 860px)" fetchpriority="high">
 </head>
 <body>
 
@@ -312,7 +313,7 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
   </a>
   <nav class="nav__links" aria-label="Ana menü">
     <a href="#hakkimizda">Hakkımızda</a>
-    <a href="/urunler/urunler">Ürünler</a>
+    <a href="/urunler">Ürünler</a>
     <a href="#pasta">Özel Pastalar</a>
     <a href="#galeri">Galeri</a>
     <a href="#yorumlar">Yorumlar</a>
@@ -333,7 +334,7 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
     <p class="mobile-menu__label">Menü</p>
     <nav class="mobile-menu__links" aria-label="Mobil menü">
       <a href="#hakkimizda">Hakkımızda</a>
-      <a href="/urunler/urunler">Ürünler</a>
+      <a href="/urunler">Ürünler</a>
       <a href="#pasta">Özel Pastalar</a>
       <a href="#galeri">Galeri</a>
       <a href="#yorumlar">Yorumlar</a>
@@ -353,8 +354,8 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
          en büyük içerik boyaması buna takılıyordu. Sahne hazır olunca
          karşılıklı geçişle devralır. -->
     <picture>
-      <source media="(max-width: 860px)" srcset="/assets/img/hero-mobile.webp?v=20260810x3" type="image/webp">
-      <img class="gate__poster" data-site="heroPoster" src="/assets/img/hero-cephe.webp?v=20260810x3" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1200" height="900" onerror="this.onerror=null;this.src='/assets/img/hero-cephe.webp?v=20260810x3'">
+      <source media="(max-width: 860px)" srcset="/assets/img/hero-mobile.webp?v=20260810x7" type="image/webp">
+      <img class="gate__poster" data-site="heroPoster" src="/assets/img/hero-cephe.webp?v=20260810x7" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1200" height="900" onerror="this.onerror=null;this.src='/assets/img/hero-cephe.webp?v=20260810x7'">
     </picture>
     <div class="gate__boot" id="gateBoot" role="status" aria-live="polite">
       <div class="gate__boot-spin" aria-hidden="true"></div>
@@ -496,7 +497,8 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
       <h2 class="h2" data-split="">Taşdelen'de taptaze fırın lezzetleri</h2>
       <p class="lead" data-fade="">Fırınımızda günlük olarak hazırlanan ekmek, simit, poğaça, börek, pasta ve tatlı çeşitlerimizi keşfedin.</p>
       <p class="menu__legend" data-fade=""><i aria-hidden="true">★</i> işaretliler en çok tercih edilenler.</p>
-      <p class="menu__hepsi" data-fade=""><a href="/urunler/urunler">14 kategoride 132 çeşidin tamamını inceleyin →</a></p>
+      <p class="menu__hepsi" data-fade=""><a href="/urunler">14 kategoride 132 çeşidin tamamını inceleyin →</a></p>
+      <p class="menu__hepsi" data-fade="" style="margin-top:0.75rem"><a class="btn btn--lg" href="/urunler">Tüm Ürünleri Gör</a></p>
     </div>
 
     <div class="menu">
@@ -927,7 +929,7 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
       <div>
         <img class="foot__mark" data-site="logo" src="/assets/img/logo.webp?v=22446218" alt="Taşdelen Fırıncı logosu" width="160" height="160" loading="lazy" decoding="async">
       </div>
-      <div><h4>Firin</h4><a href="#hakkimizda">Hakkimizda</a><a href="/urunler/urunler">Urunler</a><a href="#pasta">Ozel Pastalar</a><a href="#galeri">Galeri</a><a href="/blog/blog">Blog</a></div>
+      <div><h4>Firin</h4><a href="#hakkimizda">Hakkimizda</a><a href="/urunler">Urunler</a><a href="#pasta">Ozel Pastalar</a><a href="#galeri">Galeri</a><a href="/blog/blog">Blog</a></div>
       <div><h4>Adres</h4><a href="https://www.google.com/maps/dir/?api=1&destination=41.031267%2C29.229361" target="_blank" rel="noopener noreferrer">Turgut Ozal Cad. No:108/C</a><a href="#iletisim">Bulvar Rezidans A Blok</a><a href="#iletisim">Cekmekoy / Istanbul</a><a href="#iletisim">7/24 acik</a></div>
       <div><h4>Iletisim</h4><a href="tel:+905523400202">0552 340 02 02</a><a href="https://wa.me/905523400202" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://www.instagram.com/firincitasdelenn/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="mailto:info@firincitasdelen.com.tr">info@firincitasdelen.com.tr</a></div>
     </div>
@@ -951,11 +953,11 @@ a.wa-float .wa-float__title,a.wa-float .wa-float__sub{color:#fff!important}
 <script src="assets/vendor/lenis.min.js" defer=""></script>
 <script src="assets/vendor/gsap.min.js" defer=""></script>
 <script src="assets/vendor/ScrollTrigger.min.js" defer=""></script>
-<script type="module" src="assets/js/hero/index.js?v=20260810x3"></script>
-<script src="assets/js/content-api.js?v=20260810x3" defer=""></script>
-<script src="assets/js/site-loader.js?v=20260810x3" defer=""></script>
-<script src="assets/js/main.js?v=20260810x3" defer=""></script>
-<script src="assets/js/content.js?v=20260810x3" defer=""></script>
-<script src="assets/js/cms-ext.js?v=20260810x3" defer=""></script>
+<script type="module" src="assets/js/hero/index.js?v=20260810x7"></script>
+<script src="assets/js/content-api.js?v=20260810x7" defer=""></script>
+<script src="assets/js/site-loader.js?v=20260810x7" defer=""></script>
+<script src="assets/js/main.js?v=20260810x7" defer=""></script>
+<script src="assets/js/content.js?v=20260810x7" defer=""></script>
+<script src="assets/js/cms-ext.js?v=20260810x7" defer=""></script>
 </body>
 </html>

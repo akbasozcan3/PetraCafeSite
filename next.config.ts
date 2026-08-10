@@ -20,6 +20,31 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 3600,
   },
 
+  async redirects() {
+    return [
+      {
+        source: "/index.htm",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/index.htm/:path*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/blog/blog",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/blog/:slug/:slugDup",
+        destination: "/blog/:slug",
+        permanent: true,
+      },
+    ];
+  },
+
   async rewrites() {
     return [
       { source: "/api/content", destination: "/api/v1/content" },

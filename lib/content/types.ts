@@ -58,14 +58,35 @@ export interface YorumItem {
   yildiz?: number;
 }
 
+export interface MenuUrunImage {
+  url: string;
+  alt?: string;
+  source?: "admin" | "integration" | "local" | "external";
+  order?: number;
+  isPrimary?: boolean;
+}
+
 export interface MenuUrun {
   ad: string;
   slug?: string;
   not?: string;
   aciklama?: string;
+  /** Ana görsel (admin / local) — öncelik zincirinde admin */
   image?: string;
+  /** Galeri görselleri */
+  images?: MenuUrunImage[];
+  /** Entegrasyondan gelen ham görsel URL (kopyalanmaz; referans) */
+  externalImageUrl?: string;
+  imageAlt?: string;
   fav?: boolean;
   fiyat?: string;
+  /** Gramaj vb. seçenekler — yalnızca gerçek veri */
+  varyantlar?: string[];
+  icindekiler?: string;
+  alerjen?: string;
+  saklama?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   link?: string;
   kategori?: string;
   /** Trendyol Go / Meal product id — sync upsert anahtarı */
@@ -76,7 +97,14 @@ export interface MenuUrun {
   externalId?: string;
   /** Örn. "trendyol_go" | "yemeksepeti" | "local" */
   source?: string;
+  /** Birden fazla platform ilişkisi */
+  sources?: string[];
+  /** API fiyatını otomatik güncelle (admin kontrolü) */
+  autoUpdatePrice?: boolean;
+  stok?: number | null;
   aktif?: boolean;
+  ozelSiparis?: boolean;
+  lastSyncedAt?: string;
 }
 
 export interface MenuSssItem {

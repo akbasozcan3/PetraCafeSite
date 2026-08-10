@@ -229,17 +229,32 @@ export const trendyolGoProvider: IntegrationProvider = {
     if (!data?.enabled) throw new Error("Trendyol Go entegrasyonu kapalı.");
     const client = await clientFromStore();
     const raw = await client.getProducts();
-    return normalizeMenuPayload(raw).map((p) => ({
-      externalId: String((p as { id?: string }).id || ""),
-      name: String((p as { name?: string }).name || ""),
-      description: (p as { description?: string }).description,
-      price: (p as { sellingPrice?: number | string | null }).sellingPrice,
-      image: (p as { image?: string | null }).image,
-      categoryId: (p as { categoryId?: string | null }).categoryId,
-      categoryName: (p as { categoryName?: string }).categoryName,
-      status: (p as { status?: string | null }).status,
-      available: true,
-    })).filter((p) => p.externalId && p.name);
+    // normalizeMenuPayload gerçek Trendyol alanlarını (images/imageUrl/…) map eder
+    return normalizeMenuPayload(raw)
+      .map((item) => {
+        const p = item as {
+          id?: string;
+          name?: string;
+          description?: string;
+          sellingPrice?: string | number | null;
+          image?: string | null;
+          categoryId?: string | null;
+          categoryName?: string;
+          status?: string | null;
+        };
+        return {
+          externalId: String(p.id || ""),
+          name: String(p.name || ""),
+          description: p.description || undefined,
+          price: p.sellingPrice,
+          image: p.image || null,
+          categoryId: p.categoryId || null,
+          categoryName: p.categoryName,
+          status: p.status || null,
+          available: true,
+        };
+      })
+      .filter((p) => p.externalId && p.name);
   },
 
   async syncMenu(): Promise<SyncReport> {

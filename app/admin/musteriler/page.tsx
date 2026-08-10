@@ -1,5 +1,6 @@
-import CustomersPanel from "@/components/admin/panels/CustomersPanel";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  return <CustomersPanel />;
+/** @deprecated Web üyelik kaldırıldı */
+export default function MusterilerRedirect() {
+  redirect("/admin");
 }

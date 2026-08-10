@@ -44,7 +44,7 @@ export default function MenuPanel() {
     giris: content.bolumlar.menu.lead,
     legend: "★ işaretliler en çok tercih edilenler.",
     hepsiMetin: "Tüm ürünleri inceleyin →",
-    hepsiLink: "urunler/urunler",
+    hepsiLink: "/urunler",
     not: "",
     gruplar: [],
   };
@@ -222,7 +222,7 @@ export default function MenuPanel() {
           />
           <Select
             label="Tüm ürünler sayfa adresi"
-            value={menu.hepsiLink || "urunler/urunler"}
+            value={menu.hepsiLink || "/urunler"}
             options={SITE_PAGE_URLS}
             onChange={(e) => updateMenu({ hepsiLink: e.target.value })}
           />
@@ -607,6 +607,13 @@ export default function MenuPanel() {
                     <ProductRow
                       key={ui}
                       urun={urun}
+                      categorySlug={
+                        grup.slug ||
+                        String(grup.link || "")
+                          .replace(/^\/?urunler\//, "")
+                          .split("/")[0] ||
+                        undefined
+                      }
                       onChange={(u) => {
                         const urunler = [...grup.urunler];
                         urunler[ui] = u;
@@ -653,7 +660,7 @@ export default function MenuPanel() {
                             {
                               ad: "Yeni Ürün",
                               fav: false,
-                              link: grup.link || "urunler/urunler",
+                              link: grup.link || "/urunler",
                             },
                           ],
                         })
@@ -708,8 +715,8 @@ export default function MenuPanel() {
                 {
                   ad: "Yeni Kategori",
                   adet: "0 çeşit",
-                  link: "urunler/urunler",
-                  tumLink: "urunler/urunler",
+                  link: "/urunler",
+                  tumLink: "/urunler",
                   image: "",
                   banner: "",
                   aciklama: "",
@@ -733,6 +740,7 @@ export default function MenuPanel() {
 
 function ProductRow({
   urun,
+  categorySlug,
   onChange,
   onDelete,
   onMoveUp,
@@ -742,6 +750,7 @@ function ProductRow({
   onError,
 }: {
   urun: MenuUrun;
+  categorySlug?: string;
   onChange: (u: MenuUrun) => void;
   onDelete: () => void;
   onMoveUp: () => void;
@@ -750,6 +759,22 @@ function ProductRow({
   isLast: boolean;
   onError?: (msg: string) => void;
 }) {
+  const detailHref =
+    urun.slug && categorySlug
+      ? `/urunler/${categorySlug}/${urun.slug}`
+      : urun.slug
+        ? `/urunler/${urun.slug}`
+        : "";
+  const gallery = [...(urun.images || [])].sort(
+    (a, b) => (a.order ?? 0) - (b.order ?? 0)
+  );
+  const sourceLabel =
+    urun.source === "trendyol_go" || urun.externalId?.startsWith("trendyol_go:")
+      ? "Trendyol Go"
+      : urun.source === "yemeksepeti" || urun.externalId?.startsWith("yemeksepeti:")
+        ? "Yemeksepeti"
+        : "Manuel";
+
   return (
     <div className="grid gap-3 rounded-xl border border-white/[0.06] bg-[#0D1117] p-3 md:grid-cols-[170px_1.5fr_1fr_1.5fr_auto]">
       {/* Ürün Görseli */}
@@ -775,6 +800,18 @@ function ProductRow({
               <Trash2 className="h-3 w-3" />
             </button>
           </div>
+        ) : urun.externalImageUrl ? (
+          <div className="relative mb-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={resolveMediaUrl(urun.externalImageUrl)}
+              alt={urun.ad}
+              className="h-28 w-full rounded-xl border border-dashed border-orange-400/30 object-cover"
+            />
+            <span className="absolute left-1.5 top-1.5 rounded bg-black/60 px-1.5 py-0.5 text-[10px] text-orange-200">
+              API görseli
+            </span>
+          </div>
         ) : (
           <div className="mb-2 flex h-20 items-center justify-center rounded-xl border border-dashed border-white/[0.1] bg-white/[0.02]">
             <ImageIcon className="h-6 w-6 text-[#4A5568]" />
@@ -783,11 +820,23 @@ function ProductRow({
 
         <Upload
           uploadKey=""
+          accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+          label="Ana görsel yükle / değiştir"
           onComplete={(files) => {
             if (files[0]) {
               onChange({
                 ...urun,
                 image: files[0].url,
+                images: [
+                  {
+                    url: files[0].url,
+                    alt: urun.ad,
+                    source: "admin",
+                    order: 0,
+                    isPrimary: true,
+                  },
+                  ...(urun.images || []).filter((img) => img.url !== files[0].url),
+                ],
               });
             }
           }}
@@ -795,6 +844,105 @@ function ProductRow({
             if (onError) onError(err.message);
           }}
         />
+        <p className="mt-1.5 text-[11px] leading-snug text-[#8A9BB0]">
+          Önerilen: <strong className="text-[#C9D1D9]">1200×500 px</strong>{" "}
+          (geniş vitrin). JPEG/WebP, yatay kompozisyon — ürün sayfasında tam
+          genişlikte görünür.
+        </p>
+        <div className="mt-2">
+          <Upload
+            uploadKey=""
+            accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+            label="Galeriye ekle"
+            multiple
+            onComplete={(files) => {
+              const start = (urun.images || []).length;
+              const added = files.map((f, i) => ({
+                url: f.url,
+                alt: urun.ad,
+                source: "admin" as const,
+                order: start + i,
+                isPrimary: false,
+              }));
+              onChange({
+                ...urun,
+                images: [...(urun.images || []), ...added],
+                image: urun.image || files[0]?.url || "",
+              });
+            }}
+            onError={(err) => {
+              if (onError) onError(err.message);
+            }}
+          />
+        </div>
+        {gallery.length > 0 ? (
+          <div className="mt-2 space-y-1">
+            {gallery.map((img, i) => (
+              <div
+                key={`${img.url}-${i}`}
+                className="flex items-center gap-1 rounded-lg border border-white/[0.06] p-1"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={resolveMediaUrl(img.url)}
+                  alt=""
+                  className="h-8 w-8 rounded object-cover"
+                />
+                <button
+                  type="button"
+                  className="rounded px-1 text-[10px] text-[#8A9BB0] hover:bg-white/5"
+                  title="Yukarı"
+                  onClick={() => {
+                    if (i === 0) return;
+                    const next = [...gallery];
+                    [next[i - 1], next[i]] = [next[i], next[i - 1]];
+                    onChange({
+                      ...urun,
+                      images: next.map((x, order) => ({ ...x, order })),
+                    });
+                  }}
+                >
+                  ↑
+                </button>
+                <button
+                  type="button"
+                  className="rounded px-1 text-[10px] text-[#8A9BB0] hover:bg-white/5"
+                  title="Ana görsel"
+                  onClick={() =>
+                    onChange({
+                      ...urun,
+                      image: img.url,
+                      images: gallery.map((x, order) => ({
+                        ...x,
+                        order,
+                        isPrimary: x.url === img.url,
+                      })),
+                    })
+                  }
+                >
+                  Ana
+                </button>
+                <button
+                  type="button"
+                  className="ml-auto rounded px-1 text-[10px] text-red-300 hover:bg-red-500/10"
+                  onClick={() => {
+                    const next = gallery.filter((_, j) => j !== i);
+                    onChange({
+                      ...urun,
+                      images: next.map((x, order) => ({ ...x, order })),
+                      image:
+                        urun.image === img.url
+                          ? next[0]?.url || ""
+                          : urun.image,
+                    });
+                  }}
+                >
+                  Sil
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
 
       <div className="space-y-2">
@@ -812,45 +960,56 @@ function ProductRow({
         <Input
           label="Ürün slug (SEO)"
           value={urun.slug || ""}
-          onChange={(e) =>
+          onChange={(e) => {
+            const slug = e.target.value
+              .toLocaleLowerCase("tr-TR")
+              .replace(/ğ/g, "g")
+              .replace(/ü/g, "u")
+              .replace(/ş/g, "s")
+              .replace(/ı/g, "i")
+              .replace(/ö/g, "o")
+              .replace(/ç/g, "c")
+              .replace(/[^a-z0-9-]+/g, "-")
+              .replace(/-+/g, "-");
             onChange({
               ...urun,
-              slug: e.target.value
-                .toLocaleLowerCase("tr-TR")
-                .replace(/ğ/g, "g")
-                .replace(/ü/g, "u")
-                .replace(/ş/g, "s")
-                .replace(/ı/g, "i")
-                .replace(/ö/g, "o")
-                .replace(/ç/g, "c")
-                .replace(/[^a-z0-9-]+/g, "-")
-                .replace(/-+/g, "-"),
-              link: e.target.value
-                ? `/urunler/${e.target.value.replace(/^\/+|\/+$/g, "")}`
+              slug,
+              link: slug
+                ? categorySlug
+                  ? `/urunler/${categorySlug}/${slug}`
+                  : `/urunler/${slug}`
                 : urun.link,
-            })
-          }
+            });
+          }}
           placeholder="cavdar-ekmegi"
         />
         <div className="flex flex-wrap gap-1.5">
           <span className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] text-[#8A9BB0]">
-            ✓ Web Sitesi
+            Kaynak: [{sourceLabel}]
           </span>
           {(urun.trendyolId ||
             urun.source === "trendyol_go" ||
             urun.externalId?.startsWith("trendyol_go:")) && (
             <span className="rounded-md bg-orange-500/15 px-2 py-0.5 text-[10px] text-orange-300">
-              ✓ Trendyol Go
+              Trendyol Go
             </span>
           )}
           {(urun.yemeksepetiId ||
             urun.source === "yemeksepeti" ||
             urun.externalId?.startsWith("yemeksepeti:")) && (
             <span className="rounded-md bg-pink-500/15 px-2 py-0.5 text-[10px] text-pink-300">
-              ✓ Yemeksepeti
+              Yemeksepeti
             </span>
           )}
         </div>
+        {urun.externalId ? (
+          <p className="text-[10px] text-[#8A9BB0]">
+            External ID: {urun.externalId}
+            {urun.lastSyncedAt
+              ? ` · Son sync: ${new Date(urun.lastSyncedAt).toLocaleString("tr-TR")}`
+              : ""}
+          </p>
+        ) : null}
       </div>
 
       <div className="space-y-2">
@@ -887,14 +1046,82 @@ function ProductRow({
           }
           placeholder="Ürün açıklaması"
         />
+        <Input
+          label="Gramaj / varyantlar (virgülle)"
+          value={(urun.varyantlar || []).join(", ")}
+          onChange={(e) =>
+            onChange({
+              ...urun,
+              varyantlar: e.target.value
+                .split(",")
+                .map((x) => x.trim())
+                .filter(Boolean),
+            })
+          }
+          placeholder="250 g, 500 g, 1 kg"
+        />
+        <label className="flex items-center gap-2 text-xs text-[#8A9BB0]">
+          <input
+            type="checkbox"
+            checked={urun.autoUpdatePrice !== false}
+            onChange={(e) =>
+              onChange({ ...urun, autoUpdatePrice: e.target.checked })
+            }
+          />
+          API fiyatını otomatik güncelle
+        </label>
+        <label className="flex items-center gap-2 text-xs text-[#8A9BB0]">
+          <input
+            type="checkbox"
+            checked={Boolean(urun.ozelSiparis)}
+            onChange={(e) =>
+              onChange({ ...urun, ozelSiparis: e.target.checked })
+            }
+          />
+          Özel sipariş (WhatsApp / telefon)
+        </label>
+        <label className="flex items-center gap-2 text-xs text-[#8A9BB0]">
+          <input
+            type="checkbox"
+            checked={urun.aktif !== false}
+            onChange={(e) => onChange({ ...urun, aktif: e.target.checked })}
+          />
+          Aktif
+        </label>
       </div>
 
       <div className="space-y-1 text-xs text-[#8A9BB0]">
         <p>Detay adresi</p>
         <code className="block rounded-lg bg-black/30 px-2 py-1.5 text-[11px] text-[#C8703A]">
-          {urun.slug ? `/urunler/${urun.slug}` : "Kayıtta otomatik slug üretilir"}
+          {detailHref || "Kayıtta otomatik slug üretilir"}
         </code>
-        <p className="pt-1">Kategori sayfası ürün listesinden bu adrese gider.</p>
+        <Input
+          label="İçindekiler"
+          value={urun.icindekiler || ""}
+          onChange={(e) => onChange({ ...urun, icindekiler: e.target.value })}
+        />
+        <Input
+          label="Alerjen"
+          value={urun.alerjen || ""}
+          onChange={(e) => onChange({ ...urun, alerjen: e.target.value })}
+        />
+        <Input
+          label="Saklama"
+          value={urun.saklama || ""}
+          onChange={(e) => onChange({ ...urun, saklama: e.target.value })}
+        />
+        <Input
+          label="SEO title"
+          value={urun.seoTitle || ""}
+          onChange={(e) => onChange({ ...urun, seoTitle: e.target.value })}
+        />
+        <Input
+          label="SEO description"
+          value={urun.seoDescription || ""}
+          onChange={(e) =>
+            onChange({ ...urun, seoDescription: e.target.value })
+          }
+        />
       </div>
 
       <div className="flex items-end justify-end gap-2 pb-0.5">
@@ -918,7 +1145,7 @@ function ProductRow({
 
         <button
           type="button"
-          title={urun.fav ? "Favoriden Çıkar" : "Favori Yap"}
+          title={urun.fav ? "Vitrinden çıkar" : "Vitrine al (★)"}
           onClick={() =>
             onChange({
               ...urun,

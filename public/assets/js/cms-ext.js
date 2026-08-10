@@ -42,13 +42,24 @@
   function resolveHref(href) {
     if (!href) return "#";
     if (/^(https?:|tel:|mailto:|whatsapp:)/i.test(href)) return href;
-    if (href.charAt(0) === "#") return "/index.htm" + href;
+    if (href.charAt(0) === "#") return "/" + href;
     var clean = String(href).replace(/^\.\//, "").replace(/^(\.\.\/)+/, "");
+    if (/^index\.htm/i.test(clean)) {
+      var hashIdx = clean.indexOf("#");
+      if (hashIdx >= 0) return "/" + clean.slice(hashIdx);
+      return "/";
+    }
     // Always absolute for site sections — relative + sitePrefix broke category clicks
-    if (/^(urunler|blog|assets|uploads)\//i.test(clean) || /^index\.htm/i.test(clean)) {
+    if (/^(urunler|blog|assets|uploads)\//i.test(clean)) {
       return "/" + clean.replace(/^\//, "");
     }
-    if (href.charAt(0) === "/") return href;
+    if (href.charAt(0) === "/") {
+      if (/^\/index\.htm/i.test(href)) {
+        var h = href.indexOf("#");
+        return h >= 0 ? "/" + href.slice(h) : "/";
+      }
+      return href;
+    }
     return "/" + clean.replace(/^\//, "");
   }
 
@@ -192,7 +203,12 @@
   }
 
   function isHomePage() {
-    return !document.body.classList.contains("page");
+    // Next.js SSR homepage does not load cms-ext; static index.htm is retired.
+    // Treat only legacy extensionless "/" HTML shells as home (body without .page).
+    if (document.documentElement.hasAttribute("data-next-home")) return false;
+    if (document.body.classList.contains("page")) return false;
+    var p = (window.location.pathname || "").replace(/\/+$/, "") || "/";
+    return p === "/" || /\/index\.htm$/i.test(p);
   }
 
   function applySeo(seo) {
@@ -603,37 +619,428 @@
       if (!container) return;
       container.innerHTML = "";
       nav.links.forEach(function (link) {
+        var label = link.label || "";
+        if (/hesab|sepet|profil/i.test(label)) return;
         var a = document.createElement("a");
         a.href = resolveHref(link.href || "#");
-        a.textContent = link.label || "";
+        a.textContent = label;
         container.appendChild(a);
       });
-      // Storefront hesap / sepet (CMS linklerinden bağımsız)
-      [
-        { href: "/hesabim", label: "Hesabım" },
-        { href: "/sepet", label: "Sepet" },
-      ].forEach(function (extra) {
-        var exists = false;
-        Array.prototype.forEach.call(container.querySelectorAll("a"), function (el) {
-          if ((el.getAttribute("href") || "").indexOf(extra.href) === 0) exists = true;
+      if (includeCta) {
+        [
+          { href: "/hesabim", label: "Hesabım" },
+          { href: "/sepet", label: "Sepet" },
+        ].forEach(function (extra) {
+          var x = document.createElement("a");
+          x.href = extra.href;
+          x.textContent = extra.label;
+          x.setAttribute("data-shop-link", "1");
+          container.appendChild(x);
         });
-        if (exists) return;
-        var x = document.createElement("a");
-        x.href = extra.href;
-        x.textContent = extra.label;
-        x.setAttribute("data-shop-link", "1");
-        container.appendChild(x);
-      });
-      if (includeCta && nav.ctaLabel) {
-        var btn = document.createElement("a");
-        btn.href = resolveHref(nav.ctaHref || "#");
-        btn.className = "btn";
-        btn.textContent = nav.ctaLabel;
-        container.appendChild(btn);
+        if (nav.ctaLabel) {
+          var btn = document.createElement("a");
+          btn.href = resolveHref(nav.ctaHref || "#");
+          btn.className = "btn";
+          btn.textContent = nav.ctaLabel;
+          container.appendChild(btn);
+        }
       }
     }
     fillNav($(".nav__links"), false);
-    fillNav($(".mobile-menu__links") || $("#mobileMenu"), false);
+    fillNav($(".mobile-menu__links") || $("#mobileMenu"), true);
+    ensureNavActions(nav);
+  }
+
+  function ensureNavActions(nav) {
+    var header = $("header.nav") || $(".nav");
+    if (!header) return;
+    var actions = header.querySelector(".nav__actions");
+    if (!actions) {
+      actions = document.createElement("div");
+      actions.className = "nav__actions";
+      var burger = header.querySelector(".nav__burger");
+      var cta = header.querySelector(".nav__cta");
+      if (cta && cta.parentElement === header) {
+        actions.appendChild(cta);
+      }
+      if (burger) header.insertBefore(actions, burger);
+      else header.appendChild(actions);
+    }
+
+    if (!actions.querySelector('[data-nav-search]')) {
+      var searchWrap = document.createElement("div");
+      searchWrap.className = "nav__search";
+      searchWrap.setAttribute("data-nav-search-wrap", "1");
+      searchWrap.innerHTML =
+        '<button type="button" class="nav__icon-btn" data-nav-search="1" aria-label="Ürün ara" aria-expanded="false">' +
+        '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' +
+        "</button>" +
+        '<div class="nav__search-pop" data-nav-search-pop hidden>' +
+        '<div class="oc-search">' +
+        '<label class="oc-search__field"><span class="sr-only">Ürün ara</span>' +
+        '<input type="search" data-nav-search-input placeholder="Ürün ara…" autocomplete="off" />' +
+        "</label>" +
+        '<div class="oc-search__panel" data-nav-search-panel hidden role="listbox"></div>' +
+        "</div></div>";
+      actions.insertBefore(searchWrap, actions.firstChild);
+      bindNavSearch(searchWrap);
+    }
+
+    if (!actions.querySelector('[data-nav-profile]')) {
+      var profileWrap = document.createElement("div");
+      profileWrap.className = "nav__profile";
+      profileWrap.setAttribute("data-nav-profile-wrap", "1");
+      var iconHeart =
+        '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+      var iconHome =
+        '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+      var iconBag =
+        '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M7 7h13l-1.4 8.2a1.5 1.5 0 0 1-1.5 1.3H9.2a1.5 1.5 0 0 1-1.5-1.3L6 4H3M10 21h.01M17 21h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      var iconPin =
+        '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="1.5" stroke="currentColor" stroke-width="1.7"/></svg>';
+      var iconUserSm =
+        '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 19.2c1.4-3.1 3.7-4.7 6.5-4.7s5.1 1.6 6.5 4.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+      profileWrap.innerHTML =
+        '<button type="button" class="nav__account-btn" data-nav-profile="1" aria-label="Hesap menüsü" aria-expanded="false" aria-haspopup="menu">' +
+        '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 19.2c1.4-3.1 3.7-4.7 6.5-4.7s5.1 1.6 6.5 4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' +
+        '<span class="nav__account-label" data-nav-profile-label>Giriş Yap</span>' +
+        "</button>" +
+        '<div class="nav__profile-menu" data-nav-profile-menu hidden role="menu">' +
+        '<div class="nav__profile-head" data-nav-profile-head>' +
+        '<p class="nav__profile-hello">Hesabınıza giriş yapın</p>' +
+        '<p class="nav__profile-email">Sipariş, adres ve favorileriniz tek yerde.</p>' +
+        "</div>" +
+        '<div data-nav-profile-guest>' +
+        '<a role="menuitem" class="nav__profile-primary" href="/hesabim/giris">Giriş Yap</a>' +
+        '<a role="menuitem" class="nav__profile-secondary" href="/hesabim/kayit">Üye Ol</a>' +
+        '<a role="menuitem" class="nav__profile-item" href="/favoriler">' +
+        iconHeart +
+        "Favorilerim</a>" +
+        '<a role="menuitem" class="nav__profile-item" href="/hesabim/giris?next=/hesabim/adresler">' +
+        iconPin +
+        "Adreslerim</a>" +
+        "</div>" +
+        '<div data-nav-profile-authed hidden>' +
+        '<a role="menuitem" class="nav__profile-item" href="/hesabim">' +
+        iconHome +
+        "Hesabım</a>" +
+        '<a role="menuitem" class="nav__profile-item" href="/hesabim/siparisler">' +
+        iconBag +
+        "Siparişlerim</a>" +
+        '<a role="menuitem" class="nav__profile-item" href="/hesabim/adresler">' +
+        iconPin +
+        "Adreslerim</a>" +
+        '<a role="menuitem" class="nav__profile-item" href="/favoriler">' +
+        iconHeart +
+        "Favorilerim</a>" +
+        '<a role="menuitem" class="nav__profile-item" href="/hesabim/profil">' +
+        iconUserSm +
+        "Profilim</a>" +
+        '<button type="button" role="menuitem" class="nav__profile-logout" data-nav-profile-logout>Çıkış Yap</button>' +
+        "</div>" +
+        "</div>";
+      var searchEl = actions.querySelector("[data-nav-search-wrap]");
+      if (searchEl && searchEl.nextSibling) {
+        actions.insertBefore(profileWrap, searchEl.nextSibling);
+      } else if (searchEl) {
+        actions.appendChild(profileWrap);
+      } else {
+        actions.insertBefore(profileWrap, actions.firstChild);
+      }
+      var pBtn = profileWrap.querySelector("[data-nav-profile]");
+      var pMenu = profileWrap.querySelector("[data-nav-profile-menu]");
+      var pLabel = profileWrap.querySelector("[data-nav-profile-label]");
+      var pHead = profileWrap.querySelector("[data-nav-profile-head]");
+      var pGuest = profileWrap.querySelector("[data-nav-profile-guest]");
+      var pAuthed = profileWrap.querySelector("[data-nav-profile-authed]");
+      var pLogout = profileWrap.querySelector("[data-nav-profile-logout]");
+      function closeProfileMenu() {
+        if (!pMenu || !pBtn) return;
+        pMenu.setAttribute("hidden", "");
+        pBtn.setAttribute("aria-expanded", "false");
+      }
+      function applyProfileSession(customer) {
+        if (!pGuest || !pAuthed || !pLabel || !pHead) return;
+        if (customer && customer.email) {
+          var display =
+            String(customer.name || "").trim() ||
+            String(customer.email).split("@")[0] ||
+            "Hesabım";
+          pLabel.textContent = display;
+          pBtn.classList.add("is-authed");
+          pGuest.setAttribute("hidden", "");
+          pAuthed.removeAttribute("hidden");
+          pHead.innerHTML =
+            '<p class="nav__profile-hello">Merhaba, ' +
+            display.replace(/</g, "&lt;") +
+            "</p>" +
+            '<p class="nav__profile-email">' +
+            String(customer.email).replace(/</g, "&lt;") +
+            "</p>" +
+            (customer.emailVerified
+              ? '<span class="nav__profile-chip nav__profile-chip--ok">Doğrulandı</span>'
+              : '<span class="nav__profile-chip">E-posta doğrulanmadı</span>');
+        } else {
+          pLabel.textContent = "Giriş Yap";
+          pBtn.classList.remove("is-authed");
+          pGuest.removeAttribute("hidden");
+          pAuthed.setAttribute("hidden", "");
+          pHead.innerHTML =
+            '<p class="nav__profile-hello">Hesabınıza giriş yapın</p>' +
+            '<p class="nav__profile-email">Sipariş, adres ve favorileriniz tek yerde.</p>';
+        }
+      }
+      if (pBtn && pMenu) {
+        pBtn.addEventListener("click", function (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          var open = pMenu.hasAttribute("hidden");
+          if (open) {
+            pMenu.removeAttribute("hidden");
+            pBtn.setAttribute("aria-expanded", "true");
+          } else {
+            closeProfileMenu();
+          }
+        });
+        document.addEventListener("click", closeProfileMenu);
+        pMenu.addEventListener("click", function (ev) {
+          ev.stopPropagation();
+        });
+      }
+      if (pLogout) {
+        pLogout.addEventListener("click", function () {
+          fetch("/api/v1/customer/session", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "logout" }),
+          })
+            .then(function () {
+              applyProfileSession(null);
+              closeProfileMenu();
+              window.location.href = "/urunler";
+            })
+            .catch(function () {
+              applyProfileSession(null);
+            });
+        });
+      }
+      fetch("/api/v1/customer/session", { credentials: "include" })
+        .then(function (r) {
+          return r.ok ? r.json() : null;
+        })
+        .then(function (d) {
+          applyProfileSession(d && d.customer ? d.customer : null);
+        })
+        .catch(function () {
+          applyProfileSession(null);
+        });
+    }
+
+    if (!actions.querySelector('[data-nav-fav]')) {
+      var fav = document.createElement("a");
+      fav.href = "/favoriler";
+      fav.className = "nav__icon-btn";
+      fav.setAttribute("data-nav-fav", "1");
+      fav.setAttribute("aria-label", "Favoriler");
+      fav.title = "Favoriler";
+      fav.innerHTML =
+        '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg><span class="nav__badge" data-nav-fav-count hidden>0</span>';
+      var afterProfile = actions.querySelector("[data-nav-profile-wrap]");
+      if (afterProfile && afterProfile.nextSibling) {
+        actions.insertBefore(fav, afterProfile.nextSibling);
+      } else if (afterProfile) {
+        actions.appendChild(fav);
+      } else {
+        actions.insertBefore(fav, actions.firstChild);
+      }
+    }
+
+    if (!actions.querySelector('[data-nav-cart]')) {
+      var cart = document.createElement("a");
+      cart.href = "/sepet";
+      cart.className = "nav__icon-btn nav__cart-btn";
+      cart.setAttribute("data-nav-cart", "1");
+      cart.setAttribute("aria-label", "Sepet");
+      cart.title = "Sepet";
+      cart.innerHTML =
+        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M4 6h2.2l1.3 9.2a1.5 1.5 0 0 0 1.5 1.3h7.7a1.5 1.5 0 0 0 1.5-1.2L19.5 8H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.2" fill="currentColor"/><circle cx="17" cy="20" r="1.2" fill="currentColor"/></svg><span class="nav__badge" data-nav-cart-count hidden>0</span>';
+      var afterFav = actions.querySelector("[data-nav-fav]");
+      var profileWrapEl = actions.querySelector("[data-nav-profile-wrap]");
+      var insertAfter = afterFav || profileWrapEl;
+      if (insertAfter && insertAfter.nextSibling) {
+        actions.insertBefore(cart, insertAfter.nextSibling);
+      } else if (insertAfter) {
+        actions.appendChild(cart);
+      } else {
+        actions.insertBefore(cart, actions.firstChild);
+      }
+    }
+
+    // CTA telefon varsa actions içinde olsun
+    var ctaEl = header.querySelector(".nav__cta");
+    if (ctaEl && ctaEl.parentElement !== actions) {
+      actions.appendChild(ctaEl);
+    }
+    if (ctaEl && nav) {
+      if (nav.ctaHref) ctaEl.href = resolveHref(nav.ctaHref);
+      if (nav.ctaLabel) ctaEl.textContent = nav.ctaLabel;
+    }
+
+    syncNavCartBadge();
+    syncNavFavBadge();
+  }
+
+  function bindNavSearch(wrap) {
+    if (!wrap || wrap.getAttribute("data-bound") === "1") return;
+    wrap.setAttribute("data-bound", "1");
+    var btn = wrap.querySelector("[data-nav-search]");
+    var pop = wrap.querySelector("[data-nav-search-pop]");
+    var input = wrap.querySelector("[data-nav-search-input]");
+    var panel = wrap.querySelector("[data-nav-search-panel]");
+    var timer = null;
+    if (!btn || !pop || !input || !panel) return;
+
+    function closeSearch() {
+      pop.setAttribute("hidden", "");
+      btn.setAttribute("aria-expanded", "false");
+      btn.classList.remove("is-active");
+    }
+    function openSearch() {
+      pop.removeAttribute("hidden");
+      btn.setAttribute("aria-expanded", "true");
+      btn.classList.add("is-active");
+      window.setTimeout(function () {
+        input.focus();
+      }, 30);
+    }
+
+    btn.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (pop.hasAttribute("hidden")) openSearch();
+      else closeSearch();
+    });
+    pop.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+    });
+    document.addEventListener("click", closeSearch);
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape") closeSearch();
+    });
+
+    function renderHits(hits, q) {
+      if (q.length < 2) {
+        panel.setAttribute("hidden", "");
+        panel.innerHTML = "";
+        return;
+      }
+      panel.removeAttribute("hidden");
+      if (!hits.length) {
+        panel.innerHTML =
+          '<p class="oc-search__empty">Aradığınız ürünü bulamadık.</p>';
+        return;
+      }
+      panel.innerHTML = hits
+        .map(function (h) {
+          var price = h.fiyat
+            ? "<em>" + String(h.fiyat).replace(/</g, "&lt;") + "</em>"
+            : "";
+          return (
+            '<a class="oc-search__link" role="option" href="' +
+            String(h.href || "/urunler").replace(/"/g, "") +
+            '">' +
+            '<img class="oc-search__img" src="' +
+            String(h.image || "/assets/img/product-placeholder.svg").replace(
+              /"/g,
+              ""
+            ) +
+            '" alt="" loading="lazy" />' +
+            "<span><strong>" +
+            String(h.ad || "").replace(/</g, "&lt;") +
+            "</strong><small>" +
+            String(h.categoryName || "").replace(/</g, "&lt;") +
+            "</small>" +
+            price +
+            "</span></a>"
+          );
+        })
+        .join("");
+    }
+
+    input.addEventListener("input", function () {
+      var q = String(input.value || "").trim();
+      if (timer) window.clearTimeout(timer);
+      if (q.length < 2) {
+        renderHits([], q);
+        return;
+      }
+      timer = window.setTimeout(function () {
+        fetch("/api/v1/catalog/search?q=" + encodeURIComponent(q), {
+          cache: "no-store",
+        })
+          .then(function (r) {
+            return r.ok ? r.json() : { results: [] };
+          })
+          .then(function (data) {
+            renderHits(data.results || [], q);
+          })
+          .catch(function () {
+            renderHits([], q);
+          });
+      }, 280);
+    });
+  }
+
+  function readFavList() {
+    try {
+      var raw = localStorage.getItem("firinci_fav_v1");
+      var list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list) ? list : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function syncNavFavBadge() {
+    var badge = document.querySelector("[data-nav-fav-count]");
+    if (!badge) return;
+    var n = 0;
+    try {
+      n = readFavList().length;
+    } catch (e) {
+      n = 0;
+    }
+    if (n > 0) {
+      badge.hidden = false;
+      badge.removeAttribute("hidden");
+      badge.textContent = n > 99 ? "99+" : String(n);
+    } else {
+      badge.hidden = true;
+      badge.setAttribute("hidden", "");
+    }
+  }
+
+  function syncNavCartBadge() {
+    var badge = document.querySelector("[data-nav-cart-count]");
+    if (!badge) return;
+    var n = 0;
+    try {
+      var list = getCart();
+      n = list.reduce(function (sum, x) {
+        return sum + (x.qty || 0);
+      }, 0);
+    } catch (e) {
+      n = 0;
+    }
+    if (n > 0) {
+      badge.hidden = false;
+      badge.removeAttribute("hidden");
+      badge.textContent = n > 99 ? "99+" : String(n);
+    } else {
+      badge.hidden = true;
+      badge.setAttribute("hidden", "");
+    }
   }
 
   function applyHero(hero) {
@@ -1054,6 +1461,15 @@ if (list) {
 
   function productHref(u, group) {
     var slug = productSlug(u);
+    var cat = "";
+    if (group) {
+      if (group.slug) cat = group.slug;
+      else {
+        var fromG = String(group.link || group.tumLink || "").match(/\/urunler\/([^/?#]+)/i);
+        if (fromG && fromG[1] && fromG[1] !== "urunler") cat = fromG[1];
+      }
+    }
+    if (slug && cat) return "/urunler/" + encodeURIComponent(cat) + "/" + encodeURIComponent(slug);
     if (slug) return "/urunler/" + encodeURIComponent(slug);
     return toCategoryHref((group && (group.link || group.tumLink)) || "", group && group.ad);
   }
@@ -1086,6 +1502,8 @@ if (list) {
       localStorage.setItem(CART_KEY, JSON.stringify(list || []));
     } catch (e) { /* ignore */ }
     renderCartUI();
+    if (typeof syncNavCartBadge === "function") syncNavCartBadge();
+    if (typeof syncNavFavBadge === "function") syncNavFavBadge();
   }
 
   function addToCart(item) {
@@ -1740,7 +2158,7 @@ if (list) {
       });
       var all = document.createElement("li");
       var allA = document.createElement("a");
-      allA.href = "/urunler/urunler";
+      allA.href = "/urunler";
       allA.textContent = sayfa.relatedHepsi || "Tüm ürün kategorileri";
       all.appendChild(allA);
       related.appendChild(all);
@@ -2092,7 +2510,7 @@ if (list) {
   }
 
   function getGroupCategoryHref(groupName) {
-    if (!groupName) return "/urunler/urunler";
+    if (!groupName) return "/urunler";
     var g = groupName.toLowerCase()
       .replace(/ı/g, "i").replace(/İ/g, "i")
       .replace(/ş/g, "s").replace(/ğ/g, "g")
@@ -2111,7 +2529,7 @@ if (list) {
     if (g.indexOf("icecek") > -1) return "/urunler/icecekler/icecekler";
     if (g.indexOf("donut") > -1) return "/urunler/donut/donut";
     if (g.indexOf("pasta") > -1) return "/urunler/pastalar/pastalar";
-    return "/urunler/urunler";
+    return "/urunler";
   }
 
   // Homepage menu: category headers stay on category; product rows go to product detail
@@ -2212,37 +2630,49 @@ if (list) {
   function applyAll(data) {
     if (!data) return;
     window.__FIRINCI_CONTENT = data;
-    applyDuyuru(data.duyuru);
-    applyNavbar(data.navbar);
-    applyHero(data.hero);
-    applyMarquee(data.marquee);
-    applyHakkimizda(data.hakkimizda);
-    if (data.bolumlar) {
-      applyBolum("menu", data.bolumlar.menu);
-      applyBolum("galeri", data.bolumlar.galeri);
-      applyBolum("yorumlar", data.bolumlar.yorumlar);
-      applyBolum("sss", data.bolumlar.sss);
+    // Homepage sections are SSR in Next (`/`). Only apply home DOM on legacy home HTML.
+    var home = isHomePage();
+    if (home) {
+      applyDuyuru(data.duyuru);
+      applyNavbar(data.navbar);
+      applyHero(data.hero);
+      applyMarquee(data.marquee);
+      applyHakkimizda(data.hakkimizda);
+      if (data.bolumlar) {
+        applyBolum("menu", data.bolumlar.menu);
+        applyBolum("galeri", data.bolumlar.galeri);
+        applyBolum("yorumlar", data.bolumlar.yorumlar);
+        applyBolum("sss", data.bolumlar.sss);
+      }
+      applyMenu(data.menu);
+      applyGaleri(data.galeri);
+      if (data.yorumlar) applyYorumlarData(data.yorumlar);
+      else initReviewsSlider();
+      applyPasta(data.pasta);
+      applyIletisim(data.iletisim);
+      applySeo(data.seo);
+      applyFooter(data.footer, data.images);
+      applyWaFloat(data.waFloat, data.iletisim);
+      applyYorumlarMeta(data.yorumlarMeta);
+      applyLegal(data.legal);
+    } else {
+      applyNavbar(data.navbar);
+      if (data.menu) {
+        applyKatlar(data.menu);
+        applyUrunKategori(data.menu);
+        applyUrunDetay(data.menu);
+      }
+      renderCartBadge();
+      applySayfalar(data.sayfalar);
+      applyMakaleler(data.makaleler);
+      applyMakaleDetay(data.makaleler);
+      applyIletisim(data.iletisim);
+      applySeo(data.seo);
+      applyFooter(data.footer, data.images);
+      applyWaFloat(data.waFloat, data.iletisim);
+      applyLegal(data.legal);
     }
-    applyMenu(data.menu);
-    if (data.menu) {
-      applyKatlar(data.menu);
-      applyUrunKategori(data.menu);
-      applyUrunDetay(data.menu);
-    }
-    renderCartBadge();
-    applySayfalar(data.sayfalar);
-    applyGaleri(data.galeri);
-    applyMakaleler(data.makaleler);
-    applyMakaleDetay(data.makaleler);
-    if (data.yorumlar) applyYorumlarData(data.yorumlar);
-    else initReviewsSlider();
-    applyPasta(data.pasta);
-    applyIletisim(data.iletisim);
-    applySeo(data.seo);
-    applyFooter(data.footer, data.images);
-    applyWaFloat(data.waFloat, data.iletisim);
-    applyYorumlarMeta(data.yorumlarMeta);
-    applyLegal(data.legal);
+
     if (window.__firinciApplySiteImages && data.images) {
       window.__firinciApplySiteImages(data.images);
     } else if (data.images && data.images.logo) {
@@ -2276,7 +2706,21 @@ if (list) {
       }
       applyAll(payload.data);
     })
-    .catch(function () { initReviewsSlider(); });
+    .catch(function () {
+      initReviewsSlider();
+      try { ensureNavActions({}); } catch (e) {}
+    });
+
+  window.addEventListener("storage", function () {
+    if (typeof syncNavCartBadge === "function") syncNavCartBadge();
+    if (typeof syncNavFavBadge === "function") syncNavFavBadge();
+  });
+  window.addEventListener("firinci-cart", function () {
+    if (typeof syncNavCartBadge === "function") syncNavCartBadge();
+  });
+  window.addEventListener("firinci-fav", function () {
+    if (typeof syncNavFavBadge === "function") syncNavFavBadge();
+  });
 
 window.__firinciApplyCms = applyAll;
 })();

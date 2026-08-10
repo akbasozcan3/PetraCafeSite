@@ -9,7 +9,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const CACHE = "20260810x4";
+const CACHE = "20260810x7";
 
 function isReparsePoint(p) {
   try {
@@ -201,10 +201,11 @@ function fixUrunlerHub(html) {
 }
 
 // ── Materialize trees that were Windows junctions ───────────────
+// NOTE: Do NOT copy `urunler` into public/ — App Router serves /urunler.
+// Extensionless HTML in public/ is downloaded by browsers (octet-stream).
 const materialize = [
   ["assets", "public/assets"],
-  ["urunler", "public/urunler"],
-  ["blog", "public/blog"],
+  // blog App Router'da; public/blog extensionless HTML kopyalanmaz
 ];
 
 for (const [srcRel, destRel] of materialize) {
@@ -230,6 +231,8 @@ copyDirFiles(
 // Critical JS/CSS overwrite from source
 const assetPairs = [
   ["assets/css/style.css", "public/assets/css/style.css"],
+  ["styles/storefront.css", "public/assets/css/storefront.css"],
+  ["assets/css/home-next.css", "public/assets/css/home-next.css"],
   ["assets/js/cms-ext.js", "public/assets/js/cms-ext.js"],
   ["assets/js/site-loader.js", "public/assets/js/site-loader.js"],
   ["assets/js/content.js", "public/assets/js/content.js"],

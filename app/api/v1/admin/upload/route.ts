@@ -7,6 +7,7 @@ import { IMAGE_KEYS, type ImageKey } from "@/lib/content/image-keys";
 import { jsonResponse, errorResponse, assertSameOrigin } from "@/lib/api/helpers";
 import { put } from "@vercel/blob";
 import { appendActivity } from "@/lib/db/activity";
+import { revalidatePath } from "next/cache";
 
 export const runtime = "nodejs";
 
@@ -218,6 +219,10 @@ export async function POST(request: Request) {
       action: "media.upload",
       detail: key ? `${key} → ${publicPath}` : publicPath,
     });
+
+    revalidatePath("/");
+    revalidatePath("/urunler");
+    revalidatePath("/blog");
 
     return jsonResponse(responseData);
   } catch (error) {

@@ -1,5 +1,6 @@
-import WebOrdersPanel from "@/components/admin/panels/WebOrdersPanel";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  return <WebOrdersPanel />;
+/** @deprecated Web sepet siparişleri kaldırıldı */
+export default function WebSiparislerRedirect() {
+  redirect("/admin");
 }

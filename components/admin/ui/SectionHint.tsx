@@ -14,8 +14,8 @@ export default function SectionHint({
   const link =
     href ||
     (anchor
-      ? `/index.htm#${anchor.replace(/^#/, "")}`
-      : "/index.htm");
+      ? `/#${anchor.replace(/^#/, "")}`
+      : "/");
   return (
     <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#C8703A]/20 bg-[#C8703A]/8 px-4 py-3 text-sm text-[#E8B84B]">
       <span>

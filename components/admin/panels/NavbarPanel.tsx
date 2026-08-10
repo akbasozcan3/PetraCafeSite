@@ -49,12 +49,12 @@ const LINK_TYPE_LABELS = {
 
 const PRESET_LINKS = [
   { label: "Hakkımızda", href: "#hakkimizda" },
-  { label: "Ürünler", href: "/urunler/urunler" },
+  { label: "Ürünler", href: "/urunler" },
   { label: "Özel Pastalar", href: "#pasta" },
   { label: "Galeri", href: "#galeri" },
   { label: "Yorumlar", href: "#yorumlar" },
   { label: "S.S.S.", href: "#sss" },
-  { label: "Blog", href: "/blog/blog" },
+  { label: "Blog", href: "/blog" },
   { label: "İletişim", href: "#iletisim" },
 ];
 
@@ -134,7 +134,7 @@ export default function NavbarPanel() {
               </span>
             )}
             <a
-              href="/index.htm"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs font-semibold text-[#C8703A] hover:underline"

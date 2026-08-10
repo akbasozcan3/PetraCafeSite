@@ -22,7 +22,7 @@
       },
       {
         "label": "Ürünler",
-        "href": "/urunler/urunler"
+        "href": "/urunler"
       },
       {
         "label": "Özel Pastalar",
@@ -42,7 +42,7 @@
       },
       {
         "label": "Blog",
-        "href": "/blog/blog"
+        "href": "/blog"
       },
       {
         "label": "İletişim",
@@ -238,7 +238,7 @@
     "giris": "Fırınımızda günlük olarak hazırlanan ekmek, simit, poğaça, börek, pasta ve tatlı çeşitlerimizi keşfedin.",
     "legend": "★ işaretliler en çok tercih edilenler.",
     "hepsiMetin": "15 kategoride 132 çeşidin tamamını inceleyin →",
-    "hepsiLink": "/urunler/urunler",
+    "hepsiLink": "/urunler",
     "not": "Ürünler gramaj seçeneğine göre 250 gr, 500 gr ve 1 kg olarak hazırlanır. Güncel fiyatlar için tezgâhımıza danışabilir veya bizi arayabilirsiniz. Gluten, süt, yumurta ve kuruyemiş içeren ürünler hakkında personelimizden bilgi alabilirsiniz.",
     "gruplar": [
       {
@@ -250,56 +250,56 @@
           {
             "ad": "Ekmek",
             "fav": true,
-            "link": "/urunler/ekmek",
+            "link": "/urunler/ekmek-cesitleri/ekmek",
             "slug": "ekmek",
             "aktif": true
           },
           {
             "ad": "Tam Buğdaylı Ekmek",
             "fav": true,
-            "link": "/urunler/tam-bugdayli-ekmek",
+            "link": "/urunler/ekmek-cesitleri/tam-bugdayli-ekmek",
             "slug": "tam-bugdayli-ekmek",
             "aktif": true
           },
           {
             "ad": "Çavdar Ekmek",
             "fav": true,
-            "link": "/urunler/cavdar-ekmek",
+            "link": "/urunler/ekmek-cesitleri/cavdar-ekmek",
             "slug": "cavdar-ekmek",
             "aktif": true
           },
           {
             "ad": "Papatya Ekmeği",
             "fav": true,
-            "link": "/urunler/papatya-ekmegi",
+            "link": "/urunler/ekmek-cesitleri/papatya-ekmegi",
             "slug": "papatya-ekmegi",
             "aktif": true
           },
           {
             "ad": "Kepek Ekmek",
             "fav": false,
-            "link": "/urunler/kepek-ekmek",
+            "link": "/urunler/ekmek-cesitleri/kepek-ekmek",
             "slug": "kepek-ekmek",
             "aktif": true
           },
           {
             "ad": "Çok Tahıllı Ekmek",
             "fav": false,
-            "link": "/urunler/cok-tahilli-ekmek",
+            "link": "/urunler/ekmek-cesitleri/cok-tahilli-ekmek",
             "slug": "cok-tahilli-ekmek",
             "aktif": true
           },
           {
             "ad": "Cevizli Alman Çavdarı",
             "fav": false,
-            "link": "/urunler/cevizli-alman-cavdari",
+            "link": "/urunler/ekmek-cesitleri/cevizli-alman-cavdari",
             "slug": "cevizli-alman-cavdari",
             "aktif": true
           },
           {
             "ad": "Baget Ekmek",
             "fav": false,
-            "link": "/urunler/baget-ekmek",
+            "link": "/urunler/ekmek-cesitleri/baget-ekmek",
             "slug": "baget-ekmek",
             "aktif": true
           },
@@ -307,21 +307,21 @@
             "ad": "Tava Ekmeği",
             "not": "susamlı  ·  çörekotlu",
             "fav": false,
-            "link": "/urunler/tava-ekmegi",
+            "link": "/urunler/ekmek-cesitleri/tava-ekmegi",
             "slug": "tava-ekmegi",
             "aktif": true
           },
           {
             "ad": "Lavaş",
             "fav": false,
-            "link": "/urunler/lavas",
+            "link": "/urunler/ekmek-cesitleri/lavas",
             "slug": "lavas",
             "aktif": true
           },
           {
             "ad": "Tandır Lavaş",
             "fav": false,
-            "link": "/urunler/tandir-lavas",
+            "link": "/urunler/ekmek-cesitleri/tandir-lavas",
             "slug": "tandir-lavas",
             "aktif": true
           },
@@ -329,7 +329,7 @@
             "ad": "Ramazan Pidesi",
             "not": "sade  ·  yumurtalı",
             "fav": false,
-            "link": "/urunler/ramazan-pidesi",
+            "link": "/urunler/ekmek-cesitleri/ramazan-pidesi",
             "slug": "ramazan-pidesi",
             "aktif": true
           }
@@ -362,42 +362,42 @@
           {
             "ad": "Ekşi Mayalı Tam Buğday Ekmek",
             "fav": true,
-            "link": "/urunler/eksi-mayali-tam-bugday-ekmek",
+            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-tam-bugday-ekmek",
             "slug": "eksi-mayali-tam-bugday-ekmek",
             "aktif": true
           },
           {
             "ad": "Osmanlı Ekşi Mayalı Ekmek",
             "fav": false,
-            "link": "/urunler/osmanli-eksi-mayali-ekmek",
+            "link": "/urunler/eksi-mayali-ekmekler/osmanli-eksi-mayali-ekmek",
             "slug": "osmanli-eksi-mayali-ekmek",
             "aktif": true
           },
           {
             "ad": "Chia Tohumlu Ekşi Mayalı Ekmek",
             "fav": false,
-            "link": "/urunler/chia-tohumlu-eksi-mayali-ekmek",
+            "link": "/urunler/eksi-mayali-ekmekler/chia-tohumlu-eksi-mayali-ekmek",
             "slug": "chia-tohumlu-eksi-mayali-ekmek",
             "aktif": true
           },
           {
             "ad": "Üzümlü Cevizli Ekşi Mayalı Ekmek",
             "fav": false,
-            "link": "/urunler/uzumlu-cevizli-eksi-mayali-ekmek",
+            "link": "/urunler/eksi-mayali-ekmekler/uzumlu-cevizli-eksi-mayali-ekmek",
             "slug": "uzumlu-cevizli-eksi-mayali-ekmek",
             "aktif": true
           },
           {
             "ad": "Ekşi Mayalı Trabzon Ekmek",
             "fav": false,
-            "link": "/urunler/eksi-mayali-trabzon-ekmek",
+            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-trabzon-ekmek",
             "slug": "eksi-mayali-trabzon-ekmek",
             "aktif": true
           },
           {
             "ad": "Ekşi Mayalı Baget Ekmek",
             "fav": false,
-            "link": "/urunler/eksi-mayali-baget-ekmek",
+            "link": "/urunler/eksi-mayali-ekmekler/eksi-mayali-baget-ekmek",
             "slug": "eksi-mayali-baget-ekmek",
             "aktif": true
           }
@@ -430,133 +430,133 @@
           {
             "ad": "Simit",
             "fav": true,
-            "link": "/urunler/simit",
+            "link": "/urunler/simit-pogaca-acma/simit",
             "slug": "simit",
             "aktif": true
           },
           {
             "ad": "Tereyağlı Simit",
             "fav": true,
-            "link": "/urunler/tereyagli-simit",
+            "link": "/urunler/simit-pogaca-acma/tereyagli-simit",
             "slug": "tereyagli-simit",
             "aktif": true
           },
           {
             "ad": "Büyük Simit",
             "fav": false,
-            "link": "/urunler/buyuk-simit",
+            "link": "/urunler/simit-pogaca-acma/buyuk-simit",
             "slug": "buyuk-simit",
             "aktif": true
           },
           {
             "ad": "Rize Simidi",
             "fav": false,
-            "link": "/urunler/rize-simidi",
+            "link": "/urunler/simit-pogaca-acma/rize-simidi",
             "slug": "rize-simidi",
             "aktif": true
           },
           {
             "ad": "Tahinli Simit",
             "fav": false,
-            "link": "/urunler/tahinli-simit",
+            "link": "/urunler/simit-pogaca-acma/tahinli-simit",
             "slug": "tahinli-simit",
             "aktif": true
           },
           {
             "ad": "Kaşarlı Simit",
             "fav": false,
-            "link": "/urunler/kasarli-simit",
+            "link": "/urunler/simit-pogaca-acma/kasarli-simit",
             "slug": "kasarli-simit",
             "aktif": true
           },
           {
             "ad": "Kaşarlı Sucuklu Simit",
             "fav": false,
-            "link": "/urunler/kasarli-sucuklu-simit",
+            "link": "/urunler/simit-pogaca-acma/kasarli-sucuklu-simit",
             "slug": "kasarli-sucuklu-simit",
             "aktif": true
           },
           {
             "ad": "Sade Poğaça",
             "fav": true,
-            "link": "/urunler/sade-pogaca",
+            "link": "/urunler/simit-pogaca-acma/sade-pogaca",
             "slug": "sade-pogaca",
             "aktif": true
           },
           {
             "ad": "Kaşarlı Poğaça",
             "fav": true,
-            "link": "/urunler/kasarli-pogaca",
+            "link": "/urunler/simit-pogaca-acma/kasarli-pogaca",
             "slug": "kasarli-pogaca",
             "aktif": true
           },
           {
             "ad": "Peynirli Poğaça",
             "fav": false,
-            "link": "/urunler/peynirli-pogaca",
+            "link": "/urunler/simit-pogaca-acma/peynirli-pogaca",
             "slug": "peynirli-pogaca",
             "aktif": true
           },
           {
             "ad": "Patatesli Poğaça",
             "fav": false,
-            "link": "/urunler/patatesli-pogaca",
+            "link": "/urunler/simit-pogaca-acma/patatesli-pogaca",
             "slug": "patatesli-pogaca",
             "aktif": true
           },
           {
             "ad": "Zeytinli Poğaça",
             "fav": false,
-            "link": "/urunler/zeytinli-pogaca",
+            "link": "/urunler/simit-pogaca-acma/zeytinli-pogaca",
             "slug": "zeytinli-pogaca",
             "aktif": true
           },
           {
             "ad": "Dereotlu Poğaça",
             "fav": false,
-            "link": "/urunler/dereotlu-pogaca",
+            "link": "/urunler/simit-pogaca-acma/dereotlu-pogaca",
             "slug": "dereotlu-pogaca",
             "aktif": true
           },
           {
             "ad": "Sade Açma",
             "fav": true,
-            "link": "/urunler/sade-acma",
+            "link": "/urunler/simit-pogaca-acma/sade-acma",
             "slug": "sade-acma",
             "aktif": true
           },
           {
             "ad": "Çikolatalı Açma",
             "fav": true,
-            "link": "/urunler/cikolatali-acma",
+            "link": "/urunler/simit-pogaca-acma/cikolatali-acma",
             "slug": "cikolatali-acma",
             "aktif": true
           },
           {
             "ad": "Peynirli Açma",
             "fav": false,
-            "link": "/urunler/peynirli-acma",
+            "link": "/urunler/simit-pogaca-acma/peynirli-acma",
             "slug": "peynirli-acma",
             "aktif": true
           },
           {
             "ad": "Kaşarlı Açma",
             "fav": false,
-            "link": "/urunler/kasarli-acma",
+            "link": "/urunler/simit-pogaca-acma/kasarli-acma",
             "slug": "kasarli-acma",
             "aktif": true
           },
           {
             "ad": "Zeytinli Açma",
             "fav": false,
-            "link": "/urunler/zeytinli-acma",
+            "link": "/urunler/simit-pogaca-acma/zeytinli-acma",
             "slug": "zeytinli-acma",
             "aktif": true
           },
           {
             "ad": "Ponçik",
             "fav": true,
-            "link": "/urunler/poncik",
+            "link": "/urunler/simit-pogaca-acma/poncik",
             "slug": "poncik",
             "aktif": true
           },
@@ -564,21 +564,21 @@
             "ad": "Tereyağlı Kol Böreği",
             "not": "peynirli  ·  patatesli  ·  kıymalı",
             "fav": true,
-            "link": "/urunler/tereyagli-kol-boregi",
+            "link": "/urunler/simit-pogaca-acma/tereyagli-kol-boregi",
             "slug": "tereyagli-kol-boregi",
             "aktif": true
           },
           {
             "ad": "Ay Çöreği",
             "fav": false,
-            "link": "/urunler/ay-coregi",
+            "link": "/urunler/simit-pogaca-acma/ay-coregi",
             "slug": "ay-coregi",
             "aktif": true
           },
           {
             "ad": "Tahinli Çörek",
             "fav": false,
-            "link": "/urunler/tahinli-corek",
+            "link": "/urunler/simit-pogaca-acma/tahinli-corek",
             "slug": "tahinli-corek",
             "aktif": true
           }
@@ -611,56 +611,56 @@
           {
             "ad": "Minik Dereotlu Peynirli Kurabiye",
             "fav": true,
-            "link": "/urunler/minik-dereotlu-peynirli-kurabiye",
+            "link": "/urunler/kurabiye-cesitleri/minik-dereotlu-peynirli-kurabiye",
             "slug": "minik-dereotlu-peynirli-kurabiye",
             "aktif": true
           },
           {
             "ad": "Minik Beyaz Peynirli Kurabiye",
             "fav": false,
-            "link": "/urunler/minik-beyaz-peynirli-kurabiye",
+            "link": "/urunler/kurabiye-cesitleri/minik-beyaz-peynirli-kurabiye",
             "slug": "minik-beyaz-peynirli-kurabiye",
             "aktif": true
           },
           {
             "ad": "Minik Patatesli Kurabiye",
             "fav": false,
-            "link": "/urunler/minik-patatesli-kurabiye",
+            "link": "/urunler/kurabiye-cesitleri/minik-patatesli-kurabiye",
             "slug": "minik-patatesli-kurabiye",
             "aktif": true
           },
           {
             "ad": "Tuzlu Kurabiye",
             "fav": false,
-            "link": "/urunler/tuzlu-kurabiye",
+            "link": "/urunler/kurabiye-cesitleri/tuzlu-kurabiye",
             "slug": "tuzlu-kurabiye",
             "aktif": true
           },
           {
             "ad": "Tatlı Kurabiye",
             "fav": false,
-            "link": "/urunler/tatli-kurabiye",
+            "link": "/urunler/kurabiye-cesitleri/tatli-kurabiye",
             "slug": "tatli-kurabiye",
             "aktif": true
           },
           {
             "ad": "Acıbadem",
             "fav": false,
-            "link": "/urunler/acibadem",
+            "link": "/urunler/kurabiye-cesitleri/acibadem",
             "slug": "acibadem",
             "aktif": true
           },
           {
             "ad": "İzmir Bomba",
             "fav": false,
-            "link": "/urunler/izmir-bomba",
+            "link": "/urunler/kurabiye-cesitleri/izmir-bomba",
             "slug": "izmir-bomba",
             "aktif": true
           },
           {
             "ad": "Tahinli Bomba",
             "fav": false,
-            "link": "/urunler/tahinli-bomba",
+            "link": "/urunler/kurabiye-cesitleri/tahinli-bomba",
             "slug": "tahinli-bomba",
             "aktif": true
           }
@@ -693,70 +693,70 @@
           {
             "ad": "Bonibonlu Kurabiye",
             "fav": false,
-            "link": "/urunler/bonibonlu-kurabiye",
+            "link": "/urunler/buyuk-kurabiyeler/bonibonlu-kurabiye",
             "slug": "bonibonlu-kurabiye",
             "aktif": true
           },
           {
             "ad": "Damla Çikolatalı Kurabiye",
             "fav": false,
-            "link": "/urunler/damla-cikolatali-kurabiye",
+            "link": "/urunler/buyuk-kurabiyeler/damla-cikolatali-kurabiye",
             "slug": "damla-cikolatali-kurabiye",
             "aktif": true
           },
           {
             "ad": "Parça Çikolatalı Fındıklı Kurabiye",
             "fav": false,
-            "link": "/urunler/parca-cikolatali-findikli-kurabiye",
+            "link": "/urunler/buyuk-kurabiyeler/parca-cikolatali-findikli-kurabiye",
             "slug": "parca-cikolatali-findikli-kurabiye",
             "aktif": true
           },
           {
             "ad": "Kayısılı Kurabiye",
             "fav": false,
-            "link": "/urunler/kayisili-kurabiye",
+            "link": "/urunler/buyuk-kurabiyeler/kayisili-kurabiye",
             "slug": "kayisili-kurabiye",
             "aktif": true
           },
           {
             "ad": "İncirli Makas Kurabiye",
             "fav": false,
-            "link": "/urunler/incirli-makas-kurabiye",
+            "link": "/urunler/buyuk-kurabiyeler/incirli-makas-kurabiye",
             "slug": "incirli-makas-kurabiye",
             "aktif": true
           },
           {
             "ad": "Emili Kurabiye",
             "fav": false,
-            "link": "/urunler/emili-kurabiye",
+            "link": "/urunler/buyuk-kurabiyeler/emili-kurabiye",
             "slug": "emili-kurabiye",
             "aktif": true
           },
           {
             "ad": "Elmalı Kurabiye",
             "fav": false,
-            "link": "/urunler/elmali-kurabiye",
+            "link": "/urunler/buyuk-kurabiyeler/elmali-kurabiye",
             "slug": "elmali-kurabiye",
             "aktif": true
           },
           {
             "ad": "Çatal Kurabiye",
             "fav": false,
-            "link": "/urunler/catal-kurabiye",
+            "link": "/urunler/buyuk-kurabiyeler/catal-kurabiye",
             "slug": "catal-kurabiye",
             "aktif": true
           },
           {
             "ad": "Pürüzyen Kurabiye",
             "fav": false,
-            "link": "/urunler/puruzyen-kurabiye",
+            "link": "/urunler/buyuk-kurabiyeler/puruzyen-kurabiye",
             "slug": "puruzyen-kurabiye",
             "aktif": true
           },
           {
             "ad": "İran Poğaçası",
             "fav": false,
-            "link": "/urunler/iran-pogacasi",
+            "link": "/urunler/buyuk-kurabiyeler/iran-pogacasi",
             "slug": "iran-pogacasi",
             "aktif": true
           }
@@ -785,63 +785,63 @@
           {
             "ad": "Sade Galeta",
             "fav": false,
-            "link": "/urunler/sade-galeta",
+            "link": "/urunler/galeta-cubuk-kokteyl/sade-galeta",
             "slug": "sade-galeta",
             "aktif": true
           },
           {
             "ad": "Susamlı Galeta",
             "fav": false,
-            "link": "/urunler/susamli-galeta",
+            "link": "/urunler/galeta-cubuk-kokteyl/susamli-galeta",
             "slug": "susamli-galeta",
             "aktif": true
           },
           {
             "ad": "Çekirdekli Galeta",
             "fav": false,
-            "link": "/urunler/cekirdekli-galeta",
+            "link": "/urunler/galeta-cubuk-kokteyl/cekirdekli-galeta",
             "slug": "cekirdekli-galeta",
             "aktif": true
           },
           {
             "ad": "Susamlı Kokteyl",
             "fav": false,
-            "link": "/urunler/susamli-kokteyl",
+            "link": "/urunler/galeta-cubuk-kokteyl/susamli-kokteyl",
             "slug": "susamli-kokteyl",
             "aktif": true
           },
           {
             "ad": "Çörekotlu Kokteyl",
             "fav": false,
-            "link": "/urunler/corekotlu-kokteyl",
+            "link": "/urunler/galeta-cubuk-kokteyl/corekotlu-kokteyl",
             "slug": "corekotlu-kokteyl",
             "aktif": true
           },
           {
             "ad": "Çekirdekli Kokteyl",
             "fav": false,
-            "link": "/urunler/cekirdekli-kokteyl",
+            "link": "/urunler/galeta-cubuk-kokteyl/cekirdekli-kokteyl",
             "slug": "cekirdekli-kokteyl",
             "aktif": true
           },
           {
             "ad": "Çörekotlu Çubuk",
             "fav": false,
-            "link": "/urunler/corekotlu-cubuk",
+            "link": "/urunler/galeta-cubuk-kokteyl/corekotlu-cubuk",
             "slug": "corekotlu-cubuk",
             "aktif": true
           },
           {
             "ad": "Çekirdekli Çubuk",
             "fav": false,
-            "link": "/urunler/cekirdekli-cubuk",
+            "link": "/urunler/galeta-cubuk-kokteyl/cekirdekli-cubuk",
             "slug": "cekirdekli-cubuk",
             "aktif": true
           },
           {
             "ad": "Selanik Gevreği",
             "fav": false,
-            "link": "/urunler/selanik-gevregi",
+            "link": "/urunler/galeta-cubuk-kokteyl/selanik-gevregi",
             "slug": "selanik-gevregi",
             "aktif": true
           }
@@ -870,70 +870,70 @@
           {
             "ad": "Cevizli Baklava",
             "fav": false,
-            "link": "/urunler/cevizli-baklava",
+            "link": "/urunler/baklava-serbetli/cevizli-baklava",
             "slug": "cevizli-baklava",
             "aktif": true
           },
           {
             "ad": "Fıstıklı Baklava",
             "fav": false,
-            "link": "/urunler/fistikli-baklava",
+            "link": "/urunler/baklava-serbetli/fistikli-baklava",
             "slug": "fistikli-baklava",
             "aktif": true
           },
           {
             "ad": "Özel Fıstıklı Baklava",
             "fav": false,
-            "link": "/urunler/ozel-fistikli-baklava",
+            "link": "/urunler/baklava-serbetli/ozel-fistikli-baklava",
             "slug": "ozel-fistikli-baklava",
             "aktif": true
           },
           {
             "ad": "Meşhur Fındıklı Cemil Usta Baklavası",
             "fav": false,
-            "link": "/urunler/meshur-findikli-cemil-usta-baklavasi",
+            "link": "/urunler/baklava-serbetli/meshur-findikli-cemil-usta-baklavasi",
             "slug": "meshur-findikli-cemil-usta-baklavasi",
             "aktif": true
           },
           {
             "ad": "Şöbiyet",
             "fav": false,
-            "link": "/urunler/sobiyet",
+            "link": "/urunler/baklava-serbetli/sobiyet",
             "slug": "sobiyet",
             "aktif": true
           },
           {
             "ad": "Midye Baklava",
             "fav": false,
-            "link": "/urunler/midye-baklava",
+            "link": "/urunler/baklava-serbetli/midye-baklava",
             "slug": "midye-baklava",
             "aktif": true
           },
           {
             "ad": "Ankara Sarma",
             "fav": false,
-            "link": "/urunler/ankara-sarma",
+            "link": "/urunler/baklava-serbetli/ankara-sarma",
             "slug": "ankara-sarma",
             "aktif": true
           },
           {
             "ad": "Kuru Baklava",
             "fav": false,
-            "link": "/urunler/kuru-baklava",
+            "link": "/urunler/baklava-serbetli/kuru-baklava",
             "slug": "kuru-baklava",
             "aktif": true
           },
           {
             "ad": "Fıstıklı Kadayıf",
             "fav": false,
-            "link": "/urunler/fistikli-kadayif",
+            "link": "/urunler/baklava-serbetli/fistikli-kadayif",
             "slug": "fistikli-kadayif",
             "aktif": true
           },
           {
             "ad": "Şekerpare",
             "fav": false,
-            "link": "/urunler/sekerpare",
+            "link": "/urunler/baklava-serbetli/sekerpare",
             "slug": "sekerpare",
             "aktif": true
           },
@@ -941,7 +941,7 @@
             "ad": "Güllaç",
             "not": "çilekli  ·  cevizli  ·  fındıklı kivili",
             "fav": false,
-            "link": "/urunler/gullac",
+            "link": "/urunler/baklava-serbetli/gullac",
             "slug": "gullac",
             "aktif": true
           }
@@ -975,21 +975,21 @@
             "ad": "Ekler",
             "not": "çikolatalı  ·  beyaz çikolatalı",
             "fav": true,
-            "link": "/urunler/ekler",
+            "link": "/urunler/sutlu-tatlilar/ekler",
             "slug": "ekler",
             "aktif": true
           },
           {
             "ad": "Sütlaç",
             "fav": false,
-            "link": "/urunler/sutlac",
+            "link": "/urunler/sutlu-tatlilar/sutlac",
             "slug": "sutlac",
             "aktif": true
           },
           {
             "ad": "Profiterol",
             "fav": false,
-            "link": "/urunler/profiterol",
+            "link": "/urunler/sutlu-tatlilar/profiterol",
             "slug": "profiterol",
             "aktif": true
           },
@@ -997,7 +997,7 @@
             "ad": "Trileçe",
             "not": "karamelli  ·  frambuazlı",
             "fav": false,
-            "link": "/urunler/trilece",
+            "link": "/urunler/sutlu-tatlilar/trilece",
             "slug": "trilece",
             "aktif": true
           },
@@ -1005,35 +1005,35 @@
             "ad": "Magnolia",
             "not": "çilekli  ·  muzlu  ·  fıstıklı  ·  frambuazlı",
             "fav": false,
-            "link": "/urunler/magnolia",
+            "link": "/urunler/sutlu-tatlilar/magnolia",
             "slug": "magnolia",
             "aktif": true
           },
           {
             "ad": "Oreo & Çilekli Magnolia",
             "fav": false,
-            "link": "/urunler/oreo-cilekli-magnolia",
+            "link": "/urunler/sutlu-tatlilar/oreo-cilekli-magnolia",
             "slug": "oreo-cilekli-magnolia",
             "aktif": true
           },
           {
             "ad": "Muzlu Malaga",
             "fav": false,
-            "link": "/urunler/muzlu-malaga",
+            "link": "/urunler/sutlu-tatlilar/muzlu-malaga",
             "slug": "muzlu-malaga",
             "aktif": true
           },
           {
             "ad": "Soğuk Baklava",
             "fav": false,
-            "link": "/urunler/soguk-baklava",
+            "link": "/urunler/sutlu-tatlilar/soguk-baklava",
             "slug": "soguk-baklava",
             "aktif": true
           },
           {
             "ad": "Fıstıklı Soğuk Kadayıf",
             "fav": false,
-            "link": "/urunler/fistikli-soguk-kadayif",
+            "link": "/urunler/sutlu-tatlilar/fistikli-soguk-kadayif",
             "slug": "fistikli-soguk-kadayif",
             "aktif": true
           }
@@ -1066,21 +1066,21 @@
           {
             "ad": "Zeytinyağlı Yaprak Sarma",
             "fav": true,
-            "link": "/urunler/zeytinyagli-yaprak-sarma",
+            "link": "/urunler/zeytinyagli-urunler/zeytinyagli-yaprak-sarma",
             "slug": "zeytinyagli-yaprak-sarma",
             "aktif": true
           },
           {
             "ad": "Beyaz Lahana Sarma",
             "fav": true,
-            "link": "/urunler/beyaz-lahana-sarma",
+            "link": "/urunler/zeytinyagli-urunler/beyaz-lahana-sarma",
             "slug": "beyaz-lahana-sarma",
             "aktif": true
           },
           {
             "ad": "Zeytinyağlı Patlıcan",
             "fav": false,
-            "link": "/urunler/zeytinyagli-patlican",
+            "link": "/urunler/zeytinyagli-urunler/zeytinyagli-patlican",
             "slug": "zeytinyagli-patlican",
             "aktif": true
           }
@@ -1114,7 +1114,7 @@
             "ad": "Frambuaz & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": true,
-            "link": "/urunler/frambuaz-cikolatali",
+            "link": "/urunler/pastalar/frambuaz-cikolatali",
             "slug": "frambuaz-cikolatali",
             "aktif": true
           },
@@ -1122,7 +1122,7 @@
             "ad": "Çilek & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/cilek-cikolatali",
+            "link": "/urunler/pastalar/cilek-cikolatali",
             "slug": "cilek-cikolatali",
             "aktif": true
           },
@@ -1130,7 +1130,7 @@
             "ad": "Çilek & Çikolatalı Mois",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/cilek-cikolatali-mois",
+            "link": "/urunler/pastalar/cilek-cikolatali-mois",
             "slug": "cilek-cikolatali-mois",
             "aktif": true
           },
@@ -1138,7 +1138,7 @@
             "ad": "Fıstık & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/fistik-cikolatali",
+            "link": "/urunler/pastalar/fistik-cikolatali",
             "slug": "fistik-cikolatali",
             "aktif": true
           },
@@ -1146,7 +1146,7 @@
             "ad": "Çikolata Parçacıklı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/cikolata-parcacikli",
+            "link": "/urunler/pastalar/cikolata-parcacikli",
             "slug": "cikolata-parcacikli",
             "aktif": true
           },
@@ -1154,7 +1154,7 @@
             "ad": "Profiterol & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/profiterol-cikolatali",
+            "link": "/urunler/pastalar/profiterol-cikolatali",
             "slug": "profiterol-cikolatali",
             "aktif": true
           },
@@ -1162,7 +1162,7 @@
             "ad": "Muz & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/muz-cikolatali",
+            "link": "/urunler/pastalar/muz-cikolatali",
             "slug": "muz-cikolatali",
             "aktif": true
           },
@@ -1170,7 +1170,7 @@
             "ad": "Muz & Fındıklı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/muz-findikli",
+            "link": "/urunler/pastalar/muz-findikli",
             "slug": "muz-findikli",
             "aktif": true
           },
@@ -1178,7 +1178,7 @@
             "ad": "Böğürtlen & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/bogurtlen-cikolatali",
+            "link": "/urunler/pastalar/bogurtlen-cikolatali",
             "slug": "bogurtlen-cikolatali",
             "aktif": true
           },
@@ -1186,7 +1186,7 @@
             "ad": "Orman Meyveli & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/orman-meyveli-cikolatali",
+            "link": "/urunler/pastalar/orman-meyveli-cikolatali",
             "slug": "orman-meyveli-cikolatali",
             "aktif": true
           },
@@ -1194,7 +1194,7 @@
             "ad": "Karışık Meyveli",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/karisik-meyveli",
+            "link": "/urunler/pastalar/karisik-meyveli",
             "slug": "karisik-meyveli",
             "aktif": true
           },
@@ -1202,7 +1202,7 @@
             "ad": "Karışık Meyveli & Çikolatalı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/karisik-meyveli-cikolatali",
+            "link": "/urunler/pastalar/karisik-meyveli-cikolatali",
             "slug": "karisik-meyveli-cikolatali",
             "aktif": true
           },
@@ -1210,7 +1210,7 @@
             "ad": "Krokan & Fındıklı",
             "not": "4–6  ·  6–8 kişilik",
             "fav": false,
-            "link": "/urunler/krokan-findikli",
+            "link": "/urunler/pastalar/krokan-findikli",
             "slug": "krokan-findikli",
             "aktif": true
           },
@@ -1218,7 +1218,7 @@
             "ad": "Şeker Hamurlu & Figürlü Pasta",
             "not": "özel tasarım",
             "fav": false,
-            "link": "/urunler/seker-hamurlu-figurlu-pasta",
+            "link": "/urunler/pastalar/seker-hamurlu-figurlu-pasta",
             "slug": "seker-hamurlu-figurlu-pasta",
             "aktif": true
           }
@@ -1255,70 +1255,70 @@
           {
             "ad": "Çilek & Çikolatalı",
             "fav": false,
-            "link": "/urunler/cilek-cikolatali-2",
+            "link": "/urunler/tek-pasta-dilim/cilek-cikolatali-2",
             "slug": "cilek-cikolatali-2",
             "aktif": true
           },
           {
             "ad": "Muz & Çikolatalı",
             "fav": false,
-            "link": "/urunler/muz-cikolatali-2",
+            "link": "/urunler/tek-pasta-dilim/muz-cikolatali-2",
             "slug": "muz-cikolatali-2",
             "aktif": true
           },
           {
             "ad": "Frambuaz & Çikolatalı",
             "fav": false,
-            "link": "/urunler/frambuaz-cikolatali-2",
+            "link": "/urunler/tek-pasta-dilim/frambuaz-cikolatali-2",
             "slug": "frambuaz-cikolatali-2",
             "aktif": true
           },
           {
             "ad": "Böğürtlen & Çikolatalı",
             "fav": false,
-            "link": "/urunler/bogurtlen-cikolatali-2",
+            "link": "/urunler/tek-pasta-dilim/bogurtlen-cikolatali-2",
             "slug": "bogurtlen-cikolatali-2",
             "aktif": true
           },
           {
             "ad": "Vişne & Çikolatalı",
             "fav": false,
-            "link": "/urunler/visne-cikolatali",
+            "link": "/urunler/tek-pasta-dilim/visne-cikolatali",
             "slug": "visne-cikolatali",
             "aktif": true
           },
           {
             "ad": "Fıstık & Çikolatalı",
             "fav": false,
-            "link": "/urunler/fistik-cikolatali-2",
+            "link": "/urunler/tek-pasta-dilim/fistik-cikolatali-2",
             "slug": "fistik-cikolatali-2",
             "aktif": true
           },
           {
             "ad": "Parça Çikolatalı",
             "fav": false,
-            "link": "/urunler/parca-cikolatali",
+            "link": "/urunler/tek-pasta-dilim/parca-cikolatali",
             "slug": "parca-cikolatali",
             "aktif": true
           },
           {
             "ad": "Karışık Meyveli",
             "fav": false,
-            "link": "/urunler/karisik-meyveli-2",
+            "link": "/urunler/tek-pasta-dilim/karisik-meyveli-2",
             "slug": "karisik-meyveli-2",
             "aktif": true
           },
           {
             "ad": "Çilek & Oreolu",
             "fav": false,
-            "link": "/urunler/cilek-oreolu",
+            "link": "/urunler/tek-pasta-dilim/cilek-oreolu",
             "slug": "cilek-oreolu",
             "aktif": true
           },
           {
             "ad": "Muz & Frambuazlı",
             "fav": false,
-            "link": "/urunler/muz-frambuazli",
+            "link": "/urunler/tek-pasta-dilim/muz-frambuazli",
             "slug": "muz-frambuazli",
             "aktif": true
           },
@@ -1326,7 +1326,7 @@
             "ad": "Kaşık Pasta",
             "not": "orman meyveli  ·  karamelli  ·  çilek çikolatalı",
             "fav": false,
-            "link": "/urunler/kasik-pasta",
+            "link": "/urunler/tek-pasta-dilim/kasik-pasta",
             "slug": "kasik-pasta",
             "aktif": true
           }
@@ -1359,35 +1359,35 @@
           {
             "ad": "Çilekli Rulo Pasta",
             "fav": true,
-            "link": "/urunler/cilekli-rulo-pasta",
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/cilekli-rulo-pasta",
             "slug": "cilekli-rulo-pasta",
             "aktif": true
           },
           {
             "ad": "Muzlu Rulo Pasta",
             "fav": true,
-            "link": "/urunler/muzlu-rulo-pasta",
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/muzlu-rulo-pasta",
             "slug": "muzlu-rulo-pasta",
             "aktif": true
           },
           {
             "ad": "Tartolet",
             "fav": true,
-            "link": "/urunler/tartolet",
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/tartolet",
             "slug": "tartolet",
             "aktif": true
           },
           {
             "ad": "Kesme Pasta",
             "fav": false,
-            "link": "/urunler/kesme-pasta",
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/kesme-pasta",
             "slug": "kesme-pasta",
             "aktif": true
           },
           {
             "ad": "Lezzet Topları",
             "fav": false,
-            "link": "/urunler/lezzet-toplari",
+            "link": "/urunler/tartolet-rulo-lezzet-toplari/lezzet-toplari",
             "slug": "lezzet-toplari",
             "aktif": true
           }
@@ -1420,35 +1420,35 @@
           {
             "ad": "Çikolata Dolgulu",
             "fav": false,
-            "link": "/urunler/cikolata-dolgulu",
+            "link": "/urunler/donut/cikolata-dolgulu",
             "slug": "cikolata-dolgulu",
             "aktif": true
           },
           {
             "ad": "Muz Dolgulu",
             "fav": false,
-            "link": "/urunler/muz-dolgulu",
+            "link": "/urunler/donut/muz-dolgulu",
             "slug": "muz-dolgulu",
             "aktif": true
           },
           {
             "ad": "Frambuaz Dolgulu",
             "fav": false,
-            "link": "/urunler/frambuaz-dolgulu",
+            "link": "/urunler/donut/frambuaz-dolgulu",
             "slug": "frambuaz-dolgulu",
             "aktif": true
           },
           {
             "ad": "Çilek Dolgulu",
             "fav": false,
-            "link": "/urunler/cilek-dolgulu",
+            "link": "/urunler/donut/cilek-dolgulu",
             "slug": "cilek-dolgulu",
             "aktif": true
           },
           {
             "ad": "Karamel Dolgulu",
             "fav": false,
-            "link": "/urunler/karamel-dolgulu",
+            "link": "/urunler/donut/karamel-dolgulu",
             "slug": "karamel-dolgulu",
             "aktif": true
           }
@@ -1477,14 +1477,14 @@
           {
             "ad": "Kola",
             "fav": false,
-            "link": "/urunler/kola",
+            "link": "/urunler/icecekler/kola",
             "slug": "kola",
             "aktif": true
           },
           {
             "ad": "Çamlıca Portakal",
             "fav": false,
-            "link": "/urunler/camlica-portakal",
+            "link": "/urunler/icecekler/camlica-portakal",
             "slug": "camlica-portakal",
             "aktif": true
           },
@@ -1492,14 +1492,14 @@
             "ad": "Meyve Suyu",
             "not": "vişne  ·  şeftali  ·  kayısı  ·  karışık",
             "fav": false,
-            "link": "/urunler/meyve-suyu",
+            "link": "/urunler/icecekler/meyve-suyu",
             "slug": "meyve-suyu",
             "aktif": true
           },
           {
             "ad": "Limonata",
             "fav": false,
-            "link": "/urunler/limonata",
+            "link": "/urunler/icecekler/limonata",
             "slug": "limonata",
             "aktif": true
           },
@@ -1507,7 +1507,7 @@
             "ad": "Didi",
             "not": "şeftali  ·  limon",
             "fav": false,
-            "link": "/urunler/didi",
+            "link": "/urunler/icecekler/didi",
             "slug": "didi",
             "aktif": true
           },
@@ -1515,7 +1515,7 @@
             "ad": "Soda",
             "not": "sade  ·  limonlu",
             "fav": false,
-            "link": "/urunler/soda",
+            "link": "/urunler/icecekler/soda",
             "slug": "soda",
             "aktif": true
           },
@@ -1523,7 +1523,7 @@
             "ad": "Süt",
             "not": "sade  ·  çikolatalı  ·  çilekli  ·  muzlu",
             "fav": false,
-            "link": "/urunler/sut",
+            "link": "/urunler/icecekler/sut",
             "slug": "sut",
             "aktif": true
           }
@@ -1698,7 +1698,7 @@
           },
           {
             "label": "Ürünler",
-            "href": "/urunler/urunler"
+            "href": "/urunler"
           },
           {
             "label": "Özel Pastalar",
@@ -1710,7 +1710,7 @@
           },
           {
             "label": "Blog",
-            "href": "/blog/blog"
+            "href": "/blog"
           }
         ]
       },

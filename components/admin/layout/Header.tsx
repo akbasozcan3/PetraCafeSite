@@ -48,7 +48,7 @@ export default function Header({ onMobileMenuOpen }: HeaderProps) {
 
         <div className="flex items-center gap-2">
           <a
-            href="/index.htm"
+            href="/"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden rounded-xl border border-white/[0.08] px-3 py-1.5 text-xs font-medium text-[#8A9BB0] transition hover:border-[#C8703A]/30 hover:text-[#EEE9E0] sm:inline-flex"

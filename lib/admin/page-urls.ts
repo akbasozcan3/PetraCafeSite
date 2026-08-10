@@ -4,7 +4,7 @@ export interface PageUrlOption {
 }
 
 export const SITE_PAGE_URLS: PageUrlOption[] = [
-  { label: "Ürünler Ana Sayfası", value: "urunler/urunler" },
+  { label: "Ürünler Ana Sayfası", value: "/urunler" },
   { label: "Ekmek Çeşitleri", value: "urunler/ekmek-cesitleri/ekmek-cesitleri" },
   { label: "Ekşi Mayalı Ekmekler", value: "urunler/eksi-mayali-ekmekler/eksi-mayali-ekmekler" },
   { label: "Simit, Poğaça & Açma", value: "urunler/simit-pogaca-acma/simit-pogaca-acma" },

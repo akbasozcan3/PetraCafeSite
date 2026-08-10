@@ -21,7 +21,6 @@ import {
   DoorOpen,
   Info,
   Plug,
-  ShoppingBag,
   type LucideIcon,
 } from "lucide-react";
 import type { Permission } from "@/lib/admin/roles";
@@ -220,22 +219,6 @@ export const adminNavItems: AdminNavItem[] = [
     icon: DatabaseBackup,
     group: "Sistem",
     permission: "backup:manage",
-  },
-  {
-    href: "/admin/web-siparisler",
-    label: "Web Siparişleri",
-    description: "Site sepet / checkout siparişleri",
-    icon: ShoppingBag,
-    group: "Sistem",
-    permission: "content:write",
-  },
-  {
-    href: "/admin/musteriler",
-    label: "Müşteriler",
-    description: "Storefront üyelik hesapları",
-    icon: Users,
-    group: "Sistem",
-    permission: "content:write",
   },
   {
     href: "/admin/integrations",

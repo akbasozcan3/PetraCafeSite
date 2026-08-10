@@ -1,6 +1,8 @@
 # Taşdelen Fırıncı — Production Kurulum
 
-Next.js 16 tabanlı hibrit site: statik HTML (`public/`) + JSON CMS + React admin paneli.
+Next.js 16 App Router: SSR ana sayfa (`/`), katalog (`/urunler`), blog (`/blog`), admin (`/admin`).  
+Sipariş: WhatsApp / telefon — web sepet ve üyelik yok.  
+Yayın adımları: **[PUBLISH.md](./PUBLISH.md)**.
 
 ## Gereksinimler
 
@@ -11,18 +13,18 @@ Next.js 16 tabanlı hibrit site: statik HTML (`public/`) + JSON CMS + React admi
 
 ```bash
 cp .env.example .env.local
-# JWT_SECRET değiştirin (production'da zorunlu)
+# JWT_SECRET değiştirin (production'da zorunlu, ≥32 karakter)
 
 npm install
 npm run init-admin -- ozcanakbas38@gmail.com Sifre123!
 npm run seed-content    # galeri, yorumlar, makaleler (ilk kurulum)
-npm run import-menu     # menüyü index.htm'den içe aktar (gerekirse)
+npm run import-menu     # menüyü içe aktar (gerekirse)
 npm run dev
 ```
 
 | Adres | URL |
 |-------|-----|
-| **Site** | http://localhost:3010/index.htm |
+| **Site** | http://localhost:3010/ |
 | **Admin** | http://localhost:3010/admin/login |
 
 > Port **3010** kullanılır. `3000` başka projeler için ayrılmış olabilir.
@@ -78,7 +80,7 @@ Panelden **Ayarlar → Şifre Değiştir** ile şifre güncellenebilir.
 
 ```
 public/          → Next.js tarafından sunulan statik dosyalar
-  index.htm      → Ana sayfa
+  app/page.tsx   → Ana sayfa (/)
   urunler/       → Ürün kategori sayfaları (uzantısız HTML)
   blog/          → Blog sayfaları
   assets/        → CSS, JS, görseller (junction → /assets)
@@ -137,7 +139,7 @@ pm2 save
 - [ ] `GET /api/v1/health` → `{"ok":true}`
 - [ ] `GET /api/content` menü/görseller geliyor
 - [ ] Admin login çalışıyor (`/admin/login`)
-- [ ] Ana sayfa: `https://DOMAIN/index.htm`
+- [ ] Ana sayfa: `https://DOMAIN/`
 - [ ] HTTPS + Nginx reverse proxy
 
 ### Nginx
@@ -218,7 +220,7 @@ git push -u origin main
 ```bash
 npm run init-admin -- email sifre   # Admin hesabı oluştur
 npm run seed-content               # Boş galeri/yorum/makale doldur
-npm run import-menu                # Menüyü index.htm'den aktar
+npm run import-menu                # Menüyü CMS'e aktar
 npm run build:vercel               # Vercel build (standalone yok)
 npm run preflight                  # typecheck + vercel build
 ```

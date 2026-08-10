@@ -24,19 +24,30 @@ export async function PUT(request: Request) {
     if (typeof body.phone === "string") patch.phone = body.phone.trim();
 
     if (Array.isArray(body.addresses)) {
+      let sawDefault = false;
       const addresses: CustomerAddress[] = body.addresses.map(
-        (a: Partial<CustomerAddress>) => ({
-          id: a.id || crypto.randomUUID(),
-          title: String(a.title || "Adres").trim(),
-          fullName: String(a.fullName || user.name).trim(),
-          phone: String(a.phone || user.phone).trim(),
-          city: String(a.city || "").trim(),
-          district: String(a.district || "").trim(),
-          addressLine: String(a.addressLine || "").trim(),
-          notes: a.notes ? String(a.notes) : "",
-          isDefault: Boolean(a.isDefault),
-        })
+        (a: Partial<CustomerAddress>) => {
+          let isDefault = Boolean(a.isDefault);
+          if (isDefault) {
+            if (sawDefault) isDefault = false;
+            else sawDefault = true;
+          }
+          return {
+            id: a.id || crypto.randomUUID(),
+            title: String(a.title || "Adres").trim(),
+            fullName: String(a.fullName || user.name).trim(),
+            phone: String(a.phone || user.phone).trim(),
+            city: String(a.city || "").trim(),
+            district: String(a.district || "").trim(),
+            addressLine: String(a.addressLine || "").trim(),
+            notes: a.notes ? String(a.notes) : "",
+            isDefault,
+          };
+        }
       );
+      if (addresses.length && !addresses.some((a) => a.isDefault)) {
+        addresses[0].isDefault = true;
+      }
       patch.addresses = addresses;
     }
 

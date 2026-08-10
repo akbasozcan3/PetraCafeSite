@@ -24,22 +24,25 @@ function getJwtKey() {
   return new TextEncoder().encode(weak ? FALLBACK_SECRET : secret);
 }
 
-function isExtensionlessHtmlPath(pathname: string) {
-  const clean = pathname.replace(/\/$/, "");
-  if (clean === "/urunler" || clean === "/blog") return true;
-  if (pathname.startsWith("/urunler/") || pathname.startsWith("/blog/")) {
-    const last = clean.split("/").pop() || "";
-    return last.length > 0 && !last.includes(".");
-  }
-  return false;
-}
+const SHOP_GONE = [
+  "/sepet",
+  "/favoriler",
+  "/checkout",
+  "/hesabim",
+  "/admin/musteriler",
+  "/admin/web-siparisler",
+];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (isExtensionlessHtmlPath(pathname)) {
-    const subpath = pathname.replace(/^\//, "").replace(/\/$/, "");
-    return NextResponse.rewrite(new URL(`/api/static-html/${subpath}`, request.url));
+  if (
+    SHOP_GONE.some(
+      (p) => pathname === p || pathname.startsWith(`${p}/`)
+    )
+  ) {
+    const dest = pathname.startsWith("/admin") ? "/admin" : "/urunler";
+    return NextResponse.redirect(new URL(dest, request.url));
   }
 
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
@@ -60,5 +63,15 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/urunler/:path*", "/blog/:path*", "/urunler", "/blog"],
+  matcher: [
+    "/admin/:path*",
+    "/sepet",
+    "/sepet/:path*",
+    "/favoriler",
+    "/favoriler/:path*",
+    "/checkout",
+    "/checkout/:path*",
+    "/hesabim",
+    "/hesabim/:path*",
+  ],
 };

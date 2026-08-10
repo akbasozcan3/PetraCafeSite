@@ -1,4 +1,4 @@
-import * as THREE from '../../vendor/three.module.js?v=20260810x3';
+import * as THREE from '../../vendor/three.module.js?v=20260810x7';
 import {
   FOV,
   SCENE_W,
@@ -7,9 +7,9 @@ import {
   CAMERA_PRESETS,
   PARALLAX,
   sceneUnitsFromUV,
-  DOOR_UV,
-} from './config.js?v=20260810x3';
-import { clamp, easeInOut, lerp, range } from './utils.js?v=20260810x3';
+  resolveDoorUv,
+} from './config.js?v=20260810x7';
+import { clamp, easeInOut, lerp, range } from './utils.js?v=20260810x7';
 
 /** Kamera konumu ve projeksiyon */
 export class CameraController {

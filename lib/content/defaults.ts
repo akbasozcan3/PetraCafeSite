@@ -19,12 +19,12 @@ export const DEFAULT_CONTENT: SiteContent = {
     ctaHref: "tel:+905523400202",
     links: [
       { label: "Hakkımızda", href: "#hakkimizda" },
-      { label: "Ürünler", href: "urunler/urunler" },
+      { label: "Ürünler", href: "/urunler" },
       { label: "Özel Pastalar", href: "#pasta" },
       { label: "Galeri", href: "#galeri" },
       { label: "Yorumlar", href: "#yorumlar" },
       { label: "S.S.S.", href: "#sss" },
-      { label: "Blog", href: "blog/blog" },
+      { label: "Blog", href: "/blog" },
       { label: "İletişim", href: "#iletisim" },
     ],
   },
@@ -199,10 +199,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         baslik: "Fırın",
         links: [
           { label: "Hakkımızda", href: "#hakkimizda" },
-          { label: "Ürünler", href: "/urunler/urunler" },
+          { label: "Ürünler", href: "/urunler" },
           { label: "Özel Pastalar", href: "#pasta" },
           { label: "Galeri", href: "#galeri" },
-          { label: "Blog", href: "/blog/blog" },
+          { label: "Blog", href: "/blog" },
         ],
       },
       {

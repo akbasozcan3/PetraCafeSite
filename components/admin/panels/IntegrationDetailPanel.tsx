@@ -53,6 +53,22 @@ type Product = {
   name: string;
   categoryName?: string;
   price?: string | number | null;
+  image?: string | null;
+};
+
+type SyncPreview = {
+  productCount: number;
+  created: number;
+  updated: number;
+  unchanged: number;
+  errors: number;
+  priceChanges: Array<{
+    name: string;
+    externalId: string;
+    oldPrice?: string;
+    newPrice?: string;
+    delta?: number;
+  }>;
 };
 
 type Order = {
@@ -94,6 +110,7 @@ export default function IntegrationDetailPanel({ providerSlug }: { providerSlug:
   const [settings, setSettings] = useState<Settings | null>(null);
   const [form, setForm] = useState<Record<string, string | boolean>>({});
   const [products, setProducts] = useState<Product[]>([]);
+  const [preview, setPreview] = useState<SyncPreview | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
 
   const base = `/api/v1/admin/integrations/${apiId}`;
@@ -181,9 +198,17 @@ export default function IntegrationDetailPanel({ providerSlug }: { providerSlug:
     setMenuLoading(true);
     setError("");
     try {
-      const data = await apiJson<{ products: Product[] }>(`${base}/menu`);
+      const data = await apiJson<{ products: Product[]; preview?: SyncPreview }>(
+        `${base}/menu`
+      );
       setProducts(data.products || []);
-      setOk(`${data.products?.length || 0} ürün alındı.`);
+      setPreview(data.preview || null);
+      const p = data.preview;
+      setOk(
+        p
+          ? `Önizleme: ${p.created} yeni · ${p.updated} güncellenecek · ${p.unchanged} aynı · ${p.errors} hatalı`
+          : `${data.products?.length || 0} ürün alındı.`
+      );
     } catch (e) {
       setError(e instanceof Error ? e.message : "Menü alınamadı");
     } finally {
@@ -192,6 +217,10 @@ export default function IntegrationDetailPanel({ providerSlug }: { providerSlug:
   };
 
   const sync = async () => {
+    if (!preview) {
+      setError("Önce «Menüleri Getir» ile önizleme alın, sonra senkron başlatın.");
+      return;
+    }
     setSyncing(true);
     setError("");
     setOk("");
@@ -203,12 +232,18 @@ export default function IntegrationDetailPanel({ providerSlug }: { providerSlug:
           updated: number;
           skipped: number;
           unmatched: number;
+          priceChanges?: SyncPreview["priceChanges"];
         };
       }>(`${base}/sync`, { method: "POST", body: "{}" });
       const r = data.result;
+      const priceNote =
+        r.priceChanges?.length
+          ? ` · ${r.priceChanges.length} fiyat değişikliği`
+          : "";
       setOk(
-        `✓ ${r.productCount} ürün bulundu · ✓ ${r.updated} güncellendi · ✓ ${r.created} yeni · ⚠ ${r.unmatched} eşleştirilemedi`
+        `✓ ${r.productCount} ürün · ✓ ${r.updated} güncellendi · ✓ ${r.created} yeni · ⚠ ${r.unmatched} eşleştirilemedi${priceNote}`
       );
+      setPreview(null);
       await load();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Senkron başarısız");
@@ -380,12 +415,41 @@ export default function IntegrationDetailPanel({ providerSlug }: { providerSlug:
               </Button>
             )}
             {caps.has("syncMenu") && (
-              <Button onClick={() => void sync()} disabled={syncing}>
+              <Button onClick={() => void sync()} disabled={syncing || !preview}>
                 {syncing ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
-                Şimdi Senkronize Et
+                Senkr. Başlat
               </Button>
             )}
           </div>
+          {preview && (
+            <div className="mb-4 grid gap-2 rounded-xl border border-white/[0.08] bg-[#0D1117] p-4 text-sm text-[#EEE9E0] sm:grid-cols-4">
+              <div>
+                <div className="text-[#8A9BB0]">Yeni</div>
+                <strong>{preview.created}</strong>
+              </div>
+              <div>
+                <div className="text-[#8A9BB0]">Güncellenecek</div>
+                <strong>{preview.updated}</strong>
+              </div>
+              <div>
+                <div className="text-[#8A9BB0]">Değişmeyecek</div>
+                <strong>{preview.unchanged}</strong>
+              </div>
+              <div>
+                <div className="text-[#8A9BB0]">Hatalı</div>
+                <strong>{preview.errors}</strong>
+              </div>
+              {preview.priceChanges?.length ? (
+                <div className="sm:col-span-4 text-[#C8703A]">
+                  {preview.priceChanges.length} fiyat değişikliği bulundu
+                  {preview.priceChanges[0]?.delta != null
+                    ? ` (ör. ${preview.priceChanges[0].name}: ${preview.priceChanges[0].oldPrice} → ${preview.priceChanges[0].newPrice})`
+                    : ""}
+                  . Ürün bazında «otomatik fiyat güncelle» kapalıysa fiyat korunur.
+                </div>
+              ) : null}
+            </div>
+          )}
           {products.length > 0 && (
             <div className="max-h-72 overflow-auto rounded-xl border border-white/[0.06]">
               <table className="w-full text-left text-sm">

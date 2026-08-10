@@ -72,8 +72,14 @@ export function ensureProductSlugs(content: SiteContent): SiteContent {
         u.slug = uniqueSlug(base, used);
       }
 
-      u.link = productHref(u.slug!);
+      const catSlug =
+        g.slug ||
+        categorySlugFromHref(g.link) ||
+        categorySlugFromHref(g.tumLink) ||
+        slugifyTr(g.ad);
+      u.link = productHref(u.slug!, catSlug || undefined);
       if (u.aktif === undefined) u.aktif = true;
+      if (!u.source) u.source = "local";
     }
   }
 

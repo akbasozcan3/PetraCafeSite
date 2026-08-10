@@ -182,7 +182,7 @@ export default function DashboardPage() {
                   </p>
                 </div>
                 <a
-                  href="/index.htm"
+                  href="/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-xl bg-[#C8703A] px-4 py-2.5 text-sm font-medium text-[#0A0F18] transition hover:bg-[#E8915A]"

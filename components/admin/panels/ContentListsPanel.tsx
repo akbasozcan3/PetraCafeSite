@@ -349,7 +349,7 @@ export function MakalelerPanel() {
       }}
       topNode={
         <div className="mb-4 space-y-3">
-          <SectionHint href="/blog/blog" label="Blog" />
+          <SectionHint href="/blog" label="Blog" />
           <p className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-xs text-[#8A9BB0]">
             Site menüsündeki “Blog” yazısı: <span className="text-[#C8D0DC]">Üst Menü & Logo</span> veya{" "}
             <span className="text-[#C8D0DC]">Alt Sayfa Metinleri → Blog</span>. Yazılar burada yönetilir.

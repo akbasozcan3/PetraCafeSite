@@ -151,6 +151,22 @@ export async function verifyEmailToken(rawToken: string) {
   });
 }
 
+/** Oturumdaki kullanıcı için yeni doğrulama e-postası token'ı üretir */
+export async function issueEmailVerification(userId: string) {
+  const user = await findCustomerById(userId);
+  if (!user) throw new Error("Kullanıcı bulunamadı.");
+  if (user.emailVerifiedAt) throw new Error("E-posta zaten doğrulanmış.");
+  const rawToken = crypto.randomBytes(32).toString("hex");
+  const verifyTokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");
+  const verifyExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+  const next = await updateCustomer(user.id, {
+    verifyTokenHash,
+    verifyExpiresAt,
+  });
+  if (!next) throw new Error("Doğrulama oluşturulamadı.");
+  return { customer: next, verifyToken: rawToken };
+}
+
 export async function startPasswordReset(email: string) {
   const user = await findCustomerByEmail(email);
   if (!user) return null; // don't leak

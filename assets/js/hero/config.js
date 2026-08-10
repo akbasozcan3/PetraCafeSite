@@ -1,6 +1,6 @@
 /** Hero sahne sabitleri — orijinal scene.js ile aynı değerler */
 /** sync-public.mjs bu değeri CACHE ile senkronlar */
-export const CACHE_V = '20260810x3';
+export const CACHE_V = '20260810x7';
 
 export const ASSETS = {
   cephe: `/assets/img/hero-cephe.webp?v=${CACHE_V}`,
@@ -17,6 +17,25 @@ export const FRAME_PAD = 6;
 
 /** Kapı UV — aynı boy, yatay ortalı, alta yapışık (üst dokunulmadı) */
 export const DOOR_UV = { u0: 0.368, u1: 0.633, v0: 0.552, v1: 1 };
+
+/** Admin CMS `hero.doorUv` varsa onu kullan */
+export function resolveDoorUv() {
+  try {
+    const u = window.__FIRINCI_CONTENT?.hero?.doorUv;
+    if (
+      u &&
+      typeof u.u0 === "number" &&
+      typeof u.u1 === "number" &&
+      typeof u.v0 === "number" &&
+      typeof u.v1 === "number"
+    ) {
+      return u;
+    }
+  } catch {
+    /* ignore */
+  }
+  return DOOR_UV;
+}
 
 export const CAMERA_PRESETS = {
   yatay: { zoom: 0.96, y: -0.95 },

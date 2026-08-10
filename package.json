@@ -12,7 +12,7 @@
     "prepare-standalone": "node scripts/prepare-standalone.mjs",
     "start": "next start -p 3010",
     "start:standalone": "node .next/standalone/server.js",
-    "lint": "next lint",
+    "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "preflight": "npm run typecheck && npm run build:vercel",
     "init-admin": "node -r ./scripts/load-env.cjs scripts/init-admin.mjs",
