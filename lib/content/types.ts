@@ -256,6 +256,8 @@ export interface SayfalarContent {
     eyebrow: string;
     baslikSablon: string;
     lead: string;
+    /** Hub alt not (örn. sunum menüsü uyarısı) */
+    altNot?: string;
   };
   urunKategori: {
     eyebrow: string;
@@ -266,6 +268,11 @@ export interface SayfalarContent {
     ctaWaLabel: string;
     relatedBaslik: string;
     relatedHepsi: string;
+    /** Ürün detay not satırları (satır satır) */
+    detayNotlari?: string;
+    detayWaLabel?: string;
+    detayTelLabel?: string;
+    fiyatSorulur?: string;
   };
   blog: {
     eyebrow: string;
@@ -283,6 +290,8 @@ export interface SiteContent {
     fallbackMark: string;
     fallbackTagline: string;
     scrollHint: string;
+    /** Kapı yüklenirken gösterilen kısa metin */
+    bootText?: string;
     /** Kapı açılınca hoş geldiniz yazısı */
     welcomeAktif?: boolean;
     welcomeEyebrow?: string;

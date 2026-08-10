@@ -113,27 +113,44 @@ html.no-motion [data-reveal-mask] {
   clip-path: none !important;
 }
 
-/* Override legacy style.css [data-fade]{opacity:0} until motion boots */
-.site-home [data-fade] {
+/* Override legacy style.css [data-fade]{opacity:0} until GSAP boots */
+html:not(.gsap-ready):not(.home-anim) .site-home [data-fade] {
   opacity: 1;
   transform: none;
 }
-.site-home [data-reveal-mask] {
+html:not(.gsap-ready):not(.home-anim) .site-home [data-reveal-mask] {
   clip-path: none;
 }
-html.home-anim .site-home [data-fade]:not(.is-in) {
+html.home-anim:not(.gsap-ready) .site-home [data-fade]:not(.is-in) {
   opacity: 0;
   transform: translateY(12px);
+  transition: opacity 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-html.home-anim .site-home [data-reveal-mask]:not(.is-in) {
-  clip-path: inset(0 0 100% 0);
-}
-html.home-anim .site-home [data-fade].is-in {
+html.home-anim:not(.gsap-ready) .site-home [data-fade].is-in {
   opacity: 1;
   transform: none;
 }
-html.home-anim .site-home [data-reveal-mask].is-in {
+html.home-anim:not(.gsap-ready) .site-home [data-reveal-mask]:not(.is-in) {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+html.home-anim:not(.gsap-ready) .site-home [data-reveal-mask].is-in {
   clip-path: none;
+}
+
+/* Split-word headlines (GSAP yPercent) */
+.site-home .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+.site-home .w i {
+  display: inline-block;
+  font-style: inherit;
+  will-change: transform;
 }
 
 .site-home {

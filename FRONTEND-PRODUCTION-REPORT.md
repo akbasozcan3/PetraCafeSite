@@ -1,23 +1,26 @@
-# Frontend üretim durumu — sunum sitesi
+# Frontend — sunum sitesi
 
-**Rol:** Fırın sunum / katalog sitesi. Web sepet, üyelik, favori yok.  
-Sipariş: WhatsApp + telefon (+ opsiyonel Trendyol Go / Yemeksepeti entegrasyonları admin’de).
+**Rol:** Fırın sunum / katalog. Web sepet, üyelik, favori yok.  
+Sipariş: WhatsApp + telefon. Katalog sync: Trendyol Go / Yemeksepeti (admin entegrasyonları).
 
-## Canlı yüzey
+## Canlı JS
 
-| Yol | Durum |
-|-----|--------|
-| `/` | SSR ana sayfa (CMS + hero island) |
-| `/urunler` | Menü kataloğu (kart grid, İncele) |
-| `/urunler/...` | Ürün detay — 1200×500 vitrin, WhatsApp / telefon |
-| `/blog` | App Router blog |
-| `/admin` | CMS |
-| `/hesabim`, `/sepet`, `/favoriler`, `/checkout` | → `/urunler` |
+| Kaynak | Görev |
+|--------|--------|
+| `public/assets/js/hero/*` | 3B kapı sahnesi (Three.js) |
+| `HomeMotion` → GSAP / ScrollTrigger / Lenis | Scroll fade + başlık split |
+| React (Next) | Nav, menü, ürün, blog, footer |
 
-## Marka
+**Kaldırıldı:** `cms-ext.js`, `main.js`, `site-loader.js`, `content.js`, `content-api.js`, `scene.js`
 
-Cream / charcoal / brass (`style.css` + `storefront.css`). Playfair + Inter.
+## Yönetim
 
-## Bilinçli olarak kaldırılan e-ticaret
+Tüm içerik `/admin` panellerinden. Kaydet → CMS → SSR sayfalar.
 
-Nav: giriş, üye, arama, favori, sepet. Sticky cart ve müşteri auth UI silindi.
+| Bölüm | Admin |
+|-------|--------|
+| Kapı / marquee / boot metni | `/admin/hero` |
+| Üst menü | `/admin/navbar` |
+| Ürünler & kategoriler | `/admin/menu` |
+| Sayfa metinleri / ürün detay notları | `/admin/sayfalar` |
+| İletişim / WhatsApp | `/admin/iletisim`, `/admin/site` |

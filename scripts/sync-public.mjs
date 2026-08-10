@@ -97,11 +97,6 @@ function walk(dir, out = []) {
 function bumpCache(html) {
   return html
     .replace(/assets\/css\/style\.css(\?v=[^"'&\s]+)?/g, `assets/css/style.css?v=${CACHE}`)
-    .replace(/assets\/js\/site-loader\.js(\?v=[^"'&\s]+)?/g, `assets/js/site-loader.js?v=${CACHE}`)
-    .replace(/assets\/js\/cms-ext\.js(\?v=[^"'&\s]+)?/g, `assets/js/cms-ext.js?v=${CACHE}`)
-    .replace(/assets\/js\/content\.js(\?v=[^"'&\s]+)?/g, `assets/js/content.js?v=${CACHE}`)
-    .replace(/assets\/js\/content-api\.js(\?v=[^"'&\s]+)?/g, `assets/js/content-api.js?v=${CACHE}`)
-    .replace(/assets\/js\/main\.js(\?v=[^"'&\s]+)?/g, `assets/js/main.js?v=${CACHE}`)
     .replace(/assets\/js\/hero\/index\.js(\?v=[^"'&\s]+)?/g, `assets/js/hero/index.js?v=${CACHE}`)
     .replace(/\/assets\/img\/hero-cephe\.webp(\?v=[^"'&\s]+)?/g, `/assets/img/hero-cephe.webp?v=${CACHE}`)
     .replace(/\/assets\/img\/hero-mobile\.webp(\?v=[^"'&\s]+)?/g, `/assets/img/hero-mobile.webp?v=${CACHE}`)
@@ -125,22 +120,7 @@ function bumpStyleHeroUrls() {
 }
 
 function bumpSiteLoaderHeroUrls() {
-  const files = [
-    path.join(root, "assets", "js", "site-loader.js"),
-    path.join(root, "public", "assets", "js", "site-loader.js"),
-  ];
-  for (const full of files) {
-    if (!fs.existsSync(full)) continue;
-    let code = fs.readFileSync(full, "utf8");
-    const next = code.replace(
-      /\/assets\/img\/hero-mobile\.webp(\?v=[^"'&\s]*)?/g,
-      `/assets/img/hero-mobile.webp?v=${CACHE}`,
-    ).replace(
-      /v=20260810x\w+/g,
-      `v=${CACHE}`,
-    );
-    if (next !== code) fs.writeFileSync(full, next, "utf8");
-  }
+  /* legacy site-loader removed — no-op */
 }
 
 /** ES modül alt import'larına ?v= — yoksa eski camera-controller cache'te kalır */
@@ -168,22 +148,10 @@ function bustHeroModuleImports() {
   }
 }
 
-function ensureScripts(html, depth) {
-  const prefix = depth === 0 ? "assets/js/" : depth === 1 ? "../assets/js/" : "../../assets/js/";
-  let out = html;
-  if (!/site-loader\.js/.test(out) && /cms-ext\.js/.test(out)) {
-    out = out.replace(
-      /(<script[^>]+cms-ext\.js[^>]*><\/script>)/i,
-      `<script src="${prefix}site-loader.js?v=${CACHE}" defer=""></script>\n$1`
-    );
-  }
-  if (!/cms-ext\.js/.test(out) && /<\/body>/i.test(out)) {
-    out = out.replace(
-      /<\/body>/i,
-      `<script src="${prefix}site-loader.js?v=${CACHE}" defer=""></script>\n<script src="${prefix}cms-ext.js?v=${CACHE}" defer=""></script>\n</body>`
-    );
-  }
-  return bumpCache(out);
+function ensureScripts(html, _depth) {
+  /* Legacy cms-ext / site-loader retired — strip if present */
+  return bumpCache(html)
+    .replace(/<script[^>]+(?:site-loader|cms-ext|content-api|content\.js|main\.js)[^>]*><\/script>\s*/gi, "");
 }
 
 function fixUrunlerHub(html) {
@@ -233,11 +201,6 @@ const assetPairs = [
   ["assets/css/style.css", "public/assets/css/style.css"],
   ["styles/storefront.css", "public/assets/css/storefront.css"],
   ["assets/css/home-next.css", "public/assets/css/home-next.css"],
-  ["assets/js/cms-ext.js", "public/assets/js/cms-ext.js"],
-  ["assets/js/site-loader.js", "public/assets/js/site-loader.js"],
-  ["assets/js/content.js", "public/assets/js/content.js"],
-  ["assets/js/content-api.js", "public/assets/js/content-api.js"],
-  ["assets/js/main.js", "public/assets/js/main.js"],
 ];
 for (const [a, b] of assetPairs) {
   const src = path.join(root, a);

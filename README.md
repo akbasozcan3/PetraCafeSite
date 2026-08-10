@@ -1,7 +1,10 @@
 # Taşdelen Fırıncı — Production Kurulum
 
 Next.js 16 App Router: SSR ana sayfa (`/`), katalog (`/urunler`), blog (`/blog`), admin (`/admin`).  
-Sipariş: WhatsApp / telefon — web sepet ve üyelik yok.  
+Sipariş: WhatsApp / telefon — web sepet ve üyelik yok.
+
+**CMS:** Tüm metin, menü, görsel, hero, iletişim admin’den (`/admin`) yönetilir.  
+Canlı JS yalnızca `hero/` (3B kapı) + GSAP motion; eski `cms-ext` / `main.js` kaldırıldı.  
 Yayın adımları: **[PUBLISH.md](./PUBLISH.md)**.
 
 ## Gereksinimler

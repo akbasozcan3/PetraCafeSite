@@ -154,9 +154,6 @@ export default function SiteNav({
                 {link.label}
               </a>
             ))}
-            <Link href="/urunler" onClick={() => setOpen(false)}>
-              Ürünler
-            </Link>
           </nav>
           <a
             href={resolveHref(navbar.ctaHref || "tel:+905523400202")}

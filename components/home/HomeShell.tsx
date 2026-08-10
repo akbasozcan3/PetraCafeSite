@@ -4,10 +4,10 @@ import SiteFooter from "@/components/site/SiteFooter";
 import type { SiteContent } from "@/lib/content/types";
 import HomeHeroScripts from "@/components/home/HomeHeroScripts";
 import HomeMotion from "@/components/home/HomeMotion";
-import HomeDocumentFlag from "@/components/home/HomeDocumentFlag";
 
 /**
- * Ana sayfa kabuğu — sunum sitesi (katalog + WhatsApp).
+ * Ana sayfa kabuğu — sunum sitesi.
+ * JS: yalnızca hero/ + HomeMotion (GSAP). Legacy cms-ext/main yok.
  */
 export default function HomeShell({
   content,
@@ -36,8 +36,7 @@ export default function HomeShell({
         href="/css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       />
       <link rel="stylesheet" href="/assets/css/style.css?v=20260810x9" />
-      <link rel="stylesheet" href="/assets/css/nav-actions.css?v=6" />
-      <link rel="stylesheet" href="/assets/css/home-next.css?v=3" />
+      <link rel="stylesheet" href="/assets/css/home-next.css?v=4" />
       <link rel="preload" as="image" href={`${poster}?v=20260810x4`} />
       <link
         rel="preload"
@@ -54,7 +53,6 @@ export default function HomeShell({
       <main id="icerik">{children}</main>
       <SiteFooter content={content} />
 
-      <HomeDocumentFlag />
       <HomeHeroScripts
         boot={{
           images: content.images || {},

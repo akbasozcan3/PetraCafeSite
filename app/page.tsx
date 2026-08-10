@@ -104,20 +104,21 @@ export default async function HomePage() {
           addressCountry: "TR",
         }
       : undefined,
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: "00:00",
-      closes: "23:59",
-    },
+    openingHoursSpecification: content.iletisim?.saatler
+      ? {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          description: content.iletisim.saatler,
+        }
+      : undefined,
   };
 
   const websiteLd = {
@@ -125,11 +126,6 @@ export default async function HomePage() {
     "@type": "WebSite",
     name: brand,
     url: canonical,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${canonical.replace(/\/$/, "")}/urunler?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 
   const faqLd =

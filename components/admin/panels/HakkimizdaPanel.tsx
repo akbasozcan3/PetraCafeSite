@@ -402,6 +402,16 @@ export function HeroPanel() {
                 })
               }
             />
+            <Input
+              label="Yüklenirken metin"
+              value={content.hero.bootText || "Kapı açılıyor"}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  hero: { ...content.hero, bootText: e.target.value },
+                })
+              }
+            />
           </div>
           <div className="space-y-4 rounded-xl border border-white/[0.06] bg-[#0D1117]/60 p-4">
             <div className="flex flex-wrap items-center justify-between gap-3">

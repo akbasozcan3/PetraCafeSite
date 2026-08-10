@@ -94,6 +94,19 @@ export default function SayfalarPanel() {
               }
             />
           </div>
+          <div className="md:col-span-2">
+            <Input
+              label="Alt not (hub)"
+              value={sayfalar.urunler.altNot || ""}
+              onChange={(e) =>
+                setSayfalar({
+                  ...sayfalar,
+                  urunler: { ...sayfalar.urunler, altNot: e.target.value },
+                })
+              }
+              placeholder="Sunum menüsü — sepet yok…"
+            />
+          </div>
         </div>
         <p className="mt-2 text-xs text-[#8A9BB0]">
           Başlık şablonunda {"{n}"} = kategori sayısı, {"{m}"} = ürün sayısı.
@@ -140,6 +153,65 @@ export default function SayfalarPanel() {
               }
             />
           </div>
+          <div className="md:col-span-2">
+            <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">
+              Ürün detay notları (her satır bir madde)
+            </label>
+            <textarea
+              className={fieldClass}
+              rows={3}
+              value={sayfalar.urunKategori.detayNotlari || ""}
+              onChange={(e) =>
+                setSayfalar({
+                  ...sayfalar,
+                  urunKategori: {
+                    ...sayfalar.urunKategori,
+                    detayNotlari: e.target.value,
+                  },
+                })
+              }
+              placeholder={"Gel al veya telefon / WhatsApp siparişi\n7/24 WhatsApp ile hızlı yanıt"}
+            />
+          </div>
+          <Input
+            label="Detay WhatsApp butonu"
+            value={sayfalar.urunKategori.detayWaLabel || ""}
+            onChange={(e) =>
+              setSayfalar({
+                ...sayfalar,
+                urunKategori: {
+                  ...sayfalar.urunKategori,
+                  detayWaLabel: e.target.value,
+                },
+              })
+            }
+          />
+          <Input
+            label="Detay telefon butonu"
+            value={sayfalar.urunKategori.detayTelLabel || ""}
+            onChange={(e) =>
+              setSayfalar({
+                ...sayfalar,
+                urunKategori: {
+                  ...sayfalar.urunKategori,
+                  detayTelLabel: e.target.value,
+                },
+              })
+            }
+          />
+          <Input
+            label="Fiyat yoksa metin"
+            value={sayfalar.urunKategori.fiyatSorulur || ""}
+            onChange={(e) =>
+              setSayfalar({
+                ...sayfalar,
+                urunKategori: {
+                  ...sayfalar.urunKategori,
+                  fiyatSorulur: e.target.value,
+                },
+              })
+            }
+          />
         </div>
       </section>
 

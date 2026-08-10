@@ -34,19 +34,27 @@ export default async function UrunlerPage() {
     (n, g) => n + (g.urunler || []).filter(isProductActive).length,
     0
   );
+  const hub = content.sayfalar?.urunler;
+  const brand =
+    content.brand?.displayName || content.seo?.siteName || "Taşdelen Fırıncı";
+  const title =
+    hub?.baslikSablon
+      ?.replace("{n}", String(cats.length))
+      .replace("{m}", String(total)) || `${brand} Menü`;
+  const lead =
+    hub?.lead ||
+    `${cats.length} kategori · ${total} ürün. İnceleyin; sipariş için WhatsApp veya telefon.`;
 
   return (
     <div className="ys">
       <header className="ys-hero">
         <div className="ys-hero__text">
-          <p className="ys-hero__eyebrow">Menü</p>
-          <h1>Taşdelen Fırıncı Menü</h1>
-          <p>
-            {cats.length} kategori · {total} ürün. İnceleyin; sipariş için
-            WhatsApp veya telefon.
-          </p>
+          <p className="ys-hero__eyebrow">{hub?.eyebrow || "Menü"}</p>
+          <h1>{title}</h1>
+          <p>{lead}</p>
           <p className="ys-hero__note">
-            Sunum menüsü — sepet yok; fırından gel-al veya iletişime geçin.
+            {hub?.altNot ||
+              "Sunum menüsü — sepet yok; fırından gel-al veya iletişime geçin."}
           </p>
         </div>
       </header>

@@ -227,6 +227,12 @@ export default function MenuPanel() {
             onChange={(e) => updateMenu({ hepsiLink: e.target.value })}
           />
         </div>
+        <Input
+          label="Kategori “tümü” link şablonu"
+          value={menu.tumMetinSablon || "{ad} hakkında bilgi →"}
+          onChange={(e) => updateMenu({ tumMetinSablon: e.target.value })}
+        />
+        <p className="text-xs text-[#6B7A94]">{"{ad}"} yerine kategori adı yazılır</p>
         <textarea
           value={menu.not || ""}
           onChange={(e) => updateMenu({ not: e.target.value })}

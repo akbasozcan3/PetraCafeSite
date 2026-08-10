@@ -67,8 +67,20 @@ export default async function ProductPage({ params }: Props) {
   const phoneRaw =
     content.iletisim?.telefonHam ||
     content.iletisim?.telefon ||
-    "+905523400202";
-  const phoneHref = `tel:${String(phoneRaw).replace(/[^\d+]/g, "") || "+905523400202"}`;
+    "";
+  const phoneHref = phoneRaw
+    ? `tel:${String(phoneRaw).replace(/[^\d+]/g, "")}`
+    : undefined;
+  const whatsappBase =
+    content.iletisim?.whatsapp ||
+    content.iletisim?.telefonHam ||
+    content.iletisim?.telefon ||
+    "";
+  const uk = content.sayfalar?.urunKategori;
+  const detailNotes = (uk?.detayNotlari || "")
+    .split(/\n+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
 
   const specs = [
     product.icindekiler
@@ -90,7 +102,13 @@ export default async function ProductPage({ params }: Props) {
     description: product.aciklama || product.not || undefined,
     image:
       gallery.primary.source !== "fallback" ? gallery.primary.url : undefined,
-    brand: { "@type": "Brand", name: "Taşdelen Fırıncı" },
+    brand: {
+      "@type": "Brand",
+      name:
+        content.brand?.displayName ||
+        content.seo?.siteName ||
+        "Taşdelen Fırıncı",
+    },
     ...(priceNum != null
       ? {
           offers: {
@@ -132,6 +150,11 @@ export default async function ProductPage({ params }: Props) {
         categoryHref={catHref}
         aciklama={product.aciklama || product.not || undefined}
         phoneHref={phoneHref}
+        whatsappBase={whatsappBase}
+        notes={detailNotes}
+        waLabel={uk?.detayWaLabel}
+        telLabel={uk?.detayTelLabel}
+        priceAskLabel={uk?.fiyatSorulur}
       />
 
       {specs.length ? (

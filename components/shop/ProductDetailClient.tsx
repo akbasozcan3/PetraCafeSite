@@ -10,12 +10,16 @@ export default function ProductDetailClient({
   image,
   gallery,
   varyantlar,
-  whatsappHref,
+  whatsappBase,
   ozelSiparis,
   categoryName,
   categoryHref,
   aciklama,
   phoneHref,
+  notes,
+  waLabel,
+  telLabel,
+  priceAskLabel,
 }: {
   ad: string;
   slug: string;
@@ -24,25 +28,42 @@ export default function ProductDetailClient({
   href: string;
   gallery: string[];
   varyantlar?: string[];
-  whatsappHref?: string;
+  /** wa.me / whatsapp link without message (CMS iletisim) */
+  whatsappBase?: string;
   ozelSiparis?: boolean;
   categoryName?: string;
   categoryHref?: string;
   aciklama?: string;
   phoneHref?: string;
+  notes?: string[];
+  waLabel?: string;
+  telLabel?: string;
+  priceAskLabel?: string;
 }) {
   const [active, setActive] = useState(gallery[0] || image);
   const [variant, setVariant] = useState(varyantlar?.[0] || "");
   const hasPrice = Boolean(fiyat);
-  const tel = phoneHref || "tel:+905523400202";
+  const tel = phoneHref || "";
+  const noteLines = notes?.filter(Boolean) || [];
+  const ask = priceAskLabel || "Fiyat sorulur";
 
   const wa = useMemo(() => {
-    if (whatsappHref) return whatsappHref;
     const text = encodeURIComponent(
       `Merhaba, ${ad}${variant ? ` (${variant})` : ""} hakkında bilgi / sipariş vermek istiyorum.`
     );
-    return `https://wa.me/905523400202?text=${text}`;
-  }, [ad, variant, whatsappHref]);
+    const base = (whatsappBase || "").trim();
+    if (!base) return `https://wa.me/?text=${text}`;
+    if (base.includes("text=")) return base;
+    const sep = base.includes("?") ? "&" : "?";
+    // normalize wa.me/905... or full whatsapp URL
+    if (/wa\.me\//i.test(base) || /whatsapp\.com/i.test(base)) {
+      return `${base.replace(/\?.*$/, "")}${sep}text=${text}`;
+    }
+    const digits = base.replace(/\D/g, "");
+    return digits
+      ? `https://wa.me/${digits}?text=${text}`
+      : `https://wa.me/?text=${text}`;
+  }, [ad, variant, whatsappBase]);
 
   return (
     <div className="pd">
@@ -87,7 +108,7 @@ export default function ProductDetailClient({
         <h1 className="pd__title">{ad}</h1>
 
         <p className={`pd__price${!hasPrice ? " pd__price--ask" : ""}`}>
-          {hasPrice ? fiyat : "Fiyat sorulur"}
+          {hasPrice ? fiyat : ask}
         </p>
 
         {aciklama ? <p className="pd__lead">{aciklama}</p> : null}
@@ -121,17 +142,22 @@ export default function ProductDetailClient({
             target="_blank"
             rel="noopener noreferrer"
           >
-            WhatsApp ile Sipariş
+            {waLabel || "WhatsApp ile Sipariş"}
           </a>
-          <a className="pd__btn pd__btn--ghost" href={tel}>
-            Telefonla Ara
-          </a>
+          {tel ? (
+            <a className="pd__btn pd__btn--ghost" href={tel}>
+              {telLabel || "Telefonla Ara"}
+            </a>
+          ) : null}
         </div>
 
-        <ul className="pd__notes">
-          <li>Gel al veya telefon / WhatsApp siparişi</li>
-          <li>7/24 WhatsApp ile hızlı yanıt</li>
-        </ul>
+        {noteLines.length ? (
+          <ul className="pd__notes">
+            {noteLines.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </div>
   );

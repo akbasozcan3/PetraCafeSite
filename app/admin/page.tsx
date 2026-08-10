@@ -83,7 +83,7 @@ export default function DashboardPage() {
           <>
             <AdminPageHeader
               title={`Hoş geldiniz, ${user?.name ?? "Admin"}`}
-              description="Ana sayfa bölümlerini soldan seçin — her yazı buradan değişir."
+              description="Sunum sitesi — menü, metin, görsel ve iletişim buradan yönetilir. Web sepet / üyelik yok."
             />
 
             <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

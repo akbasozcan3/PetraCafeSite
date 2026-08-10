@@ -82,7 +82,7 @@ export default function HomeHero({ content }: { content: SiteContent }) {
   const mobile = resolveMediaUrl(
     images.heroMobile || "/assets/img/hero-mobile.webp"
   );
-  // Match cms-ext / hero JS: only when explicitly true
+  // Match hero JS / admin: only when explicitly true
   const welcomeOn = hero.welcomeAktif === true;
 
   return (
@@ -108,7 +108,9 @@ export default function HomeHero({ content }: { content: SiteContent }) {
         </picture>
         <div className="gate__boot" id="gateBoot" role="status" aria-live="polite">
           <div className="gate__boot-spin" aria-hidden="true" />
-          <p className="gate__boot-text">Kapı açılıyor</p>
+          <p className="gate__boot-text">
+            {hero.bootText || "Kapı açılıyor"}
+          </p>
         </div>
         <canvas id="scene" aria-hidden="true" />
         <div className="gate__fallback" id="fallback" hidden>
