@@ -63,7 +63,7 @@ export default function HomeHeroScripts({
       w.__FIRINCI_SCENE = w.__FIRINCI_SCENE || "loading";
       const s = document.createElement("script");
       s.type = "module";
-      s.src = "/assets/js/hero/index.js?v=20260810x5";
+      s.src = "/assets/js/hero/index.js?v=20260811x1";
       s.dataset.homeHero = "1";
       document.body.appendChild(s);
     }

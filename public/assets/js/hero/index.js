@@ -1,6 +1,6 @@
-import { CanvasEngine } from './canvas-engine.js?v=20260810x7';
-import { ASSETS } from './config.js?v=20260810x7';
-import { range } from './utils.js?v=20260810x7';
+import { CanvasEngine } from './canvas-engine.js?v=20260811x1';
+import { ASSETS } from './config.js?v=20260811x1';
+import { range } from './utils.js?v=20260811x1';
 
 window.__FIRINCI_SCENE = 'loading';
 
@@ -186,16 +186,16 @@ async function start3D() {
   const assets = await resolveAssets();
   await yieldFrame();
 
-  const engine = new CanvasEngine(canvas, gate, {
-    isMobile: isNarrow(),
-    isTouch,
-    reducedMotion,
-    assets,
-    onContextLost: () => fail('WebGL context lost'),
-    onProgress: (p) => updateUi(p),
-  });
-
   try {
+    const engine = new CanvasEngine(canvas, gate, {
+      isMobile: isNarrow(),
+      isTouch,
+      reducedMotion,
+      assets,
+      onContextLost: () => fail('WebGL context lost'),
+      onProgress: (p) => updateUi(p),
+    });
+
     await engine.init();
     window.__FIRINCI_SCENE = 'ok';
     window.__firinciHeroRefresh = () => {
