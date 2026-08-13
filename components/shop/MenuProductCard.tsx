@@ -26,25 +26,25 @@ export default function MenuProductCard({
 }: MenuProductCardProps) {
   return (
     <li className="ys-item">
-      <Link href={href} className="ys-item__media" tabIndex={-1}>
-        <ProductImage src={imageUrl} alt={imageAlt} />
-      </Link>
-      <div className="ys-item__body">
-        <div className="ys-item__top">
-          <Link href={href}>
+      <Link href={href} className="ys-item__card">
+        <span className="ys-item__media">
+          <ProductImage src={imageUrl} alt={imageAlt} />
+        </span>
+        <span className="ys-item__body">
+          <span className="ys-item__top">
             <h3>{ad}</h3>
-          </Link>
-        </div>
-        {desc ? <p className="ys-item__desc">{desc}</p> : null}
-        <div className="ys-item__foot">
-          <strong className={!hasPrice ? "ys-price--ask" : undefined}>
-            {fiyatLabel}
-          </strong>
-          <Link className="ys-item__link" href={href}>
-            {ozelSiparis ? "Özel sipariş" : "İncele"}
-          </Link>
-        </div>
-      </div>
+          </span>
+          {desc ? <span className="ys-item__desc">{desc}</span> : null}
+          <span className="ys-item__foot">
+            <strong className={!hasPrice ? "ys-price--ask" : undefined}>
+              {fiyatLabel}
+            </strong>
+            <span className="ys-item__link">
+              {ozelSiparis ? "Özel sipariş" : "İncele"}
+            </span>
+          </span>
+        </span>
+      </Link>
     </li>
   );
 }

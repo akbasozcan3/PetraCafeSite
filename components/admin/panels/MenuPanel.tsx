@@ -111,9 +111,6 @@ export default function MenuPanel() {
         ...menu,
         hepsiLink: absSitePath(menu.hepsiLink) || menu.hepsiLink,
         gruplar,
-        hepsiMetin: menu.hepsiMetin?.includes("→")
-          ? `${gruplar.length} kategoride ${totalProducts} çeşidin tamamını inceleyin →`
-          : menu.hepsiMetin,
       };
       const res = await api.updateContent({
         menu: nextMenu,
@@ -214,19 +211,6 @@ export default function MenuPanel() {
             });
           }}
         />
-        <div className="grid gap-4 md:grid-cols-2">
-          <Input
-            label="Tüm ürünler buton metni"
-            value={menu.hepsiMetin || ""}
-            onChange={(e) => updateMenu({ hepsiMetin: e.target.value })}
-          />
-          <Select
-            label="Tüm ürünler sayfa adresi"
-            value={menu.hepsiLink || "/urunler"}
-            options={SITE_PAGE_URLS}
-            onChange={(e) => updateMenu({ hepsiLink: e.target.value })}
-          />
-        </div>
         <Input
           label="Kategori “tümü” link şablonu"
           value={menu.tumMetinSablon || "{ad} hakkında bilgi →"}

@@ -64,13 +64,22 @@ export default async function CategoryPage({ params }: Props) {
     <div className="ys ys--category">
       <header className="ys-hero ys-hero--sm">
         <p className="oc-crumb">
-          <Link href="/urunler">Menü</Link> / {cat.ad}
+          <Link href="/urunler">Ürünler</Link>
+          <span aria-hidden="true"> / </span>
+          {cat.ad}
         </p>
+        <p className="ys-hero__eyebrow">Kategori</p>
         <h1>{cat.ad}</h1>
         {cat.aciklama ? <p>{cat.aciklama}</p> : null}
+        <p className="ys-hero__note">
+          {products.length
+            ? `${products.length} çeşit — inceleyin, fırından gel-al veya iletişime geçin.`
+            : "Bu kategoride henüz ürün yok."}
+        </p>
       </header>
 
       <div className="ys-chips" aria-label="Kategoriler">
+        <Link href="/urunler">Tümü</Link>
         {allCats.map((g) => {
           const s = getCategorySlug(g);
           return (

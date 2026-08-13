@@ -13,8 +13,6 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
   const menu = content.menu;
   const cats = listCategories(content);
   const legend = menu?.legend || "★ işaretliler en çok tercih edilenler.";
-  const hepsi = menu?.hepsiMetin || "Tüm menüyü inceleyin →";
-  const hepsiLink = menu?.hepsiLink || "/urunler";
 
   return (
     <section className="section section--warm" id="menu">
@@ -39,11 +37,6 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
               {menu.not}
             </p>
           ) : null}
-          <p className="menu__hepsi" data-fade="">
-            <Link className="btn btn--lg" href={hepsiLink}>
-              {hepsi.replace(/\s*→\s*$/, "")}
-            </Link>
-          </p>
         </div>
 
         <div className="menu">

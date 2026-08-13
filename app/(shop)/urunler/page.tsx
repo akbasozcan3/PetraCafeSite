@@ -85,9 +85,11 @@ export default async function UrunlerPage() {
             <div className="ys-chips" aria-label="Hızlı kategori">
               {cats.map((g) => {
                 const slug = getCategorySlug(g);
+                const count = (g.urunler || []).filter(isProductActive).length;
                 return (
                   <a key={slug} href={`#kat-${slug}`}>
                     {g.ad}
+                    <em>{count}</em>
                   </a>
                 );
               })}

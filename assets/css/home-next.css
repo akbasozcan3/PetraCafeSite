@@ -267,3 +267,33 @@ html.home-anim:not(.gsap-ready) .site-home [data-reveal-mask].is-in {
   color: var(--muted, #6e6a5c);
 }
 
+/* Katalog CTA kaldırıldı */
+.site-home .menu__hepsi {
+  display: none !important;
+}
+
+/* Buton hover: yazı her zaman okunur */
+.site-home a.btn:not(.btn--light):not(.nav__cta):hover,
+.site-home .btn:not(.btn--light):not(.nav__cta):hover,
+.site-home a.mobile-menu__cta:hover {
+  background: #1f2416 !important;
+  color: #f4eee1 !important;
+}
+.site-home a.nav__cta,
+.site-home a.nav__cta:hover,
+.site-home a.btn--light,
+.site-home a.btn--light:hover {
+  color: #0d0f0a !important;
+}
+.site-home a.nav__cta:hover,
+.site-home a.btn--light:hover {
+  background: #d9a441 !important;
+}
+
+.site-home #menu .menu__list a:hover .menu__name,
+.site-home #menu .menu__list a:hover .menu__name__label,
+.site-home #menu .menu__group h3 a:hover,
+.site-home #menu .menu__tum:hover {
+  color: #b8842c;
+}
+
