@@ -149,6 +149,15 @@ export default function HomeMotion() {
           ScrollTrigger.update();
           w.__firinciHeroRefresh?.();
         });
+        window.addEventListener(
+          "resize",
+          () => {
+            (
+              window as unknown as { __firinciHeroResize?: () => void }
+            ).__firinciHeroResize?.();
+          },
+          { passive: true }
+        );
         tickerFn = (time: number) => {
           lenis?.raf(time * 1000);
         };

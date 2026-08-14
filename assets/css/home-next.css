@@ -177,6 +177,22 @@ html.home-anim:not(.gsap-ready) .site-home [data-reveal-mask].is-in {
   object-fit: cover;
 }
 
+/* Poster, 3B ilk kare boyanana kadar kalsın — ara sıra siyah hero */
+html.scene-ready:not(.scene-painted) .site-home .gate__poster,
+html.scene-ready:not(.scene-painted) .gate__poster {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+}
+html.scene-painted .site-home .gate__poster,
+html.scene-painted .gate__poster {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+html.scene-ready #scene {
+  opacity: 1 !important;
+}
+
 /* Ensure sticky hero stage paints on ink, not paper bleed-through */
 .site-home .gate {
   background: var(--ink, #0d0f0a);

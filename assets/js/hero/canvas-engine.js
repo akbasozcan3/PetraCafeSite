@@ -1,10 +1,10 @@
-import * as THREE from '../../vendor/three.module.js?v=20260811x1';
-import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260811x1';
-import { ASSETS, doorTiming } from './config.js?v=20260811x1';
-import { ScrollController } from './scroll-controller.js?v=20260811x1';
-import { DoorController } from './door-controller.js?v=20260811x1';
-import { Particles } from './particles.js?v=20260811x1';
-import { CameraController, createUnits } from './camera-controller.js?v=20260811x1';
+import * as THREE from '../../vendor/three.module.js?v=20260813x1';
+import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260813x1';
+import { ASSETS, doorTiming } from './config.js?v=20260813x1';
+import { ScrollController } from './scroll-controller.js?v=20260813x1';
+import { DoorController } from './door-controller.js?v=20260813x1';
+import { Particles } from './particles.js?v=20260813x1';
+import { CameraController, createUnits } from './camera-controller.js?v=20260813x1';
 
 function yieldFrame() {
   return new Promise((resolve) => {
@@ -23,6 +23,7 @@ export class CanvasEngine {
     this.assets = options.assets || ASSETS;
     this.onContextLost = options.onContextLost || null;
     this.onProgress = typeof options.onProgress === 'function' ? options.onProgress : null;
+    this.onFirstPaint = typeof options.onFirstPaint === 'function' ? options.onFirstPaint : null;
     this.timing = doorTiming(this.isTouch);
 
     this.units = createUnits();
@@ -51,9 +52,16 @@ export class CanvasEngine {
     this.particles = null;
     this.rafId = 0;
     this._lastFrame = performance.now();
+    this._mustPaint = 12;
+    this.hasPainted = false;
+    this._ro = null;
     this._boundVisibility = () => {
       this.pageVisible = document.visibilityState !== 'hidden';
-      if (this.pageVisible) this.wake(true);
+      if (this.pageVisible) {
+        this.visible = true;
+        this._mustPaint = Math.max(this._mustPaint, 4);
+        this.wake(true);
+      }
     };
   }
 
@@ -122,6 +130,11 @@ export class CanvasEngine {
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
     window.addEventListener('resize', () => this.onResize(), { passive: true });
     document.addEventListener('visibilitychange', this._boundVisibility);
+    window.addEventListener('pageshow', () => {
+      this.visible = true;
+      this._mustPaint = Math.max(this._mustPaint, 4);
+      this.onResize();
+    });
 
     if (!this.isTouch) {
       window.addEventListener(
@@ -134,11 +147,20 @@ export class CanvasEngine {
       );
     }
 
+    const stage = this.canvas?.parentElement;
+    if (typeof ResizeObserver !== 'undefined' && stage) {
+      this._ro = new ResizeObserver(() => this.onResize());
+      this._ro.observe(stage);
+    }
+
     if ('IntersectionObserver' in window && this.gate) {
       new IntersectionObserver(
         (entries) => {
-          this.visible = entries[0].isIntersecting;
-          // fromScroll:true → idle/DPR bump tetikleme
+          const e = entries[0];
+          const r = e?.boundingClientRect;
+          // Layout henüz hazır değilse çizmeyi kesme — siyah hero’nun ana sebebi
+          if (r && (r.width < 2 || r.height < 2) && !e.isIntersecting) return;
+          this.visible = e.isIntersecting || (r && r.height > 8);
           if (this.visible) this.wake(true);
         },
         { threshold: 0 },
@@ -241,7 +263,12 @@ export class CanvasEngine {
 
   loop = () => {
     this.rafId = requestAnimationFrame(this.loop);
-    if (!this.visible || !this.pageVisible) return;
+    if (this._mustPaint > 0) {
+      this._mustPaint -= 1;
+      this.visible = true;
+    } else if (!this.visible || !this.pageVisible) {
+      return;
+    }
 
     const now = performance.now();
     const dt = Math.min(50, now - this._lastFrame);
@@ -274,11 +301,20 @@ export class CanvasEngine {
     this.particles.update(progress, this.time);
     this.renderer.render(this.scene, this.camera);
     if (this.onProgress) this.onProgress(progress);
+    if (!this.hasPainted) {
+      const { w, h } = this.viewportSize();
+      if (w > 8 && h > 8) {
+        this.hasPainted = true;
+        this.onFirstPaint?.();
+      }
+    }
   }
 
   destroy() {
     cancelAnimationFrame(this.rafId);
     this.rafId = 0;
+    this._ro?.disconnect();
+    this._ro = null;
     document.removeEventListener('visibilitychange', this._boundVisibility);
     this.scroll.unmount();
     this.renderer?.dispose();

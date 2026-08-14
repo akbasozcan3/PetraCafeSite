@@ -1,14 +1,18 @@
-import { CanvasEngine } from './canvas-engine.js?v=20260811x1';
-import { ASSETS } from './config.js?v=20260811x1';
-import { range } from './utils.js?v=20260811x1';
+import { CanvasEngine } from './canvas-engine.js?v=20260813x1';
+import { ASSETS } from './config.js?v=20260813x1';
+import { range } from './utils.js?v=20260813x1';
 
-window.__FIRINCI_SCENE = 'loading';
+window.__FIRINCI_SCENE = window.__FIRINCI_SCENE || 'loading';
 
-const canvas = document.getElementById('scene');
-const fallback = document.getElementById('fallback');
-const gate = document.querySelector('.gate');
-const scrollHint = document.getElementById('scrollHint');
-const gateBoot = document.getElementById('gateBoot');
+function el() {
+  return {
+    canvas: document.getElementById('scene'),
+    fallback: document.getElementById('fallback'),
+    gate: document.querySelector('.gate'),
+    scrollHint: document.getElementById('scrollHint'),
+    gateBoot: document.getElementById('gateBoot'),
+  };
+}
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch = matchMedia('(pointer: coarse)').matches;
@@ -34,6 +38,7 @@ function safeHeroUrl(preferred, fallbackUrl) {
 }
 
 function hideBoot() {
+  const { gateBoot } = el();
   if (!gateBoot) return;
   gateBoot.hidden = true;
   gateBoot.setAttribute('aria-hidden', 'true');
@@ -45,7 +50,12 @@ function markReady() {
   hideBoot();
 }
 
+function markPainted() {
+  document.documentElement.classList.add('scene-painted');
+}
+
 function showPoster(reason) {
+  const { canvas, fallback, scrollHint } = el();
   window.__FIRINCI_SCENE = reason === 'fail' ? 'fail' : 'poster';
   console.info('[Fırıncı] Hero poster:', reason || 'poster');
   hideBoot();
@@ -57,14 +67,13 @@ function showPoster(reason) {
     canvas.setAttribute('aria-hidden', 'true');
   }
 
-  document.documentElement.classList.remove('scene-ready');
+  document.documentElement.classList.remove('scene-ready', 'scene-painted');
   document.documentElement.classList.toggle('scene-failed', reason === 'fail');
   document.documentElement.classList.add('scene-poster');
 
   const poster = document.querySelector('.gate__poster');
   const images = window.__FIRINCI_CONTENT?.images || {};
   if (poster) {
-    // WebGL yoksa: mobilde dikey kompozit, masaüstünde cephe
     const mobileUrl = absUrl(ASSETS.mobile) || '/assets/img/hero-mobile.webp';
     const desktopSafe = safeHeroUrl(images.heroPoster, images.heroCephe || ASSETS.cephe);
     poster.src = isNarrow() ? mobileUrl : desktopSafe;
@@ -86,6 +95,7 @@ function fail(reason) {
 }
 
 function updateUi(progress) {
+  const { scrollHint } = el();
   const gateIntro = document.getElementById('gateIntro');
   const heroWelcome = document.getElementById('heroWelcome');
   if (scrollHint) {
@@ -158,10 +168,13 @@ async function resolveAssets() {
 
 let posterScrollBound = false;
 function bindPosterScroll() {
+  const { gate } = el();
   if (!gate || posterScrollBound) return;
   posterScrollBound = true;
   const onScroll = () => {
-    const max = Math.max(1, gate.offsetHeight - window.innerHeight);
+    const g = el().gate;
+    if (!g) return;
+    const max = Math.max(1, g.offsetHeight - window.innerHeight);
     const progress = Math.min(1, Math.max(0, window.scrollY / max));
     updateUi(progress);
   };
@@ -169,19 +182,46 @@ function bindPosterScroll() {
   onScroll();
 }
 
+function waitForStage(node, ms = 1800) {
+  const stage = node?.parentElement || node;
+  if (stage && stage.clientWidth > 8 && stage.clientHeight > 8) {
+    return Promise.resolve(true);
+  }
+  return new Promise((resolve) => {
+    const t0 = performance.now();
+    const tick = () => {
+      const r = stage?.getBoundingClientRect?.();
+      if (r && r.width > 8 && r.height > 8) {
+        resolve(true);
+        return;
+      }
+      if (performance.now() - t0 > ms) {
+        resolve(false);
+        return;
+      }
+      requestAnimationFrame(tick);
+    };
+    tick();
+  });
+}
+
+let engineRef = null;
+let booting = false;
+
 async function start3D() {
+  const { canvas, gate } = el();
   if (!canvas || !gate) {
     fail('canvas veya gate bulunamadı');
     return;
   }
 
-  // Önceki poster stillerini temizle — canvas görünsün
   canvas.style.display = '';
   canvas.style.opacity = '';
   canvas.style.pointerEvents = '';
   canvas.removeAttribute('aria-hidden');
-  document.documentElement.classList.remove('scene-poster', 'scene-failed');
+  document.documentElement.classList.remove('scene-poster', 'scene-failed', 'scene-painted');
 
+  await waitForStage(canvas);
   await yieldFrame();
   const assets = await resolveAssets();
   await yieldFrame();
@@ -194,17 +234,35 @@ async function start3D() {
       assets,
       onContextLost: () => fail('WebGL context lost'),
       onProgress: (p) => updateUi(p),
+      onFirstPaint: () => {
+        markPainted();
+        hideBoot();
+      },
     });
 
     await engine.init();
+    engineRef = engine;
     window.__FIRINCI_SCENE = 'ok';
-    window.__firinciHeroRefresh = () => {
-      engine.onResize();
-      engine.refreshScroll();
-    };
-    // CMS hot-swap mesh çoğaltır; boot zaten resolveAssets kullandı
+    window.__firinciHeroRefresh = () => engine.refreshScroll();
+    window.__firinciHeroResize = () => engine.onResize();
     window.__firinciHeroSetAssets = function () {};
     markReady();
+    // Poster, ilk kare boyanana kadar kalsın (scene-painted)
+    if (engine.hasPainted) markPainted();
+    window.setTimeout(() => {
+      if (!engine.hasPainted) {
+        engine.onResize();
+        engine.refreshScroll();
+        engine._mustPaint = 8;
+      }
+    }, 400);
+    window.setTimeout(() => {
+      if (!engine.hasPainted && window.__FIRINCI_SCENE === 'ok') {
+        console.warn('[Fırıncı] Hero ilk kare gecikti → poster');
+        showPoster('no-first-paint');
+        bindPosterScroll();
+      }
+    }, 2500);
     console.info('[Fırıncı] 3B kapı sahnesi aktif.', isNarrow() ? '(mobil)' : '(masaüstü)');
   } catch (err) {
     fail(err?.message || String(err));
@@ -213,32 +271,48 @@ async function start3D() {
 }
 
 async function boot() {
+  if (booting) return;
+  const { canvas, gate } = el();
   if (!canvas || !gate) {
     fail('canvas veya gate bulunamadı');
     return;
   }
 
-  // Erişilebilirlik: hareket azaltılmışsa statik poster
+  if (engineRef && window.__FIRINCI_SCENE === 'ok') {
+    engineRef.visible = true;
+    engineRef._mustPaint = 8;
+    engineRef.onResize();
+    engineRef.refreshScroll();
+    markReady();
+    if (engineRef.hasPainted) markPainted();
+    return;
+  }
+
   if (reducedMotion) {
     showPoster('reduced-motion');
     bindPosterScroll();
     return;
   }
 
-  // Takılı loading → poster (donmuş spinner olmasın)
+  booting = true;
+  window.__FIRINCI_SCENE = 'loading';
+
   const bootWatch = window.setTimeout(() => {
     if (window.__FIRINCI_SCENE === 'loading') {
       fail('hero yükleme zaman aşımı');
       bindPosterScroll();
     }
-  }, 18000);
+  }, 12000);
 
   try {
     await start3D();
   } finally {
     window.clearTimeout(bootWatch);
+    booting = false;
   }
 }
+
+window.__firinciHeroBoot = boot;
 
 // Genişlik değişince kamera fitView (engine.onResize) yeter — tam reload yarış/bozulma yapıyordu
 try {
@@ -248,8 +322,10 @@ try {
     if (e.matches === lastNarrow) return;
     lastNarrow = e.matches;
     // Yalnızca dar↔geniş geçişinde bir kez yenile (DevTools device toggle)
-    if (window.__firinciHeroRefresh) {
-      window.__firinciHeroRefresh();
+    if (window.__firinciHeroResize) {
+      window.__firinciHeroResize();
+    } else {
+      window.__firinciHeroRefresh?.();
     }
   });
 } catch {
