@@ -8,6 +8,28 @@ export function resolveMediaUrl(path?: string | null): string {
   return `/${path.replace(/^\//, "")}`;
 }
 
+/** Lokal `/uploads/` yolu — gitignore, Vercel build'e girmez. */
+export function isLocalUploadPath(path?: string | null): boolean {
+  return !!path && (path.startsWith("/uploads/") || path.startsWith("uploads/"));
+}
+
+/**
+ * Vercel'de `/uploads/` dosyaları deploy edilmez.
+ * Blob URL yoksa statik fallback kullan (siyah hero / kırık görsel önlenir).
+ */
+export function resolveProductionMediaPath(
+  path: string | undefined,
+  fallback?: string
+): string {
+  if (!path) return fallback ? resolveMediaUrl(fallback) : "";
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  const normalized = resolveMediaUrl(path);
+  if (process.env.VERCEL === "1" && isLocalUploadPath(normalized)) {
+    return fallback ? resolveMediaUrl(fallback) : normalized;
+  }
+  return normalized;
+}
+
 export function withCacheBust(url: string, key?: string | number): string {
   if (!url) return url;
   const sep = url.includes("?") ? "&" : "?";

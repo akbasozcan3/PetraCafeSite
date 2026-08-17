@@ -14,6 +14,7 @@ import { syncStaticContact } from "@/lib/content/sync-static-contact";
 import { applyIletisimCascade } from "@/lib/content/contact-utils";
 import { syncBlogPages } from "@/lib/content/sync-blog-pages";
 import { ensureProductSlugs } from "@/lib/content/ensure-product-slugs";
+import { resolveProductionMediaPath } from "@/lib/admin/media-url";
 import { getPool, isPostgresEnabled } from "./postgres";
 import { execFileSync } from "child_process";
 
@@ -125,12 +126,52 @@ function writeJson(file: string, data: unknown) {
 // İçerik normalleştirme
 // ────────────────────────────────────────────────────────────────
 function normalizeImages(images: Record<string, string>) {
+  const defaults = DEFAULT_CONTENT.images;
   const out: Record<string, string> = {};
   for (const [k, v] of Object.entries(images || {})) {
     if (!v) continue;
-    out[k] = v.startsWith("/") || v.startsWith("http") ? v : `/${v.replace(/^\//, "")}`;
+    const fb = defaults[k as keyof typeof defaults];
+    out[k] = resolveProductionMediaPath(v, fb);
   }
   return out;
+}
+
+function rewriteLocalUploadsInContent(content: SiteContent): SiteContent {
+  if (process.env.VERCEL !== "1") return content;
+
+  if (Array.isArray(content.galeri)) {
+    content.galeri = content.galeri.map((item, i) => ({
+      ...item,
+      src: resolveProductionMediaPath(
+        item.src,
+        DEFAULT_CONTENT.galeri[i]?.src || DEFAULT_CONTENT.galeri[0]?.src
+      ),
+    }));
+  }
+
+  if (content.menu?.gruplar) {
+    content.menu.gruplar = content.menu.gruplar.map((grup) => ({
+      ...grup,
+      image: resolveProductionMediaPath(grup.image),
+      banner: resolveProductionMediaPath(grup.banner),
+      urunler: (grup.urunler || []).map((urun) => ({
+        ...urun,
+        image: resolveProductionMediaPath(urun.image),
+      })),
+    }));
+  }
+
+  if (content.pasta?.gorseller) {
+    content.pasta.gorseller = content.pasta.gorseller.map((g, i) => ({
+      ...g,
+      src: resolveProductionMediaPath(
+        g.src,
+        DEFAULT_CONTENT.pasta?.gorseller?.[i]?.src
+      ),
+    }));
+  }
+
+  return content;
 }
 
 function normalizeContent(raw: Partial<SiteContent>): SiteContent {
@@ -175,7 +216,7 @@ function normalizeContent(raw: Partial<SiteContent>): SiteContent {
     );
   }
 
-  return merged;
+  return rewriteLocalUploadsInContent(merged);
 }
 
 function isSafeExternalUrl(url: string): boolean {

@@ -17,7 +17,11 @@ Müşteri üyelik / sepet / favori yok — sipariş WhatsApp veya telefon.
 | Değişken | Açıklama |
 |----------|----------|
 | `SMTP_HOST` `SMTP_PORT` `SMTP_USER` `SMTP_PASS` `SMTP_FROM` | Admin / sistem e-posta |
-| `BLOB_READ_WRITE_TOKEN` | Admin görsel yükleme (Vercel Blob) |
+| `BLOB_READ_WRITE_TOKEN` | Admin görsel yükleme (Vercel Blob) — **canlıda zorunlu** |
+
+> **Önemli:** Lokal admin'den yüklenen görseller `/uploads/site/...` olarak kaydedilir; bu klasör git'e girmez.
+> Vercel'de ya admin'den tekrar yükleyin (Blob URL kaydedilir) ya da lokalden:
+> `npm run publish-uploads` → commit → push.
 
 ## 3) Admin kullanıcı
 
