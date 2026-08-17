@@ -1,12 +1,12 @@
 {
   "images": {
-    "heroPoster": "/uploads/site/1786954045876-87beab4233e66cd2.webp",
-    "heroCephe": "/uploads/site/1786954045876-87beab4233e66cd2.webp",
-    "heroIc": "/uploads/site/1786953970952-9bab647b31bfba2c.webp",
+    "heroPoster": "/assets/cms/hero-cephe.webp",
+    "heroCephe": "/assets/cms/hero-cephe.webp",
+    "heroIc": "/assets/cms/hero-ic.webp",
     "aboutInterior": "/assets/img/ic-mekan.jpg",
-    "ogImage": "/assets/img/urun/vitrin-hamur.jpg",
-    "logo": "/uploads/site/1786952841978-90b77c6d0f480b40.webp",
-    "favicon": "/uploads/site/1786952846571-8f20971fe5f5cebb.webp"
+    "ogImage": "/assets/cms/hero-cephe.webp",
+    "logo": "/assets/cms/logo.webp",
+    "favicon": "/assets/cms/favicon.webp"
   },
   "navbar": {
     "logoText": "FIRINCI",
@@ -1548,7 +1548,7 @@
   },
   "galeri": [
     {
-      "src": "/uploads/site/1786953209764-2768f70e44d3337a.webp",
+      "src": "/assets/cms/galeri-cephe.webp",
       "baslik": "Fırınımız · Taşdelen",
       "boy": "wide"
     },

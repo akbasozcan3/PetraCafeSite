@@ -29,6 +29,12 @@ Müşteri üyelik / sepet / favori yok — sipariş WhatsApp veya telefon.
 2. Production’da **demo şifre kullanma** (`demo@firinci.com` / örnek `.env`).
 3. `ALLOW_ENV_ADMIN=false` tercih et (DB kullanıcısı yeterliyse).
 
+### Database yoksa (müşteri demosu)
+
+Site yine çalışır: içerik `data/content.json` + `public/assets/cms/` görsellerinden gelir.
+Admin panelden canlı kayıt **yapılmaz** (DATABASE_URL gerekir). Demo için yeterli.
+Kalıcı admin/CMS için Neon (ücretsiz) + `DATABASE_URL` ekleyin.
+
 ## 4) Build / deploy
 
 ```bash
