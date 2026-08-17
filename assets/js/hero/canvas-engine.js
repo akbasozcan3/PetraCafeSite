@@ -1,10 +1,10 @@
-import * as THREE from '../../vendor/three.module.js?v=20260813x1';
-import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260813x1';
-import { ASSETS, doorTiming } from './config.js?v=20260813x1';
-import { ScrollController } from './scroll-controller.js?v=20260813x1';
-import { DoorController } from './door-controller.js?v=20260813x1';
-import { Particles } from './particles.js?v=20260813x1';
-import { CameraController, createUnits } from './camera-controller.js?v=20260813x1';
+import * as THREE from '../../vendor/three.module.js?v=20260817x5';
+import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260817x5';
+import { ASSETS, doorTiming } from './config.js?v=20260817x5';
+import { ScrollController } from './scroll-controller.js?v=20260817x5';
+import { DoorController } from './door-controller.js?v=20260817x5';
+import { Particles } from './particles.js?v=20260817x5';
+import { CameraController, createUnits } from './camera-controller.js?v=20260817x5';
 
 function yieldFrame() {
   return new Promise((resolve) => {
@@ -172,6 +172,8 @@ export class CanvasEngine {
     const tex = new THREE.Texture(source);
     tex.colorSpace = THREE.SRGBColorSpace;
     tex.anisotropy = aniso;
+    tex.wrapS = THREE.ClampToEdgeWrapping;
+    tex.wrapT = THREE.ClampToEdgeWrapping;
     tex.needsUpdate = true;
     return tex;
   }

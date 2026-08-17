@@ -5,7 +5,6 @@ import { useEffect } from "react";
 function showHeroFallback(reason: string) {
   const w = window as unknown as { __FIRINCI_SCENE?: string };
   if (w.__FIRINCI_SCENE === "ok") {
-    // 3B “ok” ama siyah kaldıysa poster’ı geri getir
     if (!document.documentElement.classList.contains("scene-painted")) {
       document.documentElement.classList.add("scene-poster");
       document.documentElement.classList.remove("scene-ready");
@@ -78,23 +77,23 @@ export default function HomeHeroScripts({
       if (w.__FIRINCI_SCENE === undefined || w.__FIRINCI_SCENE === "loading") {
         showHeroFallback("hero modülü zaman aşımı");
       }
-    }, 14000);
+    }, window.matchMedia("(max-width: 860px)").matches ? 22000 : 14000);
 
     const existing = document.querySelector(
       'script[data-home-hero="1"]'
     ) as HTMLScriptElement | null;
     if (existing) {
-      const boot = (window as unknown as { __firinciHeroBoot?: () => void })
+      const bootFn = (window as unknown as { __firinciHeroBoot?: () => void })
         .__firinciHeroBoot;
       const resize = (window as unknown as { __firinciHeroResize?: () => void })
         .__firinciHeroResize;
-      if (typeof boot === "function") boot();
+      if (typeof bootFn === "function") bootFn();
       else resize?.();
     } else {
       w.__FIRINCI_SCENE = w.__FIRINCI_SCENE || "loading";
       const s = document.createElement("script");
       s.type = "module";
-      s.src = "/assets/js/hero/index.js?v=20260813x1";
+      s.src = "/assets/js/hero/index.js?v=20260817x5";
       s.dataset.homeHero = "1";
       document.body.appendChild(s);
     }

@@ -774,7 +774,8 @@ html.scene-failed .gate__boot {
 }
 @media (max-width: 860px) {
   .gate__stage {
-    background: #0a0c08 url("/assets/img/hero-mobile.webp?v=20260810x7") center center / cover no-repeat !important;
+    background: #0a0c08 !important;
+    overflow: hidden !important;
   }
   .gate__poster {
     inset: 0 !important;
@@ -788,7 +789,7 @@ html.scene-failed .gate__boot {
     max-height: none !important;
     transform: none !important;
     object-fit: cover !important;
-    object-position: center center !important;
+    object-position: center 72% !important;
     z-index: 1 !important;
   }
   #scene {
@@ -798,8 +799,7 @@ html.scene-failed .gate__boot {
   html.scene-ready #scene {
     opacity: 1 !important;
   }
-  /* 3B hazır: poster gizlenir — kapı animasyonu görünür */
-  html.scene-ready .gate__poster {
+  html.scene-painted .gate__poster {
     opacity: 0 !important;
     pointer-events: none !important;
   }

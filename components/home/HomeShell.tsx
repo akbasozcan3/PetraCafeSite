@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import SiteNav from "@/components/site/SiteNav";
 import SiteFooter from "@/components/site/SiteFooter";
 import type { SiteContent } from "@/lib/content/types";
+import { withHeroCacheBust } from "@/lib/admin/media-url";
 import HomeHeroScripts from "@/components/home/HomeHeroScripts";
 import HomeMotion from "@/components/home/HomeMotion";
 
@@ -23,11 +24,19 @@ export default function HomeShell({
   const logo = content.images?.logo || "/assets/img/logo.webp";
   const poster =
     heroPoster ||
-    content.images?.heroPoster ||
-    content.images?.heroCephe ||
-    "/assets/img/hero-cephe.webp";
+    withHeroCacheBust(
+      content.images?.heroPoster ||
+        content.images?.heroCephe ||
+        "/assets/img/hero-cephe.webp"
+    );
   const mobile =
-    heroMobile || content.images?.heroMobile || "/assets/img/hero-mobile.webp";
+    heroMobile ||
+    withHeroCacheBust(
+      content.images?.heroMobile ||
+        content.images?.heroPoster ||
+        content.images?.heroCephe ||
+        "/assets/img/hero-mobile.webp"
+    );
 
   return (
     <div className="site-home">
@@ -35,13 +44,13 @@ export default function HomeShell({
         rel="stylesheet"
         href="/css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       />
-      <link rel="stylesheet" href="/assets/css/style.css?v=20260810x9" />
-      <link rel="stylesheet" href="/assets/css/home-next.css?v=6" />
-      <link rel="preload" as="image" href={`${poster}?v=20260810x4`} />
+      <link rel="stylesheet" href="/assets/css/style.css?v=20260817x5" />
+      <link rel="stylesheet" href="/assets/css/home-next.css?v=10" />
+      <link rel="preload" as="image" href={poster} />
       <link
         rel="preload"
         as="image"
-        href={`${mobile}?v=20260810x4`}
+        href={mobile}
         media="(max-width: 860px)"
       />
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { SiteContent } from "@/lib/content/types";
-import { resolveMediaUrl } from "@/lib/admin/media-url";
+import { resolveMediaUrl, withHeroCacheBust } from "@/lib/admin/media-url";
 
 function GateCorner({
   position,
@@ -76,11 +76,14 @@ function GateCorner({
 export default function HomeHero({ content }: { content: SiteContent }) {
   const hero = content.hero || ({} as SiteContent["hero"]);
   const images = content.images || {};
-  const poster = resolveMediaUrl(
+  const posterSrc = withHeroCacheBust(
     images.heroPoster || images.heroCephe || "/assets/img/hero-cephe.webp"
   );
-  const mobile = resolveMediaUrl(
-    images.heroMobile || "/assets/img/hero-mobile.webp"
+  const mobileSrc = withHeroCacheBust(
+    images.heroMobile ||
+      images.heroPoster ||
+      images.heroCephe ||
+      "/assets/img/hero-mobile.webp"
   );
   // Match hero JS / admin: only when explicitly true
   const welcomeOn = hero.welcomeAktif === true;
@@ -91,13 +94,13 @@ export default function HomeHero({ content }: { content: SiteContent }) {
         <picture>
           <source
             media="(max-width: 860px)"
-            srcSet={`${mobile}?v=20260810x4`}
+            srcSet={mobileSrc}
             type="image/webp"
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="gate__poster"
-            src={`${poster}?v=20260810x4`}
+            src={posterSrc}
             alt=""
             aria-hidden="true"
             fetchPriority="high"

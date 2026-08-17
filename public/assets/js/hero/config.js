@@ -1,6 +1,6 @@
 /** Hero sahne sabitleri — orijinal scene.js ile aynı değerler */
 /** sync-public.mjs bu değeri CACHE ile senkronlar */
-export const CACHE_V = '20260813x1';
+export const CACHE_V = '20260817x5';
 
 export const ASSETS = {
   cephe: `/assets/img/hero-cephe.webp?v=${CACHE_V}`,
@@ -39,8 +39,8 @@ export function resolveDoorUv() {
 
 export const CAMERA_PRESETS = {
   yatay: { zoom: 0.96, y: -0.95 },
-  /** Mobil: cover + hafif geri — tabela+kapı dolu, kenar şerit yok */
-  dikey: { zoom: 1.12, y: -0.68 },
+  /** Mobil: hafif cover + kapı altı ekrana yapışık */
+  dikey: { zoom: 0.94, y: 0 },
 };
 
 export const PARALLAX = { x: 0.3, y: 0.13, z: 0.22 };

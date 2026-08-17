@@ -1,6 +1,6 @@
-import { CanvasEngine } from './canvas-engine.js?v=20260813x1';
-import { ASSETS } from './config.js?v=20260813x1';
-import { range } from './utils.js?v=20260813x1';
+import { CanvasEngine } from './canvas-engine.js?v=20260817x5';
+import { ASSETS } from './config.js?v=20260817x5';
+import { range } from './utils.js?v=20260817x5';
 
 window.__FIRINCI_SCENE = window.__FIRINCI_SCENE || 'loading';
 
@@ -32,8 +32,8 @@ function absUrl(url) {
 function safeHeroUrl(preferred, fallbackUrl) {
   const p = absUrl(preferred);
   const f = absUrl(fallbackUrl);
-  if (p && !/\/uploads\//i.test(p)) return p;
-  if (f && !/\/uploads\//i.test(f)) return f;
+  if (p) return p;
+  if (f) return f;
   return absUrl(ASSETS.cephe) || '/assets/img/hero-cephe.webp';
 }
 
@@ -74,7 +74,10 @@ function showPoster(reason) {
   const poster = document.querySelector('.gate__poster');
   const images = window.__FIRINCI_CONTENT?.images || {};
   if (poster) {
-    const mobileUrl = absUrl(ASSETS.mobile) || '/assets/img/hero-mobile.webp';
+    const mobileUrl =
+      absUrl(images.heroMobile || images.heroPoster || images.heroCephe) ||
+      absUrl(ASSETS.mobile) ||
+      '/assets/img/hero-mobile.webp';
     const desktopSafe = safeHeroUrl(images.heroPoster, images.heroCephe || ASSETS.cephe);
     poster.src = isNarrow() ? mobileUrl : desktopSafe;
     poster.style.opacity = '1';
@@ -302,7 +305,7 @@ async function boot() {
       fail('hero yükleme zaman aşımı');
       bindPosterScroll();
     }
-  }, 12000);
+  }, isNarrow() ? 20000 : 12000);
 
   try {
     await start3D();
@@ -321,7 +324,6 @@ try {
   mq.addEventListener('change', (e) => {
     if (e.matches === lastNarrow) return;
     lastNarrow = e.matches;
-    // Yalnızca dar↔geniş geçişinde bir kez yenile (DevTools device toggle)
     if (window.__firinciHeroResize) {
       window.__firinciHeroResize();
     } else {

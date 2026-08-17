@@ -1,12 +1,12 @@
-import * as THREE from '../../vendor/three.module.js?v=20260813x1';
+import * as THREE from '../../vendor/three.module.js?v=20260817x5';
 import {
   resolveDoorUv,
   SCENE_W,
   SCENE_H,
   DEPTH,
   FRAME_PAD,
-} from './config.js?v=20260813x1';
-import { easeInOut, range } from './utils.js?v=20260813x1';
+} from './config.js?v=20260817x5';
+import { easeInOut, range } from './utils.js?v=20260817x5';
 
 function remapUV(geo, u0, u1, v0, v1) {
   const uv = geo.attributes.uv;
@@ -30,19 +30,13 @@ function texturedQuad(material, u0, u1, vTop, vBot) {
   return mesh;
 }
 
-function stripH(material, y0, y1, v) {
-  const geo = new THREE.PlaneGeometry(SCENE_W + FRAME_PAD * 2, y1 - y0);
-  remapUV(geo, 0, 1, v, v);
-  const mesh = new THREE.Mesh(geo, material);
-  mesh.position.set(0, (y0 + y1) / 2, 0);
-  return mesh;
-}
-
-function stripV(material, x0, x1, u) {
-  const geo = new THREE.PlaneGeometry(x1 - x0, SCENE_H);
-  remapUV(geo, u, u, 0, 1);
-  const mesh = new THREE.Mesh(geo, material);
-  mesh.position.set((x0 + x1) / 2, 0, 0);
+/** Kenar dolgu — doku değil düz renk. Tek piksel UV gerilince kapı altı çizgileniyordu. */
+function padPlane(w, h, x, y, color = '#070903') {
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(w, h),
+    new THREE.MeshBasicMaterial({ color }),
+  );
+  mesh.position.set(x, y, 0);
   return mesh;
 }
 
@@ -76,10 +70,10 @@ export class DoorController {
       texturedQuad(mat, 0, 1, u.v1, 1),
       texturedQuad(mat, 0, u.u0, u.v0, u.v1),
       texturedQuad(mat, u.u1, 1, u.v0, u.v1),
-      stripH(mat, -SCENE_H / 2 - FRAME_PAD, -SCENE_H / 2, 1),
-      stripH(mat, SCENE_H / 2, SCENE_H / 2 + FRAME_PAD, 0),
-      stripV(mat, -SCENE_W / 2 - FRAME_PAD, -SCENE_W / 2, 0),
-      stripV(mat, SCENE_W / 2, SCENE_W / 2 + FRAME_PAD, 1),
+      padPlane(SCENE_W + FRAME_PAD * 2, FRAME_PAD, 0, -SCENE_H / 2 - FRAME_PAD / 2),
+      padPlane(SCENE_W + FRAME_PAD * 2, FRAME_PAD, 0, SCENE_H / 2 + FRAME_PAD / 2),
+      padPlane(FRAME_PAD, SCENE_H, -SCENE_W / 2 - FRAME_PAD / 2, 0),
+      padPlane(FRAME_PAD, SCENE_H, SCENE_W / 2 + FRAME_PAD / 2, 0),
     );
   }
 

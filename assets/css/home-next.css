@@ -177,6 +177,12 @@ html.home-anim:not(.gsap-ready) .site-home [data-reveal-mask].is-in {
   object-fit: cover;
 }
 
+@media (max-width: 860px) {
+  .site-home .gate__poster {
+    object-position: center 72%;
+  }
+}
+
 /* Poster, 3B ilk kare boyanana kadar kalsın — ara sıra siyah hero */
 html.scene-ready:not(.scene-painted) .site-home .gate__poster,
 html.scene-ready:not(.scene-painted) .gate__poster {

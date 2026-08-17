@@ -1,12 +1,12 @@
 {
   "images": {
-    "heroPoster": "/assets/img/hero-cephe.webp",
-    "heroCephe": "/assets/img/hero-cephe.webp",
-    "heroIc": "/assets/img/hero-ic.webp",
+    "heroPoster": "/uploads/site/1786954045876-87beab4233e66cd2.webp",
+    "heroCephe": "/uploads/site/1786954045876-87beab4233e66cd2.webp",
+    "heroIc": "/uploads/site/1786953970952-9bab647b31bfba2c.webp",
     "aboutInterior": "/assets/img/ic-mekan.jpg",
     "ogImage": "/assets/img/urun/vitrin-hamur.jpg",
-    "logo": "/assets/img/logo.webp",
-    "favicon": "/assets/img/favicon-96.png"
+    "logo": "/uploads/site/1786952841978-90b77c6d0f480b40.webp",
+    "favicon": "/uploads/site/1786952846571-8f20971fe5f5cebb.webp"
   },
   "navbar": {
     "logoText": "FIRINCI",
@@ -54,6 +54,7 @@
     "fallbackMark": "FIRINCI",
     "fallbackTagline": "Taze · Lezzetli · Doğal",
     "scrollHint": "Aşağı kaydırın",
+    "bootText": "Kapı açılıyor",
     "welcomeAktif": false,
     "welcomeEyebrow": "Taşdelen Fırıncı",
     "welcomeTitle": "Hoş Geldiniz",
@@ -1547,7 +1548,7 @@
   },
   "galeri": [
     {
-      "src": "/assets/img/cephe.jpg",
+      "src": "/uploads/site/1786953209764-2768f70e44d3337a.webp",
       "baslik": "Fırınımız · Taşdelen",
       "boy": "wide"
     },
@@ -1655,7 +1656,8 @@
     "urunler": {
       "eyebrow": "Ürünler",
       "baslikSablon": "{n} kategoride {m} çeşit",
-      "lead": "Her gün taze pişen ekmek, simit, poğaça, börek, tatlı ve pasta çeşitlerimiz."
+      "lead": "Her gün taze pişen ekmek, simit, poğaça, börek, tatlı ve pasta çeşitlerimiz.",
+      "altNot": "Sunum menüsü — sepet yok; fırından gel-al veya iletişime geçin."
     },
     "urunKategori": {
       "eyebrow": "Ürünler",
@@ -1665,7 +1667,11 @@
       "ctaBaslik": "Sipariş & bilgi",
       "ctaWaLabel": "WhatsApp’tan yazın",
       "relatedBaslik": "Diğer kategoriler",
-      "relatedHepsi": "Tüm ürün kategorileri"
+      "relatedHepsi": "Tüm ürün kategorileri",
+      "detayNotlari": "Gel al veya telefon / WhatsApp siparişi\n7/24 WhatsApp ile hızlı yanıt",
+      "detayWaLabel": "WhatsApp ile Sipariş",
+      "detayTelLabel": "Telefonla Ara",
+      "fiyatSorulur": "Fiyat sorulur"
     },
     "blog": {
       "eyebrow": "Blog",

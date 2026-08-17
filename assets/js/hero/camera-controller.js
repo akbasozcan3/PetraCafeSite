@@ -1,4 +1,4 @@
-import * as THREE from '../../vendor/three.module.js?v=20260813x1';
+import * as THREE from '../../vendor/three.module.js?v=20260817x5';
 import {
   FOV,
   SCENE_W,
@@ -8,8 +8,8 @@ import {
   PARALLAX,
   sceneUnitsFromUV,
   resolveDoorUv,
-} from './config.js?v=20260813x1';
-import { clamp, easeInOut, lerp, range } from './utils.js?v=20260813x1';
+} from './config.js?v=20260817x5';
+import { clamp, easeInOut, lerp, range } from './utils.js?v=20260817x5';
 
 /** Kamera konumu ve projeksiyon */
 export class CameraController {
@@ -32,15 +32,18 @@ export class CameraController {
       ? CAMERA_PRESETS.dikey
       : CAMERA_PRESETS.yatay;
 
-    // Cover (masaüstüyle aynı): ekranı doldur.
-    // Eski mobil max() = contain → FRAME_PAD şeritleri esneyip üstte çizgili bozulma + altta siyah boşluk.
     const fitH = SCENE_H / (2 * Math.tan(fovRad / 2));
     const fitW = SCENE_W / (2 * Math.tan(fovRad / 2) * aspect);
     this.baseDistance = Math.min(fitH, fitW) * preset.zoom;
 
     const halfH = Math.tan(fovRad / 2) * this.baseDistance;
-    const maxY = Math.max(0, SCENE_H / 2 + 6 - halfH - PARALLAX.y - 0.3);
-    this.baseY = clamp(preset.y, -maxY, maxY);
+    if (isPortrait) {
+      // Cephe altı (kapı eşiği) ekranın altına oturur — pad şeritleri görünmez
+      this.baseY = -SCENE_H / 2 + halfH - 0.04;
+    } else {
+      const maxY = Math.max(0, SCENE_H / 2 + 6 - halfH - PARALLAX.y - 0.3);
+      this.baseY = clamp(preset.y, -maxY, maxY);
+    }
   }
 
 
@@ -74,6 +77,15 @@ export class CameraController {
       this.camera.position.x += Math.sin(time * 0.2) * PARALLAX.x * sway;
       this.camera.position.y += Math.sin(time * 0.16 + 1.3) * PARALLAX.y * sway;
       this.camera.position.z += Math.sin(time * 0.12 + 2.1) * PARALLAX.z * sway;
+    }
+
+    // Mobil başlangıçta cephe altına bakma — çizgili pad görünmesin
+    if (this.camera.aspect < 1 && progress < 0.12) {
+      const halfH =
+        Math.tan(THREE.MathUtils.degToRad(FOV) / 2) *
+        Math.max(0.2, this.camera.position.z);
+      const minY = -SCENE_H / 2 + halfH - 0.06;
+      if (this.camera.position.y < minY) this.camera.position.y = minY;
     }
 
     this.pointer.x += (this.pointer.tx - this.pointer.x) * 0.05;

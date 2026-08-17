@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { getPublicContent } from "@/lib/db/content";
-import { resolveMediaUrl } from "@/lib/admin/media-url";
+import { resolveMediaUrl, withHeroCacheBust } from "@/lib/admin/media-url";
 import HomeShell from "@/components/home/HomeShell";
 import HomeDuyuru from "@/components/home/HomeDuyuru";
 import HomeHero from "@/components/home/HomeHero";
@@ -144,13 +144,16 @@ export default async function HomePage() {
         }
       : null;
 
-  const poster = resolveMediaUrl(
+  const poster = withHeroCacheBust(
     content.images?.heroPoster ||
       content.images?.heroCephe ||
       "/assets/img/hero-cephe.webp"
   );
-  const mobile = resolveMediaUrl(
-    content.images?.heroMobile || "/assets/img/hero-mobile.webp"
+  const mobile = withHeroCacheBust(
+    content.images?.heroMobile ||
+      content.images?.heroPoster ||
+      content.images?.heroCephe ||
+      "/assets/img/hero-mobile.webp"
   );
 
   return (
