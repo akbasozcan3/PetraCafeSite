@@ -183,9 +183,10 @@ export async function POST(request: Request) {
       return errorResponse("Boş dosya yüklenemez.", 400);
     }
 
-    if (process.env.VERCEL && !process.env.BLOB_READ_WRITE_TOKEN) {
+    const blobToken = (process.env.BLOB_READ_WRITE_TOKEN || "").trim();
+    if (process.env.VERCEL && !blobToken) {
       return errorResponse(
-        "Vercel Blob yapılandırması eksik (BLOB_READ_WRITE_TOKEN).",
+        "Vercel Blob bağlayın: Storage → Blob → BLOB_READ_WRITE_TOKEN.",
         503
       );
     }
@@ -218,11 +219,11 @@ export async function POST(request: Request) {
 
     let publicPath: string;
 
-    if (process.env.VERCEL) {
-      // Vercel Blob Storage
+    if (blobToken) {
       const folder = key ? "site" : "menu";
       const result = await put(`${folder}/${filename}`, bytes, {
         access: "public",
+        token: blobToken,
         contentType: mime === "image/svg+xml" ? "image/svg+xml; charset=utf-8" : mime,
       });
       publicPath = result.url;

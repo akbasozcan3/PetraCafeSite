@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import { DATA_DIR } from "./content";
 import { getPool, isPostgresEnabled } from "./postgres";
+import { ensureDatabase } from "./ensure-schema";
 import { isServerlessReadonly, safeWriteJson, writableDataDir } from "./safe-fs";
 
 export type ReservationStatus = "pending" | "confirmed" | "rejected" | "cancelled";
@@ -65,6 +66,7 @@ function writeList(file: string, items: unknown[]) {
 }
 
 async function ensurePgTables() {
+  await ensureDatabase();
   const pool = getPool();
   if (!pool) return;
   await pool.query(`

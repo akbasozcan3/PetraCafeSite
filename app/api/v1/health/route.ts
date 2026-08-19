@@ -1,5 +1,6 @@
 import { jsonResponse } from "@/lib/api/helpers";
 import { isPostgresEnabled, getPool } from "@/lib/db/postgres";
+import { ensureDatabase } from "@/lib/db/ensure-schema";
 import { getContentAsync } from "@/lib/db/content";
 import { isDefaultJwtSecret, requirePermission } from "@/lib/auth";
 
@@ -41,6 +42,7 @@ export async function GET(request: Request) {
 
   if (isPostgresEnabled()) {
     try {
+      await ensureDatabase();
       const pool = getPool();
       if (!pool) throw new Error("Pool yok");
       await pool.query("SELECT 1");

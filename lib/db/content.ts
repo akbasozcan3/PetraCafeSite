@@ -21,6 +21,7 @@ import { isDeadLocalMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { toPublicSiteContent } from "@/lib/content/public-content";
 import { resolveTheme } from "@/lib/content/theme";
 import { getPool, isPostgresEnabled } from "./postgres";
+import { ensureDatabase } from "./ensure-schema";
 import { execFileSync } from "child_process";
 
 function runPostSaveHooks(partial: Partial<SiteContent>, next: SiteContent): void {
@@ -292,11 +293,31 @@ export interface AuthRecord {
 // PostgreSQL: içerik oku
 // ────────────────────────────────────────────────────────────────
 async function pgGetContent(): Promise<SiteContent> {
+  await ensureDatabase();
   const pool = getPool()!;
-  const res = await pool.query<{ data: SiteContent }>(
+  const res = await pool.query<{ data: SiteContent | null }>(
     "SELECT data FROM site_content WHERE key = 'main' LIMIT 1"
   );
-  const raw = res.rows[0]?.data ?? {};
+  const raw = (res.rows[0]?.data ?? {}) as Partial<SiteContent>;
+  const empty =
+    !raw ||
+    typeof raw !== "object" ||
+    Array.isArray(raw) ||
+    !raw.images ||
+    !raw.navbar;
+  if (empty) {
+    const seed = getContent();
+    await pool.query(
+      `INSERT INTO site_content (key, data)
+       VALUES ('main', $1::jsonb)
+       ON CONFLICT (key) DO UPDATE
+         SET data = EXCLUDED.data
+       WHERE coalesce(site_content.data, '{}'::jsonb) = '{}'::jsonb
+          OR site_content.data->>'navbar' IS NULL`,
+      [JSON.stringify(seed)]
+    );
+    return seed;
+  }
   return normalizeContent(raw);
 }
 
@@ -335,6 +356,7 @@ async function pgGetAuth(): Promise<AuthRecord | null> {
 // PostgreSQL: auth kaydet
 // ────────────────────────────────────────────────────────────────
 async function pgSaveAuth(auth: AuthRecord): Promise<void> {
+  await ensureDatabase();
   const pool = getPool()!;
   await pool.query(
     `INSERT INTO admin_users (email, password_hash, name)
@@ -360,6 +382,7 @@ export function getContent(): SiteContent {
 export async function getContentAsync(): Promise<SiteContent> {
   if (isPostgresEnabled()) {
     try {
+      await ensureDatabase();
       return await pgGetContent();
     } catch (err) {
       console.error("[DB] PostgreSQL okuma hatası:", (err as Error).message);
@@ -383,6 +406,7 @@ export async function saveContentAsync(partial: Partial<SiteContent>): Promise<S
   }
   if (isPostgresEnabled()) {
     try {
+      await ensureDatabase();
       const next = await pgSaveContent(partial);
       // JSON dosyasını da güncelle (backup)
       try {
@@ -490,6 +514,7 @@ export function getAuthRecord(): AuthRecord | null {
 export async function getAuthRecordAsync(): Promise<AuthRecord | null> {
   if (isPostgresEnabled()) {
     try {
+      await ensureDatabase();
       return await pgGetAuth();
     } catch (err) {
       console.warn("[DB] Auth PostgreSQL hatası:", (err as Error).message);

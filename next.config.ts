@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   ...(isVercel || isNetlify ? {} : { output: "standalone" as const }),
   poweredByHeader: false,
   compress: true,
+  outputFileTracingIncludes: {
+    "/*": ["./lib/db/schema.sql", "./data/content.json"],
+  },
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
@@ -19,6 +22,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "*.public.blob.vercel-storage.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.blob.vercel-storage.com",
       },
     ],
     formats: ["image/avif", "image/webp"],

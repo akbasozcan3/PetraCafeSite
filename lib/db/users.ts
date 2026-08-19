@@ -6,6 +6,7 @@ import path from "path";
 import { randomBytes } from "crypto";
 import bcrypt from "bcryptjs";
 import { getPool, isPostgresEnabled } from "./postgres";
+import { ensureDatabase } from "./ensure-schema";
 import type { AdminRole } from "@/lib/admin/roles";
 import { isAdminRole } from "@/lib/admin/roles";
 import { AUTH_FILE, DATA_DIR, type AuthRecord } from "./content";
@@ -66,6 +67,7 @@ function migrateFromLegacyAuth(): AdminUserRecord[] {
 async function pgListUsers(): Promise<AdminUserRecord[] | null> {
   if (!isPostgresEnabled()) return null;
   try {
+    await ensureDatabase();
     const pool = getPool()!;
     // Ensure role column exists (best-effort)
     await pool.query(`
@@ -149,6 +151,7 @@ export async function createUser(input: {
 
   if (isPostgresEnabled()) {
     try {
+      await ensureDatabase();
       const pool = getPool()!;
       await pool.query(
         `INSERT INTO admin_users (email, password_hash, name, role, active, public_id)
@@ -212,6 +215,7 @@ export async function updateUser(
 
   if (isPostgresEnabled()) {
     try {
+      await ensureDatabase();
       const pool = getPool()!;
       await pool.query(
         `UPDATE admin_users
@@ -249,6 +253,7 @@ export async function deleteUser(id: string): Promise<void> {
 
   if (isPostgresEnabled()) {
     try {
+      await ensureDatabase();
       const pool = getPool()!;
       await pool.query(`DELETE FROM admin_users WHERE public_id = $1 OR email = $2`, [
         target.id,
