@@ -20,7 +20,7 @@
     "import-menu": "node -r ./scripts/load-env.cjs scripts/import-menu.mjs",
     "db:setup": "node -r ./scripts/load-env.cjs scripts/db-setup.mjs",
     "db:migrate": "node -r ./scripts/load-env.cjs scripts/db-migrate.mjs",
-    "publish-uploads": "node -r ./scripts/load-env.cjs scripts/publish-uploads-to-blob.mjs"
+    "telegram:chat-id": "node scripts/telegram-chat-id.mjs",
   },
   "engines": {
     "node": ">=20"

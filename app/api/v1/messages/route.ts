@@ -3,6 +3,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { createMessage } from "@/lib/db/inbox";
 import { getPublicContent } from "@/lib/db/content";
 import { notifyInbox } from "@/lib/mail/smtp";
+import { notifyTelegramContact } from "@/lib/telegram";
 import { sanitizePhoneDigits } from "@/lib/content/contact-utils";
 import { escapeHtml } from "@/lib/security/html";
 import { publicOrigin } from "@/lib/site/canonical";
@@ -61,6 +62,13 @@ export async function POST(request: Request) {
       subject: `Yeni mesaj — ${name}`,
       text: `${name}\n${phone}${email ? `\n${email}` : ""}\n\n${message}`,
       html: `<p><strong>${escapeHtml(name)}</strong></p><p>Tel: ${escapeHtml(phone)}${email ? `<br/>E-posta: ${escapeHtml(email)}` : ""}</p><p>${escapeHtml(message).replace(/\n/g, "<br/>")}</p><p><a href="${escapeHtml(adminUrl)}">Admin paneli</a></p>`,
+    });
+    void notifyTelegramContact({
+      name,
+      phone: phone || undefined,
+      email: email || undefined,
+      message,
+      adminUrl,
     });
 
     return jsonResponse({ success: true, id: item.id });

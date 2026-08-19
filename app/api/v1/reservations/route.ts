@@ -3,6 +3,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { createReservation } from "@/lib/db/inbox";
 import { getPublicContent } from "@/lib/db/content";
 import { notifyInbox } from "@/lib/mail/smtp";
+import { notifyTelegramReservation } from "@/lib/telegram";
 import { sanitizePhoneDigits } from "@/lib/content/contact-utils";
 import { escapeHtml } from "@/lib/security/html";
 import { publicOrigin } from "@/lib/site/canonical";
@@ -84,6 +85,15 @@ export async function POST(request: Request) {
       subject: `Rezervasyon — ${name} · ${date} ${time}`,
       text: `${name}\n${phone}\n${date} ${time}\n${guests} kişi${note ? `\n${note}` : ""}`,
       html: `<p><strong>${escapeHtml(name)}</strong> · ${escapeHtml(phone)}</p><p>${escapeHtml(date)} ${escapeHtml(time)} · ${guests} kişi</p>${note ? `<p>${escapeHtml(note)}</p>` : ""}<p><a href="${escapeHtml(adminUrl)}">Admin paneli</a></p>`,
+    });
+    void notifyTelegramReservation({
+      name,
+      phone,
+      date,
+      time,
+      guests,
+      note: note || undefined,
+      adminUrl,
     });
 
     return jsonResponse({ success: true, id: item.id });
