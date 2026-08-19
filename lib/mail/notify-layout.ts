@@ -67,12 +67,13 @@ export function buildNotifyEmail(opts: {
 
           <!-- Logo Area (Clean Centered Table - 100% Email Client Compatible) -->
           <tr>
-            <td align="center" style="padding:38px 24px 26px 24px;background-color:#FFFFFF;text-align:center;">
+            <td align="center" style="padding:36px 24px 24px 24px;background-color:#FFFFFF;text-align:center;">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin:0 auto;text-align:center;">
                 <tr>
                   <td align="center" style="text-align:center;">
                     <a href="${escapeHtml(siteBaseUrl())}" target="_blank" style="text-decoration:none;display:inline-block;">
-                      <img src="${escapeHtml(opts.logoUrl)}" alt="Petra Cafe Restaurant" height="70" border="0" style="display:block;margin:0 auto;height:70px;max-height:70px;width:auto;max-width:240px;object-fit:contain;border:0;outline:none;" />
+                      <!-- Logo Boyutu: height değerini dilediğiniz gibi büyütebilirsiniz (Örn: 96, 110, 120) -->
+                      <img src="${escapeHtml(opts.logoUrl)}" alt="Petra Cafe Restaurant" height="96" border="0" style="display:block;margin:0 auto;height:96px;max-height:96px;width:auto;max-width:280px;object-fit:contain;border:0;outline:none;" />
                     </a>
                   </td>
                 </tr>
