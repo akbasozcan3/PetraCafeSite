@@ -18,12 +18,37 @@ const DEFAULT_LINKS: NavLink[] = [
   { label: "İletişim", href: "#iletisim" },
 ];
 
+let menuScrollY = 0;
+
+function lockScroll() {
+  menuScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  const root = document.documentElement;
+  const body = document.body;
+  root.classList.add("menu-open");
+  body.style.position = "fixed";
+  body.style.top = `-${menuScrollY}px`;
+  body.style.left = "0";
+  body.style.right = "0";
+  body.style.width = "100%";
+}
+
 function unlockScroll() {
   const root = document.documentElement;
   const body = document.body;
+  if (body.style.position !== "fixed" && !root.classList.contains("menu-open")) {
+    return;
+  }
+  const y =
+    Math.abs(Number.parseInt(body.style.top || "0", 10)) || menuScrollY || 0;
   root.classList.remove("menu-open");
+  body.style.removeProperty("position");
+  body.style.removeProperty("top");
+  body.style.removeProperty("left");
+  body.style.removeProperty("right");
+  body.style.removeProperty("width");
   root.style.removeProperty("overflow");
   body.style.removeProperty("overflow");
+  window.scrollTo(0, y);
 }
 
 function PhoneIcon() {
@@ -110,10 +135,12 @@ export default function SiteNav({
       return gate.getBoundingClientRect().bottom <= 88;
     };
     const onScroll = () => {
+      if (document.documentElement.classList.contains("menu-open")) return;
       if (ticking) return;
       ticking = true;
       window.requestAnimationFrame(() => {
         ticking = false;
+        if (document.documentElement.classList.contains("menu-open")) return;
         setSolid(pastHero());
       });
     };
@@ -127,16 +154,24 @@ export default function SiteNav({
   }, [isHome]);
 
   useEffect(() => {
-    const root = document.documentElement;
-    const body = document.body;
-    if (open) {
-      root.classList.add("menu-open");
-      root.style.overflow = "hidden";
-      body.style.overflow = "hidden";
-    } else {
+    if (!open) return;
+    lockScroll();
+    return () => {
       unlockScroll();
-    }
-    return unlockScroll;
+      window.requestAnimationFrame(() => {
+        const gate = document.querySelector(".gate");
+        if (!gate) {
+          setSolid(true);
+          return;
+        }
+        const next = gate.nextElementSibling;
+        setSolid(
+          next
+            ? next.getBoundingClientRect().top <= 88
+            : gate.getBoundingClientRect().bottom <= 88
+        );
+      });
+    };
   }, [open]);
 
   useEffect(() => {
