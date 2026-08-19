@@ -325,7 +325,7 @@ async function boot() {
       fail('hero yükleme zaman aşımı');
       bindPosterScroll();
     }
-  }, isNarrow() ? 20000 : 12000);
+  }, isNarrow() ? 8000 : 12000);
 
   try {
     await start3D();

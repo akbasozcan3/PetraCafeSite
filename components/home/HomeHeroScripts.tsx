@@ -77,7 +77,7 @@ export default function HomeHeroScripts({
       if (w.__FIRINCI_SCENE === undefined || w.__FIRINCI_SCENE === "loading") {
         showHeroFallback("hero modülü zaman aşımı");
       }
-    }, window.matchMedia("(max-width: 860px)").matches ? 22000 : 14000);
+    }, window.matchMedia("(max-width: 860px)").matches ? 8000 : 14000);
 
     const existing = document.querySelector(
       'script[data-home-hero="1"]'
@@ -95,7 +95,7 @@ export default function HomeHeroScripts({
       w.__FIRINCI_SCENE = w.__FIRINCI_SCENE || "loading";
       const s = document.createElement("script");
       s.type = "module";
-      s.src = "/assets/js/hero/index.js?v=20260819back1";
+      s.src = "/assets/js/hero/index.js?v=20260819mob1";
       s.dataset.homeHero = "1";
       document.body.appendChild(s);
     }

@@ -802,9 +802,19 @@ html.scene-failed .gate__boot {
   #scene {
     display: block !important;
     z-index: 2 !important;
+    opacity: 0;
   }
-  html.scene-ready #scene {
+  html.scene-ready:not(.scene-painted) #scene {
+    opacity: 0 !important;
+  }
+  html.scene-painted #scene,
+  html.scene-ready.scene-painted #scene {
     opacity: 1 !important;
+  }
+  html.scene-ready:not(.scene-painted) .gate__poster {
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 4 !important;
   }
   html.scene-painted .gate__poster {
     opacity: 0 !important;
