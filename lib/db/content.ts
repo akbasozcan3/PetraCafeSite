@@ -318,6 +318,28 @@ async function pgGetContent(): Promise<SiteContent> {
     );
     return seed;
   }
+  const file = getContent();
+  const fileRev = file.menu?.rev || "";
+  const dbRev = (raw.menu as { rev?: string } | undefined)?.rev || "";
+  if (fileRev && fileRev !== dbRev && file.menu?.gruplar?.length) {
+    const next = normalizeContent({
+      ...raw,
+      menu: file.menu,
+      makaleler: file.makaleler,
+      hizmetler: file.hizmetler,
+      bolumlar: file.bolumlar
+        ? { ...raw.bolumlar, ...file.bolumlar, menu: file.bolumlar.menu }
+        : raw.bolumlar,
+      sayfalar: file.sayfalar
+        ? { ...raw.sayfalar, urunler: file.sayfalar.urunler }
+        : raw.sayfalar,
+    });
+    await pool.query(
+      `UPDATE site_content SET data = $1::jsonb WHERE key = 'main'`,
+      [JSON.stringify(next)]
+    );
+    return next;
+  }
   return normalizeContent(raw);
 }
 

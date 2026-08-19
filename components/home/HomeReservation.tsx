@@ -162,8 +162,8 @@ export default function HomeReservation({
             <h3>{copy?.formBaslik || "Tarih ve saat seçin"}</h3>
             {copy?.formLead ? <p>{copy.formLead}</p> : null}
           </div>
-          <div className="petra-form__row petra-form__row--3">
-            <div className="field">
+          <div className="petra-form__row petra-form__row--date">
+            <div className="field field--date">
               <label htmlFor="rsv-date">
                 {copy?.labelTarih || "Tarih"} <i>*</i>
               </label>
@@ -184,6 +184,8 @@ export default function HomeReservation({
               />
               <p className="petra-form__hint">Geçmiş gün ve saat seçilemez.</p>
             </div>
+          </div>
+          <div className="petra-form__row">
             <div className="field">
               <label htmlFor="rsv-time">
                 {copy?.labelSaat || "Saat"} <i>*</i>

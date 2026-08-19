@@ -43,13 +43,16 @@ export function iconFromLabel(label: string): SiteIconId {
 
 export function categoryIcon(slug: string): SiteIconId {
   const s = (slug || "").toLowerCase();
-  if (s.includes("kahvalti")) return "sunrise";
+  if (s.includes("kahvalti") || s.includes("menemen") || s.includes("omlet")) return "sunrise";
   if (s.includes("baslangic")) return "utensils";
-  if (s.includes("ana-yemek") || s.includes("mutfak")) return "chef";
+  if (s.includes("ana-yemek") || s.includes("mutfak") || s.includes("izgara") || s.includes("beyaz-et"))
+    return "chef";
   if (s.includes("tatli")) return "cake";
-  if (s.includes("kokteyl")) return "wine";
-  if (s.includes("kahve")) return "coffee";
-  if (s.includes("nargile")) return "flame";
+  if (s.includes("kokteyl") || s.includes("frozen") || s.includes("smoothie") || s.includes("milkshake"))
+    return "wine";
+  if (s.includes("kahve") || s.includes("bitki")) return "coffee";
+  if (s.includes("nargile") || s.includes("nakhla") || s.includes("fakher") || s.includes("adalya"))
+    return "flame";
   if (s.includes("icecek")) return "wine";
   return "utensils";
 }

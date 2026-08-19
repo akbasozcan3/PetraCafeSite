@@ -108,6 +108,7 @@ export default function SettingsPanel() {
       </section>
 
       <SmtpCard />
+      <TelegramCard />
 
       {message && (
         <div className="mt-6">
@@ -156,9 +157,12 @@ export default function SettingsPanel() {
 }
 
 function SmtpCard() {
-  const [info, setInfo] = useState<{ configured: boolean; host?: string; from?: string } | null>(
-    null
-  );
+  const [info, setInfo] = useState<{
+    configured: boolean;
+    host?: string;
+    from?: string;
+    to?: string | null;
+  } | null>(null);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -179,7 +183,11 @@ function SmtpCard() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "SMTP test başarısız");
-      setMsg(`SMTP OK — ${data.host} / ${data.from}`);
+      setMsg(
+        data.sentTo
+          ? `SMTP OK — ${data.host} / test mail: ${data.sentTo}`
+          : `SMTP OK — ${data.host} / ${data.from} (SMTP_TO ekleyin, test mail gider)`
+      );
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "Hata");
     } finally {
@@ -191,14 +199,15 @@ function SmtpCard() {
     <section className="mt-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
       <h3 className="text-lg font-semibold text-[#F8F8F8]">SMTP / E-posta</h3>
       <p className="mt-2 text-sm text-[#8A9BB0]">
-        Admin bildirimleri ve sistem e-postaları için `.env.local` içinde SMTP_HOST, SMTP_PORT,
-        SMTP_USER, SMTP_PASS, SMTP_FROM tanımlayın.
+        Vercel ortam değişkenleri: SMTP_HOST, SMTP_PORT (587), SMTP_USER, SMTP_PASS, SMTP_FROM,
+        SMTP_TO (bildirimlerin gideceği adres). Gmail için Uygulama Şifresi kullanın.
       </p>
       <p className="mt-3 text-sm text-[#EEE9E0]">
         Durum:{" "}
         {info?.configured ? (
           <span className="text-emerald-300">
-            Yapılandırıldı ({info.host} → {info.from})
+            Yapılandırıldı ({info.host} → {info.from}
+            {info.to ? ` / alıcı ${info.to}` : " / SMTP_TO yok"})
           </span>
         ) : (
           <span className="text-amber-300">Yapılandırılmadı</span>
@@ -208,6 +217,73 @@ function SmtpCard() {
       <div className="mt-4">
         <Button type="button" variant="outline" disabled={busy || !info?.configured} onClick={() => void test()}>
           Bağlantıyı Test Et
+        </Button>
+      </div>
+    </section>
+  );
+}
+
+function TelegramCard() {
+  const [info, setInfo] = useState<{
+    ready?: boolean;
+    tokenConfigured?: boolean;
+    chatIdConfigured?: boolean;
+    connected?: boolean;
+    botUsername?: string | null;
+    webhookUrl?: string;
+  } | null>(null);
+  const [msg, setMsg] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    void fetch("/api/v1/admin/telegram", { credentials: "include" })
+      .then((r) => r.json())
+      .then((d) => setInfo(d.status || null))
+      .catch(() => setInfo(null));
+  }, []);
+
+  async function test() {
+    setBusy(true);
+    setMsg("");
+    try {
+      const res = await fetch("/api/v1/admin/telegram", {
+        method: "POST",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Telegram test başarısız");
+      setInfo(data.status || info);
+      setMsg("Test mesajı gruba gönderildi.");
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Hata");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section className="mt-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
+      <h3 className="text-lg font-semibold text-[#F8F8F8]">Telegram bildirimleri</h3>
+      <p className="mt-2 text-sm text-[#8A9BB0]">
+        Vercel: TELEGRAM_BOT_TOKEN ve TELEGRAM_CHAT_ID. Chat id yoksa botu yönetici yapıp grupta
+        etiketleyin; webhook chat id&apos;yi kaydeder.
+      </p>
+      <p className="mt-3 text-sm text-[#EEE9E0]">
+        Durum:{" "}
+        {info?.ready ? (
+          <span className="text-emerald-300">
+            Hazır {info.botUsername ? `(@${info.botUsername})` : ""}
+          </span>
+        ) : info?.tokenConfigured ? (
+          <span className="text-amber-300">Token var, chat id bekleniyor</span>
+        ) : (
+          <span className="text-amber-300">Yapılandırılmadı</span>
+        )}
+      </p>
+      {msg ? <p className="mt-2 text-xs text-[#8A9BB0]">{msg}</p> : null}
+      <div className="mt-4">
+        <Button type="button" variant="outline" disabled={busy || !info?.ready} onClick={() => void test()}>
+          Test mesajı gönder
         </Button>
       </div>
     </section>

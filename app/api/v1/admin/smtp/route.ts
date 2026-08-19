@@ -1,6 +1,6 @@
 import { requirePermission } from "@/lib/auth";
 import { assertSameOrigin, errorResponse, jsonResponse } from "@/lib/api/helpers";
-import { getSmtpConfig, testSmtpConnection } from "@/lib/mail/smtp";
+import { getSmtpConfig, notificationEmail, testSmtpConnection } from "@/lib/mail/smtp";
 
 export const runtime = "nodejs";
 
@@ -13,6 +13,7 @@ export async function GET() {
       host: cfg?.host || "",
       from: cfg?.from || "",
       port: cfg?.port || null,
+      to: notificationEmail() || null,
     });
   } catch {
     return errorResponse("Unauthorized", 401);

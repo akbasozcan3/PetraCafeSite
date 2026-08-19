@@ -59,6 +59,11 @@ const TABLES = [
     status TEXT NOT NULL DEFAULT 'new'
   )`,
   `CREATE INDEX IF NOT EXISTS contact_messages_created_idx ON contact_messages (created_at DESC)`,
+  `CREATE TABLE IF NOT EXISTS app_settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  )`,
 ];
 
 async function applySchema(): Promise<void> {

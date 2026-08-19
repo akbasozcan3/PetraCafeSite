@@ -16,7 +16,8 @@ Müşteri üyelik / sepet / favori yok — sipariş WhatsApp veya telefon.
 
 | Değişken | Açıklama |
 |----------|----------|
-| `SMTP_HOST` `SMTP_PORT` `SMTP_USER` `SMTP_PASS` `SMTP_FROM` | Admin / sistem e-posta |
+| `SMTP_HOST` `SMTP_PORT` `SMTP_USER` `SMTP_PASS` `SMTP_FROM` `SMTP_TO` | Rezervasyon / iletişim e-postası. Gmail: 587 + uygulama şifresi |
+| `TELEGRAM_BOT_TOKEN` `TELEGRAM_CHAT_ID` | Grup bildirimleri. Chat id `-100...` |
 | `BLOB_READ_WRITE_TOKEN` | Admin görsel yükleme (Vercel Blob) — **canlıda zorunlu** |
 
 > **Önemli:** Lokal admin'den yüklenen görseller `/uploads/site/...` olarak kaydedilir; bu klasör git'e girmez.

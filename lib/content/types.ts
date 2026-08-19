@@ -261,6 +261,8 @@ export interface MenuGrup {
   link?: string;
   adet?: string;
   tumLink?: string;
+  /** Ana sayfa menü sekmelerinde göster */
+  home?: boolean;
   urunler: MenuUrun[];
   trendyolCategoryId?: string;
   integrationCategoryId?: string;
@@ -268,6 +270,8 @@ export interface MenuGrup {
 }
 
 export interface MenuContent {
+  /** Basılı menü sürümü — Postgres’te eski menüyü bir kez günceller */
+  rev?: string;
   baslik?: string;
   giris?: string;
   not?: string;

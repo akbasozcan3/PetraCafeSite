@@ -52,14 +52,14 @@ function unlockScroll() {
 }
 
 function isPastHomeHero() {
-  if (window.scrollY < window.innerHeight * 0.85) return false;
   const gate = document.querySelector(".gate") as HTMLElement | null;
-  if (!gate) return true;
-  const h = Math.max(gate.offsetHeight, gate.scrollHeight);
-  if (h < window.innerHeight * 0.4) {
-    return window.scrollY > window.innerHeight * 0.9;
+  if (!gate) return window.scrollY > 48;
+  const rect = gate.getBoundingClientRect();
+  const h = Math.max(gate.offsetHeight, gate.scrollHeight, rect.height);
+  if (h < 80) {
+    return window.scrollY > window.innerHeight * 0.92;
   }
-  return gate.getBoundingClientRect().bottom <= 80;
+  return rect.bottom <= 72;
 }
 
 function PhoneIcon() {
@@ -196,7 +196,11 @@ export default function SiteNav({
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
+    const later = window.setTimeout(onScroll, 400);
+    const later2 = window.setTimeout(onScroll, 1200);
     return () => {
+      window.clearTimeout(later);
+      window.clearTimeout(later2);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };

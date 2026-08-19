@@ -1,22 +1,74 @@
+import { getAppSetting, setAppSetting } from "@/lib/db/settings";
+import { siteBaseUrl } from "@/lib/mail/smtp";
+
 const API = "https://api.telegram.org";
 const TIMEOUT_MS = 12_000;
+const CHAT_SETTING = "telegram_chat_id";
 
 type TelegramApiResponse = {
   ok: boolean;
   description?: string;
-  result?: { message_id?: number; username?: string; id?: number };
+  result?: { message_id?: number; username?: string; id?: number } | unknown;
+};
+
+type TelegramChat = {
+  id: number;
+  type?: string;
+  title?: string;
+  username?: string;
+  first_name?: string;
+};
+
+export type TelegramUpdate = {
+  message?: { chat?: TelegramChat; text?: string };
+  edited_message?: { chat?: TelegramChat };
+  my_chat_member?: { chat?: TelegramChat };
+  channel_post?: { chat?: TelegramChat };
 };
 
 function botToken() {
   return (process.env.TELEGRAM_BOT_TOKEN || "").trim();
 }
 
-function chatId() {
-  return (process.env.TELEGRAM_CHAT_ID || "").trim();
+export async function resolveTelegramChatId() {
+  const fromEnv = (process.env.TELEGRAM_CHAT_ID || "").trim();
+  if (fromEnv) return fromEnv;
+  return getAppSetting(CHAT_SETTING);
 }
 
-export function isTelegramConfigured() {
-  return Boolean(botToken() && chatId());
+export async function saveTelegramChatId(id: string) {
+  const value = String(id).trim();
+  if (!value) return;
+  await setAppSetting(CHAT_SETTING, value);
+}
+
+function chatFromUpdate(update: TelegramUpdate): TelegramChat | null {
+  return (
+    update.message?.chat ||
+    update.edited_message?.chat ||
+    update.my_chat_member?.chat ||
+    update.channel_post?.chat ||
+    null
+  );
+}
+
+export async function ingestTelegramUpdate(update: TelegramUpdate) {
+  const chat = chatFromUpdate(update);
+  if (!chat?.id) return null;
+  const type = chat.type || "";
+  if (type === "group" || type === "supergroup" || type === "channel") {
+    await saveTelegramChatId(String(chat.id));
+    return { id: String(chat.id), type, title: chat.title || "" };
+  }
+  if (type === "private" && !(await resolveTelegramChatId())) {
+    await saveTelegramChatId(String(chat.id));
+    return { id: String(chat.id), type, title: chat.first_name || chat.username || "" };
+  }
+  return { id: String(chat.id), type, title: chat.title || chat.first_name || "" };
+}
+
+export async function isTelegramConfigured() {
+  return Boolean(botToken() && (await resolveTelegramChatId()));
 }
 
 async function telegramFetch(path: string, body?: Record<string, unknown>) {
@@ -41,8 +93,23 @@ async function telegramFetch(path: string, body?: Record<string, unknown>) {
   }
 }
 
+export function telegramWebhookUrl() {
+  const base = siteBaseUrl();
+  if (!base.startsWith("https://")) return "";
+  return `${base}/api/v1/telegram/webhook`;
+}
+
+export async function ensureTelegramWebhook() {
+  const url = telegramWebhookUrl();
+  if (!botToken() || !url) {
+    return { ok: false as const, url: url || null, error: "SITE_URL https olmalı ve TELEGRAM_BOT_TOKEN gerekli." };
+  }
+  await telegramFetch("setWebhook", { url, drop_pending_updates: false });
+  return { ok: true as const, url };
+}
+
 export async function sendTelegramMessage(text: string) {
-  const id = chatId();
+  const id = await resolveTelegramChatId();
   if (!botToken() || !id) {
     return { ok: false as const, skipped: true as const };
   }
@@ -52,7 +119,8 @@ export async function sendTelegramMessage(text: string) {
       text,
       disable_web_page_preview: true,
     });
-    return { ok: true as const, skipped: false as const, messageId: data.result?.message_id };
+    const result = data.result as { message_id?: number } | undefined;
+    return { ok: true as const, skipped: false as const, messageId: result?.message_id };
   } catch (err) {
     console.warn("[telegram]", err instanceof Error ? err.message : err);
     return { ok: false as const, skipped: false as const };
@@ -79,6 +147,7 @@ export async function notifyTelegramReservation(data: {
   note?: string;
   adminUrl?: string;
 }) {
+  void ensureTelegramWebhook().catch(() => undefined);
   const lines = [
     "YENİ REZERVASYON — Petra Cafe",
     "",
@@ -102,6 +171,7 @@ export async function notifyTelegramContact(data: {
   message: string;
   adminUrl?: string;
 }) {
+  void ensureTelegramWebhook().catch(() => undefined);
   const lines = [
     "YENİ İLETİŞİM MESAJI — Petra Cafe",
     "",
@@ -118,7 +188,8 @@ export async function notifyTelegramContact(data: {
 
 export async function getTelegramStatus() {
   const tokenConfigured = Boolean(botToken());
-  const chatIdConfigured = Boolean(chatId());
+  const chatIdConfigured = Boolean(await resolveTelegramChatId());
+  const webhookUrl = telegramWebhookUrl();
   if (!tokenConfigured) {
     return {
       ready: false,
@@ -126,17 +197,19 @@ export async function getTelegramStatus() {
       chatIdConfigured,
       connected: false,
       botUsername: null as string | null,
+      webhookUrl,
     };
   }
   try {
     const data = await telegramFetch("getMe");
-    const username = data.result?.username || null;
+    const result = data.result as { username?: string } | undefined;
     return {
       ready: tokenConfigured && chatIdConfigured,
       tokenConfigured,
       chatIdConfigured,
       connected: true,
-      botUsername: username,
+      botUsername: result?.username || null,
+      webhookUrl,
     };
   } catch {
     return {
@@ -145,17 +218,18 @@ export async function getTelegramStatus() {
       chatIdConfigured,
       connected: false,
       botUsername: null as string | null,
+      webhookUrl,
     };
   }
 }
 
 export async function sendTelegramTest() {
-  if (!isTelegramConfigured()) {
-    return { ok: false as const, error: "TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID eksik." };
+  if (!(await isTelegramConfigured())) {
+    return { ok: false as const, error: "TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID eksik. Gruba bir mesaj yazıp webhook’un chat id kaydetmesini bekleyin." };
   }
   const result = await sendTelegramMessage(
     "Petra Cafe — Telegram bağlantısı çalışıyor. Rezervasyon ve iletişim bildirimleri bu gruba düşecek."
   );
-  if (!result.ok) return { ok: false as const, error: "Mesaj gönderilemedi. Chat ID ve bot yetkisini kontrol edin." };
+  if (!result.ok) return { ok: false as const, error: "Mesaj gönderilemedi. Botu grup yöneticisi yapın ve tekrar deneyin." };
   return { ok: true as const };
 }

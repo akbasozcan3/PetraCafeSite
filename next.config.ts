@@ -43,9 +43,19 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/login",
-        destination: "/admin/login",
-        permanent: false,
+        source: "/menu/ana-yemekler",
+        destination: "/menu/izgaralar",
+        permanent: true,
+      },
+      {
+        source: "/menu/baslangiclar",
+        destination: "/menu/salatalar",
+        permanent: true,
+      },
+      {
+        source: "/menu/italyan-kokteyller",
+        destination: "/menu/kokteyller",
+        permanent: true,
       },
       {
         source: "/urunler",

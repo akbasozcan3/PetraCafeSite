@@ -15,7 +15,9 @@ import SiteIcon from "@/components/site/SiteIcon";
 export default function HomeMenuPreview({ content }: { content: SiteContent }) {
   const bolum = content.bolumlar?.menu;
   const menu = content.menu;
-  const cats = listCategories(content);
+  const allCats = listCategories(content);
+  const homeCats = allCats.filter((g) => g.home);
+  const cats = homeCats.length ? homeCats : allCats;
   const legend = menu?.legend || "★ işaretliler şefin önerileridir.";
 
   const featured = cats

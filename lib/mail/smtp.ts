@@ -9,6 +9,10 @@ export type SmtpConfig = {
   secure: boolean;
 };
 
+export function notificationEmail() {
+  return (process.env.SMTP_TO || process.env.NOTIFY_EMAIL || "").trim();
+}
+
 export function getSmtpConfig(): SmtpConfig | null {
   const host = (process.env.SMTP_HOST || "").trim();
   const user = (process.env.SMTP_USER || "").trim();
@@ -16,9 +20,25 @@ export function getSmtpConfig(): SmtpConfig | null {
   const from = (process.env.SMTP_FROM || user || "").trim();
   if (!host || !user || !pass || !from) return null;
   const port = Number(process.env.SMTP_PORT || 587);
-  const secure =
-    process.env.SMTP_SECURE === "true" || port === 465;
+  const secure = process.env.SMTP_SECURE === "true" || port === 465;
   return { host, port, user, pass, from, secure };
+}
+
+function createTransport(cfg: SmtpConfig) {
+  const requireTls =
+    process.env.SMTP_REQUIRE_TLS === "true" ||
+    (!cfg.secure && cfg.port === 587);
+  return nodemailer.createTransport({
+    host: cfg.host,
+    port: cfg.port,
+    secure: cfg.secure,
+    requireTLS: requireTls,
+    auth: { user: cfg.user, pass: cfg.pass },
+    connectionTimeout: 12_000,
+    greetingTimeout: 12_000,
+    socketTimeout: 20_000,
+    tls: { minVersion: "TLSv1.2" },
+  });
 }
 
 export function siteBaseUrl() {
@@ -40,12 +60,7 @@ export async function sendMail(opts: {
     console.warn("[mail] SMTP yapılandırılmamış — e-posta gönderilmedi:", opts.subject);
     return { ok: false, skipped: true as const };
   }
-  const transporter = nodemailer.createTransport({
-    host: cfg.host,
-    port: cfg.port,
-    secure: cfg.secure,
-    auth: { user: cfg.user, pass: cfg.pass },
-  });
+  const transporter = createTransport(cfg);
   await transporter.sendMail({
     from: cfg.from,
     to: opts.to,
@@ -97,8 +112,11 @@ export async function notifyInbox(opts: {
   html: string;
   text: string;
 }) {
-  const to = (opts.to || process.env.NOTIFY_EMAIL || process.env.SMTP_TO || "").trim();
-  if (!to) return { ok: false, skipped: true as const };
+  const to = (notificationEmail() || opts.to || "").trim();
+  if (!to) {
+    console.warn("[mail] SMTP_TO / NOTIFY_EMAIL yok — bildirim atlandı:", opts.subject);
+    return { ok: false, skipped: true as const };
+  }
   try {
     return await sendMail({
       to,
@@ -114,13 +132,17 @@ export async function notifyInbox(opts: {
 
 export async function testSmtpConnection() {
   const cfg = getSmtpConfig();
-  if (!cfg) throw new Error("SMTP ayarları eksik (SMTP_HOST/USER/PASS/FROM).");
-  const transporter = nodemailer.createTransport({
-    host: cfg.host,
-    port: cfg.port,
-    secure: cfg.secure,
-    auth: { user: cfg.user, pass: cfg.pass },
-  });
+  if (!cfg) throw new Error("SMTP ayarları eksik (SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM).");
+  const transporter = createTransport(cfg);
   await transporter.verify();
-  return { ok: true, host: cfg.host, from: cfg.from };
+  const to = notificationEmail();
+  if (to) {
+    await sendMail({
+      to,
+      subject: "Petra Cafe — SMTP test",
+      text: "SMTP bağlantısı çalışıyor. Rezervasyon ve iletişim e-postaları bu adrese gelecek.",
+      html: "<p>SMTP bağlantısı çalışıyor. Rezervasyon ve iletişim e-postaları bu adrese gelecek.</p>",
+    });
+  }
+  return { ok: true, host: cfg.host, from: cfg.from, sentTo: to || null };
 }

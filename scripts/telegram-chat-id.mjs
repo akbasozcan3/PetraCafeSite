@@ -1,8 +1,9 @@
 /**
- * Grup chat id'yi bulur. Bot token .env.local içinde olmalı.
- * Kullanım: node -r ./scripts/load-env.cjs scripts/telegram-chat-id.mjs
+ * Grup chat id'yi bulur. Token .env.local içinde olmalı — repoya yazmayın.
+ * npm run telegram:chat-id
  *
- * Gruba botu ekleyin, bir mesaj yazın veya botu yönetici yapın, sonra bu scripti çalıştırın.
+ * Önemli: Adres getUpdatesİ DEĞİL, getUpdates (ASCII I).
+ * Önce webhook silinir, sonra güncellemeler okunur.
  */
 import fs from "fs";
 import path from "path";
@@ -27,7 +28,10 @@ if (!token) {
   process.exit(1);
 }
 
-const res = await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=50`);
+const api = `https://api.telegram.org/bot${token}`;
+
+await fetch(`${api}/deleteWebhook?drop_pending_updates=false`);
+const res = await fetch(`${api}/getUpdates?limit=100`);
 const data = await res.json();
 if (!data.ok) {
   console.error(data.description || "getUpdates başarısız");
@@ -46,14 +50,22 @@ for (const u of data.result || []) {
 }
 
 if (!chats.size) {
-  console.log("Chat bulunamadı.");
-  console.log("1) Gruba @PetraHavuzBot ekleyin");
-  console.log("2) BotFather → /setprivacy → Disable (grup mesajlarını görsün)");
-  console.log("3) Gruba bir mesaj yazın, scripti tekrar çalıştırın");
+  console.log("Chat bulunamadı (result boş).");
+  console.log("");
+  console.log("Tarayıcıda İ HARFİ OLMADAN açın (Türkçe İ değil):");
+  console.log(`  ${api}/getUpdates`);
+  console.log("");
+  console.log("Sonra:");
+  console.log("1) BotFather → /setprivacy → Disable");
+  console.log("2) Botu gruptan çıkarıp tekrar ekleyin, yönetici yapın");
+  console.log("3) Grupta yeni bir mesaj yazın (ör. merhaba)");
+  console.log("4) getUpdates sayfasını yenileyin — chat.id (genelde -100...) TELEGRAM_CHAT_ID");
+  console.log("");
+  console.log("Canlı sitede webhook: SITE_URL/api/v1/telegram/webhook");
   process.exit(2);
 }
 
-console.log("Bulunan sohbetler — TELEGRAM_CHAT_ID olarak eksi sayılı grup id'sini kullanın:\n");
+console.log("TELEGRAM_CHAT_ID (grup için eksi sayı / -100...):\n");
 for (const [id, label] of chats) {
   console.log(`  ${id}   ${label}`);
 }

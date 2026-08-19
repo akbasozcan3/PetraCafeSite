@@ -170,5 +170,11 @@ CREATE TABLE IF NOT EXISTS contact_messages (
 );
 CREATE INDEX IF NOT EXISTS contact_messages_created_idx ON contact_messages (created_at DESC);
 
+CREATE TABLE IF NOT EXISTS app_settings (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 INSERT INTO migrations (name) VALUES ('004_reservations_messages')
   ON CONFLICT (name) DO NOTHING;

@@ -664,9 +664,10 @@ html.scene-ready.scene-painted #scene {
 }
 .site-home .rsv {
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(32px, 5vw, 80px);
   align-items: start;
+  min-width: 0;
 }
 .site-home .rsv__form {
   background: #fff;
@@ -723,6 +724,9 @@ html.scene-ready.scene-painted #scene {
   .site-home .pasta-layout,
   .site-home .faq-layout {
     grid-template-columns: 1fr !important;
+  }
+  .site-home .petra-form {
+    padding: 18px 14px;
   }
 }
 
@@ -1470,6 +1474,9 @@ html.home-anim.no-motion .site-home .hizmet__card:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
+  max-width: 100%;
+}
 }
 .site-home .contact-stage__copy .h2 {
   max-width: 18ch;
@@ -1782,6 +1789,10 @@ html.no-motion .site-shop .pd-related {
   background: #fff;
   border: 1px solid var(--line, rgba(13, 15, 10, 0.12));
   box-shadow: 0 22px 50px -32px rgba(13, 15, 10, 0.45);
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+  box-sizing: border-box;
 }
 .site-home .petra-form__head {
   display: grid;
@@ -1816,6 +1827,10 @@ html.no-motion .site-shop .pd-related {
   line-height: 1.4;
   color: var(--muted, #6e6a5c);
 }
+.site-home .petra-form .field {
+  min-width: 0;
+  max-width: 100%;
+}
 .site-home .petra-form .field label {
   font-size: 12px;
   font-weight: 700;
@@ -1838,12 +1853,17 @@ html.no-motion .site-shop .pd-related {
   font-size: 16px;
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
-.site-home .petra-form input[type="date"] {
+.site-home .petra-form input[type="date"],
+.site-home .petra-form .petra-form__date {
   display: block;
+  width: 100%;
   max-width: 100%;
   min-width: 0;
   line-height: 1.3;
   color-scheme: light;
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: hidden;
 }
 .site-home .petra-form input[type="date"]::-webkit-datetime-edit,
 .site-home .petra-form input[type="date"]::-webkit-datetime-edit-fields-wrapper,
@@ -1853,14 +1873,19 @@ html.no-motion .site-shop .pd-related {
 .site-home .petra-form input[type="date"]::-webkit-datetime-edit-day-field {
   color: var(--ink, #0d0f0a);
   padding: 0;
+  min-width: 0;
 }
 .site-home .petra-form input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 1;
   cursor: pointer;
   width: 1.25rem;
   height: 1.25rem;
-  margin-left: 8px;
+  margin: 0 0 0 4px;
   flex-shrink: 0;
+  padding: 0;
+}
+.site-home .petra-form__row--date {
+  grid-template-columns: 1fr !important;
 }
 .site-home .petra-form .field textarea {
   min-height: 120px;

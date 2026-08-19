@@ -21,6 +21,7 @@
     "db:setup": "node -r ./scripts/load-env.cjs scripts/db-setup.mjs",
     "db:migrate": "node -r ./scripts/load-env.cjs scripts/db-migrate.mjs",
     "telegram:chat-id": "node scripts/telegram-chat-id.mjs",
+    "menu:printed": "node scripts/apply-printed-menu.mjs"
   },
   "engines": {
     "node": ">=20"

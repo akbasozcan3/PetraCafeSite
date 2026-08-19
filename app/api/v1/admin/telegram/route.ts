@@ -1,12 +1,13 @@
 import { requirePermission } from "@/lib/auth";
 import { jsonResponse, errorResponse, assertSameOrigin } from "@/lib/api/helpers";
-import { getTelegramStatus, sendTelegramTest } from "@/lib/telegram";
+import { ensureTelegramWebhook, getTelegramStatus, sendTelegramTest } from "@/lib/telegram";
 
 export const runtime = "nodejs";
 
 export async function GET() {
   try {
     await requirePermission("system:read");
+    await ensureTelegramWebhook().catch(() => undefined);
     const status = await getTelegramStatus();
     return jsonResponse({ status });
   } catch (error) {
