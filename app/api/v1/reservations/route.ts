@@ -110,6 +110,11 @@ export async function POST(request: Request) {
         guests,
         note: note || undefined,
         adminUrl,
+      }).then((tg) => {
+        if (!tg.ok) {
+          console.error("[reservations] Telegram gruba düşmedi:", tg.error || tg);
+        }
+        return tg;
       }),
     ]);
 

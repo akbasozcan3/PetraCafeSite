@@ -83,6 +83,11 @@ export async function POST(request: Request) {
         email: email || undefined,
         message,
         adminUrl,
+      }).then((tg) => {
+        if (!tg.ok) {
+          console.error("[messages] Telegram gruba düşmedi:", tg.error || tg);
+        }
+        return tg;
       }),
     ]);
 

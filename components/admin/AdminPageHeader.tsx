@@ -4,6 +4,7 @@ import Button from "@/components/admin/ui/Button";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
 import type { SiteContent } from "@/lib/content/types";
 import { RefreshCw } from "lucide-react";
+import AdminSplash from "@/components/admin/ui/AdminSplash";
 
 export default function AdminPageHeader({
   title,
@@ -43,11 +44,7 @@ export function AdminAlert({
 }
 
 export function AdminLoading() {
-  return (
-    <div className="flex min-h-[40vh] items-center justify-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#C8703A] border-t-transparent" />
-    </div>
-  );
+  return <AdminSplash compact label="İçerik yükleniyor" />;
 }
 
 export function AdminError({

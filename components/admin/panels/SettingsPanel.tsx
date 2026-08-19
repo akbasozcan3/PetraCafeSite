@@ -7,6 +7,7 @@ import { ROLE_LABELS, type AdminRole } from "@/lib/admin/roles";
 import Input from "@/components/admin/ui/Input";
 import Button from "@/components/admin/ui/Button";
 import AdminPageHeader, { AdminAlert } from "@/components/admin/AdminPageHeader";
+import AdminSplash from "@/components/admin/ui/AdminSplash";
 
 export default function SettingsPanel() {
   const [email, setEmail] = useState<string | null>(null);
@@ -55,11 +56,7 @@ export default function SettingsPanel() {
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center py-12">
-        <Loader2 className="h-6 w-6 animate-spin text-[#8A9BB0]" />
-      </div>
-    );
+    return <AdminSplash compact label="Ayarlar yükleniyor" />;
   }
 
   const sourceLabel =
@@ -165,6 +162,14 @@ function SmtpCard() {
   } | null>(null);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
+  const [kind, setKind] = useState<"reservation" | "contact">("reservation");
+  const [preview, setPreview] = useState<{
+    from?: string;
+    to?: string;
+    subject?: string;
+    html?: string;
+  } | null>(null);
+  const [previewErr, setPreviewErr] = useState("");
 
   useEffect(() => {
     void fetch("/api/v1/admin/smtp", { credentials: "include" })
@@ -172,6 +177,17 @@ function SmtpCard() {
       .then((d) => setInfo(d))
       .catch(() => setInfo({ configured: false }));
   }, []);
+
+  useEffect(() => {
+    setPreviewErr("");
+    void fetch(`/api/v1/admin/smtp/preview?kind=${kind}`, { credentials: "include" })
+      .then(async (r) => {
+        const data = await r.json();
+        if (!r.ok) throw new Error(data.error || "Önizleme alınamadı");
+        setPreview(data);
+      })
+      .catch((e) => setPreviewErr(e instanceof Error ? e.message : "Önizleme yok"));
+  }, [kind]);
 
   async function test() {
     setBusy(true);
@@ -185,7 +201,7 @@ function SmtpCard() {
       if (!res.ok) throw new Error(data.error || "SMTP test başarısız");
       setMsg(
         data.sentTo
-          ? `SMTP OK — ${data.host} / test mail: ${data.sentTo}`
+          ? `SMTP OK — Gmail’e test mail gitti: ${data.sentTo}`
           : `SMTP OK — ${data.host} / ${data.from} (SMTP_TO ekleyin, test mail gider)`
       );
     } catch (e) {
@@ -197,10 +213,10 @@ function SmtpCard() {
 
   return (
     <section className="mt-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-      <h3 className="text-lg font-semibold text-[#F8F8F8]">SMTP / E-posta</h3>
+      <h3 className="text-lg font-semibold text-[#F8F8F8]">SMTP / Gmail görünümü</h3>
       <p className="mt-2 text-sm text-[#8A9BB0]">
-        Vercel ortam değişkenleri: SMTP_HOST, SMTP_PORT (587), SMTP_USER, SMTP_PASS, SMTP_FROM,
-        SMTP_TO (bildirimlerin gideceği adres). Gmail için Uygulama Şifresi kullanın.
+        Müşteriye gitmez — rezervasyon ve iletişim formları <strong className="text-[#EEE9E0]">SMTP_TO</strong>{" "}
+        adresine bu tasarımla düşer. Aşağıdaki kutu Gmail’deki okuma ekranına yakındır.
       </p>
       <p className="mt-3 text-sm text-[#EEE9E0]">
         Durum:{" "}
@@ -214,19 +230,52 @@ function SmtpCard() {
         )}
       </p>
       {msg ? <p className="mt-2 text-xs text-[#8A9BB0]">{msg}</p> : null}
-      <div className="mt-5 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0D1117]">
-        <p className="border-b border-white/[0.06] px-4 py-2 text-[11px] uppercase tracking-wider text-[#8A9BB0]">
-          E-posta görünümü (logo + şablon)
-        </p>
-        <iframe
-          title="SMTP e-posta önizlemesi"
-          src="/api/v1/admin/smtp/preview"
-          className="h-[420px] w-full bg-[#f4eee1]"
-        />
+
+      <div className="mt-4 flex gap-2">
+        <Button
+          type="button"
+          variant={kind === "reservation" ? "primary" : "outline"}
+          onClick={() => setKind("reservation")}
+        >
+          Rezervasyon
+        </Button>
+        <Button
+          type="button"
+          variant={kind === "contact" ? "primary" : "outline"}
+          onClick={() => setKind("contact")}
+        >
+          İletişim
+        </Button>
       </div>
+
+      <div className="mt-4 overflow-hidden rounded-xl border border-black/10 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.28)]">
+        <div className="flex items-center gap-2 border-b border-[#e6e6e6] bg-[#f2f2f2] px-4 py-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ea4335]" />
+          <span className="text-[11px] font-medium tracking-wide text-[#5f6368]">Gmail</span>
+        </div>
+        <div className="space-y-1 border-b border-[#ececec] bg-white px-5 py-3">
+          <p className="text-lg font-normal text-[#202124]">{preview?.subject || "…"}</p>
+          <p className="text-xs text-[#5f6368]">
+            <span className="font-medium text-[#202124]">{preview?.from || "gönderen"}</span>
+            {" → "}
+            {preview?.to || "SMTP_TO"}
+          </p>
+        </div>
+        {previewErr ? (
+          <p className="px-5 py-8 text-sm text-red-600">{previewErr}</p>
+        ) : (
+          <iframe
+            title="Gmail e-posta önizlemesi"
+            srcDoc={preview?.html || "<p style='padding:24px;font-family:sans-serif;color:#888'>Yükleniyor…</p>"}
+            className="h-[460px] w-full border-0 bg-[#f4eee1]"
+            sandbox="allow-same-origin"
+          />
+        )}
+      </div>
+
       <div className="mt-4">
         <Button type="button" variant="outline" disabled={busy || !info?.configured} onClick={() => void test()}>
-          Bağlantıyı Test Et
+          Gmail’e gerçek test maili gönder
         </Button>
       </div>
     </section>
@@ -239,8 +288,12 @@ function TelegramCard() {
     tokenConfigured?: boolean;
     chatIdConfigured?: boolean;
     connected?: boolean;
+    chatReachable?: boolean;
     botUsername?: string | null;
-    webhookUrl?: string;
+    chatTitle?: string | null;
+    chatType?: string | null;
+    chatIdMasked?: string | null;
+    hint?: string;
   } | null>(null);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
@@ -263,7 +316,7 @@ function TelegramCard() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Telegram test başarısız");
       setInfo(data.status || info);
-      setMsg("Test mesajı gruba gönderildi.");
+      setMsg("Grup mesajı gitti — Telegram’da Petra grubunu açın. Admin onayı ayrıca bildirim göndermez.");
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "Hata");
     } finally {
@@ -271,29 +324,46 @@ function TelegramCard() {
     }
   }
 
+  const canTest = Boolean(info?.tokenConfigured && info?.chatIdConfigured);
+
   return (
     <section className="mt-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-      <h3 className="text-lg font-semibold text-[#F8F8F8]">Telegram bildirimleri</h3>
+      <h3 className="text-lg font-semibold text-[#F8F8F8]">Telegram grubu</h3>
       <p className="mt-2 text-sm text-[#8A9BB0]">
-        Vercel: TELEGRAM_BOT_TOKEN ve TELEGRAM_CHAT_ID. Chat id yoksa botu yönetici yapıp grupta
-        etiketleyin; webhook chat id&apos;yi kaydeder.
+        Müşteri siteden rezervasyon veya iletişim gönderince mesaj gruba düşer. Admin’de onay/red
+        gruba tekrar gitmez.
       </p>
       <p className="mt-3 text-sm text-[#EEE9E0]">
         Durum:{" "}
-        {info?.ready ? (
+        {info?.ready && info?.chatReachable ? (
           <span className="text-emerald-300">
             Hazır {info.botUsername ? `(@${info.botUsername})` : ""}
+            {info.chatTitle ? ` · ${info.chatTitle}` : ""}
+            {info.chatIdMasked ? ` · ${info.chatIdMasked}` : ""}
           </span>
-        ) : info?.tokenConfigured ? (
-          <span className="text-amber-300">Token var, chat id bekleniyor</span>
         ) : (
-          <span className="text-amber-300">Yapılandırılmadı</span>
+          <span className="text-amber-300">{info?.hint || "Kontrol ediliyor…"}</span>
         )}
       </p>
+      {info?.hint && info.ready ? (
+        <p className="mt-2 text-xs text-[#8A9BB0]">{info.hint}</p>
+      ) : null}
       {msg ? <p className="mt-2 text-xs text-[#8A9BB0]">{msg}</p> : null}
+
+      <div className="mt-4 rounded-xl border border-white/[0.06] bg-[#0D1117] p-4 text-sm leading-relaxed text-[#D5DEE8]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C8703A]">
+          Gruba düşecek örnek
+        </p>
+        <p className="mt-2 font-semibold text-white">Petra Cafe Restaurant</p>
+        <p className="text-[#8A9BB0]">Yeni rezervasyon — müşteri siteden gönderdi</p>
+        <p className="mt-3">👤 Örnek Misafir</p>
+        <p>📞 0530 608 90 51</p>
+        <p>📅 tarih · saat · kişi</p>
+      </div>
+
       <div className="mt-4">
-        <Button type="button" variant="outline" disabled={busy || !info?.ready} onClick={() => void test()}>
-          Test mesajı gönder
+        <Button type="button" variant="outline" disabled={busy || !canTest} onClick={() => void test()}>
+          Gruba test rezervasyonu gönder
         </Button>
       </div>
     </section>

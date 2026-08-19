@@ -9,6 +9,7 @@ import Sidebar from "@/components/admin/layout/Sidebar";
 import Header from "@/components/admin/layout/Header";
 import { MobileSidebar } from "@/components/admin/layout/NavDropdown";
 import AdminFaviconSync from "@/components/admin/ui/AdminFaviconSync";
+import AdminSplash from "@/components/admin/ui/AdminSplash";
 
 function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const { loading, user } = useAdminSession();
@@ -21,9 +22,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   }
 
   if (loading || !user) {
-    return (
-      <div className="min-h-screen bg-[#080D15]" aria-busy="true" aria-label="Oturum kontrol ediliyor" />
-    );
+    return <AdminSplash label="Oturum kontrol ediliyor" />;
   }
 
   return (
