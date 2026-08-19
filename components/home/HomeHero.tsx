@@ -59,7 +59,6 @@ export default function HomeHero({ content }: { content: SiteContent }) {
         <canvas id="scene" aria-hidden="true" />
         <div className="gate__fallback" id="fallback" hidden>
           <div className="gate__fallback-inner">
-            <div className="gate__mark">{hero.fallbackMark || "PETRA"}</div>
             <p>{hero.fallbackTagline || "Cafe · Restaurant · Pool & Beach"}</p>
           </div>
         </div>
@@ -67,9 +66,6 @@ export default function HomeHero({ content }: { content: SiteContent }) {
         <div className="gate__veil" aria-hidden="true" />
 
         <div className="hero-overlays" id="gateIntro">
-          <p className="hero-layer" data-hero-layer="mark">
-            {hero.fallbackMark || "PETRA"}
-          </p>
           <p className="hero-layer" data-hero-layer="slogan">
             {hero.fallbackTagline || "Cafe · Restaurant · Pool & Beach"}
           </p>

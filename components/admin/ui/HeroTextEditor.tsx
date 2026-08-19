@@ -184,7 +184,7 @@ export default function HeroTextEditor({
           )}
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/75" />
 
-          {(["mark", "slogan", "boot"] as HeroTextKey[]).map((key) => {
+          {(["slogan", "boot"] as HeroTextKey[]).map((key) => {
             const s = map[key];
             if (s.gizle && key !== selected) return null;
             const active = selected === key;
@@ -318,7 +318,7 @@ export default function HeroTextEditor({
             onChange={(e) => setSelected(e.target.value as HeroTextKey)}
             className="mt-1.5 h-11 w-full rounded-2xl border border-white/[0.06] bg-[#0D1117] px-3 text-sm text-[#EEE9E0]"
           >
-            {HERO_TEXT_KEYS.map((key) => (
+            {HERO_TEXT_KEYS.filter((key) => key !== "mark").map((key) => (
               <option key={key} value={key}>
                 {HERO_TEXT_LABELS[key]}
               </option>

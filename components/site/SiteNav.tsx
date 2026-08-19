@@ -278,7 +278,16 @@ export default function SiteNav({
           className="nav__logo has-logo"
           href={homeHref}
           aria-label="Ana sayfa"
-          onClick={() => setOpen(false)}
+          onClick={(e) => {
+            setOpen(false);
+            if (pathname === "/" || pathname === "") {
+              e.preventDefault();
+              window.history.replaceState(null, "", "/");
+              window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+              syncHomeNavReveal(false);
+              setSolid(false);
+            }
+          }}
         >
           <BrandLogo
             className="nav__logo-img"

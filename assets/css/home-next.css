@@ -2980,6 +2980,12 @@ html.menu-open .site-shop a.nav__cta,
   position: fixed !important;
 }
 
+/* Kapı üstündeki ikinci PETRA markası — navbar logosu kalsın */
+.gate [data-hero-layer="mark"],
+.gate .gate__mark {
+  display: none !important;
+}
+
 #iletisim-form,
 #sss-liste,
 #yorumlar,

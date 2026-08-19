@@ -166,7 +166,7 @@ export function buildHeroTextCss(desktop?: HeroTextMap | null, mobile?: HeroText
   const m = resolveHeroTextMap(desktop, mobile, true);
   const overlay = (map: Record<HeroTextKey, HeroTextStyle>, titleMax: number, leadMax: number, eyeMax: number) =>
     [
-      layerCss('.gate [data-hero-layer="mark"]', map.mark),
+      layerCss('.gate [data-hero-layer="mark"]', { ...map.mark, gizle: true }),
       layerCss('.gate [data-hero-layer="slogan"]', map.slogan),
       map.scroll.gizle
         ? "#scrollHint.gate__scroll,.gate .gate__scroll{display:none!important}"
