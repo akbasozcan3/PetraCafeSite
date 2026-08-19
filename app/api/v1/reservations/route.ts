@@ -3,9 +3,9 @@ import { rateLimit } from "@/lib/rate-limit";
 import { createReservation } from "@/lib/db/inbox";
 import { getPublicContent } from "@/lib/db/content";
 import { notifyInbox } from "@/lib/mail/smtp";
+import { brandLogoAbsoluteUrl, buildNotifyEmail } from "@/lib/mail/notify-layout";
 import { notifyTelegramReservation } from "@/lib/telegram";
 import { sanitizePhoneDigits } from "@/lib/content/contact-utils";
-import { escapeHtml } from "@/lib/security/html";
 import { publicOrigin } from "@/lib/site/canonical";
 import { isAllowedReservationTime, localIsoDate, addDaysIso } from "@/lib/content/hours";
 
@@ -80,21 +80,38 @@ export async function POST(request: Request) {
     });
 
     const adminUrl = `${publicOrigin(content)}/admin/rezervasyonlar`;
-    void notifyInbox({
-      to: content?.iletisim?.eposta,
-      subject: `Rezervasyon — ${name} · ${date} ${time}`,
-      text: `${name}\n${phone}\n${date} ${time}\n${guests} kişi${note ? `\n${note}` : ""}`,
-      html: `<p><strong>${escapeHtml(name)}</strong> · ${escapeHtml(phone)}</p><p>${escapeHtml(date)} ${escapeHtml(time)} · ${guests} kişi</p>${note ? `<p>${escapeHtml(note)}</p>` : ""}<p><a href="${escapeHtml(adminUrl)}">Admin paneli</a></p>`,
-    });
-    void notifyTelegramReservation({
-      name,
-      phone,
-      date,
-      time,
-      guests,
-      note: note || undefined,
+    const mail = buildNotifyEmail({
+      kicker: "Rezervasyon",
+      title: "Yeni masa talebi",
+      intro: "Siteden bir rezervasyon geldi. Telefonla onaylayın.",
+      logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
       adminUrl,
+      rows: [
+        { label: "Ad soyad", value: name },
+        { label: "Telefon", value: phone },
+        { label: "Tarih", value: date },
+        { label: "Saat", value: time },
+        { label: "Kişi", value: String(guests) },
+        { label: "Not", value: note },
+      ],
     });
+    await Promise.allSettled([
+      notifyInbox({
+        to: content?.iletisim?.eposta,
+        subject: `Rezervasyon — ${name} · ${date} ${time}`,
+        text: mail.text,
+        html: mail.html,
+      }),
+      notifyTelegramReservation({
+        name,
+        phone,
+        date,
+        time,
+        guests,
+        note: note || undefined,
+        adminUrl,
+      }),
+    ]);
 
     return jsonResponse({ success: true, id: item.id });
   } catch (error) {

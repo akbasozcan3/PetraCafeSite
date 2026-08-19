@@ -32,8 +32,12 @@ function botToken() {
 
 export async function resolveTelegramChatId() {
   const fromEnv = (process.env.TELEGRAM_CHAT_ID || "").trim();
-  if (fromEnv) return fromEnv;
-  return getAppSetting(CHAT_SETTING);
+  if (fromEnv) return fromEnv.replace(/^["']|["']$/g, "");
+  try {
+    return await getAppSetting(CHAT_SETTING);
+  } catch {
+    return "";
+  }
 }
 
 export async function saveTelegramChatId(id: string) {
@@ -111,11 +115,13 @@ export async function ensureTelegramWebhook() {
 export async function sendTelegramMessage(text: string) {
   const id = await resolveTelegramChatId();
   if (!botToken() || !id) {
+    console.warn("[telegram] atlandı — TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID yok.");
     return { ok: false as const, skipped: true as const };
   }
+  const chatId = /^-?\d+$/.test(id) ? Number(id) : id;
   try {
     const data = await telegramFetch("sendMessage", {
-      chat_id: id,
+      chat_id: chatId,
       text,
       disable_web_page_preview: true,
     });
@@ -147,7 +153,6 @@ export async function notifyTelegramReservation(data: {
   note?: string;
   adminUrl?: string;
 }) {
-  void ensureTelegramWebhook().catch(() => undefined);
   const lines = [
     "YENİ REZERVASYON — Petra Cafe",
     "",
@@ -171,7 +176,6 @@ export async function notifyTelegramContact(data: {
   message: string;
   adminUrl?: string;
 }) {
-  void ensureTelegramWebhook().catch(() => undefined);
   const lines = [
     "YENİ İLETİŞİM MESAJI — Petra Cafe",
     "",

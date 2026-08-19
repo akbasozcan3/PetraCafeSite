@@ -3,9 +3,9 @@ import { rateLimit } from "@/lib/rate-limit";
 import { createMessage } from "@/lib/db/inbox";
 import { getPublicContent } from "@/lib/db/content";
 import { notifyInbox } from "@/lib/mail/smtp";
+import { brandLogoAbsoluteUrl, buildNotifyEmail } from "@/lib/mail/notify-layout";
 import { notifyTelegramContact } from "@/lib/telegram";
 import { sanitizePhoneDigits } from "@/lib/content/contact-utils";
-import { escapeHtml } from "@/lib/security/html";
 import { publicOrigin } from "@/lib/site/canonical";
 
 export const runtime = "nodejs";
@@ -57,19 +57,34 @@ export async function POST(request: Request) {
 
     const content = await getPublicContent().catch(() => null);
     const adminUrl = `${publicOrigin(content)}/admin/mesajlar`;
-    void notifyInbox({
-      to: content?.iletisim?.eposta,
-      subject: `Yeni mesaj — ${name}`,
-      text: `${name}\n${phone}${email ? `\n${email}` : ""}\n\n${message}`,
-      html: `<p><strong>${escapeHtml(name)}</strong></p><p>Tel: ${escapeHtml(phone)}${email ? `<br/>E-posta: ${escapeHtml(email)}` : ""}</p><p>${escapeHtml(message).replace(/\n/g, "<br/>")}</p><p><a href="${escapeHtml(adminUrl)}">Admin paneli</a></p>`,
-    });
-    void notifyTelegramContact({
-      name,
-      phone: phone || undefined,
-      email: email || undefined,
-      message,
+    const mail = buildNotifyEmail({
+      kicker: "İletişim",
+      title: "Yeni mesaj",
+      intro: "Sitedeki iletişim formundan bir yazı geldi.",
+      logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
       adminUrl,
+      rows: [
+        { label: "Ad soyad", value: name },
+        { label: "Telefon", value: phone },
+        { label: "E-posta", value: email },
+      ],
+      body: message,
     });
+    await Promise.allSettled([
+      notifyInbox({
+        to: content?.iletisim?.eposta,
+        subject: `Yeni mesaj — ${name}`,
+        text: mail.text,
+        html: mail.html,
+      }),
+      notifyTelegramContact({
+        name,
+        phone: phone || undefined,
+        email: email || undefined,
+        message,
+        adminUrl,
+      }),
+    ]);
 
     return jsonResponse({ success: true, id: item.id });
   } catch (error) {
