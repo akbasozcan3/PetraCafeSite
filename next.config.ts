@@ -37,7 +37,7 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    minimumCacheTTL: 3600,
+    minimumCacheTTL: 86400, // 24 saat (was 3600)
   },
 
   async redirects() {
@@ -186,7 +186,8 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=3600, must-revalidate",
+            // Versiyonlu dosyalar (?v=xx) — 1 yıl güvenli
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },

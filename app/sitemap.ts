@@ -8,7 +8,7 @@ import {
 import { categoryHref } from "@/lib/content/slugify";
 import { publicOrigin } from "@/lib/site/canonical";
 
-export const revalidate = 60;
+export const revalidate = 3600; // 1 saat — menü nadiren değişir
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const content = await getPublicContent();
@@ -16,8 +16,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const entries: MetadataRoute.Sitemap = [
-    { url: `${origin}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${origin}/menu`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${origin}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
+    { url: `${origin}/menu`, lastModified: now, changeFrequency: "weekly", priority: 0.95 },
     { url: `${origin}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
   ];
 
@@ -34,8 +34,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entries.push({
       url: `${origin}${product.href}`,
       lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.7,
+      changeFrequency: "monthly",
+      priority: 0.65,
     });
   }
 

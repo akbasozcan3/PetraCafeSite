@@ -50,12 +50,15 @@ export default function HomeShell({
   return (
     <div className="site-home" style={themeToCssVars(content.theme)}>
       <ThemeDocument vars={themeCssCustomProperties(content.theme)} />
+      {/* Google Fonts preconnect — DNS + TLS önceden kurar, LCP iyileştirir */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
         rel="stylesheet"
         href="/css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       />
       <link rel="stylesheet" href="/assets/css/style.css?v=20260819nav9" />
-      <link rel="stylesheet" href="/assets/css/home-next.css?v=70" />
+      <link rel="stylesheet" href="/assets/css/home-next.css?v=71" />
       <link rel="preload" as="image" href={poster} />
       <link
         rel="preload"
@@ -63,6 +66,7 @@ export default function HomeShell({
         href={mobile}
         media="(max-width: 860px)"
       />
+
 
       <SiteNav
         navbar={content.navbar}

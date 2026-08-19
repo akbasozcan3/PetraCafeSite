@@ -35,6 +35,10 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
     authors: [{ name: "Petra Cafe Restaurant" }],
     creator: "Petra Cafe Restaurant",
+    category: "restaurant",
+    alternates: {
+      canonical: `${origin}/`,
+    },
     robots: {
       index: true,
       follow: true,
@@ -51,7 +55,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: content?.seo?.siteName || "Petra Cafe Restaurant",
       title: content?.seo?.ogTitle || title,
       description: content?.seo?.ogDescription || description,
-      images: og ? [{ url: og }] : undefined,
+      url: `${origin}/`,
+      images: og
+        ? [{ url: og, width: 1200, height: 630, alt: "Petra Cafe Restaurant" }]
+        : undefined,
     },
     twitter: {
       card: "summary_large_image",
@@ -61,7 +68,6 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   };
 }
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
