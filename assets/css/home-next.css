@@ -2811,6 +2811,37 @@ html.menu-open .site-shop a.nav__cta,
   content: none !important;
 }
 
+@media (max-width: 860px) {
+  .nav,
+  .nav.is-hero,
+  .nav.is-solid,
+  .nav.is-menu,
+  .site-home .nav,
+  .site-shop .nav {
+    justify-content: flex-start !important;
+  }
+  .nav__logo,
+  .site-home .nav__logo,
+  .site-shop .nav__logo {
+    margin-right: 0 !important;
+  }
+  .nav__actions,
+  .nav .nav__phone,
+  .nav a.nav__cta,
+  .nav .nav__cta,
+  .site-home .nav a.nav__cta,
+  .site-shop .nav a.nav__cta {
+    display: none !important;
+    margin-left: 0 !important;
+  }
+  .nav__burger,
+  .site-home .nav__burger,
+  .site-shop .nav__burger {
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+  }
+}
+
 
 
 
