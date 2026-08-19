@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react"],
   },
   serverExternalPackages: ["pg", "nodemailer", "bcryptjs"],
+  webpack: (config, { dir }) => {
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      "@": dir,
+    };
+    return config;
+  },
   turbopack: {},
 
   images: {
