@@ -142,7 +142,7 @@ function normalizeImages(images: Record<string, string>) {
 }
 
 function rewriteLocalUploadsInContent(content: SiteContent): SiteContent {
-  if (process.env.VERCEL !== "1") return content;
+  if (process.env.VERCEL !== "1" && process.env.NETLIFY !== "true") return content;
 
   if (Array.isArray(content.galeri)) {
     content.galeri = content.galeri.map((item, i) => ({
