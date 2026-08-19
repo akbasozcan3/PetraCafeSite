@@ -5,7 +5,7 @@ export const SITE_PHOTOS = {
   facade: "/assets/cms/hero-cephe.webp",
   interior: "/assets/cms/hero-ic.webp",
   gallery: "/assets/cms/galeri-cephe.webp",
-  mark: "/assets/img/petra-mark.svg",
+  mark: "/assets/cms/logo.png",
   favicon: "/assets/img/petra-favicon.svg",
   placeholder: "/assets/img/product-placeholder.svg",
 } as const;

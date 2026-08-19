@@ -10,7 +10,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     aboutInterior: "/assets/cms/hero-ic.webp",
     faq: "/assets/cms/hero-ic.webp",
     ogImage: "/assets/cms/hero-cephe.webp",
-    logo: "/assets/img/petra-mark.svg",
+    logo: "/assets/cms/logo.png",
     favicon: "/assets/img/petra-favicon.svg",
     reservation: "/assets/cms/hero-ic.webp",
     heroMobile: "/assets/cms/hero-cephe.webp",
