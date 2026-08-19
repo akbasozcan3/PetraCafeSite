@@ -2980,16 +2980,6 @@ html.menu-open .site-shop a.nav__cta,
   position: fixed !important;
 }
 
-.nav__logo-img.is-video,
-.nav .is-video {
-  mix-blend-mode: screen;
-  background: transparent !important;
-}
-.nav.is-solid .nav__logo-img.is-video,
-.nav.is-solid .is-video {
-  mix-blend-mode: multiply;
-}
-
 #iletisim-form,
 #sss-liste,
 #yorumlar,

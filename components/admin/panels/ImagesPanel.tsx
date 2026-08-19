@@ -140,7 +140,7 @@ export default function ImagesPanel() {
               key === "heroCephe"
                 ? "Kapı cephesi yükle — kırparken kapıyı ortala (4:3)"
                 : key === "logo"
-                  ? "Logo yükle (PNG / SVG / MP4 animasyon)"
+                  ? "Logo yükle (SVG önerilir · PNG / WebP)"
                   : key === "favicon"
                     ? "Favicon yükle — ICO / SVG / PNG sürükle-bırak"
                     : undefined

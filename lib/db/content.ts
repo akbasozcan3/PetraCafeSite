@@ -331,7 +331,9 @@ async function pgGetContent(): Promise<SiteContent> {
       sayfalar: file.sayfalar ?? raw.sayfalar,
       images: {
         ...(raw.images || {}),
-        ...(file.images?.logo ? { logo: file.images.logo } : {}),
+        ...(/\.(mp4|webm)(\?|$)/i.test(String(raw.images?.logo || "")) && file.images?.logo
+          ? { logo: file.images.logo }
+          : {}),
       },
     });
     await pool.query(
