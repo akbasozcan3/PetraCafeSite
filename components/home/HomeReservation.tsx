@@ -177,6 +177,8 @@ export default function HomeReservation({
                 max={maxDate}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                className="petra-form__date"
+                lang="tr"
               />
             </div>
             <div className="field">
