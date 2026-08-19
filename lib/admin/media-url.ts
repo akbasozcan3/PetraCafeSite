@@ -24,11 +24,6 @@ export function resolveProductionMediaPath(
   if (!path) return fallback ? resolveMediaUrl(fallback) : "";
   if (path.startsWith("http://") || path.startsWith("https://")) return path;
   const normalized = resolveMediaUrl(path);
-  const hosted =
-    process.env.VERCEL === "1" || process.env.NETLIFY === "true";
-  if (hosted && isLocalUploadPath(normalized)) {
-    return fallback ? resolveMediaUrl(fallback) : normalized;
-  }
   return normalized;
 }
 

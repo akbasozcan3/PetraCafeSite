@@ -17,6 +17,8 @@ data/uploads/*
 !data/uploads/site/.gitkeep
 public/uploads/*
 !public/uploads/.gitkeep
+!public/uploads/site/
+!public/uploads/site/**
 server/data/auth.json
 server/data/uploads/*
 !server/data/uploads/.gitkeep

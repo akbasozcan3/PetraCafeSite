@@ -38,7 +38,11 @@ const API_GONE = ["/api/v1/customer", "/api/v1/admin/web-shop"];
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/uploads/") || pathname.startsWith("/media/")) {
+  if (pathname.startsWith("/uploads/")) {
+    return NextResponse.next();
+  }
+
+  if (pathname.startsWith("/media/")) {
     const rest = pathname.replace(/^\/(uploads|media)\//, "");
     if (!rest || rest.includes("..")) {
       return new NextResponse("Not found", { status: 404 });
