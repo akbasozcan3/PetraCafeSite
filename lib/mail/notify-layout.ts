@@ -3,8 +3,8 @@ import { SITE_PHOTOS, liveMedia } from "@/lib/content/media-fallbacks";
 import { escapeHtml } from "@/lib/security/html";
 
 export function brandLogoAbsoluteUrl(logoPath?: string | null) {
-  let raw = liveMedia(logoPath, SITE_PHOTOS.mark) || SITE_PHOTOS.mark;
-  if (/\.(mp4|webm|mov)(\?|$)/i.test(raw) || raw.startsWith("/uploads/")) {
+  let raw = logoPath || SITE_PHOTOS.mark;
+  if (/\.(mp4|webm|mov)(\?|$)/i.test(raw)) {
     raw = SITE_PHOTOS.mark;
   }
   if (/^https?:\/\//i.test(raw)) return raw;
@@ -48,9 +48,9 @@ export function buildNotifyEmail(opts: {
       <td align="center">
         <table role="presentation" width="560" cellspacing="0" cellpadding="0" style="max-width:560px;width:100%;background:#fffdf8;border-radius:18px;overflow:hidden;border:1px solid #eadfca;">
           <tr>
-            <td style="background:#16140f;padding:22px 28px;text-align:center;">
-              <img src="${escapeHtml(opts.logoUrl)}" alt="Petra Cafe" width="72" height="72" style="display:inline-block;width:72px;height:72px;object-fit:contain;border-radius:50%;background:#1f1c16;" />
-              <p style="margin:12px 0 0;color:#d9a441;font-size:11px;letter-spacing:.22em;text-transform:uppercase;">Petra Cafe Restaurant</p>
+            <td style="background:#16140f;padding:26px 28px 22px;text-align:center;">
+              <img src="${escapeHtml(opts.logoUrl)}" alt="Petra Cafe" height="60" style="display:inline-block;height:60px;max-height:60px;width:auto;max-width:240px;object-fit:contain;" />
+              <p style="margin:10px 0 0;color:#d9a441;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-family:system-ui,-apple-system,sans-serif;">Petra Cafe Restaurant</p>
             </td>
           </tr>
           <tr>

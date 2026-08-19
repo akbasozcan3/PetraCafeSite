@@ -137,12 +137,14 @@ export async function testSmtpConnection() {
   await transporter.verify();
   const to = notificationEmail();
   if (to) {
+    const { getPublicContent } = await import("@/lib/db/content");
+    const content = await getPublicContent().catch(() => null);
     const { brandLogoAbsoluteUrl, buildNotifyEmail } = await import("@/lib/mail/notify-layout");
     const mail = buildNotifyEmail({
       kicker: "SMTP test",
       title: "Bağlantı çalışıyor",
       intro: "Rezervasyon ve iletişim formları bu şablonla bu adrese düşecek.",
-      logoUrl: brandLogoAbsoluteUrl(),
+      logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
       rows: [
         { label: "Sunucu", value: cfg.host },
         { label: "Gönderen", value: cfg.from },
