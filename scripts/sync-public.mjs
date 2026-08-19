@@ -209,22 +209,6 @@ for (const [a, b] of assetPairs) {
 bumpSiteLoaderHeroUrls();
 bumpStyleHeroUrls();
 
-// index.htm cache bump + mirror
-const pubIndex = path.join(root, "public", "index.htm");
-const rootIndex = path.join(root, "index.htm");
-if (fs.existsSync(rootIndex) && !fs.existsSync(pubIndex)) {
-  copyFile(rootIndex, pubIndex);
-}
-if (fs.existsSync(pubIndex)) {
-  let html = bumpCache(fs.readFileSync(pubIndex, "utf8"));
-  fs.writeFileSync(pubIndex, html, "utf8");
-  copyFile(pubIndex, rootIndex);
-} else if (fs.existsSync(rootIndex)) {
-  let html = bumpCache(fs.readFileSync(rootIndex, "utf8"));
-  fs.writeFileSync(rootIndex, html, "utf8");
-  copyFile(rootIndex, pubIndex);
-}
-
 // urunler hub
 const urunlerHub = path.join(root, "public", "urunler", "urunler");
 if (fs.existsSync(urunlerHub)) {

@@ -44,6 +44,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/index.htm",
+        destination: "/",
+        permanent: true,
+      },
+      {
         source: "/index.htm/:path*",
         destination: "/",
         permanent: true,
