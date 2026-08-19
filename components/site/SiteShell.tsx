@@ -8,7 +8,6 @@ import { displayHours } from "@/lib/content/hours";
 import { phoneToTelHref } from "@/lib/content/contact-utils";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import HomeMotion from "@/components/home/HomeMotion";
-import "@/styles/storefront.css";
 
 /** Menü, blog ve diğer iç sayfalar — ana sayfa ile aynı kabuk (Hero hariç). */
 export default async function SiteShell({
@@ -28,6 +27,7 @@ export default async function SiteShell({
       />
       <link rel="stylesheet" href="/assets/css/style.css?v=20260819nav9" />
       <link rel="stylesheet" href="/assets/css/home-next.css?v=55" />
+      <link rel="stylesheet" href="/assets/css/storefront.css?v=55" />
 
       <SiteNav
         navbar={content.navbar}
