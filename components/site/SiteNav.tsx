@@ -51,6 +51,17 @@ function unlockScroll() {
   window.scrollTo(0, y);
 }
 
+function isPastHomeHero() {
+  if (window.scrollY < window.innerHeight * 0.85) return false;
+  const gate = document.querySelector(".gate") as HTMLElement | null;
+  if (!gate) return true;
+  const h = Math.max(gate.offsetHeight, gate.scrollHeight);
+  if (h < window.innerHeight * 0.4) {
+    return window.scrollY > window.innerHeight * 0.9;
+  }
+  return gate.getBoundingClientRect().bottom <= 80;
+}
+
 function PhoneIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -82,7 +93,7 @@ export default function SiteNav({
   const pathname = usePathname() || "";
   const isHome = pathname === "/";
   const [open, setOpen] = useState(false);
-  const [solid, setSolid] = useState(!isHome);
+  const [solid, setSolid] = useState(Boolean(pathname && pathname !== "/"));
 
   const bookHref = resolveHref(
     navbar.ctaHref && !/^tel:/i.test(navbar.ctaHref) && !/wa\.me/i.test(navbar.ctaHref)
@@ -171,13 +182,7 @@ export default function SiteNav({
       return;
     }
     let ticking = false;
-    const pastHero = () => {
-      const gate = document.querySelector(".gate");
-      if (!gate) return window.scrollY > window.innerHeight * 0.9;
-      const next = gate.nextElementSibling;
-      if (next) return next.getBoundingClientRect().top <= 88;
-      return gate.getBoundingClientRect().bottom <= 88;
-    };
+    const pastHero = () => isPastHomeHero();
     const onScroll = () => {
       if (document.documentElement.classList.contains("menu-open")) return;
       if (ticking) return;
@@ -203,17 +208,7 @@ export default function SiteNav({
     return () => {
       unlockScroll();
       window.requestAnimationFrame(() => {
-        const gate = document.querySelector(".gate");
-        if (!gate) {
-          setSolid(true);
-          return;
-        }
-        const next = gate.nextElementSibling;
-        setSolid(
-          next
-            ? next.getBoundingClientRect().top <= 88
-            : gate.getBoundingClientRect().bottom <= 88
-        );
+        setSolid(isPastHomeHero());
       });
     };
   }, [open]);

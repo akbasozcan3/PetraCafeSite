@@ -17,6 +17,7 @@ function scrollToId(raw: string) {
     ) || 72;
   const top = el.getBoundingClientRect().top + window.scrollY - navH - 18;
   window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+  window.dispatchEvent(new Event("scroll"));
   return true;
 }
 
