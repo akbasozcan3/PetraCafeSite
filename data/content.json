@@ -1,13 +1,13 @@
 {
   "images": {
-    "heroPoster": "/assets/cms/hero-cephe.webp",
-    "heroCephe": "/assets/cms/hero-cephe.webp",
-    "heroIc": "/assets/cms/hero-ic.webp",
+    "heroPoster": "/uploads/site/1787059804386-3117dc6067f91a4a.webp",
+    "heroCephe": "/uploads/site/1787059804386-3117dc6067f91a4a.webp",
+    "heroIc": "/uploads/site/1787135028402-7fc886bbee092d11.webp",
     "aboutInterior": "/assets/cms/hero-ic.webp",
     "faq": "/assets/cms/hero-ic.webp",
     "ogImage": "/assets/cms/hero-cephe.webp",
-    "logo": "/assets/cms/logo.png",
-    "favicon": "/assets/img/petra-favicon.svg",
+    "logo": "/uploads/site/1787138944366-a9620af4670bd679.png",
+    "favicon": "/uploads/site/1787139157751-c0ccc75352508523.webp",
     "reservation": "/assets/cms/hero-ic.webp"
   },
   "navbar": {

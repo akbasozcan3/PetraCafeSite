@@ -1,12 +1,12 @@
 /** Hero sahne sabitleri — orijinal scene.js ile aynı değerler */
 /** sync-public.mjs bu değeri CACHE ile senkronlar */
-export const CACHE_V = '20260818k19';
+export const CACHE_V = '20260819p1';
 
 export const ASSETS = {
-  cephe: `/assets/img/hero-cephe.webp?v=${CACHE_V}`,
-  ic: `/assets/img/hero-ic.webp?v=${CACHE_V}`,
+  cephe: `/assets/cms/hero-cephe.webp?v=${CACHE_V}`,
+  ic: `/assets/cms/hero-ic.webp?v=${CACHE_V}`,
   /** Telefon fallback / preload — dikey kompozit */
-  mobile: `/assets/img/hero-mobile.webp?v=${CACHE_V}`,
+  mobile: `/assets/cms/hero-cephe.webp?v=${CACHE_V}`,
 };
 
 export const FOV = 52;

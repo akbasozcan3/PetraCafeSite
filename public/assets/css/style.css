@@ -1518,10 +1518,6 @@ body {
   overflow-x: clip !important;
   max-width: 100%;
 }
-#scene {
-  max-width: 100% !important;
-  max-height: 100% !important;
-}
 
 @media (max-width: 860px) {
   html,
