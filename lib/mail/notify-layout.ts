@@ -41,12 +41,6 @@ export function buildNotifyEmail(opts: {
       </div>`
     : "";
 
-  const cta = opts.adminUrl
-    ? `<div style="margin:32px 0 0;text-align:center;">
-        <a href="${escapeHtml(opts.adminUrl)}" style="display:inline-block;background:#16190F;color:#FBF8F1;border:1px solid #D9A441;text-decoration:none;padding:14px 32px;border-radius:999px;font-size:14px;font-weight:600;font-family:'Inter',system-ui,sans-serif;letter-spacing:0.04em;box-shadow:0 4px 14px rgba(22,25,15,0.15);">Admin Panelinde Aç &rarr;</a>
-      </div>`
-    : "";
-
   const html = `<!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -117,7 +111,6 @@ export function buildNotifyEmail(opts: {
               </table>
 
               ${bodyHtml}
-              ${cta}
             </td>
           </tr>
 
@@ -139,7 +132,7 @@ export function buildNotifyEmail(opts: {
         <table role="presentation" width="580" cellspacing="0" cellpadding="0" border="0" style="max-width:580px;width:100%;margin-top:16px;">
           <tr>
             <td align="center" style="color:#A39B8B;font-size:11px;font-family:'Inter',sans-serif;">
-              Bu e-posta <a href="${escapeHtml(siteBaseUrl())}" style="color:#8C6A24;text-decoration:none;font-weight:600;">petra-cafe-site.vercel.app</a> üzerinden otomatik gönderilmiştir.
+              &copy; ${new Date().getFullYear()} Petra Cafe Restaurant &bull; <a href="${escapeHtml(siteBaseUrl())}" style="color:#8C6A24;text-decoration:none;font-weight:600;">petra-cafe-site.vercel.app</a>
             </td>
           </tr>
         </table>
@@ -158,7 +151,6 @@ export function buildNotifyEmail(opts: {
     ...opts.rows.filter((r) => r.value && r.value.trim()).map((r) => `${r.label}: ${r.value}`),
   ];
   if (opts.body?.trim()) textLines.push("", "MESAJ:", opts.body.trim());
-  if (opts.adminUrl) textLines.push("", `Admin Paneli: ${opts.adminUrl}`);
   textLines.push("", "Petra Yaşam Merkezi, Taşdelen · Çekmeköy");
   return { html, text: textLines.join("\n") };
 }
