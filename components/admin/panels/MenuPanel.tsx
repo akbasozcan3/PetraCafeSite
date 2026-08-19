@@ -32,7 +32,7 @@ function emptyMenu(content: { bolumlar: { menu: { baslik?: string; lead?: string
   return {
     baslik: content.bolumlar.menu.baslik,
     giris: content.bolumlar.menu.lead,
-    legend: "★ işaretliler en çok tercih edilenler.",
+    legend: "",
     hepsiMetin: "Tüm menüyü inceleyin →",
     hepsiLink: "/menu",
     not: "",
@@ -316,7 +316,7 @@ export default function MenuPanel() {
           Ürün satırına tıklayınca detay sayfası açılır. WhatsApp ve telefon Admin → İletişim’deki numaraya gider.
         </p>
         <Input
-          label="Yıldız açıklaması (ana menü + kategori kart notu)"
+          label="Menü alt notu (isteğe bağlı)"
           value={menu.legend || ""}
           onChange={(e) => updateMenu({ legend: e.target.value })}
         />

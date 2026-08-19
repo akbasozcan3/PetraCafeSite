@@ -697,7 +697,7 @@ content.menu = {
   baslik: "Petra Menü",
   giris:
     "Kahvaltı, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile. Fiyatlar basılı menü ile aynıdır.",
-  legend: "★ işaretliler önerilen tabaklardır.",
+  legend: "",
   not: "Fiyatlara KDV dahildir. Alerjen bilgisi için servise danışın. Kahvaltı ekstraları ve boş fiyatlı maddeler güncel tarife için sorunuz. Menü güncellenebilir.",
   hepsiMetin: "Tüm menüyü inceleyin →",
   hepsiLink: "/menu",

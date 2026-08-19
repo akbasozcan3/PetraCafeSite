@@ -1171,13 +1171,14 @@ export function BolumlarPanel() {
     ? content.hizmetler
     : [
         { label: "Restoran", icon: "utensils", href: "/menu", aciklama: "Salon ve teras servisi" },
-        { label: "Dünya Mutfağı", icon: "chef", href: "/menu/ana-yemekler", aciklama: "Ana yemekler" },
-        { label: "Serpme Kahvaltı", icon: "sunrise", href: "/menu/kahvalti", aciklama: "Sabah servisi" },
-        { label: "POOL & BEACH", icon: "waves", href: "#pasta", aciklama: "Havuz ve plaj" },
-        { label: "COFFEE & FOOD", icon: "coffee", href: "/menu/kahve", aciklama: "Kahve ve yemek" },
-        { label: "İtalyan Kokteylleri", icon: "wine", href: "/menu/italyan-kokteyller", aciklama: "Aperitivo" },
-        { label: "İtalyan Tatlı çeşitleri", icon: "cake", href: "/menu/tatlilar", aciklama: "Tatlı menüsü" },
-        { label: "En İyi Nargile Çeşitleri", icon: "flame", href: "/menu/nargile", aciklama: "Nargile köşesi" },
+        { label: "Serpme Kahvaltı", icon: "sunrise", href: "/menu/kahvalti", aciklama: "Tabak ve 2 kişilik serpme" },
+        { label: "Pizzalar", icon: "chef", href: "/menu/pizzalar", aciklama: "Fırın pizza" },
+        { label: "POOL & BEACH", icon: "waves", href: "#pasta", aciklama: "Havuz 09:00–18:00" },
+        { label: "Yüzme dersleri", icon: "calendar", href: "#yuzme", aciklama: "Birebir ve grup" },
+        { label: "Kahve", icon: "coffee", href: "/menu/kahve", aciklama: "Sıcak ve soğuk kahve" },
+        { label: "Kokteyller", icon: "wine", href: "/menu/kokteyller", aciklama: "Mocktail ve frozen" },
+        { label: "Tatlılar", icon: "cake", href: "/menu/tatlilar", aciklama: "Tatlı menüsü" },
+        { label: "Nargile", icon: "flame", href: "/menu/nargile", aciklama: "Nakhla, El Fakher, Adalya" },
       ];
   const rsv = content.rezervasyon || {
     maddeler: [],

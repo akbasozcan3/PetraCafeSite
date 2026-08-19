@@ -189,7 +189,7 @@
   "bolumlar": {
     "menu": {
       "eyebrow": "Menümüz",
-      "baslik": "Kahvaaltı, pizza, burger, kahve",
+      "baslik": "Kahvaltı, pizza, burger, kahve",
       "lead": "Basılı menünün tamamı sitede: serpme kahvaltı, pizza, burger, tatlı, kokteyl, kahve ve nargile.",
       "ctaLabel": "Masa ayırtın",
       "ctaHref": "#rezervasyon",
@@ -221,7 +221,7 @@
     "hizmetler": {
       "eyebrow": "Petra",
       "baslik": "Cafe · Restaurant · Pool & Beach",
-      "lead": "Dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve ve nargile — havuz kenarında veya salonda."
+      "lead": "Kahvaltı, pizza, burger, tatlı, kahve ve nargile — havuz kenarında veya salonda."
     }
   },
   "pasta": {
@@ -333,10 +333,10 @@
   },
   "hikaye": null,
   "menu": {
-    "rev": "printed-20260819b",
+    "rev": "printed-20260819c",
     "baslik": "Petra Menü",
     "giris": "Kahvaltı, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile. Fiyatlar basılı menü ile aynıdır.",
-    "legend": "★ işaretliler önerilen tabaklardır.",
+    "legend": "",
     "hepsiMetin": "Tüm menüyü inceleyin →",
     "hepsiLink": "/menu",
     "tumMetinSablon": "{ad} →",
@@ -4148,7 +4148,7 @@
       "eyebrow": "Menü",
       "answerBaslik": "Kısa bilgi",
       "listeBaslikSablon": "{ad}",
-      "kartNot": "★ işaretliler şefin önerileridir. Tabağa tıklayarak detayı inceleyin.",
+      "kartNot": "Tabağa tıklayarak detayı inceleyin.",
       "ctaBaslik": "Rezervasyon & bilgi",
       "ctaWaLabel": "WhatsApp’tan yazın",
       "relatedBaslik": "Diğer bölümler",
@@ -4327,16 +4327,16 @@
       "icon": "utensils"
     },
     {
-      "label": "Dünya Mutfağı",
-      "href": "/menu/pizzalar",
-      "aciklama": "Pizza, burger, ızgara",
-      "icon": "chef"
-    },
-    {
       "label": "Serpme Kahvaltı",
       "href": "/menu/kahvalti",
-      "aciklama": "Sabah servisi",
+      "aciklama": "Tabak ve 2 kişilik serpme",
       "icon": "sunrise"
+    },
+    {
+      "label": "Pizzalar",
+      "href": "/menu/pizzalar",
+      "aciklama": "Fırın pizza",
+      "icon": "chef"
     },
     {
       "label": "POOL & BEACH",
@@ -4351,9 +4351,9 @@
       "icon": "calendar"
     },
     {
-      "label": "COFFEE & FOOD",
+      "label": "Kahve",
       "href": "/menu/kahve",
-      "aciklama": "Kahve ve yemek",
+      "aciklama": "Sıcak ve soğuk kahve",
       "icon": "coffee"
     },
     {
@@ -4363,15 +4363,15 @@
       "icon": "wine"
     },
     {
-      "label": "İtalyan Tatlı çeşitleri",
+      "label": "Tatlılar",
       "href": "/menu/tatlilar",
       "aciklama": "Tatlı menüsü",
       "icon": "cake"
     },
     {
-      "label": "En İyi Nargile Çeşitleri",
+      "label": "Nargile",
       "href": "/menu/nargile",
-      "aciklama": "Nargile köşesi",
+      "aciklama": "Nakhla, El Fakher, Adalya",
       "icon": "flame"
     }
   ],

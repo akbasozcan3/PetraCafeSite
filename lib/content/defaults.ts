@@ -122,7 +122,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     hizmetler: {
       eyebrow: "Petra",
       baslik: "Cafe · Restaurant · Pool & Beach",
-      lead: "Dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve ve nargile — havuz kenarında veya salonda.",
+      lead: "Kahvaltı, pizza, burger, tatlı, kahve ve nargile — havuz kenarında veya salonda.",
     },
   },
   pasta: {
@@ -246,7 +246,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       eyebrow: "Menü",
       answerBaslik: "Kısa bilgi",
       listeBaslikSablon: "{ad} listesi",
-      kartNot: "★ işaretliler en çok tercih edilenler. Ürüne tıklayarak detayı inceleyebilirsiniz.",
+      kartNot: "Tabağa tıklayarak detayı inceleyin.",
       ctaBaslik: "Rezervasyon & bilgi",
       ctaWaLabel: "WhatsApp’tan yazın",
       relatedBaslik: "Diğer kategoriler",
@@ -348,14 +348,14 @@ export const DEFAULT_CONTENT: SiteContent = {
   ],
   hizmetler: [
     { label: "Restoran", icon: "utensils", href: "/menu", aciklama: "Salon ve teras servisi" },
-    { label: "Dünya Mutfağı", icon: "chef", href: "/menu/pizzalar", aciklama: "Pizza, burger, ızgara" },
-    { label: "Serpme Kahvaltı", icon: "sunrise", href: "/menu/kahvalti", aciklama: "Sabah servisi" },
+    { label: "Serpme Kahvaltı", icon: "sunrise", href: "/menu/kahvalti", aciklama: "Tabak ve 2 kişilik serpme" },
+    { label: "Pizzalar", icon: "chef", href: "/menu/pizzalar", aciklama: "Fırın pizza" },
     { label: "POOL & BEACH", icon: "waves", href: "#pasta", aciklama: "Havuz 09:00–18:00" },
     { label: "Yüzme dersleri", icon: "calendar", href: "#yuzme", aciklama: "Birebir ve grup" },
-    { label: "COFFEE & FOOD", icon: "coffee", href: "/menu/kahve", aciklama: "Kahve ve yemek" },
+    { label: "Kahve", icon: "coffee", href: "/menu/kahve", aciklama: "Sıcak ve soğuk kahve" },
     { label: "Kokteyller", icon: "wine", href: "/menu/kokteyller", aciklama: "Mocktail ve frozen" },
-    { label: "İtalyan Tatlı çeşitleri", icon: "cake", href: "/menu/tatlilar", aciklama: "Tatlı menüsü" },
-    { label: "En İyi Nargile Çeşitleri", icon: "flame", href: "/menu/nargile", aciklama: "Nargile köşesi" },
+    { label: "Tatlılar", icon: "cake", href: "/menu/tatlilar", aciklama: "Tatlı menüsü" },
+    { label: "Nargile", icon: "flame", href: "/menu/nargile", aciklama: "Nakhla, El Fakher, Adalya" },
   ],
   rezervasyon: {
     maddeler: [

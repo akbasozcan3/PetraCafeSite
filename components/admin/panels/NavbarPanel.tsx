@@ -56,7 +56,7 @@ const PRESET_LINKS = [
   { label: "Menü", href: "/menu" },
   { label: "Kahve", href: "/menu/kahve" },
   { label: "Nargile", href: "/menu/nargile" },
-  { label: "İtalyan Kokteylleri", href: "/menu/italyan-kokteyller" },
+  { label: "Kokteyller", href: "/menu/kokteyller" },
   { label: "Havuz & Plaj", href: "#pasta" },
   { label: "Blog", href: "/blog" },
   { label: "İletişim", href: "#iletisim" },

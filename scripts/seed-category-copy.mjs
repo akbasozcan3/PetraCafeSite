@@ -129,7 +129,7 @@ if (!raw.sayfalar) {
       eyebrow: "Ürünler",
       answerBaslik: "Kısa bilgi",
       listeBaslikSablon: "{ad} listesi",
-      kartNot: "★ işaretliler en çok tercih edilenler. Ürüne tıklayarak WhatsApp’tan sipariş verebilirsiniz.",
+      kartNot: "Ürüne tıklayarak detayı inceleyebilirsiniz.",
       ctaBaslik: "Sipariş & bilgi",
       ctaWaLabel: "WhatsApp’tan yazın",
       relatedBaslik: "Diğer kategoriler",

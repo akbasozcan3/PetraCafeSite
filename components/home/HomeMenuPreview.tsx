@@ -8,7 +8,6 @@ import {
   listCategories,
 } from "@/lib/catalog/catalog";
 import { categoryHref, productHref } from "@/lib/content/slugify";
-import { resolveProductImage } from "@/lib/catalog/product-image";
 import { categoryIcon } from "@/lib/content/site-icons";
 import SiteIcon from "@/components/site/SiteIcon";
 
@@ -18,22 +17,6 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
   const allCats = listCategories(content);
   const homeCats = allCats.filter((g) => g.home);
   const cats = homeCats.length ? homeCats : allCats;
-  const legend = menu?.legend || "★ işaretliler şefin önerileridir.";
-
-  const featured = cats
-    .flatMap((g) => {
-      const catSlug = getCategorySlug(g);
-      return (g.urunler || [])
-        .filter((u) => isProductActive(u) && u.fav)
-        .map((u) => ({
-          ...u,
-          catSlug,
-          catName: g.ad,
-          href: productHref(getProductSlug(u), catSlug),
-          photo: resolveProductImage(u, g),
-        }));
-    })
-    .slice(0, 3);
 
   if (!cats.length) {
     return (
@@ -62,10 +45,7 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
           <p className="lead" data-fade="">
             {bolum?.lead ||
               menu?.giris ||
-              "Başlangıçlar, ana yemekler, tatlılar ve içecekler."}
-          </p>
-          <p className="menu__legend" data-fade="">
-            <i aria-hidden="true">★</i> {legend.replace(/^★\s*/, "")}
+              "Kahvaltı, pizza, burger, tatlı, kahve ve nargile."}
           </p>
         </div>
 
@@ -107,27 +87,6 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
             })}
           </div>
 
-          {featured.length > 0 ? (
-            <div className="rmenu__featured" data-stagger="">
-              {featured.map((u) => {
-                const img = u.photo.url;
-                const price = formatPriceLabel(u.fiyat);
-                return (
-                  <Link key={u.slug || u.ad} href={u.href} className="rmenu__pick">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={img} alt={u.photo.alt} />
-                    <span className="rmenu__pick-body">
-                      <span className="rmenu__pick-cat">{u.catName}</span>
-                      <strong>{u.ad}</strong>
-                      {u.aciklama ? <em>{u.aciklama}</em> : null}
-                      {price ? <b>{price}</b> : null}
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
-          ) : null}
-
           {cats.map((g, i) => {
             const slug = getCategorySlug(g);
             const dishes = (g.urunler || []).filter(isProductActive);
@@ -148,17 +107,10 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
                     const href = productHref(pSlug, slug);
                     const price = formatPriceLabel(u.fiyat);
                     return (
-                      <li key={pSlug} className={u.fav ? "is-fav" : undefined}>
+                      <li key={pSlug}>
                         <Link href={href} className="rmenu__item">
                           <span className="rmenu__row">
-                            <span className="rmenu__name">
-                              {u.ad}
-                              {u.fav ? (
-                                <i className="rmenu__star" aria-label="Şefin önerisi">
-                                  ★
-                                </i>
-                              ) : null}
-                            </span>
+                            <span className="rmenu__name">{u.ad}</span>
                             <span className="rmenu__dots" aria-hidden="true" />
                             {price ? <span className="rmenu__price">{price}</span> : null}
                           </span>

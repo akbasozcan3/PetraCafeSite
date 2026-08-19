@@ -64,7 +64,7 @@ const noteMatch = html.match(/<p class="menu__note"[^>]*>([\s\S]*?)<\/p>/);
 const menu = {
   baslik: h2Match ? stripTags(h2Match[1]) : "Taşdelen'de taptaze fırın lezzetleri",
   giris: leadMatch ? stripTags(leadMatch[1]) : "",
-  legend: legendMatch ? stripTags(legendMatch[1]) : "★ işaretliler en çok tercih edilenler.",
+  legend: legendMatch ? stripTags(legendMatch[1]) : "",
   hepsiMetin: hepsiText || "14 kategoride 132 çeşidin tamamını inceleyin →",
   hepsiLink: hepsiLink?.[1] || "urunler/urunler",
   not: noteMatch ? stripTags(noteMatch[1]) : "",

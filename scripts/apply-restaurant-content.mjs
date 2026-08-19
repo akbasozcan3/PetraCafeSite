@@ -30,7 +30,7 @@ const menu = {
   baslik: "Şefin Sofrası",
   giris:
     "Akdeniz, Anadolu ve Uzak Doğu mutfaklarından seçilmiş tabaklar; mevsimlik malzeme, açık ateş ve klasik teknik.",
-  legend: "★ işaretliler şefin önerileridir.",
+  legend: "",
   hepsiMetin: "Tüm menüyü inceleyin →",
   hepsiLink: "/urunler",
   tumMetinSablon: "{ad} →",
@@ -444,7 +444,7 @@ data.sayfalar = {
     eyebrow: "Menü",
     answerBaslik: "Kısa bilgi",
     listeBaslikSablon: "{ad}",
-    kartNot: "★ işaretliler şefin önerileridir. Tabağa tıklayarak detayı inceleyin.",
+    kartNot: "Tabağa tıklayarak detayı inceleyin.",
     ctaBaslik: "Rezervasyon & bilgi",
     ctaWaLabel: "WhatsApp’tan yazın",
     relatedBaslik: "Diğer bölümler",
