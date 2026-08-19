@@ -15,6 +15,34 @@ function initials(name: string) {
   );
 }
 
+function StarIcon({ on }: { on: boolean }) {
+  return (
+    <svg
+      className={on ? "is-on" : "is-off"}
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        fill="currentColor"
+        d="M12 2.35l2.62 6.28 6.83.55-5.2 4.48 1.57 6.64L12 16.92 6.18 20.3l1.57-6.64-5.2-4.48 6.83-.55L12 2.35z"
+      />
+    </svg>
+  );
+}
+
+function StarRow({ n, className }: { n: number; className?: string }) {
+  const stars = Math.max(1, Math.min(5, n));
+  return (
+    <div className={className} aria-label={`5 üzerinden ${stars} yıldız`}>
+      {Array.from({ length: 5 }, (_, i) => (
+        <StarIcon key={i} on={i < stars} />
+      ))}
+    </div>
+  );
+}
+
 export default function HomeReviews({
   items,
   bolum,
@@ -26,16 +54,19 @@ export default function HomeReviews({
 }) {
   const list = items?.length ? items : [];
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
   const dogrulama = meta?.dogrulamaEtiketi || "Doğrulanmış Google Yorumu";
-  const unvanDef = meta?.unvanVarsayilan || "Müşteri";
+  const unvanDef = meta?.unvanVarsayilan || "Misafir";
 
   useEffect(() => {
     if (list.length <= 1) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches || paused) return;
     const id = window.setInterval(() => {
       setIndex((i) => (i + 1) % list.length);
     }, 5500);
     return () => window.clearInterval(id);
-  }, [list.length]);
+  }, [list.length, paused, index]);
 
   if (!list.length) return null;
 
@@ -47,19 +78,18 @@ export default function HomeReviews({
     setIndex((i) => (i + delta + list.length) % list.length);
   }
 
-  const badgeHref =
-    meta?.googleUrl ||
-    "https://www.google.com/maps/search/?api=1&query=Ta%C5%9Fdelen+F%C4%B1r%C4%B1nc%C4%B1+%C3%87ekmek%C3%B6y";
+  const badgeHref = meta?.googleUrl || "";
+  const eyebrow = bolum?.eyebrow || "Misafir Yorumları";
 
   return (
     <section className="section reviews" id="yorumlar" aria-labelledby="yorumlarBaslik">
       <div className="wrap reviews-wrap">
         <header className="reviews-head">
-          <p className="eyebrow" data-fade="">
-            {bolum?.eyebrow || "Müşteri Yorumları"}
+          <p className="eyebrow reviews-kicker" data-fade="">
+            {eyebrow}
           </p>
           <h2 className="h2" id="yorumlarBaslik" data-split="">
-            {bolum?.baslik || "Deneyimleyenlerin Gözünden"}
+            {bolum?.baslik || "Petralovers"}
           </h2>
           {bolum?.lead ? (
             <p className="lead reviews-lead" data-fade="">
@@ -69,7 +99,9 @@ export default function HomeReviews({
         </header>
 
         <div
-          className="reviews-stage"
+          className={`reviews-stage${paused ? " is-paused" : ""}`}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
           onTouchStart={(e) => {
             (e.currentTarget as HTMLElement & { _sx?: number })._sx =
               e.touches[0]?.clientX;
@@ -86,7 +118,7 @@ export default function HomeReviews({
         >
           <div className="yorumlar reviews-track" id="yorumlarTrack" aria-live="polite">
             {list.map((y, i) => {
-              const name = y.ad || "Müşteri";
+              const name = y.ad || "Misafir";
               const stars = Math.max(1, Math.min(5, y.yildiz || 5));
               const text = String(y.metin || "")
                 .trim()
@@ -97,11 +129,16 @@ export default function HomeReviews({
                   className={`yorum${i === index ? " is-active" : ""}`}
                   aria-hidden={i !== index}
                 >
-                  <div
-                    className="yorum__yildiz"
-                    aria-label={`5 üzerinden ${stars} yıldız`}
-                  >
-                    {"★".repeat(stars)}
+                  <div className="yorum__top">
+                    <StarRow n={stars} className="yorum__yildiz" />
+                    <span className="yorum__quote" aria-hidden="true">
+                      <svg width="36" height="28" viewBox="0 0 36 28">
+                        <path
+                          fill="currentColor"
+                          d="M0 28V16.4C0 7.2 4.9 1.6 14.6 0l1.2 4.1C9.8 6 7.2 9.6 7.2 16.2H14V28H0zm20.6 0V16.4c0-9.2 4.8-14.8 14.5-16.4L36.3 4c-6 1.9-8.6 5.5-8.6 12.1h6.8V28H20.6z"
+                        />
+                      </svg>
+                    </span>
                   </div>
                   <blockquote>{text}</blockquote>
                   <figcaption>
@@ -111,7 +148,20 @@ export default function HomeReviews({
                     <div className="yorum__meta">
                       <b>{name}</b>
                       <span>
-                        {y.unvan || unvanDef} · {dogrulama}
+                        {y.unvan || unvanDef}
+                        <i className="yorum__sep" aria-hidden="true">
+                          ·
+                        </i>
+                        <span className="yorum__verified">
+                          <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="11" fill="currentColor" opacity="0.16" />
+                            <path
+                              fill="currentColor"
+                              d="M10.2 15.4l-3.1-3.1 1.1-1.1 2 2 4.6-4.6 1.1 1.1z"
+                            />
+                          </svg>
+                          {dogrulama}
+                        </span>
                       </span>
                     </div>
                   </figcaption>
@@ -120,7 +170,7 @@ export default function HomeReviews({
             })}
           </div>
           <div className="reviews-progress" aria-hidden="true">
-            <i id="reviewsProgress" key={index} style={{ width: "100%" }} />
+            <i id="reviewsProgress" key={index} />
           </div>
 
           {list.length > 1 ? (
@@ -132,7 +182,9 @@ export default function HomeReviews({
                 aria-label="Önceki yorum"
                 onClick={() => go(-1)}
               >
-                ←
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
               </button>
               <div className="reviews-dots" id="reviewsDots" role="tablist" aria-label="Yorumlar">
                 {list.map((_, i) => (
@@ -157,7 +209,9 @@ export default function HomeReviews({
                 aria-label="Sonraki yorum"
                 onClick={() => go(1)}
               >
-                →
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
               </button>
             </div>
           ) : null}
@@ -166,9 +220,9 @@ export default function HomeReviews({
         <a
           className="reviews-badge"
           id="reviewsBadge"
-          href={badgeHref}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={badgeHref || "#yorumlar"}
+          target={badgeHref ? "_blank" : undefined}
+          rel={badgeHref ? "noopener noreferrer" : undefined}
         >
           <span className="reviews-badge-g" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 48 48" focusable="false">
@@ -190,14 +244,12 @@ export default function HomeReviews({
               />
             </svg>
           </span>
-          <span className="reviews-badge-stars" aria-hidden="true">
-            ★★★★★
-          </span>
-          <b className="reviews-score">{meta?.googleSkor || "4.87 / 5.0"}</b>
+          <StarRow n={5} className="reviews-badge-stars" />
+          <b className="reviews-score">{meta?.googleSkor || ""}</b>
           <span className="reviews-count">
-            {meta?.googleSayacMetin || "30+ Google Yorumu"}
+            {meta?.googleSayacMetin || ""}
           </span>
-          <span className="reviews-badge-cta">{meta?.badgeCta || "Google’da gör"}</span>
+          <span className="reviews-badge-cta">{meta?.badgeCta || ""}</span>
         </a>
       </div>
     </section>

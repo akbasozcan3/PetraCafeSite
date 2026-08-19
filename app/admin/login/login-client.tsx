@@ -6,8 +6,18 @@ import { Loader2, Lock, Mail, ShieldCheck } from "lucide-react";
 import { api } from "@/lib/api/client";
 import Input from "@/components/admin/ui/Input";
 import Button from "@/components/admin/ui/Button";
+import BrandLogo from "@/components/site/BrandLogo";
+import { StaticFavicon } from "@/components/admin/ui/AdminFaviconSync";
 
-export default function AdminLoginPage() {
+export default function AdminLoginPage({
+  logoSrc,
+  brandName = "Petra Cafe Restaurant",
+  faviconHref,
+}: {
+  logoSrc?: string | null;
+  brandName?: string;
+  faviconHref?: string;
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -29,6 +39,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#080D15] p-4 text-[#EEE9E0]">
+      {faviconHref ? <StaticFavicon href={faviconHref} /> : null}
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(200,112,58,0.10),transparent_34%)]" />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -36,15 +47,15 @@ export default function AdminLoginPage() {
         className="relative w-full max-w-md"
       >
         <div className="mb-7 text-center">
-          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-[8px] bg-[#C8703A] shadow-[0_18px_45px_rgba(200,112,58,0.22)]">
-            <span className="text-[#0A0F18] font-bold text-xl">TF</span>
+          <div className="mx-auto mb-6 flex max-w-[220px] items-center justify-center">
+            <BrandLogo src={logoSrc} alt={brandName} height={48} />
           </div>
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-[#C8703A]">
             <ShieldCheck className="h-3.5 w-3.5" />
             Güvenli Yönetim
           </div>
           <h1 className="text-2xl font-semibold tracking-tight text-[#F8F8F8]">Yönetim Girişi</h1>
-          <p className="mt-2 text-sm text-[#8A9BB0]">Taşdelen Fırıncı — site içerik paneli</p>
+          <p className="mt-2 text-sm text-[#8A9BB0]">{brandName} — yönetim paneli</p>
         </div>
 
         <form

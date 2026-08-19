@@ -15,8 +15,11 @@ import AdminPageHeader, {
 } from "@/components/admin/AdminPageHeader";
 
 const SITE_SECTIONS = [
+  "/admin/anasayfa",
   "/admin/hakkimizda",
   "/admin/menu",
+  "/admin/rezervasyonlar",
+  "/admin/mesajlar",
   "/admin/pasta",
   "/admin/galeri",
   "/admin/yorumlar",
@@ -40,18 +43,44 @@ type IntegrationSummary = {
 export default function DashboardPage() {
   const { user } = useAdminSession();
   const [integrations, setIntegrations] = useState<IntegrationSummary[]>([]);
+  const [inbox, setInbox] = useState({ pending: 0, messages: 0 });
 
   useEffect(() => {
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch("/api/v1/admin/integrations", {
-          credentials: "include",
-          cache: "no-store",
-        });
-        if (!res.ok) return;
-        const data = (await res.json()) as { providers?: IntegrationSummary[] };
-        if (!cancelled) setIntegrations(data.providers || []);
+        const [intRes, resRes, msgRes] = await Promise.all([
+          fetch("/api/v1/admin/integrations", {
+            credentials: "include",
+            cache: "no-store",
+          }),
+          fetch("/api/v1/admin/reservations", {
+            credentials: "include",
+            cache: "no-store",
+          }),
+          fetch("/api/v1/admin/messages", {
+            credentials: "include",
+            cache: "no-store",
+          }),
+        ]);
+        if (!cancelled && intRes.ok) {
+          const data = (await intRes.json()) as { providers?: IntegrationSummary[] };
+          setIntegrations(data.providers || []);
+        }
+        if (!cancelled && resRes.ok) {
+          const data = (await resRes.json()) as { items?: { status: string }[] };
+          setInbox((prev) => ({
+            ...prev,
+            pending: (data.items || []).filter((x) => x.status === "pending").length,
+          }));
+        }
+        if (!cancelled && msgRes.ok) {
+          const data = (await msgRes.json()) as { items?: { status: string }[] };
+          setInbox((prev) => ({
+            ...prev,
+            messages: (data.items || []).filter((x) => x.status === "new").length,
+          }));
+        }
       } catch {
         /* yetkisiz veya hata — sessizce atla */
       }
@@ -70,6 +99,12 @@ export default function DashboardPage() {
             (n, g) => n + (g.urunler?.length ?? 0),
             0
           ) ?? 0;
+        const activeProducts =
+          content.menu?.gruplar?.reduce(
+            (n, g) =>
+              n + (g.urunler || []).filter((u) => u.aktif !== false).length,
+            0
+          ) ?? 0;
         const yorumCount = content.yorumlar?.length ?? 0;
         const galeriCount = content.galeri?.length ?? 0;
         const sssCount = content.sss?.items?.length ?? 0;
@@ -83,14 +118,14 @@ export default function DashboardPage() {
           <>
             <AdminPageHeader
               title={`Hoş geldiniz, ${user?.name ?? "Admin"}`}
-              description="Sunum sitesi — menü, metin, görsel ve iletişim buradan yönetilir. Web sepet / üyelik yok."
+              description="Restoran sitesi — menü, rezervasyon, mesaj ve içerik buradan yönetilir."
             />
 
-            <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
               <StatCard
-                label="Ürün kategorisi"
+                label="Menü bölümü"
                 value={String(menuGroups)}
-                hint={`${menuProducts} ürün`}
+                hint={`${activeProducts} yayında · ${menuProducts} toplam tabak`}
               />
               <StatCard
                 label="Galeri"
@@ -101,6 +136,11 @@ export default function DashboardPage() {
                 label="Yorum / SSS"
                 value={`${yorumCount} / ${sssCount}`}
                 hint={`${blogCount} blog yazısı`}
+              />
+              <StatCard
+                label="Bekleyen rezervasyon"
+                value={String(inbox.pending)}
+                hint={`${inbox.messages} yeni mesaj`}
               />
               <StatCard
                 label="Telefon"

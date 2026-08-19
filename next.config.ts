@@ -1,12 +1,18 @@
 import type { NextConfig } from "next";
 
 const isVercel = process.env.VERCEL === "1";
+const isNetlify = process.env.NETLIFY === "true";
 
 const nextConfig: NextConfig = {
-  // Vercel kendi runtime'ını kullanır; standalone yalnızca VPS/PM2 için
-  ...(isVercel ? {} : { output: "standalone" as const }),
+  // Vercel/Netlify kendi runtime'ını kullanır; standalone yalnızca VPS/PM2 için
+  ...(isVercel || isNetlify ? {} : { output: "standalone" as const }),
   poweredByHeader: false,
   compress: true,
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
+  serverExternalPackages: ["pg", "nodemailer", "bcryptjs"],
+  turbopack: {},
 
   images: {
     remotePatterns: [
@@ -23,8 +29,18 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/index.htm",
-        destination: "/",
+        source: "/login",
+        destination: "/admin/login",
+        permanent: false,
+      },
+      {
+        source: "/urunler",
+        destination: "/menu",
+        permanent: true,
+      },
+      {
+        source: "/urunler/:path*",
+        destination: "/menu/:path*",
         permanent: true,
       },
       {
@@ -61,6 +77,10 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-DNS-Prefetch-Control", value: "on" },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",

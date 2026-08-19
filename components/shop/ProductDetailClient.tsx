@@ -49,7 +49,7 @@ export default function ProductDetailClient({
 
   const wa = useMemo(() => {
     const text = encodeURIComponent(
-      `Merhaba, ${ad}${variant ? ` (${variant})` : ""} hakkında bilgi / sipariş vermek istiyorum.`
+      `Merhaba, ${ad}${variant ? ` (${variant})` : ""} hakkında bilgi / rezervasyon yapmak istiyorum.`
     );
     const base = (whatsappBase || "").trim();
     if (!base) return `https://wa.me/?text=${text}`;
@@ -79,7 +79,7 @@ export default function ProductDetailClient({
         </div>
         {gallery.length > 1 ? (
           <div className="pd__thumbs" aria-label="Ürün görselleri">
-            {gallery.map((url) => (
+            {gallery.map((url, idx) => (
               <button
                 key={url}
                 type="button"
@@ -87,7 +87,7 @@ export default function ProductDetailClient({
                 onClick={() => setActive(url)}
                 aria-label="Galeri görseli"
               >
-                <ProductImage src={url} alt="" className="pd__thumb" />
+                <ProductImage src={url} alt={`${ad} ${idx + 1}`} className="pd__thumb" />
               </button>
             ))}
           </div>
@@ -132,7 +132,7 @@ export default function ProductDetailClient({
         ) : null}
 
         {ozelSiparis ? (
-          <p className="pd__badge">Özel sipariş — fiyat ve detay için yazın</p>
+          <p className="pd__badge">Özel sunum — detay için yazın</p>
         ) : null}
 
         <div className="pd__actions">
@@ -142,7 +142,7 @@ export default function ProductDetailClient({
             target="_blank"
             rel="noopener noreferrer"
           >
-            {waLabel || "WhatsApp ile Sipariş"}
+            {waLabel || "WhatsApp ile yazın"}
           </a>
           {tel ? (
             <a className="pd__btn pd__btn--ghost" href={tel}>

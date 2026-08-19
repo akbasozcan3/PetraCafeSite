@@ -1,4 +1,4 @@
-import { maxTextureSize } from './config.js?v=20260817x5';
+import { maxTextureSize } from './config.js?v=20260818k19';
 
 export function loadImage(src) {
   return new Promise((resolve, reject) => {
@@ -19,6 +19,25 @@ export function downscaleImage(img, isMobile) {
   canvas.width = Math.round(img.naturalWidth * scale);
   canvas.height = Math.round(img.naturalHeight * scale);
   canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+  return canvas;
+}
+
+export function cropImage(img, crop) {
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(2, Math.round(crop.w));
+  canvas.height = Math.max(2, Math.round(crop.h));
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(
+    img,
+    crop.x,
+    crop.y,
+    crop.w,
+    crop.h,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+  );
   return canvas;
 }
 

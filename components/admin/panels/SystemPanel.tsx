@@ -62,7 +62,7 @@ export default function SystemPanel() {
         <StatusCard
           label="Genel"
           ok={Boolean(data?.ok)}
-          detail={data?.service || "firinci-api"}
+          detail={data?.service || "petra-api"}
         />
         {Object.entries(checks).map(([key, val]) => (
           <StatusCard
@@ -78,6 +78,7 @@ export default function SystemPanel() {
         <h3 className="font-semibold text-[#F8F8F8]">Yayın kontrol listesi</h3>
         <ul className="mt-3 space-y-2 text-sm text-[#8A9BB0]">
           <li>• `.env.local` içinde güçlü `JWT_SECRET` (min 32 karakter)</li>
+          <li>• Yayın domain’i: `SITE_URL=https://gercek-domaininiz.com` (sitemap / Open Graph)</li>
           <li>• `npm run init-admin` ile admin hesabı</li>
           <li>• İsteğe bağlı: `DATABASE_URL` + `npm run db:setup` + `npm run db:migrate`</li>
           <li>• `npm run sync-public` (assets → public) — `npm run build` bunu otomatik çalıştırır</li>

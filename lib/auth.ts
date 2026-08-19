@@ -42,7 +42,7 @@ export const COOKIE_NAME = "firinci_admin_token";
 const ALLOWED_ADMIN_EMAIL = (
   process.env.ADMIN_EMAIL ||
   process.env.ADMIN_USER ||
-  "admin@firincitasdelen.com.tr"
+  ""
 )
   .trim()
   .toLowerCase();
@@ -97,14 +97,13 @@ async function verifyAdminPassword(
     return null;
   }
 
+  const envAdminOn = process.env.ALLOW_ENV_ADMIN === "true";
   if (
+    envAdminOn &&
     ALLOWED_ADMIN_EMAIL &&
     ALLOWED_ADMIN_PASSWORD &&
     normalizedEmail === ALLOWED_ADMIN_EMAIL &&
-    password === ALLOWED_ADMIN_PASSWORD &&
-    (process.env.NODE_ENV !== "production" ||
-      process.env.ALLOW_ENV_ADMIN === "true" ||
-      process.env.VERCEL === "1")
+    password === ALLOWED_ADMIN_PASSWORD
   ) {
     return {
       id: "env-1",
@@ -163,15 +162,15 @@ export async function verifyAuthToken(token: string): Promise<SessionUser | null
 
 export async function setAuthCookie(token: string) {
   const cookieStore = await cookies();
-  const isHttps =
-    process.env.NODE_ENV === "production" &&
-    (Boolean(process.env.VERCEL) ||
-      Boolean(process.env.HTTPS_ENABLED) ||
-      (process.env.SITE_URL || "").startsWith("https://"));
+  const secure =
+    process.env.NODE_ENV === "production" ||
+    Boolean(process.env.VERCEL) ||
+    process.env.HTTPS_ENABLED === "true" ||
+    (process.env.SITE_URL || "").startsWith("https://");
 
   cookieStore.set(COOKIE_NAME, token, {
     httpOnly: true,
-    secure: isHttps,
+    secure,
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
@@ -196,6 +195,22 @@ export async function requireAuth() {
   }
   const session = await getSession();
   if (!session) throw new Error("Unauthorized");
+  const users = await listUsers();
+  const email = session.email.trim().toLowerCase();
+  const record =
+    users.find((u) => u.id === session.id) ||
+    users.find((u) => u.email === email);
+  if (users.length > 0) {
+    if (!record || record.active === false) {
+      throw new Error("Unauthorized");
+    }
+    return {
+      id: record.id,
+      email: record.email,
+      name: record.name,
+      role: record.role,
+    };
+  }
   return session;
 }
 

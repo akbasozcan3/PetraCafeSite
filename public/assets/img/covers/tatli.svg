@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="İtalyan Tatlı">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#24281c"/>
+      <stop offset="100%" stop-color="#14170f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <rect x="48" y="48" width="704" height="504" rx="28" fill="none" stroke="#D9A441" stroke-width="1.5" opacity="0.28"/>
+  <g fill="none" stroke="#D9A441" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(352 210)">
+    <path d="M16 56h64l-8 20H24z"/><path d="M24 56c8-28 40-28 48 0"/><path d="M48 28v-8"/>
+  </g>
+  <text x="400" y="430" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#F4EEE1">İtalyan Tatlı</text>
+  <text x="400" y="458" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" letter-spacing="3" fill="#D9A441">PETRA</text>
+</svg>

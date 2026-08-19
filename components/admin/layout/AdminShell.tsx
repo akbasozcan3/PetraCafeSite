@@ -8,6 +8,7 @@ import { AdminContentProvider } from "@/lib/context/AdminContentContext";
 import Sidebar from "@/components/admin/layout/Sidebar";
 import Header from "@/components/admin/layout/Header";
 import { MobileSidebar } from "@/components/admin/layout/NavDropdown";
+import AdminFaviconSync from "@/components/admin/ui/AdminFaviconSync";
 
 function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const { loading, user } = useAdminSession();
@@ -27,6 +28,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
 
   return (
     <AdminContentProvider>
+      <AdminFaviconSync />
       <div className="relative min-h-screen overflow-hidden bg-[#080D15] text-[#EEE9E0]">
         <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(135deg,rgba(200,112,58,0.06),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.025),transparent_26%)]" />
         <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />

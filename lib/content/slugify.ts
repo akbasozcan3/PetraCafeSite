@@ -16,27 +16,42 @@ export function slugifyTr(input: string): string {
     .slice(0, 80);
 }
 
-/** /urunler/[categorySlug]/[productSlug] — categorySlug yoksa eski düz URL */
+const MENU_ROOT = "/menu";
+const LEGACY_ROOT = "/urunler";
+
+/** Eski /urunler bağlantılarını /menu altına taşır. */
+export function toMenuPath(href?: string): string {
+  if (!href) return MENU_ROOT;
+  return String(href).replace(/\/urunler(?=\/|$)/gi, MENU_ROOT);
+}
+
+/** /menu/[categorySlug]/[productSlug] — categorySlug yoksa düz URL */
 export function productHref(slug: string, categorySlug?: string): string {
   const s = String(slug || "").replace(/^\/+|\/+$/g, "");
-  if (!s) return "/urunler";
-  const cat = String(categorySlug || "").replace(/^\/+|\/+$/g, "");
-  if (cat && cat !== "urunler") return `/urunler/${cat}/${s}`;
-  return `/urunler/${s}`;
+  if (!s) return MENU_ROOT;
+  const cat = String(categorySlug || "")
+    .replace(/^\/+|\/+$/g, "")
+    .replace(/^(urunler|menu)$/i, "");
+  if (cat) return `${MENU_ROOT}/${cat}/${s}`;
+  return `${MENU_ROOT}/${s}`;
 }
 
 export function categoryHref(categorySlug: string): string {
-  const cat = String(categorySlug || "").replace(/^\/+|\/+$/g, "");
-  return cat ? `/urunler/${cat}` : "/urunler";
+  const cat = String(categorySlug || "")
+    .replace(/^\/+|\/+$/g, "")
+    .replace(/^(urunler|menu)$/i, "");
+  return cat ? `${MENU_ROOT}/${cat}` : MENU_ROOT;
 }
 
 export function categorySlugFromHref(href?: string): string | null {
   if (!href) return null;
-  const nested = String(href).match(/\/urunler\/([^/?#]+)\/[^/?#]+/i);
-  if (nested?.[1] && nested[1] !== "urunler") return nested[1];
-  const m = String(href).match(/\/urunler\/([^/?#]+)/i);
+  const nested = String(href).match(/\/(?:urunler|menu)\/([^/?#]+)\/[^/?#]+/i);
+  if (nested?.[1] && !/^(urunler|menu)$/i.test(nested[1])) return nested[1];
+  const m = String(href).match(/\/(?:urunler|menu)\/([^/?#]+)/i);
   if (!m) return null;
   const slug = m[1];
-  if (!slug || slug === "urunler") return null;
+  if (!slug || /^(urunler|menu)$/i.test(slug)) return null;
   return slug;
 }
+
+export { MENU_ROOT, LEGACY_ROOT };

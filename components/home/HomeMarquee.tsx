@@ -1,15 +1,6 @@
 export default function HomeMarquee({ items }: { items: string[] }) {
-  const list =
-    items?.length > 0
-      ? items
-      : [
-          "TAZE EKMEK",
-          "GÜNLÜK ÜRETİM",
-          "ÖZEL TASARIM PASTA",
-          "SİMİT & POĞAÇA",
-          "ÇEKMEKÖY TAŞDELEN",
-          "DOĞAL MALZEME",
-        ];
+  const list = (items || []).map((w) => w.trim()).filter(Boolean);
+  if (!list.length) return null;
   const seps = ["✦", "◆"];
 
   function Seg({ ariaHidden }: { ariaHidden?: boolean }) {

@@ -6,26 +6,34 @@ import HomeDuyuru from "@/components/home/HomeDuyuru";
 import HomeHero from "@/components/home/HomeHero";
 import HomeMarquee from "@/components/home/HomeMarquee";
 import HomeAbout from "@/components/home/HomeAbout";
+import HomeServices from "@/components/home/HomeServices";
+import HomeVisit from "@/components/home/HomeVisit";
 import HomeMenuPreview from "@/components/home/HomeMenuPreview";
 import HomePasta from "@/components/home/HomePasta";
 import HomeGallery from "@/components/home/HomeGallery";
 import HomeReviews from "@/components/home/HomeReviews";
 import HomeFaq from "@/components/home/HomeFaq";
+import HomeReservation from "@/components/home/HomeReservation";
 import HomeContact from "@/components/home/HomeContact";
+import { publicOrigin, parseGeo } from "@/lib/site/canonical";
+import { siteFaviconHref } from "@/lib/content/favicon";
+import { buildInstagramUrl } from "@/lib/content/contact-utils";
+import { formatHoursFaq, isHoursQuestion, openingHoursJsonLd } from "@/lib/content/hours";
+import { isHomeSectionOn } from "@/lib/content/sections";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getPublicContent();
   const seo = content.seo || ({} as typeof content.seo);
-  const title = seo.title || "Taşdelen Fırıncı";
+  const title = seo.title || "Petra Cafe Restaurant";
   const description =
     seo.description ||
-    "Çekmeköy Taşdelen'de taze ekmek, pasta ve özel tasarım pasta siparişi.";
+    "Çekmeköy Taşdelen'de dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve, nargile ve havuz.";
   const ogImage = resolveMediaUrl(
     content.images?.ogImage || content.images?.heroCephe || content.images?.logo
   );
-  const canonical = seo.canonicalUrl || "https://www.firincitasdelen.com.tr/";
+  const canonical = publicOrigin(content) + "/";
 
   return {
     title: { absolute: title },
@@ -34,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: seo.ogTitle || title,
       description: seo.ogDescription || description,
-      siteName: seo.siteName || "Taşdelen Fırıncı",
+      siteName: seo.siteName || "Petra Cafe Restaurant",
       url: canonical,
       type: "website",
       locale: "tr_TR",
@@ -46,9 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: seo.ogDescription || description,
       images: ogImage ? [ogImage] : undefined,
     },
-    icons: content.images?.favicon
-      ? { icon: resolveMediaUrl(content.images.favicon) }
-      : undefined,
+    icons: { icon: [{ url: siteFaviconHref(content) }] },
   };
 }
 
@@ -57,7 +63,7 @@ export async function generateViewport(): Promise<Viewport> {
   return {
     width: "device-width",
     initialScale: 1,
-    themeColor: content.seo?.themeColor || "#12140E",
+    themeColor: content.theme?.char || content.seo?.themeColor || "#12140E",
   };
 }
 
@@ -72,12 +78,18 @@ function JsonLd({ data }: { data: Record<string, unknown> }) {
 
 export default async function HomePage() {
   const content = await getPublicContent();
-  const faqItems = content.sss?.items || [];
+  const hoursAnswer = formatHoursFaq(content.iletisim);
+  const faqItems = (content.sss?.items || [])
+    .filter(
+      (item) => String(item.soru || "").trim() && String(item.cevap || "").trim()
+    )
+    .map((item) =>
+      isHoursQuestion(item.soru) ? { ...item, cevap: hoursAnswer } : item
+    );
   const brand =
-    content.brand?.displayName || content.seo?.siteName || "Taşdelen Fırıncı";
+    content.brand?.displayName || content.seo?.siteName || "Petra Cafe Restaurant";
   const tel = content.iletisim?.telefonHam || content.iletisim?.telefon || "";
-  const canonical =
-    content.seo?.canonicalUrl || "https://www.firincitasdelen.com.tr/";
+  const canonical = `${publicOrigin(content)}/`;
   const logo = resolveMediaUrl(content.images?.logo) || undefined;
   const adres = [
     content.iletisim?.adresSatir1,
@@ -86,38 +98,49 @@ export default async function HomePage() {
   ]
     .filter(Boolean)
     .join(", ");
+  const hoursJsonLd = openingHoursJsonLd(content.iletisim);
+  const geo = parseGeo(content.iletisim?.koordinat);
+  const cuisineList = (content.seo?.servesCuisine || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const ig =
+    content.iletisim?.instagramUrl ||
+    (content.iletisim?.instagram
+      ? buildInstagramUrl(content.iletisim.instagram)
+      : "");
 
-  const bakeryLd = {
+  const restaurantLd = {
     "@context": "https://schema.org",
-    "@type": "Bakery",
-    "@id": `${canonical.replace(/\/$/, "")}/#bakery`,
+    "@type": "Restaurant",
+    "@id": `${canonical.replace(/\/$/, "")}/#restaurant`,
+    servesCuisine: cuisineList.length ? cuisineList : undefined,
+    priceRange: content.seo?.priceRange || undefined,
+    acceptsReservations: content.seo?.acceptsReservations !== false,
     name: brand,
     url: canonical,
     image: logo,
     telephone: tel || undefined,
+    sameAs: ig ? [ig] : undefined,
     address: adres
       ? {
           "@type": "PostalAddress",
           streetAddress: content.iletisim?.adresSatir1 || adres,
-          addressLocality: "Çekmeköy",
-          addressRegion: "İstanbul",
-          addressCountry: "TR",
+          addressLocality: content.seo?.addressLocality || undefined,
+          addressRegion: content.seo?.addressRegion || undefined,
+          addressCountry: content.seo?.addressCountry || "TR",
         }
       : undefined,
-    openingHoursSpecification: content.iletisim?.saatler
+    geo: geo
       ? {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-          ],
-          description: content.iletisim.saatler,
+          "@type": "GeoCoordinates",
+          latitude: geo.latitude,
+          longitude: geo.longitude,
         }
+      : undefined,
+    hasMenu: `${canonical.replace(/\/$/, "")}/menu`,
+    openingHoursSpecification: hoursJsonLd.length
+      ? hoursJsonLd
       : undefined,
   };
 
@@ -157,25 +180,67 @@ export default async function HomePage() {
   );
 
   return (
-    <HomeShell content={content} heroPoster={poster} heroMobile={mobile}>
-      <JsonLd data={bakeryLd} />
+    <HomeShell
+      content={content}
+      heroPoster={poster}
+      heroMobile={mobile}
+      enableHero={isHomeSectionOn(content, "hero")}
+    >
+      <JsonLd data={restaurantLd} />
       <JsonLd data={websiteLd} />
       {faqLd ? <JsonLd data={faqLd} /> : null}
 
-      <HomeDuyuru aktif={content.duyuru?.aktif} metin={content.duyuru?.metin} />
-      <HomeHero content={content} />
-      <HomeMarquee items={content.marquee || []} />
-      <HomeAbout content={content} />
-      <HomeMenuPreview content={content} />
-      <HomePasta pasta={content.pasta} />
-      <HomeGallery bolum={content.bolumlar?.galeri} items={content.galeri || []} />
-      <HomeReviews
-        items={content.yorumlar || []}
-        bolum={content.bolumlar?.yorumlar}
-        meta={content.yorumlarMeta}
-      />
-      <HomeFaq bolum={content.bolumlar?.sss} items={faqItems} />
-      <HomeContact content={content} />
+      {isHomeSectionOn(content, "duyuru") ? (
+        <HomeDuyuru aktif={content.duyuru?.aktif} metin={content.duyuru?.metin} />
+      ) : null}
+      {isHomeSectionOn(content, "hero") ? <HomeHero content={content} /> : null}
+      {isHomeSectionOn(content, "marquee") ? (
+        <HomeMarquee items={content.marquee || []} />
+      ) : null}
+      {isHomeSectionOn(content, "hizmetler") ? (
+        <HomeServices content={content} />
+      ) : null}
+      {isHomeSectionOn(content, "hakkimizda") ? (
+        <HomeAbout content={content} />
+      ) : null}
+      {isHomeSectionOn(content, "ziyaret") ? (
+        <HomeVisit content={content} />
+      ) : null}
+      {isHomeSectionOn(content, "menu") ? (
+        <HomeMenuPreview content={content} />
+      ) : null}
+      {isHomeSectionOn(content, "pasta") ? (
+        <HomePasta pasta={content.pasta} />
+      ) : null}
+      {isHomeSectionOn(content, "galeri") ? (
+        <HomeGallery bolum={content.bolumlar?.galeri} items={content.galeri || []} />
+      ) : null}
+      {isHomeSectionOn(content, "yorumlar") ? (
+        <HomeReviews
+          items={content.yorumlar || []}
+          bolum={content.bolumlar?.yorumlar}
+          meta={content.yorumlarMeta}
+        />
+      ) : null}
+      {isHomeSectionOn(content, "sss") ? (
+        <HomeFaq
+          bolum={content.bolumlar?.sss}
+          items={faqItems}
+          image={content.images?.faq || content.images?.aboutInterior}
+        />
+      ) : null}
+      {isHomeSectionOn(content, "rezervasyon") ? (
+        <HomeReservation
+          contactPhone={content.iletisim?.telefon || tel}
+          iletisim={content.iletisim}
+          bolum={content.bolumlar?.rezervasyon}
+          copy={content.rezervasyon}
+          image={content.images?.reservation || content.images?.aboutInterior}
+        />
+      ) : null}
+      {isHomeSectionOn(content, "iletisim") ? (
+        <HomeContact content={content} />
+      ) : null}
     </HomeShell>
   );
 }

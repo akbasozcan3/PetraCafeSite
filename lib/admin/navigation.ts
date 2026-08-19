@@ -9,7 +9,7 @@ import {
   FileText,
   Images,
   MessageSquare,
-  Cake,
+  Waves,
   Layout,
   Search,
   Activity,
@@ -21,6 +21,10 @@ import {
   DoorOpen,
   Info,
   Plug,
+  Palette,
+  CalendarDays,
+  Inbox,
+  Home,
   type LucideIcon,
 } from "lucide-react";
 import type { Permission } from "@/lib/admin/roles";
@@ -65,6 +69,14 @@ export const adminNavItems: AdminNavItem[] = [
 
   // Ana sayfa bölümleri (sitedeki sıra)
   {
+    href: "/admin/anasayfa",
+    label: "Ana Sayfa CMS",
+    description: "Tüm bölümler, yazılar, aç/kapa ve form metinleri",
+    icon: Home,
+    group: "Ana Sayfa",
+    permission: "content:read",
+  },
+  {
     href: "/admin/hakkimizda",
     label: "Hakkımızda",
     description: "Başlık, kısaca, paragraflar, rozet",
@@ -74,17 +86,33 @@ export const adminNavItems: AdminNavItem[] = [
   },
   {
     href: "/admin/menu",
-    label: "Ürünler / Kategori",
-    description: "Kategoriler, ürün listeleri, görseller, SSS",
+    label: "Menü Yönetimi",
+    description: "Yemek ekle, sil, fiyat ve açıklama güncelle",
     icon: LayoutList,
     group: "Ana Sayfa",
     permission: "content:read",
   },
   {
+    href: "/admin/rezervasyonlar",
+    label: "Rezervasyonlar",
+    description: "Masa taleplerini onayla veya reddet",
+    icon: CalendarDays,
+    group: "Ana Sayfa",
+    permission: "content:read",
+  },
+  {
+    href: "/admin/mesajlar",
+    label: "Mesajlar",
+    description: "Siteden gelen iletişim formları",
+    icon: Inbox,
+    group: "Ana Sayfa",
+    permission: "content:read",
+  },
+  {
     href: "/admin/pasta",
-    label: "Özel Pastalar",
-    description: "Şeker hamurlu pasta bölümü",
-    icon: Cake,
+    label: "Havuz & Plaj",
+    description: "Havuz tarifesi, yüzme ve organizasyon bölümü",
+    icon: Waves,
     group: "Ana Sayfa",
     permission: "content:read",
   },
@@ -123,7 +151,7 @@ export const adminNavItems: AdminNavItem[] = [
   {
     href: "/admin/iletisim",
     label: "İletişim",
-    description: "Telefon, adres, WhatsApp, e-posta",
+    description: "Telefon, adres, WhatsApp, gün gün açılış-kapanış",
     icon: Phone,
     group: "Ana Sayfa",
     permission: "content:read",
@@ -141,8 +169,16 @@ export const adminNavItems: AdminNavItem[] = [
   {
     href: "/admin/navbar",
     label: "Üst Menü & Logo",
-    description: "Navigasyon linkleri, telefon butonu",
+    description: "Logo, menü linkleri, sağdaki Rezervasyon butonu",
     icon: Menu,
+    group: "Site",
+    permission: "content:read",
+  },
+  {
+    href: "/admin/tema",
+    label: "Tema & Renkler",
+    description: "Navbar, zemin, vurgu ve footer renkleri",
+    icon: Palette,
     group: "Site",
     permission: "content:read",
   },
@@ -165,7 +201,7 @@ export const adminNavItems: AdminNavItem[] = [
   {
     href: "/admin/bolumlar",
     label: "Bölüm Başlıkları",
-    description: "Menü / galeri / yorum / SSS başlıkları",
+    description: "Bölüm başlıkları, ziyaret şeridi, Instagram hizmetleri",
     icon: Layout,
     group: "Site",
     permission: "content:read",
@@ -173,7 +209,7 @@ export const adminNavItems: AdminNavItem[] = [
   {
     href: "/admin/sayfalar",
     label: "Alt Sayfa Metinleri",
-    description: "Ürünler, kategori, blog sayfa metinleri",
+    description: "Menü, kategori ve blog sayfa metinleri",
     icon: Files,
     group: "Site",
     permission: "content:read",

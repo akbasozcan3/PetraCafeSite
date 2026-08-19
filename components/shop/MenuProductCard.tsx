@@ -13,7 +13,7 @@ export type MenuProductCardProps = {
   ozelSiparis?: boolean;
 };
 
-/** Fırın menü kartı — sunum / katalog (sepet yok) */
+/** Restoran menü satırı — isim, açıklama, fiyat */
 export default function MenuProductCard({
   ad,
   href,
@@ -25,24 +25,19 @@ export default function MenuProductCard({
   ozelSiparis,
 }: MenuProductCardProps) {
   return (
-    <li className="ys-item">
-      <Link href={href} className="ys-item__card">
-        <span className="ys-item__media">
+    <li className="menu-row">
+      <Link href={href} className="menu-row__link">
+        <span className="menu-row__media">
           <ProductImage src={imageUrl} alt={imageAlt} />
         </span>
-        <span className="ys-item__body">
-          <span className="ys-item__top">
+        <span className="menu-row__copy">
+          <span className="menu-row__line">
             <h3>{ad}</h3>
+            <i className="menu-row__dots" aria-hidden="true" />
+            <strong className={!hasPrice ? "is-ask" : undefined}>{fiyatLabel}</strong>
           </span>
-          {desc ? <span className="ys-item__desc">{desc}</span> : null}
-          <span className="ys-item__foot">
-            <strong className={!hasPrice ? "ys-price--ask" : undefined}>
-              {fiyatLabel}
-            </strong>
-            <span className="ys-item__link">
-              {ozelSiparis ? "Özel sipariş" : "İncele"}
-            </span>
-          </span>
+          {desc ? <span className="menu-row__desc">{desc}</span> : null}
+          {ozelSiparis ? <span className="menu-row__tag">Rezervasyonla</span> : null}
         </span>
       </Link>
     </li>

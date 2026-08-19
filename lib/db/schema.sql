@@ -143,3 +143,32 @@ CREATE TRIGGER web_orders_updated_at
 
 INSERT INTO migrations (name) VALUES ('003_customers_web_orders')
   ON CONFLICT (name) DO NOTHING;
+
+-- ── Rezervasyonlar ──────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS reservations (
+  id TEXT PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  name TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  visit_date TEXT NOT NULL,
+  visit_time TEXT NOT NULL,
+  guests INTEGER NOT NULL,
+  note TEXT,
+  status TEXT NOT NULL DEFAULT 'pending'
+);
+CREATE INDEX IF NOT EXISTS reservations_created_idx ON reservations (created_at DESC);
+
+-- ── İletişim mesajları ──────────────────────────────────────
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id TEXT PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  name TEXT NOT NULL,
+  phone TEXT,
+  email TEXT,
+  message TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'new'
+);
+CREATE INDEX IF NOT EXISTS contact_messages_created_idx ON contact_messages (created_at DESC);
+
+INSERT INTO migrations (name) VALUES ('004_reservations_messages')
+  ON CONFLICT (name) DO NOTHING;

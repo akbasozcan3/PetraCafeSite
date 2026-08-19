@@ -11,7 +11,7 @@ import {
 } from "@/lib/api/helpers";
 import { appendActivity } from "@/lib/db/activity";
 import { createBackup, listBackups, deleteBackup } from "@/lib/db/backup";
-import { revalidatePath } from "next/cache";
+import { revalidatePublicSite } from "@/lib/api/gone";
 
 export const runtime = "nodejs";
 
@@ -81,11 +81,7 @@ export async function PUT(request: Request) {
       action: "content.update",
       detail: keys.slice(0, 200),
     });
-    // SSR homepage + shop/blog pick up CMS writes immediately
-    revalidatePath("/");
-    revalidatePath("/urunler");
-    revalidatePath("/blog");
-    revalidatePath("/blog", "layout");
+    revalidatePublicSite();
     return jsonResponse({ data: next });
   } catch (error) {
     if (error instanceof Error && /unauthorized/i.test(error.message)) {

@@ -1,20 +1,25 @@
 /**
- * Taşdelen Fırıncı — Veri Erişim Katmanı
+ * İçerik katmanı — PostgreSQL veya JSON dosya
  *
  * DATABASE_URL tanımlıysa → PostgreSQL kullanır
  * Tanımlı değilse         → JSON dosya sistemine geri döner (sıfır hata)
  */
 
+import { cache } from "react";
 import fs from "fs";
 import path from "path";
 import { DEFAULT_CONTENT, mergeContent } from "@/lib/content/defaults";
 import type { SiteContent } from "@/lib/content/types";
+import { formatHoursSummary, resolveHoursProgram } from "@/lib/content/hours";
 import { cascadeBrandFields, syncStaticBrand } from "@/lib/content/sync-static-brand";
 import { syncStaticContact } from "@/lib/content/sync-static-contact";
 import { applyIletisimCascade } from "@/lib/content/contact-utils";
 import { syncBlogPages } from "@/lib/content/sync-blog-pages";
 import { ensureProductSlugs } from "@/lib/content/ensure-product-slugs";
 import { resolveProductionMediaPath } from "@/lib/admin/media-url";
+import { isDeadLocalMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
+import { toPublicSiteContent } from "@/lib/content/public-content";
+import { resolveTheme } from "@/lib/content/theme";
 import { getPool, isPostgresEnabled } from "./postgres";
 import { execFileSync } from "child_process";
 
@@ -177,21 +182,87 @@ function rewriteLocalUploadsInContent(content: SiteContent): SiteContent {
 function normalizeContent(raw: Partial<SiteContent>): SiteContent {
   const merged = mergeContent(raw, DEFAULT_CONTENT);
   merged.images = { ...DEFAULT_CONTENT.images, ...normalizeImages(merged.images) };
+  if (isDeadLocalMedia(merged.images?.favicon)) {
+    merged.images.favicon = SITE_PHOTOS.favicon;
+  }
+  if (merged.seo && /firinci/i.test(merged.seo.canonicalUrl || "")) {
+    merged.seo.canonicalUrl = "";
+  }
+  merged.theme = resolveTheme(merged.theme);
   // Empty arrays are intentional (admin cleared the section) — do not restore defaults.
   if (!Array.isArray(merged.galeri)) merged.galeri = DEFAULT_CONTENT.galeri;
   if (!Array.isArray(merged.yorumlar)) merged.yorumlar = DEFAULT_CONTENT.yorumlar;
   if (!merged.sss || !Array.isArray(merged.sss.items)) merged.sss = DEFAULT_CONTENT.sss;
   if (!Array.isArray(merged.makaleler)) merged.makaleler = DEFAULT_CONTENT.makaleler;
+  if (!Array.isArray(merged.hizmetler) || merged.hizmetler.length === 0) {
+    merged.hizmetler = DEFAULT_CONTENT.hizmetler;
+  }
+  if (merged.iletisim) {
+    const program = resolveHoursProgram(merged.iletisim);
+    const allDayCafe =
+      program.length === 7 &&
+      program.every(
+        (d) => !d.kapali && d.acilis === "08:00" && (d.kapanis === "22:00" || d.kapanis === "24:00")
+      );
+    const nextProgram = allDayCafe
+      ? program.map((d) => ({ ...d, kapanis: "24:00" }))
+      : program;
+    const saatlerRaw = merged.iletisim.saatler?.trim() || "";
+    const saatler =
+      !saatlerRaw || /22:00/.test(saatlerRaw) || !/havuz/i.test(saatlerRaw)
+        ? DEFAULT_CONTENT.iletisim.saatler
+        : saatlerRaw;
+    merged.iletisim = {
+      ...merged.iletisim,
+      eposta: /firinci/i.test(merged.iletisim.eposta || "")
+        ? ""
+        : merged.iletisim.eposta,
+      saatProgrami: nextProgram,
+      saatler,
+    };
+  }
+  const pastaDef = DEFAULT_CONTENT.pasta;
+  merged.pasta = {
+    ...pastaDef,
+    ...merged.pasta,
+    maddeler: merged.pasta?.maddeler?.length ? merged.pasta.maddeler : pastaDef.maddeler,
+    gorseller: merged.pasta?.gorseller?.length ? merged.pasta.gorseller : pastaDef.gorseller,
+    fiyatlar: merged.pasta?.fiyatlar?.length ? merged.pasta.fiyatlar : pastaDef.fiyatlar,
+    dersler: merged.pasta?.dersler?.length ? merged.pasta.dersler : pastaDef.dersler,
+    kurallar: merged.pasta?.kurallar?.length ? merged.pasta.kurallar : pastaDef.kurallar,
+  };
+  if (!merged.bolumlar?.hizmetler) {
+    merged.bolumlar = {
+      ...merged.bolumlar,
+      hizmetler: DEFAULT_CONTENT.bolumlar.hizmetler,
+    };
+  }
 
   // Legacy section name → generic Blog (multi-store ready)
   const rename = (label?: string) =>
     label && /^fırın\s*günlüğü$/i.test(label.trim()) ? "Blog" : label;
 
-  if (merged.navbar?.links) {
-    merged.navbar = {
-      ...merged.navbar,
-      links: merged.navbar.links.map((l) => ({ ...l, label: rename(l.label) || l.label })),
-    };
+  if (merged.navbar) {
+    const ctaIsTel =
+      /^tel:/i.test(merged.navbar.ctaHref || "") ||
+      /wa\.me/i.test(merged.navbar.ctaHref || "") ||
+      /^\+?\d[\d\s]{8,}$/.test((merged.navbar.ctaLabel || "").trim());
+    if (ctaIsTel) {
+      merged.navbar = {
+        ...merged.navbar,
+        ctaLabel: "Rezervasyon",
+        ctaHref: "#rezervasyon",
+        showPhone: merged.navbar.showPhone !== false,
+      };
+    }
+    if (merged.navbar.links) {
+      merged.navbar = {
+        ...merged.navbar,
+        links: merged.navbar.links
+          .map((l) => ({ ...l, label: rename(l.label) || l.label }))
+          .filter((l) => !/^(rezervasyon|randevu)$/i.test((l.label || "").trim())),
+      };
+    }
   }
   if (merged.footer?.kolonlar) {
     merged.footer = {
@@ -391,7 +462,7 @@ const externalYorumlarCache: Record<
   { data: SiteContent["yorumlar"]; expires: number }
 > = {};
 
-export async function getPublicContent(): Promise<SiteContent> {
+export const getPublicContent = cache(async (): Promise<SiteContent> => {
   const content = await getContentAsync();
 
   try {
@@ -440,8 +511,8 @@ export async function getPublicContent(): Promise<SiteContent> {
     }
   } catch {}
 
-  return content;
-}
+  return toPublicSiteContent(content);
+});
 
 // ────────────────────────────────────────────────────────────────
 // Auth kayıtları
@@ -481,19 +552,16 @@ export async function saveAuthRecordAsync(auth: AuthRecord): Promise<void> {
 // Uploads dizini
 // ────────────────────────────────────────────────────────────────
 export function getUploadsDir(folder = "site") {
-  const dir = path.join(process.cwd(), "public", "uploads", folder);
+  const dir = path.join(process.cwd(), "data", "uploads", folder);
   fs.mkdirSync(dir, { recursive: true });
   return dir;
 }
 
-// ────────────────────────────────────────────────────────────────
-// Upload temizleme (arka plan)
-// ────────────────────────────────────────────────────────────────
 function collectReferencedFiles(content: SiteContent) {
   const refs = new Set<string>();
   function addIfUpload(v?: string) {
     if (!v) return;
-    const m = v.match(/\/uploads\/site\/(.+)$/);
+    const m = v.match(/\/(?:uploads|media)\/(?:site|menu)\/(.+)$/);
     if (m) refs.add(m[1]);
   }
   for (const v of Object.values(content.images || {})) addIfUpload(v);
@@ -502,7 +570,10 @@ function collectReferencedFiles(content: SiteContent) {
   for (const grup of content.menu?.gruplar ?? []) {
     addIfUpload(grup.image);
     addIfUpload(grup.banner);
-    for (const urun of grup.urunler ?? []) addIfUpload(urun.image);
+    for (const urun of grup.urunler ?? []) {
+      addIfUpload(urun.image);
+      for (const img of urun.images ?? []) addIfUpload(img.url);
+    }
   }
   return refs;
 }
@@ -511,25 +582,36 @@ let cleanupScheduled = false;
 function scheduleCleanup(knownContent?: SiteContent) {
   if (cleanupScheduled || process.env.VERCEL) return;
   cleanupScheduled = true;
-  setImmediate(async () => {
+  setTimeout(async () => {
     cleanupScheduled = false;
     try {
-      const uploadDir = getUploadsDir("site");
-      const files = fs.readdirSync(uploadDir);
-      // Prefer just-saved content; fall back to async source of truth (PG or JSON)
+      const dirs = [
+        path.join(process.cwd(), "data", "uploads", "site"),
+        path.join(process.cwd(), "public", "uploads", "site"),
+      ];
       const content = knownContent || (await getContentAsync());
       const refs = collectReferencedFiles(content);
-      for (const f of files) {
-        if (!refs.has(f)) {
+      const graceMs = 7 * 24 * 60 * 60 * 1000;
+      const now = Date.now();
+      for (const uploadDir of dirs) {
+        if (!fs.existsSync(uploadDir)) continue;
+        for (const f of fs.readdirSync(uploadDir)) {
+          if (refs.has(f)) continue;
+          const abs = path.join(uploadDir, f);
           try {
-            fs.unlinkSync(path.join(uploadDir, f));
-          } catch {}
+            const st = fs.statSync(abs);
+            if (!st.isFile()) continue;
+            if (now - st.mtimeMs < graceMs) continue;
+            fs.unlinkSync(abs);
+          } catch {
+            /* ignore */
+          }
         }
       }
     } catch (err) {
       console.warn("[Upload cleanup] atlandı:", (err as Error).message);
     }
-  });
+  }, 60_000);
 }
 
 export { DATA_DIR, CONTENT_FILE, AUTH_FILE };

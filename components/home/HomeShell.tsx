@@ -3,6 +3,11 @@ import SiteNav from "@/components/site/SiteNav";
 import SiteFooter from "@/components/site/SiteFooter";
 import type { SiteContent } from "@/lib/content/types";
 import { withHeroCacheBust } from "@/lib/admin/media-url";
+import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
+import { themeCssCustomProperties, themeToCssVars } from "@/lib/content/theme";
+import ThemeDocument from "@/components/site/ThemeDocument";
+import { displayHours } from "@/lib/content/hours";
+import { phoneToTelHref } from "@/lib/content/contact-utils";
 import HomeHeroScripts from "@/components/home/HomeHeroScripts";
 import HomeMotion from "@/components/home/HomeMotion";
 
@@ -15,19 +20,22 @@ export default function HomeShell({
   children,
   heroPoster,
   heroMobile,
+  enableHero = true,
 }: {
   content: SiteContent;
   children: ReactNode;
   heroPoster?: string;
   heroMobile?: string;
+  enableHero?: boolean;
 }) {
-  const logo = content.images?.logo || "/assets/img/logo.webp";
+  const logo =
+    liveMedia(content.images?.logo, SITE_PHOTOS.mark) || SITE_PHOTOS.mark;
   const poster =
     heroPoster ||
     withHeroCacheBust(
       content.images?.heroPoster ||
         content.images?.heroCephe ||
-        "/assets/img/hero-cephe.webp"
+        SITE_PHOTOS.facade
     );
   const mobile =
     heroMobile ||
@@ -35,17 +43,18 @@ export default function HomeShell({
       content.images?.heroMobile ||
         content.images?.heroPoster ||
         content.images?.heroCephe ||
-        "/assets/img/hero-mobile.webp"
+        SITE_PHOTOS.facade
     );
 
   return (
-    <div className="site-home">
+    <div className="site-home" style={themeToCssVars(content.theme)}>
+      <ThemeDocument vars={themeCssCustomProperties(content.theme)} />
       <link
         rel="stylesheet"
         href="/css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       />
-      <link rel="stylesheet" href="/assets/css/style.css?v=20260817x5" />
-      <link rel="stylesheet" href="/assets/css/home-next.css?v=10" />
+      <link rel="stylesheet" href="/assets/css/style.css?v=20260819nav6" />
+      <link rel="stylesheet" href="/assets/css/home-next.css?v=54" />
       <link rel="preload" as="image" href={poster} />
       <link
         rel="preload"
@@ -54,20 +63,27 @@ export default function HomeShell({
         media="(max-width: 860px)"
       />
 
-      <a className="skip" href="#hakkimizda">
-        İçeriğe geç
-      </a>
-
-      <SiteNav navbar={content.navbar} logoUrl={logo} homeHref="/" />
+      <SiteNav
+        navbar={content.navbar}
+        logoUrl={logo}
+        homeHref="/"
+        hours={displayHours(content.iletisim)}
+        phone={content.iletisim?.telefon}
+        phoneHref={phoneToTelHref(
+          content.iletisim?.telefonHam || content.iletisim?.telefon || ""
+        )}
+      />
       <main id="icerik">{children}</main>
       <SiteFooter content={content} />
 
-      <HomeHeroScripts
-        boot={{
-          images: content.images || {},
-          hero: content.hero,
-        }}
-      />
+      {enableHero ? (
+        <HomeHeroScripts
+          boot={{
+            images: content.images || {},
+            hero: content.hero,
+          }}
+        />
+      ) : null}
       <HomeMotion />
     </div>
   );

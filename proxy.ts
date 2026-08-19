@@ -33,15 +33,31 @@ const SHOP_GONE = [
   "/admin/web-siparisler",
 ];
 
+const API_GONE = ["/api/v1/customer", "/api/v1/admin/web-shop"];
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/uploads/") || pathname.startsWith("/media/")) {
+    const rest = pathname.replace(/^\/(uploads|media)\//, "");
+    if (!rest || rest.includes("..")) {
+      return new NextResponse("Not found", { status: 404 });
+    }
+    const url = request.nextUrl.clone();
+    url.pathname = `/api/v1/media/${rest}`;
+    return NextResponse.rewrite(url);
+  }
+
+  if (API_GONE.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
+    return NextResponse.json({ error: "Bu özellik kapatıldı." }, { status: 410 });
+  }
 
   if (
     SHOP_GONE.some(
       (p) => pathname === p || pathname.startsWith(`${p}/`)
     )
   ) {
-    const dest = pathname.startsWith("/admin") ? "/admin" : "/urunler";
+    const dest = pathname.startsWith("/admin") ? "/admin" : "/menu";
     return NextResponse.redirect(new URL(dest, request.url));
   }
 
@@ -64,7 +80,10 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/admin",
     "/admin/:path*",
+    "/uploads/:path*",
+    "/media/:path*",
     "/sepet",
     "/sepet/:path*",
     "/favoriler",
@@ -73,5 +92,8 @@ export const config = {
     "/checkout/:path*",
     "/hesabim",
     "/hesabim/:path*",
+    "/api/v1/customer",
+    "/api/v1/customer/:path*",
+    "/api/v1/admin/:path*",
   ],
 };

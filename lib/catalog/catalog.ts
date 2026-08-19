@@ -26,7 +26,7 @@ export function getCategorySlug(g: MenuGrup): string {
 export function getProductSlug(u: MenuUrun): string {
   if (u.slug && !RESERVED_URUNLER_SLUGS.has(u.slug)) return u.slug;
   const fromLink = String(u.link || "").match(
-    /\/urunler\/(?:[^/]+\/)?([^/?#]+)/i
+    /\/(?:urunler|menu)\/(?:[^/]+\/)?([^/?#]+)/i
   );
   if (fromLink?.[1] && !RESERVED_URUNLER_SLUGS.has(fromLink[1])) {
     return fromLink[1];
@@ -38,8 +38,12 @@ export function isProductActive(u: MenuUrun): boolean {
   return u.aktif !== false && Boolean(u.ad?.trim());
 }
 
+export function isCategoryActive(g: MenuGrup): boolean {
+  return g.aktif !== false && Boolean(g.ad?.trim());
+}
+
 export function listCategories(content: SiteContent): MenuGrup[] {
-  return (content.menu?.gruplar || []).filter((g) => g.ad?.trim());
+  return (content.menu?.gruplar || []).filter(isCategoryActive);
 }
 
 export function findCategory(

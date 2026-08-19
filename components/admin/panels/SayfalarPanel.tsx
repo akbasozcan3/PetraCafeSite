@@ -61,12 +61,12 @@ export default function SayfalarPanel() {
     <>
       <AdminPageHeader
         title="Sayfa Metinleri"
-        description="Ürünler, kategori ve blog sayfalarındaki başlık / giriş / CTA metinlerini düzenleyin."
+        description="Menü, kategori ve blog sayfalarındaki başlık / giriş / CTA metinleri. Navbar’daki Menü her zaman /menu sayfasına gider; bu alan o sayfanın yazılarıdır."
       />
       <AdminAlert message={message} />
 
       <section className="mb-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[#EEE9E0]">Ürünler hub</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[#EEE9E0]">Menü sayfası</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <Input
             label="Üst yazı (eyebrow)"
@@ -109,12 +109,12 @@ export default function SayfalarPanel() {
           </div>
         </div>
         <p className="mt-2 text-xs text-[#8A9BB0]">
-          Başlık şablonunda {"{n}"} = kategori sayısı, {"{m}"} = ürün sayısı.
+          Başlık şablonunda {"{n}"} = kategori sayısı, {"{m}"} = tabak sayısı.
         </p>
       </section>
 
       <section className="mb-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[#EEE9E0]">Ürün kategori sayfası</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[#EEE9E0]">Menü kategori sayfası</h2>
         <div className="grid gap-4 md:grid-cols-2">
           {(
             [
@@ -140,7 +140,7 @@ export default function SayfalarPanel() {
             />
           ))}
           <div className="md:col-span-2">
-            <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">Ürün kartı notu</label>
+            <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">Kart notu</label>
             <textarea
               className={fieldClass}
               rows={2}
@@ -155,7 +155,7 @@ export default function SayfalarPanel() {
           </div>
           <div className="md:col-span-2">
             <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">
-              Ürün detay notları (her satır bir madde)
+              Tabak detay notları (her satır bir madde)
             </label>
             <textarea
               className={fieldClass}
@@ -170,7 +170,7 @@ export default function SayfalarPanel() {
                   },
                 })
               }
-              placeholder={"Gel al veya telefon / WhatsApp siparişi\n7/24 WhatsApp ile hızlı yanıt"}
+              placeholder={"Rezervasyon önerilir\nAlerjen için servise danışın"}
             />
           </div>
           <Input

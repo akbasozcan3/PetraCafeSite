@@ -1,19 +1,19 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { DoorOpen, ImageIcon, Sparkles } from "lucide-react";
+import { DoorOpen, Sparkles } from "lucide-react";
 import { api } from "@/lib/api/client";
-import { resolveMediaUrl, withCacheBust } from "@/lib/admin/media-url";
+import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
+import { clampDoorUv } from "@/lib/content/door-uv";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
 import AdminPageHeader, { AdminAlert, AdminLoading } from "@/components/admin/AdminPageHeader";
 import Upload from "@/components/admin/ui/Upload";
-import Input from "@/components/admin/ui/Input";
-import Button from "@/components/admin/ui/Button";
+import AdminImage from "@/components/admin/ui/AdminImage";
+import DoorAlignEditor from "@/components/admin/ui/DoorAlignEditor";
 import SaveBar from "@/components/admin/ui/SaveBar";
 
 const BRAND_KEYS = new Set(["logo", "favicon"]);
 const DOOR_KEYS = ["heroCephe", "heroIc", "heroPoster"] as const;
-const DEFAULT_DOOR_UV = { u0: 0.368, u1: 0.633, v0: 0.552, v1: 1 };
 
 export default function ImagesPanel() {
   const { content, imageKeys, loading, setContent } = useAdminContent();
@@ -28,10 +28,8 @@ export default function ImagesPanel() {
     ([key]) => !BRAND_KEYS.has(key) && !(DOOR_KEYS as readonly string[]).includes(key)
   );
 
-  const doorUv = {
-    ...DEFAULT_DOOR_UV,
-    ...(content?.hero?.doorUv || {}),
-  };
+  const doorUv = clampDoorUv(content?.hero?.doorUv);
+  const doorUvMobile = clampDoorUv(content?.hero?.doorUvMobile, doorUv);
 
   const refresh = async (okMsg: string) => {
     try {
@@ -48,24 +46,14 @@ export default function ImagesPanel() {
   if (loading) return <AdminLoading />;
   if (!content) return <AdminAlert message="İçerik yüklenemedi." />;
 
-  const setUv = (patch: Partial<typeof DEFAULT_DOOR_UV>) => {
-    setContent({
-      ...content,
-      hero: {
-        ...content.hero,
-        doorUv: { ...doorUv, ...patch },
-      },
-    });
-  };
-
   const saveUv = async () => {
     setSavingUv(true);
     try {
       const res = await api.updateContent({
-        hero: { ...content.hero, doorUv },
+        hero: { ...content.hero, doorUv, doorUvMobile },
       });
       setContent(res.data);
-      setMessage("Kapı hizası kaydedildi. Ana sayfayı yenileyin.");
+      setMessage("Kapı hizası kaydedildi. Ana sayfayı Ctrl+F5 ile yenileyin.");
       setMessageType("success");
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
@@ -81,11 +69,18 @@ export default function ImagesPanel() {
     opts?: { featured?: boolean; syncPoster?: boolean }
   ) => {
     const url = content.images?.[key];
-    const src = url ? withCacheBust(resolveMediaUrl(url), key) : "";
+    const displayUrl =
+      key === "logo"
+        ? liveMedia(url, SITE_PHOTOS.mark)
+        : key === "favicon"
+          ? liveMedia(url, SITE_PHOTOS.favicon)
+          : url;
     const accept =
-      key === "logo" || key === "favicon"
+      key === "logo"
         ? "image/svg+xml,.svg,image/png,image/webp,image/jpeg,image/gif"
-        : "image/jpeg,image/png,image/webp,image/gif";
+        : key === "favicon"
+          ? ".ico,image/x-icon,image/vnd.microsoft.icon,image/svg+xml,.svg,image/png,image/webp,image/jpeg"
+          : "image/jpeg,image/png,image/webp,image/gif";
     const featured = opts?.featured;
 
     return (
@@ -100,38 +95,26 @@ export default function ImagesPanel() {
         <div
           className={
             featured
-              ? "relative flex min-h-[240px] items-center justify-center bg-[radial-gradient(circle_at_30%_20%,#2a1a12,transparent_55%),#0D1117] p-6"
-              : "flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#0D1117]"
+              ? "relative flex min-h-[240px] items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_30%_20%,#2a1a12,transparent_55%),#0D1117]"
+              : key === "favicon"
+                ? "flex aspect-square max-h-[220px] items-center justify-center overflow-hidden bg-[repeating-conic-gradient(#1a2230_0%_25%,#0D1117_0%_50%)] bg-[length:16px_16px]"
+                : "flex aspect-[4/3] items-center justify-center overflow-hidden bg-[#0D1117]"
           }
         >
-          {src ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={src}
-              alt={info.label}
-              className={
-                featured
-                  ? "max-h-52 max-w-full object-contain drop-shadow-lg"
-                  : key === "logo" || key === "favicon"
+          <AdminImage
+            src={displayUrl}
+            alt={info.label}
+            contain={featured || key === "logo" || key === "favicon"}
+            className={
+              featured
+                ? "max-h-52 max-w-full object-contain drop-shadow-lg"
+                : key === "favicon"
+                  ? "h-24 w-24 object-contain drop-shadow-md"
+                  : key === "logo"
                     ? "max-h-full max-w-full object-contain p-6"
                     : "h-full w-full object-cover"
-              }
-            />
-          ) : (
-            <ImageIcon className="h-10 w-10 text-[#4A5568]" />
-          )}
-          {featured && src && (
-            <div
-              className="pointer-events-none absolute border-2 border-[#E8B84B]/85 shadow-[0_0_0_9999px_rgba(0,0,0,0.4)]"
-              style={{
-                left: `${doorUv.u0 * 100}%`,
-                right: `${(1 - doorUv.u1) * 100}%`,
-                top: `${doorUv.v0 * 100}%`,
-                bottom: `${(1 - doorUv.v1) * 100}%`,
-              }}
-              title="Açılan kapı bölgesi"
-            />
-          )}
+            }
+          />
         </div>
         <div className="space-y-3 p-4">
           <div>
@@ -141,9 +124,13 @@ export default function ImagesPanel() {
                 <Sparkles className="h-4 w-4 text-[#C8703A]" />
               )}
               <p className="font-medium text-[#EEE9E0]">{info.label}</p>
+              {url ? (
+                <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-400">
+                  Yayında
+                </span>
+              ) : null}
             </div>
             <p className="text-xs text-[#8A9BB0]">{info.hint}</p>
-            {url && <p className="mt-1 truncate text-xs text-[#6B7A94]">{url}</p>}
           </div>
           <Upload
             accept={accept}
@@ -155,7 +142,7 @@ export default function ImagesPanel() {
                 : key === "logo"
                   ? "Logo yükle (SVG önerilir · PNG / WebP)"
                   : key === "favicon"
-                    ? "Favicon (SVG veya PNG)"
+                    ? "Favicon yükle — ICO / SVG / PNG sürükle-bırak"
                     : undefined
             }
             onComplete={async (results) => {
@@ -177,7 +164,9 @@ export default function ImagesPanel() {
                   ? "Kapı cephesi yayınlandı — masaüstü 3D + mobil poster güncellendi. Ana sayfayı yenileyin."
                   : key === "logo"
                     ? "Logo güncellendi — navbar ve footer’da yayınlandı."
-                    : "Görsel başarıyla güncellendi."
+                    : key === "favicon"
+                      ? "Favicon yayınlandı. Admin ve site sekmesinde görünür."
+                      : "Görsel başarıyla güncellendi."
               );
             }}
             onError={(err) => {
@@ -194,7 +183,7 @@ export default function ImagesPanel() {
     <>
       <AdminPageHeader
         title="Görsel & Logo Yönetimi"
-        description="Açılan kapı = “Kapı cephe (3D)”. Mobilde aynı fotoğraf poster olarak kullanılır."
+        description="Yüklediğiniz fotoğraf kaydedilir ve sitede yayınlanır. Dosya yolları gösterilmez."
       />
       <AdminAlert message={message} type={messageType} />
 
@@ -204,9 +193,8 @@ export default function ImagesPanel() {
           <div>
             <h3 className="font-semibold text-[#F8F8F8]">3D açılan kapı</h3>
             <p className="mt-1 text-xs leading-relaxed text-[#8A9BB0]">
-              Ana sayfada kaydırınca açılan kapı buradan gelir. Cephe fotoğrafını yükleyin;
-              kırparken <strong className="text-[#EEE9E0]">kapı girişini ortada</strong> bırakın
-              (Serbest veya 4:3). “Hero afiş” yalnız yedektir — kapı için değil.
+              Cephe fotoğrafını yükleyin. Altta kapıyı fotoğrafın üstünde tıklayıp
+              sürükleyerek hizalayın — bilgisayar ve telefon ayrı kaydedilir.
             </p>
           </div>
         </div>
@@ -219,67 +207,24 @@ export default function ImagesPanel() {
           )}
         </div>
 
-        <div className="mt-6 space-y-3 rounded-xl border border-white/[0.06] bg-[#0D1117]/70 p-4">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#8A9BB0]">
-            Kapı hizası (ince ayar)
-          </p>
-          <p className="text-[11px] text-[#6B7A94]">
-            Kapı yanlış yerde açılıyorsa değerleri kaydırın. Sol/sağ 0–1, üst/alt 0–1.
-          </p>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Input
-              label="Sol (u0)"
-              type="number"
-              step="0.005"
-              min={0}
-              max={1}
-              value={String(doorUv.u0)}
-              onChange={(e) => setUv({ u0: Number(e.target.value) })}
-            />
-            <Input
-              label="Sağ (u1)"
-              type="number"
-              step="0.005"
-              min={0}
-              max={1}
-              value={String(doorUv.u1)}
-              onChange={(e) => setUv({ u1: Number(e.target.value) })}
-            />
-            <Input
-              label="Üst (v0)"
-              type="number"
-              step="0.005"
-              min={0}
-              max={1}
-              value={String(doorUv.v0)}
-              onChange={(e) => setUv({ v0: Number(e.target.value) })}
-            />
-            <Input
-              label="Alt (v1)"
-              type="number"
-              step="0.005"
-              min={0}
-              max={1}
-              value={String(doorUv.v1)}
-              onChange={(e) => setUv({ v1: Number(e.target.value) })}
-            />
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() =>
-                setContent({
-                  ...content,
-                  hero: { ...content.hero, doorUv: { ...DEFAULT_DOOR_UV } },
-                })
-              }
-            >
-              Varsayılana dön
-            </Button>
-            <SaveBar onSave={() => void saveUv()} saving={savingUv} />
-          </div>
+        <div className="mt-6 space-y-3">
+          <DoorAlignEditor
+            imageUrl={content.images?.heroCephe || content.images?.heroPoster}
+            desktopUv={doorUv}
+            phoneUv={doorUvMobile}
+            onChange={(device, next) => {
+              setContent({
+                ...content,
+                hero: {
+                  ...content.hero,
+                  ...(device === "phone"
+                    ? { doorUvMobile: next }
+                    : { doorUv: next }),
+                },
+              });
+            }}
+          />
+          <SaveBar onSave={() => void saveUv()} saving={savingUv} label="Kapı hizasını kaydet" />
         </div>
       </section>
 

@@ -1,32 +1,75 @@
+import HomeContactForm from "@/components/home/HomeContactForm";
 import type { SiteContent } from "@/lib/content/types";
 import { buildWhatsappUrl, phoneToTelHref } from "@/lib/content/contact-utils";
+import SiteIcon from "@/components/site/SiteIcon";
+import { displayHours } from "@/lib/content/hours";
 
 export default function HomeContact({ content }: { content: SiteContent }) {
   const c = content.iletisim;
   if (!c) return null;
 
+  const hoursText = displayHours(c);
   const tel = c.telefon || "";
   const telHref = phoneToTelHref(c.telefonHam || c.telefon || "");
   const waHref = buildWhatsappUrl(
     c.whatsapp || c.telefonHam || c.telefon || "",
-    content.waFloat?.onYazi || "Merhaba, sipariş vermek istiyorum."
+    content.waFloat?.onYazi || "Merhaba, masa ayırtmak istiyorum."
   );
-  const mapDest = c.koordinat || c.haritaSorgu || "";
-  const mapHref = mapDest
-    ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapDest)}`
-    : "https://www.google.com/maps/search/?api=1&query=Ta%C5%9Fdelen+F%C4%B1r%C4%B1nc%C4%B1";
-
+  const mapDest =
+    c.koordinat ||
+    c.haritaSorgu ||
+    [c.adresSatir1, c.adresSatir2, c.adresSatir3].filter(Boolean).join(", ");
+  const mapHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapDest)}`;
   const adresLines = [c.adresSatir1, c.adresSatir2, c.adresSatir3].filter(Boolean);
 
+  const lines = [
+    telHref
+      ? {
+          href: `tel:${telHref}`,
+          icon: "phone" as const,
+          title: tel || telHref,
+          sub: c.telefonAlt || "Rezervasyon & İletişim",
+          external: false,
+        }
+      : null,
+    waHref
+      ? {
+          href: waHref,
+          icon: "whatsapp" as const,
+          title: c.whatsappBaslik || "WhatsApp'tan yazın",
+          sub: c.whatsappAlt || "Hızlı rezervasyon ve bilgi",
+          external: true,
+        }
+      : null,
+    c.instagramUrl
+      ? {
+          href: c.instagramUrl,
+          icon: "instagram" as const,
+          title: c.instagram || "Instagram",
+          sub: c.instagramAlt || "Günün fotoğrafları Instagram'da",
+          external: true,
+        }
+      : null,
+    c.eposta
+      ? {
+          href: `mailto:${c.eposta}`,
+          icon: "mail" as const,
+          title: c.eposta,
+          sub: c.epostaAlt || "E-posta",
+          external: false,
+        }
+      : null,
+  ].filter(Boolean);
+
   return (
-    <section className="section" id="iletisim">
-      <div className="wrap grid-2">
-        <div>
+    <section className="section contact-sec" id="iletisim">
+      <div className="wrap contact-stage">
+        <div className="contact-stage__copy">
           <p className="eyebrow" data-fade="">
             {c.eyebrow || "İletişim"}
           </p>
           <h2 className="h2" data-split="">
-            {c.baslik || "Her gün taze, sıcak ve lezzetli"}
+            {c.baslik || "Masa, menü ve özel davet"}
           </h2>
           {c.giris ? (
             <p className="lead" data-fade="">
@@ -38,89 +81,76 @@ export default function HomeContact({ content }: { content: SiteContent }) {
               {c.metin}
             </p>
           ) : null}
-          <div className="contact-lines">
-            {telHref ? (
-              <a href={`tel:${telHref}`}>
-                <b>{tel || telHref}</b>
-                <span>{c.telefonAlt || "Sipariş & İletişim"}</span>
-              </a>
-            ) : null}
-            {waHref ? (
-              <a href={waHref} target="_blank" rel="noopener noreferrer">
-                <b>{c.whatsappBaslik || "WhatsApp'tan yazın"}</b>
-                <span>{c.whatsappAlt || "Hızlı Sipariş ve Bilgi"}</span>
-              </a>
-            ) : null}
-            {c.instagramUrl ? (
-              <a href={c.instagramUrl} target="_blank" rel="noopener noreferrer">
-                <b>{c.instagram || "@firincitasdelenn"}</b>
-                <span>{c.instagramAlt || "Günün Fotoğrafları Instagram'da"}</span>
-              </a>
-            ) : null}
-            {c.eposta ? (
-              <a href={`mailto:${c.eposta}`}>
-                <b>{c.eposta}</b>
-                <span>{c.epostaAlt || "E-posta"}</span>
-              </a>
-            ) : null}
+          {c.ozelPastaNot ? (
+            <p className="body" data-fade="">
+              {c.ozelPastaNot}
+            </p>
+          ) : null}
+          <div className="contact-lines" data-stagger="">
+            {lines.map((row) =>
+              row ? (
+                <a
+                  key={row.title}
+                  href={row.href}
+                  target={row.external ? "_blank" : undefined}
+                  rel={row.external ? "noopener noreferrer" : undefined}
+                >
+                  <span className={`contact-lines__ico${row.icon === "whatsapp" ? " is-wa" : ""}`}>
+                    <SiteIcon name={row.icon} size={20} />
+                  </span>
+                  <span>
+                    <b>{row.title}</b>
+                    <span>{row.sub}</span>
+                  </span>
+                </a>
+              ) : null
+            )}
           </div>
+          <HomeContactForm copy={content.mesajForm} />
         </div>
-        <div>
-          <div className="corp" data-reveal-mask="">
-            <div className="corp__row">
-              <b>{c.etiketAdres || "Adres"}</b>
-              <span>
+
+        <div className="contact-stage__map" data-fade="">
+          <div className="contact-map">
+            {mapDest ? (
+              <iframe
+                title={c.haritaIframeBaslik || c.baslik || "Konum"}
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(mapDest)}&z=16&output=embed`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            ) : null}
+            <div className="contact-map__card">
+              <p>
+                <SiteIcon name="map" size={16} />
+                <span>{c.etiketAdres || "Adres"}</span>
+              </p>
+              <strong>
                 {adresLines.map((line, i) => (
                   <span key={i}>
                     {i > 0 ? <br /> : null}
                     {line}
                   </span>
                 ))}
-              </span>
+              </strong>
+              {hoursText ? (
+                <em>
+                  <SiteIcon name="clock" size={14} />
+                  {hoursText}
+                </em>
+              ) : null}
             </div>
-            <div className="corp__row">
-              <b>{c.etiketSaatler || "Çalışma saatleri"}</b>
-              <span>{c.saatler}</span>
-            </div>
-            <div className="corp__row">
-              <b>{c.etiketTelefon || "Telefon"}</b>
-              <span>
-                {telHref ? <a href={`tel:${telHref}`}>{tel}</a> : tel}
-              </span>
-            </div>
-            <div className="corp__row">
-              <b>{c.etiketWhatsapp || "WhatsApp"}</b>
-              <span>
-                {waHref ? (
-                  <a href={waHref} target="_blank" rel="noopener noreferrer">
-                    {tel || "WhatsApp"}
-                  </a>
-                ) : null}
-              </span>
-            </div>
-            <div className="corp__row">
-              <b>{c.etiketOzelPasta || "Özel pasta"}</b>
-              <span>{c.ozelPastaNot}</span>
-            </div>
+            {mapDest ? (
+            <a
+              className="btn btn--lg contact-map__cta"
+              href={mapHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <SiteIcon name="map" size={18} />
+              <span>{c.haritaButonMetin || "Yol Tarifi Al"}</span>
+            </a>
+            ) : null}
           </div>
-          <a
-            className="btn btn--lg map-btn"
-            href={mapHref}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span>{c.haritaButonMetin || "Yol Tarifi Al"}</span>
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-              <path
-                d="M5 12h14M13 6l6 6-6 6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
         </div>
       </div>
     </section>

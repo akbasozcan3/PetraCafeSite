@@ -1,13 +1,13 @@
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
 import { randomBytes } from "crypto";
 import { requirePermission } from "@/lib/auth";
-import { getContentAsync, saveContentAsync, getUploadsDir } from "@/lib/db/content";
+import { getContentAsync, saveContentAsync } from "@/lib/db/content";
 import { IMAGE_KEYS, type ImageKey } from "@/lib/content/image-keys";
 import { jsonResponse, errorResponse, assertSameOrigin } from "@/lib/api/helpers";
 import { put } from "@vercel/blob";
 import { appendActivity } from "@/lib/db/activity";
+import { revalidatePublicSite } from "@/lib/api/gone";
 import { revalidatePath } from "next/cache";
+import { writeUploadFile } from "@/lib/uploads/fs";
 
 export const runtime = "nodejs";
 
@@ -19,6 +19,8 @@ const ALLOWED_TYPES = new Set([
   "image/gif",
   "image/avif",
   "image/svg+xml",
+  "image/x-icon",
+  "image/vnd.microsoft.icon",
 ]);
 
 const EXT_MIME: Record<string, string> = {
@@ -29,17 +31,42 @@ const EXT_MIME: Record<string, string> = {
   gif: "image/gif",
   avif: "image/avif",
   svg: "image/svg+xml",
+  ico: "image/x-icon",
 };
 
-function resolveMime(file: File): string | null {
-  const ext = file.name.split(".").pop()?.toLowerCase() || "";
-  const fromExt = EXT_MIME[ext];
-  if (file.type && ALLOWED_TYPES.has(file.type)) {
-    // Extension must also match when present
-    if (fromExt && fromExt !== file.type) return null;
-    return file.type;
+function decodeSvgText(bytes: Buffer): string {
+  if (bytes.length >= 3 && bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf) {
+    return bytes.subarray(3).toString("utf8");
   }
-  if (fromExt) return fromExt;
+  if (bytes.length >= 2 && bytes[0] === 0xff && bytes[1] === 0xfe) {
+    return bytes.subarray(2).toString("utf16le");
+  }
+  if (bytes.length >= 2 && bytes[0] === 0xfe && bytes[1] === 0xff) {
+    const swapped = Buffer.alloc(bytes.length - 2);
+    for (let i = 2; i + 1 < bytes.length; i += 2) {
+      swapped[i - 2] = bytes[i + 1];
+      swapped[i - 1] = bytes[i];
+    }
+    return swapped.toString("utf16le");
+  }
+  return bytes.toString("utf8");
+}
+
+function resolveMime(file: File, bytes?: Buffer): string | null {
+  const ext = file.name.split(".").pop()?.toLowerCase() || "";
+  if (ext && EXT_MIME[ext]) return EXT_MIME[ext];
+  if (file.type && ALLOWED_TYPES.has(file.type)) return file.type;
+  if (
+    bytes &&
+    (file.type === "application/octet-stream" ||
+      file.type === "application/xml" ||
+      file.type === "text/xml" ||
+      file.type === "text/plain" ||
+      !file.type) &&
+    /<svg[\s>]/i.test(decodeSvgText(bytes))
+  ) {
+    return "image/svg+xml";
+  }
   return null;
 }
 
@@ -70,12 +97,17 @@ function looksLikeImage(bytes: Buffer, mime: string): boolean {
   if (mime === "image/svg+xml") {
     return sanitizeSvg(bytes) !== null;
   }
+  if (mime === "image/x-icon" || mime === "image/vnd.microsoft.icon") {
+    const icoHeader = bytes[0] === 0 && bytes[1] === 0 && bytes[2] === 1 && bytes[3] === 0;
+    const png = bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47;
+    return icoHeader || png;
+  }
   return false;
 }
 
 /** Strip scripts / event handlers from SVG logos (safe for <img>). */
 function sanitizeSvg(bytes: Buffer): Buffer | null {
-  let text = bytes.toString("utf8");
+  let text = decodeSvgText(bytes);
   if (!/<svg[\s>]/i.test(text)) return null;
 
   const dangerous =
@@ -99,7 +131,7 @@ function sanitizeSvg(bytes: Buffer): Buffer | null {
     );
 
   if (!/<svg[\s>]/i.test(text)) return null;
-  if (dangerous && /<script/i.test(bytes.toString("utf8"))) {
+  if (dangerous && /<script/i.test(decodeSvgText(bytes))) {
     // Scripts were present — only accept after strip if <svg> remains and no leftover handlers
     if (/\son[a-z]+\s*=/i.test(text) || /\bjavascript\s*:/i.test(text)) return null;
   }
@@ -122,6 +154,9 @@ function extensionForMime(mime: string): string {
       return "avif";
     case "image/svg+xml":
       return "svg";
+    case "image/x-icon":
+    case "image/vnd.microsoft.icon":
+      return "ico";
     default:
       return "jpg";
   }
@@ -141,13 +176,6 @@ export async function POST(request: Request) {
       return errorResponse("Dosya gerekli.", 400);
     }
 
-    const mime = resolveMime(file);
-    if (!mime || !ALLOWED_TYPES.has(mime)) {
-      return errorResponse(
-        "Yalnızca JPEG, PNG, WebP, GIF, AVIF veya SVG yüklenebilir.",
-        400
-      );
-    }
     if (file.size > MAX_BYTES) {
       return errorResponse("Dosya boyutu en fazla 8MB olabilir.", 400);
     }
@@ -162,9 +190,16 @@ export async function POST(request: Request) {
       );
     }
 
+    let bytes = Buffer.from(await file.arrayBuffer());
+    const mime = resolveMime(file, bytes);
+    if (!mime || !ALLOWED_TYPES.has(mime)) {
+      return errorResponse(
+        "Yalnızca JPEG, PNG, WebP, GIF, AVIF, SVG veya ICO yüklenebilir.",
+        400
+      );
+    }
     const ext = extensionForMime(mime);
     const filename = `${Date.now()}-${randomBytes(8).toString("hex")}.${ext}`;
-    let bytes = Buffer.from(await file.arrayBuffer());
     if (!looksLikeImage(bytes, mime)) {
       return errorResponse(
         mime === "image/svg+xml"
@@ -192,10 +227,7 @@ export async function POST(request: Request) {
       });
       publicPath = result.url;
     } else {
-      // Local filesystem
-      const uploadDir = getUploadsDir("site");
-      await mkdir(uploadDir, { recursive: true });
-      await writeFile(path.join(uploadDir, filename), bytes);
+      await writeUploadFile("site", filename, bytes);
       publicPath = `/uploads/site/${filename}`;
     }
 
@@ -220,9 +252,8 @@ export async function POST(request: Request) {
       detail: key ? `${key} → ${publicPath}` : publicPath,
     });
 
-    revalidatePath("/");
-    revalidatePath("/urunler");
-    revalidatePath("/blog");
+    revalidatePublicSite();
+    revalidatePath("/admin/images");
 
     return jsonResponse(responseData);
   } catch (error) {

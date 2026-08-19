@@ -1,7 +1,41 @@
-export async function resizeImageFile(file: File, maxWidth = 1600, maxHeight = 1600, quality = 0.8, toWebp = true): Promise<Blob> {
+function toBlob(
+  canvas: HTMLCanvasElement,
+  mime: string,
+  quality: number
+): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) return resolve(blob);
+        canvas.toBlob(
+          (fallback) =>
+            fallback
+              ? resolve(fallback)
+              : reject(new Error("Görsel işlenemedi. JPEG veya PNG deneyin.")),
+          "image/jpeg",
+          quality
+        );
+      },
+      mime,
+      quality
+    );
+  });
+}
+
+export async function resizeImageFile(
+  file: File,
+  maxWidth = 1600,
+  maxHeight = 1600,
+  quality = 0.8,
+  toWebp = true
+): Promise<Blob> {
   return await new Promise((resolve, reject) => {
     const img = new Image();
-    img.onerror = (e) => reject(new Error("Image load error"));
+    const obj = URL.createObjectURL(file);
+    img.onerror = () => {
+      URL.revokeObjectURL(obj);
+      reject(new Error("Görsel okunamadı. JPEG, PNG veya WebP yükleyin."));
+    };
     img.onload = async () => {
       try {
         const ratio = Math.min(maxWidth / img.width, maxHeight / img.height, 1);
@@ -11,19 +45,17 @@ export async function resizeImageFile(file: File, maxWidth = 1600, maxHeight = 1
         canvas.width = w;
         canvas.height = h;
         const ctx = canvas.getContext("2d");
-        if (!ctx) return reject(new Error("Canvas context not available"));
+        if (!ctx) return reject(new Error("Görsel işlenemedi"));
         ctx.drawImage(img, 0, 0, w, h);
         const mime = toWebp ? "image/webp" : file.type || "image/jpeg";
-        canvas.toBlob((blob) => {
-          if (!blob) return reject(new Error("Conversion failed"));
-          resolve(blob);
-        }, mime, quality);
+        resolve(await toBlob(canvas, mime, quality));
       } catch (err) {
         reject(err);
+      } finally {
+        URL.revokeObjectURL(obj);
       }
     };
-    // Create object URL so CORS not an issue for local files
-    img.src = URL.createObjectURL(file);
+    img.src = obj;
   });
 }
 
@@ -31,7 +63,7 @@ export function fileToDataUrl(file: File | Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const fr = new FileReader();
     fr.onload = () => resolve(String(fr.result));
-    fr.onerror = () => reject(new Error("File read error"));
+    fr.onerror = () => reject(new Error("Dosya okunamadı"));
     fr.readAsDataURL(file);
   });
 }
@@ -54,7 +86,11 @@ export async function cropImageFile(
 
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.onerror = () => reject(new Error("Görsel yüklenemedi"));
+    const obj = URL.createObjectURL(file);
+    img.onerror = () => {
+      URL.revokeObjectURL(obj);
+      reject(new Error("Görsel yüklenemedi"));
+    };
     img.onload = () => {
       try {
         const canvas = document.createElement("canvas");
@@ -76,6 +112,7 @@ export async function cropImageFile(
           sh
         );
 
+        const mime = toWebp ? "image/webp" : file.type || "image/jpeg";
         const ratio = Math.min(maxWidth / sw, maxHeight / sh, 1);
         if (ratio < 1) {
           const out = document.createElement("canvas");
@@ -84,22 +121,52 @@ export async function cropImageFile(
           const octx = out.getContext("2d");
           if (!octx) return reject(new Error("Canvas yok"));
           octx.drawImage(canvas, 0, 0, out.width, out.height);
-          out.toBlob(
-            (blob) => (blob ? resolve(blob) : reject(new Error("Crop failed"))),
-            toWebp ? "image/webp" : file.type || "image/jpeg",
-            quality
-          );
+          toBlob(out, mime, quality).then(resolve, reject);
         } else {
-          canvas.toBlob(
-            (blob) => (blob ? resolve(blob) : reject(new Error("Crop failed"))),
-            toWebp ? "image/webp" : file.type || "image/jpeg",
-            quality
-          );
+          toBlob(canvas, mime, quality).then(resolve, reject);
         }
       } catch (err) {
         reject(err);
+      } finally {
+        URL.revokeObjectURL(obj);
       }
     };
-    img.src = URL.createObjectURL(file);
+    img.src = obj;
+  });
+}
+
+export function looksLikeIcoFile(file: File): boolean {
+  return (
+    /\.ico$/i.test(file.name || "") ||
+    file.type === "image/x-icon" ||
+    file.type === "image/vnd.microsoft.icon"
+  );
+}
+
+/** ICO tarayıcıda açılırsa PNG’ye çevir (önizleme her yerde çalışsın). */
+export async function rasterizeFaviconFile(file: File, size = 128): Promise<Blob> {
+  return await new Promise((resolve) => {
+    const img = new Image();
+    const obj = URL.createObjectURL(file);
+    const finish = (blob: Blob) => {
+      URL.revokeObjectURL(obj);
+      resolve(blob);
+    };
+    img.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return finish(file);
+        ctx.clearRect(0, 0, size, size);
+        ctx.drawImage(img, 0, 0, size, size);
+        canvas.toBlob((blob) => finish(blob || file), "image/png");
+      } catch {
+        finish(file);
+      }
+    };
+    img.onerror = () => finish(file);
+    img.src = obj;
   });
 }

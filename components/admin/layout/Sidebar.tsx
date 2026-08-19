@@ -10,6 +10,8 @@ import { api } from "@/lib/api/client";
 import { useAdminSession } from "@/lib/context/AdminSessionContext";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
 import Avatar from "@/components/admin/ui/Avatar";
+import BrandLogo from "@/components/site/BrandLogo";
+import { siteFaviconHref } from "@/lib/content/favicon";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -27,13 +29,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
     content?.brand?.displayName ||
     content?.seo?.siteName ||
     content?.footer?.markaAdi ||
-    "Yönetim";
-  const brandInitials = brandName
-    .split(/\s+/)
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase() || "YP";
+    "Petra Cafe Restaurant";
 
   return (
     <aside
@@ -42,18 +38,25 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         collapsed ? "w-[72px]" : "w-[260px]"
       )}
     >
-      <div className={cn("border-b border-white/[0.06] p-5", collapsed && "px-3")}>
-        <Link href="/admin" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#C8703A] font-bold text-[#0A0F18]">
-            {brandInitials}
-          </div>
-          {!collapsed && (
-            <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-[#EEE9E0]">{brandName}</p>
-              <p className="text-[10px] uppercase tracking-widest text-[#6B7A94]">Yönetim Paneli</p>
-            </div>
+      <div className={cn("border-b border-white/[0.06] p-5", collapsed && "px-3 py-4")}>
+        <Link href="/admin" className="flex items-center gap-3" title={brandName}>
+          {collapsed ? (
+            <img
+              src={siteFaviconHref(content)}
+              alt=""
+              width={32}
+              height={32}
+              className="mx-auto h-8 w-8 rounded-md object-contain"
+            />
+          ) : (
+            <BrandLogo src={content?.images?.logo} alt={brandName} height={34} className="max-w-[168px]" />
           )}
         </Link>
+        {!collapsed ? (
+          <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-[#6B7A94]">
+            Yönetim Paneli
+          </p>
+        ) : null}
       </div>
 
       <nav className="flex-1 space-y-4 overflow-y-auto p-3">

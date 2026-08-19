@@ -1,5 +1,7 @@
 import type { MenuGrup, MenuUrun } from "@/lib/content/types";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
+import { categoryCover, isDeadLocalMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
+import { getCategorySlug } from "@/lib/catalog/catalog";
 
 export type ResolvedProductImage = {
   url: string;
@@ -7,30 +9,28 @@ export type ResolvedProductImage = {
   source: "admin" | "integration" | "local" | "fallback";
 };
 
-const PLACEHOLDER = "/assets/img/product-placeholder.svg";
+const PLACEHOLDER = SITE_PHOTOS.placeholder;
 
 function isRemote(url: string) {
   return /^https?:\/\//i.test(url);
 }
 
-function isLocalAsset(url: string) {
-  return (
-    url.startsWith("/assets/") ||
-    url.startsWith("assets/") ||
-    url.startsWith("/uploads/") ||
-    url.startsWith("uploads/")
-  );
+function usableLocal(url?: string | null): string {
+  if (!url?.trim()) return "";
+  if (isDeadLocalMedia(url)) return "";
+  return url;
 }
 
 /**
- * Öncelik: ADMIN → INTEGRATION → LOCAL → FALLBACK
- * Fake görsel üretmez; API/admin yoksa placeholder.
+ * Öncelik: ADMIN → INTEGRATION → LOCAL → KATEGORİ KAPAĞI
  */
 export function resolveProductImage(
   product: MenuUrun,
   category?: MenuGrup | null
 ): ResolvedProductImage {
   const alt = product.imageAlt || product.ad || "Ürün görseli";
+  const catSlug = category ? getCategorySlug(category) : "";
+  const cover = categoryCover(catSlug);
 
   const primaryGallery = (product.images || [])
     .slice()
@@ -42,8 +42,8 @@ export function resolveProductImage(
     .find((img) => img.url?.trim());
 
   const adminUrl =
-    (primaryGallery?.source === "admin" && primaryGallery.url) ||
-    (firstGallery?.source === "admin" && firstGallery.url) ||
+    (primaryGallery?.source === "admin" && usableLocal(primaryGallery.url)) ||
+    (firstGallery?.source === "admin" && usableLocal(firstGallery.url)) ||
     (product.image &&
     (product.image.startsWith("/uploads/") ||
       product.image.includes("blob.vercel-storage.com") ||
@@ -68,28 +68,16 @@ export function resolveProductImage(
   }
 
   const localUrl =
-    (product.image && isLocalAsset(product.image) ? product.image : "") ||
-    (firstGallery?.url && isLocalAsset(firstGallery.url) ? firstGallery.url : "") ||
-    (category?.image && isLocalAsset(category.image) ? category.image : "") ||
+    usableLocal(product.image) ||
+    usableLocal(firstGallery?.url) ||
+    usableLocal(category?.image) ||
     "";
 
   if (localUrl) {
     return { url: resolveMediaUrl(localUrl), alt, source: "local" };
   }
 
-  if (product.image) {
-    return { url: resolveMediaUrl(product.image), alt, source: "local" };
-  }
-
-  if (category?.image) {
-    return {
-      url: resolveMediaUrl(category.image),
-      alt,
-      source: "local",
-    };
-  }
-
-  return { url: PLACEHOLDER, alt, source: "fallback" };
+  return { url: cover || PLACEHOLDER, alt, source: "fallback" };
 }
 
 export function productGallery(product: MenuUrun, category?: MenuGrup | null) {

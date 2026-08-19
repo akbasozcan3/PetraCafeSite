@@ -1,46 +1,66 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { publicOrigin } from "@/lib/site/canonical";
+import { getPublicContent } from "@/lib/db/content";
+import { siteFaviconHref } from "@/lib/content/favicon";
+import { resolveMediaUrl } from "@/lib/admin/media-url";
 
-export const metadata: Metadata = {
-  title: {
-    default: "Taşdelen Fırıncı",
-    template: "%s | Taşdelen Fırıncı",
-  },
-  description:
-    "Taşdelen Fırıncı — Çekmeköy Taşdelen'de taze ekmek, simit, börek, pasta ve unlu mamuller. Özel tasarım pasta siparişi.",
-  keywords: [
-    "fırın",
-    "pastane",
-    "taşdelen",
-    "çekmeköy",
-    "ekmek",
-    "pasta",
-    "simit",
-    "börek",
-    "özel tasarım pasta",
-  ],
-  authors: [{ name: "Taşdelen Fırıncı" }],
-  creator: "Taşdelen Fırıncı",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true },
-  },
-  openGraph: {
-    type: "website",
-    locale: "tr_TR",
-    siteName: "Taşdelen Fırıncı",
-    title: "Taşdelen Fırıncı — Taze · Lezzetli · Doğal",
-    description:
-      "Çekmeköy Taşdelen'de taze ekmek, pasta ve özel tasarım pasta siparişi.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Taşdelen Fırıncı",
-    description:
-      "Çekmeköy Taşdelen'de taze ekmek, pasta ve özel tasarım pasta siparişi.",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getPublicContent().catch(() => null);
+  const origin = publicOrigin(content);
+  const icon = siteFaviconHref(content);
+  const title = content?.seo?.title || "Petra Cafe Restaurant";
+  const description =
+    content?.seo?.description ||
+    "Petra Cafe Restaurant — Çekmeköy Taşdelen'de dünya mutfağı, serpme kahvaltı, kahve ve havuz.";
+  const og = resolveMediaUrl(
+    content?.images?.ogImage || content?.images?.heroCephe || content?.images?.logo
+  );
+
+  return {
+    metadataBase: new URL(origin),
+    title: {
+      default: title,
+      template: "%s | Petra Cafe Restaurant",
+    },
+    description,
+    keywords: [
+      "petra cafe",
+      "restoran çekmeköy",
+      "taşdelen",
+      "serpme kahvaltı",
+      "havuz",
+      "pool beach",
+      "rezervasyon",
+    ],
+    authors: [{ name: "Petra Cafe Restaurant" }],
+    creator: "Petra Cafe Restaurant",
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true },
+    },
+    icons: {
+      icon: [{ url: icon }],
+      shortcut: icon,
+      apple: icon,
+    },
+    openGraph: {
+      type: "website",
+      locale: "tr_TR",
+      siteName: content?.seo?.siteName || "Petra Cafe Restaurant",
+      title: content?.seo?.ogTitle || title,
+      description: content?.seo?.ogDescription || description,
+      images: og ? [{ url: og }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: content?.seo?.ogTitle || title,
+      description: content?.seo?.ogDescription || description,
+      images: og ? [og] : undefined,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",

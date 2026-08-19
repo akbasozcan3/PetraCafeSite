@@ -1,12 +1,18 @@
 import type { SiteContent } from "@/lib/content/types";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
+import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
+import { iconFromLabel } from "@/lib/content/site-icons";
+import SafeImg from "@/components/site/SafeImg";
+import SiteIcon from "@/components/site/SiteIcon";
+import { displayHours, looksLikeHours } from "@/lib/content/hours";
 
 export default function HomeAbout({ content }: { content: SiteContent }) {
   const h = content.hakkimizda;
   const img = resolveMediaUrl(
-    content.images?.aboutInterior ||
-      content.images?.icMekan ||
-      "/assets/img/ic-mekan.jpg"
+    liveMedia(
+      content.images?.aboutInterior || content.images?.icMekan,
+      SITE_PHOTOS.interior
+    )
   );
 
   if (!h) return null;
@@ -19,7 +25,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             {h.eyebrow || "Hakkımızda"}
           </p>
           <h1 className="h2" data-split="">
-            {h.baslik || "Taşdelen'in fırını ve pastanesi"}
+            {h.baslik || "Petra Yaşam Merkezi'nde cafe & restaurant"}
           </h1>
           {(h.answerBaslik || h.answerMetin) && (
             <div className="answer" data-fade="">
@@ -38,31 +44,33 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             </p>
           ))}
           {h.ozet?.length ? (
-            <div className="ozet">
+            <div className="ozet" data-stagger="">
               {h.ozet.map((item) => (
                 <div className="ozet__i" key={`${item.b}-${item.span}`}>
-                  <b>{item.b}</b>
+                  <span className="ozet__ico">
+                    <SiteIcon name={iconFromLabel(`${item.b} ${item.span}`)} size={20} />
+                  </span>
+                  <b>{looksLikeHours(item.b) ? displayHours(content.iletisim) : item.b}</b>
                   <span>{item.span}</span>
                 </div>
               ))}
             </div>
           ) : null}
         </div>
-        <div>
-          <div className="tilt-card" data-reveal-mask="">
+        <div data-fade="">
+          <div className="tilt-card">
             <div className="tilt-card__inner">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <SafeImg
                 src={img}
-                alt="Taşdelen Fırıncı iç mekân"
+                alt={h.badgeBaslik ? `${h.badgeBaslik} — iç mekân` : "Restoran iç mekân"}
+                fallback={SITE_PHOTOS.interior}
                 loading="eager"
-                decoding="async"
                 width={1800}
                 height={1350}
               />
               <div className="tilt-card__badge">
-                <b>{h.badgeBaslik || "Taze"}</b>
-                <span>{h.badgeAlt || "Lezzetli · Doğal"}</span>
+                <b>{h.badgeBaslik || "Petra"}</b>
+                <span>{h.badgeAlt || "Cafe · Restaurant · Pool"}</span>
               </div>
             </div>
           </div>

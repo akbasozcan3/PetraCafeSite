@@ -1,7 +1,7 @@
 import { jsonResponse } from "@/lib/api/helpers";
 import { isPostgresEnabled, getPool } from "@/lib/db/postgres";
 import { getContentAsync } from "@/lib/db/content";
-import { isDefaultJwtSecret } from "@/lib/auth";
+import { isDefaultJwtSecret, requirePermission } from "@/lib/auth";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -9,11 +9,17 @@ export async function GET(request: Request) {
 
   const base = {
     ok: true as boolean,
-    service: "firinci-api",
+    service: "petra-api",
     time: new Date().toISOString(),
   };
 
   if (!deep) {
+    return jsonResponse(base);
+  }
+
+  try {
+    await requirePermission("system:read");
+  } catch {
     return jsonResponse(base);
   }
 

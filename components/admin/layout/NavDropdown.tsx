@@ -8,6 +8,7 @@ import { cn } from "@/lib/admin/cn";
 import { adminNavGroups, adminNavItems, filterNavByPermission } from "@/lib/admin/navigation";
 import { useAdminSession } from "@/lib/context/AdminSessionContext";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
+import BrandLogo from "@/components/site/BrandLogo";
 
 export default function NavDropdown() {
   const pathname = usePathname();
@@ -102,10 +103,10 @@ export function MobileSidebar({
       <div className="fixed inset-0 z-40 bg-black/60 lg:hidden" onClick={onClose} aria-hidden />
       <aside className="fixed left-0 top-0 z-50 flex h-full w-[280px] flex-col border-r border-white/[0.06] bg-[#0D1117] lg:hidden">
         <div className="flex items-center justify-between border-b border-white/[0.06] p-4">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#C8703A]">Menü</p>
-            <p className="text-sm font-semibold text-[#EEE9E0]">{brandName}</p>
-          </div>
+          <Link href="/admin" onClick={onClose} className="min-w-0">
+            <BrandLogo src={content?.images?.logo} alt={brandName} height={32} className="max-w-[160px]" />
+            <p className="mt-2 text-[10px] uppercase tracking-[0.18em] text-[#6B7A94]">Yönetim Paneli</p>
+          </Link>
           <button type="button" onClick={onClose} className="rounded-lg p-2 text-[#8A9BB0] hover:bg-white/[0.06]">
             <X className="h-5 w-5" />
           </button>

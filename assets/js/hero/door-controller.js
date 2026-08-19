@@ -1,12 +1,12 @@
-import * as THREE from '../../vendor/three.module.js?v=20260817x5';
+import * as THREE from '../../vendor/three.module.js?v=20260818k19';
 import {
   resolveDoorUv,
   SCENE_W,
   SCENE_H,
   DEPTH,
   FRAME_PAD,
-} from './config.js?v=20260817x5';
-import { easeInOut, range } from './utils.js?v=20260817x5';
+} from './config.js?v=20260818k19';
+import { easeInOut, range } from './utils.js?v=20260818k19';
 
 function remapUV(geo, u0, u1, v0, v1) {
   const uv = geo.attributes.uv;
@@ -61,15 +61,20 @@ export class DoorController {
     this.glow = null;
   }
 
-  buildFacade(facadeTexture) {
+  buildFacade(facadeTexture, options = {}) {
     const mat = new THREE.MeshBasicMaterial({ map: facadeTexture });
     const u = resolveDoorUv();
-
+    const parts = [];
+    if (u.v0 > 0.004) parts.push(texturedQuad(mat, 0, 1, 0, u.v0));
+    if (u.v1 < 0.996) parts.push(texturedQuad(mat, 0, 1, u.v1, 1));
+    if (u.u0 > 0.004) parts.push(texturedQuad(mat, 0, u.u0, u.v0, u.v1));
+    if (u.u1 < 0.996) parts.push(texturedQuad(mat, u.u1, 1, u.v0, u.v1));
+    if (options.pads === false) {
+      this.scene.add(...parts);
+      return;
+    }
     this.scene.add(
-      texturedQuad(mat, 0, 1, 0, u.v0),
-      texturedQuad(mat, 0, 1, u.v1, 1),
-      texturedQuad(mat, 0, u.u0, u.v0, u.v1),
-      texturedQuad(mat, u.u1, 1, u.v0, u.v1),
+      ...parts,
       padPlane(SCENE_W + FRAME_PAD * 2, FRAME_PAD, 0, -SCENE_H / 2 - FRAME_PAD / 2),
       padPlane(SCENE_W + FRAME_PAD * 2, FRAME_PAD, 0, SCENE_H / 2 + FRAME_PAD / 2),
       padPlane(FRAME_PAD, SCENE_H, -SCENE_W / 2 - FRAME_PAD / 2, 0),
@@ -99,7 +104,7 @@ export class DoorController {
     plane.position.set(cx, cy, z);
     group.add(plane);
 
-    const shadowMat = new THREE.MeshBasicMaterial({ color: '#0A0C07', side: THREE.DoubleSide });
+    const shadowMat = new THREE.MeshBasicMaterial({ color: '#1a1410', side: THREE.DoubleSide });
     const p = (x, y, z2) => ({ x, y, z: z2 });
     const inset = -0.05;
 
@@ -131,9 +136,19 @@ export class DoorController {
     const makeLeaf = (isLeft) => {
       const halfW = (this.units.x1 - this.units.x0) / 2;
       const h = this.units.y1 - this.units.y0;
+      // Telefon kırpığında halfW ≈ 8 — tüm ölçüler o tasarıma göre ölçeklenir
+      const s = halfW / 8;
+      const t = Math.max(0.014, 0.045 * s);
+      const tInner = Math.max(0.007, 0.018 * s);
+      const edge = Math.max(0.008, 0.022 * s);
+      const innerOff = Math.max(0.028, 0.075 * s);
+      const handleXOff = Math.max(0.018, 0.055 * s);
+      const handleW = Math.max(0.01, 0.034 * s);
+      const handleHi = Math.max(0.005, 0.014 * s);
+      const bracketW = Math.max(0.014, 0.05 * s);
+      const bracketH = Math.max(0.008, 0.025 * s);
       const group = new THREE.Group();
-      
-      // Cam panel
+
       group.add(new THREE.Mesh(new THREE.PlaneGeometry(halfW, h), glassMat));
 
       const bar = (w, ht, x, y, mat = frameMat, zOffset = 0.01) => {
@@ -142,29 +157,22 @@ export class DoorController {
         group.add(m);
       };
 
-      // Kapı koyu siyah ana dış profilleri
-      bar(0.045, h, -halfW / 2 + 0.022, 0);
-      bar(0.045, h, halfW / 2 - 0.022, 0);
-      bar(halfW, 0.045, 0, h / 2 - 0.022);
-      bar(halfW, 0.045, 0, -h / 2 + 0.022);
+      bar(t, h, -halfW / 2 + edge, 0);
+      bar(t, h, halfW / 2 - edge, 0);
+      bar(halfW, t, 0, h / 2 - edge);
+      bar(halfW, t, 0, -h / 2 + edge);
 
-      // Üst ve Alt Altın/Pirinç Çıta Detayı (Görsel 2'deki gibi üstte sarı lüks çizgi)
-      bar(halfW * 0.96, 0.022, 0, h / 2 - 0.075, brassMat, 0.015);
-      bar(halfW * 0.96, 0.022, 0, -h / 2 + 0.075, brassMat, 0.015);
+      bar(halfW * 0.96, tInner, 0, h / 2 - innerOff, frameMat, 0.015);
+      bar(halfW * 0.96, tInner, 0, -h / 2 + innerOff, frameMat, 0.015);
 
-      // Orta Birleşimdeki Lüks Dikey Altın Kapı Kolu (Görsel 2)
-      const handleX = isLeft ? halfW / 2 - 0.055 : -halfW / 2 + 0.055;
+      const handleX = isLeft ? halfW / 2 - handleXOff : -halfW / 2 + handleXOff;
       const handleH = h * 0.38;
       const handleY = -h * 0.02;
 
-      // Kapı kolu montaj bağlantı parçaları (Üst ve alt bağlantı)
-      bar(0.05, 0.025, handleX, handleY + handleH / 2 - 0.015, bracketMat, 0.018);
-      bar(0.05, 0.025, handleX, handleY - handleH / 2 + 0.015, bracketMat, 0.018);
-
-      // Ana dikey pirinç kol gövdesi
-      bar(0.034, handleH, handleX, handleY, brassMat, 0.022);
-      // Kol üzerindeki parlak altın yansıma çizgisi
-      bar(0.014, handleH * 0.92, handleX, handleY, goldHighlightMat, 0.026);
+      bar(bracketW, bracketH, handleX, handleY + handleH / 2 - bracketH * 0.6, bracketMat, 0.018);
+      bar(bracketW, bracketH, handleX, handleY - handleH / 2 + bracketH * 0.6, bracketMat, 0.018);
+      bar(handleW, handleH, handleX, handleY, brassMat, 0.022);
+      bar(handleHi, handleH * 0.92, handleX, handleY, goldHighlightMat, 0.026);
 
       group.position.z = -0.06;
       this.scene.add(group);
@@ -209,10 +217,11 @@ export class DoorController {
     if (!this.leftLeaf || !this.rightLeaf) return;
 
     const halfW = (this.units.x1 - this.units.x0) / 2;
+    const seam = Math.max(0.008, 0.03 * (halfW / 8));
     const open = easeInOut(range(progress, timing.ac0, timing.ac1)) * halfW;
 
-    this.leftLeaf.position.set(this.units.cx - halfW / 2 - open, this.units.cy, -0.06);
-    this.rightLeaf.position.set(this.units.cx + halfW / 2 + open, this.units.cy, -0.06);
+    this.leftLeaf.position.set(this.units.cx - halfW / 2 - open + seam, this.units.cy, -0.06);
+    this.rightLeaf.position.set(this.units.cx + halfW / 2 + open - seam, this.units.cy, -0.06);
 
     const visible = 1 - range(progress, timing.son0, timing.son1);
     this.leftLeaf.visible = this.rightLeaf.visible = visible > 0.02;

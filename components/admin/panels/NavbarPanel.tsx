@@ -16,13 +16,16 @@ import {
   EyeOff,
 } from "lucide-react";
 import { api } from "@/lib/api/client";
-import { resolveMediaUrl, withCacheBust } from "@/lib/admin/media-url";
+import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
+import BrandLogo from "@/components/site/BrandLogo";
 import Input from "@/components/admin/ui/Input";
+import ColorField from "@/components/admin/ui/ColorField";
 import Button from "@/components/admin/ui/Button";
 import Upload from "@/components/admin/ui/Upload";
 import SaveBar from "@/components/admin/ui/SaveBar";
 import AdminPageHeader, { AdminAlert, AdminLoading } from "@/components/admin/AdminPageHeader";
+import { resolveTheme } from "@/lib/content/theme";
 
 type LinkType = "anchor" | "page" | "external" | "tel";
 
@@ -49,11 +52,12 @@ const LINK_TYPE_LABELS = {
 
 const PRESET_LINKS = [
   { label: "Hakkımızda", href: "#hakkimizda" },
-  { label: "Ürünler", href: "/urunler" },
-  { label: "Özel Pastalar", href: "#pasta" },
-  { label: "Galeri", href: "#galeri" },
-  { label: "Yorumlar", href: "#yorumlar" },
-  { label: "S.S.S.", href: "#sss" },
+  { label: "Hizmetler", href: "#hizmetler" },
+  { label: "Menü", href: "/menu" },
+  { label: "Kahve", href: "/menu/kahve" },
+  { label: "Nargile", href: "/menu/nargile" },
+  { label: "İtalyan Kokteylleri", href: "/menu/italyan-kokteyller" },
+  { label: "Havuz & Plaj", href: "#pasta" },
   { label: "Blog", href: "/blog" },
   { label: "İletişim", href: "#iletisim" },
 ];
@@ -69,7 +73,17 @@ export default function NavbarPanel() {
     if (!content) return;
     setSaving(true);
     try {
-      const res = await api.updateContent({ navbar: content.navbar });
+      const res = await api.updateContent({
+        navbar: {
+          ...content.navbar,
+          links: (content.navbar.links || []).map((l) =>
+            /^menü$/i.test((l.label || "").trim()) || l.href === "#menu" || l.href === "/#menu"
+              ? { ...l, href: "/menu" }
+              : l
+          ),
+        },
+        theme: content.theme,
+      });
       setContent(res.data);
       setMessage("Menü başarıyla kaydedildi.");
       setMessageType("success");
@@ -84,6 +98,8 @@ export default function NavbarPanel() {
   if (loading || !content) return <AdminLoading />;
 
   const nav = content.navbar;
+  const logoSrc = liveMedia(content.images?.logo, SITE_PHOTOS.mark);
+  const logoIsSvg = /\.svg(\?|$)/i.test(logoSrc);
 
   const moveLink = (i: number, dir: "up" | "down") => {
     const links = [...nav.links];
@@ -107,7 +123,7 @@ export default function NavbarPanel() {
     <>
       <AdminPageHeader
         title="Navbar ve Menü Yönetimi"
-        description="Üst navigasyon çubuğundaki logo, telefon butonu ve menü linklerini düzenleyin."
+        description="Üst çubuk: logo, menü linkleri ve en sağdaki Rezervasyon butonu."
       />
       <AdminAlert message={message} type={messageType} />
 
@@ -122,17 +138,15 @@ export default function NavbarPanel() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            {content.images?.logo && (
-              <span
-                className={
-                  /\.svg(\?|$)/i.test(content.images.logo)
-                    ? "rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-300"
-                    : "rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#8A9BB0]"
-                }
-              >
-                {/\.svg(\?|$)/i.test(content.images.logo) ? "SVG vektör" : "Raster görsel"}
-              </span>
-            )}
+            <span
+              className={
+                logoIsSvg
+                  ? "rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-300"
+                  : "rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#8A9BB0]"
+              }
+            >
+              {logoIsSvg ? "SVG vektör" : "Raster görsel"}
+            </span>
             <a
               href="/"
               target="_blank"
@@ -145,44 +159,24 @@ export default function NavbarPanel() {
         </div>
         <div className="grid gap-6 md:grid-cols-[220px_1fr]">
           <div className="flex aspect-square flex-col items-center justify-center gap-3 rounded-2xl border border-white/[0.08] bg-[radial-gradient(circle_at_40%_30%,rgba(200,112,58,0.12),transparent_55%),#0D1117] p-5">
-            {content.images?.logo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={withCacheBust(resolveMediaUrl(content.images.logo), "logo")}
-                alt="Logo önizleme"
-                className="max-h-[140px] max-w-full object-contain drop-shadow-md"
-              />
-            ) : (
-              <span className="text-center text-xs text-[#6B7A94]">
-                Logo yok
-                <br />
-                SVG veya PNG yükleyin
-              </span>
-            )}
+            <BrandLogo
+              src={logoSrc}
+              alt="Logo önizleme"
+              height={72}
+              className="max-h-[140px] drop-shadow-md"
+            />
           </div>
           <div className="space-y-4">
             <div className="overflow-hidden rounded-xl border border-white/[0.06] bg-white">
               <div className="flex h-[72px] items-center gap-3 px-4">
-                {content.images?.logo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={withCacheBust(resolveMediaUrl(content.images.logo), "nav-preview")}
-                    alt=""
-                    style={{
-                      height: nav.logoSize || 64,
-                      width: "auto",
-                      maxHeight: 56,
-                      maxWidth: 200,
-                    }}
-                    className="object-contain"
-                  />
-                ) : (
-                  <span className="text-sm font-bold tracking-widest text-[#16190F]">
-                    {nav.logoText || "FIRINCI"}
-                  </span>
-                )}
+                <BrandLogo
+                  src={logoSrc}
+                  alt=""
+                  height={Math.min(56, nav.logoSize || 64)}
+                  className="max-w-[200px]"
+                />
                 <span className="ml-auto rounded-full bg-[#D9A441] px-3 py-1 text-[11px] font-bold text-[#16190F]">
-                  {nav.ctaLabel || "0552 340 02 02"}
+                  {nav.ctaLabel || "Rezervasyon"}
                 </span>
               </div>
             </div>
@@ -237,6 +231,9 @@ export default function NavbarPanel() {
               }
               placeholder="Menü"
             />
+            <p className="text-[11px] leading-relaxed text-[#6B7A94]">
+              Mobil menü bu başlık, aşağıdaki linkler ve en alttaki Rezervasyon butonundan oluşur. Çalışma saati İletişim panelinden gelir.
+            </p>
 
             <Upload
               accept="image/svg+xml,.svg,image/png,image/webp,image/jpeg,image/gif"
@@ -288,25 +285,78 @@ export default function NavbarPanel() {
             onChange={(e) =>
               setContent({ ...content, navbar: { ...nav, logoText: e.target.value } })
             }
-            placeholder="FIRINCI"
+            placeholder="PETRA"
           />
           <Input
-            label="Telefon Butonu Metni"
+            label="Rezervasyon butonu"
             value={nav.ctaLabel}
             onChange={(e) =>
               setContent({ ...content, navbar: { ...nav, ctaLabel: e.target.value } })
             }
-            placeholder="0552 340 02 02"
+            placeholder="Rezervasyon"
           />
           <Input
-            label="Telefon Linki (tel:)"
+            label="Buton linki"
             value={nav.ctaHref}
             onChange={(e) =>
               setContent({ ...content, navbar: { ...nav, ctaHref: e.target.value } })
             }
-            placeholder="tel:+905523400202"
+            placeholder="#rezervasyon"
           />
         </div>
+        <label className="mt-4 flex cursor-pointer items-center gap-3 text-sm text-[#EEE9E0]">
+          <input
+            type="checkbox"
+            checked={nav.showPhone !== false}
+            onChange={(e) =>
+              setContent({
+                ...content,
+                navbar: { ...nav, showPhone: e.target.checked },
+              })
+            }
+            className="h-4 w-4 accent-[#C8703A]"
+          />
+          Rezervasyonun solunda telefonu göster (numara İletişim’den gelir)
+        </label>
+        <p className="mt-2 text-xs text-[#6B7A94]">
+          Sağdaki altın buton rezervasyon formuna gider. Telefonu değiştirmek için İletişim ekranını kullanın.
+        </p>
+      </section>
+
+      <section className="mb-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
+        <h3 className="mb-1 font-semibold text-[#F8F8F8]">Navbar renkleri</h3>
+        <p className="mb-4 text-xs text-[#6B7A94]">
+          Tam palet için Admin → Tema & Renkler. Buradaki alanlar aynı temayı günceller.
+        </p>
+        {(() => {
+          const theme = resolveTheme(content.theme);
+          const patch = (next: Partial<typeof theme>) =>
+            setContent({ ...content, theme: { ...theme, ...next } });
+          return (
+            <div className="grid gap-4 md:grid-cols-2">
+              <ColorField
+                label="Çubuk zemin"
+                value={theme.navSolidBg}
+                onChange={(navSolidBg) => patch({ navSolidBg })}
+              />
+              <ColorField
+                label="Çubuk yazı"
+                value={theme.navSolidText}
+                onChange={(navSolidText) => patch({ navSolidText })}
+              />
+              <ColorField
+                label="Rezervasyon butonu zemin"
+                value={theme.ctaBg}
+                onChange={(ctaBg) => patch({ ctaBg })}
+              />
+              <ColorField
+                label="Rezervasyon butonu yazı"
+                value={theme.ctaText}
+                onChange={(ctaText) => patch({ ctaText })}
+              />
+            </div>
+          );
+        })()}
       </section>
 
       {/* Menü Linkleri */}
@@ -337,8 +387,8 @@ export default function NavbarPanel() {
               style={{ fontFamily: "Inter, sans-serif" }}
               className="flex h-14 items-center gap-6 px-6"
             >
-              <span className="mr-auto text-sm font-bold tracking-widest text-[#16190F]">
-                {nav.logoText || "FIRINCI"}
+              <span className="mr-auto">
+                <BrandLogo src={logoSrc} alt={nav.logoText || "PETRA"} height={28} />
               </span>
               <nav className="flex gap-1">
                 {nav.links.map((l, i) => (
@@ -351,7 +401,7 @@ export default function NavbarPanel() {
                 ))}
               </nav>
               <span className="rounded-full bg-[#16190F] px-4 py-2 text-xs font-bold text-[#F5C862]">
-                {nav.ctaLabel || "0552 340 02 02"}
+                {nav.ctaLabel || "Rezervasyon"}
               </span>
             </div>
           </div>

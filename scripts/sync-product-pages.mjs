@@ -261,15 +261,16 @@ const brand =
   content.brand?.displayName ||
   content.seo?.siteName ||
   content.footer?.markaAdi ||
-  "Taşdelen Fırıncı";
-const siteUrl = (content.seo?.canonicalUrl || "https://www.firincitasdelen.com.tr").replace(
-  /\/$/,
-  ""
-);
+  "Petra Cafe Restaurant";
+const siteUrl = (
+  content.seo?.canonicalUrl ||
+  process.env.SITE_URL ||
+  "http://localhost:3010"
+).replace(/\/$/, "");
 
 const used = new Set(RESERVED);
 for (const g of content.menu?.gruplar || []) {
-  const m = String(g.link || g.tumLink || "").match(/\/urunler\/([^/?#]+)/i);
+  const m = String(g.link || g.tumLink || "").match(/\/(?:urunler|menu)\/([^/?#]+)/i);
   const cat = g.slug || (m && m[1]) || slugifyTr(g.ad);
   if (cat) {
     used.add(cat);
@@ -286,7 +287,7 @@ for (const g of content.menu?.gruplar || []) {
     } else {
       u.slug = uniqueSlug(slugifyTr(u.ad) || "urun", used);
     }
-    u.link = g.slug ? `/urunler/${g.slug}/${u.slug}` : `/urunler/${u.slug}`;
+    u.link = g.slug ? `/menu/${g.slug}/${u.slug}` : `/menu/${u.slug}`;
     if (u.aktif === undefined) u.aktif = true;
     products += 1;
   }
@@ -295,7 +296,7 @@ for (const g of content.menu?.gruplar || []) {
 fs.writeFileSync(CONTENT_FILE, JSON.stringify(content, null, 2) + "\n", "utf8");
 
 /**
- * App Router owns /urunler — do NOT write extensionless HTML into public/.
+ * App Router owns /menu — do NOT write extensionless HTML into public/.
  * Those files are served as application/octet-stream and browsers download them.
  */
 function removeExtensionless(dir) {
@@ -318,5 +319,5 @@ const cleaned =
   removeExtensionless(path.join(ROOT, "urunler"));
 
 console.log(
-  `sync-product-pages: ${products} products, slugs updated, cleaned ${cleaned} extensionless shells (App Router serves /urunler)`
+  `sync-product-pages: ${products} products, slugs updated, cleaned ${cleaned} extensionless shells (App Router serves /menu)`
 );

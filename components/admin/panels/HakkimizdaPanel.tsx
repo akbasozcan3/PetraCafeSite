@@ -4,6 +4,10 @@ import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { api } from "@/lib/api/client";
 import Upload from "@/components/admin/ui/Upload";
+import AdminImage from "@/components/admin/ui/AdminImage";
+import HeroTextEditor from "@/components/admin/ui/HeroTextEditor";
+import ColorField from "@/components/admin/ui/ColorField";
+import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
 import Input from "@/components/admin/ui/Input";
 import Button from "@/components/admin/ui/Button";
@@ -13,7 +17,8 @@ import AdminPageHeader, {
   AdminAlert,
   AdminLoading,
 } from "@/components/admin/AdminPageHeader";
-import { resolveMediaUrl } from "@/lib/admin/media-url";
+import type { BolumBaslik } from "@/lib/content/types";
+import { SITE_ICON_OPTIONS } from "@/lib/content/site-icons";
 
 const fieldClass =
   "w-full rounded-xl border border-white/[0.06] bg-[#0D1117] px-4 py-3 text-sm text-[#EEE9E0] focus:border-[#C8703A]/40 focus:outline-none focus:ring-1 focus:ring-[#C8703A]/20";
@@ -279,12 +284,9 @@ export default function HakkimizdaPanel() {
             <h4 className="mb-2 font-medium text-[#EEE9E0]">Hakkımızda görseli</h4>
             {content.images?.aboutInterior ? (
               <div className="mb-3 flex items-center gap-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={resolveMediaUrl(content.images.aboutInterior)}
-                  alt="Hakkımızda"
-                  className="h-28 w-40 rounded-lg object-cover"
-                />
+                <div className="h-28 w-40 overflow-hidden rounded-lg">
+                  <AdminImage src={content.images.aboutInterior} alt="Hakkımızda" />
+                </div>
                 <Button
                   variant="ghost"
                   onClick={async () => {
@@ -402,6 +404,9 @@ export function HeroPanel() {
                 })
               }
             />
+            <p className="-mt-2 text-xs text-[#6B7A94]">
+              Metin Admin’den gelir. Konum sabit: hero sahnesinin alt ortası. Karşılama yazısıyla birlikte kaymaz.
+            </p>
             <Input
               label="Yüklenirken metin"
               value={content.hero.bootText || "Kapı açılıyor"}
@@ -420,7 +425,7 @@ export function HeroPanel() {
                   Kapı açılınca görünen yazı
                 </p>
                 <p className="mt-1 text-xs text-[#6B7A94]">
-                  Kapı aralanınca ortada belirir.
+                  Telefon ve bilgisayarda aynı: kapı açılıp içeri girince belirir, sonra kaybolur. “Aşağı kaydırın” ayrı, altta sabit.
                 </p>
               </div>
               <button
@@ -453,6 +458,81 @@ export function HeroPanel() {
               </button>
             </div>
             {content.hero.welcomeAktif === true && (
+              <>
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-[#0D1117]/80 px-4 py-3">
+                <div>
+                  <p className="text-sm font-semibold text-[#EEE9E0]">Koyu kutu</p>
+                  <p className="text-xs text-[#6B7A94]">Yazının arkasındaki cam / renk. Kapalıysa yazı fotoğrafın üstünde durur.</p>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={content.hero.welcomeKutu === true}
+                  onClick={() =>
+                    setContent({
+                      ...content,
+                      hero: {
+                        ...content.hero,
+                        welcomeKutu: !(content.hero.welcomeKutu === true),
+                      },
+                    })
+                  }
+                  className={
+                    content.hero.welcomeKutu === true
+                      ? "inline-flex items-center gap-2 rounded-full border border-[#C8703A]/40 bg-[#C8703A]/15 px-4 py-2 text-sm font-semibold text-[#E8B84B]"
+                      : "inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-sm font-semibold text-[#8A9BB0]"
+                  }
+                >
+                  {content.hero.welcomeKutu === true ? "Açık" : "Kapalı"}
+                </button>
+              </div>
+              {content.hero.welcomeKutu === true ? (
+                <div className="grid gap-3 md:grid-cols-3">
+                  <ColorField
+                    label="Kutu rengi"
+                    value={content.hero.welcomeKutuRenk || "#0A0C09"}
+                    onChange={(next) =>
+                      setContent({
+                        ...content,
+                        hero: { ...content.hero, welcomeKutuRenk: next },
+                      })
+                    }
+                    hint="Yazının arkasındaki dolgu"
+                  />
+                  <ColorField
+                    label="Çerçeve rengi"
+                    value={content.hero.welcomeKutuKenar || "#E8B84B"}
+                    onChange={(next) =>
+                      setContent({
+                        ...content,
+                        hero: { ...content.hero, welcomeKutuKenar: next },
+                      })
+                    }
+                  />
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-medium text-[#8A9BB0]">
+                      Yoğunluk ({content.hero.welcomeKutuOpaklik ?? 58}%)
+                    </label>
+                    <input
+                      type="range"
+                      min={0}
+                      max={90}
+                      value={content.hero.welcomeKutuOpaklik ?? 58}
+                      onChange={(e) =>
+                        setContent({
+                          ...content,
+                          hero: {
+                            ...content.hero,
+                            welcomeKutuOpaklik: Number(e.target.value),
+                          },
+                        })
+                      }
+                      className="mt-3 w-full accent-[#C8703A]"
+                    />
+                    <p className="text-[11px] text-[#6B7A94]">0 şeffaf, 90 koyu.</p>
+                  </div>
+                </div>
+              ) : null}
               <div className="grid gap-3 md:grid-cols-3">
                 <Input
                   label="Üst etiket"
@@ -494,8 +574,50 @@ export function HeroPanel() {
                   }
                 />
               </div>
+              </>
             )}
           </div>
+          <HeroTextEditor
+            imageUrl={
+              liveMedia(content.images?.heroPoster || content.images?.heroCephe, SITE_PHOTOS.facade) ||
+              SITE_PHOTOS.facade
+            }
+            phoneImageUrl={
+              liveMedia(
+                content.images?.heroMobile ||
+                  content.images?.heroPoster ||
+                  content.images?.heroCephe,
+                SITE_PHOTOS.facade
+              ) || SITE_PHOTOS.facade
+            }
+            welcomeAktif={content.hero.welcomeAktif === true}
+            welcomeKutu={content.hero.welcomeKutu === true}
+            welcomeKutuRenk={content.hero.welcomeKutuRenk}
+            welcomeKutuKenar={content.hero.welcomeKutuKenar}
+            welcomeKutuOpaklik={content.hero.welcomeKutuOpaklik}
+            desktop={content.hero.textStyles}
+            phone={content.hero.textStylesMobile}
+            preview={{
+              mark: content.hero.fallbackMark || "PETRA",
+              slogan: content.hero.fallbackTagline || "Slogan",
+              scroll: content.hero.scrollHint || "Aşağı kaydırın",
+              boot: content.hero.bootText || "Kapı açılıyor",
+              welcomeEyebrow: content.hero.welcomeEyebrow || "Üst etiket",
+              welcomeTitle: content.hero.welcomeTitle || "Başlık",
+              welcomeLead: content.hero.welcomeLead || "Alt metin",
+            }}
+            onChange={(device, next) =>
+              setContent({
+                ...content,
+                hero: {
+                  ...content.hero,
+                  ...(device === "phone"
+                    ? { textStylesMobile: next }
+                    : { textStyles: next }),
+                },
+              })
+            }
+          />
         </section>
 
         <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
@@ -554,10 +676,10 @@ export function PastaPanel() {
   return (
     <>
       <AdminPageHeader
-        title="Özel Pastalar"
-        description="Ana sayfadaki şeker hamurlu özel tasarım pasta bölümü — tüm yazılar ve görseller."
+        title="Havuz, Plaj ve Organizasyon"
+        description="Saatler, tarife, yüzme dersi, kurallar ve Instagram — afiş bilgileri burada. Görsel zorunlu değil."
       />
-      <SectionHint anchor="pasta" label="Özel Pastalar" />
+      <SectionHint anchor="pasta" label="Havuz & Plaj" />
       <AdminAlert message={message} />
       <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
         <div className="grid gap-4 md:grid-cols-2">
@@ -598,11 +720,253 @@ export function PastaPanel() {
             className={fieldClass}
           />
         </div>
+        <Input
+          label="Slogan"
+          value={p.slogan || ""}
+          onChange={(e) =>
+            setContent({ ...content, pasta: { ...p, slogan: e.target.value } })
+          }
+          placeholder="Lezzet, keyif ve serinliğin buluştuğu yer"
+        />
+        <div className="grid gap-4 md:grid-cols-3">
+          <Input
+            label="Cafe saatleri"
+            value={p.cafeSaat || ""}
+            onChange={(e) =>
+              setContent({ ...content, pasta: { ...p, cafeSaat: e.target.value } })
+            }
+            placeholder="08:00 – 24:00"
+          />
+          <Input
+            label="Havuz saatleri"
+            value={p.havuzSaat || ""}
+            onChange={(e) =>
+              setContent({ ...content, pasta: { ...p, havuzSaat: e.target.value } })
+            }
+            placeholder="09:00 – 18:00"
+          />
+          <Input
+            label="Havuz derinliği"
+            value={p.derinlik || ""}
+            onChange={(e) =>
+              setContent({ ...content, pasta: { ...p, derinlik: e.target.value } })
+            }
+            placeholder="1.45 m – 1.95 m"
+          />
+        </div>
+        <Input
+          label="Instagram"
+          value={p.instagramHref || ""}
+          onChange={(e) =>
+            setContent({ ...content, pasta: { ...p, instagramHref: e.target.value } })
+          }
+          placeholder="https://www.instagram.com/petracaferestaurant/"
+        />
+        <Input
+          label="Instagram etiketi"
+          value={p.instagramEtiket || ""}
+          onChange={(e) =>
+            setContent({ ...content, pasta: { ...p, instagramEtiket: e.target.value } })
+          }
+          placeholder="@petracaferestaurant"
+        />
+
+        <h4 className="pt-2 font-medium text-[#EEE9E0]">Petra House fiyatları</h4>
+        <Input
+          label="Tablo başlığı"
+          value={p.fiyatBaslik || ""}
+          onChange={(e) =>
+            setContent({ ...content, pasta: { ...p, fiyatBaslik: e.target.value } })
+          }
+        />
+        {(p.fiyatlar || []).map((row, i) => (
+          <div key={i} className="grid gap-2 md:grid-cols-[1fr_1fr_1fr_auto]">
+            <Input
+              label={i === 0 ? "Kategori" : undefined}
+              value={row.kategori}
+              onChange={(e) => {
+                const fiyatlar = [...(p.fiyatlar || [])];
+                fiyatlar[i] = { ...fiyatlar[i], kategori: e.target.value };
+                setContent({ ...content, pasta: { ...p, fiyatlar } });
+              }}
+            />
+            <Input
+              label={i === 0 ? "Hafta içi" : undefined}
+              value={row.haftaIci}
+              onChange={(e) => {
+                const fiyatlar = [...(p.fiyatlar || [])];
+                fiyatlar[i] = { ...fiyatlar[i], haftaIci: e.target.value };
+                setContent({ ...content, pasta: { ...p, fiyatlar } });
+              }}
+            />
+            <Input
+              label={i === 0 ? "Hafta sonu" : undefined}
+              value={row.haftaSonu}
+              onChange={(e) => {
+                const fiyatlar = [...(p.fiyatlar || [])];
+                fiyatlar[i] = { ...fiyatlar[i], haftaSonu: e.target.value };
+                setContent({ ...content, pasta: { ...p, fiyatlar } });
+              }}
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="self-end"
+              onClick={() =>
+                setContent({
+                  ...content,
+                  pasta: { ...p, fiyatlar: (p.fiyatlar || []).filter((_, j) => j !== i) },
+                })
+              }
+            >
+              <Trash2 className="h-4 w-4 text-red-400" />
+            </Button>
+          </div>
+        ))}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            setContent({
+              ...content,
+              pasta: {
+                ...p,
+                fiyatlar: [...(p.fiyatlar || []), { kategori: "", haftaIci: "", haftaSonu: "" }],
+              },
+            })
+          }
+        >
+          <Plus className="h-4 w-4" /> Fiyat satırı
+        </Button>
+        <textarea
+          value={p.fiyatNot || ""}
+          onChange={(e) =>
+            setContent({ ...content, pasta: { ...p, fiyatNot: e.target.value } })
+          }
+          rows={2}
+          placeholder="0–2 yaş ücretsiz · mayo ve bone zorunlu…"
+          className={fieldClass}
+        />
+
+        <h4 className="pt-2 font-medium text-[#EEE9E0]">Yüzme dersleri</h4>
+        <Input
+          label="Ders başlığı"
+          value={p.dersBaslik || ""}
+          onChange={(e) =>
+            setContent({ ...content, pasta: { ...p, dersBaslik: e.target.value } })
+          }
+        />
+        <Input
+          label="Ders özeti"
+          value={p.dersLead || ""}
+          onChange={(e) =>
+            setContent({ ...content, pasta: { ...p, dersLead: e.target.value } })
+          }
+        />
+        {(p.dersler || []).map((d, i) => (
+          <div key={i} className="grid gap-2 rounded-xl border border-white/[0.06] p-3 md:grid-cols-[1fr_1fr_auto]">
+            <Input
+              label="Tür"
+              value={d.baslik}
+              onChange={(e) => {
+                const dersler = [...(p.dersler || [])];
+                dersler[i] = { ...dersler[i], baslik: e.target.value };
+                setContent({ ...content, pasta: { ...p, dersler } });
+              }}
+            />
+            <Input
+              label="Kısa vurgu"
+              value={d.kicker || ""}
+              onChange={(e) => {
+                const dersler = [...(p.dersler || [])];
+                dersler[i] = { ...dersler[i], kicker: e.target.value };
+                setContent({ ...content, pasta: { ...p, dersler } });
+              }}
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="self-end"
+              onClick={() =>
+                setContent({
+                  ...content,
+                  pasta: { ...p, dersler: (p.dersler || []).filter((_, j) => j !== i) },
+                })
+              }
+            >
+              <Trash2 className="h-4 w-4 text-red-400" />
+            </Button>
+            <textarea
+              value={d.metin}
+              onChange={(e) => {
+                const dersler = [...(p.dersler || [])];
+                dersler[i] = { ...dersler[i], metin: e.target.value };
+                setContent({ ...content, pasta: { ...p, dersler } });
+              }}
+              rows={2}
+              className={`${fieldClass} md:col-span-3`}
+            />
+          </div>
+        ))}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            setContent({
+              ...content,
+              pasta: {
+                ...p,
+                dersler: [...(p.dersler || []), { baslik: "", kicker: "", metin: "" }],
+              },
+            })
+          }
+        >
+          <Plus className="h-4 w-4" /> Ders türü
+        </Button>
+
+        <h4 className="pt-2 font-medium text-[#EEE9E0]">Kurallar (küçük yazı)</h4>
+        {(p.kurallar || []).map((k, i) => (
+          <div key={i} className="flex gap-2">
+            <Input
+              value={k}
+              onChange={(e) => {
+                const kurallar = [...(p.kurallar || [])];
+                kurallar[i] = e.target.value;
+                setContent({ ...content, pasta: { ...p, kurallar } });
+              }}
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() =>
+                setContent({
+                  ...content,
+                  pasta: { ...p, kurallar: (p.kurallar || []).filter((_, j) => j !== i) },
+                })
+              }
+            >
+              <Trash2 className="h-4 w-4 text-red-400" />
+            </Button>
+          </div>
+        ))}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            setContent({
+              ...content,
+              pasta: { ...p, kurallar: [...(p.kurallar || []), ""] },
+            })
+          }
+        >
+          <Plus className="h-4 w-4" /> Kural
+        </Button>
+
         <div className="grid gap-3">
           <label className="block text-sm text-[#EEE9E0]">
             Madde listesi (tikli satırlar)
           </label>
-          {p.maddeler.map((m, i) => (
+          {(p.maddeler || []).map((m, i) => (
             <div key={i} className="flex gap-2">
               <Input
                 value={m}
@@ -681,19 +1045,16 @@ export function PastaPanel() {
             }
           />
         </div>
-        <h4 className="pt-2 font-medium text-[#EEE9E0]">Pasta görselleri</h4>
-        {p.gorseller.map((g, i) => (
+        <h4 className="pt-2 font-medium text-[#EEE9E0]">Bölüm görselleri</h4>
+        {(p.gorseller || []).map((g, i) => (
           <div
             key={i}
             className="grid gap-3 rounded-xl border border-white/[0.06] p-3 md:grid-cols-[100px_1fr_1fr_auto]"
           >
             {g.src ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={resolveMediaUrl(g.src)}
-                alt={g.alt || ""}
-                className="h-20 w-full rounded-lg object-cover"
-              />
+              <div className="h-20 overflow-hidden rounded-lg">
+                <AdminImage src={g.src} alt={g.alt || ""} />
+              </div>
             ) : (
               <div className="h-20 rounded-lg bg-[#0D1117]" />
             )}
@@ -740,7 +1101,7 @@ export function PastaPanel() {
                   ...content,
                   pasta: {
                     ...p,
-                    gorseller: p.gorseller.filter((_, j) => j !== i),
+                    gorseller: (p.gorseller || []).filter((_, j) => j !== i),
                   },
                 })
               }
@@ -757,7 +1118,7 @@ export function PastaPanel() {
               ...content,
               pasta: {
                 ...p,
-                gorseller: [...p.gorseller, { src: "", alt: "" }],
+                gorseller: [...(p.gorseller || []), { src: "", alt: "" }],
               },
             })
           }
@@ -770,7 +1131,7 @@ export function PastaPanel() {
             try {
               const res = await api.updateContent({ pasta: content.pasta });
               setContent(res.data);
-              setMessage("Özel Pastalar kaydedildi.");
+              setMessage("Havuz & Plaj kaydedildi.");
             } catch (e) {
               setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
             } finally {
@@ -790,24 +1151,50 @@ export function BolumlarPanel() {
   const [message, setMessage] = useState("");
   if (loading || !content) return <AdminLoading />;
 
-  const keys = ["menu", "galeri", "yorumlar", "sss"] as const;
-  const labels = {
-    menu: "Ürünler / Kategori",
+  const keys = ["hizmetler", "menu", "galeri", "yorumlar", "sss", "rezervasyon"] as const;
+  const labels: Record<(typeof keys)[number], string> = {
+    hizmetler: "Hizmetler (Instagram)",
+    menu: "Menü",
     galeri: "Galeri",
     yorumlar: "Yorumlar",
     sss: "S.S.S.",
+    rezervasyon: "Rezervasyon",
+  };
+  const emptyBolum: BolumBaslik = { eyebrow: "", baslik: "", lead: "" };
+  const ziyaret = content.ziyaret || [
+    { k: "Saatler", v: "", n: "" },
+    { k: "Rezervasyon", v: "", n: "" },
+    { k: "Havuz & Plaj", v: "", n: "" },
+    { k: "Konum", v: "", n: "" },
+  ];
+  const hizmetler = content.hizmetler?.length
+    ? content.hizmetler
+    : [
+        { label: "Restoran", icon: "utensils", href: "/menu", aciklama: "Salon ve teras servisi" },
+        { label: "Dünya Mutfağı", icon: "chef", href: "/menu/ana-yemekler", aciklama: "Ana yemekler" },
+        { label: "Serpme Kahvaltı", icon: "sunrise", href: "/menu/kahvalti", aciklama: "Sabah servisi" },
+        { label: "POOL & BEACH", icon: "waves", href: "#pasta", aciklama: "Havuz ve plaj" },
+        { label: "COFFEE & FOOD", icon: "coffee", href: "/menu/kahve", aciklama: "Kahve ve yemek" },
+        { label: "İtalyan Kokteylleri", icon: "wine", href: "/menu/italyan-kokteyller", aciklama: "Aperitivo" },
+        { label: "İtalyan Tatlı çeşitleri", icon: "cake", href: "/menu/tatlilar", aciklama: "Tatlı menüsü" },
+        { label: "En İyi Nargile Çeşitleri", icon: "flame", href: "/menu/nargile", aciklama: "Nargile köşesi" },
+      ];
+  const rsv = content.rezervasyon || {
+    maddeler: [],
+    ctaLabel: "",
+    successMetin: "",
   };
 
   return (
     <>
       <AdminPageHeader
         title="Bölüm Başlıkları"
-        description="Ana sayfa bölümlerinin üst etiketi, başlığı ve kısa açıklaması. Aynı alanlar ilgili bölüm sayfalarında da vardır."
+        description="Ana sayfa bölüm başlıkları, Instagram hizmet kartları ve ziyaret şeridi. Hepsi sitede görünür."
       />
       <AdminAlert message={message} />
       <div className="space-y-4">
         {keys.map((key) => {
-          const b = content.bolumlar[key];
+          const b = content.bolumlar[key] || emptyBolum;
           return (
             <section
               key={key}
@@ -841,34 +1228,300 @@ export function BolumlarPanel() {
                     })
                   }
                 />
-                {"lead" in b && (
+                <Input
+                  label="Kısa açıklama"
+                  value={b.lead || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      bolumlar: {
+                        ...content.bolumlar,
+                        [key]: { ...b, lead: e.target.value },
+                      },
+                    })
+                  }
+                />
+              </div>
+              {key === "menu" ? (
+                <div className="mt-3 grid gap-3 md:grid-cols-2">
                   <Input
-                    label="Kısa açıklama"
-                    value={b.lead || ""}
+                    label="Birincil buton"
+                    value={b.ctaLabel || ""}
                     onChange={(e) =>
                       setContent({
                         ...content,
                         bolumlar: {
                           ...content.bolumlar,
-                          [key]: { ...b, lead: e.target.value },
+                          menu: { ...b, ctaLabel: e.target.value },
                         },
                       })
                     }
+                    placeholder="Masa ayırtın"
                   />
-                )}
-              </div>
+                  <Input
+                    label="Birincil link"
+                    value={b.ctaHref || ""}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        bolumlar: {
+                          ...content.bolumlar,
+                          menu: { ...b, ctaHref: e.target.value },
+                        },
+                      })
+                    }
+                    placeholder="#rezervasyon"
+                  />
+                  <Input
+                    label="İkinci buton"
+                    value={b.cta2Label || ""}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        bolumlar: {
+                          ...content.bolumlar,
+                          menu: { ...b, cta2Label: e.target.value },
+                        },
+                      })
+                    }
+                    placeholder="Tüm menü"
+                  />
+                  <Input
+                    label="İkinci link"
+                    value={b.cta2Href || ""}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        bolumlar: {
+                          ...content.bolumlar,
+                          menu: { ...b, cta2Href: e.target.value },
+                        },
+                      })
+                    }
+                    placeholder="/menu"
+                  />
+                </div>
+              ) : null}
             </section>
           );
         })}
+
+        <section className="rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-4">
+          <h3 className="mb-1 font-medium text-[#C8703A]">Ziyaret şeridi</h3>
+          <p className="mb-3 text-xs text-[#6B7A94]">
+            Ana sayfadaki bilgi kartları. Değer boşsa saat / telefon iletişimden gelir.
+          </p>
+          <div className="space-y-3">
+            {ziyaret.map((item, i) => (
+              <div key={i} className="grid gap-2 md:grid-cols-[1fr_1fr_1fr_auto]">
+                <Input
+                  label="Etiket"
+                  value={item.k}
+                  onChange={(e) => {
+                    const next = [...ziyaret];
+                    next[i] = { ...item, k: e.target.value };
+                    setContent({ ...content, ziyaret: next });
+                  }}
+                />
+                <Input
+                  label="Değer"
+                  value={item.v}
+                  onChange={(e) => {
+                    const next = [...ziyaret];
+                    next[i] = { ...item, v: e.target.value };
+                    setContent({ ...content, ziyaret: next });
+                  }}
+                />
+                <Input
+                  label="Alt satır"
+                  value={item.n}
+                  onChange={(e) => {
+                    const next = [...ziyaret];
+                    next[i] = { ...item, n: e.target.value };
+                    setContent({ ...content, ziyaret: next });
+                  }}
+                />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="self-end"
+                  onClick={() =>
+                    setContent({
+                      ...content,
+                      ziyaret: ziyaret.filter((_, j) => j !== i),
+                    })
+                  }
+                >
+                  <Trash2 className="h-4 w-4 text-red-400" />
+                </Button>
+              </div>
+            ))}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                setContent({
+                  ...content,
+                  ziyaret: [...ziyaret, { k: "", v: "", n: "" }],
+                })
+              }
+            >
+              <Plus className="h-4 w-4" /> Kart ekle
+            </Button>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-4">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <div>
+              <h3 className="font-medium text-[#C8703A]">Hizmet kartları</h3>
+              <p className="mt-1 text-xs text-[#6B7A94]">
+                Instagram bio satırları. Link boşsa kart tıklanmaz. Menü / havuz sayfalarına bağlayın.
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() =>
+                setContent({
+                  ...content,
+                  hizmetler: [
+                    ...hizmetler,
+                    { label: "", icon: "utensils", href: "", aciklama: "" },
+                  ],
+                })
+              }
+            >
+              <Plus className="h-4 w-4" />
+              Ekle
+            </Button>
+          </div>
+          <div className="space-y-3">
+            {hizmetler.map((item, i) => (
+              <div
+                key={i}
+                className="grid gap-2 rounded-xl border border-white/[0.06] p-3 md:grid-cols-[160px_1fr_1fr_auto]"
+              >
+                <label className="block text-sm font-medium text-[#8A9BB0]">
+                  İkon
+                  <select
+                    className="mt-2 h-11 w-full rounded-xl border border-white/[0.06] bg-[#0D1117] px-3 text-sm text-[#EEE9E0]"
+                    value={item.icon || ""}
+                    onChange={(e) => {
+                      const next = [...hizmetler];
+                      next[i] = { ...item, icon: e.target.value };
+                      setContent({ ...content, hizmetler: next });
+                    }}
+                  >
+                    <option value="">Otomatik</option>
+                    {SITE_ICON_OPTIONS.map((opt) => (
+                      <option key={opt.id} value={opt.id}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <Input
+                  label="Başlık"
+                  value={item.label}
+                  onChange={(e) => {
+                    const next = [...hizmetler];
+                    next[i] = { ...item, label: e.target.value };
+                    setContent({ ...content, hizmetler: next });
+                  }}
+                />
+                <Input
+                  label="Link"
+                  value={item.href || ""}
+                  onChange={(e) => {
+                    const next = [...hizmetler];
+                    next[i] = { ...item, href: e.target.value };
+                    setContent({ ...content, hizmetler: next });
+                  }}
+                  placeholder="/menu/kahve veya #pasta"
+                />
+                <button
+                  type="button"
+                  className="mt-6 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.08] text-[#8A9BB0] hover:text-red-400"
+                  aria-label="Kartı sil"
+                  onClick={() => {
+                    const next = hizmetler.filter((_, idx) => idx !== i);
+                    setContent({ ...content, hizmetler: next });
+                  }}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+                <div className="md:col-span-4">
+                  <Input
+                    label="Kısa açıklama"
+                    value={item.aciklama || ""}
+                    onChange={(e) => {
+                      const next = [...hizmetler];
+                      next[i] = { ...item, aciklama: e.target.value };
+                      setContent({ ...content, hizmetler: next });
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-4">
+          <h3 className="mb-3 font-medium text-[#C8703A]">Rezervasyon formu</h3>
+          <div className="grid gap-3 md:grid-cols-2">
+            <Input
+              label="Gönder butonu"
+              value={rsv.ctaLabel || ""}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  rezervasyon: { ...rsv, ctaLabel: e.target.value },
+                })
+              }
+            />
+            <Input
+              label="Başarı mesajı"
+              value={rsv.successMetin || ""}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  rezervasyon: { ...rsv, successMetin: e.target.value },
+                })
+              }
+            />
+          </div>
+          <label className="mb-2 mt-3 block text-sm font-medium text-[#8A9BB0]">
+            Maddeler (her satır bir madde)
+          </label>
+          <textarea
+            className="w-full rounded-2xl border border-white/[0.06] bg-[#0D1117] px-4 py-3 text-sm text-[#EEE9E0]"
+            rows={4}
+            value={(rsv.maddeler || []).join("\n")}
+            onChange={(e) =>
+              setContent({
+                ...content,
+                rezervasyon: {
+                  ...rsv,
+                  maddeler: e.target.value.split("\n"),
+                },
+              })
+            }
+          />
+        </section>
+
         <SaveBar
           onSave={async () => {
             setSaving(true);
             try {
               const res = await api.updateContent({
                 bolumlar: content.bolumlar,
+                ziyaret: content.ziyaret,
+                hizmetler,
+                rezervasyon: content.rezervasyon,
               });
               setContent(res.data);
-              setMessage("Bölüm başlıkları kaydedildi.");
+              setMessage("Bölüm metinleri kaydedildi.");
             } catch (e) {
               setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
             } finally {

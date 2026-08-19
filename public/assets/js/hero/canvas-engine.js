@@ -1,10 +1,10 @@
-import * as THREE from '../../vendor/three.module.js?v=20260817x5';
-import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260817x5';
-import { ASSETS, doorTiming } from './config.js?v=20260817x5';
-import { ScrollController } from './scroll-controller.js?v=20260817x5';
-import { DoorController } from './door-controller.js?v=20260817x5';
-import { Particles } from './particles.js?v=20260817x5';
-import { CameraController, createUnits } from './camera-controller.js?v=20260817x5';
+import * as THREE from '../../vendor/three.module.js?v=20260818k19';
+import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260818k19';
+import { ASSETS, doorTiming, setSceneFromImage, setDoorUvOverride } from './config.js?v=20260818k19';
+import { ScrollController } from './scroll-controller.js?v=20260818k19';
+import { DoorController } from './door-controller.js?v=20260818k19';
+import { Particles } from './particles.js?v=20260818k19';
+import { CameraController, createUnits } from './camera-controller.js?v=20260818k19';
 
 function yieldFrame() {
   return new Promise((resolve) => {
@@ -55,6 +55,28 @@ export class CanvasEngine {
     this._mustPaint = 12;
     this.hasPainted = false;
     this._ro = null;
+    this._onWinScroll = () => this.onScroll();
+    this._onWinResize = () => this.onResize();
+    this._onPageShow = () => {
+      this.visible = true;
+      this._mustPaint = Math.max(this._mustPaint, 4);
+      this.onResize();
+    };
+    this._onPointerMove = (e) => {
+      this.cameraCtrl.onPointerMove(e.clientX, e.clientY);
+      this.wake();
+    };
+    this._onPointerLeave = () => {
+      if (this.cameraCtrl) {
+        this.cameraCtrl.pointer.tx = 0;
+        this.cameraCtrl.pointer.ty = 0;
+      }
+    };
+    this._onContextLost = (e) => {
+      e.preventDefault();
+      this.destroy();
+      if (this.onContextLost) this.onContextLost();
+    };
     this._boundVisibility = () => {
       this.pageVisible = document.visibilityState !== 'hidden';
       if (this.pageVisible) {
@@ -71,7 +93,13 @@ export class CanvasEngine {
 
     this.interiorImage = downscaleImage(images.ic, this.isMobile);
     await yieldFrame();
-    const facadeImage = downscaleImage(images.cephe, this.isMobile);
+    let facadeImage = downscaleImage(images.cephe, this.isMobile);
+    const fw = facadeImage.naturalWidth || facadeImage.width || 16;
+    const fh = facadeImage.naturalHeight || facadeImage.height || 12;
+    // Kapı UV sadece 3D kapıyı taşır — fotoğraf oranı asla değişmez
+    setDoorUvOverride(null);
+    setSceneFromImage(fw, fh);
+    this.units = createUnits();
     await yieldFrame();
 
     this.renderer = new THREE.WebGLRenderer({
@@ -117,34 +145,20 @@ export class CanvasEngine {
     this.targetProgress = this.smoothProgress = this.scroll.update();
     this.renderFrame(this.smoothProgress);
 
-    this.canvas.addEventListener('webglcontextlost', (e) => {
-      e.preventDefault();
-      this.destroy();
-      if (this.onContextLost) this.onContextLost();
-    });
+    this.canvas.addEventListener('webglcontextlost', this._onContextLost);
 
     if (!this.reducedMotion) {
       this.loop();
     }
 
-    window.addEventListener('scroll', () => this.onScroll(), { passive: true });
-    window.addEventListener('resize', () => this.onResize(), { passive: true });
+    window.addEventListener('scroll', this._onWinScroll, { passive: true });
+    window.addEventListener('resize', this._onWinResize, { passive: true });
     document.addEventListener('visibilitychange', this._boundVisibility);
-    window.addEventListener('pageshow', () => {
-      this.visible = true;
-      this._mustPaint = Math.max(this._mustPaint, 4);
-      this.onResize();
-    });
+    window.addEventListener('pageshow', this._onPageShow);
 
     if (!this.isTouch) {
-      window.addEventListener(
-        'pointermove',
-        (e) => {
-          this.cameraCtrl.onPointerMove(e.clientX, e.clientY);
-          this.wake();
-        },
-        { passive: true },
-      );
+      window.addEventListener('pointermove', this._onPointerMove, { passive: true });
+      window.addEventListener('pointerleave', this._onPointerLeave, { passive: true });
     }
 
     const stage = this.canvas?.parentElement;
@@ -288,7 +302,7 @@ export class CanvasEngine {
       return;
     }
 
-    const lerpSpeed = this.isTouch ? 0.2 : 0.085;
+    const lerpSpeed = 0.2;
     this.smoothProgress += (this.targetProgress - this.smoothProgress) * lerpSpeed;
     this.renderFrame(this.smoothProgress);
   };
@@ -318,6 +332,12 @@ export class CanvasEngine {
     this._ro?.disconnect();
     this._ro = null;
     document.removeEventListener('visibilitychange', this._boundVisibility);
+    window.removeEventListener('scroll', this._onWinScroll);
+    window.removeEventListener('resize', this._onWinResize);
+    window.removeEventListener('pageshow', this._onPageShow);
+    window.removeEventListener('pointermove', this._onPointerMove);
+    window.removeEventListener('pointerleave', this._onPointerLeave);
+    this.canvas?.removeEventListener('webglcontextlost', this._onContextLost);
     this.scroll.unmount();
     this.renderer?.dispose();
   }

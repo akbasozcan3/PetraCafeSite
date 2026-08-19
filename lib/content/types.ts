@@ -1,3 +1,5 @@
+import type { HeroTextMap } from "./hero-text";
+
 export interface NavLink {
   label: string;
   href: string;
@@ -5,11 +7,14 @@ export interface NavLink {
 
 export interface NavbarContent {
   logoText: string;
+  /** Sağdaki ana buton — Rezervasyon */
   ctaLabel: string;
   ctaHref: string;
+  /** Navbar’da telefonu da göster (iletişim numarasından) */
+  showPhone?: boolean;
   /** Navbar logo height/width in px (admin controlled) */
   logoSize?: number;
-  /** When true (default if logo image exists), hide "FIRINCI" text next to logo */
+  /** When true (default if logo image exists), hide wordmark text next to logo */
   logoTextGizle?: boolean;
   /** Mobil menü başlığı */
   mobileLabel?: string;
@@ -32,12 +37,137 @@ export interface BolumBaslik {
   eyebrow: string;
   baslik: string;
   lead?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  cta2Label?: string;
+  cta2Href?: string;
+}
+
+/** Admin’den site renkleri — CSS değişkenlerine yazılır */
+export interface ThemeContent {
+  ink: string;
+  paper: string;
+  cream: string;
+  cream2: string;
+  muted: string;
+  brass: string;
+  brassLo: string;
+  char: string;
+  char2: string;
+  olive: string;
+  navSolidBg: string;
+  navSolidText: string;
+  navHeroText: string;
+  ctaBg: string;
+  ctaText: string;
+  footerBg: string;
+  footerText: string;
+}
+
+export interface HizmetItem {
+  label: string;
+  icon?: string;
+  emoji?: string;
+  href?: string;
+  aciklama?: string;
+}
+
+export interface ZiyaretItem {
+  k: string;
+  v: string;
+  n: string;
+}
+
+export interface RezervasyonCopy {
+  maddeler?: string[];
+  ctaLabel?: string;
+  successMetin?: string;
+  formKicker?: string;
+  formBaslik?: string;
+  formLead?: string;
+  labelTarih?: string;
+  labelSaat?: string;
+  labelKisi?: string;
+  labelAd?: string;
+  labelTelefon?: string;
+  labelNot?: string;
+  placeholderAd?: string;
+  placeholderTelefon?: string;
+  placeholderNot?: string;
+  kisiSablon?: string;
+  kapaliMetin?: string;
+  gonderiliyor?: string;
+  hataTelefon?: string;
+  hataBaglanti?: string;
+  hataKapali?: string;
+  gorselAlt?: string;
+}
+
+export interface MesajFormCopy {
+  kicker?: string;
+  baslik?: string;
+  lead?: string;
+  labelAd?: string;
+  labelTelefon?: string;
+  labelEposta?: string;
+  labelMesaj?: string;
+  placeholderAd?: string;
+  placeholderTelefon?: string;
+  placeholderEposta?: string;
+  placeholderMesaj?: string;
+  gonder?: string;
+  gonderiliyor?: string;
+  success?: string;
+  hataTelefon?: string;
+  hataBaglanti?: string;
+}
+
+export type HomeSectionId =
+  | "duyuru"
+  | "hero"
+  | "marquee"
+  | "hizmetler"
+  | "hakkimizda"
+  | "ziyaret"
+  | "menu"
+  | "pasta"
+  | "galeri"
+  | "yorumlar"
+  | "sss"
+  | "rezervasyon"
+  | "iletisim";
+
+export type BolumGoster = Partial<Record<HomeSectionId, boolean>>;
+
+export interface PastaFiyatSatir {
+  kategori: string;
+  haftaIci: string;
+  haftaSonu: string;
+}
+
+export interface PastaDers {
+  baslik: string;
+  kicker?: string;
+  metin: string;
 }
 
 export interface PastaContent {
   eyebrow: string;
   baslik: string;
   lead: string;
+  slogan?: string;
+  cafeSaat?: string;
+  havuzSaat?: string;
+  derinlik?: string;
+  fiyatBaslik?: string;
+  fiyatlar?: PastaFiyatSatir[];
+  fiyatNot?: string;
+  dersBaslik?: string;
+  dersLead?: string;
+  dersler?: PastaDers[];
+  kurallar?: string[];
+  instagramEtiket?: string;
+  instagramHref?: string;
   maddeler: string[];
   body: string;
   ctaLabel: string;
@@ -49,6 +179,7 @@ export interface GaleriItem {
   src: string;
   baslik: string;
   boy?: "wide" | "half" | "third";
+  aktif?: boolean;
 }
 
 export interface YorumItem {
@@ -67,6 +198,8 @@ export interface MenuUrunImage {
 }
 
 export interface MenuUrun {
+  /** Kararlı kimlik (slug’dan üretilir, entegrasyon yoksa) */
+  id?: string;
   ad: string;
   slug?: string;
   not?: string;
@@ -105,6 +238,8 @@ export interface MenuUrun {
   aktif?: boolean;
   ozelSiparis?: boolean;
   lastSyncedAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface MenuSssItem {
@@ -115,6 +250,7 @@ export interface MenuSssItem {
 export interface MenuGrup {
   ad: string;
   slug?: string;
+  aktif?: boolean;
   image?: string;
   banner?: string;
   aciklama?: string;
@@ -141,6 +277,7 @@ export interface MenuContent {
   /** "{ad} hakkında bilgi →" şablonu */
   tumMetinSablon?: string;
   kartNot?: string;
+  emptyMetin?: string;
   gruplar: MenuGrup[];
 }
 
@@ -154,6 +291,8 @@ export interface MakaleItem {
   statik?: boolean;
   /** Kart üzerinde okuma süresi metni */
   okumaSuresi?: string;
+  /** Kapak görseli */
+  kapak?: string;
   /** İleride tam makale HTML (şimdilik opsiyonel) */
   govdeHtml?: string;
 }
@@ -171,6 +310,12 @@ export interface SeoContent {
   siteName: string;
   canonicalUrl: string;
   themeColor: string;
+  servesCuisine?: string;
+  priceRange?: string;
+  addressLocality?: string;
+  addressRegion?: string;
+  addressCountry?: string;
+  acceptsReservations?: boolean;
 }
 
 /** Tek yerden mağaza markası (SEO / footer / navbar / hero ile senkron) */
@@ -194,6 +339,9 @@ export interface FooterContent {
   yasalMetin: string;
   slogan: string;
   kolonlar: FooterColumn[];
+  iletisimBaslik?: string;
+  whatsappEtiket?: string;
+  barLinks?: FooterLink[];
 }
 
 export interface WaFloatContent {
@@ -218,6 +366,13 @@ export interface YorumlarMeta {
   unvanVarsayilan?: string;
 }
 
+export interface CalismaGunu {
+  gun: string;
+  acilis: string;
+  kapanis: string;
+  kapali?: boolean;
+}
+
 export interface IletisimContent {
   baslik: string;
   giris: string;
@@ -237,17 +392,20 @@ export interface IletisimContent {
   adresSatir1: string;
   adresSatir2: string;
   adresSatir3: string;
+  /** Kısa satır (navbar / footer) — gün tablosundan üretilir, elle düzeltilebilir */
   saatler: string;
+  /** Pazartesi–Pazar açılış / kapanış */
+  saatProgrami?: CalismaGunu[];
   ozelPastaNot: string;
   koordinat: string;
   haritaSorgu: string;
   haritaButonMetin: string;
+  haritaIframeBaslik?: string;
   etiketAdres?: string;
   etiketSaatler?: string;
   etiketTelefon?: string;
   etiketWhatsapp?: string;
   etiketOzelPasta?: string;
-  [key: string]: string | undefined;
 }
 
 /** Alt sayfa metinleri (ürünler hub, kategori, blog) */
@@ -294,11 +452,23 @@ export interface SiteContent {
     bootText?: string;
     /** Kapı açılınca hoş geldiniz yazısı */
     welcomeAktif?: boolean;
+    /** Karşılama yazısının koyu cam kutusu */
+    welcomeKutu?: boolean;
+    welcomeKutuRenk?: string;
+    welcomeKutuKenar?: string;
+    /** 0–100 */
+    welcomeKutuOpaklik?: number;
     welcomeEyebrow?: string;
     welcomeTitle?: string;
     welcomeLead?: string;
-    /** Cephe fotoğrafında 3D kapı bölgesi (0–1) */
+    /** Cephe fotoğrafında 3D kapı bölgesi (0–1) — masaüstü */
     doorUv?: { u0: number; u1: number; v0: number; v1: number };
+    /** Telefon kadrajı için ayrı kapı bölgesi (yoksa doorUv) */
+    doorUvMobile?: { u0: number; u1: number; v0: number; v1: number };
+    /** Hero yazı konumu / stil — masaüstü */
+    textStyles?: HeroTextMap;
+    /** Hero yazı konumu / stil — telefon */
+    textStylesMobile?: HeroTextMap;
   };
   marquee: string[];
   duyuru: { aktif: boolean; metin: string };
@@ -308,7 +478,15 @@ export interface SiteContent {
     galeri: BolumBaslik;
     yorumlar: BolumBaslik;
     sss: BolumBaslik;
+    rezervasyon?: BolumBaslik;
+    hizmetler?: BolumBaslik;
   };
+  theme?: ThemeContent;
+  ziyaret?: ZiyaretItem[];
+  hizmetler?: HizmetItem[];
+  rezervasyon?: RezervasyonCopy;
+  mesajForm?: MesajFormCopy;
+  bolumGoster?: BolumGoster;
   pasta: PastaContent;
   makaleler: MakaleItem[];
   manifesto: ManifestoContent;

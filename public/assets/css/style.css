@@ -635,7 +635,11 @@ body.page a.wa-float {
 .gate__scroll {
   position: absolute !important;
   left: 50% !important;
+  right: auto !important;
+  top: auto !important;
   bottom: max(28px, calc(16px + env(safe-area-inset-bottom, 0px))) !important;
+  width: max-content !important;
+  max-width: calc(100% - 24px) !important;
   transform: translateX(-50%) !important;
   display: flex !important;
   flex-direction: column !important;
@@ -643,6 +647,8 @@ body.page a.wa-float {
   justify-content: center !important;
   gap: 10px !important;
   padding: 0 !important;
+  margin: 0 !important;
+  text-align: center !important;
   border: none !important;
   border-radius: 0 !important;
   background: transparent !important;
@@ -686,10 +692,12 @@ body.page a.wa-float {
   display: block !important;
   margin: 0 !important;
   padding: 0 !important;
-  color: #fff !important;
-  font-family: var(--f-body) !important;
-  font-size: 10px !important;
-  font-weight: 700 !important;
+  width: 100% !important;
+  text-align: center !important;
+  color: #fff;
+  font-family: var(--f-body);
+  font-size: 10px;
+  font-weight: 700;
   letter-spacing: 0.28em !important;
   text-transform: uppercase !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85), 0 2px 16px rgba(0, 0, 0, 0.55) !important;
@@ -709,8 +717,8 @@ body.page a.wa-float {
   }
   #scrollHint .gate__scroll-text,
   .gate__scroll-text {
-    font-size: 9px !important;
     letter-spacing: 0.24em !important;
+    text-align: center !important;
   }
 }
 
@@ -787,9 +795,8 @@ html.scene-failed .gate__boot {
     min-width: 0 !important;
     max-width: none !important;
     max-height: none !important;
-    transform: none !important;
     object-fit: cover !important;
-    object-position: center 72% !important;
+    object-position: 50% 50% !important;
     z-index: 1 !important;
   }
   #scene {
@@ -904,16 +911,17 @@ html.scene-failed .gate__boot {
   width: 100%;
   margin: 0;
   padding: 0;
-  min-height: 280px;
+  min-height: 0;
   grid-template-columns: none !important;
   columns: auto !important;
   transform: none !important;
 }
 #yorumlar .yorumlar.reviews-track .yorum {
   position: absolute;
-  inset: 0;
+  inset: 0 auto auto 0;
+  width: 100%;
   margin: 0;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-between;
   gap: 28px;
@@ -926,15 +934,16 @@ html.scene-failed .gate__boot {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(10px);
-  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0.45s;
+  transform: none;
+  transition: opacity 0.45s ease, visibility 0.45s;
 }
 #yorumlar .yorumlar.reviews-track .yorum.is-active {
   position: relative;
+  display: flex;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: none;
   z-index: 2;
 }
 #yorumlar .yorum__yildiz {
@@ -1147,7 +1156,7 @@ html.scene-failed .gate__boot {
     white-space: normal;
   }
   #yorumlar .yorumlar.reviews-track {
-    min-height: 300px;
+    min-height: 0;
   }
 }
 
@@ -1292,10 +1301,14 @@ html.scene-failed .gate__boot {
     color: rgba(243, 241, 235, 0.45);
   }
   html.menu-open .nav__burger {
-    color: #12150E !important;
+    color: #fbf8f1 !important;
   }
   html.menu-open .nav__burger span {
-    background: #12150E !important;
+    background: #fbf8f1 !important;
+  }
+  html.menu-open .nav__cta,
+  html.menu-open .nav__phone {
+    display: none !important;
   }
   .mobile-menu__links {
     display: flex;
@@ -1337,24 +1350,64 @@ html.scene-failed .gate__boot {
 @media (min-width: 861px) {
   .mobile-menu {
     display: none !important;
+    pointer-events: none !important;
+  }
+  html.menu-open,
+  html.menu-open body {
+    overflow: visible !important;
+    overflow-x: clip !important;
   }
 }
 
-/* Kapı açılınca hoş geldiniz */
-.hero-welcome {
+/* Kapı açılınca hoş geldiniz — kart + kaydır ipucu tek ortalı blok */
+.hero-dock {
   position: absolute;
-  left: 50%;
-  top: 48%;
+  left: 16px;
+  right: 16px;
+  top: calc(var(--nav-h, 72px) + 8px);
+  bottom: max(120px, calc(100px + env(safe-area-inset-bottom, 0px)));
   z-index: 8;
-  width: min(92vw, 520px);
-  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  pointer-events: none;
+  text-align: center;
+  z-index: 8;
+}
+.hero-welcome {
+  position: relative;
+  left: auto;
+  top: auto;
+  z-index: 8;
+  width: min(100%, 440px);
+  padding: 0;
   text-align: center;
   color: #FFFEFA;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -50%);
+  transform: none;
   pointer-events: none;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+.hero-welcome__card {
+  padding: 22px 24px 18px;
+  border-radius: 2px;
+  background: var(--welcome-card-bg, rgba(10, 12, 9, 0.58));
+  border: 1px solid var(--welcome-card-border, rgba(232, 184, 75, 0.28));
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
+}
+.hero-welcome__card.is-bare {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 .hero-welcome.is-off,
 .hero-welcome[hidden] {
@@ -1367,34 +1420,56 @@ html.scene-failed .gate__boot {
   font-family: var(--f-body);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(232, 184, 75, 0.95);
+  color: #e8b84b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .hero-welcome__title {
   margin: 0;
   font-family: var(--f-head);
-  font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+  font-size: clamp(1.7rem, 4.4vw, 2.6rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.12;
   letter-spacing: -0.02em;
   color: #FFFEFA;
 }
 .hero-welcome__lead {
-  margin: 14px auto 0;
-  max-width: 28ch;
-  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  margin: 12px 0 0;
+  max-width: none;
+  font-size: 0.95rem;
   font-weight: 500;
-  line-height: 1.55;
+  line-height: 1.5;
   color: rgba(255, 254, 250, 0.88);
 }
 @media (max-width: 860px) {
+  .hero-dock {
+    left: 18px;
+    right: 18px;
+    top: calc(var(--nav-h, 72px) + 10px);
+    bottom: max(118px, calc(96px + env(safe-area-inset-bottom, 0px)));
+    gap: 16px;
+    justify-content: center;
+  }
   .hero-welcome {
-    top: 46%;
-    width: min(90vw, 400px);
+    width: min(100%, 360px);
+  }
+  .hero-welcome__card {
+    padding: 18px 18px 16px;
   }
   .hero-welcome__title {
-    font-size: clamp(1.85rem, 8vw, 2.6rem);
+    font-size: 1.45rem;
+    line-height: 1.18;
+  }
+  .hero-welcome__lead {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
@@ -1533,8 +1608,9 @@ body {
     flex-direction: column !important;
   }
   .wrap {
-    width: calc(100% - 32px) !important;
+    width: min(1240px, calc(100% - 32px)) !important;
     max-width: 100% !important;
+    margin-inline: auto !important;
     box-sizing: border-box !important;
   }
   img,
@@ -1666,30 +1742,12 @@ body {
 
 /* Skip link — klavye erişilebilir, görselde gizli */
 a.skip {
-  position: absolute !important;
-  left: -9999px !important;
-  top: auto !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  clip: rect(1px, 1px, 1px, 1px) !important;
+  display: none !important;
 }
+a.skip,
 a.skip:focus,
 a.skip:focus-visible {
-  position: fixed !important;
-  left: 12px !important;
-  top: 12px !important;
-  z-index: 10000 !important;
-  width: auto !important;
-  height: auto !important;
-  overflow: visible !important;
-  clip: auto !important;
-  padding: 10px 14px !important;
-  background: #fff !important;
-  color: #0d0f0a !important;
-  border: 2px solid var(--brass, #b8842c) !important;
-  border-radius: 8px !important;
-  text-decoration: none !important;
+  display: none !important;
 }
 .cart-float__count {
   min-width: 1.4em;
@@ -1877,7 +1935,7 @@ html.cart-open body {
   width: 100%;
 }
 @media (max-width: 980px) {
-  .nav__actions .nav__cta {
+  .nav__actions .nav__phone {
     display: none;
   }
 }
@@ -2057,7 +2115,7 @@ html.cart-open body {
 }
 
 @media (max-width: 980px) {
-  .nav__actions .nav__cta {
+  .nav__actions .nav__phone {
     display: none;
   }
 }

@@ -13,6 +13,7 @@ import {
   parseBody,
   assertSameOrigin,
 } from "@/lib/api/helpers";
+import { revalidatePublicSite } from "@/lib/api/gone";
 import { appendActivity } from "@/lib/db/activity";
 
 export const runtime = "nodejs";
@@ -72,6 +73,7 @@ export async function POST(request: Request) {
       if (!body.id) return errorResponse("Yedek id gerekli.", 400);
       createAutoBackup(session.email);
       const content = await restoreBackup(body.id);
+      revalidatePublicSite();
       await appendActivity({
         userId: session.id,
         email: session.email,

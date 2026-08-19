@@ -197,6 +197,49 @@ export default function SiteSettingsPanel() {
                   }
                 />
               </div>
+              <p className="text-xs text-[#6B7A94]">Google restoran şeması (ana sayfa JSON-LD)</p>
+              <div className="grid gap-3 md:grid-cols-2">
+                <Input
+                  label="Mutfaklar (virgülle)"
+                  value={seo.servesCuisine || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      seo: { ...seo, servesCuisine: e.target.value },
+                    })
+                  }
+                />
+                <Input
+                  label="Fiyat aralığı"
+                  value={seo.priceRange || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      seo: { ...seo, priceRange: e.target.value },
+                    })
+                  }
+                />
+                <Input
+                  label="İlçe"
+                  value={seo.addressLocality || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      seo: { ...seo, addressLocality: e.target.value },
+                    })
+                  }
+                />
+                <Input
+                  label="İl"
+                  value={seo.addressRegion || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      seo: { ...seo, addressRegion: e.target.value },
+                    })
+                  }
+                />
+              </div>
             </section>
 
             <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
@@ -311,6 +354,26 @@ export default function SiteSettingsPanel() {
                     })
                   }
                 />
+                <Input
+                  label="İletişim kolon başlığı"
+                  value={footer.iletisimBaslik || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      footer: { ...footer, iletisimBaslik: e.target.value },
+                    })
+                  }
+                />
+                <Input
+                  label="WhatsApp etiketi"
+                  value={footer.whatsappEtiket || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      footer: { ...footer, whatsappEtiket: e.target.value },
+                    })
+                  }
+                />
               </div>
               <div>
                 <label className="mb-2 block text-sm text-[#8A9BB0]">Slogan</label>
@@ -326,6 +389,60 @@ export default function SiteSettingsPanel() {
                   className="w-full rounded-xl border border-white/[0.06] bg-[#0D1117] px-4 py-3 text-sm text-[#EEE9E0]"
                 />
               </div>
+              <p className="text-xs text-[#6B7A94]">Alt çubuk linkleri (Menü / Blog / Rezervasyon)</p>
+              {(footer.barLinks || []).map((link, i) => (
+                <div key={i} className="grid gap-2 md:grid-cols-[1fr_1fr_auto]">
+                  <Input
+                    label="Etiket"
+                    value={link.label}
+                    onChange={(e) => {
+                      const barLinks = [...(footer.barLinks || [])];
+                      barLinks[i] = { ...link, label: e.target.value };
+                      setContent({ ...content, footer: { ...footer, barLinks } });
+                    }}
+                  />
+                  <Input
+                    label="Bağlantı"
+                    value={link.href}
+                    onChange={(e) => {
+                      const barLinks = [...(footer.barLinks || [])];
+                      barLinks[i] = { ...link, href: e.target.value };
+                      setContent({ ...content, footer: { ...footer, barLinks } });
+                    }}
+                  />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="self-end text-red-400"
+                    onClick={() =>
+                      setContent({
+                        ...content,
+                        footer: {
+                          ...footer,
+                          barLinks: (footer.barLinks || []).filter((_, j) => j !== i),
+                        },
+                      })
+                    }
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  setContent({
+                    ...content,
+                    footer: {
+                      ...footer,
+                      barLinks: [...(footer.barLinks || []), { label: "", href: "/" }],
+                    },
+                  })
+                }
+              >
+                <Plus className="h-4 w-4" /> Alt link ekle
+              </Button>
 
               {footer.kolonlar.map((col, ci) => (
                 <div

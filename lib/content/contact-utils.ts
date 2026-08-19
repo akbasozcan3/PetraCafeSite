@@ -29,6 +29,27 @@ export function formatDisplayPhone(raw: string): string {
   return String(raw || "").trim();
 }
 
+/** Form input: only digits, TR 05xx… (max 11). Strips +90. */
+export function sanitizePhoneDigits(raw: string, max = 11): string {
+  let d = String(raw || "").replace(/\D/g, "");
+  if (d.startsWith("90") && d.length >= 12) d = "0" + d.slice(2);
+  return d.slice(0, max);
+}
+
+export function formatPhoneInput(raw: string): string {
+  const d = sanitizePhoneDigits(raw);
+  if (d.length <= 4) return d;
+  if (d.length <= 7) return `${d.slice(0, 4)} ${d.slice(4)}`;
+  if (d.length <= 9) return `${d.slice(0, 4)} ${d.slice(4, 7)} ${d.slice(7)}`;
+  return `${d.slice(0, 4)} ${d.slice(4, 7)} ${d.slice(7, 9)} ${d.slice(9)}`;
+}
+
+export function isPhoneTypingKey(key: string, withModifier: boolean): boolean {
+  if (withModifier) return true;
+  if (key.length !== 1) return true;
+  return /^\d$/.test(key);
+}
+
 export function buildWhatsappUrl(phoneOrUrl: string, presetText?: string): string {
   const digits = phoneToWaDigits(phoneOrUrl);
   if (!digits) return "";
@@ -83,18 +104,5 @@ export function cascadeIletisimFields(iletisim: IletisimContent): IletisimConten
 
 export function applyIletisimCascade(content: SiteContent): SiteContent {
   if (!content.iletisim) return content;
-  const iletisim = cascadeIletisimFields(content.iletisim);
-  const digits = phoneToWaDigits(iletisim.telefonHam || iletisim.telefon || "");
-  let navbar = content.navbar;
-  if (digits && navbar) {
-    const telHref = `tel:${iletisim.telefonHam || phoneToTelHref(digits)}`;
-    if (!navbar.ctaHref || /^tel:/i.test(navbar.ctaHref) || /wa\.me/i.test(navbar.ctaHref)) {
-      navbar = {
-        ...navbar,
-        ctaHref: telHref,
-        ctaLabel: iletisim.telefon || navbar.ctaLabel,
-      };
-    }
-  }
-  return { ...content, iletisim, navbar };
+  return { ...content, iletisim: cascadeIletisimFields(content.iletisim) };
 }

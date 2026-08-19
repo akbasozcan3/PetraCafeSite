@@ -2,21 +2,43 @@
 
 import React, { useRef, useState, useCallback } from "react";
 import { Upload as UploadIcon, Loader2, CheckCircle, AlertCircle } from "lucide-react";
-import { resizeImageFile, cropImageFile } from "./imageUtils";
+import { resizeImageFile, cropImageFile, looksLikeIcoFile, rasterizeFaviconFile } from "./imageUtils";
 import CropModal, { type CropRect } from "./CropModal";
 
 type UploadResult = { url: string; key?: string };
+
+async function fileLooksLikeSvg(file: File): Promise<boolean> {
+  if (file.type === "image/svg+xml" || /\.svg$/i.test(file.name || "")) return true;
+  try {
+    const head = (await file.slice(0, 2048).text()).replace(/^\uFEFF/, "");
+    return /<svg[\s>]/i.test(head);
+  } catch {
+    return false;
+  }
+}
+
+async function fileLooksLikeIco(file: File): Promise<boolean> {
+  if (looksLikeIcoFile(file)) return true;
+  try {
+    const buf = new Uint8Array(await file.slice(0, 4).arrayBuffer());
+    return buf[0] === 0 && buf[1] === 0 && buf[2] === 1 && buf[3] === 0;
+  } catch {
+    return false;
+  }
+}
 
 async function uploadOne(
   file: Blob | File,
   url: string,
   fieldName = "file",
-  key = ""
+  key = "",
+  asSvg = false
 ): Promise<UploadResult> {
   return await new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.withCredentials = true;
+    xhr.timeout = 60000;
     xhr.onload = () => {
       try {
         const data = JSON.parse(xhr.responseText || "{}");
@@ -28,19 +50,45 @@ async function uploadOne(
       }
     };
     xhr.onerror = () => reject(new Error("Ağ hatası — yükleme başarısız"));
+    xhr.ontimeout = () => reject(new Error("Yükleme zaman aşımına uğradı"));
     const fd = new FormData();
     const rawName = ((file as File).name || "").trim();
     const svg =
-      file.type === "image/svg+xml" || /\.svg$/i.test(rawName);
+      asSvg ||
+      file.type === "image/svg+xml" ||
+      /\.svg$/i.test(rawName);
+    const ico =
+      !svg &&
+      (/\.ico$/i.test(rawName) ||
+        file.type === "image/x-icon" ||
+        file.type === "image/vnd.microsoft.icon");
+    const mime = svg
+      ? "image/svg+xml"
+      : ico
+        ? "image/x-icon"
+        : file.type && file.type.startsWith("image/")
+          ? file.type
+          : "image/webp";
+    const ext =
+      mime === "image/png"
+        ? "png"
+        : mime === "image/jpeg"
+          ? "jpg"
+          : mime === "image/gif"
+            ? "gif"
+            : mime === "image/avif"
+              ? "avif"
+              : mime === "image/svg+xml"
+                ? "svg"
+                : mime === "image/x-icon"
+                  ? "ico"
+                  : "webp";
     const filename = svg
-      ? rawName
-        ? rawName.replace(/\.[^.]+$/, "") + ".svg"
-        : "logo.svg"
-      : rawName || "upload.webp";
-    const payload =
-      svg && file.type !== "image/svg+xml"
-        ? new File([file], filename, { type: "image/svg+xml" })
-        : file;
+      ? (rawName ? rawName.replace(/\.[^.]+$/, "") : "logo") + ".svg"
+      : ico
+        ? (rawName ? rawName.replace(/\.[^.]+$/, "") : "favicon") + ".ico"
+        : `upload.${ext}`;
+    const payload = new File([file], filename, { type: mime });
     fd.append(fieldName, payload, filename);
     if (key) fd.append("key", key);
     xhr.send(fd);
@@ -51,7 +99,7 @@ type UploadStatus = "idle" | "uploading" | "success" | "error";
 
 export default function Upload({
   uploadUrl = "/api/v1/admin/upload",
-  accept = "image/*",
+  accept = "image/*,image/svg+xml,.svg",
   multiple = false,
   maxSize = 8 * 1024 * 1024,
   maxWidth = 2000,
@@ -96,17 +144,18 @@ export default function Upload({
             `Dosya boyutu en fazla ${Math.round(maxSize / 1024 / 1024)}MB olabilir`
           );
         }
-        const mime = file.type || "image/jpeg";
-        if (!mime.startsWith("image/") && mime !== "image/svg+xml") {
-          throw new Error("Yalnızca görsel dosyaları yüklenebilir");
+        const isSvg = await fileLooksLikeSvg(file);
+        const isIco = await fileLooksLikeIco(file);
+        const mime = file.type || "";
+        if (!isSvg && !isIco && !mime.startsWith("image/")) {
+          throw new Error("Yalnızca görsel dosyaları yüklenebilir (SVG, ICO, PNG, JPG, WebP)");
         }
-
-        const isSvg =
-          mime === "image/svg+xml" || /\.svg$/i.test(file.name || "");
 
         let blob: Blob;
         if (isSvg) {
           blob = file;
+        } else if (isIco) {
+          blob = await rasterizeFaviconFile(file);
         } else if (crop) {
           blob = await cropImageFile(file, crop, {
             maxWidth,
@@ -118,7 +167,7 @@ export default function Upload({
           blob = await resizeImageFile(file, maxWidth, maxHeight, quality, webp);
         }
 
-        const res = await uploadOne(blob, uploadUrl, "file", uploadKey);
+        const res = await uploadOne(blob, uploadUrl, "file", uploadKey, isSvg);
         setStatus("success");
         setStatusMsg("Görsel yüklendi");
         if (onProgress) onProgress(100, 0);
@@ -156,9 +205,7 @@ export default function Upload({
 
       if (enableCrop && !multiple && list[0]) {
         const first = list[0];
-        const isSvg =
-          first.type === "image/svg+xml" || /\.svg$/i.test(first.name || "");
-        if (!isSvg) {
+        if (!(await fileLooksLikeSvg(first)) && !(await fileLooksLikeIco(first))) {
           setPendingFile(first);
           return;
         }
@@ -175,15 +222,18 @@ export default function Upload({
               `Dosya boyutu en fazla ${Math.round(maxSize / 1024 / 1024)}MB olabilir`
             );
           }
+          const isSvg = await fileLooksLikeSvg(f);
+          const isIco = await fileLooksLikeIco(f);
           const mime = f.type || "";
-          if (!mime.startsWith("image/") && !/\.svg$/i.test(f.name || "")) {
-            throw new Error("Yalnızca görsel dosyaları yüklenebilir");
+          if (!isSvg && !isIco && !mime.startsWith("image/")) {
+            throw new Error("Yalnızca görsel dosyaları yüklenebilir (SVG, ICO, PNG, JPG, WebP)");
           }
-          const isSvg = mime === "image/svg+xml" || /\.svg$/i.test(f.name || "");
           const blob = isSvg
             ? f
-            : await resizeImageFile(f, maxWidth, maxHeight, quality, webp);
-          const res = await uploadOne(blob, uploadUrl, "file", uploadKey);
+            : isIco
+              ? await rasterizeFaviconFile(f)
+              : await resizeImageFile(f, maxWidth, maxHeight, quality, webp);
+          const res = await uploadOne(blob, uploadUrl, "file", uploadKey, isSvg);
           results.push(res);
           if (onProgress) onProgress(100, i);
         }
@@ -219,10 +269,17 @@ export default function Upload({
     ]
   );
 
-  const acceptsSvg = /svg/i.test(accept);
-  const formatHint = acceptsSvg
-    ? "SVG · PNG · JPG · WebP"
-    : "PNG · JPG · WebP";
+  const fileAccept = (() => {
+    let next = /svg/i.test(accept) ? accept : `${accept},image/svg+xml,.svg`;
+    if (uploadKey === "favicon" || /ico/i.test(accept)) {
+      if (!/ico/i.test(next)) next += ",.ico,image/x-icon,image/vnd.microsoft.icon";
+    }
+    return next;
+  })();
+  const formatHint =
+    uploadKey === "favicon" || /ico/i.test(accept)
+      ? "ICO · SVG · PNG · WebP"
+      : "SVG · PNG · JPG · WebP";
 
   const borderColor =
     drag
@@ -254,7 +311,7 @@ export default function Upload({
         <input
           ref={inputRef}
           type="file"
-          accept={accept}
+          accept={fileAccept}
           multiple={multiple}
           className="hidden"
           onChange={(e) => handleFiles(e.target.files)}
@@ -284,7 +341,7 @@ export default function Upload({
                   </div>
                   <div className="text-[10px] text-[#6B7A94]">
                     {formatHint} · maks {Math.round(maxSize / 1024 / 1024)}MB
-                    {acceptsSvg ? " · SVG kırpılmaz" : enableCrop && !multiple ? " · kırpma açık" : ""}
+                    {/svg|ico/i.test(fileAccept) ? " · SVG/ICO kırpılmaz" : enableCrop && !multiple ? " · kırpma açık" : ""}
                   </div>
                 </>
               )}

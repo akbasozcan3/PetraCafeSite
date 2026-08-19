@@ -311,7 +311,7 @@ a.btn:not(.btn--light):hover {
 }
 
 @media (max-width: 980px) {
-  .nav__actions .nav__cta {
+  .nav__actions .nav__phone {
     display: none;
   }
 }

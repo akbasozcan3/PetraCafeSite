@@ -10,7 +10,7 @@ export function resolveBrandName(content: SiteContent): string {
     content.seo?.siteName ||
     content.footer?.markaAdi ||
     content.navbar?.logoText ||
-    "Fırıncı"
+    "TAŞDELEN"
   );
 }
 

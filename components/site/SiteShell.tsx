@@ -1,33 +1,44 @@
 import type { ReactNode } from "react";
 import SiteNav from "@/components/site/SiteNav";
 import SiteFooter from "@/components/site/SiteFooter";
-import { getContentAsync } from "@/lib/db/content";
+import { getPublicContent } from "@/lib/db/content";
+import { themeCssCustomProperties, themeToCssVars } from "@/lib/content/theme";
+import ThemeDocument from "@/components/site/ThemeDocument";
+import { displayHours } from "@/lib/content/hours";
+import { phoneToTelHref } from "@/lib/content/contact-utils";
+import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
+import HomeMotion from "@/components/home/HomeMotion";
 import "@/styles/storefront.css";
 
-/**
- * Ürün / blog / iletişim sayfalarında ortak kabuk (katalog + WhatsApp sipariş).
- */
+/** Menü, blog ve diğer iç sayfalar — ana sayfa ile aynı kabuk (Hero hariç). */
 export default async function SiteShell({
   children,
 }: {
   children: ReactNode;
 }) {
-  const content = await getContentAsync();
-  const logo = content.images?.logo || "/assets/img/logo.webp";
+  const content = await getPublicContent();
+  const logo = liveMedia(content.images?.logo, SITE_PHOTOS.mark) || SITE_PHOTOS.mark;
 
   return (
-    <div className="site-shop">
+    <div className="site-home site-shop" style={themeToCssVars(content.theme)}>
+      <ThemeDocument vars={themeCssCustomProperties(content.theme)} />
       <link
         rel="stylesheet"
         href="/css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       />
-      <link rel="stylesheet" href="/assets/css/style.css?v=20260810x9" />
+      <link rel="stylesheet" href="/assets/css/style.css?v=20260819nav6" />
+      <link rel="stylesheet" href="/assets/css/home-next.css?v=54" />
 
-      <a className="skip" href="#icerik">
-        İçeriğe geç
-      </a>
-
-      <SiteNav navbar={content.navbar} logoUrl={logo} homeHref="/" />
+      <SiteNav
+        navbar={content.navbar}
+        logoUrl={logo}
+        homeHref="/"
+        hours={displayHours(content.iletisim)}
+        phone={content.iletisim?.telefon}
+        phoneHref={phoneToTelHref(
+          content.iletisim?.telefonHam || content.iletisim?.telefon || ""
+        )}
+      />
 
       <div className="site-shop__body">
         <div className="oc-shell wrap">
@@ -38,6 +49,7 @@ export default async function SiteShell({
       </div>
 
       <SiteFooter content={content} />
+      <HomeMotion />
     </div>
   );
 }

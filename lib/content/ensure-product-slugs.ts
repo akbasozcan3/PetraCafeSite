@@ -1,8 +1,14 @@
 import type { SiteContent } from "@/lib/content/types";
-import { categorySlugFromHref, productHref, slugifyTr } from "@/lib/content/slugify";
+import {
+  categoryHref,
+  categorySlugFromHref,
+  productHref,
+  slugifyTr,
+} from "@/lib/content/slugify";
 
 /** Kategori klasör adları — ürün slug’ı bunlarla çakışmamalı */
 export const RESERVED_URUNLER_SLUGS = new Set([
+  "menu",
   "urunler",
   "ekmek-cesitleri",
   "eksi-mayali-ekmekler",
@@ -18,17 +24,24 @@ export const RESERVED_URUNLER_SLUGS = new Set([
   "tartolet-rulo-lezzet-toplari",
   "donut",
   "icecekler",
+  "kahvalti",
+  "baslangiclar",
+  "ana-yemekler",
+  "tatlilar",
+  "italyan-kokteyller",
+  "kahve",
+  "nargile",
 ]);
 
-function uniqueSlug(base: string, used: Set<string>): string {
-  let slug = base || "urun";
-  if (!used.has(slug)) {
-    used.add(slug);
-    return slug;
+export function uniqueSlug(base: string, used: Set<string>): string {
+  const root = (base || "urun").replace(/^-+|-+$/g, "") || "urun";
+  if (!used.has(root)) {
+    used.add(root);
+    return root;
   }
   let i = 2;
-  while (used.has(`${base}-${i}`)) i += 1;
-  const next = `${base}-${i}`;
+  while (used.has(`${root}-${i}`)) i += 1;
+  const next = `${root}-${i}`;
   used.add(next);
   return next;
 }
@@ -41,45 +54,48 @@ function isUsableProductSlug(slug: string | undefined, used: Set<string>): boole
 }
 
 /**
- * Menüdeki tüm ürünlere benzersiz SEO slug atar.
- * Mevcut geçerli slug korunur; kategori klasörleriyle çakışmaz.
+ * Kategorilere ve ürünlere benzersiz slug verir; boş adlı tabakları atar.
  */
 export function ensureProductSlugs(content: SiteContent): SiteContent {
   if (!content.menu?.gruplar?.length) return content;
 
-  const used = new Set<string>(RESERVED_URUNLER_SLUGS);
+  const catUsed = new Set(["menu", "urunler"]);
 
   for (const g of content.menu.gruplar) {
-    const cat =
-      g.slug ||
+    const preferred =
+      (g.slug && !catUsed.has(g.slug) ? g.slug : "") ||
       categorySlugFromHref(g.link) ||
       categorySlugFromHref(g.tumLink) ||
-      slugifyTr(g.ad);
-    if (cat) {
-      used.add(cat);
-      if (!g.slug) g.slug = cat;
+      slugifyTr(g.ad) ||
+      "kategori";
+    g.slug = uniqueSlug(preferred, catUsed);
+    if (!g.link || g.link === "/menu" || g.link === "/urunler") {
+      g.link = categoryHref(g.slug);
     }
+    if (!g.tumLink || g.tumLink === "/menu" || g.tumLink === "/urunler") {
+      g.tumLink = categoryHref(g.slug);
+    }
+    if (g.aktif === undefined) g.aktif = true;
+    g.urunler = (g.urunler || []).filter((u) => Boolean(u?.ad?.trim()));
   }
+
+  const used = new Set<string>([...RESERVED_URUNLER_SLUGS, ...catUsed]);
 
   for (const g of content.menu.gruplar) {
     for (const u of g.urunler || []) {
-      if (!u?.ad?.trim()) continue;
-
       if (isUsableProductSlug(u.slug, used)) {
         used.add(u.slug!);
       } else {
-        const base = slugifyTr(u.ad) || "urun";
-        u.slug = uniqueSlug(base, used);
+        u.slug = uniqueSlug(slugifyTr(u.ad) || "urun", used);
       }
 
-      const catSlug =
-        g.slug ||
-        categorySlugFromHref(g.link) ||
-        categorySlugFromHref(g.tumLink) ||
-        slugifyTr(g.ad);
-      u.link = productHref(u.slug!, catSlug || undefined);
+      u.link = productHref(u.slug!, g.slug);
       if (u.aktif === undefined) u.aktif = true;
       if (!u.source) u.source = "local";
+      if (!u.id) u.id = `p_${u.slug}`;
+      const now = new Date().toISOString();
+      if (!u.createdAt) u.createdAt = now;
+      u.updatedAt = now;
     }
   }
 

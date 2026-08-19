@@ -13,20 +13,32 @@ import {
 } from "lucide-react";
 import { api } from "@/lib/api/client";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
-import type { MenuGrup, MenuUrun } from "@/lib/content/types";
+import type { MenuContent, MenuGrup, MenuUrun } from "@/lib/content/types";
 import Input from "@/components/admin/ui/Input";
-import Select from "@/components/admin/ui/Select";
 import Button from "@/components/admin/ui/Button";
 import SaveBar from "@/components/admin/ui/SaveBar";
 import AdminPageHeader, {
   AdminAlert,
   AdminLoading,
 } from "@/components/admin/AdminPageHeader";
-import { SITE_PAGE_URLS } from "@/lib/admin/page-urls";
 import Upload from "@/components/admin/ui/Upload";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SectionHint from "@/components/admin/ui/SectionHint";
 import BolumBaslikFields from "@/components/admin/ui/BolumBaslikFields";
+import { slugifyTr, categoryHref } from "@/lib/content/slugify";
+import { uniqueSlug } from "@/lib/content/ensure-product-slugs";
+
+function emptyMenu(content: { bolumlar: { menu: { baslik?: string; lead?: string } } }): MenuContent {
+  return {
+    baslik: content.bolumlar.menu.baslik,
+    giris: content.bolumlar.menu.lead,
+    legend: "★ işaretliler en çok tercih edilenler.",
+    hepsiMetin: "Tüm menüyü inceleyin →",
+    hepsiLink: "/menu",
+    not: "",
+    gruplar: [],
+  };
+}
 
 export default function MenuPanel() {
   const { content, setContent, loading } = useAdminContent();
@@ -36,31 +48,45 @@ export default function MenuPanel() {
     "success"
   );
   const [open, setOpen] = useState<number | null>(0);
+  const [query, setQuery] = useState("");
+  const [newCat, setNewCat] = useState("");
+  const [newDish, setNewDish] = useState({ ad: "", fiyat: "" });
 
   if (loading || !content) return <AdminLoading />;
 
-  const menu = content.menu ?? {
-    baslik: content.bolumlar.menu.baslik,
-    giris: content.bolumlar.menu.lead,
-    legend: "★ işaretliler en çok tercih edilenler.",
-    hepsiMetin: "Tüm ürünleri inceleyin →",
-    hepsiLink: "/urunler",
-    not: "",
-    gruplar: [],
-  };
+  const menu = content.menu ?? emptyMenu(content);
 
   const showMessage = (msg: string, type: "success" | "error" = "success") => {
     setMessage(msg);
     setMessageType(type);
   };
 
-  const updateMenu = (patch: Partial<typeof menu>) =>
-    setContent({ ...content, menu: { ...menu, ...patch } });
+  const updateMenu = (patch: Partial<MenuContent>) =>
+    setContent((prev) => {
+      if (!prev) return prev;
+      const current = prev.menu ?? emptyMenu(prev);
+      return { ...prev, menu: { ...current, ...patch } };
+    });
 
   const updateGroup = (i: number, g: MenuGrup) => {
-    const gruplar = [...menu.gruplar];
-    gruplar[i] = g;
-    updateMenu({ gruplar });
+    setContent((prev) => {
+      if (!prev) return prev;
+      const current = prev.menu ?? emptyMenu(prev);
+      const gruplar = [...current.gruplar];
+      gruplar[i] = g;
+      return { ...prev, menu: { ...current, gruplar } };
+    });
+  };
+
+  const patchGroup = (i: number, fn: (g: MenuGrup) => MenuGrup) => {
+    setContent((prev) => {
+      if (!prev) return prev;
+      const current = prev.menu ?? emptyMenu(prev);
+      const gruplar = [...current.gruplar];
+      if (!gruplar[i]) return prev;
+      gruplar[i] = fn(gruplar[i]);
+      return { ...prev, menu: { ...current, gruplar } };
+    });
   };
 
   const moveGroup = (index: number, direction: "up" | "down") => {
@@ -79,7 +105,7 @@ export default function MenuPanel() {
     if (/^(https?:|tel:|mailto:|whatsapp:|#|\/)/i.test(href) || /wa\.me/i.test(href)) {
       return href;
     }
-    if (/^(urunler|blog)\//i.test(href)) return `/${href}`;
+    if (/^(urunler|menu|blog)\//i.test(href)) return `/${href}`.replace(/^\/urunler/i, "/menu");
     return href;
   };
 
@@ -90,10 +116,13 @@ export default function MenuPanel() {
         const count = g.urunler.filter((u) => u.ad?.trim()).length;
         return {
           ...g,
-          link: absSitePath(g.link),
-          tumLink: absSitePath(g.tumLink),
+          slug: g.slug || slugifyTr(g.ad),
+          link: absSitePath(g.link) || categoryHref(g.slug || slugifyTr(g.ad)),
+          tumLink: absSitePath(g.tumLink) || categoryHref(g.slug || slugifyTr(g.ad)),
           adet: count ? `${count} çeşit` : g.adet,
-          urunler: g.urunler.map((u) => ({
+          urunler: g.urunler
+            .filter((u) => u.ad?.trim())
+            .map((u) => ({
             ...u,
             // WhatsApp numarası İletişim admininden gelir; eski wa.me ürün linklerini temizle
             link:
@@ -122,10 +151,11 @@ export default function MenuPanel() {
             lead: nextMenu.giris || content.bolumlar.menu.lead,
           },
         },
+        sayfalar: content.sayfalar,
       });
       setContent(res.data);
       showMessage(
-        "Menü ve ürünler başarıyla kaydedildi — site anında güncellenir.",
+        `${totalProducts} tabak kaydedildi. Menü ve kategori sayfaları güncellendi.`,
         "success"
       );
     } catch (e) {
@@ -142,22 +172,128 @@ export default function MenuPanel() {
     (n, g) => n + g.urunler.length,
     0
   );
+  const q = query.trim().toLocaleLowerCase("tr-TR");
+  const visibleGroups = menu.gruplar
+    .map((g, gi) => {
+      const all = g.urunler.map((urun, ui) => ({ urun, ui }));
+      if (!q) return { g, gi, urunler: all };
+      const catHit = g.ad.toLocaleLowerCase("tr-TR").includes(q);
+      const urunler = all.filter(({ urun }) =>
+        `${urun.ad} ${urun.aciklama || ""} ${urun.fiyat || ""}`
+          .toLocaleLowerCase("tr-TR")
+          .includes(q)
+      );
+      if (!catHit && !urunler.length) return null;
+      return { g, gi, urunler: catHit && urunler.length === 0 ? all : urunler };
+    })
+    .filter(Boolean) as { g: MenuGrup; gi: number; urunler: { urun: MenuUrun; ui: number }[] }[];
+
+  const addCategory = () => {
+    const ad = newCat.trim();
+    if (!ad) {
+      showMessage("Kategori adı yazın.", "error");
+      return;
+    }
+    const used = new Set(
+      menu.gruplar.map((g) => g.slug || slugifyTr(g.ad)).filter(Boolean)
+    );
+    used.add("menu");
+    used.add("urunler");
+    const slug = uniqueSlug(slugifyTr(ad) || "kategori", used);
+    const href = categoryHref(slug);
+    updateMenu({
+      gruplar: [
+        ...menu.gruplar,
+        {
+          ad,
+          slug,
+          adet: "0 çeşit",
+          link: href,
+          tumLink: href,
+          image: "",
+          banner: "",
+          aciklama: "",
+          govdeHtml: "",
+          aktif: true,
+          urunler: [],
+        },
+      ],
+    });
+    setOpen(menu.gruplar.length);
+    setNewCat("");
+    showMessage(`“${ad}” eklendi. Tabak ekleyip Kaydet’e basın.`, "success");
+  };
+
+  const addDish = (gi: number) => {
+    const ad = newDish.ad.trim();
+    if (!ad) {
+      showMessage("Tabak adı yazın.", "error");
+      return;
+    }
+    const fiyat = newDish.fiyat.trim();
+    setContent((prev) => {
+      if (!prev?.menu) return prev;
+      const current = prev.menu;
+      const gruplar = [...current.gruplar];
+      const grup = gruplar[gi];
+      if (!grup) return prev;
+      gruplar[gi] = {
+        ...grup,
+        urunler: [
+          {
+            ad,
+            fiyat,
+            fav: false,
+            aktif: true,
+            source: "local",
+          },
+          ...grup.urunler,
+        ],
+      };
+      return { ...prev, menu: { ...current, gruplar } };
+    });
+    setNewDish({ ad: "", fiyat: "" });
+    setOpen(gi);
+    showMessage(`“${ad}” eklendi — Kaydet’e basınca sitede görünür.`, "success");
+  };
 
   return (
     <>
       <AdminPageHeader
-        title="Ürünler / Kategori"
-        description={`${menu.gruplar.length} kategori · ${totalProducts} ürün — Ana sayfa menüsü, ürünler grid’i ve kategori sayfaları.`}
+        title="Menü Yönetimi"
+        description={`${menu.gruplar.length} bölüm · ${totalProducts} tabak — ana sayfa menüsü ve kategori sayfaları.`}
       />
-      <SectionHint anchor="menu" label="Ürünler / Kategori" />
+      <SectionHint anchor="menu" label="Menü Yönetimi" />
       <AdminAlert message={message} type={messageType} />
 
-      <div className="mb-4 rounded-xl border border-[#C8703A]/25 bg-[#C8703A]/5 px-4 py-3 text-sm text-[#C8D0DC]">
-        <p className="font-medium text-[#EEE9E0]">Kategori silmek</p>
-        <p className="mt-1 text-xs text-[#8A9BB0]">
-          Her satırdaki kırmızı çöp kutusuna bas → onayla → alttaki{" "}
-          <span className="text-[#EEE9E0]">Kaydet</span>. Silinen kategorinin ürünleri de gider.
+      <div className="mb-4 space-y-3 rounded-2xl border border-[#C8703A]/30 bg-[#C8703A]/8 p-4">
+        <p className="text-sm font-medium text-[#EEE9E0]">Hızlı ekle</p>
+        <p className="text-xs text-[#8A9BB0]">
+          Kategori veya tabak yazın, ekleyin, sonra alttaki Kaydet. Adres (URL) otomatik oluşur.
         </p>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <Input
+            label="Yeni kategori"
+            value={newCat}
+            onChange={(e) => setNewCat(e.target.value)}
+            placeholder="Örn. Serpme Kahvaltı"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                addCategory();
+              }
+            }}
+          />
+          <Button className="sm:mt-7" onClick={addCategory}>
+            <Plus className="h-4 w-4" /> Kategori ekle
+          </Button>
+        </div>
+        <Input
+          label="Ara (kategori veya tabak)"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Kahvaltı, Aperol, nargile…"
+        />
       </div>
 
       <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
@@ -177,7 +313,7 @@ export default function MenuPanel() {
         />
         <h3 className="pt-2 font-semibold text-[#F8F8F8]">Menü ekstra metinler</h3>
         <p className="text-xs text-[#6B7A94]">
-          Ürün satırına tıklayınca WhatsApp, Admin → İletişim’deki telefon numarasına gider. Liste başlığı kategori adından üretilir.
+          Ürün satırına tıklayınca detay sayfası açılır. WhatsApp ve telefon Admin → İletişim’deki numaraya gider.
         </p>
         <Input
           label="Yıldız açıklaması (ana menü + kategori kart notu)"
@@ -191,14 +327,14 @@ export default function MenuPanel() {
             const kartNot = e.target.value;
             const urunKategori = {
               ...(content.sayfalar?.urunKategori || {
-                eyebrow: "Ürünler",
+                eyebrow: "Menü",
                 answerBaslik: "Kısa bilgi",
                 listeBaslikSablon: "{ad} listesi",
                 kartNot: "",
-                ctaBaslik: "Sipariş & bilgi",
+                ctaBaslik: "Rezervasyon & bilgi",
                 ctaWaLabel: "WhatsApp’tan yazın",
                 relatedBaslik: "Diğer kategoriler",
-                relatedHepsi: "Tüm ürün kategorileri",
+                relatedHepsi: "Tüm menü",
               }),
               kartNot,
             };
@@ -217,6 +353,12 @@ export default function MenuPanel() {
           onChange={(e) => updateMenu({ tumMetinSablon: e.target.value })}
         />
         <p className="text-xs text-[#6B7A94]">{"{ad}"} yerine kategori adı yazılır</p>
+        <Input
+          label="Boş kategori metni (ana sayfa)"
+          value={menu.emptyMetin || ""}
+          onChange={(e) => updateMenu({ emptyMetin: e.target.value })}
+          placeholder="Bu bölümde yayında tabak yok."
+        />
         <textarea
           value={menu.not || ""}
           onChange={(e) => updateMenu({ not: e.target.value })}
@@ -227,7 +369,7 @@ export default function MenuPanel() {
       </section>
 
       <div className="space-y-4">
-        {menu.gruplar.map((grup, gi) => (
+        {visibleGroups.map(({ g: grup, gi, urunler }) => (
           <div
             key={gi}
             className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 transition"
@@ -324,10 +466,30 @@ export default function MenuPanel() {
                     <Input
                       label="Kategori Adı"
                       value={grup.ad}
-                      onChange={(e) =>
-                        updateGroup(gi, { ...grup, ad: e.target.value })
-                      }
+                      onChange={(e) => {
+                        const ad = e.target.value;
+                        const auto = slugifyTr(ad);
+                        const locked =
+                          Boolean(grup.slug) && grup.slug !== slugifyTr(grup.ad);
+                        updateGroup(gi, {
+                          ...grup,
+                          ad,
+                          slug: locked ? grup.slug : auto,
+                          link: locked ? grup.link : categoryHref(auto),
+                          tumLink: locked ? grup.tumLink : categoryHref(auto),
+                        });
+                      }}
                     />
+                    <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-white/[0.06] bg-[#0D1117] px-4 py-3 text-sm text-[#EEE9E0]">
+                      <input
+                        type="checkbox"
+                        checked={grup.aktif !== false}
+                        onChange={(e) =>
+                          updateGroup(gi, { ...grup, aktif: e.target.checked })
+                        }
+                      />
+                      Sitede yayınla
+                    </label>
                     <Input
                       label="Adet Etiketi (ör: 12 çeşit)"
                       value={grup.adet || ""}
@@ -336,22 +498,26 @@ export default function MenuPanel() {
                       }
                       placeholder="12 çeşit"
                     />
-                    <Select
-                      label="Kategori sayfa adresi"
-                      value={grup.link || ""}
-                      options={SITE_PAGE_URLS}
-                      onChange={(e) =>
-                        updateGroup(gi, { ...grup, link: e.target.value })
-                      }
+                    <Input
+                      label="Sayfa adresi (otomatik)"
+                      value={grup.slug ? categoryHref(grup.slug) : grup.link || ""}
+                      onChange={(e) => {
+                        const raw = e.target.value.trim();
+                        const slug =
+                          slugifyTr(raw.replace(/^\/menu\/?/i, "")) ||
+                          slugifyTr(grup.ad);
+                        updateGroup(gi, {
+                          ...grup,
+                          slug,
+                          link: categoryHref(slug),
+                          tumLink: categoryHref(slug),
+                        });
+                      }}
+                      placeholder="/menu/kahvalti"
                     />
-                    <Select
-                      label="Kategori detay adresi"
-                      value={grup.tumLink || ""}
-                      options={SITE_PAGE_URLS}
-                      onChange={(e) =>
-                        updateGroup(gi, { ...grup, tumLink: e.target.value })
-                      }
-                    />
+                    <p className="text-xs text-[#6B7A94] md:col-span-2">
+                      Adı yazmanız yeterli. Adres kayıttan sonra kesinleşir.
+                    </p>
                     <div className="md:col-span-2">
                       <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">
                         Kategori Açıklaması (kısa bilgi)
@@ -519,11 +685,8 @@ export default function MenuPanel() {
                         label="Kapak Görseli Yükle"
                         onComplete={(files) => {
                           if (files[0]) {
-                            updateGroup(gi, {
-                              ...grup,
-                              image: files[0].url,
-                            });
-                            showMessage(`${grup.ad} kapak görseli güncellendi.`, "success");
+                            patchGroup(gi, (g) => ({ ...g, image: files[0].url }));
+                            showMessage("Kapak görseli yüklendi. Kaydetmeyi unutmayın.", "success");
                           }
                         }}
                         onError={(err) => showMessage(err.message, "error")}
@@ -572,11 +735,8 @@ export default function MenuPanel() {
                         label="Banner Görseli Yükle"
                         onComplete={(files) => {
                           if (files[0]) {
-                            updateGroup(gi, {
-                              ...grup,
-                              banner: files[0].url,
-                            });
-                            showMessage(`${grup.ad} banner görseli güncellendi.`, "success");
+                            patchGroup(gi, (g) => ({ ...g, banner: files[0].url }));
+                            showMessage("Banner görseli yüklendi. Kaydetmeyi unutmayın.", "success");
                           }
                         }}
                         onError={(err) => showMessage(err.message, "error")}
@@ -588,26 +748,53 @@ export default function MenuPanel() {
 
                 {/* Ürünler */}
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-semibold uppercase tracking-wider text-[#8A9BB0]">
-                      Ürünler ({grup.urunler.length})
-                    </h4>
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-[#8A9BB0]">
+                    Tabaklar ({grup.urunler.length})
+                  </h4>
+                  <div className="grid gap-2 rounded-xl border border-white/[0.06] bg-[#0D1117] p-3 sm:grid-cols-[1fr_8rem_auto]">
+                    <Input
+                      label="Tabak adı"
+                      value={open === gi ? newDish.ad : ""}
+                      onChange={(e) => setNewDish((s) => ({ ...s, ad: e.target.value }))}
+                      placeholder="Örn. Serpme Kahvaltı"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          addDish(gi);
+                        }
+                      }}
+                    />
+                    <Input
+                      label="Fiyat"
+                      value={open === gi ? newDish.fiyat : ""}
+                      onChange={(e) => setNewDish((s) => ({ ...s, fiyat: e.target.value }))}
+                      placeholder="850"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          addDish(gi);
+                        }
+                      }}
+                    />
+                    <Button className="sm:mt-7" onClick={() => addDish(gi)}>
+                      <Plus className="h-4 w-4" /> Tabak ekle
+                    </Button>
                   </div>
-                  {grup.urunler.map((urun, ui) => (
+                  {urunler.map(({ urun, ui }) => (
                     <ProductRow
-                      key={ui}
+                      key={urun.id || urun.slug || `${gi}-${ui}`}
                       urun={urun}
                       categorySlug={
                         grup.slug ||
                         String(grup.link || "")
-                          .replace(/^\/?urunler\//, "")
+                          .replace(/^\/?(urunler|menu)\//, "")
                           .split("/")[0] ||
                         undefined
                       }
                       onChange={(u) => {
-                        const urunler = [...grup.urunler];
-                        urunler[ui] = u;
-                        updateGroup(gi, { ...grup, urunler });
+                        const next = [...grup.urunler];
+                        next[ui] = u;
+                        updateGroup(gi, { ...grup, urunler: next });
                       }}
                       onDelete={() =>
                         updateGroup(gi, {
@@ -617,48 +804,21 @@ export default function MenuPanel() {
                       }
                       onMoveUp={() => {
                         if (ui === 0) return;
-                        const urunler = [...grup.urunler];
-                        [urunler[ui - 1], urunler[ui]] = [
-                          urunler[ui],
-                          urunler[ui - 1],
-                        ];
-                        updateGroup(gi, { ...grup, urunler });
+                        const next = [...grup.urunler];
+                        [next[ui - 1], next[ui]] = [next[ui], next[ui - 1]];
+                        updateGroup(gi, { ...grup, urunler: next });
                       }}
                       onMoveDown={() => {
                         if (ui === grup.urunler.length - 1) return;
-                        const urunler = [...grup.urunler];
-                        [urunler[ui + 1], urunler[ui]] = [
-                          urunler[ui],
-                          urunler[ui + 1],
-                        ];
-                        updateGroup(gi, { ...grup, urunler });
+                        const next = [...grup.urunler];
+                        [next[ui + 1], next[ui]] = [next[ui], next[ui + 1]];
+                        updateGroup(gi, { ...grup, urunler: next });
                       }}
                       isFirst={ui === 0}
                       isLast={ui === grup.urunler.length - 1}
                       onError={(msg) => showMessage(msg, "error")}
                     />
                   ))}
-                  <div className="pt-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        updateGroup(gi, {
-                          ...grup,
-                          urunler: [
-                            ...grup.urunler,
-                            {
-                              ad: "Yeni Ürün",
-                              fav: false,
-                              link: grup.link || "/urunler",
-                            },
-                          ],
-                        })
-                      }
-                    >
-                      <Plus className="h-4 w-4" /> Yeni Ürün Ekle
-                    </Button>
-                  </div>
                 </div>
 
                 {/* Kategori Sil — belirgin alan */}
@@ -705,12 +865,13 @@ export default function MenuPanel() {
                 {
                   ad: "Yeni Kategori",
                   adet: "0 çeşit",
-                  link: "/urunler",
-                  tumLink: "/urunler",
+                  link: "/menu",
+                  tumLink: "/menu",
                   image: "",
                   banner: "",
                   aciklama: "",
                   govdeHtml: "",
+                  aktif: true,
                   urunler: [],
                 },
               ],
@@ -749,11 +910,12 @@ function ProductRow({
   isLast: boolean;
   onError?: (msg: string) => void;
 }) {
+  const [more, setMore] = useState(false);
   const detailHref =
     urun.slug && categorySlug
-      ? `/urunler/${categorySlug}/${urun.slug}`
+      ? `/menu/${categorySlug}/${urun.slug}`
       : urun.slug
-        ? `/urunler/${urun.slug}`
+        ? `/menu/${urun.slug}`
         : "";
   const gallery = [...(urun.images || [])].sort(
     (a, b) => (a.order ?? 0) - (b.order ?? 0)
@@ -810,7 +972,7 @@ function ProductRow({
 
         <Upload
           uploadKey=""
-          accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+          accept="image/*,image/svg+xml,.svg,image/jpeg,image/png,image/webp,image/gif,image/avif"
           label="Ana görsel yükle / değiştir"
           onComplete={(files) => {
             if (files[0]) {
@@ -842,7 +1004,7 @@ function ProductRow({
         <div className="mt-2">
           <Upload
             uploadKey=""
-            accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+            accept="image/*,image/svg+xml,.svg,image/jpeg,image/png,image/webp,image/gif,image/avif"
             label="Galeriye ekle"
             multiple
             onComplete={(files) => {
@@ -937,7 +1099,7 @@ function ProductRow({
 
       <div className="space-y-2">
         <Input
-          label="Ürün Adı"
+          label="Tabak adı"
           value={urun.ad}
           onChange={(e) =>
             onChange({
@@ -945,10 +1107,12 @@ function ProductRow({
               ad: e.target.value,
             })
           }
-          placeholder="Ör: Papatya Ekmeği"
+          placeholder="Örn. Serpme Kahvaltı"
         />
-        <Input
-          label="Ürün slug (SEO)"
+        {more ? (
+          <>
+          <Input
+            label="Ürün slug (SEO)"
           value={urun.slug || ""}
           onChange={(e) => {
             const slug = e.target.value
@@ -966,8 +1130,8 @@ function ProductRow({
               slug,
               link: slug
                 ? categorySlug
-                  ? `/urunler/${categorySlug}/${slug}`
-                  : `/urunler/${slug}`
+                  ? `/menu/${categorySlug}/${slug}`
+                  : `/menu/${slug}`
                 : urun.link,
             });
           }}
@@ -1000,6 +1164,8 @@ function ProductRow({
               : ""}
           </p>
         ) : null}
+          </>
+        ) : null}
       </div>
 
       <div className="space-y-2">
@@ -1023,7 +1189,7 @@ function ProductRow({
               fiyat: e.target.value,
             })
           }
-          placeholder="Ör: 45 TL"
+          placeholder="Ör: 420"
         />
         <Input
           label="Açıklama"
@@ -1034,8 +1200,25 @@ function ProductRow({
               aciklama: e.target.value,
             })
           }
-          placeholder="Ürün açıklaması"
+          placeholder="Tabak açıklaması"
         />
+        <label className="flex items-center gap-2 text-xs text-[#8A9BB0]">
+          <input
+            type="checkbox"
+            checked={urun.aktif !== false}
+            onChange={(e) => onChange({ ...urun, aktif: e.target.checked })}
+          />
+          Sitede yayınla
+        </label>
+        <button
+          type="button"
+          className="text-xs font-medium text-[#C8703A]"
+          onClick={() => setMore((v) => !v)}
+        >
+          {more ? "Azalt" : "Alerjen, SEO, varyant…"}
+        </button>
+        {more ? (
+          <>
         <Input
           label="Gramaj / varyantlar (virgülle)"
           value={(urun.varyantlar || []).join(", ")}
@@ -1070,14 +1253,8 @@ function ProductRow({
           />
           Özel sipariş (WhatsApp / telefon)
         </label>
-        <label className="flex items-center gap-2 text-xs text-[#8A9BB0]">
-          <input
-            type="checkbox"
-            checked={urun.aktif !== false}
-            onChange={(e) => onChange({ ...urun, aktif: e.target.checked })}
-          />
-          Aktif
-        </label>
+          </>
+        ) : null}
       </div>
 
       <div className="space-y-1 text-xs text-[#8A9BB0]">
@@ -1085,6 +1262,8 @@ function ProductRow({
         <code className="block rounded-lg bg-black/30 px-2 py-1.5 text-[11px] text-[#C8703A]">
           {detailHref || "Kayıtta otomatik slug üretilir"}
         </code>
+        {more ? (
+          <>
         <Input
           label="İçindekiler"
           value={urun.icindekiler || ""}
@@ -1112,6 +1291,8 @@ function ProductRow({
             onChange({ ...urun, seoDescription: e.target.value })
           }
         />
+          </>
+        ) : null}
       </div>
 
       <div className="flex items-end justify-end gap-2 pb-0.5">

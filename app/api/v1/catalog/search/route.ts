@@ -1,4 +1,4 @@
-import { getContentAsync } from "@/lib/db/content";
+import { getPublicContent } from "@/lib/db/content";
 import { formatPriceLabel, searchProducts } from "@/lib/catalog/catalog";
 import { resolveProductImage } from "@/lib/catalog/product-image";
 import { jsonResponse, errorResponse } from "@/lib/api/helpers";
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const q = (searchParams.get("q") || "").trim().slice(0, 80);
     if (q.length < 2) return jsonResponse({ results: [] });
 
-    const content = await getContentAsync();
+    const content = await getPublicContent();
     const results = searchProducts(content, q, 20).map((p) => {
       const img = resolveProductImage(p, p.category);
       return {

@@ -1,6 +1,6 @@
-import { CanvasEngine } from './canvas-engine.js?v=20260817x5';
-import { ASSETS } from './config.js?v=20260817x5';
-import { range } from './utils.js?v=20260817x5';
+import { CanvasEngine } from './canvas-engine.js?v=20260818k19';
+import { ASSETS } from './config.js?v=20260818k19';
+import { range } from './utils.js?v=20260818k19';
 
 window.__FIRINCI_SCENE = window.__FIRINCI_SCENE || 'loading';
 
@@ -102,14 +102,18 @@ function updateUi(progress) {
   const gateIntro = document.getElementById('gateIntro');
   const heroWelcome = document.getElementById('heroWelcome');
   if (scrollHint) {
-    const fade = 1 - range(progress, 0.12, 0.42);
+    const fade = 1 - range(progress, 0.18, 0.48);
     scrollHint.style.opacity = String(fade);
     scrollHint.style.visibility = fade < 0.05 ? 'hidden' : 'visible';
+    scrollHint.style.left = '';
+    scrollHint.style.top = '';
+    scrollHint.style.right = '';
+    scrollHint.style.bottom = '';
+    scrollHint.style.transform = '';
   }
   if (gateIntro) {
-    const fadeOut = 1 - range(progress, 0.1, 0.45);
+    const fadeOut = 1 - range(progress, 0.08, 0.36);
     gateIntro.style.opacity = String(fadeOut);
-    gateIntro.style.transform = `translateY(${range(progress, 0.1, 0.45) * -35}px)`;
     gateIntro.style.pointerEvents = fadeOut < 0.05 ? 'none' : 'auto';
   }
   if (heroWelcome) {
@@ -125,14 +129,19 @@ function updateUi(progress) {
     } else {
       heroWelcome.hidden = false;
       heroWelcome.classList.remove('is-off');
-      const fadeIn = range(progress, 0.2, 0.46);
+      const fadeIn = range(progress, 0.22, 0.48);
       const fadeOut = 1 - range(progress, 0.7, 0.92);
       const opacity = Math.max(0, Math.min(1, fadeIn * fadeOut));
-      const rise = (1 - fadeIn) * 28;
+      const rise = (1 - fadeIn) * 20;
       heroWelcome.style.opacity = String(opacity);
-      heroWelcome.style.transform = `translate(-50%, calc(-50% + ${rise}px))`;
       heroWelcome.style.visibility = opacity < 0.04 ? 'hidden' : 'visible';
       heroWelcome.setAttribute('aria-hidden', opacity < 0.1 ? 'true' : 'false');
+      heroWelcome.style.left = '';
+      heroWelcome.style.right = '';
+      heroWelcome.style.top = '';
+      heroWelcome.style.bottom = '';
+      heroWelcome.style.width = '';
+      heroWelcome.style.transform = `translateY(${rise}px)`;
     }
   }
 }
@@ -277,8 +286,25 @@ async function boot() {
   if (booting) return;
   const { canvas, gate } = el();
   if (!canvas || !gate) {
-    fail('canvas veya gate bulunamadı');
     return;
+  }
+
+  if (reducedMotion) {
+    if (engineRef) {
+      try {
+        engineRef.destroy();
+      } catch {
+        /* ignore */
+      }
+      engineRef = null;
+    }
+    showPoster('reduced-motion');
+    bindPosterScroll();
+    return;
+  }
+
+  if (engineRef && (!el().canvas || engineRef.canvas !== el().canvas || !document.contains(engineRef.canvas))) {
+    hardResetHero();
   }
 
   if (engineRef && window.__FIRINCI_SCENE === 'ok') {
@@ -288,12 +314,6 @@ async function boot() {
     engineRef.refreshScroll();
     markReady();
     if (engineRef.hasPainted) markPainted();
-    return;
-  }
-
-  if (reducedMotion) {
-    showPoster('reduced-motion');
-    bindPosterScroll();
     return;
   }
 
@@ -316,19 +336,66 @@ async function boot() {
 }
 
 window.__firinciHeroBoot = boot;
+window.__firinciHeroReset = hardResetHero;
 
-// Genişlik değişince kamera fitView (engine.onResize) yeter — tam reload yarış/bozulma yapıyordu
+function hardResetHero() {
+  if (engineRef) {
+    try {
+      engineRef.destroy();
+    } catch {
+      /* ignore */
+    }
+    engineRef = null;
+  }
+  window.__FIRINCI_SCENE = undefined;
+  window.__firinciHeroResize = undefined;
+  window.__firinciHeroRefresh = undefined;
+  const canvas = el().canvas;
+  if (canvas) {
+    canvas.style.display = '';
+    canvas.style.opacity = '';
+    canvas.style.pointerEvents = '';
+    canvas.removeAttribute('aria-hidden');
+  }
+  document.documentElement.classList.remove(
+    'scene-poster',
+    'scene-failed',
+    'scene-painted',
+    'scene-ready',
+  );
+}
+
+try {
+  window.addEventListener('pageshow', (e) => {
+    document.documentElement.classList.remove('menu-open');
+    document.documentElement.style.removeProperty('overflow');
+    document.body.style.removeProperty('overflow');
+    const canvas = el().canvas;
+    if (!canvas) return;
+    if (e.persisted || (engineRef && engineRef.canvas !== canvas)) {
+      hardResetHero();
+      booting = false;
+      boot();
+    } else if (engineRef) {
+      engineRef.visible = true;
+      engineRef._mustPaint = 8;
+      engineRef.onResize();
+      engineRef.refreshScroll();
+    }
+  });
+} catch {
+  /* ignore */
+}
+
 try {
   const mq = matchMedia('(max-width: 860px)');
   let lastNarrow = mq.matches;
   mq.addEventListener('change', (e) => {
     if (e.matches === lastNarrow) return;
     lastNarrow = e.matches;
-    if (window.__firinciHeroResize) {
-      window.__firinciHeroResize();
-    } else {
-      window.__firinciHeroRefresh?.();
-    }
+    hardResetHero();
+    booting = false;
+    boot();
   });
 } catch {
   /* eski tarayıcı */

@@ -3,7 +3,7 @@ import {
   setAuthCookie,
   isDefaultJwtSecret,
 } from "@/lib/auth";
-import { jsonResponse, errorResponse, parseBody } from "@/lib/api/helpers";
+import { jsonResponse, errorResponse, parseBody, assertSameOrigin } from "@/lib/api/helpers";
 import { rateLimit } from "@/lib/rate-limit";
 import { appendActivity } from "@/lib/db/activity";
 
@@ -12,6 +12,8 @@ export async function POST(request: Request) {
     if (isDefaultJwtSecret() && process.env.NODE_ENV === "production") {
       return errorResponse("Sunucu yapılandırması eksik (JWT_SECRET).", 503);
     }
+
+    assertSameOrigin(request);
 
     const ip =
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
@@ -40,10 +42,12 @@ export async function POST(request: Request) {
     return jsonResponse({ success: true, user: result.user });
   } catch (error) {
     const msg = error instanceof Error ? error.message : "Giriş başarısız.";
-    // Never surface filesystem/infra noise as login failure text
-    if (/EROFS|EACCES|read-only|activity-log/i.test(msg)) {
-      return errorResponse("Giriş başarısız. E-posta veya şifre hatalı.", 401);
+    if (/JWT_SECRET|yapılandır/i.test(msg)) {
+      return errorResponse("Sunucu yapılandırması eksik (JWT_SECRET).", 503);
     }
-    return errorResponse(msg, 401);
+    if (/Cross-origin|Origin|Geçersiz Origin/i.test(msg)) {
+      return errorResponse("İstek reddedildi.", 403);
+    }
+    return errorResponse("Geçersiz e-posta veya şifre.", 401);
   }
 }

@@ -83,17 +83,19 @@ export default function HomeHeroScripts({
       'script[data-home-hero="1"]'
     ) as HTMLScriptElement | null;
     if (existing) {
-      const bootFn = (window as unknown as { __firinciHeroBoot?: () => void })
-        .__firinciHeroBoot;
-      const resize = (window as unknown as { __firinciHeroResize?: () => void })
-        .__firinciHeroResize;
-      if (typeof bootFn === "function") bootFn();
-      else resize?.();
+      const wHero = window as unknown as {
+        __firinciHeroBoot?: () => void;
+        __firinciHeroReset?: () => void;
+        __firinciHeroResize?: () => void;
+      };
+      wHero.__firinciHeroReset?.();
+      if (typeof wHero.__firinciHeroBoot === "function") wHero.__firinciHeroBoot();
+      else wHero.__firinciHeroResize?.();
     } else {
       w.__FIRINCI_SCENE = w.__FIRINCI_SCENE || "loading";
       const s = document.createElement("script");
       s.type = "module";
-      s.src = "/assets/js/hero/index.js?v=20260817x5";
+      s.src = "/assets/js/hero/index.js?v=20260819back1";
       s.dataset.homeHero = "1";
       document.body.appendChild(s);
     }
@@ -101,6 +103,12 @@ export default function HomeHeroScripts({
     return () => {
       window.clearTimeout(timeout);
       window.removeEventListener("error", onScriptError, true);
+      const reset = (window as unknown as { __firinciHeroReset?: () => void })
+        .__firinciHeroReset;
+      reset?.();
+      document.documentElement.classList.remove("menu-open");
+      document.documentElement.style.removeProperty("overflow");
+      document.body.style.removeProperty("overflow");
     };
   }, [boot.images, boot.hero]);
 

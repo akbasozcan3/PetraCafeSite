@@ -2,7 +2,7 @@
   "name": "firincitasdelen",
   "version": "2.0.0",
   "private": true,
-  "description": "Taşdelen Fırıncı — Next.js web + admin",
+  "description": "Petra Cafe Restaurant — Next.js web + admin",
   "scripts": {
     "dev": "next dev -p 3010",
     "build": "node scripts/sync-product-pages.mjs && node scripts/sync-public.mjs && next build && node scripts/prepare-standalone.mjs",

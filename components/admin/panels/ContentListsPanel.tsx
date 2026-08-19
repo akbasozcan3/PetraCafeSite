@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { Plus, Trash2, ArrowUp, ArrowDown } from "lucide-react";
 import Upload from "@/components/admin/ui/Upload";
+import AdminImage from "@/components/admin/ui/AdminImage";
 import { api } from "@/lib/api/client";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
 import Input from "@/components/admin/ui/Input";
 import Button from "@/components/admin/ui/Button";
 import SaveBar from "@/components/admin/ui/SaveBar";
 import AdminPageHeader, { AdminAlert, AdminLoading } from "@/components/admin/AdminPageHeader";
-import { resolveMediaUrl } from "@/lib/admin/media-url";
+import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import SectionHint from "@/components/admin/ui/SectionHint";
 import BolumBaslikFields from "@/components/admin/ui/BolumBaslikFields";
 
@@ -100,11 +101,11 @@ export function GaleriPanel() {
   return (
     <ListPanel
       title="Galeri"
-      description="Ana sayfa galeri başlığı ve fotoğrafları."
+      description="Ana sayfa galeri başlığı ve fotoğrafları. Görseller telefonda tam genişlik ve ortalı yayınlanır."
       items={content.galeri}
       message={message}
       saving={saving}
-      newItem={() => ({ src: "", baslik: "", boy: "third" as const })}
+      newItem={() => ({ src: "", baslik: "", boy: "third" as const, aktif: true })}
       onChange={(galeri) => setContent({ ...content, galeri })}
       onSave={handleSave}
       topNode={
@@ -132,6 +133,7 @@ export function GaleriPanel() {
                   src: r.url,
                   baslik: "",
                   boy: "third" as const,
+                  aktif: true,
                 }));
                 setContent({
                   ...content,
@@ -147,10 +149,7 @@ export function GaleriPanel() {
       renderItem={(item, i, update) => (
         <div className="grid gap-4 md:grid-cols-[140px_1fr]">
           <div className="aspect-[4/3] overflow-hidden rounded-xl bg-[#0D1117]">
-            {item.src ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={resolveMediaUrl(item.src)} alt="" className="h-full w-full object-cover" />
-            ) : null}
+            <AdminImage src={item.src} alt={item.baslik || "Galeri"} />
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             <div>
@@ -162,7 +161,9 @@ export function GaleriPanel() {
                 }}
                 onError={(err) => setMessage(err.message)}
               />
-              {item.src && <p className="mt-2 truncate text-xs text-[#6B7A94]">{item.src}</p>}
+              {item.src && (
+                <p className="mt-2 text-[11px] font-medium text-emerald-400">Yayında</p>
+              )}
               <div className="mt-2 flex gap-2">
                 <Button variant="ghost" size="sm" onClick={() => {
                   if (i <= 0) return;
@@ -187,6 +188,14 @@ export function GaleriPanel() {
               </div>
             </div>
             <Input label="Başlık" value={item.baslik} onChange={(e) => update({ ...item, baslik: e.target.value })} />
+            <label className="flex cursor-pointer items-center gap-2 text-sm text-[#EEE9E0]">
+              <input
+                type="checkbox"
+                checked={item.aktif !== false}
+                onChange={(e) => update({ ...item, aktif: e.target.checked })}
+              />
+              Sitede yayınla
+            </label>
             <div>
               <label className="mb-2 block text-sm text-[#8A9BB0]">Boyut</label>
               <select value={item.boy || "third"} onChange={(e) => update({ ...item, boy: e.target.value as "wide" | "half" | "third" })} className="h-11 w-full rounded-xl border border-white/[0.06] bg-[#0D1117] px-3 text-sm text-[#EEE9E0]">
@@ -287,6 +296,16 @@ export function YorumlarPanel() {
               value={meta.googleUrl || ""}
               onChange={(e) => setContent({ ...content, yorumlarMeta: { ...meta, googleUrl: e.target.value } })}
             />
+            <Input
+              label="Rozet buton yazısı"
+              value={meta.badgeCta || ""}
+              onChange={(e) => setContent({ ...content, yorumlarMeta: { ...meta, badgeCta: e.target.value } })}
+            />
+            <Input
+              label="Varsayılan unvan"
+              value={meta.unvanVarsayilan || ""}
+              onChange={(e) => setContent({ ...content, yorumlarMeta: { ...meta, unvanVarsayilan: e.target.value } })}
+            />
           </div>
         </div>
         <div className="space-y-3">
@@ -330,6 +349,7 @@ export function MakalelerPanel() {
           year: "numeric",
         }),
         okumaSuresi: "5 dakika okuma",
+        kapak: "",
         govdeHtml: "",
         yayinda: true,
         statik: false,
@@ -369,6 +389,25 @@ export function MakalelerPanel() {
             placeholder="6 dakika okuma"
           />
           <div className="md:col-span-2">
+            <p className="mb-2 text-sm text-[#8A9BB0]">Kapak görseli</p>
+            <div className="grid gap-3 md:grid-cols-[160px_1fr]">
+              <div className="aspect-[16/10] overflow-hidden rounded-xl bg-[#0D1117]">
+                <AdminImage src={item.kapak} alt={item.baslik || "Kapak"} />
+              </div>
+              <Upload
+                label="Kapak yükle"
+                accept="image/*"
+                enableCrop
+                uploadKey={`blog-${item.slug || "yazi"}`}
+                onComplete={(results) => {
+                  const first = results?.[0];
+                  if (first?.url) update({ ...item, kapak: first.url });
+                }}
+                onError={(err) => setMessage(err.message)}
+              />
+            </div>
+          </div>
+          <div className="md:col-span-2">
             <textarea value={item.ozet || ""} onChange={(e) => update({ ...item, ozet: e.target.value })} rows={2} className="w-full rounded-xl border border-white/[0.06] bg-[#0D1117] px-4 py-3 text-sm text-[#EEE9E0]" placeholder="Özet / lead" />
           </div>
           <div className="md:col-span-2">
@@ -381,7 +420,7 @@ export function MakalelerPanel() {
               placeholder="<h2>...</h2><p>...</p>"
             />
           </div>
-          <p className="md:col-span-2 text-xs text-[#6B7A94]">Link: /blog/{item.slug}/{item.slug}</p>
+          <p className="md:col-span-2 text-xs text-[#6B7A94]">Yayın adresi: /blog/{item.slug || "yazi-adi"}</p>
           <label className="flex items-center gap-2 text-sm text-[#EEE9E0]">
             <input type="checkbox" checked={item.yayinda !== false} onChange={(e) => update({ ...item, yayinda: e.target.checked })} /> Yayında (listede görünsün)
           </label>
@@ -397,15 +436,19 @@ export function SssPanel() {
   const [message, setMessage] = useState("");
   if (loading || !content) return <AdminLoading />;
   const items = (content.sss?.items as { soru: string; cevap: string }[]) || [];
+  const faqImg = liveMedia(
+    content.images?.faq || content.images?.aboutInterior,
+    SITE_PHOTOS.interior
+  );
   return (
     <ListPanel
       title="S.S.S."
-      description="Ana sayfa sıkça sorulan sorular — başlık ve soru/cevap listesi."
+      description="Ana sayfa sıkça sorulan sorular — başlık, görsel ve soru/cevap listesi."
       items={items}
       message={message}
       saving={saving}
       newItem={() => ({ soru: "", cevap: "" })}
-      onChange={(next) => setContent({ ...content, sss: { items: next as any } })}
+      onChange={(next) => setContent({ ...content, sss: { items: next } })}
       onSave={async () => {
         setSaving(true);
         try {
@@ -426,7 +469,6 @@ export function SssPanel() {
           <SectionHint anchor="sss" label="S.S.S." />
           <BolumBaslikFields
             value={content.bolumlar.sss}
-            lead={false}
             onChange={(sss) =>
               setContent({
                 ...content,
@@ -434,12 +476,75 @@ export function SssPanel() {
               })
             }
           />
+          <div className="grid gap-3 md:grid-cols-2">
+            <Input
+              label="Buton yazısı"
+              value={content.bolumlar.sss?.ctaLabel || ""}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  bolumlar: {
+                    ...content.bolumlar,
+                    sss: { ...content.bolumlar.sss, ctaLabel: e.target.value },
+                  },
+                })
+              }
+              placeholder="Masa ayırtın"
+            />
+            <Input
+              label="Buton bağlantısı"
+              value={content.bolumlar.sss?.ctaHref || ""}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  bolumlar: {
+                    ...content.bolumlar,
+                    sss: { ...content.bolumlar.sss, ctaHref: e.target.value },
+                  },
+                })
+              }
+              placeholder="#rezervasyon"
+            />
+          </div>
+          <div className="rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-4">
+            <h3 className="text-sm font-semibold text-[#F8F8F8]">Bölüm görseli</h3>
+            <p className="mt-1 mb-3 text-xs text-[#6B7A94]">
+              S.S.S. bölüm görseli. Telefonda tam genişlik ve ortalı; masaüstünde sol kolonda durur. Yükleme kaydı otomatik yayınlanır.
+            </p>
+            <div className="mb-3 h-40 overflow-hidden rounded-xl border border-white/[0.06] bg-[#0D1117]">
+              <AdminImage src={faqImg} alt="SSS görseli" />
+            </div>
+            <Upload
+              uploadKey="faq"
+              accept="image/jpeg,image/png,image/webp"
+              enableCrop
+              label="SSS görseli yükle (yatay 16:10)"
+              onComplete={async () => {
+                try {
+                  const res = await api.getAdminContent();
+                  setContent(res.data);
+                  setMessage("SSS görseli güncellendi.");
+                } catch (err) {
+                  setMessage(
+                    err instanceof Error ? err.message : "Yükleme sonrası güncelleme başarısız"
+                  );
+                }
+              }}
+              onError={(err) => setMessage(err.message)}
+            />
+          </div>
         </div>
       }
-      renderItem={(item: any, _i, update) => (
+      renderItem={(item: { soru: string; cevap: string }, _i, update) => (
         <div className="grid gap-3">
           <Input label="Soru" value={item.soru} onChange={(e) => update({ ...item, soru: e.target.value })} />
-          <textarea value={item.cevap} onChange={(e) => update({ ...item, cevap: e.target.value })} rows={3} className="w-full rounded-xl border border-white/[0.06] bg-[#0D1117] px-4 py-3 text-sm text-[#EEE9E0]" />
+          <label className="block text-xs font-medium text-[#8A9BB0]">Cevap</label>
+          <textarea
+            value={item.cevap}
+            onChange={(e) => update({ ...item, cevap: e.target.value })}
+            rows={3}
+            className="w-full rounded-xl border border-white/[0.06] bg-[#0D1117] px-4 py-3 text-sm text-[#EEE9E0]"
+          />
         </div>
       )}
     />

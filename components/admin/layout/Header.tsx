@@ -6,6 +6,8 @@ import { adminNavItems } from "@/lib/admin/navigation";
 import Button from "@/components/admin/ui/Button";
 import UserMenu from "@/components/admin/layout/UserMenu";
 import NavDropdown from "@/components/admin/layout/NavDropdown";
+import { useAdminContent } from "@/lib/context/AdminContentContext";
+import BrandLogo from "@/components/site/BrandLogo";
 
 interface HeaderProps {
   onMobileMenuOpen: () => void;
@@ -13,6 +15,7 @@ interface HeaderProps {
 
 export default function Header({ onMobileMenuOpen }: HeaderProps) {
   const pathname = usePathname();
+  const { content } = useAdminContent();
   const current = adminNavItems.find(
     (item) =>
       pathname === item.href ||
@@ -32,6 +35,12 @@ export default function Header({ onMobileMenuOpen }: HeaderProps) {
           >
             <Menu className="h-5 w-5" />
           </Button>
+          <BrandLogo
+            src={content?.images?.logo}
+            alt={content?.brand?.displayName || "Petra Cafe Restaurant"}
+            height={26}
+            className="lg:hidden max-w-[132px]"
+          />
           {/* Tablet: hızlı sayfa seçici — mobilde sidebar hamburger yeterli */}
           <div className="hidden md:block lg:hidden">
             <NavDropdown />
