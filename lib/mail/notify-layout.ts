@@ -71,22 +71,36 @@ export function buildNotifyEmail(opts: {
             <td height="4" style="background:linear-gradient(90deg, #B8842C 0%, #D9A441 50%, #B8842C 100%);height:4px;font-size:0;line-height:0;">&nbsp;</td>
           </tr>
 
-          <!-- Logo Area (Clean White/Ivory Background - No dark header) -->
+          <!-- Logo Area (Clean Centered Table - 100% Email Client Compatible) -->
           <tr>
-            <td align="center" style="padding:36px 32px 22px 32px;background-color:#FFFFFF;text-align:center;">
-              <a href="${escapeHtml(siteBaseUrl())}" target="_blank" style="text-decoration:none;display:inline-block;">
-                <img src="${escapeHtml(opts.logoUrl)}" alt="Petra Cafe Restaurant" height="64" style="display:block;margin:0 auto;height:64px;max-height:64px;width:auto;max-width:240px;object-fit:contain;border:0;outline:none;" />
-              </a>
-              <div style="margin-top:14px;display:inline-block;padding:4px 14px;background:#F9F5EC;border-radius:999px;border:1px solid #EADBCA;">
-                <span style="color:#A1782A;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;font-family:'Inter',sans-serif;display:block;">Petra Cafe &bull; Restaurant &bull; Pool</span>
-              </div>
+            <td align="center" style="padding:38px 24px 26px 24px;background-color:#FFFFFF;text-align:center;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin:0 auto;text-align:center;">
+                <tr>
+                  <td align="center" style="text-align:center;">
+                    <a href="${escapeHtml(siteBaseUrl())}" target="_blank" style="text-decoration:none;display:inline-block;">
+                      <img src="${escapeHtml(opts.logoUrl)}" alt="Petra Cafe Restaurant" height="70" border="0" style="display:block;margin:0 auto;height:70px;max-height:70px;width:auto;max-width:240px;object-fit:contain;border:0;outline:none;" />
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding-top:14px;text-align:center;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin:0 auto;background-color:#FBF7EF;border-radius:999px;border:1px solid #EADBCA;">
+                      <tr>
+                        <td align="center" style="padding:5px 16px;color:#A1782A;font-size:11px;font-weight:700;letter-spacing:0.20em;text-transform:uppercase;font-family:'Inter',system-ui,sans-serif;white-space:nowrap;">
+                          Petra Cafe &bull; Restaurant &bull; Pool
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
           <!-- Thin Decorative Line -->
           <tr>
-            <td style="padding:0 32px;">
-              <div style="height:1px;background:#EFE6D8;width:100%;"></div>
+            <td style="padding:0 36px;">
+              <div style="height:1px;background:#F0E7D8;width:100%;"></div>
             </td>
           </tr>
 
