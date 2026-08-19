@@ -56,7 +56,12 @@ export default function HomeContactForm({ copy }: { copy?: MesajFormCopy }) {
   };
 
   return (
-    <form className="form petra-form contact-form" onSubmit={submit} data-fade="">
+    <form
+      className="form petra-form contact-form"
+      id="iletisim-form"
+      onSubmit={submit}
+      data-fade=""
+    >
       <div className="petra-form__head">
         <p className="petra-form__kicker">{copy?.kicker || "Mesaj"}</p>
         {copy?.baslik ? <h3>{copy.baslik}</h3> : null}

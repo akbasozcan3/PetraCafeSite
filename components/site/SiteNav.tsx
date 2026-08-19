@@ -118,7 +118,36 @@ export default function SiteNav({
     ) {
       return "/menu";
     }
+    if (/iletişim|iletisim/i.test((label || "").trim()) || /#iletisim$/i.test(href)) {
+      return pathname === "/" ? "#iletisim-form" : "/#iletisim-form";
+    }
+    if (/s\.?\s?s\.?\s?s/i.test((label || "").trim()) || /#sss$/i.test(href)) {
+      return pathname === "/" ? "#sss-liste" : "/#sss-liste";
+    }
+    if (/yorum/i.test((label || "").trim()) || /#yorumlar$/i.test(href)) {
+      return pathname === "/" ? "#yorumlar-kart" : "/#yorumlar-kart";
+    }
     return href;
+  };
+
+  const jumpTo = (e: { preventDefault: () => void }, href: string) => {
+    const hash = href.includes("#") ? href.slice(href.indexOf("#") + 1) : "";
+    if (!hash || pathname !== "/") {
+      setOpen(false);
+      return;
+    }
+    e.preventDefault();
+    setOpen(false);
+    window.setTimeout(
+      () => {
+        document.getElementById(hash)?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+        history.replaceState(null, "", `#${hash}`);
+      },
+      open ? 140 : 0
+    );
   };
 
   useEffect(() => {
@@ -250,6 +279,7 @@ export default function SiteNav({
                     href={href}
                     className={active ? "is-active" : undefined}
                     aria-current={active ? "page" : undefined}
+                    onClick={(e) => jumpTo(e, href)}
                   >
                     {link.label}
                   </a>
@@ -305,7 +335,7 @@ export default function SiteNav({
                   <a
                     href={navHref(link.href, link.label)}
                     data-i={String(i + 1).padStart(2, "0")}
-                    onClick={() => setOpen(false)}
+                    onClick={(e) => jumpTo(e, navHref(link.href, link.label))}
                   >
                     {link.label}
                   </a>

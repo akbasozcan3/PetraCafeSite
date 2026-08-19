@@ -2836,8 +2836,9 @@ html.menu-open .site-shop a.nav__cta,
   }
   .nav__burger,
   .site-home .nav__burger,
-  .site-shop .nav__burger {
-    margin-left: 8px !important;
+  .site-shop .nav__burger,
+  html.menu-open .nav__burger {
+    margin-left: auto !important;
     margin-right: 0 !important;
   }
 
@@ -2912,6 +2913,13 @@ html.menu-open .site-shop a.nav__cta,
   pointer-events: auto !important;
   transform: none !important;
   position: fixed !important;
+}
+
+#iletisim-form,
+#sss-liste,
+#yorumlar-kart {
+  scroll-margin-top: calc(var(--nav-h, 72px) + 28px);
+  scroll-margin-bottom: 24px;
 }
 
 

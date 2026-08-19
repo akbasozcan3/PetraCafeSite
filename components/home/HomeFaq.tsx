@@ -52,7 +52,7 @@ export default function HomeFaq({
           </a>
         </div>
 
-        <div className="faq" data-stagger="">
+        <div className="faq" id="sss-liste" data-stagger="">
           {list.map((item, i) => (
             <details className="faq__item" key={`${item.soru}-${i}`} open={i === 0}>
               <summary>

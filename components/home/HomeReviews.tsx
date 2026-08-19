@@ -100,6 +100,7 @@ export default function HomeReviews({
 
         <div
           className={`reviews-stage${paused ? " is-paused" : ""}`}
+          id="yorumlar-kart"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           onTouchStart={(e) => {
