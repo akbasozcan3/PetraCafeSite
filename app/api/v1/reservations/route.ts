@@ -6,7 +6,7 @@ import { notifyInbox } from "@/lib/mail/smtp";
 import { sanitizePhoneDigits } from "@/lib/content/contact-utils";
 import { escapeHtml } from "@/lib/security/html";
 import { publicOrigin } from "@/lib/site/canonical";
-import { isAllowedReservationTime } from "@/lib/content/hours";
+import { isAllowedReservationTime, localIsoDate, addDaysIso } from "@/lib/content/hours";
 
 export const runtime = "nodejs";
 
@@ -48,17 +48,19 @@ export async function POST(request: Request) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
       return errorResponse("Geçerli bir tarih seçin.", 400);
     }
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const visit = new Date(`${date}T00:00:00`);
-    const horizon = new Date(today);
-    horizon.setDate(horizon.getDate() + 90);
-    if (visit > horizon) {
+    const today = localIsoDate();
+    if (date < today) {
+      return errorResponse("Geçmiş güne rezervasyon alınmaz. Lütfen bugün veya sonrası seçin.", 400);
+    }
+    if (date > addDaysIso(today, 90)) {
       return errorResponse("En fazla 90 gün ileriye rezervasyon alınır.", 400);
     }
     const content = await getPublicContent().catch(() => null);
     if (!isAllowedReservationTime(date, time, content?.iletisim)) {
-      return errorResponse("Bu gün veya saat çalışma saatleri dışında.", 400);
+      return errorResponse(
+        "Bu saat artık seçilemez. Lütfen ileri bir saat veya başka bir gün seçin.",
+        400
+      );
     }
     if (!Number.isInteger(guests) || guests < 1 || guests > 20) {
       return errorResponse("Kişi sayısı 1–20 arasında olmalı.", 400);

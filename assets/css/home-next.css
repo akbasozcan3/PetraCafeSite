@@ -1810,9 +1810,11 @@ html.no-motion .site-shop .pd-related {
   color: var(--muted, #6e6a5c);
   line-height: 1.45;
 }
-.site-home .petra-form .field {
-  min-width: 0;
-  gap: 7px;
+.site-home .petra-form__hint {
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--muted, #6e6a5c);
 }
 .site-home .petra-form .field label {
   font-size: 12px;

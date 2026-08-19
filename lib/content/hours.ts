@@ -121,6 +121,42 @@ function clockFromMinutes(total: number): string {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
+const BOOKING_TZ = "Europe/Istanbul";
+const SLOT_LEAD_MINUTES = 30;
+
+export function istanbulNowParts(now = new Date()) {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: BOOKING_TZ,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    })
+      .formatToParts(now)
+      .map((p) => [p.type, p.value])
+  );
+  return {
+    date: `${parts.year}-${parts.month}-${parts.day}`,
+    minutes: Number(parts.hour) * 60 + Number(parts.minute),
+  };
+}
+
+export function localIsoDate(now = new Date()): string {
+  return istanbulNowParts(now).date;
+}
+
+export function addDaysIso(dateIso: string, days: number): string {
+  const d = new Date(`${dateIso}T12:00:00`);
+  d.setDate(d.getDate() + days);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
 /** Açılış dahil, kapanıştan önceki 30 dk dilimleri */
 export function reservationSlotsForHours(open: string, close: string): string[] {
   const start = minutes(open);
@@ -145,16 +181,44 @@ export function hoursForDate(dateIso: string, iletisim?: IletisimContent | null)
   return program[weekdayIndexFromIso(dateIso)] || program[0];
 }
 
-export function reservationSlotsForDate(dateIso: string, iletisim?: IletisimContent | null): string[] {
+export function reservationSlotsForDate(
+  dateIso: string,
+  iletisim?: IletisimContent | null,
+  now = new Date()
+): string[] {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateIso)) return [];
+  const { date: today, minutes: nowMin } = istanbulNowParts(now);
+  if (dateIso < today) return [];
   const day = hoursForDate(dateIso, iletisim);
   if (day.kapali) return [];
-  return reservationSlotsForHours(day.acilis, day.kapanis);
+  let slots = reservationSlotsForHours(day.acilis, day.kapanis);
+  if (dateIso === today) {
+    const cutoff = nowMin + SLOT_LEAD_MINUTES;
+    slots = slots.filter((s) => minutes(s) >= cutoff);
+  }
+  return slots;
+}
+
+export function nextBookableDate(
+  iletisim?: IletisimContent | null,
+  now = new Date(),
+  horizon = 90
+): string {
+  const today = istanbulNowParts(now).date;
+  for (let i = 0; i <= horizon; i++) {
+    const iso = addDaysIso(today, i);
+    if (reservationSlotsForDate(iso, iletisim, now).length) return iso;
+  }
+  return today;
 }
 
 export function isAllowedReservationTime(
   dateIso: string,
   time: string,
-  iletisim?: IletisimContent | null
+  iletisim?: IletisimContent | null,
+  now = new Date()
 ): boolean {
-  return reservationSlotsForDate(dateIso, iletisim).includes(normalizeClock(time, time));
+  return reservationSlotsForDate(dateIso, iletisim, now).includes(
+    normalizeClock(time, time)
+  );
 }

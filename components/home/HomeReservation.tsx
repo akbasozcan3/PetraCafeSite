@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { displayHours, reservationSlotsForDate } from "@/lib/content/hours";
+import { displayHours, nextBookableDate, reservationSlotsForDate } from "@/lib/content/hours";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import {
@@ -15,16 +15,8 @@ import type { BolumBaslik, IletisimContent, RezervasyonCopy } from "@/lib/conten
 
 const GUESTS = Array.from({ length: 20 }, (_, i) => i + 1);
 
-function todayIso() {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-}
-
-function maxIso() {
-  const d = new Date();
+function maxIsoFrom(minDate: string) {
+  const d = new Date(`${minDate}T12:00:00`);
   d.setDate(d.getDate() + 90);
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -45,8 +37,8 @@ export default function HomeReservation({
   copy?: RezervasyonCopy;
   image?: string;
 }) {
-  const minDate = todayIso();
-  const maxDate = maxIso();
+  const minDate = nextBookableDate(iletisim);
+  const maxDate = maxIsoFrom(minDate);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState(minDate);
@@ -60,6 +52,10 @@ export default function HomeReservation({
   const hours = displayHours(iletisim);
   const slots = useMemo(() => reservationSlotsForDate(date, iletisim), [date, iletisim]);
   const closed = slots.length === 0;
+
+  useEffect(() => {
+    if (date < minDate) setDate(minDate);
+  }, [date, minDate]);
 
   useEffect(() => {
     if (!slots.length) {
@@ -78,7 +74,10 @@ export default function HomeReservation({
     e.preventDefault();
     if (closed || !time || !slots.includes(time)) {
       setStatus("err");
-      setError(copy?.hataKapali || "Bu gün kapalıyız veya saat çalışma saatleri dışında.");
+      setError(
+        copy?.hataKapali ||
+          "Bu tarih için uygun saat kalmadı. Lütfen başka bir gün seçin."
+      );
       return;
     }
     const digits = sanitizePhoneDigits(phone);
@@ -175,11 +174,15 @@ export default function HomeReservation({
                 required
                 min={minDate}
                 max={maxDate}
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={date < minDate ? minDate : date}
+                onChange={(e) => {
+                  const next = e.target.value;
+                  setDate(next < minDate ? minDate : next);
+                }}
                 className="petra-form__date"
                 lang="tr"
               />
+              <p className="petra-form__hint">Geçmiş gün ve saat seçilemez.</p>
             </div>
             <div className="field">
               <label htmlFor="rsv-time">
@@ -194,7 +197,9 @@ export default function HomeReservation({
                 onChange={(e) => setTime(e.target.value)}
               >
                 {closed ? (
-                  <option value="">{copy?.kapaliMetin || "Bu gün kapalıyız"}</option>
+                  <option value="">
+                    {copy?.kapaliMetin || "Bu gün için uygun saat yok"}
+                  </option>
                 ) : (
                   slots.map((s) => (
                     <option key={s} value={s}>
