@@ -1,7 +1,7 @@
 export const IMAGE_KEYS = {
   logo: {
     label: "Marka logosu (Navbar + Footer)",
-    hint: "Üst menü ve footer’da görünür · PNG / SVG / WebP · şeffaf arka plan önerilir",
+    hint: "Üst menü ve footer · PNG / SVG veya MP4 animasyon · koyu zeminli videoda arka plan ekranda eritilir",
   },
   favicon: {
     label: "Favicon / sekme ikonu",

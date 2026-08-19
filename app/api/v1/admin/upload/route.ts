@@ -21,6 +21,8 @@ const ALLOWED_TYPES = new Set([
   "image/svg+xml",
   "image/x-icon",
   "image/vnd.microsoft.icon",
+  "video/mp4",
+  "video/webm",
 ]);
 
 const EXT_MIME: Record<string, string> = {
@@ -32,6 +34,8 @@ const EXT_MIME: Record<string, string> = {
   avif: "image/avif",
   svg: "image/svg+xml",
   ico: "image/x-icon",
+  mp4: "video/mp4",
+  webm: "video/webm",
 };
 
 function decodeSvgText(bytes: Buffer): string {
@@ -68,6 +72,10 @@ function resolveMime(file: File, bytes?: Buffer): string | null {
     return "image/svg+xml";
   }
   return null;
+}
+
+function looksLikeMp4(bytes: Buffer): boolean {
+  return bytes.length > 12 && bytes.slice(4, 8).toString("ascii") === "ftyp";
 }
 
 function looksLikeImage(bytes: Buffer, mime: string): boolean {
@@ -157,6 +165,10 @@ function extensionForMime(mime: string): string {
     case "image/x-icon":
     case "image/vnd.microsoft.icon":
       return "ico";
+    case "video/mp4":
+      return "mp4";
+    case "video/webm":
+      return "webm";
     default:
       return "jpg";
   }
@@ -195,13 +207,17 @@ export async function POST(request: Request) {
     const mime = resolveMime(file, bytes);
     if (!mime || !ALLOWED_TYPES.has(mime)) {
       return errorResponse(
-        "Yalnızca JPEG, PNG, WebP, GIF, AVIF, SVG veya ICO yüklenebilir.",
+        "Yalnızca JPEG, PNG, WebP, GIF, AVIF, SVG, ICO veya MP4 yüklenebilir.",
         400
       );
     }
     const ext = extensionForMime(mime);
     const filename = `${Date.now()}-${randomBytes(8).toString("hex")}.${ext}`;
-    if (!looksLikeImage(bytes, mime)) {
+    if (mime === "video/mp4" || mime === "video/webm") {
+      if (mime === "video/mp4" && !looksLikeMp4(bytes)) {
+        return errorResponse("Dosya geçerli bir MP4 video değil.", 400);
+      }
+    } else if (!looksLikeImage(bytes, mime)) {
       return errorResponse(
         mime === "image/svg+xml"
           ? "Geçersiz veya güvensiz SVG (script / zararlı içerik)."

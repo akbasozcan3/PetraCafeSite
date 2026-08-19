@@ -292,7 +292,10 @@ html.scene-ready.scene-painted #scene {
   }
 }
 
-/* Hero: navbar kapalı; kapı/hero geçilince .is-solid ile açılır */
+/* Hero: navbar kapalı; kapı/hero geçilince .nav-revealed + .is-solid */
+.site-home:not(.nav-revealed) .nav.site-nav:not(.is-menu) {
+  display: none !important;
+}
 .site-home .nav.is-hero:not(.is-menu) {
   opacity: 0 !important;
   visibility: hidden !important;
@@ -2959,6 +2962,9 @@ html.menu-open .site-shop a.nav__cta,
   }
 }
 
+.site-home:not(.nav-revealed) .nav.site-nav:not(.is-menu) {
+  display: none !important;
+}
 .site-home .nav.is-hero:not(.is-menu) {
   opacity: 0 !important;
   visibility: hidden !important;
@@ -2972,6 +2978,16 @@ html.menu-open .site-shop a.nav__cta,
   pointer-events: auto !important;
   transform: none !important;
   position: fixed !important;
+}
+
+.nav__logo-img.is-video,
+.nav .is-video {
+  mix-blend-mode: screen;
+  background: transparent !important;
+}
+.nav.is-solid .nav__logo-img.is-video,
+.nav.is-solid .is-video {
+  mix-blend-mode: multiply;
 }
 
 #iletisim-form,

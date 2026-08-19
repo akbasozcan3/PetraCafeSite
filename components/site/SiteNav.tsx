@@ -52,14 +52,21 @@ function unlockScroll() {
 }
 
 function isPastHomeHero() {
-  const gate = document.querySelector(".gate") as HTMLElement | null;
-  if (!gate) return window.scrollY > 48;
-  const rect = gate.getBoundingClientRect();
-  const h = Math.max(gate.offsetHeight, gate.scrollHeight, rect.height);
-  if (h < 80) {
-    return window.scrollY > window.innerHeight * 0.92;
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
+  const gate = document.querySelector(".site-home .gate") as HTMLElement | null;
+  if (gate) {
+    const r = gate.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    const visible = Math.min(r.bottom, vh) - Math.max(r.top, 0);
+    const ratio = Math.max(0, visible) / vh;
+    if (y < 24 && ratio > 0.55) return false;
+    return ratio < 0.18 || r.bottom <= 8;
   }
-  return rect.bottom <= 72;
+  return y >= Math.round(window.innerHeight * 0.88);
+}
+
+function syncHomeNavReveal(revealed: boolean) {
+  document.querySelector(".site-home")?.classList.toggle("nav-revealed", revealed);
 }
 
 function PhoneIcon() {
@@ -171,6 +178,7 @@ export default function SiteNav({
         history.replaceState(null, "", `#${hash}`);
         window.dispatchEvent(new Event("hashchange"));
         setSolid(true);
+        syncHomeNavReveal(true);
       },
       open ? 160 : 0
     );
@@ -179,30 +187,41 @@ export default function SiteNav({
   useEffect(() => {
     if (!isHome) {
       setSolid(true);
+      syncHomeNavReveal(true);
       return;
     }
+    syncHomeNavReveal(false);
     let ticking = false;
-    const pastHero = () => isPastHomeHero();
-    const onScroll = () => {
+    const apply = () => {
       if (document.documentElement.classList.contains("menu-open")) return;
+      const next = isPastHomeHero();
+      setSolid(next);
+      syncHomeNavReveal(next);
+    };
+    const onScroll = () => {
       if (ticking) return;
       ticking = true;
       window.requestAnimationFrame(() => {
         ticking = false;
-        if (document.documentElement.classList.contains("menu-open")) return;
-        setSolid(pastHero());
+        apply();
       });
     };
-    onScroll();
+    apply();
+    const gate = document.querySelector(".site-home .gate");
+    let io: IntersectionObserver | null = null;
+    if (gate) {
+      io = new IntersectionObserver(() => apply(), {
+        threshold: [0, 0.12, 0.2, 0.4, 0.6, 0.8, 1],
+      });
+      io.observe(gate);
+    }
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
-    const later = window.setTimeout(onScroll, 400);
-    const later2 = window.setTimeout(onScroll, 1200);
     return () => {
-      window.clearTimeout(later);
-      window.clearTimeout(later2);
+      io?.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      syncHomeNavReveal(false);
     };
   }, [isHome]);
 

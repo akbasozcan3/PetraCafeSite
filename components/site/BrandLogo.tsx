@@ -8,7 +8,11 @@ export function brandLogoSrc(logo?: string | null): string {
   return resolveMediaUrl(liveMedia(logo, SITE_PHOTOS.mark)) || SITE_PHOTOS.mark;
 }
 
-/** Public site + admin share the same mark (CMS logo or petra-mark.svg). */
+export function isBrandLogoVideo(url?: string | null): boolean {
+  return /\.(mp4|webm|mov)(\?|$)/i.test(url || "");
+}
+
+/** Public site + admin share the same mark (CMS logo, video, or fallback). */
 export default function BrandLogo({
   src,
   alt = "Petra Cafe Restaurant",
@@ -23,7 +27,33 @@ export default function BrandLogo({
   style?: CSSProperties;
 }) {
   const url = brandLogoSrc(src);
+  const video = isBrandLogoVideo(url);
   const isSvg = /\.svg(\?|$)/i.test(url);
+  const merged = {
+    height,
+    width: "auto",
+    maxWidth: "100%",
+    objectFit: "contain" as const,
+    background: "transparent",
+    ...style,
+  };
+
+  if (video) {
+    return (
+      <video
+        className={[className, "is-video"].filter(Boolean).join(" ")}
+        src={url}
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-label={alt}
+        height={height}
+        style={merged}
+      />
+    );
+  }
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
@@ -31,17 +61,11 @@ export default function BrandLogo({
       src={url}
       alt={alt}
       height={height}
-      style={{
-        height,
-        width: "auto",
-        maxWidth: "100%",
-        objectFit: "contain",
-        ...style,
-      }}
+      style={merged}
       decoding="async"
       onError={(e) => {
         const el = e.currentTarget;
-        if (el.src.includes("petra-mark.svg")) return;
+        if (el.src.includes("petra-mark.svg") || el.src.includes("logo.png")) return;
         el.src = SITE_PHOTOS.mark;
       }}
     />

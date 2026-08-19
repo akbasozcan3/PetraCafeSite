@@ -3,10 +3,12 @@ import { SITE_PHOTOS, liveMedia } from "@/lib/content/media-fallbacks";
 import { escapeHtml } from "@/lib/security/html";
 
 export function brandLogoAbsoluteUrl(logoPath?: string | null) {
-  const raw = liveMedia(logoPath, SITE_PHOTOS.mark) || SITE_PHOTOS.mark;
+  let raw = liveMedia(logoPath, SITE_PHOTOS.mark) || SITE_PHOTOS.mark;
+  if (/\.(mp4|webm|mov)(\?|$)/i.test(raw) || raw.startsWith("/uploads/")) {
+    raw = SITE_PHOTOS.mark;
+  }
   if (/^https?:\/\//i.test(raw)) return raw;
-  const path = raw.startsWith("/uploads/") ? SITE_PHOTOS.mark : raw;
-  const rel = path.startsWith("/") ? path : `/${path}`;
+  const rel = raw.startsWith("/") ? raw : `/${raw}`;
   return `${siteBaseUrl()}${rel}`;
 }
 

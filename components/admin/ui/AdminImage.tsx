@@ -22,6 +22,8 @@ export default function AdminImage({
     /\.(svg|ico)(\?|$)/i.test((url.split("&")[0] || "").split("?")[0] || "");
   const [failed, setFailed] = useState(false);
 
+  const isVideo = /\.(mp4|webm|mov)(\?|$)/i.test(src || url.split("?")[0] || "");
+
   useEffect(() => {
     setFailed(false);
   }, [url]);
@@ -34,6 +36,20 @@ export default function AdminImage({
           {src ? "Önizleme yok — yeniden yükleyin" : "Henüz görsel yok"}
         </span>
       </div>
+    );
+  }
+
+  if (isVideo) {
+    return (
+      <video
+        src={url}
+        className={contain || isVector ? `${className} object-contain bg-transparent` : className}
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-label={alt}
+      />
     );
   }
 

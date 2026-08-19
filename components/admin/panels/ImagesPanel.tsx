@@ -77,7 +77,7 @@ export default function ImagesPanel() {
           : url;
     const accept =
       key === "logo"
-        ? "image/svg+xml,.svg,image/png,image/webp,image/jpeg,image/gif"
+        ? "image/svg+xml,.svg,image/png,image/webp,image/jpeg,image/gif,video/mp4,video/webm,.mp4,.webm"
         : key === "favicon"
           ? ".ico,image/x-icon,image/vnd.microsoft.icon,image/svg+xml,.svg,image/png,image/webp,image/jpeg"
           : "image/jpeg,image/png,image/webp,image/gif";
@@ -140,7 +140,7 @@ export default function ImagesPanel() {
               key === "heroCephe"
                 ? "Kapı cephesi yükle — kırparken kapıyı ortala (4:3)"
                 : key === "logo"
-                  ? "Logo yükle (SVG önerilir · PNG / WebP)"
+                  ? "Logo yükle (PNG / SVG / MP4 animasyon)"
                   : key === "favicon"
                     ? "Favicon yükle — ICO / SVG / PNG sürükle-bırak"
                     : undefined

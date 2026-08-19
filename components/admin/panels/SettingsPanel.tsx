@@ -214,6 +214,16 @@ function SmtpCard() {
         )}
       </p>
       {msg ? <p className="mt-2 text-xs text-[#8A9BB0]">{msg}</p> : null}
+      <div className="mt-5 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0D1117]">
+        <p className="border-b border-white/[0.06] px-4 py-2 text-[11px] uppercase tracking-wider text-[#8A9BB0]">
+          E-posta görünümü (logo + şablon)
+        </p>
+        <iframe
+          title="SMTP e-posta önizlemesi"
+          src="/api/v1/admin/smtp/preview"
+          className="h-[420px] w-full bg-[#f4eee1]"
+        />
+      </div>
       <div className="mt-4">
         <Button type="button" variant="outline" disabled={busy || !info?.configured} onClick={() => void test()}>
           Bağlantıyı Test Et

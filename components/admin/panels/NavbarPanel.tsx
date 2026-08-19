@@ -236,11 +236,11 @@ export default function NavbarPanel() {
             </p>
 
             <Upload
-              accept="image/svg+xml,.svg,image/png,image/webp,image/jpeg,image/gif"
+              accept="image/svg+xml,.svg,image/png,image/webp,image/jpeg,image/gif,video/mp4,.mp4"
               uploadKey="logo"
               enableCrop={false}
               webp={false}
-              label="Logo yükle — SVG (önerilen) veya PNG / WebP"
+              label="Logo yükle — PNG / SVG veya MP4 animasyon"
               onComplete={async () => {
                 try {
                   const res = await api.getAdminContent();

@@ -7,6 +7,13 @@ import CropModal, { type CropRect } from "./CropModal";
 
 type UploadResult = { url: string; key?: string };
 
+function isVideoFile(file: File | Blob, name = "") {
+  const n = name || (file as File).name || "";
+  return (
+    (file.type || "").startsWith("video/") || /\.(mp4|webm|mov)$/i.test(n)
+  );
+}
+
 async function fileLooksLikeSvg(file: File): Promise<boolean> {
   if (file.type === "image/svg+xml" || /\.svg$/i.test(file.name || "")) return true;
   try {
@@ -62,13 +69,16 @@ async function uploadOne(
       (/\.ico$/i.test(rawName) ||
         file.type === "image/x-icon" ||
         file.type === "image/vnd.microsoft.icon");
+    const video = isVideoFile(file, rawName);
     const mime = svg
       ? "image/svg+xml"
       : ico
         ? "image/x-icon"
-        : file.type && file.type.startsWith("image/")
-          ? file.type
-          : "image/webp";
+        : video
+          ? file.type || (/\.webm$/i.test(rawName) ? "video/webm" : "video/mp4")
+          : file.type && file.type.startsWith("image/")
+            ? file.type
+            : "image/webp";
     const ext =
       mime === "image/png"
         ? "png"
@@ -82,12 +92,18 @@ async function uploadOne(
                 ? "svg"
                 : mime === "image/x-icon"
                   ? "ico"
-                  : "webp";
+                  : mime === "video/webm"
+                    ? "webm"
+                    : mime === "video/mp4"
+                      ? "mp4"
+                      : "webp";
     const filename = svg
       ? (rawName ? rawName.replace(/\.[^.]+$/, "") : "logo") + ".svg"
       : ico
         ? (rawName ? rawName.replace(/\.[^.]+$/, "") : "favicon") + ".ico"
-        : `upload.${ext}`;
+        : video
+          ? rawName || `logo.${ext}`
+          : `upload.${ext}`;
     const payload = new File([file], filename, { type: mime });
     fd.append(fieldName, payload, filename);
     if (key) fd.append("key", key);
@@ -146,13 +162,14 @@ export default function Upload({
         }
         const isSvg = await fileLooksLikeSvg(file);
         const isIco = await fileLooksLikeIco(file);
+        const isVideo = isVideoFile(file);
         const mime = file.type || "";
-        if (!isSvg && !isIco && !mime.startsWith("image/")) {
-          throw new Error("Yalnızca görsel dosyaları yüklenebilir (SVG, ICO, PNG, JPG, WebP)");
+        if (!isSvg && !isIco && !isVideo && !mime.startsWith("image/")) {
+          throw new Error("Yalnızca görsel veya MP4 logo yüklenebilir");
         }
 
         let blob: Blob;
-        if (isSvg) {
+        if (isSvg || isVideo) {
           blob = file;
         } else if (isIco) {
           blob = await rasterizeFaviconFile(file);
@@ -203,7 +220,7 @@ export default function Upload({
       if (!files || files.length === 0) return;
       const list = Array.from(files).slice(0, multiple ? undefined : 1);
 
-      if (enableCrop && !multiple && list[0]) {
+      if (enableCrop && !multiple && list[0] && !isVideoFile(list[0])) {
         const first = list[0];
         if (!(await fileLooksLikeSvg(first)) && !(await fileLooksLikeIco(first))) {
           setPendingFile(first);
@@ -224,11 +241,12 @@ export default function Upload({
           }
           const isSvg = await fileLooksLikeSvg(f);
           const isIco = await fileLooksLikeIco(f);
+          const isVideo = isVideoFile(f);
           const mime = f.type || "";
-          if (!isSvg && !isIco && !mime.startsWith("image/")) {
-            throw new Error("Yalnızca görsel dosyaları yüklenebilir (SVG, ICO, PNG, JPG, WebP)");
+          if (!isSvg && !isIco && !isVideo && !mime.startsWith("image/")) {
+            throw new Error("Yalnızca görsel veya MP4 logo yüklenebilir");
           }
-          const blob = isSvg
+          const blob = isSvg || isVideo
             ? f
             : isIco
               ? await rasterizeFaviconFile(f)
@@ -279,7 +297,9 @@ export default function Upload({
   const formatHint =
     uploadKey === "favicon" || /ico/i.test(accept)
       ? "ICO · SVG · PNG · WebP"
-      : "SVG · PNG · JPG · WebP";
+      : /mp4|video/i.test(accept)
+        ? "PNG · SVG · MP4"
+        : "SVG · PNG · JPG · WebP";
 
   const borderColor =
     drag

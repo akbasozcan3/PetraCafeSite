@@ -329,6 +329,10 @@ async function pgGetContent(): Promise<SiteContent> {
       hizmetler: file.hizmetler,
       bolumlar: file.bolumlar ?? raw.bolumlar,
       sayfalar: file.sayfalar ?? raw.sayfalar,
+      images: {
+        ...(raw.images || {}),
+        ...(file.images?.logo ? { logo: file.images.logo } : {}),
+      },
     });
     await pool.query(
       `UPDATE site_content SET data = $1::jsonb WHERE key = 'main'`,

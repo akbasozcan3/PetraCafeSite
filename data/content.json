@@ -6,7 +6,7 @@
     "aboutInterior": "/assets/cms/hero-ic.webp",
     "faq": "/assets/cms/hero-ic.webp",
     "ogImage": "/assets/cms/hero-cephe.webp",
-    "logo": "/uploads/site/1787138944366-a9620af4670bd679.png",
+    "logo": "/assets/cms/petra-logo.mp4",
     "favicon": "/uploads/site/1787139157751-c0ccc75352508523.webp",
     "reservation": "/assets/cms/hero-ic.webp"
   },
@@ -333,7 +333,7 @@
   },
   "hikaye": null,
   "menu": {
-    "rev": "printed-20260819c",
+    "rev": "printed-20260819d",
     "baslik": "Petra Menü",
     "giris": "Kahvaltı, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile. Fiyatlar basılı menü ile aynıdır.",
     "legend": "",
