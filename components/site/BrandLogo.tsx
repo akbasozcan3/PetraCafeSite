@@ -1,3 +1,5 @@
+"use client";
+
 import type { CSSProperties } from "react";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
