@@ -2864,7 +2864,7 @@ html.menu-open .site-shop a.nav__cta,
   .nav,
   .site-home .nav,
   .site-shop .nav {
-    position: relative;
+    position: fixed !important;
   }
   .nav__links {
     position: absolute;
@@ -2897,6 +2897,21 @@ html.menu-open .site-shop a.nav__cta,
     margin-left: auto;
     z-index: 2;
   }
+}
+
+.site-home .nav.is-hero:not(.is-menu) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(-110%) !important;
+  position: fixed !important;
+}
+.site-home .nav.is-solid {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none !important;
+  position: fixed !important;
 }
 
 

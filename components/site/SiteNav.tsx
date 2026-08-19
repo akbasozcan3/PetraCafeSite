@@ -103,12 +103,11 @@ export default function SiteNav({
     }
     let ticking = false;
     const pastHero = () => {
-      if (window.scrollY < 80) return false;
       const gate = document.querySelector(".gate");
-      if (!gate) return false;
-      const rect = gate.getBoundingClientRect();
-      if (rect.height < 80) return false;
-      return rect.bottom <= 72;
+      if (!gate) return window.scrollY > window.innerHeight * 0.9;
+      const next = gate.nextElementSibling;
+      if (next) return next.getBoundingClientRect().top <= 88;
+      return gate.getBoundingClientRect().bottom <= 88;
     };
     const onScroll = () => {
       if (ticking) return;
