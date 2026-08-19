@@ -1973,6 +1973,13 @@ html.no-motion .site-shop .pd-related {
 }
 .site-home #yorumlar .reviews-wrap {
   max-width: 780px;
+  margin-inline: auto;
+}
+.site-home #yorumlar .reviews-head {
+  text-align: center;
+}
+.site-home #yorumlar .reviews-lead {
+  margin-inline: auto;
 }
 .site-home #yorumlar .reviews-kicker {
   display: inline-flex !important;
@@ -2309,7 +2316,7 @@ html.no-motion .site-shop .pd-related {
 /* ——— Mobil: tek sütun, büyük görsel, nav altında kırpılma yok ——— */
 @media (max-width: 860px) {
   html {
-    scroll-padding-top: calc(var(--nav-h) + 12px);
+    scroll-padding-top: calc(var(--nav-h, 72px) + 20px);
   }
   .site-home .section,
   .site-home #pasta,
@@ -2321,10 +2328,9 @@ html.no-motion .site-shop .pd-related {
   .site-home #yorumlar,
   .site-home #rezervasyon,
   .site-home #iletisim {
-    scroll-margin-top: calc(var(--nav-h) + 8px);
+    scroll-margin-top: calc(var(--nav-h, 72px) + 20px);
   }
   .site-home .section {
-    padding-top: calc(var(--nav-h) + 28px) !important;
     padding-bottom: 56px !important;
   }
   .site-home .pasta-layout,
@@ -2917,9 +2923,9 @@ html.menu-open .site-shop a.nav__cta,
 
 #iletisim-form,
 #sss-liste,
-#yorumlar-kart {
-  scroll-margin-top: calc(var(--nav-h, 72px) + 28px);
-  scroll-margin-bottom: 24px;
+#yorumlar,
+#hizmetler {
+  scroll-margin-top: calc(var(--nav-h, 72px) + 20px);
 }
 
 

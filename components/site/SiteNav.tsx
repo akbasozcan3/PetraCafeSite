@@ -124,8 +124,11 @@ export default function SiteNav({
     if (/s\.?\s?s\.?\s?s/i.test((label || "").trim()) || /#sss$/i.test(href)) {
       return pathname === "/" ? "#sss-liste" : "/#sss-liste";
     }
-    if (/yorum/i.test((label || "").trim()) || /#yorumlar$/i.test(href)) {
-      return pathname === "/" ? "#yorumlar-kart" : "/#yorumlar-kart";
+    if (/yorum/i.test((label || "").trim()) || /#yorumlar/i.test(href)) {
+      return pathname === "/" ? "#yorumlar" : "/#yorumlar";
+    }
+    if (/hizmet/i.test((label || "").trim()) || /#hizmetler/i.test(href)) {
+      return pathname === "/" ? "#hizmetler" : "/#hizmetler";
     }
     return href;
   };
@@ -140,13 +143,19 @@ export default function SiteNav({
     setOpen(false);
     window.setTimeout(
       () => {
-        document.getElementById(hash)?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+        const el = document.getElementById(hash);
+        if (!el) return;
+        const navH =
+          Number.parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue("--nav-h")
+          ) || 72;
+        const top = el.getBoundingClientRect().top + window.scrollY - navH - 18;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
         history.replaceState(null, "", `#${hash}`);
+        window.dispatchEvent(new Event("hashchange"));
+        setSolid(true);
       },
-      open ? 140 : 0
+      open ? 160 : 0
     );
   };
 
