@@ -2840,6 +2840,63 @@ html.menu-open .site-shop a.nav__cta,
     margin-left: 8px !important;
     margin-right: 0 !important;
   }
+
+  .mobile-menu__links {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    align-items: center !important;
+  }
+  .mobile-menu__links li {
+    width: 100%;
+    text-align: center;
+  }
+  .mobile-menu__links a,
+  .mobile-menu a:not(.btn):not(.mobile-menu__cta):not(.mobile-menu__phone) {
+    justify-content: center !important;
+    justify-items: center;
+    text-align: center;
+  }
+}
+
+@media (min-width: 861px) {
+  .nav,
+  .site-home .nav,
+  .site-shop .nav {
+    position: relative;
+  }
+  .nav__links {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    z-index: 1;
+  }
+  .nav__links ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav__links li {
+    display: flex;
+    align-items: center;
+  }
+  .nav__logo {
+    z-index: 2;
+  }
+  .nav__actions {
+    margin-left: auto;
+    z-index: 2;
+  }
 }
 
 

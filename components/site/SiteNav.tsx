@@ -201,25 +201,28 @@ export default function SiteNav({
         </Link>
 
         <nav className="nav__links" aria-label="Ana menü">
-          {links.map((link) => {
-            const href = navHref(link.href, link.label);
-            const active =
-              href === "/menu" || href.startsWith("/menu/") || href === "/#menu"
-                ? pathname.startsWith("/menu")
-                : href === "/blog" || href.startsWith("/blog/")
-                  ? pathname.startsWith("/blog")
-                  : false;
-            return (
-              <a
-                key={`${link.label}-${link.href}`}
-                href={href}
-                className={active ? "is-active" : undefined}
-                aria-current={active ? "page" : undefined}
-              >
-                {link.label}
-              </a>
-            );
-          })}
+          <ul>
+            {links.map((link) => {
+              const href = navHref(link.href, link.label);
+              const active =
+                href === "/menu" || href.startsWith("/menu/") || href === "/#menu"
+                  ? pathname.startsWith("/menu")
+                  : href === "/blog" || href.startsWith("/blog/")
+                    ? pathname.startsWith("/blog")
+                    : false;
+              return (
+                <li key={`${link.label}-${link.href}`}>
+                  <a
+                    href={href}
+                    className={active ? "is-active" : undefined}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
         </nav>
 
         <button
@@ -261,17 +264,20 @@ export default function SiteNav({
       >
         <div className="mobile-menu__panel">
           <p className="mobile-menu__label">{navbar.mobileLabel || "Menü"}</p>
-          <nav className="mobile-menu__links" aria-label="Mobil menü">
-            {links.map((link, i) => (
-              <a
-                key={`m-${link.label}-${link.href}`}
-                href={navHref(link.href, link.label)}
-                data-i={String(i + 1).padStart(2, "0")}
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
+          <nav aria-label="Mobil menü">
+            <ul className="mobile-menu__links">
+              {links.map((link, i) => (
+                <li key={`m-${link.label}-${link.href}`}>
+                  <a
+                    href={navHref(link.href, link.label)}
+                    data-i={String(i + 1).padStart(2, "0")}
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </nav>
           <div className="mobile-menu__foot">
             <a
