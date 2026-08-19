@@ -135,7 +135,13 @@ export default function SiteNav({
 
   const jumpTo = (e: { preventDefault: () => void }, href: string) => {
     const hash = href.includes("#") ? href.slice(href.indexOf("#") + 1) : "";
-    if (!hash || pathname !== "/") {
+    if (hash && pathname !== "/") {
+      e.preventDefault();
+      setOpen(false);
+      window.location.assign(`/#${hash}`);
+      return;
+    }
+    if (!hash) {
       setOpen(false);
       return;
     }

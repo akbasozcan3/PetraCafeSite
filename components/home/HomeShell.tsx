@@ -10,6 +10,7 @@ import { displayHours } from "@/lib/content/hours";
 import { phoneToTelHref } from "@/lib/content/contact-utils";
 import HomeHeroScripts from "@/components/home/HomeHeroScripts";
 import HomeMotion from "@/components/home/HomeMotion";
+import HomeHashScroll from "@/components/home/HomeHashScroll";
 
 /**
  * Ana sayfa kabuğu — sunum sitesi.
@@ -76,6 +77,7 @@ export default function HomeShell({
       <main id="icerik">{children}</main>
       <SiteFooter content={content} />
 
+      <HomeHashScroll />
       {enableHero ? (
         <HomeHeroScripts
           boot={{
