@@ -102,17 +102,29 @@ export default function SiteNav({
       return;
     }
     let ticking = false;
+    const pastHero = () => {
+      if (window.scrollY < 80) return false;
+      const gate = document.querySelector(".gate");
+      if (!gate) return false;
+      const rect = gate.getBoundingClientRect();
+      if (rect.height < 80) return false;
+      return rect.bottom <= 72;
+    };
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
       window.requestAnimationFrame(() => {
         ticking = false;
-        setSolid(window.scrollY > Math.min(120, window.innerHeight * 0.12));
+        setSolid(pastHero());
       });
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [isHome]);
 
   useEffect(() => {
@@ -241,7 +253,12 @@ export default function SiteNav({
         </div>
       </header>
 
-      <div className="mobile-menu" id="mobileMenu" hidden={!open}>
+      <div
+        className={`mobile-menu${open ? " is-open" : ""}`}
+        id="mobileMenu"
+        hidden={!open}
+        aria-hidden={!open}
+      >
         <div className="mobile-menu__panel">
           <p className="mobile-menu__label">{navbar.mobileLabel || "Menü"}</p>
           <nav className="mobile-menu__links" aria-label="Mobil menü">

@@ -54,7 +54,7 @@ export default function HomeShell({
         href="/css2.css?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       />
       <link rel="stylesheet" href="/assets/css/style.css?v=20260819nav9" />
-      <link rel="stylesheet" href="/assets/css/home-next.css?v=55" />
+      <link rel="stylesheet" href="/assets/css/home-next.css?v=57" />
       <link rel="preload" as="image" href={poster} />
       <link
         rel="preload"

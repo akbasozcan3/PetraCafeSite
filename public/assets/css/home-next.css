@@ -292,37 +292,27 @@ html.scene-ready.scene-painted #scene {
   }
 }
 
-/* Hero nav: transparent over gate, solid after scroll */
-.site-home .nav.is-hero {
-  background: transparent;
-  box-shadow: none;
-  border-bottom-color: transparent;
-}
-.site-home .nav.is-hero .nav__links a,
-.site-home .nav.is-hero .nav__icon-btn,
-.site-home .nav.is-hero .nav__logo-text {
-  color: var(--nav-hero-text, #fbf8f1);
-}
-.site-home .nav.is-hero .nav__burger span {
-  background: var(--nav-hero-text, #fbf8f1);
+/* Hero: navbar kapalı; kapı/hero geçilince .is-solid ile açılır */
+.site-home .nav.is-hero:not(.is-menu) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(-110%) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  border-bottom-color: transparent !important;
 }
 
 @media (max-width: 860px) {
-  .site-home .nav.is-hero {
+  .site-home .nav.is-hero:not(.is-menu) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-110%) !important;
     background: transparent !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
-    color: var(--nav-hero-text, #fbf8f1) !important;
-  }
-  .site-home .nav.is-hero .nav__logo-text,
-  .site-home .nav.is-hero .nav__icon-btn {
-    color: var(--nav-hero-text, #fbf8f1) !important;
-  }
-  .site-home .nav.is-hero .nav__burger {
-    color: var(--nav-hero-text, #fbf8f1) !important;
-  }
-  .site-home .nav.is-hero .nav__burger span {
-    background: var(--nav-hero-text, #fbf8f1) !important;
   }
 }
 
@@ -2786,6 +2776,39 @@ html.menu-open .site-shop a.nav__cta,
 
 .site-home .nav.is-hero .nav__phone {
   color: var(--nav-hero-text, #fbf8f1);
+}
+
+/* Ana sayfa: hero bitene kadar navbar yok (Vercel/mobil !important savaşını ezer) */
+.site-home .nav.is-hero:not(.is-menu) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(-110%) !important;
+}
+
+.mobile-menu:not(.is-open),
+.mobile-menu[hidden] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.mobile-menu.is-open {
+  display: block !important;
+}
+
+.mobile-menu a.mobile-menu__phone,
+.mobile-menu__phone {
+  display: block !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow: visible !important;
+  text-align: center;
+  grid-template-columns: none !important;
+}
+
+.mobile-menu a.mobile-menu__phone::before {
+  content: none !important;
 }
 
 
