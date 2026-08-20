@@ -90,3 +90,36 @@ export async function PATCH(request: Request) {
     return errorResponse("Güncellenemedi.", 500);
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const session = await requirePermission("content:write");
+    assertSameOrigin(request);
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    if (!id) return errorResponse("ID belirtilmedi.", 400);
+
+    const { deleteReservation } = await import("@/lib/db/inbox");
+    const ok = await deleteReservation(id);
+    if (!ok) return errorResponse("Rezervasyon bulunamadı veya silinemedi.", 404);
+
+    await appendActivity({
+      userId: session.id,
+      email: session.email,
+      name: session.name,
+      action: "reservation.delete",
+      detail: `Rezervasyon silindi (ID: ${id})`,
+    });
+
+    return jsonResponse({ success: true, id });
+  } catch (error) {
+    if (error instanceof Error && /unauthorized/i.test(error.message)) {
+      return errorResponse("Unauthorized", 401);
+    }
+    if (error instanceof Error && /forbidden/i.test(error.message)) {
+      return errorResponse("Bu işlem için yetkiniz yok.", 403);
+    }
+    console.error("[DELETE /admin/reservations]", error);
+    return errorResponse("Silinemedi.", 500);
+  }
+}

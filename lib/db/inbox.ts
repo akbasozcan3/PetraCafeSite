@@ -282,6 +282,26 @@ export async function updateReservation(
   return list[idx];
 }
 
+export async function deleteReservation(id: string): Promise<boolean> {
+  if (isPostgresEnabled()) {
+    try {
+      await ensurePgTables();
+      const pool = getPool()!;
+      const res = await pool.query(`DELETE FROM reservations WHERE id = $1`, [id]);
+      return (res.rowCount ?? 0) > 0;
+    } catch (err) {
+      console.warn("[inbox] pg delete reservation:", (err as Error).message);
+      if (process.env.VERCEL === "1") throw err;
+    }
+  }
+
+  const list = readList<Reservation>(RES_FILE, RES_FALLBACK);
+  const next = list.filter((x) => x.id !== id);
+  if (next.length === list.length) return false;
+  writeList(RES_FILE, next);
+  return true;
+}
+
 export async function listMessages(): Promise<ContactMessage[]> {
   if (isPostgresEnabled()) {
     try {

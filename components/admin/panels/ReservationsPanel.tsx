@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState, useMemo } from "react";
-import { Ban, Check, Phone, Mail, RefreshCw, X, Search } from "lucide-react";
+import { Ban, Check, Phone, Mail, RefreshCw, X, Search, Trash2 } from "lucide-react";
 import Button from "@/components/admin/ui/Button";
 import AdminPageHeader, {
   AdminAlert,
@@ -73,11 +73,33 @@ export default function ReservationsPanel() {
       const data = (await res.json()) as { item?: Reservation; error?: string };
       if (!res.ok) throw new Error(data.error || "Güncellenemedi");
       setItems((prev) => prev.map((x) => (x.id === id ? data.item! : x)));
-      const emailNotice = target?.email && status === "confirmed" ? " (Müşteriye onay maili iletildi)" : "";
+      const emailNotice = target?.email && (status === "confirmed" || status === "rejected")
+        ? ` (Müşteriye bildirim maili iletildi)`
+        : "";
       setMessage(`Rezervasyon ${LABELS[status].toLowerCase()}${emailNotice}.`);
       setMessageType("success");
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "Güncellenemedi");
+      setMessageType("error");
+    }
+  };
+
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`"${name}" adlı misafirin rezervasyon kaydını kalıcı olarak silmek istediğinize emin misiniz?`)) {
+      return;
+    }
+    try {
+      const res = await fetch(`/api/v1/admin/reservations?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const data = (await res.json()) as { success?: boolean; error?: string };
+      if (!res.ok) throw new Error(data.error || "Silinemedi");
+      setItems((prev) => prev.filter((x) => x.id !== id));
+      setMessage(`"${name}" rezervasyonu başarıyla silindi.`);
+      setMessageType("success");
+    } catch (e) {
+      setMessage(e instanceof Error ? e.message : "Silinemedi");
       setMessageType("error");
     }
   };
@@ -292,41 +314,53 @@ export default function ReservationsPanel() {
                   {LABELS[r.status]}
                 </span>
               </div>
-              {r.status === "pending" ? (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Button size="sm" onClick={() => void setStatus(r.id, "confirmed")}>
-                    <Check className="h-4 w-4" />
-                    Onayla
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="danger"
-                    onClick={() => void setStatus(r.id, "rejected")}
-                  >
-                    <X className="h-4 w-4" />
-                    Reddet
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => void setStatus(r.id, "cancelled")}
-                  >
-                    <Ban className="h-4 w-4" />
-                    İptal
-                  </Button>
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.06] pt-3">
+                <div className="flex flex-wrap gap-2">
+                  {r.status === "pending" ? (
+                    <>
+                      <Button size="sm" onClick={() => void setStatus(r.id, "confirmed")}>
+                        <Check className="h-4 w-4" />
+                        Onayla
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="danger"
+                        onClick={() => void setStatus(r.id, "rejected")}
+                      >
+                        <X className="h-4 w-4" />
+                        Reddet
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => void setStatus(r.id, "cancelled")}
+                      >
+                        <Ban className="h-4 w-4" />
+                        İptal
+                      </Button>
+                    </>
+                  ) : r.status === "confirmed" ? (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => void setStatus(r.id, "cancelled")}
+                    >
+                      <Ban className="h-4 w-4" />
+                      İptal et
+                    </Button>
+                  ) : null}
                 </div>
-              ) : r.status === "confirmed" ? (
-                <div className="mt-4">
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => void setStatus(r.id, "cancelled")}
-                  >
-                    <Ban className="h-4 w-4" />
-                    İptal et
-                  </Button>
-                </div>
-              ) : null}
+
+                <Button
+                  size="sm"
+                  variant="danger"
+                  onClick={() => void handleDelete(r.id, r.name)}
+                  title="Rezervasyonu Kalıcı Olarak Sil"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Sil
+                </Button>
+              </div>
             </article>
           ))}
         </div>
