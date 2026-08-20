@@ -163,18 +163,26 @@ export default function HomeReservation({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             amount: 250, // 250 TL Kapora Bedeli
-            email: email.trim() || `${digits}@petra.local`,
+            userEmail: email.trim() || `${digits}@petra.local`,
             userName: name,
             userPhone: phone,
             userAddress: "Petra Cafe & Restaurant Rezervasyon",
-            basketItems: [
-              [`Petra Rezervasyon Kaporası (${date} - ${time})`, "250.00", 1],
+            basket: [
+              { name: `Petra Rezervasyon Kaporası (${date} - ${time})`, price: 250, quantity: 1 },
             ],
           }),
         });
-        const payData = (await payRes.json()) as { token?: string; error?: string };
+
+        const rawText = await payRes.text();
+        let payData: { token?: string; error?: string } = {};
+        try {
+          payData = JSON.parse(rawText);
+        } catch {
+          throw new Error("PayTR Sanal POS bağlantısı kurulamadı. Lütfen admin panelinden PayTR anahtarlarınızı kontrol edin veya Normal Rezervasyon seçeneğini kullanın.");
+        }
+
         if (!payRes.ok || !payData.token) {
-          throw new Error(payData.error || "Ödeme oturumu başlatılamadı.");
+          throw new Error(payData.error || "PayTR mağaza anahtarları eksik veya ödeme başlatılamadı.");
         }
         setPaytrToken(payData.token);
         setShowPaytrModal(true);
@@ -182,10 +190,11 @@ export default function HomeReservation({
         return;
       } catch (err: any) {
         setStatus("err");
-        setError(err?.message || "Ödeme bağlantısı kurulamadı. Standart rezervasyon olarak deneyebilirsiniz.");
+        setError(err?.message || "Ödeme bağlantısı kurulamadı. Normal Rezervasyon seçeneğiyle devam edebilirsiniz.");
         return;
       }
     }
+
 
     // Standart Rezervasyon Talebi (Ücretsiz / Kapıda Ödeme):
     try {

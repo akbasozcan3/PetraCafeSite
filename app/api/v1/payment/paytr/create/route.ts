@@ -1,22 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createPayTrToken, getPayTrConfig } from "@/lib/integrations/paytr/paytr";
+import { createPayTrToken } from "@/lib/integrations/paytr/paytr";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    let body: any = {};
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Geçersiz istek gövdesi (JSON bekleniyor)." }, { status: 400 });
+    }
+
     const {
       amount,
       userEmail,
+      email,
       userName,
+      name,
       userPhone,
+      phone,
       userAddress,
       basket,
+      basketItems,
       orderId,
-    } = body;
+    } = body || {};
 
-    const paymentAmount = Number(amount);
-    if (!paymentAmount || paymentAmount <= 0) {
-      return NextResponse.json({ error: "Geçersiz ödeme tutarı" }, { status: 400 });
+    const paymentAmount = Number(amount) || 250;
+    if (paymentAmount <= 0) {
+      return NextResponse.json({ error: "Geçersiz ödeme tutarı." }, { status: 400 });
     }
 
     const host = req.headers.get("host") || "petra-cafe-site.vercel.app";
@@ -30,25 +40,31 @@ export async function POST(req: NextRequest) {
       req.headers.get("x-real-ip") ||
       "127.0.0.1";
 
-    const basketItems = Array.isArray(basket) && basket.length > 0
+    const resolvedBasket = Array.isArray(basket) && basket.length > 0
       ? basket
-      : [{ name: "Petra Cafe Sipariş / Ön Ödeme", price: paymentAmount, quantity: 1 }];
+      : Array.isArray(basketItems) && basketItems.length > 0
+      ? basketItems.map((item: any) => ({
+          name: Array.isArray(item) ? item[0] : item.name || "Rezervasyon Kaporası",
+          price: Array.isArray(item) ? item[1] : item.price || paymentAmount,
+          quantity: Array.isArray(item) ? item[2] : item.quantity || 1,
+        }))
+      : [{ name: "Petra Masa Rezervasyon Kaporası", price: paymentAmount, quantity: 1 }];
 
     const result = await createPayTrToken({
       merchantOid,
-      userEmail: userEmail || "misafir@petracafe.com",
-      userName: userName || "Misafir Müşteri",
-      userPhone: userPhone || "05306089051",
+      userEmail: userEmail || email || "misafir@petracafe.com",
+      userName: userName || name || "Misafir Müşteri",
+      userPhone: userPhone || phone || "05306089051",
       userAddress: userAddress || "Petra Cafe, Çekmeköy / İstanbul",
       paymentAmount,
       userIp,
-      basket: basketItems,
+      basket: resolvedBasket,
       okUrl: `${origin}/odeme/basarili?oid=${merchantOid}`,
       failUrl: `${origin}/odeme/basarisiz?oid=${merchantOid}`,
     });
 
     if (!result.ok) {
-      return NextResponse.json({ error: result.error }, { status: 400 });
+      return NextResponse.json({ error: result.error || "PayTR token üretilemedi." }, { status: 400 });
     }
 
     return NextResponse.json({
