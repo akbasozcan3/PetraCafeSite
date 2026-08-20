@@ -296,14 +296,16 @@ function SmtpSection() {
     try {
       const res = await fetch("/api/v1/admin/smtp", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
+        body: JSON.stringify({ kind }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "SMTP test başarısız");
       setMsg(
         data.sentTo
-          ? `SMTP OK — Gmail’e test mail gitti: ${data.sentTo}`
-          : `SMTP OK — ${data.host} / ${data.from} (SMTP_TO ekleyin, test mail gider)`
+          ? `✓ Canlı E-posta Gönderildi: "${data.sentTo}" adresine seçili şablon iletildi!`
+          : `✓ SMTP Bağlantısı Başarılı (${data.host})`
       );
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "Hata");
@@ -311,6 +313,7 @@ function SmtpSection() {
       setBusy(false);
     }
   }
+
 
   return (
     <section className="mt-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">

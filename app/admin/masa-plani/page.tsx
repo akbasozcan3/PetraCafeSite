@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { RestaurantTable } from "@/lib/content/tables-data";
-import { Save, Plus, Trash2, RotateCcw, Move, Sparkles, Check, AlertCircle } from "lucide-react";
+import { Save, Plus, Trash2, Move, ZoomIn, ZoomOut, Sparkles, Check, AlertCircle } from "lucide-react";
 
 export default function AdminMasaPlaniPage() {
   const [tables, setTables] = useState<RestaurantTable[]>([]);
@@ -68,6 +68,24 @@ export default function AdminMasaPlaniPage() {
     );
   };
 
+  // Seçili masayı küçült / büyüt
+  const adjustSelectedRadius = (delta: number) => {
+    if (!selectedId || !selectedTable) return;
+    const currentR = selectedTable.r || 22;
+    const nextR = Math.max(12, Math.min(60, currentR + delta));
+    handleUpdateField("r", nextR);
+  };
+
+  // Tüm masaları toplu küçült / büyüt
+  const scaleAllTables = (delta: number) => {
+    setTables((prev) =>
+      prev.map((t) => ({
+        ...t,
+        r: Math.max(12, Math.min(60, (t.r || 22) + delta)),
+      }))
+    );
+  };
+
   const handleAddNewTable = () => {
     const newNum = tables.length + 1;
     const newTable: RestaurantTable = {
@@ -81,7 +99,7 @@ export default function AdminMasaPlaniPage() {
       shape: "circle",
       cx: 325,
       cy: 434,
-      r: 22,
+      r: 20,
       description: "Yeni eklenen havuz masası",
     };
     setTables((prev) => [...prev, newTable]);
@@ -106,7 +124,8 @@ export default function AdminMasaPlaniPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Kaydedilemedi.");
-      setMessage({ type: "ok", text: "✅ Tüm masa konumları ve ayarları başarıyla kaydedildi!" });
+      setMessage({ type: "ok", text: "✅ Tüm masa konumları ve boyutları başarıyla kaydedildi!" });
+      setTimeout(() => setMessage(null), 4000);
     } catch (err: any) {
       setMessage({ type: "err", text: `Hata: ${err?.message || "Kayıt başarısız."}` });
     } finally {
@@ -115,7 +134,7 @@ export default function AdminMasaPlaniPage() {
   };
 
   return (
-    <div style={{ maxWidth: 1400, margin: "0 auto", padding: "20px" }}>
+    <div style={{ maxWidth: 1440, margin: "0 auto", padding: "16px" }}>
       {/* Üst Başlık & Kaydet Buton Barı */}
       <div
         style={{
@@ -124,45 +143,85 @@ export default function AdminMasaPlaniPage() {
           alignItems: "center",
           justifyContent: "space-between",
           gap: 16,
-          background: "#12150e",
-          color: "#f4eee1",
-          padding: "20px 24px",
-          borderRadius: 20,
-          marginBottom: 24,
+          background: "#141E2E",
+          border: "1px solid rgba(255,255,255,0.08)",
+          color: "#EEE9E0",
+          padding: "18px 24px",
+          borderRadius: 18,
+          marginBottom: 20,
           boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
         }}
       >
         <div>
-          <span style={{ fontSize: 12, color: "#d9a441", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-            Canlı Kroki Yönetimi
+          <span style={{ fontSize: 11.5, color: "#D9A441", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            Canlı Kroki & Masa Yönetimi
           </span>
-          <h1 style={{ margin: "4px 0 0", fontSize: 24, fontWeight: 800 }}>
+          <h1 style={{ margin: "4px 0 0", fontSize: 22, fontWeight: 800, color: "#FFFFFF" }}>
             İnteraktif Masa & Loca Konumlandırıcı
           </h1>
-          <p style={{ margin: "4px 0 0", fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
-            Kroki üzerindeki masaları fareyle tutup dilediğiniz konuma sürükleyin veya sağdaki panelden milimetrik düzenleyin.
+          <p style={{ margin: "4px 0 0", fontSize: 12.5, color: "#8A9BB0" }}>
+            Masaları fareyle sürükleyin veya sağdaki panelden boyutunu (+ / -) ve koordinatlarını milimetrik ayarlayın.
           </p>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
+          {/* Toplu Boyut Butonları */}
+          <div style={{ display: "flex", alignItems: "center", gap: 4, background: "rgba(255,255,255,0.05)", padding: "4px 8px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)" }}>
+            <span style={{ fontSize: 11, color: "#8A9BB0", fontWeight: 600, marginRight: 4 }}>Tüm Butonlar:</span>
+            <button
+              type="button"
+              onClick={() => scaleAllTables(-2)}
+              title="Tüm masaları küçült"
+              style={{
+                padding: "4px 8px",
+                borderRadius: 6,
+                background: "rgba(255,255,255,0.1)",
+                color: "#FFFFFF",
+                fontSize: 11,
+                fontWeight: 700,
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              - Küçült
+            </button>
+            <button
+              type="button"
+              onClick={() => scaleAllTables(2)}
+              title="Tüm masaları büyüt"
+              style={{
+                padding: "4px 8px",
+                borderRadius: 6,
+                background: "rgba(255,255,255,0.1)",
+                color: "#FFFFFF",
+                fontSize: 11,
+                fontWeight: 700,
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              + Büyüt
+            </button>
+          </div>
+
           <button
             type="button"
             onClick={handleAddNewTable}
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 8,
-              padding: "10px 18px",
+              gap: 6,
+              padding: "10px 16px",
               borderRadius: 12,
-              background: "rgba(255,255,255,0.1)",
-              color: "#ffffff",
-              fontSize: 13,
+              background: "rgba(255,255,255,0.08)",
+              color: "#FFFFFF",
+              fontSize: 12.5,
               fontWeight: 600,
-              border: "1px solid rgba(255,255,255,0.2)",
+              border: "1px solid rgba(255,255,255,0.15)",
               cursor: "pointer",
             }}
           >
-            <Plus style={{ width: 16, height: 16 }} />
+            <Plus style={{ width: 15, height: 15 }} />
             Yeni Masa Ekle
           </button>
 
@@ -174,18 +233,18 @@ export default function AdminMasaPlaniPage() {
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
-              padding: "12px 24px",
+              padding: "11px 22px",
               borderRadius: 12,
-              background: "#d9a441",
-              color: "#0d0f0a",
-              fontSize: 14,
+              background: "#D9A441",
+              color: "#0D0F0A",
+              fontSize: 13.5,
               fontWeight: 800,
               border: "none",
               cursor: isSaving ? "not-allowed" : "pointer",
               boxShadow: "0 4px 16px rgba(217, 164, 65, 0.4)",
             }}
           >
-            <Save style={{ width: 18, height: 18 }} />
+            <Save style={{ width: 16, height: 16 }} />
             {isSaving ? "Kaydediliyor..." : "Konumları Kaydet"}
           </button>
         </div>
@@ -194,43 +253,43 @@ export default function AdminMasaPlaniPage() {
       {message && (
         <div
           style={{
-            padding: "14px 20px",
-            borderRadius: 14,
+            padding: "12px 18px",
+            borderRadius: 12,
             background: message.type === "ok" ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)",
             border: `1px solid ${message.type === "ok" ? "#10b981" : "#ef4444"}`,
-            color: message.type === "ok" ? "#065f46" : "#991b1b",
-            fontSize: 14,
+            color: message.type === "ok" ? "#34d399" : "#f87171",
+            fontSize: 13.5,
             fontWeight: 600,
-            marginBottom: 20,
+            marginBottom: 16,
           }}
         >
           {message.text}
         </div>
       )}
 
-      {/* İkili Düzen: Sol (Canlı Kroki Tuvali) - Sağ (Masa Detay Editörü) */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 24, alignItems: "start" }}>
+      {/* İkili Düzen: Sol (Canlı Kroki Tuvali) - Sağ (Koyu Tema Masa Parametreleri) */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 20, alignItems: "start" }}>
         {/* SOL: İNTERAKTİF SÜRÜKLE-BIRAK SVG TUVALİ */}
         <div
           style={{
-            background: "#ffffff",
-            borderRadius: 20,
-            padding: 20,
-            border: "2px solid #d9a441",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+            background: "#141E2E",
+            borderRadius: 18,
+            padding: 16,
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
             userSelect: "none",
           }}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
         >
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: "#0d0f0a", display: "inline-flex", alignItems: "center", gap: 6 }}>
-              <Move style={{ width: 16, height: 16, color: "#b8842c" }} />
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+            <span style={{ fontSize: 12.5, fontWeight: 700, color: "#EEE9E0", display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <Move style={{ width: 15, height: 15, color: "#D9A441" }} />
               Masaları sürükleyerek havuz krokisi üzerine tam oturtun ({tables.length} Masa)
             </span>
-            <span style={{ fontSize: 12, color: "#6e6a5c" }}>
-              Seçili Masa: <strong style={{ color: "#b8842c" }}>{selectedTable ? selectedTable.name : "Yok"}</strong>
+            <span style={{ fontSize: 12, color: "#8A9BB0" }}>
+              Seçili: <strong style={{ color: "#D9A441" }}>{selectedTable ? selectedTable.name : "Yok"}</strong>
             </span>
           </div>
 
@@ -240,8 +299,8 @@ export default function AdminMasaPlaniPage() {
               width: "100%",
               borderRadius: 14,
               overflow: "hidden",
-              border: "1px solid rgba(13,15,10,0.15)",
-              background: "#fafafa",
+              border: "1px solid rgba(255,255,255,0.15)",
+              background: "#ffffff",
             }}
           >
             <svg
@@ -267,7 +326,7 @@ export default function AdminMasaPlaniPage() {
               {/* Sürüklenebilir Masa Hotspotları */}
               {tables.map((t) => {
                 const isSelected = t.id === selectedId;
-                const isDragging = t.id === draggingId;
+                const radius = t.r || 20;
 
                 return (
                   <g
@@ -280,11 +339,11 @@ export default function AdminMasaPlaniPage() {
                       <circle
                         cx={t.cx}
                         cy={t.cy}
-                        r={(t.r || 22) + 6}
+                        r={radius + 6}
                         fill="none"
-                        stroke="#b8842c"
-                        strokeWidth="3"
-                        strokeDasharray="4 2"
+                        stroke="#D9A441"
+                        strokeWidth="3.5"
+                        strokeDasharray="5 3"
                       />
                     )}
 
@@ -292,20 +351,20 @@ export default function AdminMasaPlaniPage() {
                     <circle
                       cx={t.cx}
                       cy={t.cy}
-                      r={t.r || 22}
-                      fill={isSelected ? "rgba(217, 164, 65, 0.9)" : "rgba(34, 197, 94, 0.6)"}
-                      stroke={isSelected ? "#0d0f0a" : "#15803d"}
+                      r={radius}
+                      fill={isSelected ? "rgba(217, 164, 65, 0.9)" : "rgba(34, 197, 94, 0.65)"}
+                      stroke={isSelected ? "#0D0F0A" : "#15803D"}
                       strokeWidth={isSelected ? "3" : "2"}
                     />
 
                     {/* Masa Numarası */}
                     <text
                       x={t.cx}
-                      y={(t.cy || 0) - 2}
+                      y={(t.cy || 0) - (radius > 24 ? 3 : 2)}
                       textAnchor="middle"
                       dominantBaseline="middle"
-                      fill={isSelected ? "#0d0f0a" : "#ffffff"}
-                      fontSize={t.isVip ? "13" : "11"}
+                      fill={isSelected ? "#0D0F0A" : "#FFFFFF"}
+                      fontSize={radius > 26 ? "13" : radius > 18 ? "10.5" : "9"}
                       fontWeight="900"
                       fontFamily="system-ui, sans-serif"
                       style={{ pointerEvents: "none" }}
@@ -316,11 +375,11 @@ export default function AdminMasaPlaniPage() {
                     {/* Kapasite */}
                     <text
                       x={t.cx}
-                      y={(t.cy || 0) + 12}
+                      y={(t.cy || 0) + (radius > 24 ? 11 : 9)}
                       textAnchor="middle"
                       dominantBaseline="middle"
-                      fill={isSelected ? "#0d0f0a" : "#ffffff"}
-                      fontSize="9"
+                      fill={isSelected ? "#0D0F0A" : "#FFFFFF"}
+                      fontSize={radius > 26 ? "9.5" : "8"}
                       fontWeight="700"
                       fontFamily="system-ui, sans-serif"
                       style={{ pointerEvents: "none" }}
@@ -334,24 +393,33 @@ export default function AdminMasaPlaniPage() {
           </div>
         </div>
 
-        {/* SAĞ: SEÇİLİ MASA ÖZELLİK PANELİ */}
+        {/* SAĞ: KOYU TEMA SEÇİLİ MASA ÖZELLİK PANELİ (YAZILAR NET VE OKUNUR) */}
         <div
           style={{
-            background: "#ffffff",
-            borderRadius: 20,
+            background: "#141E2E",
+            borderRadius: 18,
             padding: 20,
-            border: "1px solid rgba(13,15,10,0.12)",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+            color: "#EEE9E0",
           }}
         >
-          <h2 style={{ margin: "0 0 16px", fontSize: 18, fontWeight: 800, color: "#0d0f0a" }}>
-            Masa Parametreleri
-          </h2>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: 10 }}>
+
+            <h2 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: "#FFFFFF" }}>
+              Masa Parametreleri
+            </h2>
+            {selectedTable && (
+              <span style={{ fontSize: 11.5, background: "rgba(217, 164, 65, 0.15)", color: "#D9A441", padding: "3px 8px", borderRadius: 6, fontWeight: 700 }}>
+                {selectedTable.tableNumber}
+              </span>
+            )}
+          </div>
 
           {selectedTable ? (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               <div>
-                <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#6e6a5c" }}>
+                <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#8A9BB0", display: "block", marginBottom: 4 }}>
                   Masa Numarası (Kısa Kod)
                 </label>
                 <input
@@ -360,18 +428,20 @@ export default function AdminMasaPlaniPage() {
                   onChange={(e) => handleUpdateField("tableNumber", e.target.value)}
                   style={{
                     width: "100%",
-                    padding: "8px 12px",
+                    padding: "9px 12px",
                     borderRadius: 10,
-                    border: "1px solid rgba(13,15,10,0.15)",
-                    marginTop: 4,
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    background: "#0D1117",
+                    color: "#FFFFFF",
                     fontSize: 13,
                     fontWeight: 700,
+                    boxSizing: "border-box",
                   }}
                 />
               </div>
 
               <div>
-                <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#6e6a5c" }}>
+                <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#8A9BB0", display: "block", marginBottom: 4 }}>
                   Görünen İsim
                 </label>
                 <input
@@ -380,18 +450,20 @@ export default function AdminMasaPlaniPage() {
                   onChange={(e) => handleUpdateField("name", e.target.value)}
                   style={{
                     width: "100%",
-                    padding: "8px 12px",
+                    padding: "9px 12px",
                     borderRadius: 10,
-                    border: "1px solid rgba(13,15,10,0.15)",
-                    marginTop: 4,
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    background: "#0D1117",
+                    color: "#FFFFFF",
                     fontSize: 13,
+                    boxSizing: "border-box",
                   }}
                 />
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                 <div>
-                  <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#6e6a5c" }}>
+                  <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#8A9BB0", display: "block", marginBottom: 4 }}>
                     Bölge
                   </label>
                   <select
@@ -400,14 +472,17 @@ export default function AdminMasaPlaniPage() {
                       const zid = e.target.value as "loca" | "masalar";
                       handleUpdateField("zoneId", zid);
                       handleUpdateField("zoneName", zid === "loca" ? "VIP Localar" : "Havuz Masaları");
+                      handleUpdateField("isVip", zid === "loca");
                     }}
                     style={{
                       width: "100%",
-                      padding: "8px 12px",
+                      padding: "9px 10px",
                       borderRadius: 10,
-                      border: "1px solid rgba(13,15,10,0.15)",
-                      marginTop: 4,
-                      fontSize: 13,
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "#0D1117",
+                      color: "#FFFFFF",
+                      fontSize: 12.5,
+                      boxSizing: "border-box",
                     }}
                   >
                     <option value="masalar">Havuz Masası</option>
@@ -416,7 +491,7 @@ export default function AdminMasaPlaniPage() {
                 </div>
 
                 <div>
-                  <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#6e6a5c" }}>
+                  <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#8A9BB0", display: "block", marginBottom: 4 }}>
                     Kapasite (Kişi)
                   </label>
                   <input
@@ -427,70 +502,112 @@ export default function AdminMasaPlaniPage() {
                     onChange={(e) => handleUpdateField("capacity", Number(e.target.value))}
                     style={{
                       width: "100%",
-                      padding: "8px 12px",
+                      padding: "9px 12px",
                       borderRadius: 10,
-                      border: "1px solid rgba(13,15,10,0.15)",
-                      marginTop: 4,
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "#0D1117",
+                      color: "#FFFFFF",
                       fontSize: 13,
+                      boxSizing: "border-box",
                     }}
                   />
                 </div>
               </div>
 
-              {/* Koordinat Ayarları (X, Y, Yarıçap) */}
-              <div style={{ padding: 12, borderRadius: 12, background: "#f6f1e6", border: "1px solid rgba(13,15,10,0.1)" }}>
-                <p style={{ margin: "0 0 8px", fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#b8842c" }}>
-                  Hassas Koordinatlar (Piksel)
+              {/* MASA BOYUTUNU KÜÇÜLT / BÜYÜT KONTROL KARTI */}
+              <div style={{ padding: 12, borderRadius: 12, background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#D9A441" }}>
+                    Masa Boyutu (Çap: {selectedTable.r || 20}px)
+                  </span>
+                  <div style={{ display: "flex", gap: 4 }}>
+                    <button
+                      type="button"
+                      onClick={() => adjustSelectedRadius(-2)}
+                      style={{
+                        padding: "3px 8px",
+                        borderRadius: 6,
+                        background: "rgba(255,255,255,0.1)",
+                        color: "#FFFFFF",
+                        fontSize: 11,
+                        fontWeight: 700,
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      - Küçült
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => adjustSelectedRadius(2)}
+                      style={{
+                        padding: "3px 8px",
+                        borderRadius: 6,
+                        background: "rgba(255,255,255,0.1)",
+                        color: "#FFFFFF",
+                        fontSize: 11,
+                        fontWeight: 700,
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      + Büyüt
+                    </button>
+                  </div>
+                </div>
+
+                <input
+                  type="range"
+                  min={12}
+                  max={50}
+                  step={1}
+                  value={selectedTable.r || 20}
+                  onChange={(e) => handleUpdateField("r", Number(e.target.value))}
+                  style={{ width: "100%", accentColor: "#D9A441", cursor: "pointer" }}
+                />
+              </div>
+
+              {/* Koordinat Ayarları (X, Y) */}
+              <div style={{ padding: 12, borderRadius: 12, background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <p style={{ margin: "0 0 8px", fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#8A9BB0" }}>
+                  Hassas Piksel Konumları
                 </p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                   <div>
-                    <label style={{ fontSize: 10, fontWeight: 600, color: "#6e6a5c" }}>X (cx)</label>
+                    <label style={{ fontSize: 10.5, fontWeight: 600, color: "#8A9BB0", display: "block", marginBottom: 2 }}>X (cx)</label>
                     <input
                       type="number"
                       value={selectedTable.cx || 0}
                       onChange={(e) => handleUpdateField("cx", Number(e.target.value))}
                       style={{
                         width: "100%",
-                        padding: "6px 8px",
+                        padding: "7px 10px",
                         borderRadius: 8,
-                        border: "1px solid rgba(13,15,10,0.15)",
-                        marginTop: 2,
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        background: "#0D1117",
+                        color: "#FFFFFF",
                         fontSize: 12,
                         fontWeight: 700,
+                        boxSizing: "border-box",
                       }}
                     />
                   </div>
                   <div>
-                    <label style={{ fontSize: 10, fontWeight: 600, color: "#6e6a5c" }}>Y (cy)</label>
+                    <label style={{ fontSize: 10.5, fontWeight: 600, color: "#8A9BB0", display: "block", marginBottom: 2 }}>Y (cy)</label>
                     <input
                       type="number"
                       value={selectedTable.cy || 0}
                       onChange={(e) => handleUpdateField("cy", Number(e.target.value))}
                       style={{
                         width: "100%",
-                        padding: "6px 8px",
+                        padding: "7px 10px",
                         borderRadius: 8,
-                        border: "1px solid rgba(13,15,10,0.15)",
-                        marginTop: 2,
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        background: "#0D1117",
+                        color: "#FFFFFF",
                         fontSize: 12,
                         fontWeight: 700,
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: 10, fontWeight: 600, color: "#6e6a5c" }}>Çap (r)</label>
-                    <input
-                      type="number"
-                      value={selectedTable.r || 22}
-                      onChange={(e) => handleUpdateField("r", Number(e.target.value))}
-                      style={{
-                        width: "100%",
-                        padding: "6px 8px",
-                        borderRadius: 8,
-                        border: "1px solid rgba(13,15,10,0.15)",
-                        marginTop: 2,
-                        fontSize: 12,
-                        fontWeight: 700,
+                        boxSizing: "border-box",
                       }}
                     />
                   </div>
@@ -498,7 +615,7 @@ export default function AdminMasaPlaniPage() {
               </div>
 
               <div>
-                <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#6e6a5c" }}>
+                <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#8A9BB0", display: "block", marginBottom: 4 }}>
                   Açıklama
                 </label>
                 <textarea
@@ -509,27 +626,29 @@ export default function AdminMasaPlaniPage() {
                     width: "100%",
                     padding: "8px 12px",
                     borderRadius: 10,
-                    border: "1px solid rgba(13,15,10,0.15)",
-                    marginTop: 4,
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    background: "#0D1117",
+                    color: "#FFFFFF",
                     fontSize: 12,
+                    boxSizing: "border-box",
                   }}
                 />
               </div>
 
-              <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
+              <div style={{ marginTop: 6 }}>
                 <button
                   type="button"
                   onClick={() => handleDeleteTable(selectedTable.id)}
                   style={{
-                    flex: 1,
+                    width: "100%",
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
                     gap: 6,
                     padding: "10px",
                     borderRadius: 10,
-                    background: "rgba(239, 68, 68, 0.1)",
-                    color: "#dc2626",
+                    background: "rgba(239, 68, 68, 0.15)",
+                    color: "#f87171",
                     border: "1px solid rgba(239, 68, 68, 0.3)",
                     fontSize: 12,
                     fontWeight: 700,
@@ -542,7 +661,7 @@ export default function AdminMasaPlaniPage() {
               </div>
             </div>
           ) : (
-            <div style={{ textAlign: "center", padding: "40px 10px", color: "#6e6a5c" }}>
+            <div style={{ textAlign: "center", padding: "40px 10px", color: "#8A9BB0" }}>
               <p>Düzenlemek için krokiden bir masaya tıklayın.</p>
             </div>
           )}
