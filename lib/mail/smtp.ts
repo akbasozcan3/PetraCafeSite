@@ -91,6 +91,50 @@ export async function sendPasswordResetEmail(to: string, token: string) {
   });
 }
 
+export async function sendReservationStatusEmail(opts: {
+  to: string;
+  name: string;
+  date: string;
+  time: string;
+  guests: number;
+  status: "confirmed" | "rejected" | "cancelled";
+  note?: string;
+}) {
+  const { getPublicContent } = await import("@/lib/db/content");
+  const content = await getPublicContent().catch(() => null);
+  const { brandLogoAbsoluteUrl, buildNotifyEmail } = await import("@/lib/mail/notify-layout");
+  const logoHeight = Number(content?.images?.smtpLogoHeight || content?.images?.smtpLogoSize || 120);
+
+  const isConfirmed = opts.status === "confirmed";
+
+  const mail = buildNotifyEmail({
+    kicker: isConfirmed ? "REZERVASYON ONAYI" : "REZERVASYON BİLGİLENDİRMESİ",
+    title: isConfirmed ? "Rezervasyonunuz Onaylandı" : "Rezervasyon Durum Bilgisi",
+    intro: isConfirmed
+      ? `Sayın ${opts.name}, rezervasyon talebiniz onaylanmıştır. Belirttiğiniz gün ve saatte masanız sizler için hazır olacaktır.`
+      : `Sayın ${opts.name}, talep ettiğiniz tarih veya saatte uygunluk bulunamadığı için rezervasyonunuz onaylanamamıştır. Farklı bir zaman dilimi için bizimle iletişime geçebilirsiniz.`,
+    logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
+    logoHeight,
+    rows: [
+      { label: "Misafir Adı", value: opts.name },
+      { label: "Tarih", value: opts.date },
+      { label: "Saat", value: opts.time },
+      { label: "Kişi Sayısı", value: `${opts.guests} Kişi` },
+      { label: "Durum", value: isConfirmed ? "✅ ONAYLANDI" : "İptal Edildi / Uygunluk Yok" },
+      { label: "Not", value: opts.note || "" },
+    ],
+  });
+
+  return sendMail({
+    to: opts.to,
+    subject: isConfirmed
+      ? `Rezervasyonunuz Onaylandı (${opts.date} - ${opts.time}) — Petra Cafe Restaurant`
+      : `Rezervasyon Talebi Bilgilendirmesi — Petra Cafe Restaurant`,
+    text: mail.text,
+    html: mail.html,
+  });
+}
+
 export async function sendOrderConfirmationEmail(opts: {
   to: string;
   publicCode: string;

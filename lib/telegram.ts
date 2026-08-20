@@ -208,6 +208,7 @@ function formatTrDate(iso: string) {
 export async function notifyTelegramReservation(data: {
   name: string;
   phone: string;
+  email?: string;
   date: string;
   time: string;
   guests: number;
@@ -220,10 +221,13 @@ export async function notifyTelegramReservation(data: {
     "",
     `👤 <b>${escapeHtml(data.name)}</b>`,
     `📞 ${escapeHtml(data.phone)}`,
+  ];
+  if (data.email) lines.push(`✉️ ${escapeHtml(data.email)}`);
+  lines.push(
     `📅 ${escapeHtml(formatTrDate(data.date))}`,
     `🕐 ${escapeHtml(data.time)}`,
-    `👥 ${escapeHtml(String(data.guests))} kişi`,
-  ];
+    `👥 ${escapeHtml(String(data.guests))} kişi`
+  );
   if (data.note) lines.push(`📝 ${escapeHtml(data.note)}`);
   return sendTelegramMessage(lines.join("\n"), {
     parseMode: "HTML",

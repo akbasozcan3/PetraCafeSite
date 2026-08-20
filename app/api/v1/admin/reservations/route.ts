@@ -50,6 +50,27 @@ export async function PATCH(request: Request) {
     }
     const item = await updateReservation(body.id, { status: body.status });
     if (!item) return errorResponse("Rezervasyon bulunamadı.", 404);
+
+    // Müşteriye onay veya durum bildirim e-postası gönder
+    if (item.email && (body.status === "confirmed" || body.status === "rejected" || body.status === "cancelled")) {
+      const { sendReservationStatusEmail } = await import("@/lib/mail/smtp");
+      sendReservationStatusEmail({
+        to: item.email,
+        name: item.name,
+        date: item.date,
+        time: item.time,
+        guests: item.guests,
+        status: body.status,
+        note: item.note,
+      }).then((res) => {
+        if (!res.ok) {
+          console.warn("[admin reservations] Müşteri onay maili gönderilemedi:", res);
+        }
+      }).catch((err) => {
+        console.error("[admin reservations] Müşteri onay maili hatası:", err);
+      });
+    }
+
     await appendActivity({
       userId: session.id,
       email: session.email,

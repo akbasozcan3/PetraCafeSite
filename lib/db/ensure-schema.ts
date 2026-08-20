@@ -42,12 +42,14 @@ const TABLES = [
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     name TEXT NOT NULL,
     phone TEXT NOT NULL,
+    email TEXT,
     visit_date TEXT NOT NULL,
     visit_time TEXT NOT NULL,
     guests INTEGER NOT NULL,
     note TEXT,
     status TEXT NOT NULL DEFAULT 'pending'
   )`,
+  `ALTER TABLE reservations ADD COLUMN IF NOT EXISTS email TEXT`,
   `CREATE INDEX IF NOT EXISTS reservations_created_idx ON reservations (created_at DESC)`,
   `CREATE TABLE IF NOT EXISTS contact_messages (
     id TEXT PRIMARY KEY,

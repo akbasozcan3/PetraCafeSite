@@ -17,6 +17,7 @@ export interface Reservation {
   createdAt: string;
   name: string;
   phone: string;
+  email?: string;
   date: string;
   time: string;
   guests: number;
@@ -75,12 +76,14 @@ async function ensurePgTables() {
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       name TEXT NOT NULL,
       phone TEXT NOT NULL,
+      email TEXT,
       visit_date TEXT NOT NULL,
       visit_time TEXT NOT NULL,
       guests INTEGER NOT NULL,
       note TEXT,
       status TEXT NOT NULL DEFAULT 'pending'
     );
+    ALTER TABLE reservations ADD COLUMN IF NOT EXISTS email TEXT;
     CREATE INDEX IF NOT EXISTS reservations_created_idx ON reservations (created_at DESC);
 
     CREATE TABLE IF NOT EXISTS contact_messages (
@@ -101,6 +104,7 @@ function rowToReservation(r: {
   created_at: string | Date;
   name: string;
   phone: string;
+  email?: string | null;
   visit_date: string;
   visit_time: string;
   guests: number;
@@ -115,6 +119,7 @@ function rowToReservation(r: {
         : String(r.created_at),
     name: r.name,
     phone: r.phone,
+    email: r.email || undefined,
     date: r.visit_date,
     time: r.visit_time,
     guests: r.guests,
@@ -152,7 +157,7 @@ export async function listReservations(): Promise<Reservation[]> {
       await ensurePgTables();
       const pool = getPool()!;
       const res = await pool.query(
-        `SELECT id, created_at, name, phone, visit_date, visit_time, guests, note, status
+        `SELECT id, created_at, name, phone, email, visit_date, visit_time, guests, note, status
          FROM reservations ORDER BY created_at DESC LIMIT 500`
       );
       return res.rows.map(rowToReservation);
@@ -171,6 +176,7 @@ export async function createReservation(
     id: newId(),
     createdAt: new Date().toISOString(),
     status: "pending",
+    email: input.email?.trim() || undefined,
     note: input.note?.trim() || undefined,
   };
 
@@ -179,13 +185,14 @@ export async function createReservation(
       await ensurePgTables();
       const pool = getPool()!;
       await pool.query(
-        `INSERT INTO reservations (id, created_at, name, phone, visit_date, visit_time, guests, note, status)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+        `INSERT INTO reservations (id, created_at, name, phone, email, visit_date, visit_time, guests, note, status)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
         [
           item.id,
           item.createdAt,
           item.name,
           item.phone,
+          item.email || null,
           item.date,
           item.time,
           item.guests,
@@ -257,7 +264,7 @@ export async function updateReservation(
       const res = await pool.query(
         `UPDATE reservations SET status = COALESCE($2, status)
          WHERE id = $1
-         RETURNING id, created_at, name, phone, visit_date, visit_time, guests, note, status`,
+         RETURNING id, created_at, name, phone, email, visit_date, visit_time, guests, note, status`,
         [id, patch.status || null]
       );
       if (res.rows[0]) return rowToReservation(res.rows[0]);

@@ -33,6 +33,7 @@ export async function POST(request: Request) {
     const body = await parseBody<{
       name?: string;
       phone?: string;
+      email?: string;
       date?: string;
       time?: string;
       guests?: number | string;
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
 
     const name = String(body.name || "").trim();
     const phone = sanitizePhoneDigits(String(body.phone || "").trim());
+    const email = String(body.email || "").trim();
     const date = String(body.date || "").trim();
     const time = String(body.time || "").trim();
     const guests = Number(body.guests);
@@ -56,6 +58,9 @@ export async function POST(request: Request) {
     }
     if (phone.length < 10 || phone.length > 11) {
       return errorResponse("Geçerli bir telefon numarası girin.", 400);
+    }
+    if (email && (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 120)) {
+      return errorResponse("Geçerli bir e-posta adresi girin veya boş bırakın.", 400);
     }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
       return errorResponse("Geçerli bir tarih seçin.", 400);
@@ -94,6 +99,7 @@ export async function POST(request: Request) {
     const item = await createReservation({
       name,
       phone,
+      email: email || undefined,
       date,
       time,
       guests,
@@ -102,21 +108,28 @@ export async function POST(request: Request) {
 
     const adminUrl = `${publicOrigin(content)}/admin/rezervasyonlar`;
     const logoHeight = Number(content?.images?.smtpLogoHeight || content?.images?.smtpLogoSize || 96);
+    const notifyRows = [
+      { label: "Ad soyad", value: name },
+      { label: "Telefon", value: phone },
+    ];
+    if (email) {
+      notifyRows.push({ label: "E-Posta", value: email });
+    }
+    notifyRows.push(
+      { label: "Tarih", value: date },
+      { label: "Saat", value: time },
+      { label: "Kişi", value: String(guests) },
+      { label: "Not", value: note }
+    );
+
     const mail = buildNotifyEmail({
       kicker: "Rezervasyon",
       title: "Yeni masa talebi",
-      intro: "Siteden bir rezervasyon geldi. Telefonla onaylayın.",
+      intro: "Siteden bir rezervasyon geldi. Müşteriye bildirim onaylandığında gidecektir.",
       logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
       logoHeight,
       adminUrl,
-      rows: [
-        { label: "Ad soyad", value: name },
-        { label: "Telefon", value: phone },
-        { label: "Tarih", value: date },
-        { label: "Saat", value: time },
-        { label: "Kişi", value: String(guests) },
-        { label: "Not", value: note },
-      ],
+      rows: notifyRows,
     });
     await Promise.allSettled([
       notifyInbox({
@@ -128,6 +141,7 @@ export async function POST(request: Request) {
       notifyTelegramReservation({
         name,
         phone,
+        email: email || undefined,
         date,
         time,
         guests,

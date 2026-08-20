@@ -41,6 +41,7 @@ export default function HomeReservation({
   const maxDate = maxIsoFrom(minDate);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [date, setDate] = useState(minDate);
   const [time, setTime] = useState("");
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
@@ -117,6 +118,7 @@ export default function HomeReservation({
         body: JSON.stringify({
           name,
           phone,
+          email: email.trim() || undefined,
           date,
           time,
           guests,
@@ -133,6 +135,7 @@ export default function HomeReservation({
       setStatus("ok");
       setName("");
       setPhone("");
+      setEmail("");
       setNote("");
     } catch {
       setStatus("err");
@@ -300,12 +303,30 @@ export default function HomeReservation({
             </div>
           </div>
           <div className="field">
+            <label htmlFor="rsv-email">
+              E-posta <i>(Opsiyonel)</i>
+            </label>
+            <input
+              id="rsv-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              maxLength={120}
+              placeholder="ornek@eposta.com (Onay maili almak için)"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <p className="petra-form__hint" style={{ marginTop: 4, fontSize: 12, color: "#8E8A7E" }}>
+              Rezervasyon onayınız bu adrese e-posta olarak da iletilir.
+            </p>
+          </div>
+          <div className="field">
             <label htmlFor="rsv-note">{copy?.labelNot || "Not"}</label>
             <textarea
               id="rsv-note"
               name="note"
               maxLength={500}
-              rows={4}
+              rows={3}
               placeholder={copy?.placeholderNot || ""}
               value={note}
               onChange={(e) => setNote(e.target.value)}

@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useEffect, useState, useMemo } from "react";
-import { Ban, Check, Phone, RefreshCw, X, Search } from "lucide-react";
+import { Ban, Check, Phone, Mail, RefreshCw, X, Search } from "lucide-react";
 import Button from "@/components/admin/ui/Button";
 import AdminPageHeader, {
   AdminAlert,
@@ -63,6 +63,7 @@ export default function ReservationsPanel() {
 
   const setStatus = async (id: string, status: ReservationStatus) => {
     try {
+      const target = items.find((x) => x.id === id);
       const res = await fetch("/api/v1/admin/reservations", {
         method: "PATCH",
         credentials: "include",
@@ -72,7 +73,8 @@ export default function ReservationsPanel() {
       const data = (await res.json()) as { item?: Reservation; error?: string };
       if (!res.ok) throw new Error(data.error || "Güncellenemedi");
       setItems((prev) => prev.map((x) => (x.id === id ? data.item! : x)));
-      setMessage(`Rezervasyon ${LABELS[status].toLowerCase()}.`);
+      const emailNotice = target?.email && status === "confirmed" ? " (Müşteriye onay maili iletildi)" : "";
+      setMessage(`Rezervasyon ${LABELS[status].toLowerCase()}${emailNotice}.`);
       setMessageType("success");
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "Güncellenemedi");
@@ -100,6 +102,7 @@ export default function ReservationsPanel() {
         (x) =>
           x.name.toLocaleLowerCase("tr-TR").includes(q) ||
           x.phone.includes(q) ||
+          (x.email || "").toLocaleLowerCase("tr-TR").includes(q) ||
           x.date.includes(q) ||
           (x.note || "").toLocaleLowerCase("tr-TR").includes(q)
       );
@@ -250,13 +253,24 @@ export default function ReservationsPanel() {
                   <p className="mt-1 text-sm text-[#EEE9E0] font-medium">
                     📅 {r.date} &nbsp;·&nbsp; 🕐 {r.time} &nbsp;·&nbsp; 👥 {r.guests} kişi
                   </p>
-                  <a
-                    href={`tel:${r.phone.replace(/\s/g, "")}`}
-                    className="mt-1 inline-flex items-center gap-1 text-sm text-[#C8703A] hover:underline"
-                  >
-                    <Phone className="h-3.5 w-3.5" />
-                    {r.phone}
-                  </a>
+                  <div className="mt-1 flex flex-wrap items-center gap-3">
+                    <a
+                      href={`tel:${r.phone.replace(/\s/g, "")}`}
+                      className="inline-flex items-center gap-1 text-sm text-[#C8703A] hover:underline"
+                    >
+                      <Phone className="h-3.5 w-3.5" />
+                      {r.phone}
+                    </a>
+                    {r.email ? (
+                      <a
+                        href={`mailto:${r.email}`}
+                        className="inline-flex items-center gap-1 text-sm text-sky-400 hover:underline"
+                      >
+                        <Mail className="h-3.5 w-3.5" />
+                        {r.email}
+                      </a>
+                    ) : null}
+                  </div>
                   {r.note ? (
                     <p className="mt-2 text-sm text-[#C8D0DC] bg-white/[0.03] p-2.5 rounded-lg border border-white/[0.04]">
                       💬 <span className="italic">{r.note}</span>
