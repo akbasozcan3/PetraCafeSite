@@ -108,7 +108,7 @@ export default async function BlogIndexPage() {
           <p>Henüz yayınlanmış yazı yok.</p>
         </div>
       ) : (
-        <div className="blog-list" style={{ display: "grid", gap: 24, margin: "28px 0" }}>
+        <div className="blog-list">
           {posts.map((m) => {
             const cover = resolveMediaUrl(liveMedia(m.kapak, SITE_PHOTOS.interior));
             return (
@@ -116,32 +116,9 @@ export default async function BlogIndexPage() {
                 className="post-magazine-card"
                 href={`/blog/${m.slug}`}
                 key={m.slug}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "stretch",
-                  gap: 28,
-                  padding: 22,
-                  background: "#ffffff",
-                  borderRadius: 22,
-                  border: "1px solid rgba(13, 15, 10, 0.09)",
-                  boxShadow: "0 10px 30px rgba(13, 15, 10, 0.03)",
-                  textDecoration: "none",
-                  color: "inherit",
-                  transition: "all 0.2s ease",
-                }}
               >
                 {cover ? (
-                  <div
-                    style={{
-                      flex: "0 0 320px",
-                      width: 320,
-                      height: 210,
-                      borderRadius: 16,
-                      overflow: "hidden",
-                      background: "#f0ede6",
-                    }}
-                  >
+                  <div className="post-magazine-card__thumb">
                     <SafeImg
                       src={cover}
                       alt={m.baslik}
@@ -151,93 +128,41 @@ export default async function BlogIndexPage() {
                   </div>
                 ) : null}
 
-                <div
-                  style={{
-                    flex: "1 1 auto",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    padding: "4px 0",
-                  }}
-                >
+                <div className="post-magazine-card__body">
                   <div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        alignItems: "center",
-                        gap: 12,
-                        marginBottom: 10,
-                        fontSize: "0.8rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.06em",
-                        textTransform: "uppercase",
-                        color: "#B8842C",
-                      }}
-                    >
+                    <div className="post-magazine-card__meta">
                       {m.kategori ? (
-                        <span
-                          style={{
-                            background: "rgba(217, 164, 65, 0.12)",
-                            padding: "3px 10px",
-                            borderRadius: 6,
-                          }}
-                        >
+                        <span className="post-magazine-card__badge">
                           {m.kategori}
                         </span>
                       ) : null}
                       {m.tarih ? (
-                        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#6E6A5C" }}>
+                        <span className="post-magazine-card__info">
                           <CalendarIcon />
                           {m.tarih}
                         </span>
                       ) : null}
                       {m.okumaSuresi ? (
-                        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#6E6A5C" }}>
+                        <span className="post-magazine-card__info">
                           <ClockIcon />
                           {m.okumaSuresi}
                         </span>
                       ) : null}
                     </div>
 
-                    <h2
-                      style={{
-                        fontFamily: 'var(--f-head, "Playfair Display", Georgia, serif)',
-                        fontSize: "1.42rem",
-                        fontWeight: 700,
-                        lineHeight: 1.3,
-                        color: "#12140E",
-                        margin: "0 0 10px 0",
-                      }}
-                    >
+                    <h2 className="post-magazine-card__title">
                       {m.baslik}
                     </h2>
 
                     {m.ozet ? (
-                      <p
-                        style={{
-                          fontSize: "0.98rem",
-                          lineHeight: 1.6,
-                          color: "#5E594D",
-                          margin: 0,
-                        }}
-                      >
+                      <p className="post-magazine-card__lead">
                         {m.ozet}
                       </p>
                     ) : null}
                   </div>
 
-                  <div style={{ marginTop: 16 }}>
-                    <span
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 8,
-                        fontSize: "0.88rem",
-                        fontWeight: 700,
-                        color: "#B8842C",
-                      }}
-                    >
+                  <div className="post-magazine-card__footer">
+                    <span className="post-magazine-card__btn">
                       Yazıyı İncele <ArrowRightIcon />
                     </span>
                   </div>
@@ -248,27 +173,182 @@ export default async function BlogIndexPage() {
         </div>
       )}
 
-      <div className="cta-box" style={{ background: "#ffffff", border: "1px solid rgba(184, 132, 44, 0.2)", borderRadius: 22, padding: "32px 28px", marginTop: 40, boxShadow: "0 10px 30px rgba(13,15,10,0.03)" }}>
-        <h2 style={{ fontFamily: 'var(--f-head, "Playfair Display", Georgia, serif)', fontSize: "1.45rem", color: "#12140E", margin: "0 0 8px 0" }}>
-          {b?.ctaBaslik || "Masa veya Havuz İçin Rezervasyon"}
-        </h2>
-        <p style={{ color: "#5E594D", fontSize: "0.95rem", margin: "0 0 20px 0" }}>
+      <div className="blog-cta-banner">
+        <h2>{b?.ctaBaslik || "Masa veya Havuz İçin Rezervasyon"}</h2>
+        <p>
           {b?.ctaMetin ||
             "Taşdelen'in huzurlu atmosferinde keyifli bir gün için online rezervasyon yapın veya bizi arayın."}
         </p>
-        <div className="shop-actions" style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-          <Link href="/#rezervasyon" className="btn btn--lg btn--light" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+        <div className="blog-cta-actions">
+          <Link href="/#rezervasyon" className="btn btn--lg btn--light">
             <CalendarCheckIcon />
             Rezervasyon Formu
           </Link>
           {telHref ? (
-            <a href={`tel:${telHref}`} className="btn btn--lg btn--ghost" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <a href={`tel:${telHref}`} className="btn btn--lg btn--ghost">
               <PhoneIcon />
               {tel}
             </a>
           ) : null}
         </div>
       </div>
+
+      <style>{`
+        .blog-list {
+          display: grid;
+          gap: 24px;
+          margin: 28px 0;
+        }
+        .post-magazine-card {
+          display: flex;
+          flex-direction: row;
+          align-items: stretch;
+          gap: 28px;
+          padding: 22px;
+          background: #ffffff;
+          border-radius: 22px;
+          border: 1px solid rgba(13, 15, 10, 0.09);
+          box-shadow: 0 10px 30px rgba(13, 15, 10, 0.03);
+          text-decoration: none !important;
+          color: inherit !important;
+          transition: all 0.2s ease;
+        }
+        .post-magazine-card:hover {
+          border-color: rgba(184, 132, 44, 0.4);
+          box-shadow: 0 14px 36px rgba(184, 132, 44, 0.08);
+          transform: translateY(-2px);
+        }
+        .post-magazine-card__thumb {
+          flex: 0 0 320px;
+          width: 320px;
+          height: 210px;
+          border-radius: 16px;
+          overflow: hidden;
+          background: #f0ede6;
+        }
+        .post-magazine-card__thumb img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .post-magazine-card__body {
+          flex: 1 1 auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 4px 0;
+          min-width: 0;
+        }
+        .post-magazine-card__meta {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px 14px;
+          margin-bottom: 10px;
+          font-size: 0.8rem;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+        .post-magazine-card__badge {
+          background: rgba(217, 164, 65, 0.14);
+          color: #B8842C;
+          padding: 3px 10px;
+          border-radius: 6px;
+          font-size: 0.76rem;
+        }
+        .post-magazine-card__info {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          color: #6E6A5C;
+          font-size: 0.78rem;
+        }
+        .post-magazine-card__title {
+          font-family: var(--f-head, "Playfair Display", Georgia, serif);
+          font-size: clamp(1.25rem, 2.2vw, 1.45rem);
+          font-weight: 700;
+          line-height: 1.3;
+          color: #12140E;
+          margin: 0 0 10px 0;
+        }
+        .post-magazine-card__lead {
+          font-size: 0.96rem;
+          line-height: 1.6;
+          color: #5E594D;
+          margin: 0;
+        }
+        .post-magazine-card__footer {
+          margin-top: 16px;
+        }
+        .post-magazine-card__btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.88rem;
+          font-weight: 700;
+          color: #B8842C;
+        }
+
+        .blog-cta-banner {
+          background: #ffffff;
+          border: 1px solid rgba(184, 132, 44, 0.25);
+          border-radius: 22px;
+          padding: 32px 28px;
+          margin-top: 40px;
+          box-shadow: 0 10px 30px rgba(13,15,10,0.03);
+        }
+        .blog-cta-banner h2 {
+          font-family: var(--f-head, "Playfair Display", Georgia, serif);
+          font-size: 1.45rem;
+          color: #12140E;
+          font-weight: 700;
+          margin: 0 0 8px 0;
+        }
+        .blog-cta-banner p {
+          color: #5E594D;
+          font-size: 0.96rem;
+          line-height: 1.6;
+          margin: 0 0 20px 0;
+        }
+        .blog-cta-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        .blog-cta-actions .btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+          .post-magazine-card {
+            flex-direction: column !important;
+            gap: 16px !important;
+            padding: 16px !important;
+          }
+          .post-magazine-card__thumb {
+            flex: none !important;
+            width: 100% !important;
+            height: 200px !important;
+          }
+          .post-magazine-card__body {
+            padding: 0 !important;
+          }
+          .post-magazine-card__title {
+            font-size: 1.25rem !important;
+          }
+          .blog-cta-banner {
+            padding: 22px 18px !important;
+          }
+          .blog-cta-actions .btn {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
