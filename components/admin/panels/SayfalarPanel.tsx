@@ -44,9 +44,9 @@ export default function SayfalarPanel() {
     setSaving(true);
     setMessage("");
     try {
-      const res = await api.updateContent({ sayfalar });
+      const res = await api.updateContent({ sayfalar, legal: content.legal });
       setContent(res.data);
-      setMessage("Sayfa metinleri kaydedildi.");
+      setMessage("Sayfa ve Yasal/KVKK metinleri başarıyla kaydedildi.");
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Kayıt başarısız");
     } finally {
@@ -261,6 +261,277 @@ export default function SayfalarPanel() {
         </div>
       </section>
 
+      {/* Yasal & KVKK Sayfaları Yönetimi */}
+      <section className="mb-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
+        <h2 className="mb-2 text-lg font-semibold text-[#EEE9E0]">Yasal & KVKK Sayfaları</h2>
+        <p className="mb-6 text-xs text-[#6B7A94]">
+          Gizlilik Politikası, Rezervasyon / İptal Koşulları, Kullanım Koşulları, Çerez Politikası ve Ticari Bilgiler sayfalarının içerikleri.
+        </p>
+
+        <div className="space-y-6">
+          {/* 1. Gizlilik Politikası & KVKK */}
+          <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+            <h3 className="text-sm font-semibold text-[#D9A441] mb-3">1. Gizlilik Politikası ve KVKK Metni (/gizlilik-politikasi)</h3>
+            <div className="grid gap-3">
+              <Input
+                label="Sayfa Başlığı"
+                value={content.legal?.gizlilikPolitikasi?.title || ""}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    legal: {
+                      ...content.legal,
+                      gizlilikPolitikasi: {
+                        ...content.legal?.gizlilikPolitikasi,
+                        title: e.target.value,
+                        body: content.legal?.gizlilikPolitikasi?.body || "",
+                      },
+                    },
+                  })
+                }
+              />
+              <Input
+                label="Özet / Giriş Metni"
+                value={content.legal?.gizlilikPolitikasi?.lead || ""}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    legal: {
+                      ...content.legal,
+                      gizlilikPolitikasi: {
+                        ...content.legal?.gizlilikPolitikasi,
+                        title: content.legal?.gizlilikPolitikasi?.title || "",
+                        lead: e.target.value,
+                        body: content.legal?.gizlilikPolitikasi?.body || "",
+                      },
+                    },
+                  })
+                }
+              />
+              <div>
+                <label className="mb-1 block text-xs font-medium text-[#8A9BB0]">Detaylı Metin & Maddeler</label>
+                <textarea
+                  className={fieldClass}
+                  rows={6}
+                  value={content.legal?.gizlilikPolitikasi?.body || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      legal: {
+                        ...content.legal,
+                        gizlilikPolitikasi: {
+                          ...content.legal?.gizlilikPolitikasi,
+                          title: content.legal?.gizlilikPolitikasi?.title || "",
+                          body: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 2. Rezervasyon & İptal Koşulları */}
+          <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+            <h3 className="text-sm font-semibold text-[#D9A441] mb-3">2. Rezervasyon, İptal ve İade Koşulları (/rezervasyon-kosullari)</h3>
+            <div className="grid gap-3">
+              <Input
+                label="Sayfa Başlığı"
+                value={content.legal?.rezervasyonKosullari?.title || ""}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    legal: {
+                      ...content.legal,
+                      rezervasyonKosullari: {
+                        ...content.legal?.rezervasyonKosullari,
+                        title: e.target.value,
+                        body: content.legal?.rezervasyonKosullari?.body || "",
+                      },
+                    },
+                  })
+                }
+              />
+              <Input
+                label="Özet / Giriş Metni"
+                value={content.legal?.rezervasyonKosullari?.lead || ""}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    legal: {
+                      ...content.legal,
+                      rezervasyonKosullari: {
+                        ...content.legal?.rezervasyonKosullari,
+                        title: content.legal?.rezervasyonKosullari?.title || "",
+                        lead: e.target.value,
+                        body: content.legal?.rezervasyonKosullari?.body || "",
+                      },
+                    },
+                  })
+                }
+              />
+              <div>
+                <label className="mb-1 block text-xs font-medium text-[#8A9BB0]">Detaylı Metin & Maddeler</label>
+                <textarea
+                  className={fieldClass}
+                  rows={6}
+                  value={content.legal?.rezervasyonKosullari?.body || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      legal: {
+                        ...content.legal,
+                        rezervasyonKosullari: {
+                          ...content.legal?.rezervasyonKosullari,
+                          title: content.legal?.rezervasyonKosullari?.title || "",
+                          body: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Kullanım Koşulları */}
+          <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+            <h3 className="text-sm font-semibold text-[#D9A441] mb-3">3. Kullanım Koşulları (/kullanim-kosullari)</h3>
+            <div className="grid gap-3">
+              <Input
+                label="Sayfa Başlığı"
+                value={content.legal?.kullanimKosullari?.title || ""}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    legal: {
+                      ...content.legal,
+                      kullanimKosullari: {
+                        ...content.legal?.kullanimKosullari,
+                        title: e.target.value,
+                        body: content.legal?.kullanimKosullari?.body || "",
+                      },
+                    },
+                  })
+                }
+              />
+              <div>
+                <label className="mb-1 block text-xs font-medium text-[#8A9BB0]">Detaylı Metin & Maddeler</label>
+                <textarea
+                  className={fieldClass}
+                  rows={5}
+                  value={content.legal?.kullanimKosullari?.body || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      legal: {
+                        ...content.legal,
+                        kullanimKosullari: {
+                          ...content.legal?.kullanimKosullari,
+                          title: content.legal?.kullanimKosullari?.title || "",
+                          body: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 4. Çerez Politikası */}
+          <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+            <h3 className="text-sm font-semibold text-[#D9A441] mb-3">4. Çerez (Cookie) Politikası (/cerez-politikasi)</h3>
+            <div className="grid gap-3">
+              <Input
+                label="Sayfa Başlığı"
+                value={content.legal?.cerezPolitikasi?.title || ""}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    legal: {
+                      ...content.legal,
+                      cerezPolitikasi: {
+                        ...content.legal?.cerezPolitikasi,
+                        title: e.target.value,
+                        body: content.legal?.cerezPolitikasi?.body || "",
+                      },
+                    },
+                  })
+                }
+              />
+              <div>
+                <label className="mb-1 block text-xs font-medium text-[#8A9BB0]">Detaylı Metin & Maddeler</label>
+                <textarea
+                  className={fieldClass}
+                  rows={5}
+                  value={content.legal?.cerezPolitikasi?.body || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      legal: {
+                        ...content.legal,
+                        cerezPolitikasi: {
+                          ...content.legal?.cerezPolitikasi,
+                          title: content.legal?.cerezPolitikasi?.title || "",
+                          body: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 5. İşletme ve Ticari Bilgiler */}
+          <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+            <h3 className="text-sm font-semibold text-[#D9A441] mb-3">5. İşletme ve Ticari Bilgiler (/ticari-bilgiler)</h3>
+            <div className="grid gap-3">
+              <Input
+                label="Sayfa Başlığı"
+                value={content.legal?.ticariBilgiler?.title || ""}
+                onChange={(e) =>
+                  setContent({
+                    ...content,
+                    legal: {
+                      ...content.legal,
+                      ticariBilgiler: {
+                        ...content.legal?.ticariBilgiler,
+                        title: e.target.value,
+                        body: content.legal?.ticariBilgiler?.body || "",
+                      },
+                    },
+                  })
+                }
+              />
+              <div>
+                <label className="mb-1 block text-xs font-medium text-[#8A9BB0]">Detaylı Metin & Maddeler</label>
+                <textarea
+                  className={fieldClass}
+                  rows={5}
+                  value={content.legal?.ticariBilgiler?.body || ""}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      legal: {
+                        ...content.legal,
+                        ticariBilgiler: {
+                          ...content.legal?.ticariBilgiler,
+                          title: content.legal?.ticariBilgiler?.title || "",
+                          body: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div className="flex justify-end">
         <Button onClick={save} disabled={saving}>
           {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
@@ -270,3 +541,4 @@ export default function SayfalarPanel() {
     </>
   );
 }
+

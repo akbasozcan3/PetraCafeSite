@@ -356,10 +356,22 @@ export interface WaFloatContent {
   ariaLabel: string;
 }
 
+export interface LegalPageContent {
+  title: string;
+  lead?: string;
+  body: string;
+  updatedAt?: string;
+}
+
 export interface LegalContent {
-  kvkk: string;
-  gizlilik: string;
-  cerez: string;
+  kvkk?: string;
+  gizlilik?: string;
+  cerez?: string;
+  gizlilikPolitikasi?: LegalPageContent;
+  rezervasyonKosullari?: LegalPageContent;
+  kullanimKosullari?: LegalPageContent;
+  cerezPolitikasi?: LegalPageContent;
+  ticariBilgiler?: LegalPageContent;
 }
 
 export interface YorumlarMeta {

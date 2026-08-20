@@ -331,9 +331,102 @@ export const DEFAULT_CONTENT: SiteContent = {
     ariaLabel: "WhatsApp ile rezervasyon",
   },
   legal: {
-    kvkk: "Kişisel verileriniz 6698 sayılı KVKK kapsamında yalnızca rezervasyon ve iletişim amaçlı işlenir.",
-    gizlilik: "Gizlilik politikamız: iletişim bilgileriniz üçüncü taraflarla paylaşılmaz.",
-    cerez: "Bu site temel işlevler için zorunlu çerezler kullanır.",
+    kvkk: "Kişisel verileriniz 6698 sayılı KVKK kapsamında yalnızca rezervasyon, müşteri memnuniyeti ve iletişim amaçlı işlenir.",
+    gizlilik: "Gizlilik politikamız: İletişim ve rezervasyon bilgileriniz asla üçüncü taraflarla paylaşılmaz ve güvenli sunucularda saklanır.",
+    cerez: "Sitemizde kullanıcı deneyimini artırmak ve rezervasyon adımlarını güvenle tamamlamak için temel çerezler kullanılmaktadır.",
+    gizlilikPolitikasi: {
+      title: "Gizlilik Politikası ve KVKK Aydınlatma Metni",
+      lead: "Petra Cafe Restaurant olarak kişisel verilerinizin güvenliğine ve gizliliğine azami önem veriyoruz.",
+      body: `Petra Cafe & Restaurant (“İşletme”) olarak, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) uyarınca Veri Sorumlusu sıfatıyla, ziyaretçilerimizin ve misafirlerimizin kişisel verilerini aşağıda açıklanan çerçevede işlemekteyiz.
+
+1. İŞLENEN KİŞİSEL VERİLER
+Web sitemiz üzerinden rezervasyon formu, iletişim formu veya telefon/WhatsApp hatlarımız aracılığıyla toplanan ad-soyad, telefon numarası, e-posta adresi, rezervasyon tarihi/saati ve rezervasyon notları gibi verileriniz işlenmektedir.
+
+2. KİŞİSEL VERİLERİN İŞLENME AMACI
+Toplanan kişisel verileriniz;
+• Rezervasyon taleplerinizin alınması, teyit edilmesi ve masanızın hazırlanması,
+• Rezervasyon onay, iptal veya değişiklik durumlarında tarafınıza SMTP / SMS / Telefon yoluyla bilgilendirme yapılması,
+• İletişim taleplerinize ve sorularınıza yanıt verilmesi,
+• Yasal yükümlülüklerimizin yerine getirilmesi amacıyla işlenmektedir.
+
+3. VERİLERİN AKTARILMASI VE GÜVENLİĞİ
+Kişisel verileriniz ticari veya reklam amacıyla kesinlikle üçüncü şahıslara veya kurumlara satılmaz, kiralanmaz ya da aktarılmaz. Yalnızca yasal zorunluluk halinde yetkili kamu kurum ve kuruluşları ile paylaşılabilir.
+
+4. HAKLARINIZ (KVKK MADDE 11)
+KVKK’nın 11. maddesi uyarınca işletmemize başvurarak verilerinizin işlenip işlenmediğini öğrenme, işlenmişse bilgi talep etme, silinmesini veya düzeltilmesini isteme haklarına sahipsiniz. Başvurularınızı petracaferestaurant@gmail.com adresine iletebilirsiniz.`,
+    },
+    rezervasyonKosullari: {
+      title: "Rezervasyon, İptal ve İade Koşulları",
+      lead: "Masa, havuz ve loca rezervasyonlarınızda geçerli olan rezervasyon ve kullanım kuralları.",
+      body: `1. REZERVASYON OLUŞTURMA VE ONAY SÜRECİ
+• Web sitemiz üzerinden oluşturulan rezervasyon talepleri sisteme "Bekliyor" durumunda kaydedilir.
+• Yetkili ekibimiz talebinizi ve masa müsaitliğini inceledikten sonra onaylar. Onaylandığında rezervasyon formunda belirttiğiniz e-posta adresinize ve/veya telefonunuza onay bildirimi iletilir.
+• İnteraktif masa planı üzerinden seçilen masalar, restoran operasyonel zorunlulukları veya özel hava koşulları gerektirmedikçe misafirimiz için ayrılır.
+
+2. GECİKME VE MASA TUTMA SÜRESİ
+• Rezervasyon saatinden itibaren masanız 15 dakika boyunca adınıza rezerve olarak tutulur.
+• 15 dakikayı aşan ve işletmemize önceden bildirilmeyen gecikmelerde rezervasyon otomatik olarak iptal edilebilir ve masa sıradaki misafirlere açılabilir.
+
+3. İPTAL VE DEĞİŞİKLİK TALEPLERİ
+• Rezervasyonunuzu iptal etmek veya tarih/saat değişikliği yapmak için en az 2 saat öncesinden 0530 608 90 51 numaralı telefonumuzdan veya WhatsApp hattımızdan bize bilgi vermeniz rica olunur.
+• Özel grup organizasyonları ve loca kapatma rezervasyonlarında iptal bildirim süresi en az 24 saattir.
+
+4. HAVUZ VE TESİS KURALLARI
+• Havuz kullanımı için bone ve uygun mayo/şort zorunludur.
+• Dışarıdan yiyecek ve içecek getirilmesi hijyen ve işletme kuralları gereği kabul edilmemektedir.
+• 0–2 yaş çocuklar için havuz kullanımı ücretsizdir.`,
+    },
+    kullanimKosullari: {
+      title: "Kullanım Koşulları",
+      lead: "Petra Cafe Restaurant web sitesini ziyaret eden tüm kullanıcılar aşağıdaki koşulları kabul etmiş sayılır.",
+      body: `1. GENEL ŞARTLAR
+Bu internet sitesine giriş yaparak ve sitedeki servisleri (menü inceleme, online rezervasyon, masa planı, iletişim) kullanarak işbu Kullanım Koşulları'nı kabul etmiş sayılırsınız.
+
+2. FİKRİ MÜLKİYET
+Sitede yer alan tüm metinler, görseller, logolar, havuz krokisi, menü içerikleri ve yazılım kodları Petra Cafe & Restaurant'a aittir. İzinsiz kopyalanamaz, çoğaltılamaz ve ticari amaçla kullanılamaz.
+
+3. HİZMET DEĞİŞİKLİKLERİ
+Petra Cafe Restaurant, menü fiyatlarında, çalışma saatlerinde ve hizmet şartlarında önceden haber vermeksizin güncelleme yapma hakkını saklı tutar.
+
+4. KULLANICI SORUMLULUĞU
+Kullanıcılar rezervasyon formuna doğru ve eksiksiz bilgi girmekle yükümlüdür. Yanıltıcı bilgi veya kötü niyetli rezervasyon girişimlerinde işletmenin rezervasyonu tek taraflı iptal etme hakkı saklıdır.`,
+    },
+    cerezPolitikasi: {
+      title: "Çerez (Cookie) Politikası",
+      lead: "Web sitemizde kullanılan çerez türleri ve çerez tercihlerinizi nasıl yönetebileceğiniz hakkında bilgilendirme.",
+      body: `1. ÇEREZ NEDİR?
+Çerezler, web sitemizi ziyaret ettiğinizde tarayıcınız aracılığıyla cihazınıza kaydedilen küçük metin dosyalarıdır.
+
+2. SİTEMİZDE KULLANILAN ÇEREZLER
+• Zorunlu Çerezler: Web sitemizin güvenli çalışması, rezervasyon formunun iletilmesi ve oturum güvenliği için gereklidir.
+• İşlevsel Çerezler: Masa seçim tercihleriniz, tema tercihleri gibi deneyiminizi kolaylaştıran tercihleri hatırlar.
+• Performans ve Analitik Çerezler: Sitemizin hızını ve ziyaretçi trafiğini anonim olarak ölçümlememize yardımcı olur.
+
+3. ÇEREZLERİN YÖNETİMİ
+Tarayıcınızın ayarlar menüsünden çerezleri dilediğiniz zaman silebilir veya çerez kullanımını engelleyebilirsiniz. Ancak zorunlu çerezlerin kapatılması durumunda rezervasyon formu gibi temel özellikler düzgün çalışmayabilir.`,
+    },
+    ticariBilgiler: {
+      title: "İşletme ve Ticari Bilgiler",
+      lead: "Petra Cafe Restaurant yasal işletme unvanı, açık adres ve resmi iletişim bilgileri.",
+      body: `İŞLETME ÜNVANI:
+Petra Cafe Restaurant & Yaşam Merkezi
+
+ADRES:
+Merkez Mahallesi, Çekmeköy / İstanbul
+
+İLETİŞİM BİLGİLERİ:
+• Telefon: 0530 608 90 51
+• E-Posta: petracaferestaurant@gmail.com
+• WhatsApp: +90 530 608 90 51
+• Instagram: @petracaferestaurant
+
+ÇALIŞMA SAATLERİ:
+• Cafe & Restaurant: Pazartesi – Pazar: 08:00 – 24:00
+• Açık Yüzme Havuzu: 09:00 – 18:00
+
+FAALİYET ALANI:
+Yiyecek & İçecek Hizmetleri, Cafe & Restoran İşletmeciliği, Açık Yüzme Havuzu ve Özel Organizasyonlar`,
+    },
   },
   brand: {
     displayName: "Petra Cafe Restaurant",
