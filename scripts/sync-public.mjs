@@ -250,4 +250,18 @@ for (const file of pages) {
   }
 }
 
+// Sync Petra Logo as Favicons
+const logoPng = path.join(root, "public", "assets", "cms", "logo.png");
+const petraSvg = path.join(root, "assets", "img", "petra-favicon.svg");
+if (fs.existsSync(logoPng)) {
+  copyFile(logoPng, path.join(root, "public", "icon.png"));
+  copyFile(logoPng, path.join(root, "public", "apple-touch-icon.png"));
+  copyFile(logoPng, path.join(root, "public", "favicon.ico"));
+  copyFile(logoPng, path.join(root, "favicon.ico"));
+}
+if (fs.existsSync(petraSvg)) {
+  copyFile(petraSvg, path.join(root, "public", "favicon.svg"));
+}
+
 console.log(`sync-public ok — cache=${CACHE}, pages patched=${patched}`);
+
