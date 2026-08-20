@@ -831,6 +831,64 @@ html.scene-ready.scene-painted #scene {
   color: var(--brass, #b8842c);
 }
 
+.site-shop .ys-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 28px;
+  padding: 34px 40px;
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse 65% 85% at 92% 18%, rgba(217, 164, 65, 0.16), transparent 60%),
+    linear-gradient(135deg, #ffffff 0%, #fbf8f1 50%, #f5eedd 100%);
+  border: 1px solid rgba(217, 164, 65, 0.28);
+  box-shadow: 0 14px 40px rgba(13, 15, 10, 0.035);
+}
+.site-shop .ys-hero::after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  bottom: -30px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(217, 164, 65, 0.12), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.site-shop .ys-hero--sm {
+  padding: 28px 34px;
+}
+.site-shop .ys-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 4px 12px;
+  background: rgba(217, 164, 65, 0.12);
+  border: 1px solid rgba(217, 164, 65, 0.28);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass-lo, #b8842c);
+  font-weight: 700;
+}
+.site-shop .ys-hero h1 {
+  margin: 0 0 10px;
+  font-family: var(--f-head, "Playfair Display", Georgia, serif);
+  font-size: clamp(1.95rem, 3.4vw, 2.7rem);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--ink, #12140e);
+  font-weight: 700;
+}
+.site-shop .ys-hero p {
+  margin: 0;
+  color: var(--muted, #5e594d);
+  max-width: 62ch;
+  font-size: 1.04rem;
+  line-height: 1.6;
+}
+
 .site-shop .blog-list {
   display: grid;
   gap: 24px;
