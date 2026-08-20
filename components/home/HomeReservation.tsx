@@ -228,54 +228,69 @@ export default function HomeReservation({
         {/* Sağ Alan: Adımlı Rezervasyon Formu (Steps Wizard) */}
         <div className="form petra-form rsv__form" data-fade="">
           {/* STEPPER BAŞLIK & İNDİKATÖRÜ */}
-          <div className="mb-5 border-b border-white/10 pb-4">
-            <div className="flex items-center justify-between gap-2 mb-3">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#D9A441] flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5" />
-                Adım {currentStep} / 3
-              </span>
-              <span className="text-xs text-white/50">
-                {currentStep === 1
-                  ? "Tarih, Saat & Kişi"
-                  : currentStep === 2
-                  ? "Masa & Loca Seçimi"
-                  : "İletişim & Onay"}
-              </span>
-            </div>
+          <div className="rsv-steps__header">
+            <span className="rsv-steps__badge">
+              <Sparkles style={{ width: 13, height: 13 }} />
+              Adım {currentStep} / 3
+            </span>
+            <span className="rsv-steps__title">
+              {currentStep === 1
+                ? "Tarih, Saat & Kişi"
+                : currentStep === 2
+                ? "Masa & Loca Seçimi"
+                : "İletişim & Onay"}
+            </span>
+          </div>
 
-            {/* İlerleme Çubuğu */}
-            <div className="grid grid-cols-3 gap-2">
-              <div
-                onClick={() => setCurrentStep(1)}
-                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentStep >= 1 ? "bg-[#D9A441]" : "bg-white/10"
-                }`}
-                title="1. Adım: Tarih & Kişi"
-              />
-              <div
-                onClick={() => (time ? setCurrentStep(2) : null)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  time ? "cursor-pointer" : "cursor-not-allowed"
-                } ${currentStep >= 2 ? "bg-[#D9A441]" : "bg-white/10"}`}
-                title="2. Adım: Masa Seçimi"
-              />
-              <div
-                onClick={() => (time ? setCurrentStep(3) : null)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  time ? "cursor-pointer" : "cursor-not-allowed"
-                } ${currentStep === 3 ? "bg-[#D9A441]" : "bg-white/10"}`}
-                title="3. Adım: Onay"
-              />
-            </div>
+          {/* İlerleme Çubuğu */}
+          <div className="rsv-steps__bar">
+            <div
+              onClick={() => setCurrentStep(1)}
+              className={`rsv-steps__segment ${
+                currentStep === 1 ? "is-active" : currentStep > 1 ? "is-passed" : ""
+              }`}
+              title="1. Adım: Tarih & Kişi"
+            />
+            <div
+              onClick={() => (time ? setCurrentStep(2) : null)}
+              className={`rsv-steps__segment ${
+                currentStep === 2 ? "is-active" : currentStep > 2 ? "is-passed" : ""
+              }`}
+              title="2. Adım: Masa Seçimi"
+            />
+            <div
+              onClick={() => (time ? setCurrentStep(3) : null)}
+              className={`rsv-steps__segment ${
+                currentStep === 3 ? "is-active" : ""
+              }`}
+              title="3. Adım: Onay"
+            />
           </div>
 
           {status === "ok" ? (
-            <div className="petra-form__success text-center py-8 animate-fadeIn">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 mb-4 text-2xl font-bold">
+            <div className="petra-form__success" style={{ textAlign: "center", padding: "24px 8px" }}>
+              <div
+                style={{
+                  width: 56,
+                  height: 56,
+                  borderRadius: "50%",
+                  background: "rgba(16, 185, 129, 0.15)",
+                  color: "#10b981",
+                  border: "1px solid rgba(16, 185, 129, 0.3)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  margin: "0 auto 16px",
+                }}
+              >
                 ✓
               </div>
-              <h3 className="text-xl font-bold text-[#F4EEE1] mb-2">Talebiniz Alındı!</h3>
-              <p className="text-sm text-white/80 max-w-sm mx-auto leading-relaxed">
+              <h3 style={{ margin: "0 0 8px", fontSize: "1.25rem", color: "var(--ink, #0d0f0a)" }}>
+                Talebiniz Alındı!
+              </h3>
+              <p style={{ margin: "0 0 20px", fontSize: "0.9rem", color: "var(--muted, #6e6a5c)", lineHeight: 1.5 }}>
                 {copy?.successMetin ||
                   "Rezervasyon talebiniz kaydedildi. Ekibimiz en kısa sürede sizinle iletişime geçerek teyit edecektir."}
               </p>
@@ -285,7 +300,8 @@ export default function HomeReservation({
                   setStatus("idle");
                   setCurrentStep(1);
                 }}
-                className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#D9A441] text-[#0D0F0A] font-bold text-xs hover:bg-[#E5B555] transition shadow-md"
+                className="btn btn--gold"
+                style={{ minHeight: 46, padding: "0 24px" }}
               >
                 Yeni Rezervasyon Oluştur
               </button>
@@ -296,11 +312,11 @@ export default function HomeReservation({
               {/* ADIM 1: TARİH, SAAT VE KİŞİ SAYISI */}
               {/* ========================================================================= */}
               {currentStep === 1 && (
-                <div className="space-y-4 animate-fadeIn">
+                <div>
                   <div className="petra-form__head">
-                    <p className="petra-form__kicker">1. Adım</p>
-                    <h3 className="text-lg font-bold text-[#F4EEE1]">Ne zaman gelmek istersiniz?</h3>
-                    <p className="text-xs text-white/60">Tarih, saat ve kişi sayısını belirleyin.</p>
+                    <p className="petra-form__kicker">1. ADIM</p>
+                    <h3>Ne zaman gelmek istersiniz?</h3>
+                    <p>Tarih, saat ve kişi sayısını belirleyin.</p>
                   </div>
 
                   <div className="petra-form__row petra-form__row--date">
@@ -379,17 +395,17 @@ export default function HomeReservation({
                     </div>
                   </div>
 
-                  {error && <p className="petra-form__err text-xs text-red-400">{error}</p>}
+                  {error && <p className="petra-form__err" style={{ color: "#dc2626", fontSize: 13, marginTop: 8 }}>{error}</p>}
 
-                  <div className="pt-3">
+                  <div className="rsv-steps__actions">
                     <button
                       type="button"
                       onClick={handleNextToStep2}
                       disabled={closed || !time}
-                      className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#D9A441] text-[#0D0F0A] font-bold text-sm hover:bg-[#E5B555] transition shadow-lg disabled:opacity-50"
+                      className="rsv-steps__btn-next"
                     >
                       <span>Masamı Seç (2. Adım)</span>
-                      <ArrowRight className="h-4 w-4" />
+                      <ArrowRight style={{ width: 16, height: 16 }} />
                     </button>
                   </div>
                 </div>
@@ -399,24 +415,22 @@ export default function HomeReservation({
               {/* ADIM 2: İNTERAKTİF MASA & LOCA SEÇİMİ (KROKİDEN) */}
               {/* ========================================================================= */}
               {currentStep === 2 && (
-                <div className="space-y-4 animate-fadeIn">
+                <div>
                   <div className="petra-form__head">
-                    <div className="flex items-center justify-between gap-2">
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                       <div>
-                        <p className="petra-form__kicker">2. Adım</p>
-                        <h3 className="text-lg font-bold text-[#F4EEE1]">Masa / Loca Seçin</h3>
+                        <p className="petra-form__kicker">2. ADIM</p>
+                        <h3>Masa / Loca Seçin</h3>
                       </div>
-                      <span className="text-xs text-[#D9A441] bg-[#D9A441]/10 px-2.5 py-1 rounded-lg border border-[#D9A441]/20">
+                      <span className="rsv-steps__badge">
                         {date} · {time} · {guests} Kişi
                       </span>
                     </div>
-                    <p className="text-xs text-white/70">
-                      Havuz krokisindeki yeşil masalara dokunarak yerinizi ayırtabilirsiniz.
-                    </p>
+                    <p>Havuz krokisindeki yeşil masalara dokunarak yerinizi ayırtabilirsiniz.</p>
                   </div>
 
                   {/* İnteraktif Kroki SVG Bileşeni */}
-                  <div className="border border-white/10 rounded-2xl p-2 sm:p-3 bg-[#0D1117] shadow-inner">
+                  <div className="rsv-floorplan-container">
                     <InteractiveFloorPlan
                       selectedTableId={selectedTable?.id}
                       onSelectTable={(tbl) => setSelectedTable(tbl)}
@@ -428,17 +442,29 @@ export default function HomeReservation({
                   </div>
 
                   {/* Seçilen Masa Durum Bildirimi */}
-                  <div className="p-3.5 rounded-xl border border-white/10 bg-white/[0.03] flex items-center justify-between gap-3">
-                    <div className="min-w-0">
-                      <span className="text-[10px] uppercase tracking-wider text-white/50 block">Seçilen Yer</span>
+                  <div
+                    style={{
+                      padding: "12px 14px",
+                      borderRadius: 14,
+                      background: "#f6f1e6",
+                      border: "1px solid rgba(13, 15, 10, 0.12)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 8,
+                      marginBottom: 12,
+                    }}
+                  >
+                    <div>
+                      <span style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--muted, #6e6a5c)", display: "block" }}>
+                        Seçilen Yer
+                      </span>
                       {selectedTable ? (
-                        <p className="text-sm font-bold text-[#D9A441] truncate flex items-center gap-1.5">
-                          <span>🪑</span>
-                          <span>{selectedTable.name}</span>
-                          <span className="text-xs text-white/60 font-normal">({selectedTable.capacity} Kişilik)</span>
+                        <p style={{ margin: "2px 0 0", fontWeight: 700, color: "var(--brass-lo, #b8842c)", fontSize: 14 }}>
+                          🪑 {selectedTable.name} <span style={{ fontSize: 12, color: "#6e6a5c", fontWeight: 400 }}>({selectedTable.capacity} Kişilik)</span>
                         </p>
                       ) : (
-                        <p className="text-xs text-white/80 font-medium">
+                        <p style={{ margin: "2px 0 0", fontWeight: 600, color: "var(--ink, #0d0f0a)", fontSize: 13 }}>
                           Otomatik Masa (Restoranda Belirlenecek)
                         </p>
                       )}
@@ -447,7 +473,7 @@ export default function HomeReservation({
                       <button
                         type="button"
                         onClick={() => setSelectedTable(null)}
-                        className="text-xs text-red-300 hover:text-red-200 underline shrink-0"
+                        style={{ background: "none", border: "none", color: "#dc2626", fontSize: 12, cursor: "pointer", textDecoration: "underline" }}
                       >
                         Seçimi Kaldır
                       </button>
@@ -455,22 +481,22 @@ export default function HomeReservation({
                   </div>
 
                   {/* Adım Butonları */}
-                  <div className="flex items-center gap-3 pt-2">
+                  <div className="rsv-steps__actions">
                     <button
                       type="button"
                       onClick={() => setCurrentStep(1)}
-                      className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-xl border border-white/15 text-white/80 font-semibold text-xs hover:bg-white/5 transition"
+                      className="rsv-steps__btn-prev"
                     >
-                      <ArrowLeft className="h-4 w-4" />
+                      <ArrowLeft style={{ width: 16, height: 16 }} />
                       <span>Geri (Tarih)</span>
                     </button>
                     <button
                       type="button"
                       onClick={handleNextToStep3}
-                      className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-[#D9A441] text-[#0D0F0A] font-bold text-xs hover:bg-[#E5B555] transition shadow-lg"
+                      className="rsv-steps__btn-next"
                     >
                       <span>İletişim Bilgileri (3. Adım)</span>
-                      <ArrowRight className="h-4 w-4" />
+                      <ArrowRight style={{ width: 16, height: 16 }} />
                     </button>
                   </div>
                 </div>
@@ -480,30 +506,27 @@ export default function HomeReservation({
               {/* ADIM 3: İLETİŞİM BİLGİLERİ & REZERVASYON ÖZETİ */}
               {/* ========================================================================= */}
               {currentStep === 3 && (
-                <form onSubmit={submit} className="space-y-4 animate-fadeIn">
+                <form onSubmit={submit}>
                   <div className="petra-form__head">
-                    <p className="petra-form__kicker">3. Adım (Son)</p>
-                    <h3 className="text-lg font-bold text-[#F4EEE1]">Misafir Bilgileri</h3>
-                    <p className="text-xs text-white/60">Talebinizi onaylayabilmemiz için bilgilerinizi girin.</p>
+                    <p className="petra-form__kicker">3. ADIM (SON)</p>
+                    <h3>Misafir Bilgileri</h3>
+                    <p>Talebinizi onaylayabilmemiz için bilgilerinizi girin.</p>
                   </div>
 
                   {/* Rezervasyon Özet Kartı */}
-                  <div className="p-3.5 rounded-xl border border-[#D9A441]/30 bg-[#D9A441]/10 text-xs text-[#F4EEE1] space-y-1.5">
-                    <p className="font-bold text-[#D9A441] text-[11px] uppercase tracking-wider">Rezervasyon Özeti</p>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5 text-[#D9A441]" /> {date}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-3.5 w-3.5 text-[#D9A441]" /> {time}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users className="h-3.5 w-3.5 text-[#D9A441]" /> {guests} Kişi
-                      </span>
-                      <span className="flex items-center gap-1 font-semibold text-[#D9A441]">
-                        🪑 {selectedTable ? selectedTable.name : "Otomatik Masa"}
-                      </span>
-                    </div>
+                  <div className="rsv-steps__summary">
+                    <span className="rsv-steps__summary-tag">
+                      <Calendar style={{ width: 14, height: 14, color: "var(--brass-lo, #b8842c)" }} /> {date}
+                    </span>
+                    <span className="rsv-steps__summary-tag">
+                      <Clock style={{ width: 14, height: 14, color: "var(--brass-lo, #b8842c)" }} /> {time}
+                    </span>
+                    <span className="rsv-steps__summary-tag">
+                      <Users style={{ width: 14, height: 14, color: "var(--brass-lo, #b8842c)" }} /> {guests} Kişi
+                    </span>
+                    <span className="rsv-steps__summary-tag" style={{ color: "var(--brass-lo, #b8842c)" }}>
+                      🪑 {selectedTable ? selectedTable.name : "Otomatik Masa"}
+                    </span>
                   </div>
 
                   <div className="petra-form__row">
@@ -548,9 +571,9 @@ export default function HomeReservation({
                     </div>
                   </div>
 
-                  <div className="field">
+                  <div className="field" style={{ marginTop: 12 }}>
                     <label htmlFor="rsv-email">
-                      E-Posta <span className="text-[#D9A441] text-[10px] font-normal">(Onay maili almak için opsiyonel)</span>
+                      E-Posta <span style={{ fontSize: 11, fontWeight: 400, color: "var(--brass-lo, #b8842c)" }}>(Onay maili almak için opsiyonel)</span>
                     </label>
                     <input
                       id="rsv-email"
@@ -561,12 +584,12 @@ export default function HomeReservation({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
-                    <p className="petra-form__hint text-xs text-white/50 mt-1">
+                    <p className="petra-form__hint">
                       Rezervasyon onayınız bu adrese e-posta olarak da iletilir.
                     </p>
                   </div>
 
-                  <div className="field">
+                  <div className="field" style={{ marginTop: 12 }}>
                     <label htmlFor="rsv-note">{copy?.labelNot || "Özel Not / İstek"}</label>
                     <textarea
                       id="rsv-note"
@@ -592,29 +615,29 @@ export default function HomeReservation({
                     />
                   </div>
 
-                  {error && <p className="petra-form__err text-xs text-red-400">{error}</p>}
+                  {error && <p className="petra-form__err" style={{ color: "#dc2626", fontSize: 13, marginTop: 8 }}>{error}</p>}
 
-                  <div className="flex items-center gap-3 pt-2">
+                  <div className="rsv-steps__actions">
                     <button
                       type="button"
                       onClick={() => setCurrentStep(2)}
-                      className="flex-1 flex items-center justify-center gap-1.5 py-3.5 rounded-xl border border-white/15 text-white/80 font-semibold text-xs hover:bg-white/5 transition"
+                      className="rsv-steps__btn-prev"
                     >
-                      <ArrowLeft className="h-4 w-4" />
+                      <ArrowLeft style={{ width: 16, height: 16 }} />
                       <span>Geri (Masa)</span>
                     </button>
 
                     <button
                       type="submit"
                       disabled={status === "saving"}
-                      className="flex-[2] flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#D9A441] text-[#0D0F0A] font-bold text-sm hover:bg-[#E5B555] transition shadow-xl disabled:opacity-50"
+                      className="rsv-steps__btn-next"
                     >
                       {status === "saving" ? (
                         <span>{copy?.gonderiliyor || "İletiliyor…"}</span>
                       ) : (
                         <>
                           <span>{copy?.ctaLabel || "Rezervasyonu Tamamla"}</span>
-                          <Check className="h-4 w-4" />
+                          <Check style={{ width: 16, height: 16 }} />
                         </>
                       )}
                     </button>
