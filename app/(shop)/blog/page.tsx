@@ -65,7 +65,7 @@ export default async function BlogIndexPage() {
             return (
               <Link className="post" href={`/blog/${m.slug}`} key={m.slug}>
                 {cover ? (
-                  <div style={{ width: "100%", height: 260, borderRadius: 14, overflow: "hidden", background: "#f0ede6", marginBottom: 12 }}>
+                  <div className="post__thumb">
                     <SafeImg
                       src={cover}
                       alt={m.baslik}
@@ -73,13 +73,18 @@ export default async function BlogIndexPage() {
                     />
                   </div>
                 ) : null}
-                <div className="post__meta">
-                  {m.kategori ? <span>{m.kategori}</span> : null}
-                  {m.tarih ? <span>{m.tarih}</span> : null}
-                  {m.okumaSuresi ? <span>{m.okumaSuresi}</span> : null}
+                <div className="post__content">
+                  <div className="post__meta">
+                    {m.kategori ? <span>{m.kategori}</span> : null}
+                    {m.tarih ? <span>{m.tarih}</span> : null}
+                    {m.okumaSuresi ? <span>{m.okumaSuresi}</span> : null}
+                  </div>
+                  <h2>{m.baslik}</h2>
+                  {m.ozet ? <p>{m.ozet}</p> : null}
+                  <span className="post__more">
+                    Yazıyı oku →
+                  </span>
                 </div>
-                <h2>{m.baslik}</h2>
-                {m.ozet ? <p>{m.ozet}</p> : null}
               </Link>
             );
           })}
@@ -90,13 +95,18 @@ export default async function BlogIndexPage() {
         <h2>{b?.ctaBaslik || "Masa veya havuz için yazın"}</h2>
         <p>
           {b?.ctaMetin ||
-            "Rezervasyon ve sorularınız için bizi arayın veya Instagram’dan yazın."}
+            "Rezervasyon ve sorularınız için bizi arayın veya formdan yazın."}
         </p>
-        {telHref ? (
-          <a href={`tel:${telHref}`} className="btn btn--lg">
-            {tel}
-          </a>
-        ) : null}
+        <div className="shop-actions">
+          <Link href="/#rezervasyon" className="btn btn--lg btn--light">
+            Rezervasyon Yap
+          </Link>
+          {telHref ? (
+            <a href={`tel:${telHref}`} className="btn btn--lg btn--ghost">
+              📞 {tel}
+            </a>
+          ) : null}
+        </div>
       </div>
     </div>
   );

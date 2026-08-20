@@ -76,13 +76,18 @@ export default function SiteFault({
   lead,
   primary,
   secondary,
+  logoUrl,
 }: {
   kicker?: string;
   title: string;
   lead: string;
   primary: { label: string; href?: string; onClick?: () => void };
   secondary?: { label: string; href?: string };
+  logoUrl?: string;
 }) {
+  const finalLogo = logoUrl || "/assets/img/petra-mark.svg";
+  const isCustomLogo = Boolean(logoUrl && !logoUrl.includes("petra-mark"));
+
   return (
     <main
       style={{
@@ -102,19 +107,21 @@ export default function SiteFault({
       <Corner pos="bl" />
       <Corner pos="br" />
 
-      <div style={{ maxWidth: 460 }}>
+      <div style={{ maxWidth: 480 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/assets/img/petra-mark.svg"
-          alt=""
-          width={220}
-          height={50}
+          src={finalLogo}
+          alt="Petra Logo"
+          width={isCustomLogo ? 90 : 200}
+          height={isCustomLogo ? 90 : 50}
           style={{
             display: "block",
-            width: 200,
-            height: "auto",
+            width: isCustomLogo ? 84 : 180,
+            height: isCustomLogo ? 84 : "auto",
             maxWidth: "70%",
             objectFit: "contain",
+            borderRadius: isCustomLogo ? "50%" : 0,
+            boxShadow: isCustomLogo ? "0 8px 24px rgba(217, 164, 65, 0.2)" : "none",
             margin: "0 auto 20px",
           }}
         />
