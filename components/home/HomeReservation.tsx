@@ -179,27 +179,26 @@ export default function HomeReservation({
           }),
         });
 
-        const rawText = await payRes.text();
-        let payData: { token?: string; error?: string } = {};
-        try {
-          payData = JSON.parse(rawText);
-        } catch {
-          throw new Error("PayTR Sanal POS bağlantısı kurulamadı. Lütfen admin panelinden PayTR anahtarlarınızı kontrol edin veya Normal Rezervasyon seçeneğini kullanın.");
+        const payData = (await payRes.json().catch(() => ({}))) as { success?: boolean; token?: string; error?: string };
+
+        if (!payData?.token) {
+          throw new Error(
+            payData?.error ||
+            "PayTR Sanal POS anahtarları (PAYTR_MERCHANT_ID, PAYTR_MERCHANT_KEY, PAYTR_MERCHANT_SALT) henüz tanımlanmamış. Lütfen Admin Paneli > PayTR sayfasından veya Vercel'den anahtarlarınızı girin."
+          );
         }
 
-        if (!payRes.ok || !payData.token) {
-          throw new Error(payData.error || "PayTR mağaza anahtarları eksik veya ödeme başlatılamadı.");
-        }
         setPaytrToken(payData.token);
         setShowPaytrModal(true);
         setStatus("idle");
         return;
       } catch (err: any) {
         setStatus("err");
-        setError(err?.message || "Ödeme bağlantısı kurulamadı. Normal Rezervasyon seçeneğiyle devam edebilirsiniz.");
+        setError(err?.message || "PayTR ödeme bağlantısı kurulamadı. Dilerseniz 'Normal Rezervasyon' seçeneğiyle ücretsiz devam edebilirsiniz.");
         return;
       }
     }
+
 
 
     // Standart Rezervasyon Talebi (Ücretsiz / Kapıda Ödeme):

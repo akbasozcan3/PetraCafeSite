@@ -270,16 +270,15 @@ async function start3D() {
     }, 400);
     window.setTimeout(() => {
       if (!engine.hasPainted && window.__FIRINCI_SCENE === 'ok') {
-        console.warn('[Fırıncı] Hero ilk kare gecikti → poster');
         showPoster('no-first-paint');
         bindPosterScroll();
       }
     }, 2500);
-    console.info('[Fırıncı] 3B kapı sahnesi aktif.', isNarrow() ? '(mobil)' : '(masaüstü)');
   } catch (err) {
     fail(err?.message || String(err));
     bindPosterScroll();
   }
+
 }
 
 async function boot() {
