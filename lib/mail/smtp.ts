@@ -97,6 +97,7 @@ export async function sendReservationStatusEmail(opts: {
   date: string;
   time: string;
   guests: number;
+  tableName?: string;
   status: "confirmed" | "rejected" | "cancelled";
   note?: string;
 }) {
@@ -120,6 +121,7 @@ export async function sendReservationStatusEmail(opts: {
       { label: "Tarih", value: opts.date },
       { label: "Saat", value: opts.time },
       { label: "Kişi Sayısı", value: `${opts.guests} Kişi` },
+      ...(opts.tableName ? [{ label: "Ayrılan Masa / Yer", value: opts.tableName }] : []),
       { label: "Durum", value: isConfirmed ? "✅ Onaylandı" : "❌ Onaylanamadı" },
       ...(opts.note ? [{ label: "Not", value: opts.note }] : []),
     ],

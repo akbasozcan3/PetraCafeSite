@@ -1,6 +1,13 @@
 import { jsonResponse, errorResponse, parseBody } from "@/lib/api/helpers";
 import { rateLimit } from "@/lib/rate-limit";
-import { createReservation, getReservedTimesForDate, isSlotBooked } from "@/lib/db/inbox";
+import {
+  createReservation,
+  getReservedTimesForDate,
+  getBookedTablesForSlot,
+  isSlotBooked,
+  isTableBooked,
+} from "@/lib/db/inbox";
+import { findTableById } from "@/lib/content/tables-data";
 import { getPublicContent } from "@/lib/db/content";
 import { notifyInbox } from "@/lib/mail/smtp";
 import { brandLogoAbsoluteUrl, buildNotifyEmail } from "@/lib/mail/notify-layout";
@@ -15,10 +22,12 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const date = searchParams.get("date") || localIsoDate();
+    const time = searchParams.get("time")?.trim() || "";
     const bookedTimes = await getReservedTimesForDate(date, true);
-    return jsonResponse({ date, bookedTimes });
+    const bookedTables = time ? await getBookedTablesForSlot(date, time) : [];
+    return jsonResponse({ date, time, bookedTimes, bookedTables });
   } catch {
-    return errorResponse("Saatler alınamadı", 500);
+    return errorResponse("Saatler ve masa durumu alınamadı", 500);
   }
 }
 
@@ -37,6 +46,8 @@ export async function POST(request: Request) {
       date?: string;
       time?: string;
       guests?: number | string;
+      tableId?: string;
+      tableName?: string;
       note?: string;
       website?: string;
     }>(request);
@@ -51,6 +62,8 @@ export async function POST(request: Request) {
     const date = String(body.date || "").trim();
     const time = String(body.time || "").trim();
     const guests = Number(body.guests);
+    const tableId = String(body.tableId || "").trim();
+    let tableName = String(body.tableName || "").trim();
     const note = String(body.note || "").trim();
 
     if (name.length < 2 || name.length > 80) {
@@ -80,18 +93,32 @@ export async function POST(request: Request) {
       );
     }
 
-    // Aynı tarih ve saatte önceden onaylanmış rezervasyon çakışma kontrolü
-    const slotFull = await isSlotBooked(date, time, true);
-    if (slotFull) {
-      return errorResponse(
-        `Seçtiğiniz ${time} saati doludur. Lütfen farklı bir saat veya gün seçiniz.`,
-        400
-      );
-    }
-
     if (!Number.isInteger(guests) || guests < 1 || guests > 20) {
       return errorResponse("Kişi sayısı 1–20 arasında olmalı.", 400);
     }
+
+    // Masa seçilmişse doğrulama
+    if (tableId) {
+      const tableDef = findTableById(tableId);
+      if (!tableDef) {
+        return errorResponse("Seçilen masa geçersiz veya bulunamadı.", 400);
+      }
+      tableName = tableDef.name;
+      if (guests > tableDef.capacity) {
+        return errorResponse(
+          `${tableDef.tableNumber} maksimum ${tableDef.capacity} kişiliktir. Lütfen daha büyük bir loca veya masa seçin.`,
+          400
+        );
+      }
+      const tableOccupied = await isTableBooked(tableId, date, time);
+      if (tableOccupied) {
+        return errorResponse(
+          `Seçtiğiniz ${tableDef.tableNumber} ${date} saat ${time} için başkası tarafından rezerve edilmiştir. Lütfen başka bir masa seçiniz.`,
+          400
+        );
+      }
+    }
+
     if (note.length > 500) {
       return errorResponse("Not en fazla 500 karakter olabilir.", 400);
     }
@@ -103,6 +130,8 @@ export async function POST(request: Request) {
       date,
       time,
       guests,
+      tableId: tableId || undefined,
+      tableName: tableName || undefined,
       note: note || undefined,
     });
 
@@ -118,13 +147,18 @@ export async function POST(request: Request) {
     notifyRows.push(
       { label: "Tarih", value: date },
       { label: "Saat", value: time },
-      { label: "Kişi", value: String(guests) },
-      { label: "Not", value: note }
+      { label: "Kişi", value: String(guests) }
     );
+    if (tableName) {
+      notifyRows.push({ label: "Seçilen Masa", value: tableName });
+    }
+    if (note) {
+      notifyRows.push({ label: "Not", value: note });
+    }
 
     const mail = buildNotifyEmail({
       kicker: "Rezervasyon",
-      title: "Yeni masa talebi",
+      title: tableName ? `Yeni Masa Talebi (${tableName})` : "Yeni masa talebi",
       intro: "Siteden bir rezervasyon geldi. Müşteriye bildirim onaylandığında gidecektir.",
       logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
       logoHeight,
@@ -134,7 +168,7 @@ export async function POST(request: Request) {
     await Promise.allSettled([
       notifyInbox({
         to: content?.iletisim?.eposta,
-        subject: `Rezervasyon — ${name} · ${date} ${time}`,
+        subject: `Rezervasyon — ${name}${tableName ? ` · ${tableName}` : ""} · ${date} ${time}`,
         text: mail.text,
         html: mail.html,
       }),
@@ -145,6 +179,7 @@ export async function POST(request: Request) {
         date,
         time,
         guests,
+        tableName: tableName || undefined,
         note: note || undefined,
         adminUrl,
       }).then((tg) => {

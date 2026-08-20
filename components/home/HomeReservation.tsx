@@ -11,6 +11,8 @@ import {
 } from "@/lib/content/contact-utils";
 import SafeImg from "@/components/site/SafeImg";
 import SiteIcon from "@/components/site/SiteIcon";
+import InteractiveFloorPlan from "@/components/site/InteractiveFloorPlan";
+import { RestaurantTable } from "@/lib/content/tables-data";
 import type { BolumBaslik, IletisimContent, RezervasyonCopy } from "@/lib/content/types";
 
 const GUESTS = Array.from({ length: 20 }, (_, i) => i + 1);
@@ -45,6 +47,9 @@ export default function HomeReservation({
   const [date, setDate] = useState(minDate);
   const [time, setTime] = useState("");
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+  const [bookedTables, setBookedTables] = useState<string[]>([]);
+  const [selectedTable, setSelectedTable] = useState<RestaurantTable | null>(null);
+  const [showFloorPlan, setShowFloorPlan] = useState(false);
   const [guests, setGuests] = useState(2);
   const [note, setNote] = useState("");
   const [website, setWebsite] = useState("");
@@ -63,20 +68,30 @@ export default function HomeReservation({
     if (date < minDate) setDate(minDate);
   }, [date, minDate]);
 
+  // Tarih veya saat değiştiğinde dolu saatleri ve dolu masaları çek
   useEffect(() => {
     let active = true;
-    void fetch(`/api/v1/reservations?date=${encodeURIComponent(date)}`)
+    const timeParam = time ? `&time=${encodeURIComponent(time)}` : "";
+    void fetch(`/api/v1/reservations?date=${encodeURIComponent(date)}${timeParam}`)
       .then((r) => r.json())
       .then((d) => {
-        if (active && Array.isArray(d?.bookedTimes)) {
+        if (!active) return;
+        if (Array.isArray(d?.bookedTimes)) {
           setBookedTimes(d.bookedTimes);
+        }
+        if (Array.isArray(d?.bookedTables)) {
+          setBookedTables(d.bookedTables);
+          // Eğer seçili masa o saatte dolduysa seçimi uyar ve kaldır
+          if (selectedTable && d.bookedTables.includes(selectedTable.id)) {
+            setSelectedTable(null);
+          }
         }
       })
       .catch(() => {});
     return () => {
       active = false;
     };
-  }, [date]);
+  }, [date, time, selectedTable]);
 
   useEffect(() => {
     if (!availableSlots.length) {
@@ -122,6 +137,8 @@ export default function HomeReservation({
           date,
           time,
           guests,
+          tableId: selectedTable?.id || undefined,
+          tableName: selectedTable?.name || undefined,
           note,
           website,
         }),
@@ -136,6 +153,8 @@ export default function HomeReservation({
       setName("");
       setPhone("");
       setEmail("");
+      setSelectedTable(null);
+      setShowFloorPlan(false);
       setNote("");
     } catch {
       setStatus("err");
@@ -260,6 +279,59 @@ export default function HomeReservation({
               </select>
             </div>
           </div>
+
+          {/* İnteraktif Masa & Loca Seçimi Tetikleyici Buton */}
+          <div className="petra-form__table-select my-2">
+            <div className="flex items-center justify-between gap-2 p-3.5 rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/[0.07] transition">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold text-[#D9A441] uppercase tracking-wider">
+                  Masa & Loca Tercihi (Opsiyonel)
+                </p>
+                {selectedTable ? (
+                  <p className="text-sm font-bold text-[#F4EEE1] mt-0.5 flex items-center gap-1.5 truncate">
+                    <span>🪑</span>
+                    <span className="text-[#D9A441]">{selectedTable.name}</span>
+                    <span className="text-xs text-white/50 font-normal">({selectedTable.capacity} Kişilik)</span>
+                  </p>
+                ) : (
+                  <p className="text-xs text-white/70 mt-0.5">
+                    Havuz başı veya VIP localardan dilediğinizi krokiden seçin.
+                  </p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowFloorPlan((prev) => !prev)}
+                className={`px-3.5 py-2 text-xs font-semibold rounded-lg transition flex items-center gap-1.5 flex-shrink-0 ${
+                  selectedTable
+                    ? "bg-[#D9A441] text-[#0D0F0A] shadow-md hover:bg-[#b8842c]"
+                    : "bg-white/10 text-white hover:bg-white/20"
+                }`}
+              >
+                <span>{showFloorPlan ? "Planı Kapat ▲" : selectedTable ? "Masayı Değiştir ▾" : "Krokiden Seç ▾"}</span>
+              </button>
+            </div>
+
+            {/* İnteraktif Kat Planı Modalı / Açılır Paneli */}
+            {showFloorPlan ? (
+              <div className="mt-3 animate-fadeIn">
+                <InteractiveFloorPlan
+                  selectedTableId={selectedTable?.id}
+                  onSelectTable={(tbl) => {
+                    setSelectedTable(tbl);
+                    if (tbl) {
+                      // Masa seçilince otomatik kapatmak yerine açık bırakabiliriz veya seçimi onaylatabiliriz
+                    }
+                  }}
+                  bookedTableIds={bookedTables}
+                  guestsCount={guests}
+                  date={date}
+                  time={time}
+                />
+              </div>
+            ) : null}
+          </div>
+
           <div className="petra-form__row">
             <div className="field">
               <label htmlFor="rsv-name">

@@ -212,6 +212,7 @@ export async function notifyTelegramReservation(data: {
   date: string;
   time: string;
   guests: number;
+  tableName?: string;
   note?: string;
   adminUrl?: string;
 }) {
@@ -228,6 +229,7 @@ export async function notifyTelegramReservation(data: {
     `🕐 ${escapeHtml(data.time)}`,
     `👥 ${escapeHtml(String(data.guests))} kişi`
   );
+  if (data.tableName) lines.push(`🪑 <b>Masa:</b> ${escapeHtml(data.tableName)}`);
   if (data.note) lines.push(`📝 ${escapeHtml(data.note)}`);
   return sendTelegramMessage(lines.join("\n"), {
     parseMode: "HTML",

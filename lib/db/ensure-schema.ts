@@ -46,10 +46,14 @@ const TABLES = [
     visit_date TEXT NOT NULL,
     visit_time TEXT NOT NULL,
     guests INTEGER NOT NULL,
+    table_id TEXT,
+    table_name TEXT,
     note TEXT,
     status TEXT NOT NULL DEFAULT 'pending'
   )`,
   `ALTER TABLE reservations ADD COLUMN IF NOT EXISTS email TEXT`,
+  `ALTER TABLE reservations ADD COLUMN IF NOT EXISTS table_id TEXT`,
+  `ALTER TABLE reservations ADD COLUMN IF NOT EXISTS table_name TEXT`,
   `CREATE INDEX IF NOT EXISTS reservations_created_idx ON reservations (created_at DESC)`,
   `CREATE TABLE IF NOT EXISTS contact_messages (
     id TEXT PRIMARY KEY,

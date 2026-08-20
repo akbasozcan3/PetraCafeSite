@@ -60,6 +60,7 @@ export async function PATCH(request: Request) {
         date: item.date,
         time: item.time,
         guests: item.guests,
+        tableName: item.tableName,
         status: body.status,
         note: item.note,
       }).then((res) => {
