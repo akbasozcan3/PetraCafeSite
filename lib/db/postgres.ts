@@ -6,19 +6,32 @@ import { Pool, type PoolClient } from "pg";
 
 let _pool: Pool | null = null;
 
+export function getDatabaseUrl(): string {
+  const url =
+    process.env.DATABASE_URL ||
+    process.env.POSTGRES_URL ||
+    process.env.DATABASE_URL_DATABASE_URL ||
+    process.env.DATABASE_URL_POSTGRES_URL ||
+    process.env.DATABASE_URL_PRISMA_DATABASE_URL ||
+    process.env.PRISMA_DATABASE_URL ||
+    process.env.POSTGRES_PRISMA_URL ||
+    "";
+  return url.trim().replace(/^["']|["']$/g, "");
+}
+
 export function getPool(): Pool | null {
-  if (!process.env.DATABASE_URL) return null;
+  const dbUrl = getDatabaseUrl();
+  if (!dbUrl) return null;
   if (!_pool) {
     _pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: dbUrl,
       ssl:
-        process.env.DATABASE_URL.includes("localhost") ||
-        process.env.DATABASE_URL.includes("127.0.0.1")
+        dbUrl.includes("localhost") || dbUrl.includes("127.0.0.1")
           ? false
           : { rejectUnauthorized: false },
       max: 10,
       idleTimeoutMillis: 30_000,
-      connectionTimeoutMillis: 5_000,
+      connectionTimeoutMillis: 8_000,
     });
     _pool.on("error", (err) => {
       console.error("[DB] Unexpected pool error:", err.message);
@@ -28,7 +41,7 @@ export function getPool(): Pool | null {
 }
 
 export function isPostgresEnabled(): boolean {
-  return !!process.env.DATABASE_URL;
+  return Boolean(getDatabaseUrl());
 }
 
 export async function withClient<T>(fn: (client: PoolClient) => Promise<T>): Promise<T> {
