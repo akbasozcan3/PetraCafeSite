@@ -1,13 +1,81 @@
 "use client";
 
-import Link from "next/link";
+import type { CSSProperties } from "react";
+
+const ink = "#0D0F0A";
+const cream = "#FBF8F1";
+const muted = "#6E6A5C";
+const brass = "#D9A441";
+
+function Corner({ pos }: { pos: "tl" | "tr" | "bl" | "br" }) {
+  const map = {
+    tl: { top: 18, left: 18, borderTop: `1.5px solid ${brass}`, borderLeft: `1.5px solid ${brass}` },
+    tr: { top: 18, right: 18, borderTop: `1.5px solid ${brass}`, borderRight: `1.5px solid ${brass}` },
+    bl: { bottom: 18, left: 18, borderBottom: `1.5px solid ${brass}`, borderLeft: `1.5px solid ${brass}` },
+    br: { bottom: 18, right: 18, borderBottom: `1.5px solid ${brass}`, borderRight: `1.5px solid ${brass}` },
+  } as const;
+  return (
+    <span
+      aria-hidden
+      style={{
+        position: "absolute",
+        width: 28,
+        height: 28,
+        opacity: 0.7,
+        ...map[pos],
+      }}
+    />
+  );
+}
+
+function Btn({
+  label,
+  href,
+  onClick,
+  tone,
+}: {
+  label: string;
+  href?: string;
+  onClick?: () => void;
+  tone: "solid" | "ghost";
+}) {
+  const style: CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 48,
+    padding: "0 22px",
+    borderRadius: 999,
+    fontWeight: 600,
+    fontSize: 15,
+    letterSpacing: "0.02em",
+    textDecoration: "none",
+    cursor: "pointer",
+    fontFamily: "Inter, system-ui, sans-serif",
+    border: tone === "ghost" ? `1px solid ${ink}` : 0,
+    background: tone === "solid" ? ink : "transparent",
+    color: tone === "solid" ? cream : ink,
+  };
+  if (href) {
+    return (
+      <a href={href} style={style}>
+        {label}
+      </a>
+    );
+  }
+  return (
+    <button type="button" onClick={onClick} style={style}>
+      {label}
+    </button>
+  );
+}
 
 export default function SiteFault({
-  kicker = "404",
-  title = "Bu kapı burada açılmıyor",
-  lead = "Aradığınız sayfa taşınmış, adı değişmiş veya geçici olarak kullanılamıyor olabilir. Aşağıdaki bağlantılardan devam edebilirsiniz.",
-  primary = { label: "Ana Sayfaya Dön", href: "/" },
-  secondary = { label: "Menüyü Keşfet", href: "/menu" },
+  kicker = "Petra",
+  title,
+  lead,
+  primary,
+  secondary,
 }: {
   kicker?: string;
   title: string;
@@ -19,230 +87,92 @@ export default function SiteFault({
     <main
       style={{
         position: "relative",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "32px 16px",
-        backgroundColor: "#0B0F17",
-        color: "#EEE9E0",
-        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        overflow: "hidden",
-        boxSizing: "border-box",
+        minHeight: "100dvh",
+        display: "grid",
+        placeItems: "center",
+        padding: "48px 24px",
+        background: `radial-gradient(ellipse 70% 45% at 50% 0%, rgba(217,164,65,0.16), transparent 58%), ${cream}`,
+        color: ink,
+        textAlign: "center",
+        fontFamily: "Inter, system-ui, sans-serif",
       }}
     >
-      <style>{`
-        .sf-glow-1 {
-          position: absolute;
-          top: -150px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 600px;
-          height: 400px;
-          background: radial-gradient(ellipse at center, rgba(217,164,65,0.18), transparent 70%);
-          filter: blur(60px);
-          pointer-events: none;
-        }
-        .sf-glow-2 {
-          position: absolute;
-          bottom: -150px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 500px;
-          height: 350px;
-          background: radial-gradient(ellipse at center, rgba(200,112,58,0.14), transparent 70%);
-          filter: blur(60px);
-          pointer-events: none;
-        }
-        .sf-card {
-          position: relative;
-          z-index: 10;
-          width: 100%;
-          max-width: 580px;
-          background: rgba(18, 24, 36, 0.92);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 28px;
-          padding: 40px 32px;
-          text-align: center;
-          box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
-          backdrop-filter: blur(16px);
-          box-sizing: border-box;
-        }
-        @media (max-width: 480px) {
-          .sf-card { padding: 28px 20px; border-radius: 20px; }
-        }
-        .sf-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 6px 14px;
-          border-radius: 999px;
-          background: rgba(217, 164, 65, 0.12);
-          border: 1px solid rgba(217, 164, 65, 0.3);
-          color: #D9A441;
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-        }
-        .sf-title {
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(1.8rem, 4vw, 2.4rem);
-          font-weight: 700;
-          color: #F8F6F0;
-          line-height: 1.2;
-          margin: 0 0 14px 0;
-          letter-spacing: -0.01em;
-        }
-        .sf-lead {
-          font-size: 14px;
-          line-height: 1.6;
-          color: #9EABB8;
-          max-width: 440px;
-          margin: 0 auto 28px auto;
-        }
-        .sf-btn-primary {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          background: #D9A441;
-          color: #0A0D14;
-          padding: 12px 24px;
-          border-radius: 999px;
-          font-size: 14px;
-          font-weight: 700;
-          text-decoration: none;
-          border: none;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          box-shadow: 0 8px 20px rgba(217, 164, 65, 0.25);
-        }
-        .sf-btn-primary:hover {
-          background: #E5B558;
-          transform: translateY(-1px);
-        }
-        .sf-btn-sec {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          background: rgba(255, 255, 255, 0.05);
-          color: #EEE9E0;
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          padding: 12px 24px;
-          border-radius: 999px;
-          font-size: 14px;
-          font-weight: 600;
-          text-decoration: none;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .sf-btn-sec:hover {
-          background: rgba(255, 255, 255, 0.1);
-          border-color: rgba(255, 255, 255, 0.25);
-        }
-        .sf-links-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 8px;
-          margin-top: 24px;
-          padding-top: 20px;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
-          box-sizing: border-box;
-        }
-        @media (max-width: 480px) {
-          .sf-links-grid { grid-template-columns: 1fr; }
-        }
-        .sf-quick-link {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 10px 12px;
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          border-radius: 12px;
-          text-decoration: none;
-          color: #C8D0DC;
-          font-size: 12px;
-          font-weight: 600;
-          transition: all 0.15s ease;
-        }
-        .sf-quick-link:hover {
-          background: rgba(217, 164, 65, 0.1);
-          border-color: rgba(217, 164, 65, 0.3);
-          color: #F8F6F0;
-        }
-      `}</style>
+      <Corner pos="tl" />
+      <Corner pos="tr" />
+      <Corner pos="bl" />
+      <Corner pos="br" />
 
-      <div className="sf-glow-1" />
-      <div className="sf-glow-2" />
-
-      <div className="sf-card">
-        {/* Logo */}
-        <div style={{ marginBottom: 16 }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/img/petra-mark.svg"
-            alt="Petra Cafe"
-            width={140}
-            height={36}
-            style={{ display: "inline-block", height: 32, width: "auto", filter: "brightness(0) invert(1)", opacity: 0.9 }}
-          />
+      <div style={{ maxWidth: 460 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/assets/img/petra-mark.svg"
+          alt=""
+          width={220}
+          height={50}
+          style={{
+            display: "block",
+            width: 200,
+            height: "auto",
+            maxWidth: "70%",
+            objectFit: "contain",
+            margin: "0 auto 20px",
+          }}
+        />
+        {kicker && !/^petra$/i.test(kicker.trim()) ? (
+        <p
+          style={{
+            margin: 0,
+            fontSize: 11,
+            fontWeight: 600,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: brass,
+          }}
+        >
+          {kicker}
+        </p>
+        ) : null}
+        <h1
+          style={{
+            fontFamily: '"Playfair Display", Georgia, serif',
+            fontWeight: 600,
+            fontSize: "clamp(1.85rem, 4.4vw, 2.7rem)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.12,
+            margin: "12px 0 14px",
+          }}
+        >
+          {title}
+        </h1>
+        <p
+          style={{
+            margin: "0 auto 28px",
+            maxWidth: "36ch",
+            color: muted,
+            fontSize: 16,
+            lineHeight: 1.6,
+          }}
+        >
+          {lead}
+        </p>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 10,
+            justifyContent: "center",
+          }}
+        >
+          <Btn {...primary} tone="solid" />
+          {secondary ? <Btn {...secondary} tone="ghost" /> : null}
         </div>
-
-        {/* Rozet */}
-        <div className="sf-badge">
-          ✦ {kicker} · SAYFA BULUNAMADI
-        </div>
-
-        {/* Başlık ve Açıklama */}
-        <h1 className="sf-title">{title}</h1>
-        <p className="sf-lead">{lead}</p>
-
-        {/* Butonlar */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", marginBottom: 8 }}>
-          {primary.href ? (
-            <Link href={primary.href} className="sf-btn-primary">
-              🏠 {primary.label}
-            </Link>
-          ) : (
-            <button type="button" onClick={primary.onClick} className="sf-btn-primary">
-              🏠 {primary.label}
-            </button>
-          )}
-
-          {secondary?.href && (
-            <Link href={secondary.href} className="sf-btn-sec">
-              🍽️ {secondary.label}
-            </Link>
-          )}
-        </div>
-
-        {/* Hızlı Linkler */}
-        <div className="sf-links-grid">
-          <Link href="/menu" className="sf-quick-link">
-            <span>🍽️ Menü</span>
-            <span style={{ color: "#D9A441" }}>→</span>
-          </Link>
-          <Link href="/#rezervasyon" className="sf-quick-link">
-            <span>📅 Rezervasyon</span>
-            <span style={{ color: "#D9A441" }}>→</span>
-          </Link>
-          <Link href="/blog" className="sf-quick-link">
-            <span>📖 Blog & Yazılar</span>
-            <span style={{ color: "#D9A441" }}>→</span>
-          </Link>
-        </div>
-
-        {/* İletişim Bilgisi */}
-        <div style={{ marginTop: 24, fontSize: 12, color: "#6B7A94" }}>
-          <a href="tel:+905306089051" style={{ color: "#D9A441", fontWeight: 700, textDecoration: "none", marginRight: 8 }}>
-            📞 0530 608 90 51
+        <p style={{ marginTop: 36, fontSize: 13, color: muted, letterSpacing: "0.04em" }}>
+          <a href="tel:+905306089051" style={{ color: ink, fontWeight: 600, textDecoration: "none" }}>
+            0530 608 90 51
           </a>
-          <span>· Çekmeköy Petra Yaşam Merkezi</span>
-        </div>
+          <span style={{ opacity: 0.45 }}> · </span>
+          Çekmeköy · Petra Yaşam Merkezi
+        </p>
       </div>
     </main>
   );
