@@ -7,6 +7,8 @@
     "faq": "/assets/cms/hero-ic.webp",
     "ogImage": "/assets/cms/hero-cephe.webp",
     "logo": "/uploads/site/1787138944366-a9620af4670bd679.png",
+    "smtpLogoHeight": "140",
+    "smtpLogoSize": "140",
     "favicon": "/uploads/site/1787139157751-c0ccc75352508523.webp",
     "reservation": "/assets/cms/hero-ic.webp"
   },

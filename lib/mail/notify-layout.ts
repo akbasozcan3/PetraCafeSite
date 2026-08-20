@@ -24,7 +24,7 @@ export function buildNotifyEmail(opts: {
   logoUrl: string;
   logoHeight?: number;
 }) {
-  const logoH = Math.max(40, Math.min(240, Number(opts.logoHeight) || 96));
+  const logoH = Math.max(40, Math.min(240, Number(opts.logoHeight) || 140));
   const maxW = Math.round(logoH * 3.2);
 
   const rowsHtml = opts.rows
