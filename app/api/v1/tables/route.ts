@@ -1,40 +1,22 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { RESTAURANT_TABLES, RestaurantTable } from "@/lib/content/tables-data";
+import { getAppSetting, setAppSetting } from "@/lib/db/settings";
 
-const TABLES_FILE = path.join(process.cwd(), "data", "restaurant-tables.json");
+const SETTING_KEY = "restaurant_tables_data";
 
-function getStoredTables(): RestaurantTable[] {
+export async function GET() {
   try {
-    if (fs.existsSync(TABLES_FILE)) {
-      const content = fs.readFileSync(TABLES_FILE, "utf8");
-      const parsed = JSON.parse(content);
+    const raw = await getAppSetting(SETTING_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        return NextResponse.json({ success: true, tables: parsed });
       }
     }
   } catch (err) {
-    console.error("Error reading tables file:", err);
+    console.error("[GET /api/v1/tables] Hata:", err);
   }
-  return RESTAURANT_TABLES;
-}
-
-function saveStoredTables(tables: RestaurantTable[]) {
-  try {
-    const dir = path.dirname(TABLES_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(TABLES_FILE, JSON.stringify(tables, null, 2), "utf8");
-  } catch (err) {
-    console.error("Error writing tables file:", err);
-  }
-}
-
-export async function GET() {
-  const tables = getStoredTables();
-  return NextResponse.json({ success: true, tables });
+  return NextResponse.json({ success: true, tables: RESTAURANT_TABLES });
 }
 
 export async function POST(req: Request) {
@@ -44,9 +26,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Geçersiz masa verisi." }, { status: 400 });
     }
 
-    saveStoredTables(body.tables);
+    await setAppSetting(SETTING_KEY, JSON.stringify(body.tables));
     return NextResponse.json({ success: true, message: "Masa konumları başarıyla kaydedildi.", tables: body.tables });
   } catch (err: any) {
+    console.error("[POST /api/v1/tables] Hata:", err);
     return NextResponse.json({ error: err?.message || "Sunucu hatası." }, { status: 500 });
   }
 }

@@ -157,15 +157,13 @@ export default function InteractiveFloorPlan({
         </span>
       </div>
 
-      {/* 3. İnteraktif Kroki Alanı (Beyaz Zemin, Altın Çerçeve, Hassas Oran) */}
+      {/* 3. İnteraktif Kroki Alanı (Beyaz Zemin, Altın Çerçeve, Tam Görünüm) */}
       <div
         style={{
           position: "relative",
           width: "100%",
-          maxHeight: "420px",
-          overflowY: "auto",
-          overflowX: "hidden",
           borderRadius: 16,
+          overflow: "hidden",
           background: "#ffffff",
           border: "1.5px solid rgba(184, 132, 44, 0.35)",
           boxShadow: "0 6px 20px -6px rgba(0,0,0,0.12)",
@@ -179,6 +177,7 @@ export default function InteractiveFloorPlan({
             display: "block",
           }}
         >
+
           <defs>
             <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
               <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#d9a441" floodOpacity="1" />
