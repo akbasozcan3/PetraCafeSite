@@ -825,7 +825,7 @@ export default function HomeReservation({
                               style={{ width: "auto", minHeight: "auto", margin: 0 }}
                             />
                             <span style={{ fontSize: 12, fontWeight: 700, color: "#b8842c", display: "inline-flex", alignItems: "center", gap: 4 }}>
-                              <CreditCard style={{ width: 13, height: 13 }} /> PayTR ile Öde
+                              <CreditCard style={{ width: 13, height: 13 }} /> Online Kapora ile Öde
                             </span>
                           </div>
                           <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "#6e6a5c" }}>
@@ -904,7 +904,7 @@ export default function HomeReservation({
                         <span>{copy?.gonderiliyor || "İletiliyor…"}</span>
                       ) : paymentChoice === "paytr" ? (
                         <>
-                          <span>PayTR ile {depositConfig.amount} TL Öde</span>
+                          <span>{depositConfig.amount} TL Kapora Öde & Tamamla</span>
                           <CreditCard style={{ width: 16, height: 16 }} />
                         </>
                       ) : (
@@ -915,6 +915,7 @@ export default function HomeReservation({
                       )}
                     </button>
                   </div>
+
                 </form>
               )}
             </div>
