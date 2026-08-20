@@ -136,6 +136,10 @@ function normalizeImages(images: Record<string, string>) {
   const out: Record<string, string> = {};
   for (const [k, v] of Object.entries(images || {})) {
     if (!v) continue;
+    if (k === "smtpLogoHeight" || k === "smtpLogoSize" || k.startsWith("smtp")) {
+      out[k] = String(v);
+      continue;
+    }
     const fb = defaults[k as keyof typeof defaults];
     out[k] = resolveProductionMediaPath(v, fb);
   }

@@ -215,8 +215,15 @@ function SmtpCard() {
           smtpLogoSize: String(logoHeight),
         },
       };
-      await api.updateContent(updated);
-      setLogoSaveMsg("✓ Logo boyutu kaydedildi!");
+      const saveRes = await api.updateContent(updated);
+      const savedH = Number(saveRes.data?.images?.smtpLogoHeight || logoHeight);
+      setLogoHeight(savedH);
+      setLogoSaveMsg(`✓ Logo boyutu (${savedH}px) başarıyla kaydedildi!`);
+      // Önizlemeyi tazele
+      void fetch(`/api/v1/admin/smtp/preview?kind=${kind}&h=${savedH}`, { credentials: "include" })
+        .then((r) => r.json())
+        .then((data) => setPreview(data))
+        .catch(() => {});
       setTimeout(() => setLogoSaveMsg(""), 3500);
     } catch (e) {
       setLogoSaveMsg(e instanceof Error ? e.message : "Kayıt başarısız");
