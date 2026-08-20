@@ -23,27 +23,107 @@ export default function LegalPageTemplate({
   body,
 }: LegalPageProps) {
   return (
-    <div
-      style={{
-        width: "100%",
-        paddingTop: "24px",
-        paddingBottom: "60px",
-        boxSizing: "border-box",
-        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-      }}
-    >
+    <div className="petra-legal-container">
+      <style>{`
+        .petra-legal-container {
+          width: 100%;
+          padding: 20px 0 60px;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          box-sizing: border-box;
+        }
+        .petra-legal-crumbs {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 12px;
+          color: #6e6a5c;
+          margin-bottom: 20px;
+        }
+        /* Mobil Yatay Kaydırılabilir Sekmeler */
+        .petra-legal-mobile-tabs {
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          padding-bottom: 12px;
+          margin-bottom: 20px;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .petra-legal-mobile-tabs::-webkit-scrollbar {
+          display: none;
+        }
+        .petra-legal-mobile-tab-btn {
+          white-space: nowrap;
+          padding: 9px 16px;
+          border-radius: 999px;
+          font-size: 12.5px;
+          font-weight: 600;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          transition: all 0.2s;
+        }
+        .petra-legal-mobile-tab-btn.active {
+          background: #12150e;
+          color: #f4eee1;
+          border: 1.5px solid #b8842c;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .petra-legal-mobile-tab-btn.inactive {
+          background: #ffffff;
+          color: #5c5749;
+          border: 1px solid rgba(13, 15, 10, 0.12);
+        }
+        /* Masaüstü ve Mobil Düzeni */
+        .petra-legal-layout {
+          display: flex;
+          gap: 32px;
+          align-items: flex-start;
+        }
+        .petra-legal-sidebar {
+          width: 300px;
+          flex-shrink: 0;
+          background: #ffffff;
+          border-radius: 20px;
+          border: 1.5px solid rgba(184, 132, 44, 0.25);
+          padding: 24px;
+          box-shadow: 0 10px 30px -10px rgba(0,0,0,0.06);
+          position: sticky;
+          top: 100px;
+          box-sizing: border-box;
+        }
+        .petra-legal-content {
+          flex: 1;
+          min-width: 0;
+          background: #ffffff;
+          border-radius: 24px;
+          border: 1.5px solid rgba(184, 132, 44, 0.25);
+          padding: 36px 40px;
+          box-shadow: 0 12px 40px -10px rgba(0,0,0,0.06);
+          box-sizing: border-box;
+        }
+        @media (max-width: 899px) {
+          .petra-legal-sidebar {
+            display: none;
+          }
+          .petra-legal-mobile-tabs {
+            display: flex;
+          }
+          .petra-legal-content {
+            padding: 24px 20px;
+            border-radius: 18px;
+          }
+        }
+        @media (min-width: 900px) {
+          .petra-legal-mobile-tabs {
+            display: none;
+          }
+        }
+      `}</style>
+
       {/* 1. Breadcrumbs Navigasyon */}
-      <nav
-        aria-label="Breadcrumb"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          fontSize: "12px",
-          color: "#6e6a5c",
-          marginBottom: "24px",
-        }}
-      >
+      <nav aria-label="Breadcrumb" className="petra-legal-crumbs">
         <Link href="/" style={{ color: "#0d0f0a", textDecoration: "none", fontWeight: 600 }}>
           Ana Sayfa
         </Link>
@@ -51,30 +131,26 @@ export default function LegalPageTemplate({
         <span style={{ color: "#b8842c", fontWeight: 700 }}>{title}</span>
       </nav>
 
-      {/* 2. Ana Izgara Düzeni (Grid) */}
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "32px",
-          alignItems: "flex-start",
-        }}
-      >
-        {/* Sol Menü: Yasal Sayfalar Hızlı Geçiş */}
-        <aside
-          style={{
-            flex: "1 1 280px",
-            maxWidth: "340px",
-            background: "#ffffff",
-            borderRadius: "20px",
-            border: "1.5px solid rgba(184, 132, 44, 0.25)",
-            padding: "24px",
-            boxShadow: "0 10px 30px -10px rgba(0,0,0,0.06)",
-            position: "sticky",
-            top: "100px",
-            boxSizing: "border-box",
-          }}
-        >
+      {/* 2. Mobilde Yatay Kaydırılabilir Hızlı Sekmeler */}
+      <div className="petra-legal-mobile-tabs">
+        {LEGAL_NAV.map((item) => {
+          const isActive = item.slug === currentSlug;
+          return (
+            <Link
+              key={item.slug}
+              href={`/${item.slug}`}
+              className={`petra-legal-mobile-tab-btn ${isActive ? "active" : "inactive"}`}
+            >
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* 3. Ana Düzen (Sidebar + İçerik) */}
+      <div className="petra-legal-layout">
+        {/* Masaüstü Yan Menü */}
+        <aside className="petra-legal-sidebar">
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
             <span
               style={{
@@ -130,7 +206,6 @@ export default function LegalPageTemplate({
             })}
           </ul>
 
-          {/* İletişim & Yardım Kutusu */}
           <div
             style={{
               marginTop: "24px",
@@ -166,20 +241,9 @@ export default function LegalPageTemplate({
           </div>
         </aside>
 
-        {/* Sağ Alan: Sözleşme Gövdesi */}
-        <article
-          style={{
-            flex: "1 1 500px",
-            background: "#ffffff",
-            borderRadius: "24px",
-            border: "1.5px solid rgba(184, 132, 44, 0.25)",
-            padding: "36px 40px",
-            boxShadow: "0 12px 40px -10px rgba(0,0,0,0.06)",
-            boxSizing: "border-box",
-          }}
-        >
-          {/* Başlık Başlangıcı */}
-          <div style={{ borderBottom: "1px solid rgba(13, 15, 10, 0.08)", paddingBottom: "24px", marginBottom: "28px" }}>
+        {/* Sözleşme İçerik Kartı */}
+        <article className="petra-legal-content">
+          <div style={{ borderBottom: "1px solid rgba(13, 15, 10, 0.08)", paddingBottom: "20px", marginBottom: "24px" }}>
             <span
               style={{
                 display: "inline-block",
@@ -199,13 +263,12 @@ export default function LegalPageTemplate({
             </span>
             <h1
               style={{
-                margin: "0 0 12px",
+                margin: "0 0 10px",
                 fontFamily: "Georgia, 'Times New Roman', serif",
-                fontSize: "28px",
+                fontSize: "24px",
                 fontWeight: 700,
                 color: "#12150e",
                 lineHeight: "1.3",
-                letterSpacing: "-0.01em",
               }}
             >
               {title}
@@ -214,10 +277,9 @@ export default function LegalPageTemplate({
               <p
                 style={{
                   margin: 0,
-                  fontSize: "15px",
+                  fontSize: "14.5px",
                   color: "#5c5749",
-                  lineHeight: "1.65",
-                  fontWeight: 400,
+                  lineHeight: "1.6",
                 }}
               >
                 {lead}
@@ -225,10 +287,10 @@ export default function LegalPageTemplate({
             ) : null}
           </div>
 
-          {/* Sözleşme Maddeleri */}
+          {/* Sözleşme Metni */}
           <div
             style={{
-              fontSize: "14.5px",
+              fontSize: "14px",
               lineHeight: "1.8",
               color: "#2c2f26",
               whiteSpace: "pre-line",
@@ -238,11 +300,10 @@ export default function LegalPageTemplate({
             {body}
           </div>
 
-          {/* Alt Kapanış & Son Güncelleme */}
           <div
             style={{
-              marginTop: "40px",
-              paddingTop: "20px",
+              marginTop: "32px",
+              paddingTop: "18px",
               borderTop: "1px solid rgba(13, 15, 10, 0.08)",
               display: "flex",
               flexWrap: "wrap",
