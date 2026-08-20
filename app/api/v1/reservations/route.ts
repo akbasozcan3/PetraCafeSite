@@ -93,9 +93,16 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!Number.isInteger(guests) || guests < 1 || guests > 20) {
-      return errorResponse("Kişi sayısı 1–20 arasında olmalı.", 400);
+    const minAllowedGuests = Number(content?.rezervasyon?.minKisi) || 1;
+    const maxAllowedGuests = Number(content?.rezervasyon?.maxKisi) || 8;
+
+    if (!Number.isInteger(guests) || guests < minAllowedGuests || guests > maxAllowedGuests) {
+      return errorResponse(
+        `Kişi sayısı ${minAllowedGuests}–${maxAllowedGuests} arasında olmalıdır. Daha kalabalık gruplar için lütfen doğrudan işletmemizi arayınız.`,
+        400
+      );
     }
+
 
     // Masa seçilmişse doğrulama
     if (tableId) {

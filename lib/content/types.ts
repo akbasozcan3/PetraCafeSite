@@ -79,6 +79,8 @@ export interface ZiyaretItem {
 }
 
 export interface RezervasyonCopy {
+  minKisi?: number;
+  maxKisi?: number;
   maddeler?: string[];
   ctaLabel?: string;
   successMetin?: string;
@@ -102,6 +104,7 @@ export interface RezervasyonCopy {
   hataKapali?: string;
   gorselAlt?: string;
 }
+
 
 export interface MesajFormCopy {
   kicker?: string;

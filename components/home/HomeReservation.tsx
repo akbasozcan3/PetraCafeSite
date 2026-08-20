@@ -515,7 +515,10 @@ export default function HomeReservation({
                         value={guests}
                         onChange={(e) => setGuests(Number(e.target.value))}
                       >
-                        {GUESTS.map((n) => (
+                        {Array.from(
+                          { length: Math.max(1, (Number(copy?.maxKisi) || 8) - (Number(copy?.minKisi) || 1) + 1) },
+                          (_, i) => (Number(copy?.minKisi) || 1) + i
+                        ).map((n) => (
                           <option key={n} value={n}>
                             {(copy?.kisiSablon || "{n} kişi").replace("{n}", String(n))}
                           </option>
@@ -523,6 +526,7 @@ export default function HomeReservation({
                       </select>
                     </div>
                   </div>
+
 
                   {error && <p style={{ color: "#dc2626", fontSize: 13, marginTop: 10 }}>{error}</p>}
 

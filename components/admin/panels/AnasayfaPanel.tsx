@@ -202,8 +202,30 @@ export default function AnasayfaPanel() {
       </section>
 
       <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-        <h3 className="font-semibold text-[#F8F8F8]">Rezervasyon formu yazıları</h3>
+        <h3 className="font-semibold text-[#F8F8F8]">Rezervasyon formu ayarları & Kişi kapasitesi</h3>
         <div className="grid gap-3 md:grid-cols-2">
+          <Input
+            label="Minimum Kişi Sayısı"
+            type="number"
+            value={rsv.minKisi !== undefined ? String(rsv.minKisi) : "1"}
+            onChange={(e) =>
+              setContent({
+                ...content,
+                rezervasyon: { ...rsv, minKisi: Math.max(1, Number(e.target.value) || 1) },
+              })
+            }
+          />
+          <Input
+            label="Maksimum Kişi Sayısı (Max Masa Kapasitesi)"
+            type="number"
+            value={rsv.maxKisi !== undefined ? String(rsv.maxKisi) : "8"}
+            onChange={(e) =>
+              setContent({
+                ...content,
+                rezervasyon: { ...rsv, maxKisi: Math.max(1, Number(e.target.value) || 8) },
+              })
+            }
+          />
           <Input
             label="Form üst etiket"
             value={rsv.formKicker || ""}
@@ -218,6 +240,7 @@ export default function AnasayfaPanel() {
               setContent({ ...content, rezervasyon: { ...rsv, formBaslik: e.target.value } })
             }
           />
+
           <Input
             label="Form açıklama"
             value={rsv.formLead || ""}

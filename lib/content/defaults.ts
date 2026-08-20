@@ -451,11 +451,14 @@ Yiyecek & İçecek Hizmetleri, Cafe & Restoran İşletmeciliği, Açık Yüzme H
     { label: "Nargile", icon: "flame", href: "/menu/nargile", aciklama: "Nakhla, El Fakher, Adalya" },
   ],
   rezervasyon: {
+    minKisi: 1,
+    maxKisi: 8,
     maddeler: [
-      "2–12 kişi online · daha kalabalık için arayın",
+      "1–8 kişi online · daha kalabalık gruplar için arayın",
       "Alerjen ve kutlama notunu forma yazabilirsiniz",
     ],
     ctaLabel: "Rezervasyon gönder",
+
     successMetin: "Talebiniz alındı. Onay için sizi arayacağız.",
     formKicker: "Rezervasyon",
     formBaslik: "Tarih ve saat seçin",
