@@ -131,10 +131,16 @@ export default function HomeReservation({
   };
 
   const handleNextToStep3 = () => {
+    if (!selectedTable) {
+      setStatus("err");
+      setError("Lütfen rezervasyonunuz için havuz krokisinden veya listeden bir masa/loca seçiniz.");
+      return;
+    }
     setError("");
     setStatus("idle");
     setCurrentStep(3);
   };
+
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -378,7 +378,7 @@ export default function InteractiveFloorPlan({
                 onSelectTable(found);
               }}
               style={{
-                padding: "6px 12px",
+                padding: "7px 12px",
                 borderRadius: 10,
                 fontSize: 12,
                 fontWeight: 700,
@@ -386,16 +386,17 @@ export default function InteractiveFloorPlan({
                 background: "#ffffff",
                 color: "#0d0f0a",
                 cursor: "pointer",
-                maxWidth: 160,
+                maxWidth: 180,
               }}
             >
-              <option value="">Otomatik Masa</option>
+              <option value="">-- Masa Seçiniz --</option>
               {filteredTables.map((t) => (
                 <option key={t.id} value={t.id} disabled={bookedTableIds.includes(t.id)}>
                   {t.name} ({t.capacity}k) {bookedTableIds.includes(t.id) ? "— Dolu" : ""}
                 </option>
               ))}
             </select>
+
 
           </div>
         )}
