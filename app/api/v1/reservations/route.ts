@@ -119,8 +119,22 @@ export async function POST(request: Request) {
       }
     }
 
-    if (note.length > 500) {
-      return errorResponse("Not en fazla 500 karakter olabilir.", 400);
+    // Mükerrer spam koruması: Aynı telefon veya e-posta ile aynı tarih/saatte bekleyen veya onaylı talep var mı?
+    const { listReservations } = await import("@/lib/db/inbox");
+    const existingList = await listReservations().catch(() => []);
+    const duplicate = existingList.find(
+      (r) =>
+        r.date === date &&
+        r.time === time &&
+        (r.status === "pending" || r.status === "confirmed") &&
+        (r.phone === phone || (email && r.email && r.email.toLowerCase() === email.toLowerCase()))
+    );
+
+    if (duplicate) {
+      return errorResponse(
+        `Bu tarih ve saat (${date} ${time}) için zaten oluşturulmuş bir rezervasyonunuz bulunmaktadır. Değişiklik için lütfen işletmemizle iletişime geçiniz.`,
+        400
+      );
     }
 
     const item = await createReservation({
@@ -134,6 +148,7 @@ export async function POST(request: Request) {
       tableName: tableName || undefined,
       note: note || undefined,
     });
+
 
     const adminUrl = `${publicOrigin(content)}/admin/rezervasyonlar`;
     const logoHeight = Number(content?.images?.smtpLogoHeight || content?.images?.smtpLogoSize || 96);

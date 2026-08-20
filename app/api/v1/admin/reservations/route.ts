@@ -53,24 +53,26 @@ export async function PATCH(request: Request) {
 
     // Müşteriye onay veya durum bildirim e-postası gönder
     if (item.email && (body.status === "confirmed" || body.status === "rejected" || body.status === "cancelled")) {
-      const { sendReservationStatusEmail } = await import("@/lib/mail/smtp");
-      sendReservationStatusEmail({
-        to: item.email,
-        name: item.name,
-        date: item.date,
-        time: item.time,
-        guests: item.guests,
-        tableName: item.tableName,
-        status: body.status,
-        note: item.note,
-      }).then((res) => {
-        if (!res.ok) {
-          console.warn("[admin reservations] Müşteri onay maili gönderilemedi:", res);
+      try {
+        const { sendReservationStatusEmail } = await import("@/lib/mail/smtp");
+        const mailRes = await sendReservationStatusEmail({
+          to: item.email,
+          name: item.name,
+          date: item.date,
+          time: item.time,
+          guests: item.guests,
+          tableName: item.tableName,
+          status: body.status,
+          note: item.note,
+        });
+        if (!mailRes.ok) {
+          console.warn("[admin reservations] Müşteri onay maili gönderilemedi:", mailRes);
         }
-      }).catch((err) => {
+      } catch (err) {
         console.error("[admin reservations] Müşteri onay maili hatası:", err);
-      });
+      }
     }
+
 
     await appendActivity({
       userId: session.id,
