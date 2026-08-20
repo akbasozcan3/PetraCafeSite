@@ -204,12 +204,18 @@ export default function HomeReservation({
         });
 
 
-        const payData = (await payRes.json().catch(() => ({}))) as { success?: boolean; token?: string; error?: string };
+        const resText = await payRes.text().catch(() => "");
+        let payData: { success?: boolean; token?: string; error?: string } = {};
+        try {
+          payData = resText ? JSON.parse(resText) : {};
+        } catch {
+          payData = { error: resText || "Ödeme sunucusu geçersiz yanıt döndürdü." };
+        }
 
         if (!payData?.token) {
           throw new Error(
             payData?.error ||
-            "PayTR Sanal POS anahtarları (PAYTR_MERCHANT_ID, PAYTR_MERCHANT_KEY, PAYTR_MERCHANT_SALT) henüz tanımlanmamış. Lütfen Admin Paneli > PayTR sayfasından veya Vercel'den anahtarlarınızı girin."
+            "Sanal POS anahtarları (Merchant ID, Key, Salt) henüz Admin Paneli > PayTR sayfasından kaydedilmemiş. Lütfen bilgilerinizi kaydedin veya 'Normal Rezervasyon' ile devam edin."
           );
         }
 
@@ -219,10 +225,11 @@ export default function HomeReservation({
         return;
       } catch (err: any) {
         setStatus("err");
-        setError(err?.message || "PayTR ödeme bağlantısı kurulamadı. Dilerseniz 'Normal Rezervasyon' seçeneğiyle ücretsiz devam edebilirsiniz.");
+        setError(err?.message || "Ödeme bağlantısı kurulamadı. Dilerseniz 'Normal Rezervasyon' seçeneğiyle ücretsiz devam edebilirsiniz.");
         return;
       }
     }
+
 
 
 

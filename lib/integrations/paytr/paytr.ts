@@ -165,19 +165,25 @@ export async function createPayTrToken(
       body: formData.toString(),
     });
 
-    const resJson = (await response.json()) as {
-      status: "success" | "failed";
-      token?: string;
-      reason?: string;
-    };
+    const responseText = await response.text();
+    let resJson: any = null;
 
-    if (resJson.status === "success" && resJson.token) {
+    try {
+      resJson = JSON.parse(responseText);
+    } catch {
+      return {
+        ok: false,
+        error: responseText.trim() || "PayTR sunucusundan geçersiz yanıt alındı. Lütfen mağaza anahtarlarınızı kontrol edin.",
+      };
+    }
+
+    if (resJson?.status === "success" && resJson?.token) {
       return { ok: true, token: resJson.token };
     }
 
     return {
       ok: false,
-      error: resJson.reason || "PayTR token üretilemedi.",
+      error: resJson?.reason || "PayTR ödeme oturumu başlatılamadı. Lütfen PayTR mağaza panelinden IP ve anahtar ayarlarınızı doğrulayın.",
     };
   } catch (error) {
     console.error("[PayTR] Token alma hatası:", error);
@@ -187,6 +193,7 @@ export async function createPayTrToken(
     };
   }
 }
+
 
 /**
  * PayTR Bildirim (Webhook Callback) Hash Doğrulama
