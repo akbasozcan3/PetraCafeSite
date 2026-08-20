@@ -104,7 +104,8 @@ export default function SettingsPanel() {
         </p>
       </section>
 
-      <SmtpCard />
+      <SmtpSection />
+
       <TelegramCard />
 
       {message && (
@@ -153,21 +154,34 @@ export default function SettingsPanel() {
   );
 }
 
-function SmtpCard() {
+function SmtpSection() {
   const [info, setInfo] = useState<{
-    configured: boolean;
+    configured?: boolean;
     host?: string;
     from?: string;
+    user?: string;
+    port?: number | null;
     to?: string | null;
   } | null>(null);
-  const [msg, setMsg] = useState("");
-  const [busy, setBusy] = useState(false);
   const [kind, setKind] = useState<
     "reservation" | "reservation_confirmed" | "reservation_rejected" | "contact"
-  >("reservation");
-  const [logoHeight, setLogoHeight] = useState<number>(96);
+  >("reservation_confirmed");
+  const [logoHeight, setLogoHeight] = useState<number>(120);
   const [savingLogo, setSavingLogo] = useState(false);
   const [logoSaveMsg, setLogoSaveMsg] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  // SMTP Düzenleme State'leri
+  const [smtpHost, setSmtpHost] = useState("smtp.gmail.com");
+  const [smtpPort, setSmtpPort] = useState(465);
+  const [smtpUser, setSmtpUser] = useState("");
+  const [smtpPass, setSmtpPass] = useState("");
+  const [smtpFrom, setSmtpFrom] = useState("");
+  const [smtpNotifyTo, setSmtpNotifyTo] = useState("");
+  const [savingSmtp, setSavingSmtp] = useState(false);
+  const [smtpSaveMsg, setSmtpSaveMsg] = useState("");
+
   const [preview, setPreview] = useState<{
     from?: string;
     to?: string;
@@ -179,7 +193,14 @@ function SmtpCard() {
   useEffect(() => {
     void fetch("/api/v1/admin/smtp", { credentials: "include" })
       .then((r) => r.json())
-      .then((d) => setInfo(d))
+      .then((d) => {
+        setInfo(d);
+        if (d?.host) setSmtpHost(d.host);
+        if (d?.port) setSmtpPort(d.port);
+        if (d?.user) setSmtpUser(d.user);
+        if (d?.from) setSmtpFrom(d.from);
+        if (d?.to) setSmtpNotifyTo(d.to);
+      })
       .catch(() => setInfo({ configured: false }));
 
     void api.getAdminContent().then((res) => {
@@ -189,6 +210,43 @@ function SmtpCard() {
       }
     }).catch(() => {});
   }, []);
+
+  async function saveSmtpSettings(e: React.FormEvent) {
+    e.preventDefault();
+    setSavingSmtp(true);
+    setSmtpSaveMsg("");
+    try {
+      const res = await fetch("/api/v1/admin/smtp", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          host: smtpHost,
+          port: smtpPort,
+          user: smtpUser,
+          pass: smtpPass,
+          from: smtpFrom || smtpUser,
+          notifyTo: smtpNotifyTo,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "SMTP kaydedilemedi.");
+      setSmtpSaveMsg("✓ SMTP E-posta ayarları başarıyla kaydedildi!");
+      setInfo({
+        configured: true,
+        host: smtpHost,
+        from: smtpFrom || smtpUser,
+        user: smtpUser,
+        port: smtpPort,
+        to: smtpNotifyTo,
+      });
+      setTimeout(() => setSmtpSaveMsg(""), 4000);
+    } catch (err: any) {
+      setSmtpSaveMsg(`Hata: ${err?.message || "Kayıt başarısız"}`);
+    } finally {
+      setSavingSmtp(false);
+    }
+  }
 
   useEffect(() => {
     setPreviewErr("");
@@ -273,8 +331,107 @@ function SmtpCard() {
       </p>
       {msg ? <p className="mt-2 text-xs text-[#8A9BB0]">{msg}</p> : null}
 
+      {/* Canlı SMTP Yapılandırma Formu */}
+      <form onSubmit={saveSmtpSettings} className="mt-5 rounded-xl border border-white/[0.06] bg-[#0D1117] p-5">
+        <div className="flex items-center justify-between gap-3 border-b border-white/[0.06] pb-3 mb-4">
+          <div>
+            <h4 className="text-sm font-semibold text-white">Gmail & SMTP Sunucu Bilgileri</h4>
+            <p className="text-xs text-[#8A9BB0]">
+              Rezervasyon onay/red maillerinin ve bildirimlerin müşterilere ulaşması için Gmail veya kurumsal SMTP bilgilerinizi girin.
+            </p>
+          </div>
+          <Button type="submit" variant="primary" disabled={savingSmtp}>
+            {savingSmtp ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+            SMTP Ayarlarını Kaydet
+          </Button>
+        </div>
+
+        {smtpSaveMsg && (
+          <p className="mb-4 text-xs font-semibold text-emerald-400 bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20">
+            {smtpSaveMsg}
+          </p>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+          <div>
+            <label className="block text-[#8A9BB0] font-medium mb-1">SMTP Sunucusu (Host)</label>
+            <input
+              type="text"
+              placeholder="smtp.gmail.com"
+              value={smtpHost}
+              onChange={(e) => setSmtpHost(e.target.value)}
+              className="w-full rounded-lg border border-white/[0.1] bg-[#141E2E] px-3 py-2 text-white placeholder-white/30 focus:border-[#D9A441] focus:outline-none"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-[#8A9BB0] font-medium mb-1">Port</label>
+            <input
+              type="number"
+              placeholder="465 veya 587"
+              value={smtpPort}
+              onChange={(e) => setSmtpPort(Number(e.target.value))}
+              className="w-full rounded-lg border border-white/[0.1] bg-[#141E2E] px-3 py-2 text-white placeholder-white/30 focus:border-[#D9A441] focus:outline-none"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-[#8A9BB0] font-medium mb-1">Gmail / E-Posta Kullanıcı Adı</label>
+            <input
+              type="email"
+              placeholder="ozcanakbas38@gmail.com"
+              value={smtpUser}
+              onChange={(e) => setSmtpUser(e.target.value)}
+              className="w-full rounded-lg border border-white/[0.1] bg-[#141E2E] px-3 py-2 text-white placeholder-white/30 focus:border-[#D9A441] focus:outline-none"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-[#8A9BB0] font-medium mb-1">
+              Uygulama Şifresi (16 Haneli App Password)
+            </label>
+            <input
+              type="password"
+              placeholder="Gmail 16 haneli uygulama şifresi"
+              value={smtpPass}
+              onChange={(e) => setSmtpPass(e.target.value)}
+              className="w-full rounded-lg border border-white/[0.1] bg-[#141E2E] px-3 py-2 text-white placeholder-white/30 focus:border-[#D9A441] focus:outline-none"
+            />
+            <p className="text-[10px] text-[#6B7A94] mt-0.5">
+              Gmail hesabınızdan 2 Adımlı Doğrulama &gt; Uygulama Şifreleri kısmından oluşturulur.
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-[#8A9BB0] font-medium mb-1">Gönderen Başlığı (From)</label>
+            <input
+              type="text"
+              placeholder="Petra Cafe & Restaurant <ozcanakbas38@gmail.com>"
+              value={smtpFrom}
+              onChange={(e) => setSmtpFrom(e.target.value)}
+              className="w-full rounded-lg border border-white/[0.1] bg-[#141E2E] px-3 py-2 text-white placeholder-white/30 focus:border-[#D9A441] focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-[#8A9BB0] font-medium mb-1">Yönetici Bildirim E-Postası (To)</label>
+            <input
+              type="email"
+              placeholder="ozcanakbas38@gmail.com"
+              value={smtpNotifyTo}
+              onChange={(e) => setSmtpNotifyTo(e.target.value)}
+              className="w-full rounded-lg border border-white/[0.1] bg-[#141E2E] px-3 py-2 text-white placeholder-white/30 focus:border-[#D9A441] focus:outline-none"
+            />
+          </div>
+        </div>
+      </form>
+
       {/* Logo Boyutu Ayar Kartı */}
       <div className="mt-5 rounded-xl border border-white/[0.06] bg-[#0D1117] p-4">
+
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h4 className="text-sm font-semibold text-white">E-Posta Logo Boyutu</h4>

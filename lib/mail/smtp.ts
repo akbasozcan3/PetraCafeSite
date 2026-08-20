@@ -13,6 +13,29 @@ export function notificationEmail() {
   return (process.env.SMTP_TO || process.env.NOTIFY_EMAIL || "").trim();
 }
 
+export async function getSmtpConfigAsync(): Promise<SmtpConfig | null> {
+  const envCfg = getSmtpConfig();
+  if (envCfg) return envCfg;
+
+  try {
+    const { getAppSetting } = await import("@/lib/db/settings");
+    const raw = await getAppSetting("integration_smtp_config");
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed.host && parsed.user && parsed.pass) {
+        const port = Number(parsed.port || 587);
+        const secure = parsed.secure === true || port === 465;
+        const from = parsed.from || parsed.user;
+        return { host: parsed.host, port, user: parsed.user, pass: parsed.pass, from, secure };
+      }
+    }
+  } catch {
+    /* fallback */
+  }
+
+  return null;
+}
+
 export function getSmtpConfig(): SmtpConfig | null {
   const host = (process.env.SMTP_HOST || "").trim();
   const user = (process.env.SMTP_USER || "").trim();
@@ -55,21 +78,27 @@ export async function sendMail(opts: {
   html: string;
   text?: string;
 }) {
-  const cfg = getSmtpConfig();
+  const cfg = await getSmtpConfigAsync();
   if (!cfg) {
     console.warn("[mail] SMTP yapılandırılmamış — e-posta gönderilmedi:", opts.subject);
     return { ok: false, skipped: true as const };
   }
-  const transporter = createTransport(cfg);
-  await transporter.sendMail({
-    from: cfg.from,
-    to: opts.to,
-    subject: opts.subject,
-    html: opts.html,
-    text: opts.text,
-  });
-  return { ok: true, skipped: false as const };
+  try {
+    const transporter = createTransport(cfg);
+    await transporter.sendMail({
+      from: cfg.from,
+      to: opts.to,
+      subject: opts.subject,
+      html: opts.html,
+      text: opts.text,
+    });
+    return { ok: true, skipped: false as const };
+  } catch (err) {
+    console.error("[mail] sendMail hatası:", err);
+    return { ok: false, error: err instanceof Error ? err.message : "Mail gönderilemedi" };
+  }
 }
+
 
 export async function sendVerificationEmail(to: string, token: string) {
   const url = `${siteBaseUrl()}/hesabim/dogrula?token=${encodeURIComponent(token)}`;
