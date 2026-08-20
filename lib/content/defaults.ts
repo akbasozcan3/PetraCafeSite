@@ -520,6 +520,9 @@ Yiyecek & İçecek Hizmetleri, Cafe & Restoran İşletmeciliği, Açık Yüzme H
   },
 };
 
+
+
+
 export function mergeContent(partial: Partial<SiteContent>, current: SiteContent): SiteContent {
   return {
     ...current,

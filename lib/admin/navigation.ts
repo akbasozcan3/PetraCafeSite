@@ -224,6 +224,14 @@ export const adminNavItems: AdminNavItem[] = [
     permission: "content:read",
   },
   {
+    href: "/admin/sozlesmeler",
+    label: "Sözleşmeler & KVKK",
+    description: "Gizlilik, KVKK, Rezervasyon/İptal, Çerez ve Ticari Bilgiler",
+    icon: FileText,
+    group: "Site",
+    permission: "content:read",
+  },
+  {
     href: "/admin/site",
     label: "SEO & Footer",
     description: "SEO, footer, yasal metinler",
@@ -231,6 +239,7 @@ export const adminNavItems: AdminNavItem[] = [
     group: "Site",
     permission: "seo:write",
   },
+
   {
     href: "/admin/diger",
     label: "Ek Metinler",

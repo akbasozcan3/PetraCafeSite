@@ -92,8 +92,44 @@ const nextConfig: NextConfig = {
         destination: "/blog/rezervasyon-rehberi",
         permanent: true,
       },
+      {
+        source: "/kvkk",
+        destination: "/gizlilik-politikasi",
+        permanent: true,
+      },
+      {
+        source: "/gizlilik",
+        destination: "/gizlilik-politikasi",
+        permanent: true,
+      },
+      {
+        source: "/iptal-iade",
+        destination: "/rezervasyon-kosullari",
+        permanent: true,
+      },
+      {
+        source: "/iptal-ve-iade",
+        destination: "/rezervasyon-kosullari",
+        permanent: true,
+      },
+      {
+        source: "/rezervasyon-iptal",
+        destination: "/rezervasyon-kosullari",
+        permanent: true,
+      },
+      {
+        source: "/cerez",
+        destination: "/cerez-politikasi",
+        permanent: true,
+      },
+      {
+        source: "/kunye",
+        destination: "/ticari-bilgiler",
+        permanent: true,
+      },
     ];
   },
+
 
   async rewrites() {
     return [
