@@ -48,22 +48,46 @@ export default function HomeReservation({
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [status, setStatus] = useState<"idle" | "saving" | "ok" | "err">("idle");
+  const [error, setError] = useState("");
+  const [website, setWebsite] = useState("");
+  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+  const [bookedTables, setBookedTables] = useState<string[]>([]);
+
+  // Dinamik PayTR Kapora Ayarları (Admin Panelinden Yönetilir)
+  const [depositConfig, setDepositConfig] = useState({
+    amount: 250,
+    enabled: true,
+    note: "kapora ile masanızı anında garantileyin.",
+  });
+
+  useEffect(() => {
+    fetch("/api/v1/payment/paytr/info")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d) {
+          setDepositConfig({
+            amount: Number(d.depositAmount) || 250,
+            enabled: d.depositEnabled !== false,
+            note: d.depositNote || "kapora ile masanızı anında garantileyin.",
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const [email, setEmail] = useState("");
   const [date, setDate] = useState(minDate);
   const [time, setTime] = useState("");
-  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
-  const [bookedTables, setBookedTables] = useState<string[]>([]);
   const [selectedTable, setSelectedTable] = useState<RestaurantTable | null>(null);
   const [guests, setGuests] = useState(2);
   const [note, setNote] = useState("");
-  const [website, setWebsite] = useState("");
   const [paymentChoice, setPaymentChoice] = useState<"free" | "paytr">("free");
   const [paytrToken, setPaytrToken] = useState<string | null>(null);
   const [showPaytrModal, setShowPaytrModal] = useState(false);
-  const [status, setStatus] = useState<"idle" | "saving" | "ok" | "err">("idle");
-  const [error, setError] = useState("");
 
   const img = resolveMediaUrl(liveMedia(image, SITE_PHOTOS.interior));
+
   const hours = displayHours(iletisim);
   const slots = useMemo(() => reservationSlotsForDate(date, iletisim), [date, iletisim]);
   const availableSlots = useMemo(
@@ -168,16 +192,17 @@ export default function HomeReservation({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            amount: 250, // 250 TL Kapora Bedeli
+            amount: depositConfig.amount, // Admin panelinden belirlenen kapora bedeli
             userEmail: email.trim() || `${digits}@petra.local`,
             userName: name,
             userPhone: phone,
             userAddress: "Petra Cafe & Restaurant Rezervasyon",
             basket: [
-              { name: `Petra Rezervasyon Kaporası (${date} - ${time})`, price: 250, quantity: 1 },
+              { name: `Petra Rezervasyon Kaporası (${date} - ${time})`, price: depositConfig.amount, quantity: 1 },
             ],
           }),
         });
+
 
         const payData = (await payRes.json().catch(() => ({}))) as { success?: boolean; token?: string; error?: string };
 
@@ -740,67 +765,72 @@ export default function HomeReservation({
                     />
                   </div>
 
-                  {/* ÖDEME TERCİHİ SEÇENEKLERİ (PayTR & Ücretsiz Seçenek) */}
-                  <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid rgba(13,15,10,0.1)" }}>
-                    <label style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#0d0f0a", display: "block", marginBottom: 8 }}>
-                      Ödeme & Rezervasyon Türü
-                    </label>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                      <div
-                        onClick={() => setPaymentChoice("free")}
-                        style={{
-                          padding: "10px 12px",
-                          borderRadius: 12,
-                          border: paymentChoice === "free" ? "2px solid #b8842c" : "1px solid rgba(13,15,10,0.12)",
-                          background: paymentChoice === "free" ? "rgba(184, 132, 44, 0.1)" : "#f6f1e6",
-                          cursor: "pointer",
-                          transition: "all 0.2s ease",
-                        }}
-                      >
-                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                          <input
-                            type="radio"
-                            name="paymentOption"
-                            checked={paymentChoice === "free"}
-                            onChange={() => setPaymentChoice("free")}
-                            style={{ width: "auto", minHeight: "auto", margin: 0 }}
-                          />
-                          <span style={{ fontSize: 12, fontWeight: 700, color: "#0d0f0a" }}>Normal Rezervasyon</span>
-                        </div>
-                        <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "#6e6a5c" }}>
-                          Ücretsiz talep oluşturun, restoranda ödeyin.
-                        </p>
-                      </div>
+                  {/* Ödeme Türü Seçimi (Dinamik Admin Kontrollü) */}
+                  {depositConfig.enabled && (
+                    <div style={{ marginTop: 16 }}>
+                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#0d0f0a", marginBottom: 8 }}>
+                        Ödeme & Rezervasyon Türü
+                      </label>
 
-                      <div
-                        onClick={() => setPaymentChoice("paytr")}
-                        style={{
-                          padding: "10px 12px",
-                          borderRadius: 12,
-                          border: paymentChoice === "paytr" ? "2px solid #b8842c" : "1px solid rgba(13,15,10,0.12)",
-                          background: paymentChoice === "paytr" ? "rgba(184, 132, 44, 0.1)" : "#f6f1e6",
-                          cursor: "pointer",
-                          transition: "all 0.2s ease",
-                        }}
-                      >
-                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                          <input
-                            type="radio"
-                            name="paymentOption"
-                            checked={paymentChoice === "paytr"}
-                            onChange={() => setPaymentChoice("paytr")}
-                            style={{ width: "auto", minHeight: "auto", margin: 0 }}
-                          />
-                          <span style={{ fontSize: 12, fontWeight: 700, color: "#b8842c", display: "inline-flex", alignItems: "center", gap: 4 }}>
-                            <CreditCard style={{ width: 13, height: 13 }} /> PayTR ile Öde
-                          </span>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                        <div
+                          onClick={() => setPaymentChoice("free")}
+                          style={{
+                            padding: "12px 14px",
+                            borderRadius: 14,
+                            border: paymentChoice === "free" ? "2px solid #b8842c" : "1px solid rgba(13, 15, 10, 0.12)",
+                            background: paymentChoice === "free" ? "#faf6ee" : "#ffffff",
+                            cursor: "pointer",
+                            transition: "all 0.2s",
+                          }}
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                            <input
+                              type="radio"
+                              name="paymentChoice"
+                              value="free"
+                              checked={paymentChoice === "free"}
+                              onChange={() => setPaymentChoice("free")}
+                              style={{ width: "auto", minHeight: "auto", margin: 0 }}
+                            />
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "#0d0f0a" }}>Normal Rezervasyon</span>
+                          </div>
+                          <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "#6e6a5c" }}>
+                            Ücretsiz talep oluşturun, restoranda ödeyin.
+                          </p>
                         </div>
-                        <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "#6e6a5c" }}>
-                          250 TL kapora ile masanızı anında garantileyin.
-                        </p>
+
+                        <div
+                          onClick={() => setPaymentChoice("paytr")}
+                          style={{
+                            padding: "12px 14px",
+                            borderRadius: 14,
+                            border: paymentChoice === "paytr" ? "2px solid #b8842c" : "1px solid rgba(13, 15, 10, 0.12)",
+                            background: paymentChoice === "paytr" ? "#faf6ee" : "#ffffff",
+                            cursor: "pointer",
+                            transition: "all 0.2s",
+                          }}
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                            <input
+                              type="radio"
+                              name="paymentChoice"
+                              value="paytr"
+                              checked={paymentChoice === "paytr"}
+                              onChange={() => setPaymentChoice("paytr")}
+                              style={{ width: "auto", minHeight: "auto", margin: 0 }}
+                            />
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "#b8842c", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                              <CreditCard style={{ width: 13, height: 13 }} /> PayTR ile Öde
+                            </span>
+                          </div>
+                          <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "#6e6a5c" }}>
+                            {depositConfig.amount} TL {depositConfig.note}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Honeypot Bot Koruması */}
                   <div className="petra-form__hp" aria-hidden="true" style={{ display: "none" }}>
@@ -870,7 +900,7 @@ export default function HomeReservation({
                         <span>{copy?.gonderiliyor || "İletiliyor…"}</span>
                       ) : paymentChoice === "paytr" ? (
                         <>
-                          <span>PayTR ile 250 TL Öde</span>
+                          <span>PayTR ile {depositConfig.amount} TL Öde</span>
                           <CreditCard style={{ width: 16, height: 16 }} />
                         </>
                       ) : (

@@ -134,11 +134,45 @@ if (!css.includes("Desktop: hamburger asla görünmesin")) {
 
 console.log("done, files=", n);
 
+// PayTR Info API Route Oluştur
+const paytrInfoDir = path.join(root, "app", "api", "v1", "payment", "paytr", "info");
+if (!fs.existsSync(paytrInfoDir)) fs.mkdirSync(paytrInfoDir, { recursive: true });
+
+const paytrInfoCode = `import { NextResponse } from "next/server";
+import { getPayTrConfig } from "@/lib/integrations/paytr/paytr";
+
+export const runtime = "nodejs";
+
+export async function GET() {
+  try {
+    const config = await getPayTrConfig();
+    return NextResponse.json({
+      depositAmount: config.depositAmount || 250,
+      depositEnabled: config.depositEnabled !== false,
+      depositNote: config.depositNote || "kapora ile masanızı anında garantileyin.",
+      isConfigured: Boolean(config.merchantId && config.merchantKey && config.merchantSalt),
+    });
+  } catch {
+    return NextResponse.json({
+      depositAmount: 250,
+      depositEnabled: true,
+      depositNote: "kapora ile masanızı anında garantileyin.",
+      isConfigured: false,
+    });
+  }
+}
+`;
+
+fs.writeFileSync(path.join(paytrInfoDir, "route.ts"), paytrInfoCode, "utf8");
+console.log("PayTR info API route created!");
+
+
 // Admin Sozlesmeler Sayfasını Oluştur
 const sozlesmelerDir = path.join(root, "app", "admin", "sozlesmeler");
 if (!fs.existsSync(sozlesmelerDir)) fs.mkdirSync(sozlesmelerDir, { recursive: true });
 
 const sozlesmelerCode = `"use client";
+
 
 import { useState } from "react";
 import { Loader2, Save, FileText, Shield, Check, Globe, Building, ArrowRight } from "lucide-react";

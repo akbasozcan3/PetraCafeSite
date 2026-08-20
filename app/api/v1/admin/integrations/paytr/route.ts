@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       config: {
         merchantId: config.merchantId,
-        // Güvenlik için key ve salt maskeli/veya dolu döner
         merchantKey: config.merchantKey ? "••••••••" + config.merchantKey.slice(-4) : "",
         merchantSalt: config.merchantSalt ? "••••••••" + config.merchantSalt.slice(-4) : "",
         hasKey: Boolean(config.merchantKey),
@@ -17,6 +16,9 @@ export async function GET(req: NextRequest) {
         testMode: config.testMode,
         maxInstallment: config.maxInstallment || 0,
         noInstallment: config.noInstallment !== false,
+        depositAmount: config.depositAmount || 250,
+        depositEnabled: config.depositEnabled !== false,
+        depositNote: config.depositNote || "kapora ile masanızı anında garantileyin.",
       },
     });
   } catch (error) {
@@ -34,7 +36,6 @@ export async function POST(req: NextRequest) {
     const current = await getPayTrConfig();
 
     const merchantId = typeof body.merchantId === "string" ? body.merchantId.trim() : current.merchantId;
-    // Eğer şifreli/maskeli gönderildiyse eskisini koru
     const merchantKey =
       body.merchantKey && !body.merchantKey.startsWith("••••")
         ? body.merchantKey.trim()
@@ -51,13 +52,16 @@ export async function POST(req: NextRequest) {
       testMode: Boolean(body.testMode),
       maxInstallment: Number(body.maxInstallment) || 0,
       noInstallment: body.noInstallment !== false,
+      depositAmount: Number(body.depositAmount) || 250,
+      depositEnabled: body.depositEnabled !== false,
+      depositNote: typeof body.depositNote === "string" ? body.depositNote.trim() : "kapora ile masanızı anında garantileyin.",
     };
 
     await savePayTrConfig(newConfig);
 
     return NextResponse.json({
       success: true,
-      message: "PayTR ayarları başarıyla kaydedildi.",
+      message: "PayTR ve kapora ayarları başarıyla kaydedildi.",
     });
   } catch (error) {
     return NextResponse.json(

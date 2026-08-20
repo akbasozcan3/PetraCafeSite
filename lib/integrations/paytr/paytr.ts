@@ -8,6 +8,9 @@ export interface PayTrConfig {
   testMode: boolean;
   maxInstallment?: number;
   noInstallment?: boolean;
+  depositAmount?: number; // Rezervasyon kapora tutarı (TL)
+  depositEnabled?: boolean; // Online kapora ödemesi açık/kapalı
+  depositNote?: string; // Kapora açıklama metni
 }
 
 export interface PayTrBasketItem {
@@ -39,47 +42,33 @@ export async function getPayTrConfig(): Promise<PayTrConfig> {
   const envSalt = (process.env.PAYTR_MERCHANT_SALT || "").trim();
   const envTest = process.env.PAYTR_TEST_MODE === "1" || process.env.PAYTR_TEST_MODE === "true";
 
-  if (envId && envKey && envSalt) {
-    return {
-      merchantId: envId,
-      merchantKey: envKey,
-      merchantSalt: envSalt,
-      testMode: envTest,
-      maxInstallment: 0,
-      noInstallment: true,
-    };
-  }
-
+  let dbConfig: Partial<PayTrConfig> = {};
   try {
     const raw = await getAppSetting(SETTING_PAYTR_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw);
-      return {
-        merchantId: parsed.merchantId || "",
-        merchantKey: parsed.merchantKey || "",
-        merchantSalt: parsed.merchantSalt || "",
-        testMode: Boolean(parsed.testMode),
-        maxInstallment: parsed.maxInstallment || 0,
-        noInstallment: parsed.noInstallment !== false,
-      };
+      dbConfig = JSON.parse(raw);
     }
   } catch {
     /* fallback */
   }
 
   return {
-    merchantId: "",
-    merchantKey: "",
-    merchantSalt: "",
-    testMode: true,
-    maxInstallment: 0,
-    noInstallment: true,
+    merchantId: envId || dbConfig.merchantId || "",
+    merchantKey: envKey || dbConfig.merchantKey || "",
+    merchantSalt: envSalt || dbConfig.merchantSalt || "",
+    testMode: envId ? envTest : (dbConfig.testMode !== undefined ? Boolean(dbConfig.testMode) : true),
+    maxInstallment: dbConfig.maxInstallment || 0,
+    noInstallment: dbConfig.noInstallment !== false,
+    depositAmount: Number(dbConfig.depositAmount) || 250,
+    depositEnabled: dbConfig.depositEnabled !== false,
+    depositNote: dbConfig.depositNote || "kapora ile masanızı anında garantileyin.",
   };
 }
 
 export async function savePayTrConfig(config: PayTrConfig): Promise<void> {
   await setAppSetting(SETTING_PAYTR_KEY, JSON.stringify(config));
 }
+
 
 /**
  * PayTR iFrame Token üreten resmi API fonksiyonu
