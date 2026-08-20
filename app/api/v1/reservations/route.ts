@@ -1,6 +1,6 @@
 import { jsonResponse, errorResponse, parseBody } from "@/lib/api/helpers";
 import { rateLimit } from "@/lib/rate-limit";
-import { createReservation } from "@/lib/db/inbox";
+import { createReservation, getReservedTimesForDate, isSlotBooked } from "@/lib/db/inbox";
 import { getPublicContent } from "@/lib/db/content";
 import { notifyInbox } from "@/lib/mail/smtp";
 import { brandLogoAbsoluteUrl, buildNotifyEmail } from "@/lib/mail/notify-layout";
@@ -10,6 +10,17 @@ import { publicOrigin } from "@/lib/site/canonical";
 import { isAllowedReservationTime, localIsoDate, addDaysIso } from "@/lib/content/hours";
 
 export const runtime = "nodejs";
+
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const date = searchParams.get("date") || localIsoDate();
+    const bookedTimes = await getReservedTimesForDate(date, true);
+    return jsonResponse({ date, bookedTimes });
+  } catch {
+    return errorResponse("Saatler alınamadı", 500);
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -63,6 +74,16 @@ export async function POST(request: Request) {
         400
       );
     }
+
+    // Aynı tarih ve saatte önceden onaylanmış rezervasyon çakışma kontrolü
+    const slotFull = await isSlotBooked(date, time, true);
+    if (slotFull) {
+      return errorResponse(
+        `Seçtiğiniz ${time} saati doludur. Lütfen farklı bir saat veya gün seçiniz.`,
+        400
+      );
+    }
+
     if (!Number.isInteger(guests) || guests < 1 || guests > 20) {
       return errorResponse("Kişi sayısı 1–20 arasında olmalı.", 400);
     }

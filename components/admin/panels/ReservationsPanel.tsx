@@ -112,9 +112,29 @@ export default function ReservationsPanel() {
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <p className="font-semibold text-[#EEE9E0]">{r.name}</p>
-                  <p className="mt-1 text-sm text-[#8A9BB0]">
-                    {r.date} · {r.time} · {r.guests} kişi
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="font-semibold text-[#EEE9E0] text-base">{r.name}</p>
+                    {(() => {
+                      const conflictCount = items.filter(
+                        (other) =>
+                          other.id !== r.id &&
+                          other.date === r.date &&
+                          other.time === r.time &&
+                          other.status !== "rejected" &&
+                          other.status !== "cancelled"
+                      ).length;
+                      if (conflictCount > 0) {
+                        return (
+                          <span className="rounded bg-amber-500/20 px-2 py-0.5 text-xs text-amber-300 font-medium border border-amber-500/30">
+                            ⚠️ Aynı saatte {conflictCount} rezervasyon daha var
+                          </span>
+                        );
+                      }
+                      return null;
+                    })()}
+                  </div>
+                  <p className="mt-1 text-sm text-[#EEE9E0] font-medium">
+                    📅 {r.date} &nbsp;·&nbsp; 🕐 {r.time} &nbsp;·&nbsp; 👥 {r.guests} kişi
                   </p>
                   <a
                     href={`tel:${r.phone.replace(/\s/g, "")}`}
@@ -124,10 +144,12 @@ export default function ReservationsPanel() {
                     {r.phone}
                   </a>
                   {r.note ? (
-                    <p className="mt-2 text-sm text-[#C8D0DC]">{r.note}</p>
+                    <p className="mt-2 text-sm text-[#C8D0DC] bg-white/[0.03] p-2.5 rounded-lg border border-white/[0.04]">
+                      💬 <span className="italic">{r.note}</span>
+                    </p>
                   ) : null}
                   <p className="mt-2 text-[11px] text-[#6B7A94]">
-                    {new Date(r.createdAt).toLocaleString("tr-TR")}
+                    Oluşturulma: {new Date(r.createdAt).toLocaleString("tr-TR")}
                   </p>
                 </div>
                 <span

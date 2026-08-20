@@ -43,6 +43,7 @@ export default function HomeReservation({
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState(minDate);
   const [time, setTime] = useState("");
+  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
   const [guests, setGuests] = useState(2);
   const [note, setNote] = useState("");
   const [website, setWebsite] = useState("");
@@ -51,19 +52,40 @@ export default function HomeReservation({
   const img = resolveMediaUrl(liveMedia(image, SITE_PHOTOS.interior));
   const hours = displayHours(iletisim);
   const slots = useMemo(() => reservationSlotsForDate(date, iletisim), [date, iletisim]);
-  const closed = slots.length === 0;
+  const availableSlots = useMemo(
+    () => slots.filter((s) => !bookedTimes.includes(s)),
+    [slots, bookedTimes]
+  );
+  const closed = slots.length === 0 || availableSlots.length === 0;
 
   useEffect(() => {
     if (date < minDate) setDate(minDate);
   }, [date, minDate]);
 
   useEffect(() => {
-    if (!slots.length) {
+    let active = true;
+    void fetch(`/api/v1/reservations?date=${encodeURIComponent(date)}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (active && Array.isArray(d?.bookedTimes)) {
+          setBookedTimes(d.bookedTimes);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [date]);
+
+  useEffect(() => {
+    if (!availableSlots.length) {
       setTime("");
       return;
     }
-    if (!slots.includes(time)) setTime(slots[0]);
-  }, [slots, time]);
+    if (!availableSlots.includes(time)) {
+      setTime(availableSlots[0]);
+    }
+  }, [availableSlots, time]);
 
   const ticks = [
     hours,
@@ -200,14 +222,19 @@ export default function HomeReservation({
               >
                 {closed ? (
                   <option value="">
-                    {copy?.kapaliMetin || "Bu gün için uygun saat yok"}
+                    {slots.length > 0 && availableSlots.length === 0
+                      ? "Bu günün tüm saatleri doludur"
+                      : copy?.kapaliMetin || "Bu gün için uygun saat yok"}
                   </option>
                 ) : (
-                  slots.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))
+                  slots.map((s) => {
+                    const isBooked = bookedTimes.includes(s);
+                    return (
+                      <option key={s} value={s} disabled={isBooked}>
+                        {s} {isBooked ? "— (Dolu)" : ""}
+                      </option>
+                    );
+                  })
                 )}
               </select>
             </div>

@@ -206,6 +206,46 @@ export async function createReservation(
   return item;
 }
 
+export async function getReservedTimesForDate(
+  date: string,
+  confirmedOnly = true
+): Promise<string[]> {
+  if (isPostgresEnabled()) {
+    try {
+      await ensurePgTables();
+      const pool = getPool()!;
+      const statusFilter = confirmedOnly
+        ? "status = 'confirmed'"
+        : "status IN ('confirmed', 'pending')";
+      const res = await pool.query<{ visit_time: string }>(
+        `SELECT DISTINCT visit_time FROM reservations
+         WHERE visit_date = $1 AND ${statusFilter}`,
+        [date]
+      );
+      return res.rows.map((r) => r.visit_time);
+    } catch (err) {
+      console.warn("[inbox] pg reserved times:", (err as Error).message);
+    }
+  }
+
+  const list = readList<Reservation>(RES_FILE, RES_FALLBACK);
+  const matched = list.filter((r) => {
+    if (r.date !== date) return false;
+    if (confirmedOnly) return r.status === "confirmed";
+    return r.status === "confirmed" || r.status === "pending";
+  });
+  return Array.from(new Set(matched.map((r) => r.time)));
+}
+
+export async function isSlotBooked(
+  date: string,
+  time: string,
+  confirmedOnly = true
+): Promise<boolean> {
+  const booked = await getReservedTimesForDate(date, confirmedOnly);
+  return booked.includes(time);
+}
+
 export async function updateReservation(
   id: string,
   patch: Partial<Pick<Reservation, "status">>
