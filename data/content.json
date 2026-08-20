@@ -342,8 +342,8 @@
     "hepsiMetin": "Tüm menüyü inceleyin →",
     "hepsiLink": "/menu",
     "tumMetinSablon": "{ad} →",
-    "kdvDurumu": "dahil",
-    "not": "Fiyatlara KDV dahildir. Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın.",
+    "kdvDurumu": "kapali",
+    "not": "Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın.",
     "gruplar": [
       {
         "ad": "Kahvaltı Çeşitleri",

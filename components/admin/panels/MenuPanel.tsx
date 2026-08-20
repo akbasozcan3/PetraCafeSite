@@ -277,7 +277,7 @@ export default function MenuPanel() {
               KDV Durumu
             </label>
             <select
-              value={menu.kdvDurumu || "dahil"}
+              value={menu.kdvDurumu || "kapali"}
               onChange={(e) => {
                 const val = e.target.value;
                 const defaultText =
@@ -285,14 +285,15 @@ export default function MenuPanel() {
                     ? "Fiyatlara KDV dahildir. Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın."
                     : val === "haric"
                     ? "Fiyatlara KDV dahil değildir. Kahvaltı ekstraları ve servis detayları için danışınız."
-                    : "";
+                    : "Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın.";
                 updateMenu({
                   kdvDurumu: val,
-                  not: menu.not || defaultText,
+                  not: defaultText,
                 });
               }}
               className="w-full rounded-xl border border-white/[0.08] bg-[#0D1117] px-3.5 py-2.5 text-sm text-[#EEE9E0] focus:border-[#C8703A] focus:outline-none"
             >
+              <option value="kapali">⚪ KDV İbaresini Gizle / Kapalı</option>
               <option value="dahil">✓ Fiyatlara KDV Dahildir</option>
               <option value="haric">✗ Fiyatlara KDV Dahil Değildir (+KDV)</option>
               <option value="ozel">Özel / Belirtilmemiş</option>
@@ -308,7 +309,7 @@ export default function MenuPanel() {
                 type="button"
                 onClick={() =>
                   updateMenu({
-                    not: "Fiyatlara KDV dahildir. Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın.",
+                    not: "Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın.",
                   })
                 }
                 className="text-[11px] text-[#C8703A] hover:underline"
