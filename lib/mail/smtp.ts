@@ -136,13 +136,32 @@ export async function sendReservationStatusEmail(opts: {
   const logoHeight = Number(content?.images?.smtpLogoHeight || content?.images?.smtpLogoSize || 120);
 
   const isConfirmed = opts.status === "confirmed";
+  const isCancelled = opts.status === "cancelled";
+
+  let kicker = "REZERVASYON ONAYI";
+  let title = "Rezervasyonunuz Onaylandı";
+  let intro = `Merhaba Sayın ${opts.name},\n\n${opts.date} saat ${opts.time} için oluşturduğunuz rezervasyon talebiniz onaylanmıştır. Belirtilen saatte masanız sizler için hazır olacaktır.`;
+  let subject = `Rezervasyonunuz Onaylandı (${opts.date} ${opts.time}) — Petra Cafe Restaurant`;
+  let durumLabel = "✅ Onaylandı";
+
+  if (isCancelled) {
+    kicker = "REZERVASYON İPTALİ";
+    title = "Rezervasyonunuz İptal Edildi";
+    intro = `Merhaba Sayın ${opts.name},\n\n${opts.date} saat ${opts.time} için oluşturulan rezervasyon kaydınız talebiniz doğrultusunda iptal edilmiştir.`;
+    subject = `Rezervasyon İptali (${opts.date} ${opts.time}) — Petra Cafe Restaurant`;
+    durumLabel = "❌ İptal Edildi";
+  } else if (opts.status === "rejected") {
+    kicker = "REZERVASYON BİLGİLENDİRMESİ";
+    title = "Rezervasyon Talebiniz";
+    intro = `Merhaba Sayın ${opts.name},\n\n${opts.date} saat ${opts.time} için oluşturduğunuz rezervasyon talebiniz, talep edilen saatteki yoğunluk ve kontenjan doluluğu sebebiyle maalesef onaylanamamıştır.`;
+    subject = `Rezervasyon Talebiniz Hakkında — Petra Cafe Restaurant`;
+    durumLabel = "❌ Kontenjan Dolu / Reddedildi";
+  }
 
   const mail = buildNotifyEmail({
-    kicker: isConfirmed ? "REZERVASYON ONAYI" : "REZERVASYON HAKKINDA",
-    title: isConfirmed ? "Rezervasyonunuz Onaylandı" : "Rezervasyon Talebiniz",
-    intro: isConfirmed
-      ? `Merhaba ${opts.name},<br/><br/>${opts.date} saat ${opts.time} için oluşturduğunuz rezervasyon talebiniz onaylanmıştır. Belirtilen saatte masanız sizler için hazır olacaktır.`
-      : `Merhaba ${opts.name},<br/><br/>${opts.date} saat ${opts.time} için oluşturduğunuz rezervasyon talebiniz maalesef onaylanamamıştır.`,
+    kicker,
+    title,
+    intro,
     logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
     logoHeight,
     rows: [
@@ -151,20 +170,19 @@ export async function sendReservationStatusEmail(opts: {
       { label: "Saat", value: opts.time },
       { label: "Kişi Sayısı", value: `${opts.guests} Kişi` },
       ...(opts.tableName ? [{ label: "Ayrılan Masa / Yer", value: opts.tableName }] : []),
-      { label: "Durum", value: isConfirmed ? "✅ Onaylandı" : "❌ Onaylanamadı" },
+      { label: "Durum", value: durumLabel },
       ...(opts.note ? [{ label: "Not", value: opts.note }] : []),
     ],
   });
 
   return sendMail({
     to: opts.to,
-    subject: isConfirmed
-      ? `Rezervasyonunuz Onaylandı (${opts.date} ${opts.time}) — Petra Cafe Restaurant`
-      : `Rezervasyonunuz hakkında — Petra Cafe Restaurant`,
+    subject,
     text: mail.text,
     html: mail.html,
   });
 }
+
 
 export async function sendOrderConfirmationEmail(opts: {
   to: string;

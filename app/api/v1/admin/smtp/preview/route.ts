@@ -42,7 +42,7 @@ export async function GET(request: Request) {
       mail = buildNotifyEmail({
         kicker: "REZERVASYON ONAYI",
         title: "Rezervasyonunuz Onaylandı",
-        intro: "Merhaba Ahmet Yılmaz,<br/><br/>20 Ağustos 2026 saat 12:00 için oluşturduğunuz rezervasyon talebiniz onaylanmıştır. Belirtilen saatte masanız sizler için hazır olacaktır.",
+        intro: "Merhaba Sayın Ahmet Yılmaz,\n\n20 Ağustos 2026 saat 12:00 için oluşturduğunuz rezervasyon talebiniz onaylanmıştır. Belirtilen saatte masanız sizler için hazır olacaktır.",
         logoUrl,
         logoHeight,
         rows: [
@@ -50,6 +50,7 @@ export async function GET(request: Request) {
           { label: "Tarih", value: "20 Ağustos 2026" },
           { label: "Saat", value: "12:00" },
           { label: "Kişi Sayısı", value: "4 Kişi" },
+          { label: "Ayrılan Masa", value: "Loca 1 (VIP Havuz Başı)" },
           { label: "Durum", value: "✅ Onaylandı" },
           { label: "Not", value: "Pencere kenarı masa hazırlandı." },
         ],
@@ -57,9 +58,9 @@ export async function GET(request: Request) {
       subject = "Rezervasyonunuz Onaylandı (20 Ağustos 2026 12:00) — Petra Cafe Restaurant";
     } else if (kind === "reservation_rejected") {
       mail = buildNotifyEmail({
-        kicker: "REZERVASYON HAKKINDA",
+        kicker: "REZERVASYON BİLGİLENDİRMESİ",
         title: "Rezervasyon Talebiniz",
-        intro: "Merhaba Ahmet Yılmaz,<br/><br/>20 Ağustos 2026 saat 12:00 için oluşturduğunuz rezervasyon talebiniz maalesef onaylanamamıştır.",
+        intro: "Merhaba Sayın Ahmet Yılmaz,\n\n20 Ağustos 2026 saat 12:00 için oluşturduğunuz rezervasyon talebiniz, talep edilen saatteki yoğunluk ve kontenjan doluluğu sebebiyle maalesef onaylanamamıştır.",
         logoUrl,
         logoHeight,
         rows: [
@@ -67,11 +68,12 @@ export async function GET(request: Request) {
           { label: "Tarih", value: "20 Ağustos 2026" },
           { label: "Saat", value: "12:00" },
           { label: "Kişi Sayısı", value: "4 Kişi" },
-          { label: "Durum", value: "❌ Onaylanamadı" },
+          { label: "Durum", value: "❌ Kontenjan Dolu / Reddedildi" },
         ],
       });
-      subject = "Rezervasyonunuz hakkında — Petra Cafe Restaurant";
-    } else {
+      subject = "Rezervasyon Talebiniz Hakkında — Petra Cafe Restaurant";
+    }
+ else {
       mail = buildNotifyEmail({
         kicker: "Rezervasyon",
         title: "Yeni masa talebi",

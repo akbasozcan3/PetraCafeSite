@@ -45,6 +45,14 @@ export function buildNotifyEmail(opts: {
       </div>`
     : "";
 
+  const formatIntroHtml = (text?: string) => {
+    if (!text) return "";
+    // XSS koruması + güvenli satır sonu (<br/>) desteği
+    return escapeHtml(text)
+      .replace(/&lt;br\s*\/?&gt;/gi, "<br/>")
+      .replace(/\n/g, "<br/>");
+  };
+
   const html = `<!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -107,7 +115,7 @@ export function buildNotifyEmail(opts: {
             <td style="padding:32px 36px 36px 36px;background-color:#FFFFFF;">
               <p style="margin:0 0 8px;color:#B8842C;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;font-family:'Inter',sans-serif;">${escapeHtml(opts.kicker)}</p>
               <h1 style="margin:0 0 10px;font-size:26px;line-height:1.25;color:#16190F;font-weight:700;font-family:Georgia,'Times New Roman',serif;letter-spacing:-0.01em;">${escapeHtml(opts.title)}</h1>
-              ${opts.intro ? `<p style="margin:0 0 24px;color:#666254;font-size:14px;line-height:1.55;font-family:'Inter',sans-serif;">${escapeHtml(opts.intro)}</p>` : `<div style="height:12px;"></div>`}
+              ${opts.intro ? `<p style="margin:0 0 24px;color:#666254;font-size:14.5px;line-height:1.65;font-family:'Inter',sans-serif;">${formatIntroHtml(opts.intro)}</p>` : `<div style="height:12px;"></div>`}
               
               <!-- Data Table -->
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:8px;">
@@ -117,6 +125,7 @@ export function buildNotifyEmail(opts: {
               ${bodyHtml}
             </td>
           </tr>
+
 
           <!-- Footer Area -->
           <tr>
