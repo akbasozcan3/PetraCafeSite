@@ -10,7 +10,7 @@ export interface LegalPageProps {
 
 const LEGAL_NAV = [
   { slug: "gizlilik-politikasi", label: "Gizlilik & KVKK", icon: "shield" },
-  { slug: "rezervasyon-kosullari", label: "Rezervasyon / İptal Koşulları", icon: "check" },
+  { slug: "rezervasyon-kosullari", label: "Rezervasyon & İptal Koşulları", icon: "check" },
   { slug: "kullanim-kosullari", label: "Kullanım Koşulları", icon: "file" },
   { slug: "cerez-politikasi", label: "Çerez Politikası", icon: "globe" },
   { slug: "ticari-bilgiler", label: "İşletme & Ticari Bilgiler", icon: "map" },
@@ -23,87 +23,253 @@ export default function LegalPageTemplate({
   body,
 }: LegalPageProps) {
   return (
-    <main className="page legal-page bg-[#0D0F0A] text-[#F4EEE1] min-h-screen pt-28 pb-20">
-      <div className="wrap max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Breadcrumbs */}
-        <nav aria-label="Breadcrumb" className="crumbs mb-6 text-xs text-white/50 flex items-center gap-2">
-          <Link href="/" className="hover:text-[#D9A441] transition">
-            Ana Sayfa
-          </Link>
-          <span>/</span>
-          <span className="text-[#D9A441] font-medium">{title}</span>
-        </nav>
+    <div
+      style={{
+        width: "100%",
+        paddingTop: "24px",
+        paddingBottom: "60px",
+        boxSizing: "border-box",
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      }}
+    >
+      {/* 1. Breadcrumbs Navigasyon */}
+      <nav
+        aria-label="Breadcrumb"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          fontSize: "12px",
+          color: "#6e6a5c",
+          marginBottom: "24px",
+        }}
+      >
+        <Link href="/" style={{ color: "#0d0f0a", textDecoration: "none", fontWeight: 600 }}>
+          Ana Sayfa
+        </Link>
+        <span>/</span>
+        <span style={{ color: "#b8842c", fontWeight: 700 }}>{title}</span>
+      </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Sol Yan Menü: Yasal Sayfalar Arası Hızlı Geçiş */}
-          <aside className="lg:col-span-4 bg-[#16190F]/80 border border-white/10 rounded-2xl p-5 backdrop-blur-md sticky top-28">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#D9A441] mb-4">
+      {/* 2. Ana Izgara Düzeni (Grid) */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "32px",
+          alignItems: "flex-start",
+        }}
+      >
+        {/* Sol Menü: Yasal Sayfalar Hızlı Geçiş */}
+        <aside
+          style={{
+            flex: "1 1 280px",
+            maxWidth: "340px",
+            background: "#ffffff",
+            borderRadius: "20px",
+            border: "1.5px solid rgba(184, 132, 44, 0.25)",
+            padding: "24px",
+            boxShadow: "0 10px 30px -10px rgba(0,0,0,0.06)",
+            position: "sticky",
+            top: "100px",
+            boxSizing: "border-box",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
+            <span
+              style={{
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                background: "#b8842c",
+                display: "inline-block",
+              }}
+            />
+            <p
+              style={{
+                margin: 0,
+                fontSize: "11px",
+                fontWeight: 800,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "#b8842c",
+              }}
+            >
               Yasal & Kurumsal
             </p>
-            <ul className="space-y-1.5 text-sm">
-              {LEGAL_NAV.map((item) => {
-                const isActive = item.slug === currentSlug;
-                return (
-                  <li key={item.slug}>
-                    <Link
-                      href={`/${item.slug}`}
-                      className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl transition ${
-                        isActive
-                          ? "bg-[#D9A441] text-[#0D0F0A] font-bold shadow-md"
-                          : "text-white/70 hover:bg-white/5 hover:text-white"
-                      }`}
-                    >
-                      <span>{item.label}</span>
-                      {isActive && <span className="text-xs">➔</span>}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+          </div>
 
-            <div className="mt-6 pt-5 border-t border-white/10 text-xs text-white/60">
-              <p className="font-semibold text-white/80 mb-1">Sorularınız mı var?</p>
-              <p className="mb-3">Her türlü bilgi ve destek için bize ulaşabilirsiniz.</p>
-              <a
-                href="tel:05306089051"
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 text-[#D9A441] hover:bg-white/20 transition font-medium"
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "6px" }}>
+            {LEGAL_NAV.map((item) => {
+              const isActive = item.slug === currentSlug;
+              return (
+                <li key={item.slug}>
+                  <Link
+                    href={`/${item.slug}`}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "11px 16px",
+                      borderRadius: "12px",
+                      textDecoration: "none",
+                      fontSize: "13px",
+                      fontWeight: isActive ? 700 : 500,
+                      background: isActive ? "linear-gradient(135deg, #12150e 0%, #1e2417 100%)" : "transparent",
+                      color: isActive ? "#f4eee1" : "#2c2f26",
+                      border: isActive ? "1px solid #b8842c" : "1px solid transparent",
+                      boxShadow: isActive ? "0 4px 14px rgba(0,0,0,0.15)" : "none",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <span>{item.label}</span>
+                    {isActive && <span style={{ color: "#d9a441", fontSize: "12px" }}>➔</span>}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+
+          {/* İletişim & Yardım Kutusu */}
+          <div
+            style={{
+              marginTop: "24px",
+              paddingTop: "20px",
+              borderTop: "1px solid rgba(13, 15, 10, 0.08)",
+              fontSize: "12px",
+              color: "#6e6a5c",
+            }}
+          >
+            <p style={{ margin: "0 0 4px", fontWeight: 700, color: "#0d0f0a" }}>Sorularınız mı var?</p>
+            <p style={{ margin: "0 0 12px", lineHeight: "1.4" }}>
+              Yasal koşullar ve rezervasyon hakkında ekibimizle görüşebilirsiniz.
+            </p>
+            <a
+              href="tel:05306089051"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "9px 14px",
+                borderRadius: "10px",
+                background: "#faf6ee",
+                border: "1px solid rgba(184, 132, 44, 0.3)",
+                color: "#9e7b30",
+                textDecoration: "none",
+                fontWeight: 700,
+                fontSize: "12px",
+              }}
+            >
+              <SiteIcon name="phone" size={14} />
+              <span>0530 608 90 51</span>
+            </a>
+          </div>
+        </aside>
+
+        {/* Sağ Alan: Sözleşme Gövdesi */}
+        <article
+          style={{
+            flex: "1 1 500px",
+            background: "#ffffff",
+            borderRadius: "24px",
+            border: "1.5px solid rgba(184, 132, 44, 0.25)",
+            padding: "36px 40px",
+            boxShadow: "0 12px 40px -10px rgba(0,0,0,0.06)",
+            boxSizing: "border-box",
+          }}
+        >
+          {/* Başlık Başlangıcı */}
+          <div style={{ borderBottom: "1px solid rgba(13, 15, 10, 0.08)", paddingBottom: "24px", marginBottom: "28px" }}>
+            <span
+              style={{
+                display: "inline-block",
+                padding: "4px 12px",
+                borderRadius: "20px",
+                fontSize: "11px",
+                fontWeight: 800,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                background: "#faf6ee",
+                color: "#b8842c",
+                border: "1px solid rgba(184, 132, 44, 0.3)",
+                marginBottom: "12px",
+              }}
+            >
+              RESMİ BİLDİRİM & SÖZLEŞME
+            </span>
+            <h1
+              style={{
+                margin: "0 0 12px",
+                fontFamily: "Georgia, 'Times New Roman', serif",
+                fontSize: "28px",
+                fontWeight: 700,
+                color: "#12150e",
+                lineHeight: "1.3",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              {title}
+            </h1>
+            {lead ? (
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: "15px",
+                  color: "#5c5749",
+                  lineHeight: "1.65",
+                  fontWeight: 400,
+                }}
               >
-                <SiteIcon name="phone" size={14} />
-                <span>0530 608 90 51</span>
-              </a>
-            </div>
-          </aside>
+                {lead}
+              </p>
+            ) : null}
+          </div>
 
-          {/* Sağ İçerik Alanı */}
-          <article className="lg:col-span-8 bg-[#16190F]/50 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-sm">
-            <div className="border-b border-white/10 pb-6 mb-8">
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#D9A441]/15 text-[#D9A441] border border-[#D9A441]/30 mb-3">
-                RESMİ BİLDİRİM
-              </span>
-              <h1 className="font-serif text-2xl sm:text-4xl font-bold text-[#F4EEE1] tracking-tight leading-tight">
-                {title}
-              </h1>
-              {lead ? (
-                <p className="mt-3 text-base sm:text-lg text-white/80 leading-relaxed">
-                  {lead}
-                </p>
-              ) : null}
-            </div>
+          {/* Sözleşme Maddeleri */}
+          <div
+            style={{
+              fontSize: "14.5px",
+              lineHeight: "1.8",
+              color: "#2c2f26",
+              whiteSpace: "pre-line",
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            {body}
+          </div>
 
-            {/* Metin Gövdesi */}
-            <div className="legal-body text-sm sm:text-base text-[#D0C8B8] leading-relaxed space-y-4 whitespace-pre-line font-light">
-              {body}
-            </div>
-
-            <div className="mt-12 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-white/40">
-              <span>Son Güncelleme: {new Date().getFullYear()} · Petra Cafe Restaurant</span>
-              <Link href="/" className="text-[#D9A441] hover:underline font-semibold">
-                ← Ana Sayfaya Dön
-              </Link>
-            </div>
-          </article>
-        </div>
+          {/* Alt Kapanış & Son Güncelleme */}
+          <div
+            style={{
+              marginTop: "40px",
+              paddingTop: "20px",
+              borderTop: "1px solid rgba(13, 15, 10, 0.08)",
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "12px",
+              fontSize: "12px",
+              color: "#8c877a",
+            }}
+          >
+            <span>Son Güncelleme: {new Date().getFullYear()} · Petra Cafe Restaurant</span>
+            <Link
+              href="/"
+              style={{
+                color: "#b8842c",
+                textDecoration: "none",
+                fontWeight: 700,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              ← Ana Sayfaya Dön
+            </Link>
+          </div>
+        </article>
       </div>
-    </main>
+    </div>
   );
 }
