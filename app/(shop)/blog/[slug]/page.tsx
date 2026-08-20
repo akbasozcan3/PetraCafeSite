@@ -113,6 +113,55 @@ export default async function BlogPostPage({ params }: Props) {
       ) : (
         <p className="body">{post.ozet}</p>
       )}
+
+      <style>{`
+        .blog-article__body .cta-box,
+        .shop-article .cta-box {
+          margin-top: 36px !important;
+          padding: 30px 32px !important;
+          background: #ffffff !important;
+          border: 1px solid rgba(184, 132, 44, 0.25) !important;
+          border-radius: 22px !important;
+          box-shadow: 0 12px 32px rgba(13, 15, 10, 0.04) !important;
+        }
+        .blog-article__body .cta-box h2,
+        .shop-article .cta-box h2 {
+          margin: 0 0 10px 0 !important;
+          font-family: var(--f-head, "Playfair Display", Georgia, serif) !important;
+          font-size: 1.45rem !important;
+          font-weight: 700 !important;
+          color: #12140E !important;
+          line-height: 1.25 !important;
+        }
+        .blog-article__body .cta-box p,
+        .shop-article .cta-box p {
+          margin: 0 0 18px 0 !important;
+          color: #5E594D !important;
+          font-size: 0.98rem !important;
+          line-height: 1.6 !important;
+        }
+        .blog-article__body .cta-box .btn,
+        .shop-article .cta-box .btn {
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          min-height: 48px !important;
+          padding: 0 26px !important;
+          border-radius: 999px !important;
+          background: #D9A441 !important;
+          color: #0D0F0A !important;
+          font-weight: 700 !important;
+          font-size: 15px !important;
+          text-decoration: none !important;
+          box-shadow: 0 8px 20px rgba(217, 164, 65, 0.25) !important;
+          transition: all 0.2s ease !important;
+        }
+        .blog-article__body .cta-box .btn:hover,
+        .shop-article .cta-box .btn:hover {
+          background: #E5B55E !important;
+          transform: translateY(-2px) !important;
+        }
+      `}</style>
     </article>
   );
 }

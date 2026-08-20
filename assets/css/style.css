@@ -2155,3 +2155,17 @@ html.cart-open body {
   }
 }
 
+/* Garantili CTA Başlık ve Metin Rengi */
+.cta-box:not(.section--dark .cta-box) h2,
+.blog-article__body .cta-box h2,
+.shop-article .cta-box h2,
+.site-shop .cta-box h2 {
+  color: #12140E !important;
+}
+.cta-box:not(.section--dark .cta-box) p,
+.blog-article__body .cta-box p,
+.shop-article .cta-box p,
+.site-shop .cta-box p {
+  color: #5E594D !important;
+}
+
