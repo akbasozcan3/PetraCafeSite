@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+
 import {
   RESTAURANT_TABLES,
   TABLE_ZONES,
@@ -22,18 +23,37 @@ export default function InteractiveFloorPlan({
   bookedTableIds = [],
   guestsCount = 2,
 }: InteractiveFloorPlanProps) {
+  const [tables, setTables] = useState<RestaurantTable[]>(RESTAURANT_TABLES);
   const [activeZone, setActiveZone] = useState<"all" | TableZoneId>("all");
   const [hoveredTable, setHoveredTable] = useState<RestaurantTable | null>(null);
 
+  // Veritabanı / Admin tarafından güncellenen güncel masa verilerini yükle
+  useEffect(() => {
+    let active = true;
+    fetch("/api/v1/tables")
+      .then((r) => r.json())
+      .then((d) => {
+        if (!active) return;
+        if (Array.isArray(d?.tables) && d.tables.length > 0) {
+          setTables(d.tables);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const selectedTable = useMemo(
-    () => RESTAURANT_TABLES.find((t) => t.id === selectedTableId) || null,
-    [selectedTableId]
+    () => tables.find((t) => t.id === selectedTableId) || null,
+    [tables, selectedTableId]
   );
 
   const filteredTables = useMemo(() => {
-    if (activeZone === "all") return RESTAURANT_TABLES;
-    return RESTAURANT_TABLES.filter((t) => t.zoneId === activeZone);
-  }, [activeZone]);
+    if (activeZone === "all") return tables;
+    return tables.filter((t) => t.zoneId === activeZone);
+  }, [tables, activeZone]);
+
 
   const getTableStatus = (t: RestaurantTable) => {
     if (t.id === selectedTableId) return "selected";
@@ -81,10 +101,10 @@ export default function InteractiveFloorPlan({
             transition: "all 0.2s ease",
           }}
         >
-          Tüm Masalar ({RESTAURANT_TABLES.length})
+          Tüm Masalar ({tables.length})
         </button>
         {TABLE_ZONES.map((z) => {
-          const count = RESTAURANT_TABLES.filter((t) => t.zoneId === z.id).length;
+          const count = tables.filter((t) => t.zoneId === z.id).length;
           const isSelected = activeZone === z.id;
           return (
             <button
@@ -142,7 +162,7 @@ export default function InteractiveFloorPlan({
         style={{
           position: "relative",
           width: "100%",
-          maxHeight: "360px",
+          maxHeight: "420px",
           overflowY: "auto",
           overflowX: "hidden",
           borderRadius: 16,
@@ -179,7 +199,8 @@ export default function InteractiveFloorPlan({
           />
 
           {/* İnteraktif Masa Hotspotları */}
-          {RESTAURANT_TABLES.map((t) => {
+          {tables.map((t) => {
+
             const status = getTableStatus(t);
             const isHovered = hoveredTable?.id === t.id;
             const isSelected = t.id === selectedTableId;
@@ -354,7 +375,7 @@ export default function InteractiveFloorPlan({
             <select
               value={selectedTableId || ""}
               onChange={(e) => {
-                const found = RESTAURANT_TABLES.find((t) => t.id === e.target.value) || null;
+                const found = tables.find((t) => t.id === e.target.value) || null;
                 onSelectTable(found);
               }}
               style={{
@@ -376,6 +397,7 @@ export default function InteractiveFloorPlan({
                 </option>
               ))}
             </select>
+
           </div>
         )}
       </div>

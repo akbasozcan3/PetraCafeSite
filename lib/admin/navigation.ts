@@ -102,6 +102,14 @@ export const adminNavItems: AdminNavItem[] = [
     permission: "content:read",
   },
   {
+    href: "/admin/masa-plani",
+    label: "Masa & Kroki Editörü",
+    description: "Masaları canlı krokide sürükle ve konumlandır",
+    icon: Layout,
+    group: "Ana Sayfa",
+    permission: "content:read",
+  },
+  {
     href: "/admin/mesajlar",
     label: "Mesajlar",
     description: "Siteden gelen iletişim formları",

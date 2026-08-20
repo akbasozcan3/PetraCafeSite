@@ -225,7 +225,7 @@ export default function HomeReservation({
 
   return (
     <section className="section section--dark rsv-sec" id="rezervasyon">
-      <div className="wrap rsv">
+      <div className="wrap rsv" style={{ alignItems: "center" }}>
         {/* Sol Alan: Tanıtım & Fotoğraf */}
         <div>
           <p className="eyebrow" data-fade="">
