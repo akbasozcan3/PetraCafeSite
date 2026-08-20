@@ -108,41 +108,139 @@ export default async function BlogIndexPage() {
           <p>Henüz yayınlanmış yazı yok.</p>
         </div>
       ) : (
-        <div className="blog-list">
+        <div className="blog-list" style={{ display: "grid", gap: 24, margin: "28px 0" }}>
           {posts.map((m) => {
             const cover = resolveMediaUrl(liveMedia(m.kapak, SITE_PHOTOS.interior));
             return (
-              <Link className="post" href={`/blog/${m.slug}`} key={m.slug}>
+              <Link
+                className="post-magazine-card"
+                href={`/blog/${m.slug}`}
+                key={m.slug}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "stretch",
+                  gap: 28,
+                  padding: 22,
+                  background: "#ffffff",
+                  borderRadius: 22,
+                  border: "1px solid rgba(13, 15, 10, 0.09)",
+                  boxShadow: "0 10px 30px rgba(13, 15, 10, 0.03)",
+                  textDecoration: "none",
+                  color: "inherit",
+                  transition: "all 0.2s ease",
+                }}
+              >
                 {cover ? (
-                  <div className="post__thumb">
+                  <div
+                    style={{
+                      flex: "0 0 320px",
+                      width: 320,
+                      height: 210,
+                      borderRadius: 16,
+                      overflow: "hidden",
+                      background: "#f0ede6",
+                    }}
+                  >
                     <SafeImg
                       src={cover}
                       alt={m.baslik}
                       fallback={SITE_PHOTOS.interior}
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 ) : null}
-                <div className="post__content">
-                  <div className="post__meta">
-                    {m.kategori ? <span>{m.kategori}</span> : null}
-                    {m.tarih ? (
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                        <CalendarIcon />
-                        {m.tarih}
-                      </span>
-                    ) : null}
-                    {m.okumaSuresi ? (
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                        <ClockIcon />
-                        {m.okumaSuresi}
-                      </span>
+
+                <div
+                  style={{
+                    flex: "1 1 auto",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    padding: "4px 0",
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        alignItems: "center",
+                        gap: 12,
+                        marginBottom: 10,
+                        fontSize: "0.8rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.06em",
+                        textTransform: "uppercase",
+                        color: "#B8842C",
+                      }}
+                    >
+                      {m.kategori ? (
+                        <span
+                          style={{
+                            background: "rgba(217, 164, 65, 0.12)",
+                            padding: "3px 10px",
+                            borderRadius: 6,
+                          }}
+                        >
+                          {m.kategori}
+                        </span>
+                      ) : null}
+                      {m.tarih ? (
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#6E6A5C" }}>
+                          <CalendarIcon />
+                          {m.tarih}
+                        </span>
+                      ) : null}
+                      {m.okumaSuresi ? (
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#6E6A5C" }}>
+                          <ClockIcon />
+                          {m.okumaSuresi}
+                        </span>
+                      ) : null}
+                    </div>
+
+                    <h2
+                      style={{
+                        fontFamily: 'var(--f-head, "Playfair Display", Georgia, serif)',
+                        fontSize: "1.42rem",
+                        fontWeight: 700,
+                        lineHeight: 1.3,
+                        color: "#12140E",
+                        margin: "0 0 10px 0",
+                      }}
+                    >
+                      {m.baslik}
+                    </h2>
+
+                    {m.ozet ? (
+                      <p
+                        style={{
+                          fontSize: "0.98rem",
+                          lineHeight: 1.6,
+                          color: "#5E594D",
+                          margin: 0,
+                        }}
+                      >
+                        {m.ozet}
+                      </p>
                     ) : null}
                   </div>
-                  <h2>{m.baslik}</h2>
-                  {m.ozet ? <p>{m.ozet}</p> : null}
-                  <span className="post__more">
-                    Yazıyı İncele <ArrowRightIcon />
-                  </span>
+
+                  <div style={{ marginTop: 16 }}>
+                    <span
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 8,
+                        fontSize: "0.88rem",
+                        fontWeight: 700,
+                        color: "#B8842C",
+                      }}
+                    >
+                      Yazıyı İncele <ArrowRightIcon />
+                    </span>
+                  </div>
                 </div>
               </Link>
             );
