@@ -9,10 +9,10 @@ export default async function NotFound() {
   return (
     <SiteFault
       kicker="404"
-      title="Bu kapı burada açılmıyor"
-      lead="Aradığınız adres yok veya taşındı. Menüye ya da ana sayfaya dönebilirsiniz."
-      primary={{ label: "Ana sayfa", href: "/" }}
-      secondary={{ label: "Menü", href: "/menu" }}
+      title="Sayfa Bulunamadı"
+      lead="Ulaşmaya çalıştığınız sayfa kaldırılmış, adı değiştirilmiş veya geçici olarak kullanım dışı olabilir. Menüyü inceleyebilir veya ana sayfaya dönebilirsiniz."
+      primary={{ label: "Ana Sayfaya Dön", href: "/" }}
+      secondary={{ label: "Menüyü İncele", href: "/menu" }}
       logoUrl={logo}
     />
   );

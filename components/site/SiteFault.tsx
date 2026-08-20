@@ -71,9 +71,9 @@ function Btn({
 }
 
 export default function SiteFault({
-  kicker = "Petra",
-  title,
-  lead,
+  kicker = "404 HATA",
+  title = "Sayfa Bulunamadı",
+  lead = "Ulaşmaya çalıştığınız sayfa kaldırılmış, adı değiştirilmiş veya geçici olarak kullanım dışı olabilir. Menüyü inceleyebilir veya ana sayfaya dönebilirsiniz.",
   primary,
   secondary,
   logoUrl,
