@@ -185,11 +185,6 @@ export default function SiteFooter({
             © {year} {brand}
           </span>
           <span className="foot__bar-links">
-            <Link href="/gizlilik-politikasi">Gizlilik & KVKK</Link>
-            <Link href="/rezervasyon-kosullari">Rezervasyon & İptal Koşulları</Link>
-            <Link href="/kullanim-kosullari">Kullanım Koşulları</Link>
-            <Link href="/cerez-politikasi">Çerez Politikası</Link>
-            <Link href="/ticari-bilgiler">Ticari Bilgiler</Link>
             {barLinks.map((link) => (
               <FooterLink key={`${link.label}-${link.href}`} href={link.href}>
                 {link.label}
@@ -198,6 +193,7 @@ export default function SiteFooter({
             {footer?.yasalMetin ? <span>{footer.yasalMetin}</span> : null}
           </span>
         </div>
+
         {content.legal?.kvkk || content.legal?.gizlilik || content.legal?.cerez ? (
           <div className="wrap foot__legal" id="legalNote">
             {content.legal.kvkk ? (

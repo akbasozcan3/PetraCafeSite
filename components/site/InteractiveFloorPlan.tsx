@@ -243,9 +243,17 @@ export default function InteractiveFloorPlan({
                 onClick={() => handleTableClick(t)}
                 onMouseEnter={() => setHoveredTable(t)}
                 onMouseLeave={() => setHoveredTable(null)}
-                style={{ cursor, opacity, transition: "all 0.15s ease" }}
+                style={{ cursor, opacity, transition: "all 0.15s ease", touchAction: "manipulation" }}
                 filter={filter ? filter : undefined}
               >
+                {/* Mobilde parmakla kolay dokunmak için genişletilmiş görünmez Hitbox */}
+                <circle
+                  cx={t.cx}
+                  cy={t.cy}
+                  r={(t.r || 18) + 16}
+                  fill="transparent"
+                  style={{ cursor }}
+                />
                 <circle
                   cx={t.cx}
                   cy={t.cy}
@@ -254,6 +262,7 @@ export default function InteractiveFloorPlan({
                   stroke={strokeColor}
                   strokeWidth={strokeWidth}
                 />
+
                 <text
                   x={t.cx}
                   y={(t.cy || 0) - 2}

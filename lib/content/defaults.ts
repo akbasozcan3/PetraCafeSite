@@ -287,12 +287,17 @@ export const DEFAULT_CONTENT: SiteContent = {
     yasalMetin: "Tüm hakları saklıdır.",
     slogan: "Keyif, konfor ve kalite.\nDünya mutfağı · serpme kahvaltı · İtalyan tatlı & kokteyl · nargile · pool & beach.",
     iletisimBaslik: "İletişim",
-    whatsappEtiket: "WhatsApp",
     barLinks: [
+      { label: "Gizlilik & KVKK", href: "/gizlilik-politikasi" },
+      { label: "Rezervasyon & İptal Koşulları", href: "/rezervasyon-kosullari" },
+      { label: "Kullanım Koşulları", href: "/kullanim-kosullari" },
+      { label: "Çerez Politikası", href: "/cerez-politikasi" },
+      { label: "Ticari Bilgiler", href: "/ticari-bilgiler" },
       { label: "Menü", href: "/menu" },
       { label: "Instagram", href: "https://www.instagram.com/petracaferestaurant/" },
       { label: "Rezervasyon", href: "/#rezervasyon" },
     ],
+
     kolonlar: [
       {
         baslik: "Petra",
