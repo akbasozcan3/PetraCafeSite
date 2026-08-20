@@ -263,20 +263,97 @@ export default function MenuPanel() {
         title="Menü Yönetimi"
         description={`${menu.gruplar.length} bölüm · ${totalProducts} tabak — ana sayfa menüsü ve kategori sayfaları.`}
       />
-      <SectionHint anchor="menu" label="Menü Yönetimi" />
-      <AdminAlert message={message} type={messageType} />
+      <div className="mb-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-5">
+        <h3 className="text-base font-semibold text-[#F8F8F8] flex items-center gap-2">
+          <span>🏷️</span> Fiyatlandırma, KDV ve Menü Dipnotu
+        </h3>
+        <p className="mt-1 text-xs text-[#8A9BB0]">
+          Sitedeki menü sayfalarında ve ana sayfa menü önizlemesinde görünecek genel fiyat ve KDV açıklaması.
+        </p>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#8A9BB0] mb-1.5">
+              KDV Durumu
+            </label>
+            <select
+              value={menu.kdvDurumu || "dahil"}
+              onChange={(e) => {
+                const val = e.target.value;
+                const defaultText =
+                  val === "dahil"
+                    ? "Fiyatlara KDV dahildir. Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın."
+                    : val === "haric"
+                    ? "Fiyatlara KDV dahil değildir. Kahvaltı ekstraları ve servis detayları için danışınız."
+                    : "";
+                updateMenu({
+                  kdvDurumu: val,
+                  not: menu.not || defaultText,
+                });
+              }}
+              className="w-full rounded-xl border border-white/[0.08] bg-[#0D1117] px-3.5 py-2.5 text-sm text-[#EEE9E0] focus:border-[#C8703A] focus:outline-none"
+            >
+              <option value="dahil">✓ Fiyatlara KDV Dahildir</option>
+              <option value="haric">✗ Fiyatlara KDV Dahil Değildir (+KDV)</option>
+              <option value="ozel">Özel / Belirtilmemiş</option>
+            </select>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-xs font-semibold uppercase tracking-wider text-[#8A9BB0]">
+                Menü Dipnotu & Uyarı Metni
+              </label>
+              <button
+                type="button"
+                onClick={() =>
+                  updateMenu({
+                    not: "Fiyatlara KDV dahildir. Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın.",
+                  })
+                }
+                className="text-[11px] text-[#C8703A] hover:underline"
+              >
+                Standart Metni Doldur
+              </button>
+            </div>
+            <textarea
+              value={menu.not || ""}
+              onChange={(e) => updateMenu({ not: e.target.value })}
+              rows={2}
+              className="w-full rounded-xl border border-white/[0.08] bg-[#0D1117] px-3.5 py-2.5 text-sm text-[#EEE9E0] placeholder-[#6B7A94] focus:border-[#C8703A] focus:outline-none"
+              placeholder="Fiyatlara KDV dahildir. Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın."
+            />
+          </div>
+        </div>
+      </div>
 
       <div className="mb-4 space-y-3 rounded-2xl border border-[#C8703A]/30 bg-[#C8703A]/8 p-4">
-        <p className="text-sm font-medium text-[#EEE9E0]">Hızlı ekle</p>
-        <p className="text-xs text-[#8A9BB0]">
-          Kategori veya tabak yazın, ekleyin, sonra alttaki Kaydet. Adres (URL) otomatik oluşur.
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-medium text-[#EEE9E0]">⚡ Hızlı Tabak & Kategori Ekle</p>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setOpen(-1)}
+              className="rounded-lg bg-white/5 px-2.5 py-1 text-xs text-[#8A9BB0] hover:bg-white/10 hover:text-white"
+            >
+              Tümünü Kapat
+            </button>
+            <button
+              type="button"
+              onClick={() => setOpen(999)}
+              className="rounded-lg bg-white/5 px-2.5 py-1 text-xs text-[#8A9BB0] hover:bg-white/10 hover:text-white"
+            >
+              Tümünü Aç
+            </button>
+          </div>
+        </div>
+
         <div className="flex flex-col gap-2 sm:flex-row">
           <Input
-            label="Yeni kategori"
+            label="Yeni kategori ekle"
             value={newCat}
             onChange={(e) => setNewCat(e.target.value)}
-            placeholder="Örn. Serpme Kahvaltı"
+            placeholder="Örn. Serpme Kahvaltı, Izgaralar…"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
@@ -285,15 +362,48 @@ export default function MenuPanel() {
             }}
           />
           <Button className="sm:mt-7" onClick={addCategory}>
-            <Plus className="h-4 w-4" /> Kategori ekle
+            <Plus className="h-4 w-4" /> Kategori Ekle
           </Button>
         </div>
+
         <Input
-          label="Ara (kategori veya tabak)"
+          label="Menüde tabak veya kategori ara"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Kahvaltı, Aperol, nargile…"
+          placeholder="Tabak adı, açıklama veya fiyat ile anında ara…"
         />
+      </div>
+
+      {/* Kategori Hızlı Geçiş Butonları */}
+      <div className="mb-4 flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1">
+        <button
+          type="button"
+          onClick={() => setQuery("")}
+          className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+            !query
+              ? "bg-[#C8703A] text-white"
+              : "bg-white/5 text-[#8A9BB0] hover:bg-white/10 hover:text-white"
+          }`}
+        >
+          Tümü ({totalProducts})
+        </button>
+        {menu.gruplar.map((g, idx) => (
+          <button
+            key={g.slug || idx}
+            type="button"
+            onClick={() => {
+              setQuery(g.ad);
+              setOpen(idx);
+            }}
+            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+              query === g.ad
+                ? "bg-[#C8703A] text-white"
+                : "bg-white/5 text-[#8A9BB0] hover:bg-white/10 hover:text-white"
+            }`}
+          >
+            {g.ad} ({g.urunler.length})
+          </button>
+        ))}
       </div>
 
       <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
@@ -311,61 +421,19 @@ export default function MenuPanel() {
             });
           }}
         />
-        <h3 className="pt-2 font-semibold text-[#F8F8F8]">Menü ekstra metinler</h3>
-        <p className="text-xs text-[#6B7A94]">
-          Ürün satırına tıklayınca detay sayfası açılır. WhatsApp ve telefon Admin → İletişim’deki numaraya gider.
-        </p>
-        <Input
-          label="Menü alt notu (isteğe bağlı)"
-          value={menu.legend || ""}
-          onChange={(e) => updateMenu({ legend: e.target.value })}
-        />
-        <Input
-          label="Kategori ürün kartı notu (opsiyonel, yıldız metnini ezer)"
-          value={menu.kartNot || content.sayfalar?.urunKategori?.kartNot || ""}
-          onChange={(e) => {
-            const kartNot = e.target.value;
-            const urunKategori = {
-              ...(content.sayfalar?.urunKategori || {
-                eyebrow: "Menü",
-                answerBaslik: "Kısa bilgi",
-                listeBaslikSablon: "{ad} listesi",
-                kartNot: "",
-                ctaBaslik: "Rezervasyon & bilgi",
-                ctaWaLabel: "WhatsApp’tan yazın",
-                relatedBaslik: "Diğer kategoriler",
-                relatedHepsi: "Tüm menü",
-              }),
-              kartNot,
-            };
-            setContent({
-              ...content,
-              menu: { ...menu, kartNot },
-              sayfalar: content.sayfalar
-                ? { ...content.sayfalar, urunKategori }
-                : undefined,
-            });
-          }}
-        />
-        <Input
-          label="Kategori “tümü” link şablonu"
-          value={menu.tumMetinSablon || "{ad} hakkında bilgi →"}
-          onChange={(e) => updateMenu({ tumMetinSablon: e.target.value })}
-        />
-        <p className="text-xs text-[#6B7A94]">{"{ad}"} yerine kategori adı yazılır</p>
-        <Input
-          label="Boş kategori metni (ana sayfa)"
-          value={menu.emptyMetin || ""}
-          onChange={(e) => updateMenu({ emptyMetin: e.target.value })}
-          placeholder="Bu bölümde yayında tabak yok."
-        />
-        <textarea
-          value={menu.not || ""}
-          onChange={(e) => updateMenu({ not: e.target.value })}
-          rows={2}
-          className="w-full rounded-2xl border border-white/[0.06] bg-[#0D1117] px-4 py-3 text-sm text-[#EEE9E0] focus:border-[#C8703A]/40 focus:outline-none focus:ring-1 focus:ring-[#C8703A]/20"
-          placeholder="Alt not (ör: Gramaj, alerjen ve fiyat bilgisi)"
-        />
+        <h3 className="pt-2 font-semibold text-[#F8F8F8]">Menü Başlık ve Bağlantılar</h3>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Input
+            label="Menü buton metni"
+            value={menu.hepsiMetin || "Tüm menüyü inceleyin →"}
+            onChange={(e) => updateMenu({ hepsiMetin: e.target.value })}
+          />
+          <Input
+            label="Kategori “tümü” link şablonu"
+            value={menu.tumMetinSablon || "{ad} →"}
+            onChange={(e) => updateMenu({ tumMetinSablon: e.target.value })}
+          />
+        </div>
       </section>
 
       <div className="space-y-4">

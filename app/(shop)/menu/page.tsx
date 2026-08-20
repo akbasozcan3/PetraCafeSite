@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { getPublicContent } from "@/lib/db/content";
 import {
   formatPriceLabel,
@@ -126,6 +126,14 @@ export default async function MenuPage() {
               </section>
             );
           })}
+
+          {content.menu?.not ? (
+            <div className="mt-12 mb-8 rounded-2xl border border-black/10 bg-[#FAF6EE] p-6 text-center shadow-sm">
+              <p className="text-sm font-medium text-[#7C6E53] leading-relaxed max-w-2xl mx-auto">
+                ℹ️ {content.menu.not}
+              </p>
+            </div>
+          ) : null}
         </>
       )}
     </div>

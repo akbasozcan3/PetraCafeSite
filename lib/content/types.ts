@@ -275,6 +275,7 @@ export interface MenuContent {
   baslik?: string;
   giris?: string;
   not?: string;
+  kdvDurumu?: string;
   legend?: string;
   hepsiMetin?: string;
   hepsiLink?: string;
