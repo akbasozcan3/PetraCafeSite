@@ -7,14 +7,13 @@ import {
   RestaurantTable,
   TableZoneId,
 } from "@/lib/content/tables-data";
+import { Check, Sparkles, AlertCircle } from "lucide-react";
 
 interface InteractiveFloorPlanProps {
   selectedTableId?: string;
   onSelectTable: (table: RestaurantTable | null) => void;
   bookedTableIds?: string[];
   guestsCount?: number;
-  date?: string;
-  time?: string;
 }
 
 export default function InteractiveFloorPlan({
@@ -25,6 +24,11 @@ export default function InteractiveFloorPlan({
 }: InteractiveFloorPlanProps) {
   const [activeZone, setActiveZone] = useState<"all" | TableZoneId>("all");
   const [hoveredTable, setHoveredTable] = useState<RestaurantTable | null>(null);
+
+  const selectedTable = useMemo(
+    () => RESTAURANT_TABLES.find((t) => t.id === selectedTableId) || null,
+    [selectedTableId]
+  );
 
   const filteredTables = useMemo(() => {
     if (activeZone === "all") return RESTAURANT_TABLES;
@@ -50,33 +54,34 @@ export default function InteractiveFloorPlan({
 
   return (
     <div style={{ width: "100%", boxSizing: "border-box" }}>
-      {/* Bölge Seçim Butonları */}
+      {/* 1. Üst Filtre Sekmeleri (Lüks Krem & Altın Butonlar) */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           gap: 6,
           overflowX: "auto",
-          paddingBottom: 8,
-          marginBottom: 8,
+          paddingBottom: 4,
+          marginBottom: 10,
         }}
       >
         <button
           type="button"
           onClick={() => setActiveZone("all")}
           style={{
-            padding: "4px 10px",
+            padding: "6px 14px",
             borderRadius: 20,
-            fontSize: 11,
+            fontSize: 12,
             fontWeight: 700,
-            border: "none",
+            border: activeZone === "all" ? "1px solid #b8842c" : "1px solid rgba(13,15,10,0.12)",
             cursor: "pointer",
-            background: activeZone === "all" ? "#d9a441" : "rgba(255,255,255,0.1)",
-            color: activeZone === "all" ? "#0d0f0a" : "rgba(255,255,255,0.8)",
+            background: activeZone === "all" ? "#12150e" : "#f6f1e6",
+            color: activeZone === "all" ? "#f4eee1" : "#0d0f0a",
             whiteSpace: "nowrap",
+            transition: "all 0.2s ease",
           }}
         >
-          Tümü ({RESTAURANT_TABLES.length})
+          Tüm Masalar ({RESTAURANT_TABLES.length})
         </button>
         {TABLE_ZONES.map((z) => {
           const count = RESTAURANT_TABLES.filter((t) => t.zoneId === z.id).length;
@@ -87,15 +92,16 @@ export default function InteractiveFloorPlan({
               type="button"
               onClick={() => setActiveZone(z.id)}
               style={{
-                padding: "4px 10px",
+                padding: "6px 14px",
                 borderRadius: 20,
-                fontSize: 11,
+                fontSize: 12,
                 fontWeight: 700,
-                border: "none",
+                border: isSelected ? "1px solid #b8842c" : "1px solid rgba(13,15,10,0.12)",
                 cursor: "pointer",
-                background: isSelected ? "#d9a441" : "rgba(255,255,255,0.1)",
-                color: isSelected ? "#0d0f0a" : "rgba(255,255,255,0.8)",
+                background: isSelected ? "#12150e" : "#f6f1e6",
+                color: isSelected ? "#f4eee1" : "#0d0f0a",
                 whiteSpace: "nowrap",
+                transition: "all 0.2s ease",
               }}
             >
               {z.name.split(" ")[0]} ({count})
@@ -104,41 +110,45 @@ export default function InteractiveFloorPlan({
         })}
       </div>
 
-      {/* Lejant (Durumlar) */}
+      {/* 2. Lejant (Durum Göstergeleri) */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: 12,
+          gap: 16,
           fontSize: 11,
-          color: "rgba(255,255,255,0.75)",
+          fontWeight: 600,
+          color: "#6e6a5c",
           marginBottom: 10,
         }}
       >
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e" }} /> Uygun
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#16a34a", boxShadow: "0 0 6px #22c55e" }} />
+          Müsait Masa
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#d9a441" }} /> Seçili
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#b8842c" }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#d9a441", boxShadow: "0 0 8px #d9a441" }} />
+          Seçtiğiniz Masa
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444" }} /> Dolu
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#9ca3af" }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444" }} />
+          Dolu
         </span>
       </div>
 
-      {/* İnteraktif Kroki Alanı (Kompakt ve Orantılı) */}
+      {/* 3. İnteraktif Kroki Alanı (Beyaz Zemin, Altın Çerçeve, Hassas Oran) */}
       <div
         style={{
           position: "relative",
           width: "100%",
-          maxHeight: "340px",
+          maxHeight: "360px",
           overflowY: "auto",
           overflowX: "hidden",
-          borderRadius: 14,
+          borderRadius: 16,
           background: "#ffffff",
-          border: "2px solid #d9a441",
-          boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+          border: "1.5px solid rgba(184, 132, 44, 0.35)",
+          boxShadow: "0 6px 20px -6px rgba(0,0,0,0.12)",
         }}
       >
         <svg
@@ -151,14 +161,14 @@ export default function InteractiveFloorPlan({
         >
           <defs>
             <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="0" dy="0" stdDeviation="8" floodColor="#d9a441" floodOpacity="1" />
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#d9a441" floodOpacity="1" />
             </filter>
             <filter id="greenGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#22c55e" floodOpacity="0.8" />
+              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#16a34a" floodOpacity="0.8" />
             </filter>
           </defs>
 
-          {/* 1. KATMAN: Orijinal Havuz Krokisi Görseli */}
+          {/* Orijinal Havuz Krokisi */}
           <image
             href="/assets/img/havuz-kroki.png"
             x="0"
@@ -168,47 +178,44 @@ export default function InteractiveFloorPlan({
             preserveAspectRatio="xMidYMid meet"
           />
 
-          {/* 2. KATMAN: Masalar Üzerinde İnteraktif Hotspot Daireleri (🟢 Yeşil, 🔴 Kırmızı, 🟡 Sarı) */}
+          {/* İnteraktif Masa Hotspotları */}
           {RESTAURANT_TABLES.map((t) => {
             const status = getTableStatus(t);
             const isHovered = hoveredTable?.id === t.id;
             const isSelected = t.id === selectedTableId;
             const isDimmed = activeZone !== "all" && t.zoneId !== activeZone;
 
-            // Renk ve stil mantığı (🟢 🔴 🟡)
             let fillColor = "rgba(34, 197, 94, 0.4)";
-            let strokeColor = "#16a34a";
-            let strokeWidth = 3.5;
+            let strokeColor = "#15803d";
+            let strokeWidth = 3;
             let filter: string | undefined = "url(#greenGlow)";
             let cursor = "pointer";
 
             if (isSelected) {
-              // 🟡 Seçili Masa (Altın Sarı & Güçlü Glow)
               fillColor = "rgba(217, 164, 65, 0.85)";
               strokeColor = "#b8842c";
-              strokeWidth = 5;
+              strokeWidth = 4.5;
               filter = "url(#goldGlow)";
             } else if (status === "booked") {
-              // 🔴 Dolu Masa (Kırmızı)
-              fillColor = "rgba(239, 68, 68, 0.65)";
-              strokeColor = "#dc2626";
-              strokeWidth = 3;
+              fillColor = "rgba(239, 68, 68, 0.6)";
+              strokeColor = "#b91c1c";
+              strokeWidth = 2.5;
               filter = undefined;
               cursor = "not-allowed";
             } else if (status === "capacity_exceeded") {
-              fillColor = "rgba(245, 158, 11, 0.3)";
-              strokeColor = "rgba(245, 158, 11, 0.8)";
-              strokeWidth = 2.5;
+              fillColor = "rgba(245, 158, 11, 0.25)";
+              strokeColor = "rgba(245, 158, 11, 0.7)";
+              strokeWidth = 2;
               filter = undefined;
               cursor = "not-allowed";
             } else if (isHovered) {
               fillColor = "rgba(34, 197, 94, 0.65)";
-              strokeColor = "#15803d";
-              strokeWidth = 4.5;
+              strokeColor = "#166534";
+              strokeWidth = 4;
               filter = "url(#greenGlow)";
             }
 
-            const opacity = isDimmed ? 0.2 : 1;
+            const opacity = isDimmed ? 0.15 : 1;
 
             return (
               <g
@@ -219,7 +226,6 @@ export default function InteractiveFloorPlan({
                 style={{ cursor, opacity, transition: "all 0.15s ease" }}
                 filter={filter ? filter : undefined}
               >
-                {/* Hotspot Çemberi */}
                 <circle
                   cx={t.cx}
                   cy={t.cy}
@@ -228,38 +234,34 @@ export default function InteractiveFloorPlan({
                   stroke={strokeColor}
                   strokeWidth={strokeWidth}
                 />
-
-                {/* Masa Numarası / Metni */}
                 <text
                   x={t.cx}
                   y={(t.cy || 0) - 2}
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill={isSelected ? "#0d0f0a" : "#ffffff"}
-                  fontSize={t.isVip ? "14" : "12"}
+                  fontSize={t.isVip ? "13" : "11"}
                   fontWeight="900"
-                  fontFamily="system-ui, -apple-system, sans-serif"
+                  fontFamily="system-ui, sans-serif"
                   style={{
                     pointerEvents: "none",
-                    textShadow: isSelected ? "none" : "0 1px 3px rgba(0,0,0,0.8)",
+                    textShadow: isSelected ? "none" : "0 1px 3px rgba(0,0,0,0.9)",
                   }}
                 >
                   {t.tableNumber}
                 </text>
-
-                {/* Kapasite */}
                 <text
                   x={t.cx}
                   y={(t.cy || 0) + 12}
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill={isSelected ? "#12150e" : "rgba(255,255,255,0.95)"}
-                  fontSize="10"
+                  fontSize="9.5"
                   fontWeight="700"
-                  fontFamily="system-ui, -apple-system, sans-serif"
+                  fontFamily="system-ui, sans-serif"
                   style={{
                     pointerEvents: "none",
-                    textShadow: isSelected ? "none" : "0 1px 2px rgba(0,0,0,0.8)",
+                    textShadow: isSelected ? "none" : "0 1px 2px rgba(0,0,0,0.9)",
                   }}
                 >
                   {t.capacity}k
@@ -270,85 +272,112 @@ export default function InteractiveFloorPlan({
         </svg>
       </div>
 
-
-      {/* Hover Kartı / Seçim İpucu */}
-      {hoveredTable && (
-        <div
-          style={{
-            marginTop: 6,
-            padding: "6px 10px",
-            borderRadius: 8,
-            background: "rgba(217, 164, 65, 0.15)",
-            border: "1px solid rgba(217, 164, 65, 0.3)",
-            fontSize: 11,
-            color: "#f4eee1",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <span style={{ fontWeight: 700, color: "#d9a441" }}>{hoveredTable.name}</span>
-          <span style={{ color: "rgba(255,255,255,0.7)" }}>{hoveredTable.zoneName} · {hoveredTable.capacity} Kişilik</span>
-        </div>
-      )}
-
-      {/* Kompakt Hızlı Masa Butonları (Grid) */}
-      <div style={{ marginTop: 10 }}>
-        <p style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.6)", margin: "0 0 6px" }}>
-          Hızlı Seçim Listesi:
-        </p>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 5,
-            maxHeight: 110,
-            overflowY: "auto",
-            paddingRight: 2,
-          }}
-        >
-          {filteredTables.map((t) => {
-            const status = getTableStatus(t);
-            const isSelected = t.id === selectedTableId;
-            const disabled = status === "booked" || status === "capacity_exceeded";
-
-            return (
-              <button
-                key={t.id}
-                type="button"
-                disabled={disabled}
-                onClick={() => handleTableClick(t)}
+      {/* 4. Seçilen Masa veya Hızlı Liste Seçimi (Lüks Kart) */}
+      <div style={{ marginTop: 12 }}>
+        {selectedTable ? (
+          <div
+            style={{
+              padding: "14px 16px",
+              borderRadius: 14,
+              background: "rgba(184, 132, 44, 0.1)",
+              border: "1.5px solid rgba(184, 132, 44, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 10,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div
                 style={{
-                  padding: "6px 4px",
-                  borderRadius: 8,
-                  border: isSelected
-                    ? "1px solid #d9a441"
-                    : disabled
-                    ? "1px solid rgba(255,255,255,0.05)"
-                    : "1px solid rgba(255,255,255,0.15)",
-                  background: isSelected
-                    ? "#d9a441"
-                    : disabled
-                    ? "rgba(255,255,255,0.02)"
-                    : "rgba(255,255,255,0.08)",
-                  color: isSelected
-                    ? "#0d0f0a"
-                    : disabled
-                    ? "rgba(255,255,255,0.25)"
-                    : "#f4eee1",
-                  fontSize: 11,
-                  fontWeight: isSelected ? 700 : 500,
-                  cursor: disabled ? "not-allowed" : "pointer",
-                  textAlign: "center",
-                  lineHeight: 1.2,
+                  width: 38,
+                  height: 38,
+                  borderRadius: "50%",
+                  background: "#d9a441",
+                  color: "#0d0f0a",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  flexShrink: 0,
+                  boxShadow: "0 2px 8px rgba(217, 164, 65, 0.4)",
                 }}
               >
-                <div>{t.tableNumber}</div>
-                <div style={{ fontSize: 9, opacity: 0.75 }}>{t.capacity}k</div>
-              </button>
-            );
-          })}
-        </div>
+                <Check style={{ width: 18, height: 18 }} />
+              </div>
+              <div>
+                <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "#0d0f0a" }}>
+                  {selectedTable.name}
+                </p>
+                <p style={{ margin: "2px 0 0", fontSize: 12, color: "#6e6a5c" }}>
+                  {selectedTable.zoneName} · Maks. {selectedTable.capacity} Kişilik
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => onSelectTable(null)}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#dc2626",
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: "pointer",
+                textDecoration: "underline",
+                padding: "4px 8px",
+              }}
+            >
+              Kaldır
+            </button>
+          </div>
+        ) : (
+          <div
+            style={{
+              padding: "12px 14px",
+              borderRadius: 14,
+              background: "#f6f1e6",
+              border: "1px solid rgba(13,15,10,0.1)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 8,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "#6e6a5c" }}>
+              <Sparkles style={{ width: 15, height: 15, color: "#b8842c" }} />
+              <span>Krokiden dokunarak seçin veya listeden belirleyin:</span>
+            </div>
+
+            <select
+              value={selectedTableId || ""}
+              onChange={(e) => {
+                const found = RESTAURANT_TABLES.find((t) => t.id === e.target.value) || null;
+                onSelectTable(found);
+              }}
+              style={{
+                padding: "6px 12px",
+                borderRadius: 10,
+                fontSize: 12,
+                fontWeight: 700,
+                border: "1px solid rgba(13,15,10,0.15)",
+                background: "#ffffff",
+                color: "#0d0f0a",
+                cursor: "pointer",
+                maxWidth: 160,
+              }}
+            >
+              <option value="">Otomatik Masa</option>
+              {filteredTables.map((t) => (
+                <option key={t.id} value={t.id} disabled={bookedTableIds.includes(t.id)}>
+                  {t.name} ({t.capacity}k) {bookedTableIds.includes(t.id) ? "— Dolu" : ""}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ import SiteIcon from "@/components/site/SiteIcon";
 import InteractiveFloorPlan from "@/components/site/InteractiveFloorPlan";
 import { RestaurantTable } from "@/lib/content/tables-data";
 import type { BolumBaslik, IletisimContent, RezervasyonCopy } from "@/lib/content/types";
-import { ArrowLeft, ArrowRight, Check, Calendar, Users, Clock, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Calendar, Users, Clock, Sparkles, CreditCard, ShieldCheck, X } from "lucide-react";
 
 const GUESTS = Array.from({ length: 20 }, (_, i) => i + 1);
 
@@ -43,7 +43,7 @@ export default function HomeReservation({
   const minDate = nextBookableDate(iletisim);
   const maxDate = maxIsoFrom(minDate);
 
-  // Steps Durumu: 1 = Tarih/Saat/Kişi, 2 = Masa Seçimi, 3 = İletişim & Onay
+  // Steps Durumu: 1 = Tarih/Saat/Kişi, 2 = Masa Seçimi, 3 = İletişim & Onay/Ödeme
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
 
   const [name, setName] = useState("");
@@ -57,6 +57,9 @@ export default function HomeReservation({
   const [guests, setGuests] = useState(2);
   const [note, setNote] = useState("");
   const [website, setWebsite] = useState("");
+  const [paymentChoice, setPaymentChoice] = useState<"free" | "paytr">("free");
+  const [paytrToken, setPaytrToken] = useState<string | null>(null);
+  const [showPaytrModal, setShowPaytrModal] = useState(false);
   const [status, setStatus] = useState<"idle" | "saving" | "ok" | "err">("idle");
   const [error, setError] = useState("");
 
@@ -151,6 +154,40 @@ export default function HomeReservation({
     }
     setStatus("saving");
     setError("");
+
+    // Eğer kullanıcı PayTR ile Online Kapora Ödemesini seçtiyse:
+    if (paymentChoice === "paytr") {
+      try {
+        const payRes = await fetch("/api/v1/payment/paytr/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: 250, // 250 TL Kapora Bedeli
+            email: email.trim() || `${digits}@petra.local`,
+            userName: name,
+            userPhone: phone,
+            userAddress: "Petra Cafe & Restaurant Rezervasyon",
+            basketItems: [
+              [`Petra Rezervasyon Kaporası (${date} - ${time})`, "250.00", 1],
+            ],
+          }),
+        });
+        const payData = (await payRes.json()) as { token?: string; error?: string };
+        if (!payRes.ok || !payData.token) {
+          throw new Error(payData.error || "Ödeme oturumu başlatılamadı.");
+        }
+        setPaytrToken(payData.token);
+        setShowPaytrModal(true);
+        setStatus("idle");
+        return;
+      } catch (err: any) {
+        setStatus("err");
+        setError(err?.message || "Ödeme bağlantısı kurulamadı. Standart rezervasyon olarak deneyebilirsiniz.");
+        return;
+      }
+    }
+
+    // Standart Rezervasyon Talebi (Ücretsiz / Kapıda Ödeme):
     try {
       const res = await fetch("/api/v1/reservations", {
         method: "POST",
@@ -226,7 +263,17 @@ export default function HomeReservation({
         </div>
 
         {/* Sağ Alan: Adımlı Rezervasyon Formu (Steps Wizard) */}
-        <div className="form petra-form rsv__form" data-fade="" style={{ background: "#ffffff", borderRadius: 24, padding: "28px 24px", boxShadow: "0 20px 45px -20px rgba(0,0,0,0.3)" }}>
+        <div
+          className="form petra-form rsv__form"
+          data-fade=""
+          style={{
+            background: "#ffffff",
+            borderRadius: 24,
+            padding: "26px 22px",
+            boxShadow: "0 22px 50px -20px rgba(0,0,0,0.35)",
+            border: "1px solid rgba(184, 132, 44, 0.25)",
+          }}
+        >
           {/* STEPPER BAŞLIK & İNDİKATÖRÜ */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12 }}>
             <span
@@ -234,20 +281,20 @@ export default function HomeReservation({
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 6,
-                padding: "6px 14px",
+                padding: "5px 12px",
                 borderRadius: 999,
                 background: "rgba(184, 132, 44, 0.15)",
                 color: "#b8842c",
-                fontSize: 12,
+                fontSize: 11.5,
                 fontWeight: 700,
                 letterSpacing: "0.06em",
                 textTransform: "uppercase",
               }}
             >
-              <Sparkles style={{ width: 14, height: 14 }} />
+              <Sparkles style={{ width: 13, height: 13 }} />
               Adım {currentStep} / 3
             </span>
-            <span style={{ fontSize: 13, fontWeight: 600, color: "#6e6a5c" }}>
+            <span style={{ fontSize: 12.5, fontWeight: 600, color: "#6e6a5c" }}>
               {currentStep === 1
                 ? "Tarih, Saat & Kişi"
                 : currentStep === 2
@@ -257,7 +304,7 @@ export default function HomeReservation({
           </div>
 
           {/* İlerleme Çubuğu */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 22 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 20 }}>
             <div
               onClick={() => setCurrentStep(1)}
               style={{
@@ -297,28 +344,28 @@ export default function HomeReservation({
             <div style={{ textAlign: "center", padding: "30px 10px" }}>
               <div
                 style={{
-                  width: 60,
-                  height: 60,
+                  width: 58,
+                  height: 58,
                   borderRadius: "50%",
                   background: "rgba(16, 185, 129, 0.15)",
                   color: "#10b981",
-                  border: "1px solid rgba(16, 185, 129, 0.3)",
+                  border: "1.5px solid rgba(16, 185, 129, 0.4)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontSize: 26,
                   fontWeight: "bold",
-                  margin: "0 auto 16px",
+                  margin: "0 auto 14px",
                 }}
               >
                 ✓
               </div>
-              <h3 style={{ margin: "0 0 8px", fontSize: "1.35rem", fontWeight: 700, color: "#0d0f0a" }}>
-                Talebiniz Alındı!
+              <h3 style={{ margin: "0 0 8px", fontSize: "1.3rem", fontWeight: 700, color: "#0d0f0a" }}>
+                Rezervasyon Talebiniz Alındı!
               </h3>
-              <p style={{ margin: "0 0 24px", fontSize: "0.95rem", color: "#6e6a5c", lineHeight: 1.5 }}>
+              <p style={{ margin: "0 0 22px", fontSize: "0.92rem", color: "#6e6a5c", lineHeight: 1.5 }}>
                 {copy?.successMetin ||
-                  "Rezervasyon talebiniz kaydedildi. Ekibimiz en kısa sürede sizinle iletişime geçerek teyit edecektir."}
+                  "Rezervasyon talebiniz başarıyla kaydedildi. Ekibimiz sizinle iletişime geçerek teyit edecektir."}
               </p>
               <button
                 type="button"
@@ -330,13 +377,13 @@ export default function HomeReservation({
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  minHeight: 48,
-                  padding: "0 28px",
+                  minHeight: 46,
+                  padding: "0 26px",
                   borderRadius: 12,
                   background: "#d9a441",
                   color: "#0d0f0a",
                   fontWeight: 700,
-                  fontSize: 14,
+                  fontSize: 13.5,
                   border: "none",
                   cursor: "pointer",
                   boxShadow: "0 4px 12px rgba(217, 164, 65, 0.35)",
@@ -354,7 +401,7 @@ export default function HomeReservation({
                 <div>
                   <div className="petra-form__head" style={{ marginBottom: 16 }}>
                     <p className="petra-form__kicker">1. ADIM</p>
-                    <h3 style={{ fontSize: "1.3rem", fontWeight: 700, color: "#0d0f0a", margin: "4px 0" }}>
+                    <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#0d0f0a", margin: "4px 0" }}>
                       Ne zaman gelmek istersiniz?
                     </h3>
                     <p style={{ fontSize: "0.88rem", color: "#6e6a5c", margin: 0 }}>
@@ -451,12 +498,12 @@ export default function HomeReservation({
                         justifyContent: "center",
                         gap: 10,
                         width: "100%",
-                        minHeight: 52,
+                        minHeight: 50,
                         padding: "14px 22px",
                         borderRadius: 14,
                         background: "#12150e",
                         color: "#f4eee1",
-                        fontSize: 15,
+                        fontSize: 14.5,
                         fontWeight: 700,
                         border: "none",
                         cursor: closed || !time ? "not-allowed" : "pointer",
@@ -477,11 +524,11 @@ export default function HomeReservation({
               {/* ========================================================================= */}
               {currentStep === 2 && (
                 <div>
-                  <div className="petra-form__head" style={{ marginBottom: 14 }}>
+                  <div className="petra-form__head" style={{ marginBottom: 12 }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                       <div>
                         <p className="petra-form__kicker">2. ADIM</p>
-                        <h3 style={{ fontSize: "1.3rem", fontWeight: 700, color: "#0d0f0a", margin: "4px 0" }}>
+                        <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#0d0f0a", margin: "4px 0" }}>
                           Masa / Loca Seçin
                         </h3>
                       </div>
@@ -492,71 +539,28 @@ export default function HomeReservation({
                           borderRadius: 8,
                           background: "rgba(184, 132, 44, 0.15)",
                           color: "#b8842c",
-                          fontSize: 12,
+                          fontSize: 11.5,
                           fontWeight: 700,
                         }}
                       >
                         {date} · {time} · {guests} Kişi
                       </span>
                     </div>
-                    <p style={{ fontSize: "0.88rem", color: "#6e6a5c", margin: 0 }}>
-                      Havuz krokisindeki yeşil masalara dokunarak yerinizi ayırtabilirsiniz.
+                    <p style={{ fontSize: "0.85rem", color: "#6e6a5c", margin: 0 }}>
+                      Havuz krokisindeki yeşil masalara dokunarak dilediğiniz yeri seçin.
                     </p>
                   </div>
 
-                  {/* İnteraktif Kroki SVG Bileşeni */}
-                  <div style={{ borderRadius: 16, background: "#0d1117", border: "1px solid rgba(13, 15, 10, 0.15)", overflow: "hidden", marginBottom: 14 }}>
-                    <InteractiveFloorPlan
-                      selectedTableId={selectedTable?.id}
-                      onSelectTable={(tbl) => setSelectedTable(tbl)}
-                      bookedTableIds={bookedTables}
-                      guestsCount={guests}
-                      date={date}
-                      time={time}
-                    />
-                  </div>
-
-                  {/* Seçilen Masa Durum Bildirimi */}
-                  <div
-                    style={{
-                      padding: "12px 16px",
-                      borderRadius: 14,
-                      background: "#f6f1e6",
-                      border: "1px solid rgba(13, 15, 10, 0.12)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: 8,
-                      marginBottom: 14,
-                    }}
-                  >
-                    <div>
-                      <span style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em", color: "#6e6a5c", display: "block" }}>
-                        Seçilen Yer
-                      </span>
-                      {selectedTable ? (
-                        <p style={{ margin: "2px 0 0", fontWeight: 700, color: "#b8842c", fontSize: 14 }}>
-                          🪑 {selectedTable.name} <span style={{ fontSize: 12, color: "#6e6a5c", fontWeight: 400 }}>({selectedTable.capacity} Kişilik)</span>
-                        </p>
-                      ) : (
-                        <p style={{ margin: "2px 0 0", fontWeight: 600, color: "#0d0f0a", fontSize: 13 }}>
-                          Otomatik Masa (Restoranda Belirlenecek)
-                        </p>
-                      )}
-                    </div>
-                    {selectedTable ? (
-                      <button
-                        type="button"
-                        onClick={() => setSelectedTable(null)}
-                        style={{ background: "none", border: "none", color: "#dc2626", fontSize: 12, cursor: "pointer", textDecoration: "underline" }}
-                      >
-                        Seçimi Kaldır
-                      </button>
-                    ) : null}
-                  </div>
+                  {/* Lüks İnteraktif Kat Planı Bileşeni */}
+                  <InteractiveFloorPlan
+                    selectedTableId={selectedTable?.id}
+                    onSelectTable={(tbl) => setSelectedTable(tbl)}
+                    bookedTableIds={bookedTables}
+                    guestsCount={guests}
+                  />
 
                   {/* Adım Butonları */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 18 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 16 }}>
                     <button
                       type="button"
                       onClick={() => setCurrentStep(1)}
@@ -566,7 +570,7 @@ export default function HomeReservation({
                         alignItems: "center",
                         justifyContent: "center",
                         gap: 6,
-                        minHeight: 52,
+                        minHeight: 50,
                         padding: "12px 14px",
                         borderRadius: 14,
                         background: "#f6f1e6",
@@ -589,19 +593,19 @@ export default function HomeReservation({
                         alignItems: "center",
                         justifyContent: "center",
                         gap: 8,
-                        minHeight: 52,
+                        minHeight: 50,
                         padding: "12px 18px",
                         borderRadius: 14,
                         background: "#12150e",
                         color: "#f4eee1",
                         fontWeight: 700,
-                        fontSize: 14,
+                        fontSize: 13.5,
                         border: "none",
                         cursor: "pointer",
                         boxShadow: "0 4px 14px rgba(0, 0, 0, 0.15)",
                       }}
                     >
-                      <span>İletişim (3. Adım)</span>
+                      <span>İletişim & Onay (3. Adım)</span>
                       <ArrowRight style={{ width: 16, height: 16 }} />
                     </button>
                   </div>
@@ -609,17 +613,17 @@ export default function HomeReservation({
               )}
 
               {/* ========================================================================= */}
-              {/* ADIM 3: İLETİŞİM BİLGİLERİ & REZERVASYON ÖZETİ */}
+              {/* ADIM 3: İLETİŞİM BİLGİLERİ & ÖDEME SEÇENEĞİ */}
               {/* ========================================================================= */}
               {currentStep === 3 && (
                 <form onSubmit={submit}>
-                  <div className="petra-form__head" style={{ marginBottom: 14 }}>
+                  <div className="petra-form__head" style={{ marginBottom: 12 }}>
                     <p className="petra-form__kicker">3. ADIM (SON)</p>
-                    <h3 style={{ fontSize: "1.3rem", fontWeight: 700, color: "#0d0f0a", margin: "4px 0" }}>
-                      Misafir Bilgileri
+                    <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#0d0f0a", margin: "4px 0" }}>
+                      Misafir Bilgileri & Onay
                     </h3>
-                    <p style={{ fontSize: "0.88rem", color: "#6e6a5c", margin: 0 }}>
-                      Talebinizi onaylayabilmemiz için bilgilerinizi girin.
+                    <p style={{ fontSize: "0.85rem", color: "#6e6a5c", margin: 0 }}>
+                      Rezervasyon teyidi için bilgilerinizi girin.
                     </p>
                   </div>
 
@@ -629,26 +633,26 @@ export default function HomeReservation({
                       display: "flex",
                       flexWrap: "wrap",
                       alignItems: "center",
-                      gap: 10,
-                      padding: "12px 16px",
-                      borderRadius: 14,
-                      background: "rgba(184, 132, 44, 0.1)",
+                      gap: 8,
+                      padding: "10px 14px",
+                      borderRadius: 12,
+                      background: "rgba(184, 132, 44, 0.08)",
                       border: "1px solid rgba(184, 132, 44, 0.25)",
-                      marginBottom: 16,
-                      fontSize: 13,
+                      marginBottom: 14,
+                      fontSize: 12.5,
                       color: "#0d0f0a",
                     }}
                   >
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontWeight: 600 }}>
-                      <Calendar style={{ width: 14, height: 14, color: "#b8842c" }} /> {date}
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 600 }}>
+                      <Calendar style={{ width: 13, height: 13, color: "#b8842c" }} /> {date}
                     </span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontWeight: 600 }}>
-                      <Clock style={{ width: 14, height: 14, color: "#b8842c" }} /> {time}
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 600 }}>
+                      <Clock style={{ width: 13, height: 13, color: "#b8842c" }} /> {time}
                     </span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontWeight: 600 }}>
-                      <Users style={{ width: 14, height: 14, color: "#b8842c" }} /> {guests} Kişi
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 600 }}>
+                      <Users style={{ width: 13, height: 13, color: "#b8842c" }} /> {guests} Kişi
                     </span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontWeight: 700, color: "#b8842c" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 700, color: "#b8842c" }}>
                       🪑 {selectedTable ? selectedTable.name : "Otomatik Masa"}
                     </span>
                   </div>
@@ -695,9 +699,9 @@ export default function HomeReservation({
                     </div>
                   </div>
 
-                  <div className="field" style={{ marginTop: 12 }}>
+                  <div className="field" style={{ marginTop: 10 }}>
                     <label htmlFor="rsv-email">
-                      E-Posta <span style={{ fontSize: 11, fontWeight: 400, color: "#b8842c" }}>(Onay maili almak için opsiyonel)</span>
+                      E-Posta <span style={{ fontSize: 11, fontWeight: 400, color: "#b8842c" }}>(Onay maili almak için)</span>
                     </label>
                     <input
                       id="rsv-email"
@@ -708,12 +712,9 @@ export default function HomeReservation({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
-                    <p className="petra-form__hint">
-                      Rezervasyon onayınız bu adrese e-posta olarak da iletilir.
-                    </p>
                   </div>
 
-                  <div className="field" style={{ marginTop: 12 }}>
+                  <div className="field" style={{ marginTop: 10 }}>
                     <label htmlFor="rsv-note">{copy?.labelNot || "Özel Not / İstek"}</label>
                     <textarea
                       id="rsv-note"
@@ -723,6 +724,68 @@ export default function HomeReservation({
                       value={note}
                       onChange={(e) => setNote(e.target.value)}
                     />
+                  </div>
+
+                  {/* ÖDEME TERCİHİ SEÇENEKLERİ (PayTR & Ücretsiz Seçenek) */}
+                  <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid rgba(13,15,10,0.1)" }}>
+                    <label style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#0d0f0a", display: "block", marginBottom: 8 }}>
+                      Ödeme & Rezervasyon Türü
+                    </label>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                      <div
+                        onClick={() => setPaymentChoice("free")}
+                        style={{
+                          padding: "10px 12px",
+                          borderRadius: 12,
+                          border: paymentChoice === "free" ? "2px solid #b8842c" : "1px solid rgba(13,15,10,0.12)",
+                          background: paymentChoice === "free" ? "rgba(184, 132, 44, 0.1)" : "#f6f1e6",
+                          cursor: "pointer",
+                          transition: "all 0.2s ease",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          <input
+                            type="radio"
+                            name="paymentOption"
+                            checked={paymentChoice === "free"}
+                            onChange={() => setPaymentChoice("free")}
+                            style={{ width: "auto", minHeight: "auto", margin: 0 }}
+                          />
+                          <span style={{ fontSize: 12, fontWeight: 700, color: "#0d0f0a" }}>Normal Rezervasyon</span>
+                        </div>
+                        <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "#6e6a5c" }}>
+                          Ücretsiz talep oluşturun, restoranda ödeyin.
+                        </p>
+                      </div>
+
+                      <div
+                        onClick={() => setPaymentChoice("paytr")}
+                        style={{
+                          padding: "10px 12px",
+                          borderRadius: 12,
+                          border: paymentChoice === "paytr" ? "2px solid #b8842c" : "1px solid rgba(13,15,10,0.12)",
+                          background: paymentChoice === "paytr" ? "rgba(184, 132, 44, 0.1)" : "#f6f1e6",
+                          cursor: "pointer",
+                          transition: "all 0.2s ease",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          <input
+                            type="radio"
+                            name="paymentOption"
+                            checked={paymentChoice === "paytr"}
+                            onChange={() => setPaymentChoice("paytr")}
+                            style={{ width: "auto", minHeight: "auto", margin: 0 }}
+                          />
+                          <span style={{ fontSize: 12, fontWeight: 700, color: "#b8842c", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                            <CreditCard style={{ width: 13, height: 13 }} /> PayTR ile Öde
+                          </span>
+                        </div>
+                        <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "#6e6a5c" }}>
+                          250 TL kapora ile masanızı anında garantileyin.
+                        </p>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Honeypot Bot Koruması */}
@@ -739,9 +802,9 @@ export default function HomeReservation({
                     />
                   </div>
 
-                  {error && <p style={{ color: "#dc2626", fontSize: 13, marginTop: 8 }}>{error}</p>}
+                  {error && <p style={{ color: "#dc2626", fontSize: 13, marginTop: 10 }}>{error}</p>}
 
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 18 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 16 }}>
                     <button
                       type="button"
                       onClick={() => setCurrentStep(2)}
@@ -751,7 +814,7 @@ export default function HomeReservation({
                         alignItems: "center",
                         justifyContent: "center",
                         gap: 6,
-                        minHeight: 52,
+                        minHeight: 50,
                         padding: "12px 14px",
                         borderRadius: 14,
                         background: "#f6f1e6",
@@ -775,21 +838,27 @@ export default function HomeReservation({
                         alignItems: "center",
                         justifyContent: "center",
                         gap: 8,
-                        minHeight: 52,
+                        minHeight: 50,
                         padding: "12px 18px",
                         borderRadius: 14,
-                        background: "#12150e",
+                        background: paymentChoice === "paytr" ? "#b8842c" : "#12150e",
                         color: "#f4eee1",
                         fontWeight: 700,
-                        fontSize: 14,
+                        fontSize: 13.5,
                         border: "none",
                         cursor: status === "saving" ? "not-allowed" : "pointer",
                         opacity: status === "saving" ? 0.6 : 1,
                         boxShadow: "0 6px 18px rgba(0, 0, 0, 0.2)",
+                        transition: "all 0.2s ease",
                       }}
                     >
                       {status === "saving" ? (
                         <span>{copy?.gonderiliyor || "İletiliyor…"}</span>
+                      ) : paymentChoice === "paytr" ? (
+                        <>
+                          <span>PayTR ile 250 TL Öde</span>
+                          <CreditCard style={{ width: 16, height: 16 }} />
+                        </>
                       ) : (
                         <>
                           <span>{copy?.ctaLabel || "Rezervasyonu Tamamla"}</span>
@@ -804,6 +873,91 @@ export default function HomeReservation({
           )}
         </div>
       </div>
+
+      {/* PayTR 3D Secure Canlı Ödeme Modalı */}
+      {showPaytrModal && paytrToken && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "rgba(0,0,0,0.75)",
+            backdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 16,
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              maxWidth: 580,
+              maxHeight: "90vh",
+              background: "#ffffff",
+              borderRadius: 20,
+              overflow: "hidden",
+              boxShadow: "0 25px 60px rgba(0,0,0,0.5)",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {/* Modal Başlık */}
+            <div
+              style={{
+                padding: "16px 20px",
+                background: "#12150e",
+                color: "#f4eee1",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <ShieldCheck style={{ width: 20, height: 20, color: "#d9a441" }} />
+                <div>
+                  <h4 style={{ margin: 0, fontSize: 14, fontWeight: 700 }}>PayTR 3D Secure Güvenli Ödeme</h4>
+                  <p style={{ margin: "2px 0 0", fontSize: 11, color: "rgba(255,255,255,0.6)" }}>
+                    250.00 TL Masa Rezervasyon Kaporası
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowPaytrModal(false)}
+                style={{
+                  background: "rgba(255,255,255,0.1)",
+                  border: "none",
+                  color: "#ffffff",
+                  width: 32,
+                  height: 32,
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <X style={{ width: 16, height: 16 }} />
+              </button>
+            </div>
+
+            {/* PayTR iframe */}
+            <iframe
+              src={`https://www.paytr.com/odeme/guvenli/${paytrToken}`}
+              id="paytriframe"
+              style={{
+                width: "100%",
+                height: 520,
+                border: "none",
+              }}
+              title="PayTR Sanal POS Ödeme Formu"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
