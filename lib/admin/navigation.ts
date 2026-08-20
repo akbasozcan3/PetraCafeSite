@@ -25,6 +25,7 @@ import {
   CalendarDays,
   Inbox,
   Home,
+  CreditCard,
   type LucideIcon,
 } from "lucide-react";
 import type { Permission } from "@/lib/admin/roles";
@@ -261,6 +262,14 @@ export const adminNavItems: AdminNavItem[] = [
     label: "Entegrasyonlar",
     description: "Trendyol Go, Yemeksepeti ve diğerleri",
     icon: Plug,
+    group: "Sistem",
+    permission: "integrations:manage",
+  },
+  {
+    href: "/admin/paytr",
+    label: "PayTR Sanal POS",
+    description: "3D Secure kredi kartı ödeme ve anahtarlar",
+    icon: CreditCard,
     group: "Sistem",
     permission: "integrations:manage",
   },
