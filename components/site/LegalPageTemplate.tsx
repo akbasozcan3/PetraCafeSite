@@ -54,26 +54,34 @@ export default function LegalPageTemplate({
         }
         .petra-legal-mobile-tab-btn {
           white-space: nowrap;
-          padding: 9px 16px;
+          padding: 10px 18px;
           border-radius: 999px;
-          font-size: 12.5px;
+          font-size: 13px;
           font-weight: 600;
-          text-decoration: none;
+          text-decoration: none !important;
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          transition: all 0.2s;
+          transition: all 0.2s ease;
         }
         .petra-legal-mobile-tab-btn.active {
-          background: #12150e;
-          color: #f4eee1;
-          border: 1.5px solid #b8842c;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+          background: #12150e !important;
+          color: #ffffff !important;
+          border: 1.5px solid #d9a441 !important;
+          box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+        }
+        .petra-legal-mobile-tab-btn.active span {
+          color: #ffffff !important;
+          font-weight: 700;
         }
         .petra-legal-mobile-tab-btn.inactive {
-          background: #ffffff;
-          color: #5c5749;
-          border: 1px solid rgba(13, 15, 10, 0.12);
+          background: #ffffff !important;
+          color: #4a4538 !important;
+          border: 1px solid rgba(13, 15, 10, 0.15) !important;
+        }
+        .petra-legal-mobile-tab-btn.inactive span {
+          color: #4a4538 !important;
+          font-weight: 600;
         }
         /* Masaüstü ve Mobil Düzeni */
         .petra-legal-layout {
@@ -140,12 +148,20 @@ export default function LegalPageTemplate({
               key={item.slug}
               href={`/${item.slug}`}
               className={`petra-legal-mobile-tab-btn ${isActive ? "active" : "inactive"}`}
+              style={{
+                background: isActive ? "#12150e" : "#ffffff",
+                color: isActive ? "#ffffff" : "#4a4538",
+                border: isActive ? "1.5px solid #d9a441" : "1px solid rgba(13,15,10,0.15)",
+              }}
             >
-              <span>{item.label}</span>
+              <span style={{ color: isActive ? "#ffffff" : "#4a4538", fontWeight: isActive ? 700 : 600 }}>
+                {item.label}
+              </span>
             </Link>
           );
         })}
       </div>
+
 
       {/* 3. Ana Düzen (Sidebar + İçerik) */}
       <div className="petra-legal-layout">
