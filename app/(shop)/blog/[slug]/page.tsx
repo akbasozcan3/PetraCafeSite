@@ -7,7 +7,6 @@ import { sanitizeArticleHtml } from "@/lib/security/html";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
-import { Calendar, Clock, ArrowLeft, ArrowRight, Sparkles, UtensilsCrossed, BookOpen } from "lucide-react";
 
 export const revalidate = 60;
 
@@ -56,40 +55,94 @@ export default async function BlogPostPage({ params }: Props) {
     .slice(0, 2);
 
   return (
-    <div className="shop-blog shop-article">
+    <div style={{ maxWidth: 820, margin: "0 auto", padding: "16px 12px 64px 12px", fontFamily: 'Inter, -apple-system, sans-serif' }}>
+      <style>{`
+        .p-art-cover {
+          width: 100%;
+          height: 380px;
+          border-radius: 24px;
+          overflow: hidden;
+          background: #F0EDE6;
+          margin-bottom: 36px;
+          box-shadow: 0 16px 40px rgba(13,15,10,0.06);
+        }
+        .p-art-cover img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        @media (max-width: 640px) {
+          .p-art-cover { height: 240px; border-radius: 16px; margin-bottom: 24px; }
+        }
+        .p-art-body {
+          font-size: 16px;
+          line-height: 1.75;
+          color: #2B2E25;
+        }
+        .p-art-body h2 {
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #12140E;
+          margin: 32px 0 14px 0;
+        }
+        .p-art-body p {
+          margin: 0 0 18px 0;
+        }
+        .p-art-body ul, .p-art-body ol {
+          padding-left: 24px;
+          margin: 0 0 20px 0;
+        }
+        .p-art-body li {
+          margin-bottom: 8px;
+        }
+        .p-art-body div.answer {
+          background: #FFFFFF;
+          border-left: 4px solid #B8842C;
+          border-radius: 0 16px 16px 0;
+          padding: 20px 24px;
+          margin: 24px 0;
+          box-shadow: 0 8px 24px rgba(13,15,10,0.03);
+        }
+        .p-art-body div.cta-box {
+          display: none;
+        }
+      `}</style>
+
       {/* Ekmek Kırıntısı (Breadcrumbs) */}
-      <nav className="crumbs" aria-label="Sayfa yolu">
-        <Link href="/">Ana Sayfa</Link>
-        <span className="crumb-sep">/</span>
-        <Link href="/blog">Blog</Link>
-        <span className="crumb-sep">/</span>
-        <span className="crumb-current" aria-current="page">
-          {post.baslik}
-        </span>
+      <nav style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#6E6A5C", marginBottom: 28, flexWrap: "wrap" }}>
+        <Link href="/" style={{ color: "#12140E", textDecoration: "none", fontWeight: 600 }}>
+          Ana Sayfa
+        </Link>
+        <span>/</span>
+        <Link href="/blog" style={{ color: "#12140E", textDecoration: "none", fontWeight: 600 }}>
+          Blog
+        </Link>
+        <span>/</span>
+        <span style={{ color: "#B8842C", fontWeight: 600 }}>{post.baslik}</span>
       </nav>
 
       {/* Makale Başlık & Meta */}
-      <header className="article__header">
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-          <span className="blog-tag">{post.kategori || "Rehber & Yazı"}</span>
+      <header style={{ textAlign: "center", marginBottom: 32 }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+          <span style={{ display: "inline-block", padding: "4px 10px", borderRadius: 999, background: "rgba(184, 132, 44, 0.12)", color: "#B8842C", fontSize: 11, fontWeight: 700, textTransform: "uppercase" }}>
+            {post.kategori || "Rehber & Yazı"}
+          </span>
           {post.okumaSuresi && (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: "0.82rem", color: "var(--muted, #6e6a5c)" }}>
-              <Clock style={{ width: 13, height: 13, color: "var(--brass, #b8842c)" }} />
-              {post.okumaSuresi}
-            </span>
+            <span style={{ fontSize: 12, color: "#6E6A5C" }}>⏱️ {post.okumaSuresi}</span>
           )}
           {post.tarih && (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: "0.82rem", color: "var(--muted, #7c7769)" }}>
-              <Calendar style={{ width: 13, height: 13 }} />
-              {post.tarih}
-            </span>
+            <span style={{ fontSize: 12, color: "#6E6A5C" }}>📅 {post.tarih}</span>
           )}
         </div>
 
-        <h1>{post.baslik}</h1>
+        <h1 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: "clamp(1.8rem, 4vw, 2.6rem)", fontWeight: 700, color: "#12140E", lineHeight: 1.2, margin: "0 0 16px 0" }}>
+          {post.baslik}
+        </h1>
 
         {post.ozet && (
-          <p className="article__lead">
+          <p style={{ fontSize: 16, lineHeight: 1.6, color: "#5E594D", maxWidth: 640, margin: "0 auto", fontStyle: "italic" }}>
             "{post.ozet}"
           </p>
         )}
@@ -97,88 +150,87 @@ export default async function BlogPostPage({ params }: Props) {
 
       {/* Kapak Görseli */}
       {cover && (
-        <figure className="article__cover">
+        <div className="p-art-cover">
           <SafeImg
             src={cover}
             alt={post.baslik}
             fallback={SITE_PHOTOS.interior}
           />
-        </figure>
+        </div>
       )}
 
       {/* Makale İçeriği */}
-      <article className="article__content">
+      <article className="p-art-body">
         {bodyHtml ? (
-          <div
-            className="blog-article__body"
-            dangerouslySetInnerHTML={{ __html: bodyHtml }}
-          />
+          <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
         ) : (
           <p>{post.ozet}</p>
         )}
       </article>
 
       {/* Yazar / Restoran Damgası */}
-      <div style={{ marginTop: 40, padding: "20px 24px", background: "#ffffff", borderRadius: 20, border: "1px solid rgba(13,15,10,0.08)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+      <div style={{ marginTop: 44, padding: "20px 24px", background: "#FFFFFF", borderRadius: 20, border: "1px solid rgba(13,15,10,0.08)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 42, height: 42, borderRadius: "50%", background: "rgba(184,132,44,0.12)", color: "var(--brass, #b8842c)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Sparkles style={{ width: 20, height: 20 }} />
+          <div style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(184,132,44,0.12)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+            ✦
           </div>
           <div>
-            <p style={{ margin: 0, fontWeight: 700, fontSize: "0.92rem", color: "var(--ink, #12140e)" }}>Petra Cafe Restaurant</p>
-            <p style={{ margin: 0, fontSize: "0.8rem", color: "var(--muted, #6e6a5c)" }}>Çekmeköy Taşdelen · Yaşam & Lezzet Merkezi</p>
+            <p style={{ margin: 0, fontWeight: 700, fontSize: 14, color: "#12140E" }}>Petra Cafe Restaurant</p>
+            <p style={{ margin: 0, fontSize: 12, color: "#6E6A5C" }}>Çekmeköy Taşdelen · Yaşam & Lezzet Merkezi</p>
           </div>
         </div>
 
         <Link
           href="/blog"
-          className="btn btn--sm btn--ghost"
-          style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
+          style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 999, border: "1px solid rgba(13,15,10,0.15)", textDecoration: "none", color: "#12140E", fontSize: 13, fontWeight: 600 }}
         >
-          <ArrowLeft style={{ width: 14, height: 14 }} />
-          Tüm Yazılar
+          ← Tüm Yazılar
         </Link>
       </div>
 
       {/* Rezervasyon Çağrı Kutusu */}
-      <div className="blog-cta" style={{ marginTop: 40 }}>
-        <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 44, height: 44, borderRadius: "50%", background: "rgba(184, 132, 44, 0.12)", color: "var(--brass, #b8842c)", marginBottom: 14 }}>
-          <UtensilsCrossed style={{ width: 22, height: 22 }} />
+      <div style={{ background: "#FFFFFF", border: "1px solid rgba(184, 132, 44, 0.25)", borderRadius: 24, padding: "36px 24px", textAlign: "center", marginTop: 40, boxShadow: "0 16px 36px rgba(184,132,44,0.06)" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 44, height: 44, borderRadius: "50%", background: "rgba(184, 132, 44, 0.12)", color: "#B8842C", fontSize: 20, marginBottom: 14 }}>
+          🍽️
         </div>
-        <h2>Masanızı Şimdiden Ayırtın</h2>
-        <p>
+        <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: "1.7rem", fontWeight: 700, color: "#12140E", margin: "0 0 10px 0" }}>
+          Masanızı Şimdiden Ayırtın
+        </h2>
+        <p style={{ fontSize: 14, color: "#6E6A5C", maxWidth: 480, margin: "0 auto 20px auto", lineHeight: 1.6 }}>
           Kahvaltı, akşam yemeği veya özel günleriniz için 30 saniyede online rezervasyon oluşturun.
         </p>
-        <div className="cta-actions">
-          <Link href="/#rezervasyon" className="btn btn--lg btn--light" style={{ minWidth: 200 }}>
-            Rezervasyon Formu
-          </Link>
-        </div>
+        <Link
+          href="/#rezervasyon"
+          style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#D9A441", color: "#0A0D14", padding: "12px 28px", borderRadius: 999, fontSize: 14, fontWeight: 700, textDecoration: "none" }}
+        >
+          📅 Rezervasyon Formu
+        </Link>
       </div>
 
       {/* Önerilen Diğer Yazılar */}
       {otherPosts.length > 0 && (
-        <section style={{ marginTop: 56, paddingTop: 40, borderTop: "1px solid rgba(13,15,10,0.1)" }}>
-          <h2 style={{ fontFamily: 'var(--f-head, "Playfair Display", Georgia, serif)', fontSize: "1.45rem", margin: "0 0 24px", color: "var(--ink, #12140e)", display: "flex", alignItems: "center", gap: 8 }}>
-            <BookOpen style={{ width: 20, height: 20, color: "var(--brass, #b8842c)" }} />
-            İlginizi Çekebilir
+        <section style={{ marginTop: 52, paddingTop: 36, borderTop: "1px solid rgba(13,15,10,0.1)" }}>
+          <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: "1.4rem", margin: "0 0 20px 0", color: "#12140E" }}>
+            📖 İlginizi Çekebilir
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
             {otherPosts.map((other) => (
               <Link
                 key={other.slug}
                 href={`/blog/${other.slug}`}
-                style={{ background: "#ffffff", padding: "20px 24px", borderRadius: 20, border: "1px solid rgba(13,15,10,0.08)", textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column", justifyContent: "space-between" }}
+                style={{ background: "#FFFFFF", padding: "20px", borderRadius: 20, border: "1px solid rgba(13,15,10,0.08)", textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column", justifyContent: "space-between" }}
               >
                 <div>
-                  <span className="blog-tag" style={{ marginBottom: 8 }}>{other.kategori || "Blog"}</span>
-                  <h3 style={{ fontFamily: 'var(--f-head, "Playfair Display", Georgia, serif)', fontSize: "1.15rem", margin: "8px 0", color: "var(--ink, #12140e)" }}>
+                  <span style={{ display: "inline-block", padding: "3px 8px", borderRadius: 999, background: "rgba(184, 132, 44, 0.12)", color: "#B8842C", fontSize: 11, fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>
+                    {other.kategori || "Blog"}
+                  </span>
+                  <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: "1.15rem", margin: "6px 0 8px 0", color: "#12140E", lineHeight: 1.3 }}>
                     {other.baslik}
                   </h3>
-                  {other.ozet && <p style={{ fontSize: "0.85rem", color: "var(--muted, #6e6a5c)", margin: 0, lineClamp: 2 }}>{other.ozet}</p>}
+                  {other.ozet && <p style={{ fontSize: 13, color: "#6E6A5C", margin: 0, lineHeight: 1.5 }}>{other.ozet}</p>}
                 </div>
-                <span className="blog-more-btn" style={{ marginTop: 14 }}>
-                  Yazıyı Oku <ArrowRight style={{ width: 14, height: 14 }} />
+                <span style={{ marginTop: 14, fontSize: 13, fontWeight: 700, color: "#B8842C" }}>
+                  Yazıyı Oku →
                 </span>
               </Link>
             ))}
