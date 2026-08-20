@@ -911,7 +911,7 @@ export default function HomeReservation({
                         <span>{copy?.gonderiliyor || "İletiliyor…"}</span>
                       ) : paymentChoice === "paytr" ? (
                         <>
-                          <span>{depositConfig.amount} TL Kapora Öde & Tamamla</span>
+                          <span>Ödemeyi Yap ve Rezervasyonu Onayla</span>
                           <CreditCard style={{ width: 16, height: 16 }} />
                         </>
                       ) : (
@@ -920,6 +920,7 @@ export default function HomeReservation({
                           <Check style={{ width: 16, height: 16 }} />
                         </>
                       )}
+
                     </button>
                   </div>
 
