@@ -125,3 +125,21 @@ export async function listIntegrationOrders(opts?: {
   }
   return all.slice(0, opts?.limit ?? 100).map(({ raw: _r, ...rest }) => rest);
 }
+
+export async function updateOrderStatusByPaymentId(
+  paymentId: string,
+  newStatus: string
+): Promise<boolean> {
+  const all = await readAll();
+  const idx = all.findIndex((x) => x.id === paymentId || (x as any).paymentId === paymentId || (x as any).merchantOid === paymentId);
+  if (idx >= 0) {
+    all[idx] = {
+      ...all[idx],
+      status: newStatus as any,
+      updatedAt: new Date().toISOString(),
+    };
+    await writeAll(all);
+    return true;
+  }
+  return false;
+}

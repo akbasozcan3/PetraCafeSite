@@ -119,11 +119,13 @@ export default function IntegrationsHubPanel() {
         })}
       </div>
 
+      {/* PayTR Ödeme Entegrasyonu Yönetimi */}
+      <PayTrAdminCard />
+
       <section className="mt-8 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
         <h3 className="mb-2 font-semibold text-[#F8F8F8]">Birleşik siparişler</h3>
         <p className="mb-4 text-sm text-[#8A9BB0]">
-          Platform siparişlerini kaynak filtreleriyle görüntüle. Web sitesinde sepet/checkout yok;
-          yerel siparişler WhatsApp/telefon ile devam eder.
+          Platform siparişlerini ve online ödemeleri filtreleriyle görüntüle.
         </p>
         <Link href="/admin/integrations/orders">
           <Button variant="outline">Siparişleri Aç</Button>
@@ -132,3 +134,163 @@ export default function IntegrationsHubPanel() {
     </>
   );
 }
+
+function PayTrAdminCard() {
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [msgType, setMsgType] = useState<"success" | "error">("success");
+  const [form, setForm] = useState({
+    merchantId: "",
+    merchantKey: "",
+    merchantSalt: "",
+    testMode: true,
+    noInstallment: true,
+  });
+
+  useEffect(() => {
+    fetch("/api/v1/admin/integrations/paytr", { credentials: "include" })
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.config) {
+          setForm({
+            merchantId: data.config.merchantId || "",
+            merchantKey: data.config.merchantKey || "",
+            merchantSalt: data.config.merchantSalt || "",
+            testMode: Boolean(data.config.testMode),
+            noInstallment: data.config.noInstallment !== false,
+          });
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    setMsg("");
+    try {
+      const res = await fetch("/api/v1/admin/integrations/paytr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Kaydedilemedi");
+      setMsg("PayTR Sanal POS ayarları başarıyla kaydedildi.");
+      setMsgType("success");
+    } catch (err) {
+      setMsg(err instanceof Error ? err.message : "Hata oluştu");
+      setMsgType("error");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="mt-6 rounded-2xl border border-[#D9A441]/30 bg-[#16190F]/90 p-6 shadow-xl">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4 mb-5">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D9A441]/20 text-[#D9A441] border border-[#D9A441]/30 font-bold">
+            💳
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-[#F4EEE1]">PayTR Sanal POS & Online Ödeme</h3>
+            <p className="text-xs text-white/60">
+              Kredi / Banka Kartı ile 3D Secure güvenli ödeme altyapısı.
+            </p>
+          </div>
+        </div>
+        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${form.merchantId ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" : "bg-amber-500/20 text-amber-300 border border-amber-500/30"}`}>
+          {form.merchantId ? "POS Yapılandırıldı" : "Kurulum Bekliyor"}
+        </span>
+      </div>
+
+      {msg && (
+        <div className={`mb-4 p-3 rounded-xl text-xs font-medium ${msgType === "success" ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30" : "bg-red-500/15 text-red-300 border border-red-500/30"}`}>
+          {msg}
+        </div>
+      )}
+
+      {loading ? (
+        <p className="text-xs text-white/50 py-4">Yükleniyor…</p>
+      ) : (
+        <form onSubmit={handleSave} className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className="block text-xs font-semibold text-white/70 mb-1">
+              PayTR Mağaza No (Merchant ID)
+            </label>
+            <input
+              type="text"
+              required
+              placeholder="Örn: 123456"
+              value={form.merchantId}
+              onChange={(e) => setForm({ ...form, merchantId: e.target.value })}
+              className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2.5 text-sm text-white focus:border-[#D9A441] focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-white/70 mb-1">
+              PayTR Mağaza Parolası (Merchant Key)
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••••••"
+              value={form.merchantKey}
+              onChange={(e) => setForm({ ...form, merchantKey: e.target.value })}
+              className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2.5 text-sm text-white focus:border-[#D9A441] focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-white/70 mb-1">
+              PayTR Mağaza Gizli Anahtar (Merchant Salt)
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••••••"
+              value={form.merchantSalt}
+              onChange={(e) => setForm({ ...form, merchantSalt: e.target.value })}
+              className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2.5 text-sm text-white focus:border-[#D9A441] focus:outline-none"
+            />
+          </div>
+
+          <div className="flex flex-col justify-center space-y-2 pt-2">
+            <label className="flex items-center gap-2 text-xs text-white/80 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.testMode}
+                onChange={(e) => setForm({ ...form, testMode: e.target.checked })}
+                className="h-4 w-4 rounded border-white/20 bg-[#0D1117] text-[#D9A441] focus:ring-0"
+              />
+              <span>Test Modu (Canlıya alırken işareti kaldırın)</span>
+            </label>
+
+            <label className="flex items-center gap-2 text-xs text-white/80 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.noInstallment}
+                onChange={(e) => setForm({ ...form, noInstallment: e.target.checked })}
+                className="h-4 w-4 rounded border-white/20 bg-[#0D1117] text-[#D9A441] focus:ring-0"
+              />
+              <span>Yalnızca Tek Çekim (Taksit Kapalı)</span>
+            </label>
+          </div>
+
+          <div className="sm:col-span-2 pt-2 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-[11px] text-white/40">
+              PayTR Bildirim URL: <code className="text-[#D9A441] bg-black/40 px-2 py-0.5 rounded">https://petra-cafe-site.vercel.app/api/v1/payment/paytr/callback</code>
+            </p>
+            <Button type="submit" disabled={saving}>
+              {saving ? "Kaydediliyor…" : "PayTR Ayarlarını Kaydet"}
+            </Button>
+          </div>
+        </form>
+      )}
+    </div>
+  );
+}
+
