@@ -45,10 +45,9 @@ export const TABLE_ZONES: TableZone[] = [
 /**
  * Kullanıcının yüklediği gerçek Petra Havuz Planına (media_1787219097607.jpg)
  * %100 sadık kalan masa ve loca koordinat haritası.
- * ViewBox: 0 0 1000 1300
  */
 export const RESTAURANT_TABLES: RestaurantTable[] = [
-  // ─── VİP LOCALAR (Yuvarlak Masalar) ───
+  // ─── VİP LOCALAR (6-8 Kişilik) ───
   {
     id: "loca-1",
     tableNumber: "Loca 1",
@@ -59,9 +58,9 @@ export const RESTAURANT_TABLES: RestaurantTable[] = [
     minGuests: 2,
     isVip: true,
     shape: "circle",
-    cx: 190,
-    cy: 65,
-    r: 46,
+    cx: 104,
+    cy: 38,
+    r: 35,
     description: "Sol üst köşe, geniş ve ferah VIP Loca (6–8 Kişilik)",
   },
   {
@@ -74,9 +73,9 @@ export const RESTAURANT_TABLES: RestaurantTable[] = [
     minGuests: 2,
     isVip: true,
     shape: "circle",
-    cx: 830,
-    cy: 65,
-    r: 46,
+    cx: 566,
+    cy: 38,
+    r: 35,
     description: "Sağ üst köşe, geniş ve ferah VIP Loca (6–8 Kişilik)",
   },
   {
@@ -89,9 +88,9 @@ export const RESTAURANT_TABLES: RestaurantTable[] = [
     minGuests: 2,
     isVip: true,
     shape: "circle",
-    cx: 130,
-    cy: 440,
-    r: 46,
+    cx: 48,
+    cy: 454,
+    r: 35,
     description: "Sol orta, havuz cepheli geniş VIP Loca (6–8 Kişilik)",
   },
   {
@@ -104,9 +103,9 @@ export const RESTAURANT_TABLES: RestaurantTable[] = [
     minGuests: 2,
     isVip: true,
     shape: "circle",
-    cx: 870,
-    cy: 440,
-    r: 46,
+    cx: 602,
+    cy: 454,
+    r: 35,
     description: "Sağ orta, havuz cepheli geniş VIP Loca (6–8 Kişilik)",
   },
   {
@@ -119,10 +118,10 @@ export const RESTAURANT_TABLES: RestaurantTable[] = [
     minGuests: 2,
     isVip: true,
     shape: "circle",
-    cx: 190,
-    cy: 860,
-    r: 46,
-    description: "Sol alt köşe VIP Loca, çocuk havuzuna yakın (6–8 Kişilik)",
+    cx: 104,
+    cy: 825,
+    r: 35,
+    description: "Sol alt köşe, çocuk havuzu yakını VIP Loca (6–8 Kişilik)",
   },
   {
     id: "loca-4",

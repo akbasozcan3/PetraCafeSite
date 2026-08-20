@@ -150,7 +150,7 @@ export default function InteractiveFloorPlan({
 
           {/* İnteraktif SVG Katmanı */}
           <svg
-            viewBox="0 0 1000 1300"
+            viewBox="0 0 651 868"
             style={{
               position: "absolute",
               top: 0,
