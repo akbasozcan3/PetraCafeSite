@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   ArrowRight,
   ExternalLink,
   Phone,
   Plug,
+  RefreshCw,
 } from "lucide-react";
 import { useAdminSession } from "@/lib/context/AdminSessionContext";
 import { adminNavItems, adminNavGroups } from "@/lib/admin/navigation";
@@ -43,52 +44,81 @@ type IntegrationSummary = {
 export default function DashboardPage() {
   const { user } = useAdminSession();
   const [integrations, setIntegrations] = useState<IntegrationSummary[]>([]);
-  const [inbox, setInbox] = useState({ pending: 0, messages: 0 });
+  const [inbox, setInbox] = useState({
+    pending: 0,
+    messages: 0,
+    todayTotal: 0,
+    todayConfirmed: 0,
+    weekTotal: 0,
+  });
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const loadInbox = useCallback(async () => {
+    try {
+      const [resRes, msgRes] = await Promise.all([
+        fetch("/api/v1/admin/reservations", { credentials: "include", cache: "no-store" }),
+        fetch("/api/v1/admin/messages", { credentials: "include", cache: "no-store" }),
+      ]);
+
+      const today = new Date().toISOString().slice(0, 10);
+      const weekAgo = new Date(Date.now() - 7 * 86400_000).toISOString().slice(0, 10);
+
+      if (resRes.ok) {
+        const data = (await resRes.json()) as { items?: { status: string; date?: string }[] };
+        const items = data.items || [];
+        setInbox((prev) => ({
+          ...prev,
+          pending: items.filter((x) => x.status === "pending").length,
+          todayTotal: items.filter(
+            (x) => x.date === today && x.status !== "rejected" && x.status !== "cancelled"
+          ).length,
+          todayConfirmed: items.filter((x) => x.date === today && x.status === "confirmed").length,
+          weekTotal: items.filter(
+            (x) => (x.date || "") >= weekAgo && x.status !== "rejected" && x.status !== "cancelled"
+          ).length,
+        }));
+      }
+      if (msgRes.ok) {
+        const data = (await msgRes.json()) as { items?: { status: string }[] };
+        const items = data.items || [];
+        setInbox((prev) => ({
+          ...prev,
+          messages: items.filter((x) => x.status === "new").length,
+        }));
+      }
+      setLastRefresh(new Date());
+    } catch { /* sessizce atla */ }
+  }, []);
+
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await loadInbox();
+    setRefreshing(false);
+  }, [loadInbox]);
 
   useEffect(() => {
     let cancelled = false;
     void (async () => {
       try {
-        const [intRes, resRes, msgRes] = await Promise.all([
-          fetch("/api/v1/admin/integrations", {
-            credentials: "include",
-            cache: "no-store",
-          }),
-          fetch("/api/v1/admin/reservations", {
-            credentials: "include",
-            cache: "no-store",
-          }),
-          fetch("/api/v1/admin/messages", {
-            credentials: "include",
-            cache: "no-store",
-          }),
-        ]);
+        const intRes = await fetch("/api/v1/admin/integrations", {
+          credentials: "include",
+          cache: "no-store",
+        });
         if (!cancelled && intRes.ok) {
           const data = (await intRes.json()) as { providers?: IntegrationSummary[] };
           setIntegrations(data.providers || []);
         }
-        if (!cancelled && resRes.ok) {
-          const data = (await resRes.json()) as { items?: { status: string }[] };
-          setInbox((prev) => ({
-            ...prev,
-            pending: (data.items || []).filter((x) => x.status === "pending").length,
-          }));
-        }
-        if (!cancelled && msgRes.ok) {
-          const data = (await msgRes.json()) as { items?: { status: string }[] };
-          setInbox((prev) => ({
-            ...prev,
-            messages: (data.items || []).filter((x) => x.status === "new").length,
-          }));
-        }
-      } catch {
-        /* yetkisiz veya hata — sessizce atla */
-      }
+      } catch { /* yetkisiz veya hata */ }
     })();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, []);
+
+  useEffect(() => {
+    void loadInbox();
+    const timer = setInterval(() => void loadInbox(), 30_000);
+    return () => clearInterval(timer);
+  }, [loadInbox]);
 
   return (
     <AdminGate>
@@ -116,37 +146,107 @@ export default function DashboardPage() {
 
         return (
           <>
-            <AdminPageHeader
-              title={`Hoş geldiniz, ${user?.name ?? "Admin"}`}
-              description="Restoran sitesi — menü, rezervasyon, mesaj ve içerik buradan yönetilir."
-            />
+            {/* Başlık + Yenile */}
+            <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h1 className="text-2xl font-semibold tracking-tight text-[#F8F8F8]">
+                  Hoş geldiniz, {user?.name ?? "Admin"} 👋
+                </h1>
+                <p className="mt-1 text-sm text-[#8A9BB0]">
+                  Restoran sitesi — menü, rezervasyon, mesaj ve içerik buradan yönetilir.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => void handleRefresh()}
+                disabled={refreshing}
+                className="flex items-center gap-2 rounded-xl border border-white/[0.08] px-3.5 py-2 text-xs font-medium text-[#8A9BB0] transition hover:border-[#C8703A]/30 hover:text-[#EEE9E0] disabled:opacity-50"
+              >
+                <RefreshCw className={`h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} />
+                {lastRefresh
+                  ? `Güncellendi ${lastRefresh.toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}`
+                  : "Yenile"}
+              </button>
+            </div>
 
+            {/* Bugün Özet Banner */}
+            {(inbox.todayTotal > 0 || inbox.pending > 0 || inbox.messages > 0) && (
+              <div className="mb-6 flex flex-wrap gap-3">
+                {inbox.pending > 0 && (
+                  <Link
+                    href="/admin/rezervasyonlar"
+                    className="flex items-center gap-2 rounded-xl border border-[#C8703A]/30 bg-[#C8703A]/10 px-4 py-2.5 text-sm font-medium text-[#E8915A] transition hover:bg-[#C8703A]/15"
+                  >
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#C8703A] text-[10px] font-bold text-white">
+                      {inbox.pending}
+                    </span>
+                    Bekleyen rezervasyon
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                )}
+                {inbox.messages > 0 && (
+                  <Link
+                    href="/admin/mesajlar"
+                    className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-sm font-medium text-red-300 transition hover:bg-red-500/15"
+                  >
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+                      {inbox.messages}
+                    </span>
+                    Yeni mesaj
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                )}
+                {inbox.todayTotal > 0 && (
+                  <div className="flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/8 px-4 py-2.5 text-sm text-emerald-300">
+                    📅 Bugün {inbox.todayConfirmed} onaylı / {inbox.todayTotal} toplam rezervasyon
+                  </div>
+                )}
+                {inbox.weekTotal > 0 && inbox.todayTotal === 0 && (
+                  <div className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm text-[#8A9BB0]">
+                    📊 Bu hafta {inbox.weekTotal} aktif rezervasyon
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Stat Kartları — Tıklanabilir */}
             <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-              <StatCard
-                label="Menü bölümü"
-                value={String(menuGroups)}
-                hint={`${activeProducts} yayında · ${menuProducts} toplam tabak`}
-              />
-              <StatCard
-                label="Galeri"
-                value={String(galeriCount)}
-                hint="Fotoğraf"
-              />
-              <StatCard
-                label="Yorum / SSS"
-                value={`${yorumCount} / ${sssCount}`}
-                hint={`${blogCount} blog yazısı`}
-              />
-              <StatCard
-                label="Bekleyen rezervasyon"
-                value={String(inbox.pending)}
-                hint={`${inbox.messages} yeni mesaj`}
-              />
-              <StatCard
-                label="Telefon"
-                value={content.iletisim?.telefon || "—"}
-                hint={content.brand?.displayName || content.seo?.siteName || "Marka"}
-              />
+              <Link href="/admin/menu">
+                <StatCard
+                  label="Menü bölümü"
+                  value={String(menuGroups)}
+                  hint={`${activeProducts} yayında · ${menuProducts} toplam tabak`}
+                />
+              </Link>
+              <Link href="/admin/galeri">
+                <StatCard
+                  label="Galeri"
+                  value={String(galeriCount)}
+                  hint="Fotoğraf"
+                />
+              </Link>
+              <Link href="/admin/yorumlar">
+                <StatCard
+                  label="Yorum / SSS"
+                  value={`${yorumCount} / ${sssCount}`}
+                  hint={`${blogCount} blog yazısı`}
+                />
+              </Link>
+              <Link href="/admin/rezervasyonlar">
+                <StatCard
+                  label="Bekleyen rezervasyon"
+                  value={String(inbox.pending)}
+                  hint={`${inbox.messages} yeni mesaj`}
+                  highlight={inbox.pending > 0}
+                />
+              </Link>
+              <Link href="/admin/iletisim">
+                <StatCard
+                  label="Telefon"
+                  value={content.iletisim?.telefon || "—"}
+                  hint={content.brand?.displayName || content.seo?.siteName || "Marka"}
+                />
+              </Link>
             </div>
 
             {integrations.length > 0 && (
@@ -329,17 +429,25 @@ function StatCard({
   label,
   value,
   hint,
+  highlight = false,
 }: {
   label: string;
   value: string;
   hint: string;
+  highlight?: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-5">
+    <div
+      className={`rounded-2xl border p-5 transition hover:scale-[1.02] ${
+        highlight
+          ? "border-[#C8703A]/30 bg-[#C8703A]/10"
+          : "border-white/[0.08] bg-[#141E2E]/80 hover:border-white/[0.12]"
+      }`}
+    >
       <p className="text-xs font-semibold uppercase tracking-wider text-[#6B7A94]">
         {label}
       </p>
-      <p className="mt-2 truncate text-xl font-semibold text-[#F8F8F8]">
+      <p className={`mt-2 truncate text-xl font-semibold ${highlight ? "text-[#E8915A]" : "text-[#F8F8F8]"}`}>
         {value}
       </p>
       <p className="mt-1 text-xs text-[#8A9BB0]">{hint}</p>

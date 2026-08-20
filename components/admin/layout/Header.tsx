@@ -1,7 +1,9 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, CalendarDays, Inbox } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
 import { adminNavItems } from "@/lib/admin/navigation";
 import Button from "@/components/admin/ui/Button";
 import UserMenu from "@/components/admin/layout/UserMenu";
@@ -11,6 +13,63 @@ import BrandLogo from "@/components/site/BrandLogo";
 
 interface HeaderProps {
   onMobileMenuOpen: () => void;
+}
+
+function HeaderBadges() {
+  const [pending, setPending] = useState(0);
+  const [newMsgs, setNewMsgs] = useState(0);
+
+  const fetchCounts = useCallback(async () => {
+    try {
+      const [resRes, msgRes] = await Promise.all([
+        fetch("/api/v1/admin/reservations", { credentials: "include", cache: "no-store" }),
+        fetch("/api/v1/admin/messages", { credentials: "include", cache: "no-store" }),
+      ]);
+      if (resRes.ok) {
+        const d = (await resRes.json()) as { items?: { status: string }[] };
+        setPending((d.items || []).filter((x) => x.status === "pending").length);
+      }
+      if (msgRes.ok) {
+        const d = (await msgRes.json()) as { items?: { status: string }[] };
+        setNewMsgs((d.items || []).filter((x) => x.status === "new").length);
+      }
+    } catch { /* sessizce atla */ }
+  }, []);
+
+  useEffect(() => {
+    void fetchCounts();
+    const t = setInterval(() => void fetchCounts(), 30_000);
+    return () => clearInterval(t);
+  }, [fetchCounts]);
+
+  return (
+    <div className="flex items-center gap-1">
+      <Link
+        href="/admin/rezervasyonlar"
+        title="Bekleyen rezervasyonlar"
+        className="relative flex h-9 w-9 items-center justify-center rounded-xl text-[#8A9BB0] transition hover:bg-white/[0.06] hover:text-[#EEE9E0]"
+      >
+        <CalendarDays className="h-[18px] w-[18px]" />
+        {pending > 0 && (
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#C8703A] text-[9px] font-bold text-white">
+            {pending > 9 ? "9+" : pending}
+          </span>
+        )}
+      </Link>
+      <Link
+        href="/admin/mesajlar"
+        title="Yeni mesajlar"
+        className="relative flex h-9 w-9 items-center justify-center rounded-xl text-[#8A9BB0] transition hover:bg-white/[0.06] hover:text-[#EEE9E0]"
+      >
+        <Inbox className="h-[18px] w-[18px]" />
+        {newMsgs > 0 && (
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
+            {newMsgs > 9 ? "9+" : newMsgs}
+          </span>
+        )}
+      </Link>
+    </div>
+  );
 }
 
 export default function Header({ onMobileMenuOpen }: HeaderProps) {
@@ -64,6 +123,7 @@ export default function Header({ onMobileMenuOpen }: HeaderProps) {
           >
             Siteyi Aç
           </a>
+          <HeaderBadges />
           <UserMenu />
         </div>
       </div>
