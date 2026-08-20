@@ -191,8 +191,16 @@ export default async function HomePage() {
       {faqLd ? <JsonLd data={faqLd} /> : null}
 
       {isHomeSectionOn(content, "duyuru") ? (
-        <HomeDuyuru aktif={content.duyuru?.aktif} metin={content.duyuru?.metin} />
+        <HomeDuyuru
+          aktif={content.duyuru?.aktif}
+          metin={content.duyuru?.metin}
+          stil={(content.duyuru as any)?.stil}
+          ikon={(content.duyuru as any)?.ikon}
+          butonMetin={(content.duyuru as any)?.butonMetin}
+          butonLink={(content.duyuru as any)?.butonLink}
+        />
       ) : null}
+
       {isHomeSectionOn(content, "hero") ? <HomeHero content={content} /> : null}
       {isHomeSectionOn(content, "marquee") ? (
         <HomeMarquee items={content.marquee || []} />
