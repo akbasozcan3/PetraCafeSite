@@ -13,6 +13,7 @@ const DEFAULT_LINKS: NavLink[] = [
   { label: "Menü", href: "/menu" },
   { label: "Havuz & Plaj", href: "#pasta" },
   { label: "Galeri", href: "#galeri" },
+  { label: "Blog", href: "/blog" },
   { label: "Yorumlar", href: "#yorumlar" },
   { label: "S.S.S.", href: "#sss" },
   { label: "İletişim", href: "#iletisim" },
@@ -135,6 +136,14 @@ export default function SiteNav({
       /\/#menu$/i.test(href)
     ) {
       return "/menu";
+    }
+    if (
+      /^blog$/i.test((label || "").trim()) ||
+      href === "/#blog" ||
+      href === "#blog" ||
+      /\/#blog$/i.test(href)
+    ) {
+      return "/blog";
     }
     if (/iletişim|iletisim/i.test((label || "").trim()) || /#iletisim$/i.test(href)) {
       return pathname === "/" ? "#iletisim-form" : "/#iletisim-form";

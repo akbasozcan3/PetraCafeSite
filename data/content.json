@@ -41,6 +41,10 @@
         "href": "#galeri"
       },
       {
+        "label": "Blog",
+        "href": "/blog"
+      },
+      {
         "label": "Yorumlar",
         "href": "#yorumlar"
       },

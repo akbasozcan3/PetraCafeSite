@@ -87,6 +87,11 @@ const nextConfig: NextConfig = {
         destination: "/blog/:slug",
         permanent: true,
       },
+      {
+        source: "/rezervasyon-rehberi",
+        destination: "/blog/rezervasyon-rehberi",
+        permanent: true,
+      },
     ];
   },
 
