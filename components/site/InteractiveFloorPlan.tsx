@@ -132,122 +132,144 @@ export default function InteractiveFloorPlan({
         style={{
           position: "relative",
           width: "100%",
-          maxHeight: "260px",
+          maxHeight: "340px",
           overflowY: "auto",
           overflowX: "hidden",
-          borderRadius: 12,
-          background: "#080a06",
-          border: "1px solid rgba(255,255,255,0.15)",
+          borderRadius: 14,
+          background: "#ffffff",
+          border: "2px solid #d9a441",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
         }}
       >
-        <div style={{ position: "relative", width: "100%" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/img/havuz-kroki.jpg"
-            alt="Petra Kroki"
-            style={{ width: "100%", height: "auto", display: "block", opacity: 0.85 }}
+        <svg
+          viewBox="0 0 651 868"
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+          }}
+        >
+          <defs>
+            <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="0" stdDeviation="8" floodColor="#d9a441" floodOpacity="1" />
+            </filter>
+            <filter id="greenGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#22c55e" floodOpacity="0.8" />
+            </filter>
+          </defs>
+
+          {/* 1. KATMAN: Orijinal Havuz Krokisi Görseli */}
+          <image
+            href="/assets/img/havuz-kroki.png"
+            x="0"
+            y="0"
+            width="651"
+            height="868"
+            preserveAspectRatio="xMidYMid meet"
           />
 
-          {/* İnteraktif SVG Katmanı */}
-          <svg
-            viewBox="0 0 651 868"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            <defs>
-              <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="2" stdDeviation="6" floodColor="#d9a441" floodOpacity="0.9" />
-              </filter>
-            </defs>
+          {/* 2. KATMAN: Masalar Üzerinde İnteraktif Hotspot Daireleri (🟢 Yeşil, 🔴 Kırmızı, 🟡 Sarı) */}
+          {RESTAURANT_TABLES.map((t) => {
+            const status = getTableStatus(t);
+            const isHovered = hoveredTable?.id === t.id;
+            const isSelected = t.id === selectedTableId;
+            const isDimmed = activeZone !== "all" && t.zoneId !== activeZone;
 
-            {RESTAURANT_TABLES.map((t) => {
-              const status = getTableStatus(t);
-              const isHovered = hoveredTable?.id === t.id;
-              const isSelected = t.id === selectedTableId;
-              const isDimmed = activeZone !== "all" && t.zoneId !== activeZone;
+            // Renk ve stil mantığı (🟢 🔴 🟡)
+            let fillColor = "rgba(34, 197, 94, 0.4)";
+            let strokeColor = "#16a34a";
+            let strokeWidth = 3.5;
+            let filter: string | undefined = "url(#greenGlow)";
+            let cursor = "pointer";
 
-              let fillColor = "rgba(34, 197, 94, 0.25)";
-              let strokeColor = "#22c55e";
-              let strokeWidth = 3;
-              let cursor = "pointer";
+            if (isSelected) {
+              // 🟡 Seçili Masa (Altın Sarı & Güçlü Glow)
+              fillColor = "rgba(217, 164, 65, 0.85)";
+              strokeColor = "#b8842c";
+              strokeWidth = 5;
+              filter = "url(#goldGlow)";
+            } else if (status === "booked") {
+              // 🔴 Dolu Masa (Kırmızı)
+              fillColor = "rgba(239, 68, 68, 0.65)";
+              strokeColor = "#dc2626";
+              strokeWidth = 3;
+              filter = undefined;
+              cursor = "not-allowed";
+            } else if (status === "capacity_exceeded") {
+              fillColor = "rgba(245, 158, 11, 0.3)";
+              strokeColor = "rgba(245, 158, 11, 0.8)";
+              strokeWidth = 2.5;
+              filter = undefined;
+              cursor = "not-allowed";
+            } else if (isHovered) {
+              fillColor = "rgba(34, 197, 94, 0.65)";
+              strokeColor = "#15803d";
+              strokeWidth = 4.5;
+              filter = "url(#greenGlow)";
+            }
 
-              if (isSelected) {
-                fillColor = "#d9a441";
-                strokeColor = "#ffffff";
-                strokeWidth = 5;
-              } else if (status === "booked") {
-                fillColor = "rgba(239, 68, 68, 0.4)";
-                strokeColor = "#ef4444";
-                strokeWidth = 2;
-                cursor = "not-allowed";
-              } else if (status === "capacity_exceeded") {
-                fillColor = "rgba(245, 158, 11, 0.2)";
-                strokeColor = "rgba(245, 158, 11, 0.6)";
-                strokeWidth = 2;
-                cursor = "not-allowed";
-              } else if (isHovered) {
-                fillColor = "rgba(217, 164, 65, 0.4)";
-                strokeColor = "#d9a441";
-                strokeWidth = 4;
-              }
+            const opacity = isDimmed ? 0.2 : 1;
 
-              const opacity = isDimmed ? 0.2 : 1;
+            return (
+              <g
+                key={t.id}
+                onClick={() => handleTableClick(t)}
+                onMouseEnter={() => setHoveredTable(t)}
+                onMouseLeave={() => setHoveredTable(null)}
+                style={{ cursor, opacity, transition: "all 0.15s ease" }}
+                filter={filter ? filter : undefined}
+              >
+                {/* Hotspot Çemberi */}
+                <circle
+                  cx={t.cx}
+                  cy={t.cy}
+                  r={t.r}
+                  fill={fillColor}
+                  stroke={strokeColor}
+                  strokeWidth={strokeWidth}
+                />
 
-              return (
-                <g
-                  key={t.id}
-                  onClick={() => handleTableClick(t)}
-                  onMouseEnter={() => setHoveredTable(t)}
-                  onMouseLeave={() => setHoveredTable(null)}
-                  style={{ cursor, opacity, transition: "all 0.15s ease" }}
-                  filter={isSelected ? "url(#goldGlow)" : undefined}
+                {/* Masa Numarası / Metni */}
+                <text
+                  x={t.cx}
+                  y={(t.cy || 0) - 2}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill={isSelected ? "#0d0f0a" : "#ffffff"}
+                  fontSize={t.isVip ? "14" : "12"}
+                  fontWeight="900"
+                  fontFamily="system-ui, -apple-system, sans-serif"
+                  style={{
+                    pointerEvents: "none",
+                    textShadow: isSelected ? "none" : "0 1px 3px rgba(0,0,0,0.8)",
+                  }}
                 >
-                  <circle
-                    cx={t.cx}
-                    cy={t.cy}
-                    r={t.r}
-                    fill={fillColor}
-                    stroke={strokeColor}
-                    strokeWidth={strokeWidth}
-                    strokeDasharray={status === "capacity_exceeded" ? "5 3" : undefined}
-                  />
-                  <text
-                    x={t.cx}
-                    y={(t.cy || 0) - 2}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    fill={isSelected ? "#0d0f0a" : "#ffffff"}
-                    fontSize={t.isVip ? "18" : "16"}
-                    fontWeight="bold"
-                    fontFamily="system-ui, sans-serif"
-                    style={{ pointerEvents: "none" }}
-                  >
-                    {t.tableNumber}
-                  </text>
-                  <text
-                    x={t.cx}
-                    y={(t.cy || 0) + 16}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    fill={isSelected ? "#12150e" : "rgba(255,255,255,0.8)"}
-                    fontSize="12"
-                    fontWeight="600"
-                    fontFamily="system-ui, sans-serif"
-                    style={{ pointerEvents: "none" }}
-                  >
-                    {t.capacity}k
-                  </text>
-                </g>
-              );
-            })}
-          </svg>
-        </div>
+                  {t.tableNumber}
+                </text>
+
+                {/* Kapasite */}
+                <text
+                  x={t.cx}
+                  y={(t.cy || 0) + 12}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill={isSelected ? "#12150e" : "rgba(255,255,255,0.95)"}
+                  fontSize="10"
+                  fontWeight="700"
+                  fontFamily="system-ui, -apple-system, sans-serif"
+                  style={{
+                    pointerEvents: "none",
+                    textShadow: isSelected ? "none" : "0 1px 2px rgba(0,0,0,0.8)",
+                  }}
+                >
+                  {t.capacity}k
+                </text>
+              </g>
+            );
+          })}
+        </svg>
       </div>
+
 
       {/* Hover Kartı / Seçim İpucu */}
       {hoveredTable && (
