@@ -108,11 +108,11 @@ export async function sendReservationStatusEmail(opts: {
   const isConfirmed = opts.status === "confirmed";
 
   const mail = buildNotifyEmail({
-    kicker: isConfirmed ? "REZERVASYON ONAYI" : "REZERVASYON BİLGİLENDİRMESİ",
-    title: isConfirmed ? "Rezervasyonunuz Onaylandı" : "Rezervasyon Durum Bilgisi",
+    kicker: isConfirmed ? "REZERVASYON ONAYI" : "REZERVASYON HAKKINDA",
+    title: isConfirmed ? "Rezervasyonunuz Onaylandı" : "Rezervasyon Talebiniz",
     intro: isConfirmed
-      ? `Sayın ${opts.name}, rezervasyon talebiniz onaylanmıştır. Belirttiğiniz gün ve saatte masanız sizler için hazır olacaktır.`
-      : `Sayın ${opts.name}, talep ettiğiniz tarih veya saatte uygunluk bulunamadığı için rezervasyonunuz onaylanamamıştır. Farklı bir zaman dilimi için bizimle iletişime geçebilirsiniz.`,
+      ? `Merhaba ${opts.name},<br/><br/>${opts.date} saat ${opts.time} için oluşturduğunuz rezervasyon talebiniz onaylanmıştır. Belirtilen saatte masanız sizler için hazır olacaktır.`
+      : `Merhaba ${opts.name},<br/><br/>${opts.date} saat ${opts.time} için oluşturduğunuz rezervasyon talebiniz maalesef onaylanamamıştır.`,
     logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
     logoHeight,
     rows: [
@@ -120,16 +120,16 @@ export async function sendReservationStatusEmail(opts: {
       { label: "Tarih", value: opts.date },
       { label: "Saat", value: opts.time },
       { label: "Kişi Sayısı", value: `${opts.guests} Kişi` },
-      { label: "Durum", value: isConfirmed ? "✅ ONAYLANDI" : "İptal Edildi / Uygunluk Yok" },
-      { label: "Not", value: opts.note || "" },
+      { label: "Durum", value: isConfirmed ? "✅ Onaylandı" : "❌ Onaylanamadı" },
+      ...(opts.note ? [{ label: "Not", value: opts.note }] : []),
     ],
   });
 
   return sendMail({
     to: opts.to,
     subject: isConfirmed
-      ? `Rezervasyonunuz Onaylandı (${opts.date} - ${opts.time}) — Petra Cafe Restaurant`
-      : `Rezervasyon Talebi Bilgilendirmesi — Petra Cafe Restaurant`,
+      ? `Rezervasyonunuz Onaylandı (${opts.date} ${opts.time}) — Petra Cafe Restaurant`
+      : `Rezervasyonunuz hakkında — Petra Cafe Restaurant`,
     text: mail.text,
     html: mail.html,
   });

@@ -162,7 +162,9 @@ function SmtpCard() {
   } | null>(null);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
-  const [kind, setKind] = useState<"reservation" | "contact">("reservation");
+  const [kind, setKind] = useState<
+    "reservation" | "reservation_confirmed" | "reservation_rejected" | "contact"
+  >("reservation");
   const [logoHeight, setLogoHeight] = useState<number>(96);
   const [savingLogo, setSavingLogo] = useState(false);
   const [logoSaveMsg, setLogoSaveMsg] = useState("");
@@ -247,10 +249,9 @@ function SmtpCard() {
 
   return (
     <section className="mt-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-      <h3 className="text-lg font-semibold text-[#F8F8F8]">SMTP / Gmail görünümü</h3>
+      <h3 className="text-lg font-semibold text-[#F8F8F8]">SMTP / E-Posta Şablonları & Gmail Görünümü</h3>
       <p className="mt-2 text-sm text-[#8A9BB0]">
-        Müşteriye gitmez — rezervasyon ve iletişim formları <strong className="text-[#EEE9E0]">SMTP_TO</strong>{" "}
-        adresine bu tasarımla düşer. Aşağıdaki kutu Gmail’deki okuma ekranına yakındır.
+        Müşteriye giden onay/red bildirimleri ile yöneticiye giden rezervasyon ve iletişim maillerinin canlı şablon önizlemesi.
       </p>
       <p className="mt-3 text-sm text-[#EEE9E0]">
         Durum:{" "}
@@ -321,20 +322,38 @@ function SmtpCard() {
         )}
       </div>
 
-      <div className="mt-5 flex gap-2">
+      <div className="mt-5 flex flex-wrap gap-2">
         <Button
           type="button"
+          size="sm"
           variant={kind === "reservation" ? "primary" : "outline"}
           onClick={() => setKind("reservation")}
         >
-          Rezervasyon
+          Yeni Talep (Admin)
         </Button>
         <Button
           type="button"
+          size="sm"
+          variant={kind === "reservation_confirmed" ? "primary" : "outline"}
+          onClick={() => setKind("reservation_confirmed")}
+        >
+          ✅ Onaylandı (Müşteri)
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant={kind === "reservation_rejected" ? "primary" : "outline"}
+          onClick={() => setKind("reservation_rejected")}
+        >
+          ❌ Reddedildi (Müşteri)
+        </Button>
+        <Button
+          type="button"
+          size="sm"
           variant={kind === "contact" ? "primary" : "outline"}
           onClick={() => setKind("contact")}
         >
-          İletişim
+          İletişim Mesajı
         </Button>
       </div>
 
