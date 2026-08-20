@@ -163,6 +163,9 @@ function SmtpCard() {
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
   const [kind, setKind] = useState<"reservation" | "contact">("reservation");
+  const [logoHeight, setLogoHeight] = useState<number>(96);
+  const [savingLogo, setSavingLogo] = useState(false);
+  const [logoSaveMsg, setLogoSaveMsg] = useState("");
   const [preview, setPreview] = useState<{
     from?: string;
     to?: string;
@@ -176,18 +179,49 @@ function SmtpCard() {
       .then((r) => r.json())
       .then((d) => setInfo(d))
       .catch(() => setInfo({ configured: false }));
+
+    void api.getAdminContent().then((res) => {
+      const h = Number(res.data?.images?.smtpLogoHeight || res.data?.images?.smtpLogoSize);
+      if (h && !isNaN(h)) {
+        setLogoHeight(h);
+      }
+    }).catch(() => {});
   }, []);
 
   useEffect(() => {
     setPreviewErr("");
-    void fetch(`/api/v1/admin/smtp/preview?kind=${kind}`, { credentials: "include" })
+    void fetch(`/api/v1/admin/smtp/preview?kind=${kind}&h=${logoHeight}`, { credentials: "include" })
       .then(async (r) => {
         const data = await r.json();
         if (!r.ok) throw new Error(data.error || "Önizleme alınamadı");
         setPreview(data);
       })
       .catch((e) => setPreviewErr(e instanceof Error ? e.message : "Önizleme yok"));
-  }, [kind]);
+  }, [kind, logoHeight]);
+
+  async function saveLogoHeight() {
+    setSavingLogo(true);
+    setLogoSaveMsg("");
+    try {
+      const res = await api.getAdminContent();
+      const current = res.data;
+      const updated = {
+        ...current,
+        images: {
+          ...(current.images || {}),
+          smtpLogoHeight: String(logoHeight),
+          smtpLogoSize: String(logoHeight),
+        },
+      };
+      await api.updateContent(updated);
+      setLogoSaveMsg("✓ Logo boyutu kaydedildi!");
+      setTimeout(() => setLogoSaveMsg(""), 3500);
+    } catch (e) {
+      setLogoSaveMsg(e instanceof Error ? e.message : "Kayıt başarısız");
+    } finally {
+      setSavingLogo(false);
+    }
+  }
 
   async function test() {
     setBusy(true);
@@ -231,7 +265,63 @@ function SmtpCard() {
       </p>
       {msg ? <p className="mt-2 text-xs text-[#8A9BB0]">{msg}</p> : null}
 
-      <div className="mt-4 flex gap-2">
+      {/* Logo Boyutu Ayar Kartı */}
+      <div className="mt-5 rounded-xl border border-white/[0.06] bg-[#0D1117] p-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h4 className="text-sm font-semibold text-white">E-Posta Logo Boyutu</h4>
+            <p className="text-xs text-[#8A9BB0]">E-postalardaki logo yüksekliğini dilediğiniz gibi ayarlayın.</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="rounded-md bg-white/10 px-2.5 py-1 font-mono text-sm font-bold text-[#D9A441]">
+              {logoHeight} px
+            </span>
+            <Button
+              type="button"
+              variant="primary"
+              disabled={savingLogo}
+              onClick={() => void saveLogoHeight()}
+            >
+              {savingLogo ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+              Boyutu Kaydet
+            </Button>
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            type="range"
+            min={40}
+            max={200}
+            step={2}
+            value={logoHeight}
+            onChange={(e) => setLogoHeight(Number(e.target.value))}
+            className="h-2 w-full flex-1 cursor-pointer accent-[#D9A441]"
+          />
+          <div className="flex flex-wrap items-center gap-1.5">
+            {[64, 80, 96, 120, 150].map((size) => (
+              <button
+                key={size}
+                type="button"
+                onClick={() => setLogoHeight(size)}
+                className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
+                  logoHeight === size
+                    ? "bg-[#D9A441] text-[#0D0F0A]"
+                    : "bg-white/5 text-[#8A9BB0] hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                {size}px
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {logoSaveMsg && (
+          <p className="mt-2 text-xs font-medium text-emerald-400">{logoSaveMsg}</p>
+        )}
+      </div>
+
+      <div className="mt-5 flex gap-2">
         <Button
           type="button"
           variant={kind === "reservation" ? "primary" : "outline"}
@@ -267,7 +357,7 @@ function SmtpCard() {
           <iframe
             title="Gmail e-posta önizlemesi"
             srcDoc={preview?.html || "<p style='padding:24px;font-family:sans-serif;color:#888'>Yükleniyor…</p>"}
-            className="h-[460px] w-full border-0 bg-[#f4eee1]"
+            className="h-[520px] w-full border-0 bg-[#f4eee1]"
             sandbox="allow-same-origin"
           />
         )}

@@ -57,11 +57,13 @@ export async function POST(request: Request) {
 
     const content = await getPublicContent().catch(() => null);
     const adminUrl = `${publicOrigin(content)}/admin/mesajlar`;
+    const logoHeight = Number(content?.images?.smtpLogoHeight || content?.images?.smtpLogoSize || 96);
     const mail = buildNotifyEmail({
       kicker: "İletişim",
       title: "Yeni mesaj",
       intro: "Sitedeki iletişim formundan bir yazı geldi.",
       logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
+      logoHeight,
       adminUrl,
       rows: [
         { label: "Ad soyad", value: name },

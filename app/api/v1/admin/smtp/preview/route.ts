@@ -10,7 +10,10 @@ export async function GET(request: Request) {
   try {
     await requirePermission("settings:password");
     const content = await getContentAsync();
-    const kind = new URL(request.url).searchParams.get("kind") === "contact" ? "contact" : "reservation";
+    const searchParams = new URL(request.url).searchParams;
+    const kind = searchParams.get("kind") === "contact" ? "contact" : "reservation";
+    const customH = searchParams.get("h");
+    const logoHeight = customH ? Number(customH) : Number(content?.images?.smtpLogoHeight || content?.images?.smtpLogoSize || 96);
     const logoUrl = brandLogoAbsoluteUrl(content?.images?.logo);
     const cfg = getSmtpConfig();
     const to = notificationEmail() || content?.iletisim?.eposta || "";
@@ -23,6 +26,7 @@ export async function GET(request: Request) {
             title: "Yeni mesaj",
             intro: "Sitedeki iletişim formundan bir yazı geldi.",
             logoUrl,
+            logoHeight,
             adminUrl: `${siteBaseUrl()}/admin/mesajlar`,
             rows: [
               { label: "Ad soyad", value: "Örnek Misafir" },
@@ -36,6 +40,7 @@ export async function GET(request: Request) {
             title: "Yeni masa talebi",
             intro: "Siteden bir rezervasyon geldi. Telefonla onaylayın.",
             logoUrl,
+            logoHeight,
             adminUrl: `${siteBaseUrl()}/admin/rezervasyonlar`,
             rows: [
               { label: "Ad soyad", value: "Örnek Misafir" },

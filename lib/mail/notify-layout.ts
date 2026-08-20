@@ -22,7 +22,11 @@ export function buildNotifyEmail(opts: {
   body?: string;
   adminUrl?: string;
   logoUrl: string;
+  logoHeight?: number;
 }) {
+  const logoH = Math.max(40, Math.min(240, Number(opts.logoHeight) || 96));
+  const maxW = Math.round(logoH * 3.2);
+
   const rowsHtml = opts.rows
     .filter((r) => r.value && r.value.trim())
     .map(
@@ -72,8 +76,7 @@ export function buildNotifyEmail(opts: {
                 <tr>
                   <td align="center" style="text-align:center;">
                     <a href="${escapeHtml(siteBaseUrl())}" target="_blank" style="text-decoration:none;display:inline-block;">
-                      <!-- Logo Boyutu: height değerini dilediğiniz gibi büyütebilirsiniz (Örn: 96, 110, 120) -->
-                      <img src="${escapeHtml(opts.logoUrl)}" alt="Petra Cafe Restaurant" height="96" border="0" style="display:block;margin:0 auto;height:96px;max-height:96px;width:auto;max-width:280px;object-fit:contain;border:0;outline:none;" />
+                      <img src="${escapeHtml(opts.logoUrl)}" alt="Petra Cafe Restaurant" height="${logoH}" border="0" style="display:block;margin:0 auto;height:${logoH}px;max-height:${logoH}px;width:auto;max-width:${maxW}px;object-fit:contain;border:0;outline:none;" />
                     </a>
                   </td>
                 </tr>

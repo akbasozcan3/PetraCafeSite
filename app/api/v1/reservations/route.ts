@@ -80,11 +80,13 @@ export async function POST(request: Request) {
     });
 
     const adminUrl = `${publicOrigin(content)}/admin/rezervasyonlar`;
+    const logoHeight = Number(content?.images?.smtpLogoHeight || content?.images?.smtpLogoSize || 96);
     const mail = buildNotifyEmail({
       kicker: "Rezervasyon",
       title: "Yeni masa talebi",
       intro: "Siteden bir rezervasyon geldi. Telefonla onaylayın.",
       logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
+      logoHeight,
       adminUrl,
       rows: [
         { label: "Ad soyad", value: name },

@@ -140,11 +140,13 @@ export async function testSmtpConnection() {
     const { getPublicContent } = await import("@/lib/db/content");
     const content = await getPublicContent().catch(() => null);
     const { brandLogoAbsoluteUrl, buildNotifyEmail } = await import("@/lib/mail/notify-layout");
+    const logoHeight = Number(content?.images?.smtpLogoHeight || content?.images?.smtpLogoSize || 96);
     const mail = buildNotifyEmail({
       kicker: "Sistem Bildirimi",
       title: "E-Posta Bildirim Sistemi Aktif",
       intro: "Petra Cafe Restaurant kurumsal e-posta bildirim entegrasyonu başarıyla aktif edildi.",
       logoUrl: brandLogoAbsoluteUrl(content?.images?.logo),
+      logoHeight,
       rows: [
         { label: "Durum", value: "Bağlantı Başarılı & Aktif" },
         { label: "Sunucu", value: cfg.host },
