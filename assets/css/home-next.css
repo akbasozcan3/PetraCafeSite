@@ -1501,9 +1501,12 @@ html.home-anim.no-motion .site-home .hizmet__card:hover {
   object-fit: cover;
   display: block;
 }
+.site-home .pasta-sec {
+  position: relative;
+}
 .site-home .pasta-layout {
   display: grid;
-  grid-template-columns: minmax(280px, 0.92fr) minmax(0, 1.08fr);
+  grid-template-columns: minmax(300px, 0.92fr) minmax(0, 1.08fr);
   gap: clamp(28px, 4vw, 56px);
   align-items: start;
 }
@@ -1512,11 +1515,17 @@ html.home-anim.no-motion .site-home .hizmet__card:hover {
   grid-template-columns: 1.2fr 0.9fr;
   grid-template-rows: 1fr 1fr;
   gap: 12px;
-  height: min(560px, 68vh) !important;
+  height: min(580px, 70vh) !important;
   max-height: none !important;
   overflow: hidden;
   position: sticky;
   top: calc(var(--nav-h, 72px) + 20px);
+  z-index: 2;
+}
+.site-home .pasta-copy {
+  position: relative;
+  z-index: 3;
+  min-width: 0;
 }
 .site-home .pasta-grid figure {
   position: relative;
@@ -1546,6 +1555,29 @@ html.home-anim.no-motion .site-home .hizmet__card:hover {
   object-fit: cover;
   object-position: center 40%;
   display: block;
+}
+
+@media (max-width: 1023px) {
+  .site-home .pasta-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+  .site-home .pasta-grid {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: clamp(260px, 46vw, 440px) !important;
+    max-height: none !important;
+    grid-template-columns: 1.2fr 0.8fr !important;
+    grid-template-rows: 1fr 1fr !important;
+    gap: 10px !important;
+    z-index: 1 !important;
+  }
+  .site-home .pasta-copy {
+    width: 100% !important;
+  }
 }
 .site-home .gallery {
   min-height: 240px;
@@ -1711,15 +1743,6 @@ html.home-anim.no-motion .site-home .hizmet__card:hover {
     min-height: 320px;
     height: 360px;
     max-height: 420px;
-  }
-  .site-home .pasta-grid {
-    height: auto !important;
-    max-height: none !important;
-    grid-template-columns: 1.15fr 0.85fr;
-    grid-template-rows: 200px 160px;
-  }
-  .site-home .pasta-grid figure:first-child {
-    grid-row: 1 / span 2;
   }
 }
 
@@ -2524,16 +2547,6 @@ html.no-motion .site-shop .pd-related {
   .site-home .contact-stage {
     grid-template-columns: 1fr !important;
     gap: 22px !important;
-  }
-  .site-home .pasta-grid {
-    width: 100%;
-    height: auto !important;
-    max-height: none !important;
-    grid-template-columns: 1.2fr 0.8fr !important;
-    grid-template-rows: minmax(200px, 28vh) minmax(140px, 20vh) !important;
-  }
-  .site-home .pasta-grid figure:first-child {
-    grid-row: 1 / span 2;
   }
   .site-home .gallery {
     gap: 12px;
