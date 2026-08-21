@@ -1585,10 +1585,10 @@ body {
     margin: 0 !important;
     margin-left: 4px !important;
     z-index: 201 !important;
-    color: #12150E !important;
+    color: var(--brass, #D9A441) !important;
   }
   .nav__burger span {
-    background: #12150E !important;
+    background: var(--brass, #D9A441) !important;
   }
   .nav.is-hero .nav__burger {
     color: #fbf8f1 !important;
@@ -1600,8 +1600,9 @@ body {
     display: block !important;
     width: 26px !important;
     height: 26px !important;
-    stroke: #12150E !important;
+    stroke: var(--brass, #D9A441) !important;
   }
+
 
   /* Taşma kaynaklarını kilitle — .gate sticky'ye dokunma */
   .mq-band,
@@ -2447,6 +2448,62 @@ html[data-theme="dark"] .menu-page__toc a.is-active {
   color: #FFFFFF !important;
   border-bottom-color: #D9A441 !important;
 }
+
+/* ==========================================================================
+   MOBİL MENÜ & TÜM BUTONLAR İÇİN MUTLAK GÖRÜNÜRLÜK (HER TEMADA AKTİF)
+   ========================================================================== */
+.nav__burger,
+.nav__burger span {
+  color: #D9A441 !important;
+}
+.nav__burger span {
+  background: #D9A441 !important;
+}
+.nav__burger svg {
+  stroke: #D9A441 !important;
+}
+
+.mobile-menu {
+  background: #0D0F0A !important;
+  color: #F4EEE1 !important;
+  border-bottom: 2px solid #D9A441 !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7) !important;
+}
+.mobile-menu a {
+  color: #F4EEE1 !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid rgba(217, 164, 65, 0.25) !important;
+}
+.mobile-menu a:hover,
+.mobile-menu a:active {
+  color: #D9A441 !important;
+  background: rgba(217, 164, 65, 0.12) !important;
+}
+.mobile-menu .btn,
+.mobile-menu .nav__cta {
+  background: #D9A441 !important;
+  color: #0D0F0A !important;
+  font-weight: 700 !important;
+  border-bottom: 0 !important;
+}
+
+/* Menü Sayfası (/menu) Genel Tipografi ve Buton Garantisi */
+.menu-page h1,
+.menu-page h2 {
+  color: var(--ink, #0D0F0A) !important;
+}
+.menu-page__kicker {
+  color: #B8842C !important;
+}
+.menu-row__title {
+  color: var(--ink, #0D0F0A) !important;
+  font-weight: 600 !important;
+}
+.menu-row__price {
+  color: #B8842C !important;
+  font-weight: 700 !important;
+}
+
 
 
 
