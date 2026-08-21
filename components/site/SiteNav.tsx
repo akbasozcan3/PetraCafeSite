@@ -516,27 +516,31 @@ export default function SiteNav({
         style={{
           position: "fixed",
           inset: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
           width: "100vw",
           height: "100dvh",
           zIndex: 9999999,
           background: "#0D0F0A",
           backgroundColor: "#0D0F0A",
-          padding: "16px 20px 48px",
+          padding: "0 0 48px 0",
           overflowY: "auto",
           display: open ? "flex" : "none",
           flexDirection: "column",
         }}
       >
-        {/* En Üstte Sadece Sağda Kapatma Butonu (Navbar Yok) */}
+        {/* Menü butonuyla TAM AYNI YERDE, AYNI YÜKSEKLİKTE VE AYNI HİZADA Close Butonu */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-end",
             width: "100%",
-            maxWidth: "540px",
-            margin: "0 auto 12px",
-            paddingTop: "6px",
+            height: "var(--nav-h, 72px)",
+            paddingLeft: "max(18px, env(safe-area-inset-left))",
+            paddingRight: "max(18px, env(safe-area-inset-right))",
             flexShrink: 0,
           }}
         >
@@ -545,12 +549,12 @@ export default function SiteNav({
             aria-label="Menüyü kapat"
             onClick={() => setOpen(false)}
             style={{
-              width: "48px",
-              height: "48px",
+              width: "44px",
+              height: "44px",
               background: "transparent",
               border: 0,
               color: "#D9A441",
-              fontSize: "32px",
+              fontSize: "30px",
               fontWeight: "bold",
               display: "flex",
               alignItems: "center",
@@ -564,7 +568,8 @@ export default function SiteNav({
           </button>
         </div>
 
-        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto" }}>
+        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto", padding: "0 20px" }}>
+
           <nav aria-label="Mobil menü">
             <ul className="mobile-menu__links">
               {links.map((link, i) => (
