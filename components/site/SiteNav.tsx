@@ -391,7 +391,22 @@ export default function SiteNav({
       <header
         className={`nav site-nav${solid ? " is-solid" : " is-hero"}${open ? " is-menu" : ""}`}
         id="nav"
+        style={
+          open
+            ? {
+                background: "#0D0F0A",
+                backgroundColor: "#0D0F0A",
+                backdropFilter: "none",
+                WebkitBackdropFilter: "none",
+                borderBottom: "1px solid rgba(217, 164, 65, 0.25)",
+                opacity: 1,
+                transform: "none",
+                zIndex: 100000,
+              }
+            : undefined
+        }
       >
+
         <Link
           className="nav__logo has-logo"
           href={homeHref}
