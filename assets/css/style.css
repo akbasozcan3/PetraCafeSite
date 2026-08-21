@@ -2604,17 +2604,28 @@ header.nav.is-menu {
 
 .mobile-menu {
   position: fixed !important;
-  top: var(--nav-h, 72px) !important;
-  bottom: 0 !important;
+  inset: 0 !important;
+  top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  z-index: 99999 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  z-index: 9999999 !important;
   background: #0D0F0A !important;
   background-color: #0D0F0A !important;
-  padding: 20px 20px 48px !important;
+  padding: 16px 20px 48px !important;
   overflow-y: auto !important;
-  border-top: 1px solid rgba(212, 175, 55, 0.3) !important;
+  border-top: none !important;
 }
+
+.mobile-menu:not(.is-open),
+.mobile-menu[hidden] {
+  display: none !important;
+}
+
 
 
 
