@@ -508,37 +508,7 @@ export default function SiteNav({
       </header>
 
 
-      {/* SABİT SAĞ ÜST CLOSE BUTONU (Menü ikonuyla TAM AYNI YERDE VE HİZADA) */}
-      {open ? (
-        <button
-          type="button"
-          aria-label="Menüyü kapat"
-          onClick={() => setOpen(false)}
-          style={{
-            position: "fixed",
-            top: "14px",
-            right: "max(18px, env(safe-area-inset-right))",
-            zIndex: 1000000005,
-            width: "44px",
-            height: "44px",
-            background: "transparent",
-            border: 0,
-            color: "#D9A441",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            padding: 0,
-          }}
-        >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9A441" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-      ) : null}
-
-      {/* MOBİLDE TAM EKRAN MENÜ PERDESİ */}
+      {/* MOBİLDE ULTRA LÜKS VE PROFESYONEL MENÜ MODALI */}
       <div
         className={`mobile-menu${open ? " is-open" : ""}`}
         id="mobileMenu"
@@ -554,59 +524,219 @@ export default function SiteNav({
           width: "100vw",
           height: "100dvh",
           zIndex: 999999999,
-          background: "#0D0F0A",
+          background: "radial-gradient(ellipse 90% 50% at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 70%), linear-gradient(180deg, #14170F 0%, #0D0F0A 100%)",
           backgroundColor: "#0D0F0A",
-          padding: "72px 20px 24px",
+          padding: "0 0 24px 0",
           overflowY: "auto",
           display: open ? "flex" : "none",
           flexDirection: "column",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
         }}
       >
+        {/* ÜST LÜKS BAR: Solda Logo & Yazı, Sağda Dairesel Altın Close Butonu */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            height: "var(--nav-h, 72px)",
+            paddingLeft: "max(20px, env(safe-area-inset-left))",
+            paddingRight: "max(18px, env(safe-area-inset-right))",
+            borderBottom: "1px solid rgba(212, 175, 55, 0.22)",
+            background: "rgba(13, 15, 10, 0.8)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            flexShrink: 0,
+          }}
+        >
+          <Link
+            className="nav__logo has-logo"
+            href={homeHref}
+            aria-label="Ana sayfa"
+            onClick={() => setOpen(false)}
+            style={{ display: "flex", alignItems: "center", gap: "10px", margin: 0, textDecoration: "none" }}
+          >
+            <BrandLogo
+              className="nav__logo-img"
+              src={logoUrl}
+              alt={`${navbar.logoText || "PETRA"} logosu`}
+              height={36}
+              style={{
+                height: "36px",
+                width: "auto",
+                filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 8px rgba(212,175,55,0.4))",
+              }}
+            />
+            <span
+              className="nav__logo-text"
+              hidden={hideText}
+              style={{
+                color: "#FFFFFF",
+                fontFamily: "var(--f-head, Playfair Display, serif)",
+                fontWeight: 700,
+                fontSize: "18px",
+                letterSpacing: "0.14em",
+              }}
+            >
+              {navbar.logoText || "PETRA"}
+            </span>
+          </Link>
+
+          <button
+            type="button"
+            aria-label="Menüyü kapat"
+            onClick={() => setOpen(false)}
+            style={{
+              width: "42px",
+              height: "42px",
+              borderRadius: "50%",
+              background: "rgba(212, 175, 55, 0.12)",
+              border: "1px solid rgba(212, 175, 55, 0.4)",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.4), inset 0 0 6px rgba(212,175,55,0.15)",
+              color: "#D4AF37",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              padding: 0,
+            }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        {/* ORTA LÜKS PANEL: Dikeyde Dengeli Linkler */}
         <div
           className="mobile-menu__panel"
           style={{
             maxWidth: "540px",
             width: "100%",
             margin: "0 auto",
+            padding: "16px 20px 0",
+            flex: "1 1 auto",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-end",
+            justifyContent: "space-evenly",
           }}
         >
-          <nav aria-label="Mobil menü" style={{ marginBottom: "14px" }}>
-            <ul className="mobile-menu__links" style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+          <nav aria-label="Mobil menü">
+            <ul
+              className="mobile-menu__links"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0",
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+              }}
+            >
               {links.map((link, i) => (
-                <li key={`m-${link.label}-${link.href}`}>
+                <li key={`m-${link.label}-${link.href}`} style={{ borderBottom: "1px solid rgba(212, 175, 55, 0.1)" }}>
                   <a
                     href={navHref(link.href, link.label)}
                     data-i={String(i + 1).padStart(2, "0")}
-                    style={{ padding: "6px 0", fontSize: "1.05rem" }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "16px",
+                      padding: "10px 4px",
+                      fontSize: "clamp(1.05rem, 4.2vw, 1.25rem)",
+                      fontFamily: "var(--f-head, Playfair Display, serif)",
+                      fontWeight: 500,
+                      letterSpacing: "0.02em",
+                      color: "#F4EEE1",
+                      textDecoration: "none",
+                    }}
                     onClick={(e) => jumpTo(e, navHref(link.href, link.label))}
                   >
-                    {link.label}
+                    <span
+                      style={{
+                        fontFamily: "Inter, system-ui, sans-serif",
+                        fontSize: "0.72rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.14em",
+                        color: "#D4AF37",
+                        width: "22px",
+                      }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>{link.label}</span>
                   </a>
                 </li>
               ))}
             </ul>
           </nav>
-          <div className="mobile-menu__foot" style={{ marginTop: "0", paddingTop: "0" }}>
+
+          {/* ALT BÖLÜM: Altın Rezervasyon Butonu & İletişim */}
+          <div className="mobile-menu__foot" style={{ marginTop: "18px", paddingTop: "0" }}>
             <a
               href={bookHref}
               className="btn btn--lg mobile-menu__cta"
+              style={{
+                width: "100%",
+                minHeight: "50px",
+                borderRadius: "999px",
+                background: "linear-gradient(135deg, #E5B84B 0%, #C49126 100%)",
+                color: "#0D0F0A",
+                fontWeight: 700,
+                fontSize: "15px",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 8px 24px -4px rgba(212, 175, 55, 0.45)",
+                border: "none",
+                textDecoration: "none",
+                marginBottom: "12px",
+              }}
               onClick={() => setOpen(false)}
             >
               {bookLabel}
             </a>
             {showPhone && phoneHref ? (
-              <a className="mobile-menu__phone" href={`tel:${phoneHref.replace(/^tel:/i, "")}`}>
+              <a
+                className="mobile-menu__phone"
+                href={`tel:${phoneHref.replace(/^tel:/i, "")}`}
+                style={{
+                  display: "block",
+                  textAlign: "center",
+                  color: "#D4AF37",
+                  fontSize: "15px",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em",
+                  textDecoration: "none",
+                  marginBottom: "4px",
+                }}
+              >
                 {phone}
               </a>
             ) : null}
-            {hours ? <p className="mobile-menu__hours">{hours}</p> : null}
+            {hours ? (
+              <p
+                className="mobile-menu__hours"
+                style={{
+                  margin: 0,
+                  textAlign: "center",
+                  fontSize: "0.68rem",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(244, 238, 225, 0.55)",
+                }}
+              >
+                {hours}
+              </p>
+            ) : null}
           </div>
         </div>
       </div>
+
 
 
 
