@@ -508,6 +508,36 @@ export default function SiteNav({
       </header>
 
 
+      {/* SABİT SAĞ ÜST CLOSE BUTONU (Menü ikonuyla TAM AYNI YERDE) */}
+      {open ? (
+        <button
+          type="button"
+          aria-label="Menüyü kapat"
+          onClick={() => setOpen(false)}
+          style={{
+            position: "fixed",
+            top: "14px",
+            right: "max(18px, env(safe-area-inset-right))",
+            zIndex: 1000000005,
+            width: "44px",
+            height: "44px",
+            background: "transparent",
+            border: 0,
+            color: "#D9A441",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            padding: 0,
+          }}
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9A441" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      ) : null}
+
       {/* MOBİLDE TAM EKRAN MENÜ PERDESİ */}
       <div
         className={`mobile-menu${open ? " is-open" : ""}`}
@@ -526,53 +556,16 @@ export default function SiteNav({
           zIndex: 999999999,
           background: "#0D0F0A",
           backgroundColor: "#0D0F0A",
-          padding: "16px 20px 24px",
+          padding: "54px 20px 24px",
           overflowY: "auto",
           display: open ? "flex" : "none",
           flexDirection: "column",
           justifyContent: "space-between",
         }}
       >
-        {/* Üst Bar: Sadece Sağda Kapatma Butonu */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            width: "100%",
-            maxWidth: "540px",
-            margin: "0 auto",
-            height: "44px",
-            flexShrink: 0,
-          }}
-        >
-          <button
-            type="button"
-            aria-label="Menüyü kapat"
-            onClick={() => setOpen(false)}
-            style={{
-              width: "44px",
-              height: "44px",
-              background: "transparent",
-              border: 0,
-              color: "#D9A441",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              padding: 0,
-            }}
-          >
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9A441" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
-
         <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto", flex: "1 1 auto", display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
-          <nav aria-label="Mobil menü">
-            <ul className="mobile-menu__links" style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+          <nav aria-label="Mobil menü" style={{ marginTop: "16px" }}>
+            <ul className="mobile-menu__links" style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
               {links.map((link, i) => (
                 <li key={`m-${link.label}-${link.href}`}>
                   <a
@@ -604,6 +597,7 @@ export default function SiteNav({
           </div>
         </div>
       </div>
+
 
 
 

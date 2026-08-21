@@ -1,4 +1,4 @@
-import { clamp01 } from './utils.js?v=20260821m190';
+import { clamp01 } from './utils.js?v=20260821m195';
 
 /** .gate sticky scroll ile ilerleme (0→1) */
 export class ScrollController {
