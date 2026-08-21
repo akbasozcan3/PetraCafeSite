@@ -342,12 +342,12 @@ export default function SiteNav({
         header.nav.is-menu,
         header.nav.is-solid.is-menu,
         .site-nav.is-menu {
-          background: linear-gradient(180deg, #181c12 0%, #0d0f0a 100%) !important;
-          background-color: #0d0f0a !important;
-          backdrop-filter: blur(20px) saturate(1.5) !important;
-          -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
-          border-bottom: 1px solid rgba(212, 175, 55, 0.45) !important;
-          box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.7), 0 2px 14px rgba(212, 175, 55, 0.15) !important;
+          background: #0D0F0A !important;
+          background-color: #0D0F0A !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          border-bottom: 1px solid rgba(212, 175, 55, 0.35) !important;
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.8) !important;
         }
         header.nav.is-menu .nav__logo-text {
           color: #FFFFFF !important;
@@ -355,8 +355,7 @@ export default function SiteNav({
         }
         header.nav.is-menu .nav__logo-img,
         header.nav .nav__logo-img {
-          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 10px rgba(212, 175, 55, 0.35)) !important;
-          transition: filter 0.3s ease;
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 8px rgba(212, 175, 55, 0.3)) !important;
         }
         @media (max-width: 860px) {
           header.nav.site-nav {
@@ -368,7 +367,8 @@ export default function SiteNav({
             padding-right: max(18px, env(safe-area-inset-right)) !important;
           }
           header.nav.site-nav.is-menu {
-            background: linear-gradient(180deg, #181c12 0%, #0d0f0a 100%) !important;
+            background: #0D0F0A !important;
+            background-color: #0D0F0A !important;
           }
           header.nav.site-nav .nav__logo {
             order: 1 !important;
@@ -388,25 +388,26 @@ export default function SiteNav({
             display: inline-flex !important;
             width: 44px !important;
             height: 44px !important;
-            border-radius: 50% !important;
-            background: rgba(212, 175, 55, 0.12) !important;
-            border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), inset 0 0 8px rgba(212, 175, 55, 0.15) !important;
-            color: #D4AF37 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            color: #D9A441 !important;
             flex-shrink: 0 !important;
             z-index: 100001 !important;
             align-items: center !important;
             justify-content: center !important;
-            transition: all 0.25s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+            padding: 0 !important;
           }
           header.nav.site-nav .nav__burger:hover {
-            background: rgba(212, 175, 55, 0.22) !important;
-            border-color: #D4AF37 !important;
-            box-shadow: 0 0 14px rgba(212, 175, 55, 0.4) !important;
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
           }
           header.nav.site-nav .nav__burger span {
-            background: #D4AF37 !important;
-            box-shadow: 0 0 4px rgba(212, 175, 55, 0.5) !important;
+            background: #D9A441 !important;
+            box-shadow: none !important;
           }
         }
       `}</style>
@@ -417,18 +418,19 @@ export default function SiteNav({
         style={
           open
             ? {
-                background: "linear-gradient(180deg, #181c12 0%, #0d0f0a 100%)",
-                backgroundColor: "#0d0f0a",
-                backdropFilter: "blur(20px) saturate(1.5)",
-                WebkitBackdropFilter: "blur(20px) saturate(1.5)",
-                boxShadow: "0 10px 30px -8px rgba(0, 0, 0, 0.7), 0 2px 14px rgba(212, 175, 55, 0.15)",
-                borderBottom: "1px solid rgba(212, 175, 55, 0.45)",
+                background: "#0D0F0A",
+                backgroundColor: "#0D0F0A",
+                backdropFilter: "none",
+                WebkitBackdropFilter: "none",
+                boxShadow: "0 6px 24px rgba(0, 0, 0, 0.8)",
+                borderBottom: "1px solid rgba(212, 175, 55, 0.35)",
                 color: "#FFFFFF",
                 zIndex: 100000,
               }
             : undefined
         }
       >
+
 
         <Link
           className="nav__logo has-logo"

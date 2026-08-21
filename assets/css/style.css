@@ -2558,28 +2558,29 @@ header.nav.site-nav {
   display: inline-flex !important;
   width: 44px !important;
   height: 44px !important;
-  border-radius: 50% !important;
-  background: rgba(212, 175, 55, 0.12) !important;
-  border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), inset 0 0 8px rgba(212, 175, 55, 0.15) !important;
-  color: #D4AF37 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #D9A441 !important;
   align-items: center !important;
   justify-content: center !important;
-  transition: all 0.25s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  padding: 0 !important;
 }
 .nav__burger:hover {
-  background: rgba(212, 175, 55, 0.22) !important;
-  border-color: #D4AF37 !important;
-  box-shadow: 0 0 14px rgba(212, 175, 55, 0.4) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }
 .nav__burger span {
-  background: #D4AF37 !important;
-  box-shadow: 0 0 4px rgba(212, 175, 55, 0.5) !important;
+  background: #D9A441 !important;
+  box-shadow: none !important;
 }
 .nav__burger.is-open span:nth-child(1),
 .nav__burger[aria-expanded="true"] span:nth-child(1) {
   transform: translateY(7px) rotate(45deg) !important;
-  background: #D4AF37 !important;
+  background: #D9A441 !important;
 }
 .nav__burger.is-open span:nth-child(2),
 .nav__burger[aria-expanded="true"] span:nth-child(2) {
@@ -2588,7 +2589,7 @@ header.nav.site-nav {
 .nav__burger.is-open span:nth-child(3),
 .nav__burger[aria-expanded="true"] span:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg) !important;
-  background: #D4AF37 !important;
+  background: #D9A441 !important;
 }
 
 html.menu-open .nav,
@@ -2596,20 +2597,19 @@ html.menu-open .nav.is-solid,
 header.nav.is-menu,
 header.nav.is-solid.is-menu,
 .site-nav.is-menu {
-  background: linear-gradient(180deg, #181c12 0%, #0d0f0a 100%) !important;
-  background-color: #0d0f0a !important;
-  backdrop-filter: blur(20px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.45) !important;
-  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.7), 0 2px 14px rgba(212, 175, 55, 0.15) !important;
+  background: #0D0F0A !important;
+  background-color: #0D0F0A !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.35) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.8) !important;
   color: #FFFFFF !important;
 }
 
 html.menu-open .nav__logo-img,
 header.nav.is-menu .nav__logo-img,
 .nav .nav__logo-img {
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 10px rgba(212, 175, 55, 0.35)) !important;
-  transition: filter 0.3s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 8px rgba(212, 175, 55, 0.3)) !important;
 }
 
 html.menu-open .nav__logo-text,
@@ -2625,12 +2625,13 @@ header.nav.is-menu .nav__logo-text {
   left: 0 !important;
   right: 0 !important;
   z-index: 99999 !important;
-  background: linear-gradient(180deg, #0d0f0a 0%, #14170e 50%, #0d0f0a 100%) !important;
-  background-color: #0d0f0a !important;
+  background: #0D0F0A !important;
+  background-color: #0D0F0A !important;
   padding: 20px 20px 48px !important;
   overflow-y: auto !important;
   border-top: 1px solid rgba(212, 175, 55, 0.3) !important;
 }
+
 
 
 
