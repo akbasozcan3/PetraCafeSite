@@ -2569,6 +2569,12 @@ header.nav.site-nav {
   background: #D9A441 !important;
 }
 
+header.nav.is-menu {
+  background: #0D0F0A !important;
+  backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(217, 164, 65, 0.25) !important;
+}
+
 .mobile-menu {
   position: fixed !important;
   top: var(--nav-h, 72px) !important;
@@ -2581,6 +2587,7 @@ header.nav.site-nav {
   overflow-y: auto !important;
   border-top: 1px solid rgba(217, 164, 65, 0.25) !important;
 }
+
 
 
 

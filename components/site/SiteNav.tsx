@@ -336,6 +336,11 @@ export default function SiteNav({
             justify-content: center !important;
           }
         }
+        header.nav.is-menu {
+          background: #0D0F0A !important;
+          backdrop-filter: none !important;
+          border-bottom: 1px solid rgba(217, 164, 65, 0.25) !important;
+        }
         @media (max-width: 860px) {
           header.nav.site-nav {
             display: flex !important;
@@ -345,11 +350,15 @@ export default function SiteNav({
             padding-left: max(16px, env(safe-area-inset-left)) !important;
             padding-right: max(16px, env(safe-area-inset-right)) !important;
           }
+          header.nav.site-nav.is-menu {
+            background: #0D0F0A !important;
+          }
           header.nav.site-nav .nav__logo {
             order: 1 !important;
             margin-right: auto !important;
             margin-left: 0 !important;
             flex-shrink: 0 !important;
+            z-index: 100001 !important;
           }
           header.nav.site-nav .nav__links,
           header.nav.site-nav .nav__actions {
@@ -362,12 +371,14 @@ export default function SiteNav({
             display: inline-flex !important;
             color: #D9A441 !important;
             flex-shrink: 0 !important;
+            z-index: 100001 !important;
           }
           header.nav.site-nav .nav__burger span {
             background: #D9A441 !important;
           }
         }
       `}</style>
+
 
 
       <header
