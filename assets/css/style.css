@@ -2653,41 +2653,40 @@ html[data-theme="dark"] .yorum figcaption b {
 }
 
 /* ==========================================================================
-   MOBİL MENÜ & SAĞ ÜST KÖŞE KAPATMA (X) BUTONU
+   MOBİL MENÜ & AYNI YERDEN X OLARAK KAPANAN BUTON
    ========================================================================== */
-.mobile-menu {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 9999 !important;
-  background: #0D0F0A !important;
-  padding: 24px 20px !important;
-  overflow-y: auto !important;
+header.nav.site-nav {
+  z-index: 100000 !important;
 }
 
-.mobile-menu__close-btn {
-  position: absolute !important;
-  top: 18px !important;
-  right: 18px !important;
-  z-index: 10000 !important;
-  width: 44px !important;
-  height: 44px !important;
-  border-radius: 50% !important;
-  background: rgba(217, 164, 65, 0.18) !important;
-  border: 1.5px solid #D9A441 !important;
-  color: #D9A441 !important;
-  font-size: 22px !important;
-  font-weight: 900 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-  outline: none !important;
-  line-height: 1 !important;
-}
-.mobile-menu__close-btn:hover {
+.nav__burger.is-open span:nth-child(1),
+.nav__burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg) !important;
   background: #D9A441 !important;
-  color: #0D0F0A !important;
 }
+.nav__burger.is-open span:nth-child(2),
+.nav__burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0 !important;
+}
+.nav__burger.is-open span:nth-child(3),
+.nav__burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg) !important;
+  background: #D9A441 !important;
+}
+
+.mobile-menu {
+  position: fixed !important;
+  top: var(--nav-h, 72px) !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 99999 !important;
+  background: #0D0F0A !important;
+  padding: 20px 20px 48px !important;
+  overflow-y: auto !important;
+  border-top: 1px solid rgba(217, 164, 65, 0.25) !important;
+}
+
 
 
 
