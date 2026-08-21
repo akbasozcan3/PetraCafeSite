@@ -2564,14 +2564,20 @@ html.no-motion .site-shop .pd-related {
     display: none !important;
   }
   .mobile-menu {
-    overflow: hidden !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
   .mobile-menu__panel {
     padding-top: 0 !important;
-    padding-bottom: 16px !important;
+    padding-bottom: 12px !important;
     gap: 0 !important;
-    overflow: hidden !important;
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justifyContent: space-between !important;
   }
+
 
   .mobile-menu__label {
     margin: 0 0 6px !important;
