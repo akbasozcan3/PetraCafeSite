@@ -507,7 +507,8 @@ export default function SiteNav({
 
       </header>
 
-      {/* MOBİLDE TAM EKRAN MENÜ PERDESİ (NAVBARSIZ - SADECE X BUTONU VE LİNKLER) */}
+
+      {/* MOBİLDE TAM EKRAN MENÜ PERDESİ */}
       <div
         className={`mobile-menu${open ? " is-open" : ""}`}
         id="mobileMenu"
@@ -525,51 +526,59 @@ export default function SiteNav({
           zIndex: 999999999,
           background: "#0D0F0A",
           backgroundColor: "#0D0F0A",
-          padding: "20px 20px 36px",
+          padding: "16px 20px 24px",
           overflowY: "auto",
           display: open ? "flex" : "none",
           flexDirection: "column",
+          justifyContent: "space-between",
         }}
       >
-        {/* SABİT SAĞ ÜST CLOSE BUTONU (SVG + ALTIN) */}
-        <button
-          type="button"
-          aria-label="Menüyü kapat"
-          onClick={() => setOpen(false)}
+        {/* Üst Bar: Sadece Sağda Kapatma Butonu */}
+        <div
           style={{
-            position: "fixed",
-            top: "14px",
-            right: "max(18px, env(safe-area-inset-right))",
-            zIndex: 1000000001,
-            width: "48px",
-            height: "48px",
-            background: "transparent",
-            border: 0,
-            color: "#D9A441",
-            display: "inline-flex",
+            display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            padding: 0,
+            justifyContent: "flex-end",
+            width: "100%",
+            maxWidth: "540px",
+            margin: "0 auto",
+            height: "44px",
+            flexShrink: 0,
           }}
         >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9A441" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
+          <button
+            type="button"
+            aria-label="Menüyü kapat"
+            onClick={() => setOpen(false)}
+            style={{
+              width: "44px",
+              height: "44px",
+              background: "transparent",
+              border: 0,
+              color: "#D9A441",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              padding: 0,
+            }}
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9A441" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
 
-        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto", padding: "48px 0 0" }}>
-
-
-
+        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto", flex: "1 1 auto", display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
           <nav aria-label="Mobil menü">
-            <ul className="mobile-menu__links">
+            <ul className="mobile-menu__links" style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
               {links.map((link, i) => (
                 <li key={`m-${link.label}-${link.href}`}>
                   <a
                     href={navHref(link.href, link.label)}
                     data-i={String(i + 1).padStart(2, "0")}
+                    style={{ padding: "8px 0" }}
                     onClick={(e) => jumpTo(e, navHref(link.href, link.label))}
                   >
                     {link.label}
@@ -578,7 +587,7 @@ export default function SiteNav({
               ))}
             </ul>
           </nav>
-          <div className="mobile-menu__foot">
+          <div className="mobile-menu__foot" style={{ marginTop: "16px" }}>
             <a
               href={bookHref}
               className="btn btn--lg mobile-menu__cta"
@@ -595,6 +604,7 @@ export default function SiteNav({
           </div>
         </div>
       </div>
+
 
 
 
