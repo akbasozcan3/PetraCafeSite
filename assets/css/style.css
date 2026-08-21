@@ -2593,30 +2593,14 @@ header.nav.site-nav {
 }
 
 html.menu-open .nav,
-html.menu-open .nav.is-solid,
-header.nav.is-menu,
-header.nav.is-solid.is-menu,
-.site-nav.is-menu {
-  background: #0D0F0A !important;
-  background-color: #0D0F0A !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.35) !important;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.8) !important;
-  color: #FFFFFF !important;
+html.menu-open header.nav,
+html.menu-open #nav,
+header.nav.is-menu {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
-html.menu-open .nav__logo-img,
-header.nav.is-menu .nav__logo-img,
-.nav .nav__logo-img {
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 8px rgba(212, 175, 55, 0.3)) !important;
-}
-
-html.menu-open .nav__logo-text,
-header.nav.is-menu .nav__logo-text {
-  color: #FFFFFF !important;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
-}
 
 .mobile-menu {
   position: fixed !important;

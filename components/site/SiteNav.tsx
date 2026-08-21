@@ -415,23 +415,9 @@ export default function SiteNav({
       <header
         className={`nav site-nav${solid ? " is-solid" : " is-hero"}${open ? " is-menu" : ""}`}
         id="nav"
-        style={
-          open
-            ? {
-                background: "#0D0F0A",
-                backgroundColor: "#0D0F0A",
-                backdropFilter: "none",
-                WebkitBackdropFilter: "none",
-                boxShadow: "0 6px 24px rgba(0, 0, 0, 0.8)",
-                borderBottom: "1px solid rgba(212, 175, 55, 0.35)",
-                color: "#FFFFFF",
-                zIndex: 100000,
-              }
-            : undefined
-        }
+        hidden={open}
+        style={open ? { display: "none" } : undefined}
       >
-
-
         <Link
           className="nav__logo has-logo"
           href={homeHref}
@@ -458,7 +444,7 @@ export default function SiteNav({
               } as CSSProperties
             }
           />
-          <span className="nav__logo-text" hidden={hideText} style={open ? { color: "#FFFFFF" } : undefined}>
+          <span className="nav__logo-text" hidden={hideText}>
             {navbar.logoText || "PETRA"}
           </span>
         </Link>
@@ -521,7 +507,7 @@ export default function SiteNav({
 
       </header>
 
-      {/* MOBİLDE MENÜ PERDESİ */}
+      {/* MOBİLDE TAM EKRAN MENÜ PERDESİ (NAVBARSIZ - SADECE X BUTONU VE LİNKLER) */}
       <div
         className={`mobile-menu${open ? " is-open" : ""}`}
         id="mobileMenu"
@@ -529,18 +515,54 @@ export default function SiteNav({
         aria-hidden={!open}
         style={{
           position: "fixed",
-          top: "var(--nav-h, 72px)",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 99999,
-          background: "linear-gradient(180deg, #0d0f0a 0%, #14170e 50%, #0d0f0a 100%)",
-          backgroundColor: "#0d0f0a",
-          padding: "20px 20px 48px",
+          inset: 0,
+          width: "100vw",
+          height: "100dvh",
+          zIndex: 9999999,
+          background: "#0D0F0A",
+          backgroundColor: "#0D0F0A",
+          padding: "16px 20px 48px",
           overflowY: "auto",
-          display: open ? "block" : "none",
+          display: open ? "flex" : "none",
+          flexDirection: "column",
         }}
       >
+        {/* En Üstte Sadece Sağda Kapatma Butonu (Navbar Yok) */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            width: "100%",
+            maxWidth: "540px",
+            margin: "0 auto 12px",
+            paddingTop: "6px",
+            flexShrink: 0,
+          }}
+        >
+          <button
+            type="button"
+            aria-label="Menüyü kapat"
+            onClick={() => setOpen(false)}
+            style={{
+              width: "48px",
+              height: "48px",
+              background: "transparent",
+              border: 0,
+              color: "#D9A441",
+              fontSize: "32px",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              padding: 0,
+              lineHeight: 1,
+            }}
+          >
+            ✕
+          </button>
+        </div>
 
         <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto" }}>
           <nav aria-label="Mobil menü">
@@ -575,12 +597,6 @@ export default function SiteNav({
           </div>
         </div>
       </div>
-
-
-
-
-
-
 
 
 
