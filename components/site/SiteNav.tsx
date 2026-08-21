@@ -411,7 +411,7 @@ export default function SiteNav({
           }
         }
 
-        /* Mobil Menü Perdesi */
+        /* Mobil Menü Perdesi (Kusursuz Tek Ekran Yerleşimi - Sıfır Kaydırma) */
         .mobile-menu {
           position: fixed !important;
           inset: 0 !important;
@@ -441,22 +441,25 @@ export default function SiteNav({
         .mobile-menu__inner {
           display: flex !important;
           flex-direction: column !important;
+          justify-content: space-between !important;
           height: 100% !important;
+          max-height: 100dvh !important;
           width: 100% !important;
           max-width: 540px !important;
           margin: 0 auto !important;
           box-sizing: border-box !important;
           background: #0D0F0A !important;
+          overflow: hidden !important;
         }
         .mobile-menu__header {
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
-          padding-top: max(14px, env(safe-area-inset-top)) !important;
-          padding-bottom: 14px !important;
-          padding-left: max(20px, env(safe-area-inset-left)) !important;
-          padding-right: max(20px, env(safe-area-inset-right)) !important;
-          border-bottom: 1px solid rgba(217, 164, 65, 0.25) !important;
+          padding-top: max(10px, env(safe-area-inset-top)) !important;
+          padding-bottom: 10px !important;
+          padding-left: max(18px, env(safe-area-inset-left)) !important;
+          padding-right: max(18px, env(safe-area-inset-right)) !important;
+          border-bottom: 1px solid rgba(217, 164, 65, 0.2) !important;
           background: #0D0F0A !important;
           flex-shrink: 0 !important;
           z-index: 10 !important;
@@ -464,20 +467,20 @@ export default function SiteNav({
         .mobile-menu__brand {
           display: flex !important;
           align-items: center !important;
-          gap: 12px !important;
+          gap: 10px !important;
           text-decoration: none !important;
         }
         .mobile-menu__logo-img {
-          height: 38px !important;
+          height: 34px !important;
           width: auto !important;
           object-fit: contain !important;
           filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 6px rgba(217,175,55,0.3)) !important;
         }
         .mobile-menu__logo-text {
           font-family: "Playfair Display", Georgia, serif !important;
-          font-size: 1.15rem !important;
+          font-size: 1.1rem !important;
           font-weight: 700 !important;
-          letter-spacing: 0.14em !important;
+          letter-spacing: 0.12em !important;
           color: #FFFFFF !important;
           text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
         }
@@ -485,8 +488,8 @@ export default function SiteNav({
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          width: 42px !important;
-          height: 42px !important;
+          width: 38px !important;
+          height: 38px !important;
           background: rgba(217, 164, 65, 0.08) !important;
           border: 1px solid rgba(217, 164, 65, 0.3) !important;
           border-radius: 50% !important;
@@ -503,13 +506,24 @@ export default function SiteNav({
         }
         .mobile-menu__body {
           flex: 1 1 auto !important;
-          overflow-y: auto !important;
-          overscroll-behavior: contain !important;
-          -webkit-overflow-scrolling: touch !important;
-          padding-top: 10px !important;
-          padding-bottom: 14px !important;
-          padding-left: max(20px, env(safe-area-inset-left)) !important;
-          padding-right: max(20px, env(safe-area-inset-right)) !important;
+          min-height: 0 !important;
+          overflow: hidden !important;
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: center !important;
+          padding-top: 4px !important;
+          padding-bottom: 4px !important;
+          padding-left: max(18px, env(safe-area-inset-left)) !important;
+          padding-right: max(18px, env(safe-area-inset-right)) !important;
+          scrollbar-width: none !important;
+        }
+        .mobile-menu__body::-webkit-scrollbar {
+          display: none !important;
+        }
+        .mobile-menu__body nav {
+          height: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
         }
         .mobile-menu__links {
           list-style: none !important;
@@ -517,21 +531,29 @@ export default function SiteNav({
           padding: 0 !important;
           display: flex !important;
           flex-direction: column !important;
-          gap: 0 !important;
+          justify-content: space-evenly !important;
+          flex: 1 1 auto !important;
+          min-height: 0 !important;
           width: 100% !important;
         }
         .mobile-menu__links li {
           width: 100% !important;
           margin: 0 !important;
           padding: 0 !important;
+          flex: 1 1 auto !important;
+          display: flex !important;
+          align-items: center !important;
+          min-height: 0 !important;
         }
         .mobile-menu__links a {
           display: flex !important;
           align-items: center !important;
           justify-content: flex-start !important;
-          min-height: 46px !important;
-          padding: 10px 8px !important;
-          border-bottom: 1px solid rgba(217, 164, 65, 0.12) !important;
+          width: 100% !important;
+          height: 100% !important;
+          min-height: 0 !important;
+          padding: clamp(3px, 0.8vh, 7px) 6px !important;
+          border-bottom: 1px solid rgba(217, 164, 65, 0.1) !important;
           text-decoration: none !important;
           color: #F4EEE1 !important;
           transition: background 0.2s ease, color 0.2s ease, padding 0.2s ease !important;
@@ -546,27 +568,28 @@ export default function SiteNav({
         .mobile-menu__links a.is-active {
           background: rgba(217, 164, 65, 0.08) !important;
           color: #D9A441 !important;
-          padding-left: 12px !important;
+          padding-left: 10px !important;
         }
         .mobile-menu__num {
           font-family: "Inter", system-ui, sans-serif !important;
-          font-size: 0.72rem !important;
+          font-size: clamp(0.65rem, 1.2vh, 0.72rem) !important;
           font-weight: 700 !important;
           letter-spacing: 0.14em !important;
           color: #D9A441 !important;
-          width: 32px !important;
+          width: 28px !important;
           flex-shrink: 0 !important;
         }
         .mobile-menu__title {
           font-family: "Playfair Display", Georgia, serif !important;
-          font-size: 1.22rem !important;
+          font-size: clamp(1.02rem, 2.1vh, 1.22rem) !important;
           font-weight: 500 !important;
           letter-spacing: 0.01em !important;
           flex: 1 1 auto !important;
           text-align: left !important;
+          line-height: 1.2 !important;
         }
         .mobile-menu__arrow {
-          color: rgba(217, 164, 65, 0.35) !important;
+          color: rgba(217, 164, 65, 0.3) !important;
           flex-shrink: 0 !important;
           transition: transform 0.2s ease, color 0.2s ease !important;
         }
@@ -577,15 +600,15 @@ export default function SiteNav({
         }
         .mobile-menu__foot {
           flex-shrink: 0 !important;
-          padding-top: 14px !important;
-          padding-bottom: max(18px, env(safe-area-inset-bottom)) !important;
-          padding-left: max(20px, env(safe-area-inset-left)) !important;
-          padding-right: max(20px, env(safe-area-inset-right)) !important;
-          border-top: 1px solid rgba(217, 164, 65, 0.2) !important;
+          padding-top: 8px !important;
+          padding-bottom: max(12px, env(safe-area-inset-bottom)) !important;
+          padding-left: max(18px, env(safe-area-inset-left)) !important;
+          padding-right: max(18px, env(safe-area-inset-right)) !important;
+          border-top: 1px solid rgba(217, 164, 65, 0.18) !important;
           background: #0D0F0A !important;
           display: flex !important;
           flex-direction: column !important;
-          gap: 10px !important;
+          gap: 6px !important;
         }
         .mobile-menu__cta,
         .mobile-menu a.mobile-menu__cta {
@@ -593,11 +616,11 @@ export default function SiteNav({
           align-items: center !important;
           justify-content: center !important;
           width: 100% !important;
-          min-height: 48px !important;
+          min-height: clamp(40px, 5.2vh, 46px) !important;
           background: #D9A441 !important;
           color: #0D0F0A !important;
           font-weight: 700 !important;
-          font-size: 0.95rem !important;
+          font-size: clamp(0.85rem, 1.8vh, 0.92rem) !important;
           letter-spacing: 0.08em !important;
           text-transform: uppercase !important;
           border-radius: 999px !important;
@@ -618,10 +641,10 @@ export default function SiteNav({
           gap: 8px !important;
           text-decoration: none !important;
           font-family: "Playfair Display", Georgia, serif !important;
-          font-size: 1.05rem !important;
+          font-size: clamp(0.95rem, 1.9vh, 1.05rem) !important;
           font-weight: 600 !important;
           color: #F4EEE1 !important;
-          padding: 4px 0 !important;
+          padding: 2px 0 !important;
           letter-spacing: 0.03em !important;
           transition: color 0.2s ease !important;
         }
@@ -635,12 +658,12 @@ export default function SiteNav({
         .mobile-menu__hours {
           margin: 0 !important;
           text-align: center !important;
-          font-size: 0.68rem !important;
-          letter-spacing: 0.12em !important;
+          font-size: clamp(0.62rem, 1.2vh, 0.68rem) !important;
+          letter-spacing: 0.1em !important;
           text-transform: uppercase !important;
-          color: rgba(244, 238, 225, 0.5) !important;
+          color: rgba(244, 238, 225, 0.45) !important;
           font-family: "Inter", system-ui, sans-serif !important;
-          line-height: 1.4 !important;
+          line-height: 1.3 !important;
         }
         @media (min-width: 861px) {
           .mobile-menu {
