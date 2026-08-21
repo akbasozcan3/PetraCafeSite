@@ -452,48 +452,66 @@ export default function SiteNav({
           background: #0D0F0A !important;
           overflow: hidden !important;
         }
+        @keyframes menuSlideIn {
+          0% {
+            opacity: 0;
+            transform: translateY(-24px) scale(0.98);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        @keyframes itemFadeUp {
+          0% {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .mobile-menu.is-open {
+          animation: menuSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+        }
+        .mobile-menu.is-open .mobile-menu__links li {
+          animation: itemFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) backwards !important;
+        }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(1) { animation-delay: 0.03s !important; }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(2) { animation-delay: 0.06s !important; }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(3) { animation-delay: 0.09s !important; }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(4) { animation-delay: 0.12s !important; }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(5) { animation-delay: 0.15s !important; }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(6) { animation-delay: 0.18s !important; }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(7) { animation-delay: 0.21s !important; }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(8) { animation-delay: 0.24s !important; }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(9) { animation-delay: 0.27s !important; }
+        .mobile-menu.is-open .mobile-menu__links li:nth-child(10) { animation-delay: 0.30s !important; }
+        .mobile-menu.is-open .mobile-menu__foot {
+          animation: itemFadeUp 0.42s 0.22s cubic-bezier(0.16, 1, 0.3, 1) backwards !important;
+        }
         .mobile-menu__header {
           display: flex !important;
           align-items: center !important;
-          justify-content: space-between !important;
-          padding-top: max(10px, env(safe-area-inset-top)) !important;
-          padding-bottom: 10px !important;
+          justify-content: flex-end !important;
+          padding-top: max(12px, env(safe-area-inset-top)) !important;
+          padding-bottom: 12px !important;
           padding-left: max(18px, env(safe-area-inset-left)) !important;
           padding-right: max(18px, env(safe-area-inset-right)) !important;
-          border-bottom: 1px solid rgba(217, 164, 65, 0.2) !important;
+          border-bottom: 1px solid rgba(217, 164, 65, 0.18) !important;
           background: #0D0F0A !important;
           flex-shrink: 0 !important;
           z-index: 10 !important;
-        }
-        .mobile-menu__brand {
-          display: flex !important;
-          align-items: center !important;
-          gap: 10px !important;
-          text-decoration: none !important;
-        }
-        .mobile-menu__logo-img {
-          height: 34px !important;
-          width: auto !important;
-          object-fit: contain !important;
-          filter: none !important;
-          box-shadow: none !important;
-        }
-        .mobile-menu__logo-text {
-          font-family: "Playfair Display", Georgia, serif !important;
-          font-size: 1.1rem !important;
-          font-weight: 700 !important;
-          letter-spacing: 0.12em !important;
-          color: #FFFFFF !important;
-          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
         }
         .mobile-menu__close-btn {
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          width: 38px !important;
-          height: 38px !important;
-          background: rgba(217, 164, 65, 0.08) !important;
-          border: 1px solid rgba(217, 164, 65, 0.3) !important;
+          width: 40px !important;
+          height: 40px !important;
+          background: rgba(217, 164, 65, 0.1) !important;
+          border: 1.5px solid rgba(217, 164, 65, 0.35) !important;
           border-radius: 50% !important;
           color: #D9A441 !important;
           cursor: pointer !important;
@@ -502,9 +520,9 @@ export default function SiteNav({
         }
         .mobile-menu__close-btn:hover,
         .mobile-menu__close-btn:active {
-          background: rgba(217, 164, 65, 0.22) !important;
+          background: rgba(217, 164, 65, 0.25) !important;
           border-color: #D9A441 !important;
-          transform: scale(1.05) !important;
+          transform: scale(1.06) !important;
         }
         .mobile-menu__body {
           flex: 1 1 auto !important;
@@ -778,34 +796,8 @@ export default function SiteNav({
         aria-hidden={!open}
       >
         <div className="mobile-menu__inner">
-          {/* Üst Bar: Logo & Kapat Butonu */}
+          {/* Üst Bar: Kapat Butonu */}
           <div className="mobile-menu__header">
-            <Link
-              className="mobile-menu__brand"
-              href={homeHref}
-              aria-label="Ana sayfa"
-              onClick={(e) => {
-                setOpen(false);
-                if (pathname === "/" || pathname === "") {
-                  e.preventDefault();
-                  window.history.replaceState(null, "", "/");
-                  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                  syncHomeNavReveal(false);
-                  setSolid(false);
-                }
-              }}
-            >
-              <BrandLogo
-                className="mobile-menu__logo-img"
-                src={logoUrl}
-                alt={`${navbar.logoText || "PETRA"} logosu`}
-                height={38}
-              />
-              <span className="mobile-menu__logo-text" hidden={hideText}>
-                {navbar.logoText || "PETRA"}
-              </span>
-            </Link>
-
             <button
               type="button"
               className="mobile-menu__close-btn"
