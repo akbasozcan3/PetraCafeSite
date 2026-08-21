@@ -69,9 +69,23 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
                 width={1800}
                 height={1350}
               />
-              <div className="tilt-card__badge">
-                <b>{h.badgeBaslik || "Petra"}</b>
-                <span>{h.badgeAlt || "Cafe · Restaurant · Pool"}</span>
+              <div
+                className="tilt-card__badge"
+                style={{
+                  background: "var(--card-bg, #141810)",
+                  border: "1px solid var(--card-border, rgba(217, 164, 65, 0.35))",
+                  backdropFilter: "blur(14px)",
+                  borderRadius: 14,
+                  padding: "12px 18px",
+                  boxShadow: "0 14px 34px -12px rgba(0, 0, 0, 0.5)",
+                }}
+              >
+                <b style={{ color: "var(--card-text, #ffffff)", display: "block", fontSize: "1.15rem", fontWeight: 700 }}>
+                  {h.badgeBaslik || "Petra"}
+                </b>
+                <span style={{ color: "var(--brass, #d9a441)", display: "block", fontSize: "0.82rem", fontWeight: 700, marginTop: 2 }}>
+                  {h.badgeAlt || "Cafe · Restaurant · Pool"}
+                </span>
               </div>
             </div>
           </div>

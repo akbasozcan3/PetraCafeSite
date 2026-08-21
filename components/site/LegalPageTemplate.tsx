@@ -162,16 +162,7 @@ export default function LegalPageTemplate({
       <div className="petra-legal-layout">
         {/* Masaüstü Yan Menü */}
         <aside className="petra-legal-sidebar">
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
-            <span
-              style={{
-                width: "8px",
-                height: "8px",
-                borderRadius: "50%",
-                background: "var(--brass, #b8842c)",
-                display: "inline-block",
-              }}
-            />
+          <div style={{ display: "flex", alignItems: "center", marginBottom: "16px" }}>
             <p
               style={{
                 margin: 0,
