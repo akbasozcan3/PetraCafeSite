@@ -2386,10 +2386,10 @@ html[data-theme="dark"] #rezervasyon .h2,
 
 html[data-theme="dark"] #hakkimizda p,
 html[data-theme="dark"] #pasta p:not(.eyebrow),
-html[data-theme="dark"] #rezervasyon p:not(.eyebrow),
+html[data-theme="dark"] #rezervasyon .rsv > div:first-child p:not(.eyebrow),
 .theme-dark #hakkimizda p,
 .theme-dark #pasta p:not(.eyebrow),
-.theme-dark #rezervasyon p:not(.eyebrow) {
+.theme-dark #rezervasyon .rsv > div:first-child p:not(.eyebrow) {
   color: #F4EEE1 !important;
 }
 
@@ -2430,19 +2430,70 @@ html[data-theme="light"] #rezervasyon .h2,
 
 html:not([data-theme="dark"]):not(.theme-dark) #hakkimizda p,
 html:not([data-theme="dark"]):not(.theme-dark) #pasta p:not(.eyebrow),
-html:not([data-theme="dark"]):not(.theme-dark) #rezervasyon p:not(.eyebrow),
+html:not([data-theme="dark"]):not(.theme-dark) #rezervasyon .rsv > div:first-child p:not(.eyebrow),
 html[data-theme="light"] #hakkimizda p,
 html[data-theme="light"] #pasta p:not(.eyebrow),
-html[data-theme="light"] #rezervasyon p:not(.eyebrow),
+html[data-theme="light"] #rezervasyon .rsv > div:first-child p:not(.eyebrow),
 .theme-light #hakkimizda p,
 .theme-light #pasta p:not(.eyebrow),
-.theme-light #rezervasyon p:not(.eyebrow) {
+.theme-light #rezervasyon .rsv > div:first-child p:not(.eyebrow) {
   color: var(--muted, #5C5749) !important;
 }
 
 html:not([data-theme="dark"]):not(.theme-dark) #hakkimizda .eyebrow,
 html:not([data-theme="dark"]):not(.theme-dark) #pasta .eyebrow,
 html:not([data-theme="dark"]):not(.theme-dark) #rezervasyon .eyebrow,
+html[data-theme="light"] #hakkimizda .eyebrow,
+html[data-theme="light"] #pasta .eyebrow,
+html[data-theme="light"] #rezervasyon .eyebrow,
+.theme-light #hakkimizda .eyebrow,
+.theme-light #pasta .eyebrow,
+.theme-light #rezervasyon .eyebrow {
+  color: var(--brass-lo, #B8842C) !important;
+}
+
+/* Rezervasyon Formu ve Çocuk Elemanları */
+.site-home .petra-form,
+.petra-form,
+#rezervasyon .petra-form,
+.rsv__form {
+  background: var(--card-bg, #ffffff) !important;
+  color: var(--card-text, #0d0f0a) !important;
+  border: 1px solid var(--card-border, rgba(184, 132, 44, 0.25)) !important;
+}
+
+.site-home .petra-form h3,
+.petra-form h3,
+#rezervasyon .petra-form h3,
+.rsv__form h3 {
+  color: var(--card-text, #0d0f0a) !important;
+}
+
+.site-home .petra-form p,
+.petra-form p,
+#rezervasyon .petra-form p,
+.rsv__form p,
+.site-home .petra-form .petra-form__hint,
+.petra-form .petra-form__hint,
+#rezervasyon .petra-form .petra-form__hint {
+  color: var(--card-muted, #6e6a5c) !important;
+}
+
+.site-home .petra-form .petra-form__kicker,
+.petra-form .petra-form__kicker,
+#rezervasyon .petra-form .petra-form__kicker,
+.rsv__form .petra-form__kicker {
+  color: var(--brass-lo, #b8842c) !important;
+  font-weight: 700 !important;
+}
+
+.site-home .petra-form label,
+.petra-form label,
+#rezervasyon .petra-form label,
+.rsv__form label {
+  color: var(--card-text, #0d0f0a) !important;
+  font-weight: 700 !important;
+}
 html[data-theme="light"] #hakkimizda .eyebrow,
 html[data-theme="light"] #pasta .eyebrow,
 html[data-theme="light"] #rezervasyon .eyebrow,

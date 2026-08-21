@@ -1974,14 +1974,14 @@ html.no-motion .site-shop .pd-related {
 .site-home .petra-form__head p {
   margin: 0;
   font-size: 0.9rem;
-  color: var(--muted, #6e6a5c);
+  color: var(--card-muted, #6e6a5c) !important;
   line-height: 1.45;
 }
 .site-home .petra-form__hint {
   margin: 6px 0 0;
   font-size: 0.78rem;
   line-height: 1.4;
-  color: var(--muted, #6e6a5c);
+  color: var(--card-muted, #6e6a5c) !important;
 }
 .site-home .petra-form .field {
   min-width: 0;
@@ -1992,7 +1992,7 @@ html.no-motion .site-shop .pd-related {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink, #0d0f0a);
+  color: var(--card-text, #0d0f0a) !important;
 }
 .site-home .petra-form .field input,
 .site-home .petra-form .field select,
