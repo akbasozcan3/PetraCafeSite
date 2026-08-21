@@ -314,8 +314,29 @@ export default function SiteNav({
           </span>
         </Link>
 
-        <nav className="nav__links" aria-label="Ana menü">
-          <ul>
+        <nav
+          className="nav__links"
+          aria-label="Ana menü"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flex: "1 1 auto",
+            margin: "0 auto",
+            textAlign: "center",
+          }}
+        >
+          <ul
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px",
+              listStyle: "none",
+              margin: "0 auto",
+              padding: 0,
+            }}
+          >
             {links.map((link) => {
               const href = navHref(link.href, link.label);
               const active =
@@ -325,7 +346,10 @@ export default function SiteNav({
                     ? pathname.startsWith("/blog")
                     : false;
               return (
-                <li key={`${link.label}-${link.href}`}>
+                <li
+                  key={`${link.label}-${link.href}`}
+                  style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
+                >
                   <a
                     href={href}
                     className={active ? "is-active" : undefined}
@@ -339,6 +363,7 @@ export default function SiteNav({
             })}
           </ul>
         </nav>
+
 
         <button
           className={`nav__burger${open ? " is-open" : ""}`}
