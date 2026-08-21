@@ -279,10 +279,69 @@ export default function SiteNav({
 
   return (
     <>
+      <style>{`
+        header.nav.site-nav {
+          position: fixed !important;
+          inset: 0 0 auto !important;
+          z-index: 60 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          padding-left: clamp(16px, 3vw, 32px) !important;
+          padding-right: clamp(16px, 3vw, 32px) !important;
+          box-sizing: border-box !important;
+          width: 100% !important;
+        }
+        header.nav.site-nav .nav__logo {
+          margin-right: 0 !important;
+          flex-shrink: 0 !important;
+          z-index: 5 !important;
+        }
+        header.nav.site-nav .nav__actions {
+          margin-left: auto !important;
+          flex-shrink: 0 !important;
+          z-index: 5 !important;
+          display: flex !important;
+          align-items: center !important;
+          gap: 16px !important;
+        }
+        @media (min-width: 900px) {
+          header.nav.site-nav .nav__links {
+            position: absolute !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            z-index: 2 !important;
+            pointer-events: auto !important;
+            width: auto !important;
+          }
+          header.nav.site-nav .nav__links ul {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 4px !important;
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            white-space: nowrap !important;
+          }
+          header.nav.site-nav .nav__links ul li {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+          }
+        }
+      `}</style>
       <header
         className={`nav site-nav${solid ? " is-solid" : " is-hero"}${open ? " is-menu" : ""}`}
         id="nav"
       >
+
         <Link
           className="nav__logo has-logo"
           href={homeHref}
