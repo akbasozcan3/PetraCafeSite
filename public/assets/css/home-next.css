@@ -2591,8 +2591,7 @@ html.no-motion .site-shop .pd-related {
     min-height: 0;
     justify-content: space-evenly;
   }
-  .mobile-menu__links a,
-  .mobile-menu a:not(.btn):not(.mobile-menu__cta) {
+  .mobile-menu__links a {
     display: grid !important;
     grid-template-columns: 2.1rem 1fr;
     align-items: center;
@@ -2604,6 +2603,7 @@ html.no-motion .site-shop .pd-related {
     letter-spacing: 0.01em;
     color: #fbf8f1 !important;
   }
+
   .mobile-menu__links a::before {
     content: attr(data-i);
     font-family: Inter, system-ui, sans-serif;
