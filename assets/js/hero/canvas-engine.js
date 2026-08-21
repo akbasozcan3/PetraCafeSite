@@ -1,10 +1,10 @@
-import * as THREE from '../../vendor/three.module.js?v=20260821m125';
-import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260821m125';
-import { ASSETS, doorTiming, setSceneFromImage, setDoorUvOverride } from './config.js?v=20260821m125';
-import { ScrollController } from './scroll-controller.js?v=20260821m125';
-import { DoorController } from './door-controller.js?v=20260821m125';
-import { Particles } from './particles.js?v=20260821m125';
-import { CameraController, createUnits } from './camera-controller.js?v=20260821m125';
+import * as THREE from '../../vendor/three.module.js?v=20260821m128';
+import { downscaleImage, loadHeroAssets } from './asset-loader.js?v=20260821m128';
+import { ASSETS, doorTiming, setSceneFromImage, setDoorUvOverride } from './config.js?v=20260821m128';
+import { ScrollController } from './scroll-controller.js?v=20260821m128';
+import { DoorController } from './door-controller.js?v=20260821m128';
+import { Particles } from './particles.js?v=20260821m128';
+import { CameraController, createUnits } from './camera-controller.js?v=20260821m128';
 
 function yieldFrame() {
   return new Promise((resolve) => {

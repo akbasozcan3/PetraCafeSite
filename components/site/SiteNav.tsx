@@ -495,39 +495,19 @@ export default function SiteNav({
           flexDirection: "column",
         }}
       >
-        {/* Üst Bar: Solda Logo, Sağda X Kapat Butonu */}
+        {/* Üst Kısım: Sadece Sağ Üstte Parlak Altın Kapatma Butonu */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             width: "100%",
             maxWidth: "540px",
             margin: "0 auto 16px",
-            paddingBottom: "14px",
-            borderBottom: "1px solid rgba(217, 164, 65, 0.25)",
+            paddingBottom: "8px",
             flexShrink: 0,
           }}
         >
-          <Link
-            className="nav__logo has-logo"
-            href={homeHref}
-            aria-label="Ana sayfa"
-            onClick={() => setOpen(false)}
-            style={{ display: "flex", alignItems: "center", gap: "10px", margin: 0, textDecoration: "none" }}
-          >
-            <BrandLogo
-              className="nav__logo-img"
-              src={logoUrl}
-              alt={`${navbar.logoText || "PETRA"} logosu`}
-              height={logoSize}
-              style={{ ["--nav-logo-size"]: `${logoSize}px` } as CSSProperties}
-            />
-            <span className="nav__logo-text" hidden={hideText} style={{ color: "#FFFFFF", fontWeight: 700 }}>
-              {navbar.logoText || "PETRA"}
-            </span>
-          </Link>
-
           <button
             type="button"
             aria-label="Menüyü kapat"
@@ -535,10 +515,11 @@ export default function SiteNav({
             style={{
               width: "44px",
               height: "44px",
-              background: "transparent",
-              border: "0",
+              borderRadius: "50%",
+              background: "rgba(217, 164, 65, 0.2)",
+              border: "1.5px solid #D9A441",
               color: "#D9A441",
-              fontSize: "28px",
+              fontSize: "22px",
               fontWeight: "bold",
               display: "flex",
               alignItems: "center",
@@ -551,6 +532,7 @@ export default function SiteNav({
             ✕
           </button>
         </div>
+
 
         <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto" }}>
           <nav aria-label="Mobil menü">
