@@ -3344,37 +3344,37 @@ html[data-theme="dark"] .site-home .section--dark .ozet__i span,
   color: #E2DBD0 !important;
 }
 
-/* 3.1 Açık Mod Bölümleri (Light Mod / Petra Gold vb.) */
-html:not([data-theme="dark"]):not(.theme-dark) .site-home .h2,
-html:not([data-theme="dark"]):not(.theme-dark) .site-home h1,
-html:not([data-theme="dark"]):not(.theme-dark) .site-home h2,
-html:not([data-theme="dark"]):not(.theme-dark) .site-home h3,
-html[data-theme="light"] .site-home .h2,
-html[data-theme="light"] .site-home h1,
-html[data-theme="light"] .site-home h2,
-html[data-theme="light"] .site-home h3,
-.theme-light .site-home .h2,
-.theme-light .site-home h1,
-.theme-light .site-home h2,
-.theme-light .site-home h3 {
+/* 3.1 Açık Mod Bölümleri (Light Mod / Petra Gold vb.) - .gate, #pasta ve .foot KAPSAM DIŞIDIR */
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .h2,
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) h1,
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) h2,
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) h3,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .h2,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) h1,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) h2,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) h3,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .h2,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) h1,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) h2,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) h3 {
   color: var(--ink, #0D0F0A) !important;
 }
 
-html:not([data-theme="dark"]):not(.theme-dark) .site-home .lead,
-html:not([data-theme="dark"]):not(.theme-dark) .site-home p:not(.eyebrow),
-html:not([data-theme="dark"]):not(.theme-dark) .site-home .body,
-html[data-theme="light"] .site-home .lead,
-html[data-theme="light"] .site-home p:not(.eyebrow),
-html[data-theme="light"] .site-home .body,
-.theme-light .site-home .lead,
-.theme-light .site-home p:not(.eyebrow),
-.theme-light .site-home .body {
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .lead,
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) p:not(.eyebrow),
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .body,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .lead,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) p:not(.eyebrow),
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .body,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .lead,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) p:not(.eyebrow),
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .body {
   color: var(--muted, #5C5749) !important;
 }
 
-html:not([data-theme="dark"]):not(.theme-dark) .site-home .eyebrow,
-html[data-theme="light"] .site-home .eyebrow,
-.theme-light .site-home .eyebrow {
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .eyebrow,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .eyebrow,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .eyebrow {
   color: var(--brass-lo, #B8842C) !important;
 }
 
@@ -3818,11 +3818,211 @@ select.petra-form__date {
   cursor: pointer !important;
 }
 
+/* ========================================================
+   HERO / GATE SAHNESİ: ASLA KOYU OLMAZ, GÖLGESİZ NET BEYAZ
+   ======================================================== */
+html .site-home .gate,
+html .site-home .gate *,
+html .site-home #gateIntro *,
+html .site-home #heroWelcome *,
+html .site-home .hero-welcome,
+html .site-home .hero-welcome__card,
+html .site-home .hero-welcome__title,
+html .site-home .hero-welcome__lead,
+html .site-home .hero-welcome__eyebrow,
+html .site-home .gate__scroll-text,
+html .site-home #scrollHint * {
+  text-shadow: none !important;
+}
 
+html .site-home .gate .hero-welcome__title,
+html .site-home .hero-welcome__title,
+html .site-home .gate h1,
+html .site-home .gate__title,
+html .site-home .gate__inside h2,
+html .gate .hero-welcome__title,
+html .hero-welcome__title {
+  color: #FFFFFF !important;
+  text-shadow: none !important;
+}
 
+html .site-home .gate .hero-welcome__lead,
+html .site-home .hero-welcome__lead,
+html .site-home .gate p.hero-welcome__lead,
+html .site-home .gate__sub,
+html .site-home .gate__inside p,
+html .gate .hero-welcome__lead,
+html .hero-welcome__lead {
+  color: #FFFFFF !important;
+  text-shadow: none !important;
+}
 
+html .site-home .gate .hero-welcome__eyebrow,
+html .site-home .hero-welcome__eyebrow,
+html .site-home .gate p.hero-welcome__eyebrow,
+html .gate .hero-welcome__eyebrow,
+html .hero-welcome__eyebrow {
+  color: #D9A441 !important;
+  text-shadow: none !important;
+}
 
+html .site-home .gate__boot-text,
+html .site-home #gateBoot .gate__boot-text,
+html #gateBoot .gate__boot-text,
+#gateBoot p,
+.gate__boot-text {
+  color: #D9A441 !important;
+  text-shadow: none !important;
+  font-weight: 600 !important;
+}
 
+html .site-home .gate__boot-spin,
+html #gateBoot .gate__boot-spin,
+.gate__boot-spin {
+  border-top-color: #D9A441 !important;
+}
 
+html .site-home .gate .gate__scroll-text,
+html .site-home #scrollHint .gate__scroll-text,
+html #scrollHint * {
+  color: #FFFFFF !important;
+  text-shadow: none !important;
+}
 
+/* ========================================================
+   HAVUZ & PLAJ (#PASTA): HER ZAMAN KOYU LÜKS ZEMİN
+   ======================================================== */
+html .site-home #pasta,
+html .site-home .pasta-sec,
+html #pasta,
+html .pasta-sec {
+  background: #0D1008 !important;
+  background-color: #0D1008 !important;
+  color: #F4EEE1 !important;
+}
 
+html .site-home #pasta .h2,
+html .site-home .pasta-sec .h2,
+html #pasta .h2 {
+  color: #FFFFFF !important;
+}
+
+html .site-home #pasta p:not(.eyebrow),
+html .site-home .pasta-sec p:not(.eyebrow),
+html #pasta p:not(.eyebrow),
+html .site-home #pasta .lead,
+html .site-home #pasta .body {
+  color: rgba(244, 238, 225, 0.88) !important;
+}
+
+html .site-home #pasta .eyebrow,
+html .site-home .pasta-sec .eyebrow,
+html #pasta .eyebrow {
+  color: #D9A441 !important;
+}
+
+html .site-home #pasta .pasta-hours > div,
+html .site-home .pasta-sec .pasta-hours > div {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(217, 164, 65, 0.28) !important;
+}
+
+html .site-home #pasta .pasta-hours span,
+html .site-home .pasta-sec .pasta-hours span {
+  color: #D9A441 !important;
+}
+
+html .site-home #pasta .pasta-hours strong,
+html .site-home .pasta-sec .pasta-hours strong {
+  color: #FFFFFF !important;
+}
+
+html .site-home #pasta .pasta-ticks li,
+html .site-home .pasta-sec .pasta-ticks li {
+  color: #F4EEE1 !important;
+}
+
+html .site-home #pasta .tick-ico,
+html .site-home .pasta-sec .tick-ico {
+  color: #D9A441 !important;
+}
+
+html .site-home #pasta .pasta-price,
+html .site-home .pasta-sec .pasta-price {
+  background: #141810 !important;
+  border: 1px solid rgba(217, 164, 65, 0.35) !important;
+}
+
+html .site-home #pasta .pasta-price h3,
+html .site-home .pasta-sec .pasta-price h3 {
+  color: #FFFFFF !important;
+}
+
+html .site-home #pasta .pasta-price table th,
+html .site-home .pasta-sec .pasta-price table th {
+  color: #D9A441 !important;
+  border-bottom: 1px solid rgba(217, 164, 65, 0.3) !important;
+}
+
+html .site-home #pasta .pasta-price table td,
+html .site-home .pasta-sec .pasta-price table td {
+  color: #F4EEE1 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html .site-home #pasta .pasta-price .pasta-note,
+html .site-home .pasta-sec .pasta-price .pasta-note {
+  color: rgba(244, 238, 225, 0.65) !important;
+}
+
+/* ========================================================
+   FOOTER: HER ZAMAN NET BEYAZ VE ALTIN
+   ======================================================== */
+html .site-home .foot,
+html .site-shop .foot,
+html .foot {
+  background: #0D0F0A !important;
+  color: #FFFFFF !important;
+}
+
+html .site-home .foot__name,
+html .foot__name {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+}
+
+html .site-home .foot__slogan,
+html .site-home .foot p,
+html .foot p {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+html .site-home .foot__hours,
+html .foot__hours {
+  color: #FFFFFF !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(217, 164, 65, 0.4) !important;
+}
+
+html .site-home .foot__hours span,
+html .foot__hours span {
+  color: #FFFFFF !important;
+}
+
+html .site-home .foot h4,
+html .foot h4 {
+  color: #D9A441 !important;
+  font-weight: 700 !important;
+}
+
+html .site-home .foot__col a,
+html .site-home .foot__reach-a,
+html .foot__col a,
+html .foot__reach-a {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html .site-home .foot__reach-a span,
+html .foot__reach-a span {
+  color: #FFFFFF !important;
+}
