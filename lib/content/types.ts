@@ -393,6 +393,14 @@ export interface CalismaGunu {
   kapali?: boolean;
 }
 
+export interface SocialLink {
+  id: string;
+  platform: "instagram" | "whatsapp" | "tiktok" | "facebook" | "youtube" | "twitter" | "maps" | "telegram" | "linkedin" | "other";
+  label: string;
+  url: string;
+  active?: boolean;
+}
+
 export interface IletisimContent {
   baslik: string;
   giris: string;
@@ -420,6 +428,7 @@ export interface IletisimContent {
   koordinat: string;
   haritaSorgu: string;
   haritaButonMetin: string;
+  socials?: SocialLink[];
   haritaIframeBaslik?: string;
   etiketAdres?: string;
   etiketSaatler?: string;

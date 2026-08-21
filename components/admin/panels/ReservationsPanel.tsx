@@ -246,23 +246,27 @@ export default function ReservationsPanel() {
               key={r.id}
               className={`rounded-2xl border bg-[#141E2E]/80 p-5 transition ${
                 r.status === "pending"
-                  ? "border-[#C8703A]/20"
+                  ? "border-[#D9A441]/40 shadow-lg shadow-[#D9A441]/5"
                   : "border-white/[0.08]"
               }`}
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-semibold text-[#EEE9E0] text-base">{r.name}</p>
+                  <div className="flex items-center gap-2.5 flex-wrap">
+                    <p className="font-bold text-[#EEE9E0] text-base sm:text-lg">{r.name}</p>
+                    
+                    {/* Seçilen Masa Rozeti (Büyük & Vurgulu) */}
                     {r.tableName ? (
-                      <span className="rounded bg-[#D9A441]/20 px-2.5 py-0.5 text-xs text-[#D9A441] font-semibold border border-[#D9A441]/40 flex items-center gap-1 shadow-sm">
-                        🪑 {r.tableName}
+                      <span className="rounded-xl bg-[#D9A441]/25 px-3 py-1 text-xs text-[#D9A441] font-bold border border-[#D9A441]/50 flex items-center gap-1.5 shadow-sm">
+                        <span>🪑</span>
+                        <span>{r.tableName}</span>
                       </span>
                     ) : (
-                      <span className="rounded bg-white/5 px-2 py-0.5 text-xs text-white/50 font-normal border border-white/10">
+                      <span className="rounded-xl bg-white/5 px-2.5 py-1 text-xs text-white/50 font-normal border border-white/10">
                         Masa: Otomatik / Serbest
                       </span>
                     )}
+
                     {(() => {
                       const conflictCount = items.filter(
                         (other) =>
@@ -274,7 +278,7 @@ export default function ReservationsPanel() {
                       ).length;
                       if (conflictCount > 0) {
                         return (
-                          <span className="rounded bg-amber-500/20 px-2 py-0.5 text-xs text-amber-300 font-medium border border-amber-500/30">
+                          <span className="rounded-xl bg-amber-500/20 px-2.5 py-1 text-xs text-amber-300 font-semibold border border-amber-500/30">
                             ⚠️ Aynı saatte {conflictCount} talep daha
                           </span>
                         );
@@ -282,48 +286,84 @@ export default function ReservationsPanel() {
                       return null;
                     })()}
                   </div>
-                  <p className="mt-1 text-sm text-[#EEE9E0] font-medium">
-                    📅 {r.date} &nbsp;·&nbsp; 🕐 {r.time} &nbsp;·&nbsp; 👥 {r.guests} kişi
-                  </p>
-                  <div className="mt-1 flex flex-wrap items-center gap-3">
+
+                  {/* Tarih, Saat, Kişi Bilgisi */}
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs font-semibold">
+                    <span className="px-2.5 py-1 rounded-lg bg-white/[0.05] text-[#EEE9E0] border border-white/10">
+                      📅 {r.date}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-lg bg-white/[0.05] text-[#EEE9E0] border border-white/10">
+                      🕐 {r.time}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-lg bg-white/[0.05] text-[#D9A441] border border-[#D9A441]/20">
+                      👥 {r.guests} Kişi
+                    </span>
+                  </div>
+
+                  {/* Telefon & Tek Tıkla WhatsApp / Arama Butonları */}
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
                     <a
                       href={`tel:${r.phone.replace(/\s/g, "")}`}
-                      className="inline-flex items-center gap-1 text-sm text-[#C8703A] hover:underline"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.05] text-xs font-semibold text-[#D9A441] border border-[#D9A441]/30 hover:bg-[#D9A441]/10 transition"
                     >
                       <Phone className="h-3.5 w-3.5" />
-                      {r.phone}
+                      <span>{r.phone}</span>
                     </a>
+
+                    {/* WhatsApp Hızlı Mesaj Linki */}
+                    {(() => {
+                      const digits = r.phone.replace(/\D/g, "");
+                      const fullDigits = digits.startsWith("0") ? `90${digits.slice(1)}` : digits.startsWith("90") ? digits : `90${digits}`;
+                      const waText = encodeURIComponent(`Merhaba ${r.name}, Petra Cafe Restaurant rezervasyonunuz hakkında yazıyoruz (${r.date} saat ${r.time}, ${r.tableName || "Masamız"}).`);
+                      return (
+                        <a
+                          href={`https://wa.me/${fullDigits}?text=${waText}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-xs font-semibold text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition"
+                        >
+                          <span>💬 WhatsApp'tan Yaz</span>
+                        </a>
+                      );
+                    })()}
+
                     {r.email ? (
                       <a
                         href={`mailto:${r.email}`}
-                        className="inline-flex items-center gap-1 text-sm text-sky-400 hover:underline"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500/10 text-xs font-semibold text-sky-400 border border-sky-500/30 hover:bg-sky-500/20 transition"
                       >
                         <Mail className="h-3.5 w-3.5" />
-                        {r.email}
+                        <span>{r.email}</span>
                       </a>
                     ) : null}
                   </div>
+
+                  {/* Müşteri Notu (Belirgin Kutu) */}
                   {r.note ? (
-                    <p className="mt-2 text-sm text-[#C8D0DC] bg-white/[0.03] p-2.5 rounded-lg border border-white/[0.04]">
-                      💬 <span className="italic">{r.note}</span>
-                    </p>
+                    <div className="mt-3 text-xs text-[#E8D9BE] bg-[#D9A441]/10 p-3 rounded-xl border border-[#D9A441]/25">
+                      <span className="font-bold text-[#D9A441] block mb-0.5">📝 Misafir Notu:</span>
+                      <span className="italic">{r.note}</span>
+                    </div>
                   ) : null}
+
                   <p className="mt-2 text-[11px] text-[#6B7A94]">
-                    Oluşturulma: {new Date(r.createdAt).toLocaleString("tr-TR")}
+                    Talep Zamanı: {new Date(r.createdAt).toLocaleString("tr-TR")}
                   </p>
                 </div>
+
                 <span
-                  className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                  className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${
                     r.status === "confirmed"
-                      ? "bg-emerald-500/15 text-emerald-300"
+                      ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
                       : r.status === "rejected" || r.status === "cancelled"
-                        ? "bg-red-500/15 text-red-300"
-                        : "bg-[#C8703A]/15 text-[#E8915A]"
+                        ? "bg-red-500/20 text-red-300 border border-red-500/30"
+                        : "bg-[#D9A441]/20 text-[#D9A441] border border-[#D9A441]/30"
                   }`}
                 >
                   {LABELS[r.status]}
                 </span>
               </div>
+
               <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.06] pt-3">
                 <div className="flex flex-wrap gap-2">
                   {r.status === "pending" ? (

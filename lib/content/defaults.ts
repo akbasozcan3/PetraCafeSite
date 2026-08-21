@@ -234,7 +234,16 @@ export const DEFAULT_CONTENT: SiteContent = {
     etiketTelefon: "Telefon",
     etiketWhatsapp: "WhatsApp",
     etiketOzelPasta: "Havuz & organizasyon",
+    socials: [
+      { id: "s-ig", platform: "instagram", label: "Instagram", url: "https://www.instagram.com/petracaferestaurant/", active: true },
+      { id: "s-wa", platform: "whatsapp", label: "WhatsApp", url: "https://wa.me/905306089051", active: true },
+      { id: "s-tt", platform: "tiktok", label: "TikTok", url: "https://www.tiktok.com/@petracaferestaurant", active: true },
+      { id: "s-maps", platform: "maps", label: "Google Haritalar", url: "https://maps.google.com/?q=Petra+Cafe+Restaurant+Taşdelen", active: true },
+      { id: "s-fb", platform: "facebook", label: "Facebook", url: "", active: false },
+      { id: "s-yt", platform: "youtube", label: "YouTube", url: "", active: false },
+    ],
   },
+
   sayfalar: {
     urunler: {
       eyebrow: "Menü",

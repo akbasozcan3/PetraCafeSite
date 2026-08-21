@@ -185,8 +185,151 @@ export default function IletisimPanel() {
         </div>
       </section>
 
+      <section className="mb-6 space-y-4 rounded-2xl border border-[#C8703A]/25 bg-[#141E2E]/80 p-6">
+        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div>
+            <h3 className="font-semibold text-[#F8F8F8] flex items-center gap-2">
+              🌐 Sosyal Medya Hesapları & İkonlar
+            </h3>
+            <p className="text-xs text-[#6B7A94] mt-1">
+              Footer'da ve iletişim bölümünde WhatsApp boyutuyla uyumlu şık ikonlar olarak görünür.
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => {
+              if (!content) return;
+              const currentSocials = content.iletisim?.socials || [];
+              const newSocial = {
+                id: `s-${Date.now()}`,
+                platform: "instagram" as const,
+                label: "Yeni Hesap",
+                url: "",
+                active: true,
+              };
+              setContent({
+                ...content,
+                iletisim: {
+                  ...content.iletisim,
+                  socials: [...currentSocials, newSocial],
+                },
+              });
+            }}
+          >
+            + Yeni Hesap Ekle
+          </Button>
+        </div>
+
+        <div className="space-y-3 pt-2">
+          {((content.iletisim?.socials && content.iletisim.socials.length > 0)
+            ? content.iletisim.socials
+            : [
+                { id: "s-ig", platform: "instagram" as const, label: "Instagram", url: content.iletisim?.instagramUrl || "https://www.instagram.com/petracaferestaurant/", active: true },
+                { id: "s-wa", platform: "whatsapp" as const, label: "WhatsApp", url: content.iletisim?.whatsapp || "https://wa.me/905306089051", active: true },
+                { id: "s-tt", platform: "tiktok" as const, label: "TikTok", url: "https://www.tiktok.com/@petracaferestaurant", active: true },
+                { id: "s-maps", platform: "maps" as const, label: "Google Haritalar", url: "https://maps.google.com/?q=Petra+Cafe+Restaurant+Taşdelen", active: true },
+              ]
+          ).map((s, idx) => (
+            <div
+              key={s.id || idx}
+              className="grid gap-3 p-4 rounded-xl border border-white/[0.08] bg-[#0D1117] sm:grid-cols-[130px_160px_1fr_auto_auto] items-center"
+            >
+              <div>
+                <label className="block text-[11px] text-[#6B7A94] mb-1">Platform</label>
+                <select
+                  value={s.platform}
+                  onChange={(e) => {
+                    if (!content) return;
+                    const list = [...(content.iletisim?.socials || [])];
+                    list[idx] = { ...s, platform: e.target.value as any };
+                    setContent({ ...content, iletisim: { ...content.iletisim, socials: list } });
+                  }}
+                  className="w-full rounded-lg border border-white/10 bg-[#141E2E] px-2.5 py-2 text-xs text-white focus:border-[#D9A441] focus:outline-none"
+                >
+                  <option value="instagram">Instagram</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="tiktok">TikTok</option>
+                  <option value="facebook">Facebook</option>
+                  <option value="youtube">YouTube</option>
+                  <option value="twitter">X (Twitter)</option>
+                  <option value="maps">Google Harita</option>
+                  <option value="telegram">Telegram</option>
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="other">Diğer</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] text-[#6B7A94] mb-1">Hesap / Başlık</label>
+                <input
+                  type="text"
+                  value={s.label}
+                  onChange={(e) => {
+                    if (!content) return;
+                    const list = [...(content.iletisim?.socials || [])];
+                    list[idx] = { ...s, label: e.target.value };
+                    setContent({ ...content, iletisim: { ...content.iletisim, socials: list } });
+                  }}
+                  placeholder="Örn: Instagram"
+                  className="w-full rounded-lg border border-white/10 bg-[#141E2E] px-3 py-2 text-xs text-white focus:border-[#D9A441] focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] text-[#6B7A94] mb-1">Profil Linki / URL *</label>
+                <input
+                  type="text"
+                  value={s.url}
+                  onChange={(e) => {
+                    if (!content) return;
+                    const list = [...(content.iletisim?.socials || [])];
+                    list[idx] = { ...s, url: e.target.value };
+                    setContent({ ...content, iletisim: { ...content.iletisim, socials: list } });
+                  }}
+                  placeholder="https://..."
+                  className="w-full rounded-lg border border-white/10 bg-[#141E2E] px-3 py-2 text-xs text-white focus:border-[#D9A441] focus:outline-none"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 pt-4 sm:pt-0">
+                <label className="flex items-center gap-1.5 text-xs text-white/80 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={s.active !== false}
+                    onChange={(e) => {
+                      if (!content) return;
+                      const list = [...(content.iletisim?.socials || [])];
+                      list[idx] = { ...s, active: e.target.checked };
+                      setContent({ ...content, iletisim: { ...content.iletisim, socials: list } });
+                    }}
+                    className="h-4 w-4 rounded border-white/20 bg-[#141E2E] text-[#D9A441]"
+                  />
+                  <span>Yayında</span>
+                </label>
+              </div>
+
+              <div className="pt-4 sm:pt-0">
+                <button
+                  type="button"
+                  title="Hesabı sil"
+                  onClick={() => {
+                    if (!content) return;
+                    const list = (content.iletisim?.socials || []).filter((_, i) => i !== idx);
+                    setContent({ ...content, iletisim: { ...content.iletisim, socials: list } });
+                  }}
+                  className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-        <h3 className="font-semibold text-[#F8F8F8]">E-posta & Instagram</h3>
+        <h3 className="font-semibold text-[#F8F8F8]">E-posta & İletişim Notları</h3>
         <div className="grid gap-4 md:grid-cols-2">
           <Input
             label="E-posta"
@@ -200,25 +343,9 @@ export default function IletisimPanel() {
             value={content.iletisim?.epostaAlt ?? ""}
             onChange={(e) => update("epostaAlt", e.target.value)}
           />
-          <Input
-            label="Instagram kullanıcı adı"
-            value={content.iletisim?.instagram ?? ""}
-            onChange={(e) => updateInstagramHandle(e.target.value)}
-            placeholder="@petracaferestaurant"
-          />
-          <Input
-            label="Instagram URL"
-            value={content.iletisim?.instagramUrl ?? ""}
-            onChange={(e) => update("instagramUrl", e.target.value)}
-            placeholder="https://www.instagram.com/..."
-          />
-          <Input
-            label="Instagram alt yazı"
-            value={content.iletisim?.instagramAlt ?? ""}
-            onChange={(e) => update("instagramAlt", e.target.value)}
-          />
         </div>
       </section>
+
 
       <section className="mb-6 space-y-4 rounded-2xl border border-[#C8703A]/25 bg-[#141E2E]/80 p-6">
         <h3 className="font-semibold text-[#F8F8F8]">Açılış / kapanış saatleri</h3>

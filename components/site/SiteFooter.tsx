@@ -177,7 +177,43 @@ export default function SiteFooter({
                 <span>{adres || iletisim?.haritaButonMetin || ""}</span>
               </a>
               ) : null}
+
+              {/* Dinamik Sosyal Medya İkonları (Admin Yönetimli & WhatsApp Uyumlu) */}
+              {Array.isArray(iletisim?.socials) && iletisim.socials.filter((s) => s.active !== false && s.url).length > 0 ? (
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginTop: "14px", paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                  {iletisim.socials
+                    .filter((s) => s.active !== false && s.url)
+                    .map((s) => {
+                      const iconName = s.platform === "whatsapp" ? "whatsapp" : s.platform === "instagram" ? "instagram" : s.platform === "maps" ? "map" : "globe";
+                      return (
+                        <a
+                          key={s.id || s.url}
+                          href={s.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={s.label}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "36px",
+                            height: "36px",
+                            borderRadius: "50%",
+                            background: "rgba(255,255,255,0.06)",
+                            border: "1px solid rgba(217, 164, 65, 0.35)",
+                            color: "#D9A441",
+                            textDecoration: "none",
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          <SiteIcon name={iconName} size={17} />
+                        </a>
+                      );
+                    })}
+                </div>
+              ) : null}
             </div>
+
           </div>
         </div>
         <div className="wrap foot__bar">
