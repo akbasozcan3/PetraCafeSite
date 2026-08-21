@@ -572,23 +572,26 @@ export default function SiteNav({
           width: 100% !important;
           height: 100% !important;
           min-height: 0 !important;
-          padding: clamp(3px, 0.8vh, 7px) 6px !important;
-          border-bottom: 1px solid rgba(217, 164, 65, 0.1) !important;
+          padding: clamp(4px, 0.9vh, 8px) 4px !important;
+          border-bottom: 1px solid rgba(217, 164, 65, 0.12) !important;
           text-decoration: none !important;
           color: #F4EEE1 !important;
-          transition: background 0.2s ease, color 0.2s ease, padding 0.2s ease !important;
-          border-radius: 6px !important;
+          background: transparent !important;
+          transition: color 0.2s ease, padding 0.2s ease !important;
+          border-radius: 0 !important;
         }
         .mobile-menu__links a::before {
           content: none !important;
           display: none !important;
         }
         .mobile-menu__links a:hover,
-        .mobile-menu__links a:active,
-        .mobile-menu__links a.is-active {
-          background: rgba(217, 164, 65, 0.08) !important;
+        .mobile-menu__links a:active {
+          background: transparent !important;
           color: #D9A441 !important;
-          padding-left: 10px !important;
+        }
+        .mobile-menu__links a.is-active {
+          background: transparent !important;
+          color: #D9A441 !important;
         }
         .mobile-menu__num {
           font-family: "Inter", system-ui, sans-serif !important;
@@ -817,18 +820,10 @@ export default function SiteNav({
               <ul className="mobile-menu__links">
                 {links.map((link, i) => {
                   const href = navHref(link.href, link.label);
-                  const active =
-                    href === "/menu" || href.startsWith("/menu/") || href === "/#menu"
-                      ? pathname.startsWith("/menu")
-                      : href === "/blog" || href.startsWith("/blog/")
-                        ? pathname.startsWith("/blog")
-                        : false;
-
                   return (
                     <li key={`m-${link.label}-${link.href}`}>
                       <a
                         href={href}
-                        className={active ? "is-active" : undefined}
                         onClick={(e) => jumpTo(e, href)}
                       >
                         <span className="mobile-menu__num">{String(i + 1).padStart(2, "0")}</span>

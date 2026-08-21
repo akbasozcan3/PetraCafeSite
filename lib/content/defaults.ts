@@ -116,7 +116,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     },
     rezervasyon: {
       eyebrow: "Rezervasyon",
-      baslik: "Masınızı ayırtın",
+      baslik: "Masanızı ayırtın",
       lead: "Tarih, saat ve kişi sayısını bırakın; ekibimiz telefonla onaylar. Cuma–cumartesi kahvaltı ve havuz için önceden rezervasyon önerilir.",
     },
     hizmetler: {

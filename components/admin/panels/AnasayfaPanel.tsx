@@ -54,6 +54,7 @@ export default function AnasayfaPanel() {
     try {
       const payload: Partial<typeof content> = {
         bolumGoster: content.bolumGoster,
+        bolumlar: content.bolumlar,
         rezervasyon: content.rezervasyon,
         mesajForm: content.mesajForm,
         ziyaret: content.ziyaret,
@@ -78,102 +79,86 @@ export default function AnasayfaPanel() {
       <AdminAlert message={message} />
 
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#C8703A]/25 bg-[#C8703A]/8 px-4 py-3">
-        <p className="text-sm text-[#C8D0DC]">
-          Yazılar, görseller ve listeler API üzerinden <code>/api/v1/content</code> ile yayınlanır.
-        </p>
-        <a
-          href="/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-[#E8B84B]"
-        >
-          Siteyi aç <ExternalLink className="h-3.5 w-3.5" />
-        </a>
+        <span className="text-sm text-[#EEE9E0]">
+          Bölüm sıralaması sabittir (Hakkımızda → Hizmetler → Menü → Havuz → Galeri → Blog → Yorumlar → SSS → Rezervasyon → İletişim). Görünürlüğü açıp kapatabilirsiniz.
+        </span>
+        <Button onClick={save} disabled={saving} size="sm">
+          {saving ? "Kaydediliyor…" : "Kaydet"}
+        </Button>
       </div>
 
-      <section className="mb-6 space-y-3">
-        {HOME_SECTION_META.map((sec, idx) => {
-          const on = goster[sec.id] !== false;
-          return (
-            <div
-              key={sec.id}
-              className="flex flex-wrap items-center gap-3 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-4"
-            >
-              <span className="w-8 text-[10px] font-bold uppercase tracking-[0.16em] text-[#6B7A94]">
-                {String(idx + 1).padStart(2, "0")}
-              </span>
-              <label className="flex items-center gap-2 text-sm text-[#EEE9E0]">
+      <section className="mb-6 space-y-3 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
+        <h3 className="font-semibold text-[#F8F8F8]">Bölüm görünürlüğü (Aç / Kapat)</h3>
+        <p className="text-xs text-[#6B7A94]">
+          Duyuru çubuğu ve ana sayfa bölümlerini tek tıkla gizleyin veya gösterin.
+        </p>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
+          {HOME_SECTION_META.map((sec) => {
+            const on = goster[sec.id] !== false;
+            return (
+              <label
+                key={sec.id}
+                className={`flex cursor-pointer items-center justify-between rounded-xl border px-3 py-2.5 text-sm transition ${
+                  on
+                    ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
+                    : "border-white/[0.08] bg-[#0E1522] text-[#6B7A94]"
+                }`}
+              >
+                <span>{sec.label}</span>
                 <input
                   type="checkbox"
                   checked={on}
                   onChange={(e) => setOn(sec.id, e.target.checked)}
+                  className="rounded border-white/20 bg-transparent text-emerald-500"
                 />
-                {on ? "Açık" : "Kapalı"}
               </label>
-              <div className="min-w-[12rem] flex-1">
-                <p className="font-semibold text-[#F8F8F8]">{sec.label}</p>
-                <p className="text-xs text-[#6B7A94]">{sec.description}</p>
-              </div>
-              <Link
-                href={sec.admin}
-                className="inline-flex items-center gap-1 text-sm font-medium text-[#C8703A]"
-              >
-                Düzenle <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-              <a
-                href={sec.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-[#8A9BB0] hover:text-[#EEE9E0]"
-              >
-                Sitede
-              </a>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </section>
 
       <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-        <h3 className="font-semibold text-[#F8F8F8]">Ziyaret şeridi</h3>
-        <p className="text-xs text-[#6B7A94]">
-          Ana sayfadaki bilgi kartları. Değer boşsa ilk kart saatleri, ikinci kart telefonu iletişimden alır.
-        </p>
-        <div className="space-y-3">
+        <h3 className="font-semibold text-[#F8F8F8]">Ziyaret şeridi (kısa kartlar)</h3>
+        <div className="space-y-2">
           {ziyaret.map((item, i) => (
             <div
               key={i}
-              className="grid gap-2 rounded-xl border border-white/[0.06] p-3 md:grid-cols-[1fr_1fr_1fr_auto]"
+              className="flex flex-wrap items-center gap-2 rounded-xl border border-white/[0.06] bg-[#0E1522] p-3"
             >
               <Input
-                label="Etiket"
+                label="Başlık"
                 value={item.k}
                 onChange={(e) => {
-                  const next = [...ziyaret];
-                  next[i] = { ...item, k: e.target.value };
-                  setContent({ ...content, ziyaret: next });
+                  const arr = [...ziyaret];
+                  arr[i] = { ...arr[i], k: e.target.value };
+                  setContent({ ...content, ziyaret: arr });
                 }}
+                className="w-32"
               />
               <Input
-                label="Değer"
+                label="Vurgu (saat/sayı)"
                 value={item.v}
                 onChange={(e) => {
-                  const next = [...ziyaret];
-                  next[i] = { ...item, v: e.target.value };
-                  setContent({ ...content, ziyaret: next });
+                  const arr = [...ziyaret];
+                  arr[i] = { ...arr[i], v: e.target.value };
+                  setContent({ ...content, ziyaret: arr });
                 }}
+                className="w-32"
               />
               <Input
-                label="Alt satır"
+                label="Açıklama"
                 value={item.n}
                 onChange={(e) => {
-                  const next = [...ziyaret];
-                  next[i] = { ...item, n: e.target.value };
-                  setContent({ ...content, ziyaret: next });
+                  const arr = [...ziyaret];
+                  arr[i] = { ...arr[i], n: e.target.value };
+                  setContent({ ...content, ziyaret: arr });
                 }}
+                className="flex-1 min-w-[140px]"
               />
               <Button
+                type="button"
                 variant="ghost"
-                size="icon"
+                size="sm"
                 className="self-end"
                 onClick={() =>
                   setContent({
@@ -202,8 +187,67 @@ export default function AnasayfaPanel() {
       </section>
 
       <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-        <h3 className="font-semibold text-[#F8F8F8]">Rezervasyon formu ayarları & Kişi kapasitesi</h3>
+        <h3 className="font-semibold text-[#F8F8F8]">Rezervasyon bölümü & Form ayarları</h3>
         <div className="grid gap-3 md:grid-cols-2">
+          <Input
+            label="Bölüm Başlığı (Sol Alan)"
+            value={content.bolumlar?.rezervasyon?.baslik || ""}
+            placeholder="Masanızı ayırtın"
+            onChange={(e) =>
+              setContent({
+                ...content,
+                bolumlar: {
+                  ...content.bolumlar,
+                  rezervasyon: {
+                    eyebrow: "Rezervasyon",
+                    lead: "",
+                    ...content.bolumlar?.rezervasyon,
+                    baslik: e.target.value,
+                  },
+                },
+              })
+            }
+          />
+          <Input
+            label="Bölüm Üst Etiket (Eyebrow)"
+            value={content.bolumlar?.rezervasyon?.eyebrow || ""}
+            placeholder="Rezervasyon"
+            onChange={(e) =>
+              setContent({
+                ...content,
+                bolumlar: {
+                  ...content.bolumlar,
+                  rezervasyon: {
+                    baslik: "Masanızı ayırtın",
+                    lead: "",
+                    ...content.bolumlar?.rezervasyon,
+                    eyebrow: e.target.value,
+                  },
+                },
+              })
+            }
+          />
+          <div className="md:col-span-2">
+            <Input
+              label="Bölüm Açıklama Metni (Lead)"
+              value={content.bolumlar?.rezervasyon?.lead || ""}
+              placeholder="Tarih, saat ve kişi sayısını bırakın; ekibimiz telefonla onaylar..."
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  bolumlar: {
+                    ...content.bolumlar,
+                    rezervasyon: {
+                      eyebrow: "Rezervasyon",
+                      baslik: "Masanızı ayırtın",
+                      ...content.bolumlar?.rezervasyon,
+                      lead: e.target.value,
+                    },
+                  },
+                })
+              }
+            />
+          </div>
           <Input
             label="Minimum Kişi Sayısı"
             type="number"
