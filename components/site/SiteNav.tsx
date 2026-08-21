@@ -525,11 +525,10 @@ export default function SiteNav({
           zIndex: 999999999,
           background: "#0D0F0A",
           backgroundColor: "#0D0F0A",
-          padding: "72px 20px 48px",
+          padding: "20px 20px 36px",
           overflowY: "auto",
           display: open ? "flex" : "none",
           flexDirection: "column",
-          justifyContent: "center",
         }}
       >
         {/* SABİT SAĞ ÜST CLOSE BUTONU (SVG + ALTIN) */}
@@ -560,7 +559,8 @@ export default function SiteNav({
           </svg>
         </button>
 
-        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto", padding: "0" }}>
+        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto", padding: "48px 0 0" }}>
+
 
 
           <nav aria-label="Mobil menü">
