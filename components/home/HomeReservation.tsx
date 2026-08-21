@@ -479,6 +479,7 @@ export default function HomeReservation({
                           background: "var(--input-bg, #ffffff)",
                           color: "var(--input-text, #0d0f0a)",
                           border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                          colorScheme: "dark light",
                         }}
                       />
                       <p className="petra-form__hint" style={{ color: "var(--card-muted, #6e6a5c)" }}>Geçmiş gün ve saat seçilemez.</p>
@@ -501,6 +502,14 @@ export default function HomeReservation({
                           background: "var(--input-bg, #ffffff)",
                           color: "var(--input-text, #0d0f0a)",
                           border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                          appearance: "none",
+                          WebkitAppearance: "none",
+                          paddingRight: 42,
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23d9a441' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundPosition: "calc(100% - 14px) center",
+                          backgroundSize: "16px 16px",
+                          cursor: "pointer",
                         }}
                       >
                         {closed ? (
@@ -536,6 +545,14 @@ export default function HomeReservation({
                           background: "var(--input-bg, #ffffff)",
                           color: "var(--input-text, #0d0f0a)",
                           border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                          appearance: "none",
+                          WebkitAppearance: "none",
+                          paddingRight: 42,
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23d9a441' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundPosition: "calc(100% - 14px) center",
+                          backgroundSize: "16px 16px",
+                          cursor: "pointer",
                         }}
                       >
                         {Array.from(
