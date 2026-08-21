@@ -94,13 +94,25 @@ export default function HomeContact({ content }: { content: SiteContent }) {
                   href={row.href}
                   target={row.external ? "_blank" : undefined}
                   rel={row.external ? "noopener noreferrer" : undefined}
+                  style={{
+                    background: "var(--card-bg, #ffffff)",
+                    border: "1px solid var(--card-border, rgba(13, 15, 10, 0.12))",
+                    color: "var(--card-text, #0d0f0a)",
+                  }}
                 >
-                  <span className={`contact-lines__ico${row.icon === "whatsapp" ? " is-wa" : ""}`}>
+                  <span
+                    className={`contact-lines__ico${row.icon === "whatsapp" ? " is-wa" : ""}`}
+                    style={
+                      row.icon === "whatsapp"
+                        ? { background: "#25D366", color: "#FFFFFF" }
+                        : { background: "rgba(184, 132, 44, 0.14)", color: "var(--brass, #d9a441)" }
+                    }
+                  >
                     <SiteIcon name={row.icon} size={20} />
                   </span>
                   <span>
-                    <b>{row.title}</b>
-                    <span>{row.sub}</span>
+                    <b style={{ color: "var(--card-text, #0d0f0a)" }}>{row.title}</b>
+                    <span style={{ color: "var(--card-muted, #6e6a5c)" }}>{row.sub}</span>
                   </span>
                 </a>
               ) : null
@@ -119,21 +131,32 @@ export default function HomeContact({ content }: { content: SiteContent }) {
                 referrerPolicy="no-referrer-when-downgrade"
               />
             ) : null}
-            <div className="contact-map__card">
-              <p>
+            <div
+              className="contact-map__card"
+              style={{
+                background: "var(--card-bg, #141810)",
+                border: "1px solid var(--card-border, rgba(217, 164, 65, 0.35))",
+                color: "var(--card-text, #F4EEE1)",
+                backdropFilter: "blur(14px)",
+                borderRadius: 18,
+                padding: "16px 18px",
+                boxShadow: "0 16px 40px rgba(0,0,0,0.45)",
+              }}
+            >
+              <p style={{ color: "var(--brass, #d9a441)", margin: "0 0 6px", display: "flex", alignItems: "center", gap: 8 }}>
                 <SiteIcon name="map" size={16} />
-                <span>{c.etiketAdres || "Adres"}</span>
+                <span style={{ color: "var(--brass, #d9a441)", fontWeight: 700 }}>{c.etiketAdres || "Adres"}</span>
               </p>
-              <strong>
+              <strong style={{ color: "var(--card-text, #ffffff)", fontSize: "0.98rem", lineHeight: 1.45, fontWeight: 600, display: "block" }}>
                 {adresLines.map((line, i) => (
-                  <span key={i}>
+                  <span key={i} style={{ color: "inherit" }}>
                     {i > 0 ? <br /> : null}
                     {line}
                   </span>
                 ))}
               </strong>
               {hoursText ? (
-                <em>
+                <em style={{ color: "var(--card-muted, #A8A294)", display: "inline-flex", alignItems: "center", gap: 6, marginTop: 10, fontStyle: "normal", fontSize: "0.86rem" }}>
                   <SiteIcon name="clock" size={14} />
                   {hoursText}
                 </em>
@@ -145,6 +168,13 @@ export default function HomeContact({ content }: { content: SiteContent }) {
               href={mapHref}
               target="_blank"
               rel="noopener noreferrer"
+              style={{
+                background: "var(--brass, #d9a441) !important",
+                color: "#0d0f0a !important",
+                fontWeight: 700,
+                border: "none",
+                boxShadow: "0 6px 18px rgba(217, 164, 65, 0.35)",
+              }}
             >
               <SiteIcon name="map" size={18} />
               <span>{c.haritaButonMetin || "Yol Tarifi Al"}</span>
