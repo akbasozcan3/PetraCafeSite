@@ -609,7 +609,7 @@ export default function SiteNav({
           </button>
         </div>
 
-        {/* ORTA LÜKS PANEL: Dikeyde Dengeli Linkler */}
+        {/* ORTA LÜKS PANEL */}
         <div
           className="mobile-menu__panel"
           style={{
@@ -620,53 +620,19 @@ export default function SiteNav({
             flex: "1 1 auto",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-evenly",
+            justifyContent: "space-around",
           }}
         >
           <nav aria-label="Mobil menü">
-            <ul
-              className="mobile-menu__links"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0",
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-              }}
-            >
+            <ul className="mobile-menu__links">
               {links.map((link, i) => (
-                <li key={`m-${link.label}-${link.href}`} style={{ borderBottom: "1px solid rgba(212, 175, 55, 0.1)" }}>
+                <li key={`m-${link.label}-${link.href}`}>
                   <a
                     href={navHref(link.href, link.label)}
                     data-i={String(i + 1).padStart(2, "0")}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "16px",
-                      padding: "10px 4px",
-                      fontSize: "clamp(1.05rem, 4.2vw, 1.25rem)",
-                      fontFamily: "var(--f-head, Playfair Display, serif)",
-                      fontWeight: 500,
-                      letterSpacing: "0.02em",
-                      color: "#F4EEE1",
-                      textDecoration: "none",
-                    }}
                     onClick={(e) => jumpTo(e, navHref(link.href, link.label))}
                   >
-                    <span
-                      style={{
-                        fontFamily: "Inter, system-ui, sans-serif",
-                        fontSize: "0.72rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.14em",
-                        color: "#D4AF37",
-                        width: "22px",
-                      }}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span>{link.label}</span>
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -674,28 +640,10 @@ export default function SiteNav({
           </nav>
 
           {/* ALT BÖLÜM: Altın Rezervasyon Butonu & İletişim */}
-          <div className="mobile-menu__foot" style={{ marginTop: "18px", paddingTop: "0" }}>
+          <div className="mobile-menu__foot" style={{ marginTop: "12px", paddingTop: "0" }}>
             <a
               href={bookHref}
               className="btn btn--lg mobile-menu__cta"
-              style={{
-                width: "100%",
-                minHeight: "50px",
-                borderRadius: "999px",
-                background: "linear-gradient(135deg, #E5B84B 0%, #C49126 100%)",
-                color: "#0D0F0A",
-                fontWeight: 700,
-                fontSize: "15px",
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 8px 24px -4px rgba(212, 175, 55, 0.45)",
-                border: "none",
-                textDecoration: "none",
-                marginBottom: "12px",
-              }}
               onClick={() => setOpen(false)}
             >
               {bookLabel}
@@ -704,38 +652,19 @@ export default function SiteNav({
               <a
                 className="mobile-menu__phone"
                 href={`tel:${phoneHref.replace(/^tel:/i, "")}`}
-                style={{
-                  display: "block",
-                  textAlign: "center",
-                  color: "#D4AF37",
-                  fontSize: "15px",
-                  fontWeight: 600,
-                  letterSpacing: "0.05em",
-                  textDecoration: "none",
-                  marginBottom: "4px",
-                }}
               >
                 {phone}
               </a>
             ) : null}
             {hours ? (
-              <p
-                className="mobile-menu__hours"
-                style={{
-                  margin: 0,
-                  textAlign: "center",
-                  fontSize: "0.68rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: "rgba(244, 238, 225, 0.55)",
-                }}
-              >
+              <p className="mobile-menu__hours">
                 {hours}
               </p>
             ) : null}
           </div>
         </div>
       </div>
+
 
 
 
