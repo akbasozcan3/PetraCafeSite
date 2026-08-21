@@ -2632,9 +2632,63 @@ html[data-theme="dark"] .yorum blockquote,
 html[data-theme="dark"] .yorum figcaption b {
   color: #FFFFFF !important;
 }
-html[data-theme="dark"] .yorum figcaption span {
-  color: #C8C2B4 !important;
+/* ==========================================================================
+   METİNLERİN SCROLL VEYA JS BEKLEMEDEN %100 GÖRÜNÜR OLMASI (OPACITY FIX)
+   ========================================================================== */
+[data-fade],
+[data-split],
+[data-reveal-mask],
+[data-stagger],
+.h2,
+.h1,
+.lead,
+.body,
+.hizmet__card,
+.hizmet__card strong,
+.hizmet__note {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+  clip-path: none !important;
 }
+
+/* ==========================================================================
+   MOBİL MENÜ & SAĞ ÜST KÖŞE KAPATMA (X) BUTONU
+   ========================================================================== */
+.mobile-menu {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  background: #0D0F0A !important;
+  padding: 24px 20px !important;
+  overflow-y: auto !important;
+}
+
+.mobile-menu__close-btn {
+  position: absolute !important;
+  top: 18px !important;
+  right: 18px !important;
+  z-index: 10000 !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: rgba(217, 164, 65, 0.18) !important;
+  border: 1.5px solid #D9A441 !important;
+  color: #D9A441 !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  outline: none !important;
+  line-height: 1 !important;
+}
+.mobile-menu__close-btn:hover {
+  background: #D9A441 !important;
+  color: #0D0F0A !important;
+}
+
 
 
 

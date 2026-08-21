@@ -472,21 +472,17 @@ export default function SiteNav({
         hidden={!open}
         aria-hidden={!open}
       >
+        <button
+          type="button"
+          className="mobile-menu__close-btn"
+          aria-label="Menüyü Kapat"
+          onClick={() => setOpen(false)}
+        >
+          ✕
+        </button>
+
         <div className="mobile-menu__panel">
-          <div className="mobile-menu__top-row flex items-center justify-between pb-3 mb-2 border-b border-white/10">
-            <p className="mobile-menu__label m-0">{navbar.mobileLabel || "Menü"}</p>
-            <button
-              type="button"
-              className="mobile-menu__close-btn flex items-center justify-center w-9 h-9 rounded-full bg-white/10 text-[#D9A441] hover:bg-[#D9A441]/20 hover:text-white transition"
-              aria-label="Menüyü Kapat"
-              onClick={() => setOpen(false)}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-          </div>
+          <p className="mobile-menu__label">{navbar.mobileLabel || "Menü"}</p>
           <nav aria-label="Mobil menü">
             <ul className="mobile-menu__links">
               {links.map((link, i) => (
@@ -519,6 +515,7 @@ export default function SiteNav({
           </div>
         </div>
       </div>
+
 
     </>
   );

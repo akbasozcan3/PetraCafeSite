@@ -3359,6 +3359,21 @@ html.menu-open .site-shop a.nav__cta,
   color: #E2DBD0 !important;
 }
 
+/* Tüm animasyon gizlemelerini kaldır (Varsayılan %100 Görünür) */
+.site-home [data-fade],
+.site-home [data-split],
+.site-home [data-reveal-mask],
+.site-home [data-stagger],
+.site-home .h2,
+.site-home .lead,
+.site-home .hizmet__card strong {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+  clip-path: none !important;
+}
+
+
 
 
 
