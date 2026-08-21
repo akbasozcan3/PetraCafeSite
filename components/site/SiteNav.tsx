@@ -508,7 +508,7 @@ export default function SiteNav({
       </header>
 
 
-      {/* SABİT SAĞ ÜST CLOSE BUTONU (Menü ikonuyla TAM AYNI YERDE) */}
+      {/* SABİT SAĞ ÜST CLOSE BUTONU (Menü ikonuyla TAM AYNI YERDE VE HİZADA) */}
       {open ? (
         <button
           type="button"
@@ -556,22 +556,32 @@ export default function SiteNav({
           zIndex: 999999999,
           background: "#0D0F0A",
           backgroundColor: "#0D0F0A",
-          padding: "54px 20px 24px",
+          padding: "72px 20px 24px",
           overflowY: "auto",
           display: open ? "flex" : "none",
           flexDirection: "column",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
         }}
       >
-        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto", flex: "1 1 auto", display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
-          <nav aria-label="Mobil menü" style={{ marginTop: "16px" }}>
-            <ul className="mobile-menu__links" style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+        <div
+          className="mobile-menu__panel"
+          style={{
+            maxWidth: "540px",
+            width: "100%",
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+          }}
+        >
+          <nav aria-label="Mobil menü" style={{ marginBottom: "14px" }}>
+            <ul className="mobile-menu__links" style={{ display: "flex", flexDirection: "column", gap: "0" }}>
               {links.map((link, i) => (
                 <li key={`m-${link.label}-${link.href}`}>
                   <a
                     href={navHref(link.href, link.label)}
                     data-i={String(i + 1).padStart(2, "0")}
-                    style={{ padding: "8px 0" }}
+                    style={{ padding: "6px 0", fontSize: "1.05rem" }}
                     onClick={(e) => jumpTo(e, navHref(link.href, link.label))}
                   >
                     {link.label}
@@ -580,7 +590,7 @@ export default function SiteNav({
               ))}
             </ul>
           </nav>
-          <div className="mobile-menu__foot" style={{ marginTop: "16px" }}>
+          <div className="mobile-menu__foot" style={{ marginTop: "0", paddingTop: "0" }}>
             <a
               href={bookHref}
               className="btn btn--lg mobile-menu__cta"
@@ -597,6 +607,7 @@ export default function SiteNav({
           </div>
         </div>
       </div>
+
 
 
 
