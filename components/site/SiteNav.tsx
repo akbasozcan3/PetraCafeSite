@@ -484,18 +484,73 @@ export default function SiteNav({
         aria-hidden={!open}
         style={{
           position: "fixed",
-          top: "var(--nav-h, 72px)",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 99999,
+          inset: 0,
+          zIndex: 999999,
           background: "#0D0F0A",
-          padding: "20px 20px 48px",
+          padding: "16px 20px 48px",
           overflowY: "auto",
-          display: open ? "block" : "none",
+          display: open ? "flex" : "none",
+          flexDirection: "column",
         }}
       >
-        <div className="mobile-menu__panel" style={{ maxWidth: "540px", margin: "0 auto", position: "relative" }}>
+        {/* Mobil Menü Üst Bar: Solda Logo, Sağda X Kapat Butonu */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            maxWidth: "540px",
+            margin: "0 auto 20px",
+            paddingBottom: "14px",
+            borderBottom: "1px solid rgba(217, 164, 65, 0.25)",
+            flexShrink: 0,
+          }}
+        >
+          <Link
+            className="nav__logo has-logo"
+            href={homeHref}
+            aria-label="Ana sayfa"
+            onClick={() => setOpen(false)}
+            style={{ display: "flex", alignItems: "center", gap: "10px", margin: 0, textDecoration: "none" }}
+          >
+            <BrandLogo
+              className="nav__logo-img"
+              src={logoUrl}
+              alt={`${navbar.logoText || "PETRA"} logosu`}
+              height={logoSize}
+              style={{ ["--nav-logo-size"]: `${logoSize}px` } as CSSProperties}
+            />
+            <span className="nav__logo-text" hidden={hideText} style={{ color: "#FFFFFF", fontWeight: 700 }}>
+              {navbar.logoText || "PETRA"}
+            </span>
+          </Link>
+
+          <button
+            type="button"
+            aria-label="Menüyü kapat"
+            onClick={() => setOpen(false)}
+            style={{
+              width: "44px",
+              height: "44px",
+              background: "transparent",
+              border: "0",
+              color: "#D9A441",
+              fontSize: "26px",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              padding: 0,
+              lineHeight: 1,
+            }}
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto" }}>
           <nav aria-label="Mobil menü">
             <ul className="mobile-menu__links">
               {links.map((link, i) => (
@@ -528,6 +583,7 @@ export default function SiteNav({
           </div>
         </div>
       </div>
+
 
 
 
