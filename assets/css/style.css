@@ -2366,6 +2366,54 @@ html.cart-open body {
 }
 
 /* ==========================================================================
+   HAKKIMIZDA BÖLÜMÜ GARANTİLİ YÜKSEK KONTRAST (#hakkimizda)
+   ========================================================================== */
+#hakkimizda,
+.section--dark#hakkimizda {
+  background: #0D1008 !important;
+  color: #FFFFFF !important;
+}
+
+#hakkimizda .h2,
+#hakkimizda h1,
+#hakkimizda h2,
+#hakkimizda h3 {
+  color: #FFFFFF !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#hakkimizda .lead,
+#hakkimizda .body,
+#hakkimizda p {
+  color: #F4EEE1 !important;
+  opacity: 1 !important;
+}
+
+#hakkimizda .answer {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-left: 3px solid #D9A441 !important;
+  color: #F4EEE1 !important;
+}
+#hakkimizda .answer b {
+  color: #D9A441 !important;
+}
+#hakkimizda .answer p {
+  color: #F4EEE1 !important;
+}
+
+#hakkimizda .ozet__i b {
+  color: #D9A441 !important;
+}
+#hakkimizda .ozet__i span {
+  color: #E2DBD0 !important;
+}
+#hakkimizda .eyebrow {
+  color: #D9A441 !important;
+}
+
+
+/* ==========================================================================
    GECE / DARK MODE TEMASI (data-theme="dark" Seçildiğinde %100 Koyu & Altın)
    ========================================================================== */
 html[data-theme="dark"],

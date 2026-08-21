@@ -18,8 +18,9 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
   if (!h) return null;
 
   return (
-    <section className="section" id="hakkimizda">
+    <section className="section section--dark" id="hakkimizda">
       <div className="wrap grid-2">
+
         <div>
           <p className="eyebrow" data-fade="">
             {h.eyebrow || "Hakkımızda"}
