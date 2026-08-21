@@ -2247,6 +2247,124 @@ html.cart-open body {
   outline-color: var(--brass, #d9a441) !important;
 }
 
+/* ==========================================================================
+   KRİSTAL NETLİKTE KONTRAST & TİPOGRAFİ GARANTİSİ (WCAG AAA)
+   ========================================================================== */
+
+/* 1. Metin Seçimi (Selection) Rengi */
+::selection {
+  background: #D9A441 !important;
+  color: #12150E !important;
+}
+::-moz-selection {
+  background: #D9A441 !important;
+  color: #12150E !important;
+}
+
+/* 2. Açık Zeminli Bölümler (Hizmetler, Menü, Pasta, SSS, vb.) */
+.section--warm,
+.section--brass,
+.section:not(.section--dark),
+.site-shop,
+.shop-article,
+.blog-hub,
+.menu,
+.page {
+  color: #0D0F0A;
+}
+
+.section--warm .h2,
+.section--brass .h2,
+.section:not(.section--dark) .h2,
+.section--warm h1,
+.section--warm h2,
+.section--warm h3,
+.section:not(.section--dark) h1,
+.section:not(.section--dark) h2,
+.section:not(.section--dark) h3 {
+  color: #0D0F0A !important;
+}
+
+.section--warm .lead,
+.section:not(.section--dark) .lead {
+  color: #3A3C31 !important;
+}
+
+.section--warm .body,
+.section:not(.section--dark) .body,
+.section--warm p,
+.section:not(.section--dark) p:not(.eyebrow) {
+  color: #5C5749 !important;
+}
+
+.site-home .hizmet__card {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(184, 132, 44, 0.25) !important;
+  box-shadow: 0 10px 28px -10px rgba(0, 0, 0, 0.06) !important;
+}
+.site-home .hizmet__card strong {
+  color: #0D0F0A !important;
+  font-weight: 700 !important;
+}
+.site-home .hizmet__note {
+  color: #5C5749 !important;
+}
+
+/* 3. Koyu Zeminli Bölümler (Hakkımızda, Ziyaret Şeridi, Footer, vb.) */
+.section--dark,
+.hs,
+.manifesto,
+.gate,
+.foot {
+  color: #FFFFFF;
+}
+
+.section--dark .h2,
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: #FFFFFF !important;
+}
+
+.section--dark .lead,
+.section--dark p,
+.section--dark .body,
+.section--dark span:not(.eyebrow):not(.stat b):not(.branch h3) {
+  color: #F4EEE1 !important;
+}
+
+.section--dark .stat b,
+.section--dark .branch h3,
+.section--dark .ozet__i b,
+.section--dark .eyebrow {
+  color: #D9A441 !important;
+}
+
+.section--dark .stat span,
+.section--dark .branch p,
+.section--dark .ozet__i span {
+  color: #E2DBD0 !important;
+}
+
+/* Ziyaret Şeridi Koyu Zemin Rengi & Tipografi */
+.visit-bar,
+.site-home .visit-strip {
+  background: #12150E !important;
+  color: #F4EEE1 !important;
+}
+.visit-bar b,
+.site-home .visit-strip b {
+  color: #D9A441 !important;
+}
+.visit-bar span,
+.site-home .visit-strip span,
+.visit-bar p,
+.site-home .visit-strip p {
+  color: #F4EEE1 !important;
+}
+
+
 
 
 
