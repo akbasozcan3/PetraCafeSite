@@ -330,10 +330,10 @@ export default function HomeReservation({
                 gap: 6,
                 padding: "5px 12px",
                 borderRadius: 999,
-                background: "rgba(184, 132, 44, 0.15)",
-                color: "var(--brass-lo, #b8842c)",
+                background: "rgba(184, 132, 44, 0.22)",
+                color: "#0D0F0A",
                 fontSize: 11.5,
-                fontWeight: 700,
+                fontWeight: 800,
                 letterSpacing: "0.06em",
                 textTransform: "uppercase",
               }}
@@ -341,7 +341,7 @@ export default function HomeReservation({
               <Sparkles style={{ width: 13, height: 13 }} />
               Adım {currentStep} / 3
             </span>
-            <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--card-muted, #6e6a5c)" }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "#0D0F0A" }}>
               {currentStep === 1
                 ? "Tarih, Saat & Kişi"
                 : currentStep === 2
@@ -357,7 +357,7 @@ export default function HomeReservation({
               style={{
                 height: 6,
                 borderRadius: 999,
-                background: currentStep === 1 ? "var(--brass, #d9a441)" : currentStep > 1 ? "var(--char, #12150e)" : "var(--card-border, rgba(13, 15, 10, 0.12))",
+                background: currentStep === 1 ? "var(--brass, #d9a441)" : currentStep > 1 ? "var(--char, #12150e)" : "rgba(13, 15, 10, 0.15)",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
               }}
@@ -368,7 +368,7 @@ export default function HomeReservation({
               style={{
                 height: 6,
                 borderRadius: 999,
-                background: currentStep === 2 ? "var(--brass, #d9a441)" : currentStep > 2 ? "var(--char, #12150e)" : "var(--card-border, rgba(13, 15, 10, 0.12))",
+                background: currentStep === 2 ? "var(--brass, #d9a441)" : currentStep > 2 ? "var(--char, #12150e)" : "rgba(13, 15, 10, 0.15)",
                 cursor: time ? "pointer" : "not-allowed",
                 transition: "all 0.3s ease",
               }}
@@ -379,7 +379,7 @@ export default function HomeReservation({
               style={{
                 height: 6,
                 borderRadius: 999,
-                background: currentStep === 3 ? "var(--brass, #d9a441)" : "var(--card-border, rgba(13, 15, 10, 0.12))",
+                background: currentStep === 3 ? "var(--brass, #d9a441)" : "rgba(13, 15, 10, 0.15)",
                 cursor: time ? "pointer" : "not-allowed",
                 transition: "all 0.3s ease",
               }}
@@ -407,10 +407,10 @@ export default function HomeReservation({
               >
                 ✓
               </div>
-              <h3 style={{ margin: "0 0 8px", fontSize: "1.3rem", fontWeight: 700, color: "var(--card-text, #0d0f0a)" }}>
+              <h3 style={{ margin: "0 0 8px", fontSize: "1.3rem", fontWeight: 800, color: "#0d0f0a" }}>
                 Rezervasyon Talebiniz Alındı!
               </h3>
-              <p style={{ margin: "0 0 22px", fontSize: "0.92rem", color: "var(--card-muted, #6e6a5c)", lineHeight: 1.5 }}>
+              <p style={{ margin: "0 0 22px", fontSize: "0.95rem", fontWeight: 600, color: "#0d0f0a", lineHeight: 1.5 }}>
                 {copy?.successMetin ||
                   "Rezervasyon talebiniz başarıyla kaydedildi. Ekibimiz sizinle iletişime geçerek teyit edecektir."}
               </p>
@@ -447,20 +447,20 @@ export default function HomeReservation({
               {currentStep === 1 && (
                 <div>
                   <div className="petra-form__head" style={{ marginBottom: 16 }}>
-                    <p className="petra-form__kicker" style={{ color: "var(--brass-lo, #b8842c)", fontWeight: 700, margin: 0, fontSize: 11.5, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+                    <p className="petra-form__kicker" style={{ color: "#B8842C", fontWeight: 800, margin: 0, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase" }}>
                       1. ADIM
                     </p>
-                    <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--card-text, #0d0f0a)", margin: "4px 0" }}>
+                    <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#0D0F0A", margin: "4px 0" }}>
                       Ne zaman gelmek istersiniz?
                     </h3>
-                    <p style={{ fontSize: "0.88rem", color: "var(--card-muted, #6e6a5c)", margin: 0 }}>
+                    <p style={{ fontSize: "0.92rem", fontWeight: 600, color: "#0D0F0A", margin: 0 }}>
                       Tarih, saat ve kişi sayısını belirleyin.
                     </p>
                   </div>
 
                   <div className="petra-form__row petra-form__row--date">
                     <div className="field field--date">
-                      <label htmlFor="rsv-date" style={{ color: "var(--card-text, #0d0f0a)" }}>
+                      <label htmlFor="rsv-date" style={{ color: "#0D0F0A", fontWeight: 800 }}>
                         {copy?.labelTarih || "Tarih"} <i>*</i>
                       </label>
                       <input
@@ -478,19 +478,20 @@ export default function HomeReservation({
                         className="petra-form__date"
                         lang="tr"
                         style={{
-                          background: "var(--input-bg, #ffffff)",
-                          color: "var(--input-text, #0d0f0a)",
-                          border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                          background: "#ffffff",
+                          color: "#0D0F0A",
+                          fontWeight: 600,
+                          border: "1.5px solid rgba(13, 15, 10, 0.25)",
                           colorScheme: "dark light",
                         }}
                       />
-                      <p className="petra-form__hint" style={{ color: "var(--card-muted, #6e6a5c)" }}>Geçmiş gün ve saat seçilemez.</p>
+                      <p className="petra-form__hint" style={{ color: "#0D0F0A", fontWeight: 600 }}>Geçmiş gün ve saat seçilemez.</p>
                     </div>
                   </div>
 
                   <div className="petra-form__row" style={{ marginTop: 14 }}>
                     <div className="field">
-                      <label htmlFor="rsv-time" style={{ color: "var(--card-text, #0d0f0a)" }}>
+                      <label htmlFor="rsv-time" style={{ color: "#0D0F0A", fontWeight: 800 }}>
                         {copy?.labelSaat || "Saat"} <i>*</i>
                       </label>
                       <select
@@ -501,9 +502,10 @@ export default function HomeReservation({
                         value={time}
                         onChange={(e) => setTime(e.target.value)}
                         style={{
-                          background: "var(--input-bg, #ffffff)",
-                          color: "var(--input-text, #0d0f0a)",
-                          border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                          background: "#ffffff",
+                          color: "#0D0F0A",
+                          fontWeight: 600,
+                          border: "1.5px solid rgba(13, 15, 10, 0.25)",
                           appearance: "none",
                           WebkitAppearance: "none",
                           paddingRight: 42,
@@ -534,7 +536,7 @@ export default function HomeReservation({
                     </div>
 
                     <div className="field">
-                      <label htmlFor="rsv-guests" style={{ color: "var(--card-text, #0d0f0a)" }}>
+                      <label htmlFor="rsv-guests" style={{ color: "#0D0F0A", fontWeight: 800 }}>
                         {copy?.labelKisi || "Kişi"} <i>*</i>
                       </label>
                       <select
@@ -544,9 +546,10 @@ export default function HomeReservation({
                         value={guests}
                         onChange={(e) => setGuests(Number(e.target.value))}
                         style={{
-                          background: "var(--input-bg, #ffffff)",
-                          color: "var(--input-text, #0d0f0a)",
-                          border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                          background: "#ffffff",
+                          color: "#0D0F0A",
+                          fontWeight: 600,
+                          border: "1.5px solid rgba(13, 15, 10, 0.25)",
                           appearance: "none",
                           WebkitAppearance: "none",
                           paddingRight: 42,
@@ -611,28 +614,28 @@ export default function HomeReservation({
                   <div className="petra-form__head" style={{ marginBottom: 12 }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                       <div>
-                        <p className="petra-form__kicker" style={{ color: "var(--brass-lo, #b8842c)", fontWeight: 700, margin: 0, fontSize: 11.5, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+                        <p className="petra-form__kicker" style={{ color: "#B8842C", fontWeight: 800, margin: 0, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase" }}>
                           2. ADIM
                         </p>
-                        <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--card-text, #0d0f0a)", margin: "4px 0" }}>
+                        <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#0D0F0A", margin: "4px 0" }}>
                           Masa / Loca Seçin
                         </h3>
                       </div>
                       <span
                         style={{
                           display: "inline-flex",
-                          padding: "4px 10px",
+                          padding: "5px 12px",
                           borderRadius: 8,
-                          background: "rgba(184, 132, 44, 0.15)",
-                          color: "var(--brass-lo, #b8842c)",
-                          fontSize: 11.5,
-                          fontWeight: 700,
+                          background: "rgba(184, 132, 44, 0.2)",
+                          color: "#0D0F0A",
+                          fontSize: 12,
+                          fontWeight: 800,
                         }}
                       >
                         {date} · {time} · {guests} Kişi
                       </span>
                     </div>
-                    <p style={{ fontSize: "0.85rem", color: "var(--card-muted, #6e6a5c)", margin: 0 }}>
+                    <p style={{ fontSize: "0.92rem", fontWeight: 600, color: "#0D0F0A", margin: 0 }}>
                       Havuz krokisindeki yeşil masalara dokunarak dilediğiniz yeri seçin.
                     </p>
                   </div>
@@ -659,11 +662,11 @@ export default function HomeReservation({
                         minHeight: 50,
                         padding: "12px 14px",
                         borderRadius: 14,
-                        background: "var(--card-bg, #f6f1e6)",
-                        color: "var(--card-text, #0d0f0a)",
-                        fontWeight: 600,
-                        fontSize: 13,
-                        border: "1px solid var(--card-border, rgba(13, 15, 10, 0.12))",
+                        background: "#f6f1e6",
+                        color: "#0d0f0a",
+                        fontWeight: 700,
+                        fontSize: 13.5,
+                        border: "1.5px solid rgba(13, 15, 10, 0.2)",
                         cursor: "pointer",
                       }}
                     >
@@ -704,13 +707,13 @@ export default function HomeReservation({
               {currentStep === 3 && (
                 <form onSubmit={submit}>
                   <div className="petra-form__head" style={{ marginBottom: 12 }}>
-                    <p className="petra-form__kicker" style={{ color: "var(--brass-lo, #b8842c)", fontWeight: 700, margin: 0, fontSize: 11.5, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+                    <p className="petra-form__kicker" style={{ color: "#B8842C", fontWeight: 800, margin: 0, fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase" }}>
                       3. ADIM (SON)
                     </p>
-                    <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--card-text, #0d0f0a)", margin: "4px 0" }}>
+                    <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#0D0F0A", margin: "4px 0" }}>
                       Misafir Bilgileri & Onay
                     </h3>
-                    <p style={{ fontSize: "0.85rem", color: "var(--card-muted, #6e6a5c)", margin: 0 }}>
+                    <p style={{ fontSize: "0.92rem", fontWeight: 600, color: "#0D0F0A", margin: 0 }}>
                       Rezervasyon teyidi için bilgilerinizi girin.
                     </p>
                   </div>
@@ -724,30 +727,30 @@ export default function HomeReservation({
                       gap: 8,
                       padding: "10px 14px",
                       borderRadius: 12,
-                      background: "rgba(184, 132, 44, 0.1)",
-                      border: "1px solid var(--card-border, rgba(184, 132, 44, 0.25))",
+                      background: "rgba(184, 132, 44, 0.15)",
+                      border: "1.5px solid var(--brass, #d9a441)",
                       marginBottom: 14,
                       fontSize: 12.5,
-                      color: "var(--card-text, #0d0f0a)",
+                      color: "#0D0F0A",
                     }}
                   >
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 600 }}>
-                      <Calendar style={{ width: 13, height: 13, color: "var(--brass-lo, #b8842c)" }} /> {date}
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 700, color: "#0D0F0A" }}>
+                      <Calendar style={{ width: 13, height: 13, color: "#B8842C" }} /> {date}
                     </span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 600 }}>
-                      <Clock style={{ width: 13, height: 13, color: "var(--brass-lo, #b8842c)" }} /> {time}
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 700, color: "#0D0F0A" }}>
+                      <Clock style={{ width: 13, height: 13, color: "#B8842C" }} /> {time}
                     </span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 600 }}>
-                      <Users style={{ width: 13, height: 13, color: "var(--brass-lo, #b8842c)" }} /> {guests} Kişi
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 700, color: "#0D0F0A" }}>
+                      <Users style={{ width: 13, height: 13, color: "#B8842C" }} /> {guests} Kişi
                     </span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 700, color: "var(--brass, #b8842c)" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: 800, color: "#B8842C" }}>
                       🪑 {selectedTable ? selectedTable.name : "Otomatik Masa"}
                     </span>
                   </div>
 
                   <div className="petra-form__row">
                     <div className="field">
-                      <label htmlFor="rsv-name" style={{ color: "var(--card-text, #0d0f0a)" }}>
+                      <label htmlFor="rsv-name" style={{ color: "#0D0F0A", fontWeight: 800 }}>
                         {copy?.labelAd || "Ad soyad"} <i>*</i>
                       </label>
                       <input
@@ -762,14 +765,16 @@ export default function HomeReservation({
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         style={{
-                          background: "var(--input-bg, #ffffff)",
-                          color: "var(--input-text, #0d0f0a)",
-                          border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                          background: "#ffffff",
+                          color: "#0D0F0A",
+                          fontWeight: 600,
+                          border: "1.5px solid rgba(13, 15, 10, 0.25)",
                         }}
                       />
                     </div>
+
                     <div className="field">
-                      <label htmlFor="rsv-phone" style={{ color: "var(--card-text, #0d0f0a)" }}>
+                      <label htmlFor="rsv-phone" style={{ color: "#0D0F0A", fontWeight: 800 }}>
                         {copy?.labelTelefon || "Telefon"} <i>*</i>
                       </label>
                       <input
@@ -789,17 +794,18 @@ export default function HomeReservation({
                         }}
                         onChange={(e) => setPhone(formatPhoneInput(e.target.value))}
                         style={{
-                          background: "var(--input-bg, #ffffff)",
-                          color: "var(--input-text, #0d0f0a)",
-                          border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                          background: "#ffffff",
+                          color: "#0D0F0A",
+                          fontWeight: 600,
+                          border: "1.5px solid rgba(13, 15, 10, 0.25)",
                         }}
                       />
                     </div>
                   </div>
 
-                  <div className="field" style={{ marginTop: 10 }}>
-                    <label htmlFor="rsv-email" style={{ color: "var(--card-text, #0d0f0a)" }}>
-                      E-Posta <span style={{ fontSize: 11, fontWeight: 400, color: "var(--brass, #b8842c)" }}>(Onay maili almak için)</span>
+                  <div className="field" style={{ marginTop: 12 }}>
+                    <label htmlFor="rsv-email" style={{ color: "#0D0F0A", fontWeight: 800 }}>
+                      E-Posta <span style={{ fontSize: 11, fontWeight: 700, color: "#B8842C" }}>(Onay maili almak için)</span>
                     </label>
                     <input
                       id="rsv-email"
@@ -810,15 +816,16 @@ export default function HomeReservation({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       style={{
-                        background: "var(--input-bg, #ffffff)",
-                        color: "var(--input-text, #0d0f0a)",
-                        border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                        background: "#ffffff",
+                        color: "#0D0F0A",
+                        fontWeight: 600,
+                        border: "1.5px solid rgba(13, 15, 10, 0.25)",
                       }}
                     />
                   </div>
 
-                  <div className="field" style={{ marginTop: 10 }}>
-                    <label htmlFor="rsv-note" style={{ color: "var(--card-text, #0d0f0a)" }}>{copy?.labelNot || "Özel Not / İstek"}</label>
+                  <div className="field" style={{ marginTop: 12 }}>
+                    <label htmlFor="rsv-note" style={{ color: "#0D0F0A", fontWeight: 800 }}>{copy?.labelNot || "Özel Not / İstek"}</label>
                     <textarea
                       id="rsv-note"
                       name="note"
@@ -827,9 +834,10 @@ export default function HomeReservation({
                       value={note}
                       onChange={(e) => setNote(e.target.value)}
                       style={{
-                        background: "var(--input-bg, #ffffff)",
-                        color: "var(--input-text, #0d0f0a)",
-                        border: "1px solid var(--input-border, rgba(13, 15, 10, 0.15))",
+                        background: "#ffffff",
+                        color: "#0D0F0A",
+                        fontWeight: 600,
+                        border: "1.5px solid rgba(13, 15, 10, 0.25)",
                       }}
                     />
                   </div>
@@ -837,7 +845,7 @@ export default function HomeReservation({
                   {/* Ödeme Türü Seçimi (Dinamik Admin Kontrollü) */}
                   {depositConfig.enabled && (
                     <div style={{ marginTop: 16 }}>
-                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--card-text, #0d0f0a)", marginBottom: 8 }}>
+                      <label style={{ display: "block", fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#0D0F0A", marginBottom: 8 }}>
                         Ödeme & Rezervasyon Türü
                       </label>
 
@@ -847,8 +855,8 @@ export default function HomeReservation({
                           style={{
                             padding: "12px 14px",
                             borderRadius: 14,
-                            border: paymentChoice === "free" ? "2px solid var(--brass, #b8842c)" : "1px solid var(--card-border, rgba(13, 15, 10, 0.12))",
-                            background: paymentChoice === "free" ? "rgba(184, 132, 44, 0.12)" : "var(--card-bg, #ffffff)",
+                            border: paymentChoice === "free" ? "2px solid #B8842C" : "1.5px solid rgba(13, 15, 10, 0.2)",
+                            background: paymentChoice === "free" ? "rgba(184, 132, 44, 0.15)" : "#ffffff",
                             cursor: "pointer",
                             transition: "all 0.2s",
                           }}
@@ -862,9 +870,9 @@ export default function HomeReservation({
                               onChange={() => setPaymentChoice("free")}
                               style={{ width: "auto", minHeight: "auto", margin: 0 }}
                             />
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "var(--card-text, #0d0f0a)" }}>Normal Rezervasyon</span>
+                            <span style={{ fontSize: 12, fontWeight: 800, color: "#0D0F0A" }}>Normal Rezervasyon</span>
                           </div>
-                          <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "var(--card-muted, #6e6a5c)" }}>
+                          <p style={{ margin: "4px 0 0", fontSize: 11, fontWeight: 600, color: "#0D0F0A" }}>
                             Ücretsiz talep oluşturun, restoranda ödeyin.
                           </p>
                         </div>
@@ -874,8 +882,8 @@ export default function HomeReservation({
                           style={{
                             padding: "12px 14px",
                             borderRadius: 14,
-                            border: paymentChoice === "paytr" ? "2px solid var(--brass, #b8842c)" : "1px solid var(--card-border, rgba(13, 15, 10, 0.12))",
-                            background: paymentChoice === "paytr" ? "rgba(184, 132, 44, 0.12)" : "var(--card-bg, #ffffff)",
+                            border: paymentChoice === "paytr" ? "2px solid #B8842C" : "1.5px solid rgba(13, 15, 10, 0.2)",
+                            background: paymentChoice === "paytr" ? "rgba(184, 132, 44, 0.15)" : "#ffffff",
                             cursor: "pointer",
                             transition: "all 0.2s",
                           }}
@@ -889,11 +897,11 @@ export default function HomeReservation({
                               onChange={() => setPaymentChoice("paytr")}
                               style={{ width: "auto", minHeight: "auto", margin: 0 }}
                             />
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "var(--brass, #b8842c)", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                            <span style={{ fontSize: 12, fontWeight: 800, color: "#B8842C", display: "inline-flex", alignItems: "center", gap: 4 }}>
                               <CreditCard style={{ width: 13, height: 13 }} /> Online Kapora ile Öde
                             </span>
                           </div>
-                          <p style={{ margin: "4px 0 0", fontSize: 10.5, color: "var(--card-muted, #6e6a5c)" }}>
+                          <p style={{ margin: "4px 0 0", fontSize: 11, fontWeight: 600, color: "#0D0F0A" }}>
                             {depositConfig.amount} TL {depositConfig.note}
                           </p>
                         </div>

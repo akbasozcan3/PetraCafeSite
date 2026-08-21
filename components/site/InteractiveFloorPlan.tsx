@@ -137,22 +137,22 @@ export default function InteractiveFloorPlan({
           alignItems: "center",
           justifyContent: "center",
           gap: 16,
-          fontSize: 11,
-          fontWeight: 600,
-          color: "var(--card-muted, #6e6a5c)",
+          fontSize: 12,
+          fontWeight: 700,
+          color: "#0D0F0A",
           marginBottom: 10,
         }}
       >
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
-          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#16a34a", boxShadow: "0 0 6px #22c55e" }} />
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#0D0F0A", fontWeight: 700 }}>
+          <span style={{ width: 11, height: 11, borderRadius: "50%", background: "#16a34a", boxShadow: "0 0 6px #22c55e" }} />
           Müsait Masa
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "var(--brass, #b8842c)" }}>
-          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--brass, #d9a441)", boxShadow: "0 0 8px #d9a441" }} />
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#B8842C", fontWeight: 800 }}>
+          <span style={{ width: 11, height: 11, borderRadius: "50%", background: "#D9A441", boxShadow: "0 0 8px #d9a441" }} />
           Seçtiğiniz Masa
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#ef4444" }}>
-          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444" }} />
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#dc2626", fontWeight: 700 }}>
+          <span style={{ width: 11, height: 11, borderRadius: "50%", background: "#ef4444" }} />
           Dolu
         </span>
       </div>
