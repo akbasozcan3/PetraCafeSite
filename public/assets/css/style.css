@@ -2262,160 +2262,183 @@ html.cart-open body {
   color: #12150E !important;
 }
 
-/* 2. Açık Zeminli Bölümler (Hizmetler, Menü, Pasta, SSS, vb.) */
-.section--warm,
-.section--brass,
-.section:not(.section--dark),
-.site-shop,
-.shop-article,
-.blog-hub,
-.menu,
-.page {
+/* 2. Açık Temada (Petra Gold, Zeytin, Terracotta) Açık Bölümler */
+html[data-theme="light"] .section--warm,
+html[data-theme="light"] .section--brass,
+html[data-theme="light"] .section:not(.section--dark),
+html[data-theme="light"] .site-shop,
+html[data-theme="light"] .page {
   color: #0D0F0A;
 }
 
-.section--warm .h2,
-.section--brass .h2,
-.section:not(.section--dark) .h2,
-.section--warm h1,
-.section--warm h2,
-.section--warm h3,
-.section:not(.section--dark) h1,
-.section:not(.section--dark) h2,
-.section:not(.section--dark) h3 {
+html[data-theme="light"] .section--warm .h2,
+html[data-theme="light"] .section--brass .h2,
+html[data-theme="light"] .section:not(.section--dark) .h2,
+html[data-theme="light"] .section--warm h1,
+html[data-theme="light"] .section--warm h2,
+html[data-theme="light"] .section--warm h3,
+html[data-theme="light"] .section:not(.section--dark) h1,
+html[data-theme="light"] .section:not(.section--dark) h2,
+html[data-theme="light"] .section:not(.section--dark) h3 {
   color: #0D0F0A !important;
 }
 
-.section--warm .lead,
-.section:not(.section--dark) .lead {
+html[data-theme="light"] .section--warm .lead,
+html[data-theme="light"] .section:not(.section--dark) .lead {
   color: #3A3C31 !important;
 }
 
-.section--warm .body,
-.section:not(.section--dark) .body,
-.section--warm p,
-.section:not(.section--dark) p:not(.eyebrow) {
+html[data-theme="light"] .section--warm .body,
+html[data-theme="light"] .section:not(.section--dark) .body,
+html[data-theme="light"] .section--warm p:not(.eyebrow),
+html[data-theme="light"] .section:not(.section--dark) p:not(.eyebrow) {
   color: #5C5749 !important;
 }
 
-.site-home .hizmet__card {
+html[data-theme="light"] .site-home .hizmet__card {
   background: #FFFFFF !important;
   border: 1.5px solid rgba(184, 132, 44, 0.25) !important;
   box-shadow: 0 10px 28px -10px rgba(0, 0, 0, 0.06) !important;
 }
-.site-home .hizmet__card strong {
+html[data-theme="light"] .site-home .hizmet__card strong {
   color: #0D0F0A !important;
   font-weight: 700 !important;
 }
-.site-home .hizmet__note {
+html[data-theme="light"] .site-home .hizmet__note {
   color: #5C5749 !important;
 }
 
-/* 3. Koyu Zeminli Bölümler (Hakkımızda, Ziyaret Şeridi, Footer, vb.) */
+/* 3. Menü Bölümü & Yemek İsimleri (Açık Beyaz Kart İçi) */
+.rmenu__sheet,
+.urun-kart,
+.site-home .rmenu__sheet {
+  background: #FFFFFF !important;
+  color: #0D0F0A !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.08) !important;
+}
+
+.rmenu__sheet h3,
+.rmenu__sheet .menu__group h3,
+.rmenu__sheet .h2,
+.rmenu__sheet h2 {
+  color: #0D0F0A !important;
+  border-bottom: 2px solid #0D0F0A !important;
+}
+
+.rmenu__sheet .menu__name,
+.rmenu__sheet .menu__name__label,
+.menu-page .menu-row__title {
+  color: #0D0F0A !important;
+  font-weight: 600 !important;
+}
+
+.rmenu__sheet .menu__name em,
+.menu-page .menu-row__desc {
+  color: #5C5749 !important;
+}
+
+.rmenu__sheet .menu__price,
+.menu-page .menu-row__price {
+  color: #B8842C !important;
+  font-weight: 700 !important;
+}
+
+.rmenu__sheet .menu__list li i {
+  background-image: radial-gradient(circle, rgba(13,15,10,0.35) 1px, transparent 1px) !important;
+}
+
+/* Kategori Butonları */
+.rmenu__btn {
+  background: #FFFFFF !important;
+  color: #0D0F0A !important;
+  border: 1px solid rgba(13,15,10,0.15) !important;
+  font-weight: 600 !important;
+}
+.rmenu__radio:checked + .rmenu__btn {
+  background: #D9A441 !important;
+  color: #0D0F0A !important;
+  border-color: #D9A441 !important;
+  font-weight: 700 !important;
+}
+
+/* 4. Koyu Zeminli Bölümler: #hakkimizda, #pasta, #rezervasyon, .foot, .visit */
 .section--dark,
-.hs,
-.manifesto,
-.gate,
-.foot {
-  color: #FFFFFF;
+#hakkimizda,
+#pasta,
+#rezervasyon,
+.foot,
+.visit,
+.site-home .visit-strip {
+  background: #0D1008 !important;
+  color: #FFFFFF !important;
 }
 
 .section--dark .h2,
 .section--dark h1,
 .section--dark h2,
 .section--dark h3,
-.section--dark h4 {
-  color: #FFFFFF !important;
-}
-
-.section--dark .lead,
-.section--dark p,
-.section--dark .body,
-.section--dark span:not(.eyebrow):not(.stat b):not(.branch h3) {
-  color: #F4EEE1 !important;
-}
-
-.section--dark .stat b,
-.section--dark .branch h3,
-.section--dark .ozet__i b,
-.section--dark .eyebrow {
-  color: #D9A441 !important;
-}
-
-.section--dark .stat span,
-.section--dark .branch p,
-.section--dark .ozet__i span {
-  color: #E2DBD0 !important;
-}
-
-/* Ziyaret Şeridi Koyu Zemin Rengi & Tipografi */
-.visit-bar,
-.site-home .visit-strip {
-  background: #12150E !important;
-  color: #F4EEE1 !important;
-}
-.visit-bar b,
-.site-home .visit-strip b {
-  color: #D9A441 !important;
-}
-.visit-bar span,
-.site-home .visit-strip span,
-.visit-bar p,
-.site-home .visit-strip p {
-  color: #F4EEE1 !important;
-}
-
-/* ==========================================================================
-   HAKKIMIZDA BÖLÜMÜ GARANTİLİ YÜKSEK KONTRAST (#hakkimizda)
-   ========================================================================== */
-#hakkimizda,
-.section--dark#hakkimizda {
-  background: #0D1008 !important;
-  color: #FFFFFF !important;
-}
-
+.section--dark h4,
 #hakkimizda .h2,
-#hakkimizda h1,
-#hakkimizda h2,
-#hakkimizda h3 {
+#pasta .h2,
+#rezervasyon .h2 {
   color: #FFFFFF !important;
   opacity: 1 !important;
   visibility: visible !important;
 }
 
-#hakkimizda .lead,
-#hakkimizda .body,
-#hakkimizda p {
+.section--dark .lead,
+.section--dark .body,
+.section--dark p:not(.eyebrow),
+#hakkimizda p,
+#pasta p:not(.eyebrow),
+#rezervasyon p:not(.eyebrow) {
   color: #F4EEE1 !important;
   opacity: 1 !important;
 }
 
-#hakkimizda .answer {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-left: 3px solid #D9A441 !important;
+.section--dark .eyebrow,
+#hakkimizda .eyebrow,
+#pasta .eyebrow,
+#rezervasyon .eyebrow {
+  color: #D9A441 !important;
+}
+
+/* Ziyaret Şeridi */
+.visit,
+.site-home .visit-strip,
+.visit__grid,
+.visit__item {
+  color: #FFFFFF !important;
+}
+.visit b,
+.visit strong,
+.visit-bar b {
+  color: #D9A441 !important;
+}
+.visit span,
+.visit p,
+.visit-bar span,
+.visit-bar p {
   color: #F4EEE1 !important;
 }
-#hakkimizda .answer b {
-  color: #D9A441 !important;
+
+/* Galeri ve Fotoğraf Etiketleri */
+.shot figcaption {
+  color: #FFFFFF !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.9) !important;
 }
-#hakkimizda .answer p {
-  color: #F4EEE1 !important;
+.tilt-card__badge {
+  background: #FBF8F1 !important;
+}
+.tilt-card__badge b {
+  color: #0D0F0A !important;
+}
+.tilt-card__badge span {
+  color: #5C5749 !important;
 }
 
-#hakkimizda .ozet__i b {
-  color: #D9A441 !important;
-}
-#hakkimizda .ozet__i span {
-  color: #E2DBD0 !important;
-}
-#hakkimizda .eyebrow {
-  color: #D9A441 !important;
-}
-
-
-/* ==========================================================================
-   GECE / DARK MODE TEMASI (data-theme="dark" Seçildiğinde %100 Koyu & Altın)
-   ========================================================================== */
+/* 5. GECE / DARK MODE TEMASI (data-theme="dark" Seçildiğinde %100 Koyu Zemin & Beyaz Yazı) */
 html[data-theme="dark"],
 html[data-theme="dark"] body {
   background: #0D0F0A !important;
@@ -2497,144 +2520,7 @@ html[data-theme="dark"] .menu-page__toc a.is-active {
   border-bottom-color: #D9A441 !important;
 }
 
-/* ==========================================================================
-   MOBİL MENÜ & TÜM BUTONLAR İÇİN MUTLAK GÖRÜNÜRLÜK (HER TEMADA AKTİF)
-   ========================================================================== */
-.nav__burger,
-.nav__burger span {
-  color: #D9A441 !important;
-}
-.nav__burger span {
-  background: #D9A441 !important;
-}
-.nav__burger svg {
-  stroke: #D9A441 !important;
-}
-
-.mobile-menu {
-  background: #0D0F0A !important;
-  color: #F4EEE1 !important;
-  border-bottom: 2px solid #D9A441 !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7) !important;
-}
-.mobile-menu a {
-  color: #F4EEE1 !important;
-  font-weight: 600 !important;
-  border-bottom: 1px solid rgba(217, 164, 65, 0.25) !important;
-}
-.mobile-menu a:hover,
-.mobile-menu a:active {
-  color: #D9A441 !important;
-  background: rgba(217, 164, 65, 0.12) !important;
-}
-.mobile-menu .btn,
-.mobile-menu .nav__cta {
-  background: #D9A441 !important;
-  color: #0D0F0A !important;
-  font-weight: 700 !important;
-  border-bottom: 0 !important;
-}
-
-/* Menü Sayfası (/menu) Genel Tipografi ve Buton Garantisi */
-.menu-page h1,
-.menu-page h2 {
-  color: var(--ink, #0D0F0A) !important;
-}
-.menu-page__kicker {
-  color: #B8842C !important;
-}
-.menu-row__title {
-  color: var(--ink, #0D0F0A) !important;
-  font-weight: 600 !important;
-}
-.menu-row__price {
-  color: #B8842C !important;
-  font-weight: 700 !important;
-}
-
-/* ==========================================================================
-   TÜM BÖLÜMLER (SECTION) İÇİN EVRENSEL YÜKSEK KONTRAST & TİPOGRAFİ
-   ========================================================================== */
-
-/* Koyu Zeminli Bölümler: #hakkimizda, #pasta, #rezervasyon, .foot */
-.section--dark,
-#hakkimizda,
-#pasta,
-#rezervasyon,
-.foot {
-  background: #0D1008 !important;
-  color: #FFFFFF !important;
-}
-
-.section--dark .h2,
-.section--dark h1,
-.section--dark h2,
-.section--dark h3,
-.section--dark h4,
-#hakkimizda .h2,
-#pasta .h2,
-#rezervasyon .h2 {
-  color: #FFFFFF !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.section--dark .lead,
-.section--dark .body,
-.section--dark p:not(.eyebrow),
-#hakkimizda p,
-#pasta p:not(.eyebrow),
-#rezervasyon p:not(.eyebrow) {
-  color: #F4EEE1 !important;
-  opacity: 1 !important;
-}
-
-.section--dark .eyebrow,
-#hakkimizda .eyebrow,
-#pasta .eyebrow,
-#rezervasyon .eyebrow {
-  color: #D9A441 !important;
-}
-
-/* Koyu Bölümdeki Rozetler ve Kutular */
-.pasta-copy .facts b,
-.pasta-copy .fact b,
-.pasta-facts b {
-  color: #D9A441 !important;
-}
-.pasta-copy .facts span,
-.pasta-copy .fact span,
-.pasta-facts span {
-  color: #E2DBD0 !important;
-}
-
-/* SSS (#sss) ve Yorumlar (#yorumlar) Bölümleri */
-.faq__item summary {
-  color: var(--ink, #0D0F0A) !important;
-}
-.faq__item p {
-  color: var(--muted, #5C5749) !important;
-}
-html[data-theme="dark"] .faq__item summary {
-  color: #FFFFFF !important;
-}
-html[data-theme="dark"] .faq__item p {
-  color: #E2DBD0 !important;
-}
-
-.yorum blockquote {
-  color: var(--ink, #0D0F0A) !important;
-}
-.yorum figcaption b {
-  color: var(--ink, #0D0F0A) !important;
-}
-html[data-theme="dark"] .yorum blockquote,
-html[data-theme="dark"] .yorum figcaption b {
-  color: #FFFFFF !important;
-}
-/* ==========================================================================
-   METİNLERİN SCROLL VEYA JS BEKLEMEDEN %100 GÖRÜNÜR OLMASI (OPACITY FIX)
-   ========================================================================== */
+/* 6. Animasyon Opacity Kilidi (Scroll Beklemeden %100 Görünür) */
 [data-fade],
 [data-split],
 [data-reveal-mask],
@@ -2652,11 +2538,20 @@ html[data-theme="dark"] .yorum figcaption b {
   clip-path: none !important;
 }
 
-/* ==========================================================================
-   MOBİL MENÜ & AYNI YERDEN X OLARAK KAPANAN BUTON
-   ========================================================================== */
+/* 7. Mobil Menü & Burger-to-X Dönüşümü */
 header.nav.site-nav {
   z-index: 100000 !important;
+}
+
+.nav__burger,
+.nav__burger span {
+  color: #D9A441 !important;
+}
+.nav__burger span {
+  background: #D9A441 !important;
+}
+.nav__burger svg {
+  stroke: #D9A441 !important;
 }
 
 .nav__burger.is-open span:nth-child(1),
@@ -2686,12 +2581,6 @@ header.nav.site-nav {
   overflow-y: auto !important;
   border-top: 1px solid rgba(217, 164, 65, 0.25) !important;
 }
-
-
-
-
-
-
 
 
 

@@ -3305,51 +3305,59 @@ html.menu-open .site-shop a.nav__cta,
 }
 
 /* 2. Açık Zeminli Bölümler (#hizmetler, #menu, vb.) */
-.site-home .section--warm .h2,
-.site-home .section:not(.section--dark) .h2,
-.site-home #hizmetler .h2,
-.site-home .hizmet .h2 {
+html[data-theme="light"] .site-home .section--warm .h2,
+html[data-theme="light"] .site-home .section:not(.section--dark) .h2,
+html[data-theme="light"] .site-home #hizmetler .h2,
+html[data-theme="light"] .site-home .hizmet .h2 {
   color: #0D0F0A !important;
 }
 
-.site-home .section--warm .lead,
-.site-home .section:not(.section--dark) .lead,
-.site-home #hizmetler .lead {
+html[data-theme="light"] .site-home .section--warm .lead,
+html[data-theme="light"] .site-home .section:not(.section--dark) .lead,
+html[data-theme="light"] .site-home #hizmetler .lead {
   color: #3A3C31 !important;
 }
 
-.site-home .hizmet__card {
+html[data-theme="light"] .site-home .hizmet__card {
   background: #FFFFFF !important;
   border: 1.5px solid rgba(184, 132, 44, 0.25) !important;
   box-shadow: 0 10px 28px -10px rgba(0, 0, 0, 0.06) !important;
 }
-.site-home .hizmet__card strong {
+html[data-theme="light"] .site-home .hizmet__card strong {
   color: #0D0F0A !important;
   font-weight: 700 !important;
 }
-.site-home .hizmet__note {
+html[data-theme="light"] .site-home .hizmet__note {
   color: #5C5749 !important;
 }
 
-/* 3. Koyu Zeminli Bölümler (#hakkimizda, .section--dark) */
+/* 3. Koyu Zeminli Bölümler (#hakkimizda, .section--dark ve Dark Mode) */
 .site-home .section--dark .h2,
 .site-home .section--dark h1,
 .site-home .section--dark h2,
-.site-home .section--dark h3 {
+.site-home .section--dark h3,
+html[data-theme="dark"] .site-home .h2,
+html[data-theme="dark"] .site-home h1,
+html[data-theme="dark"] .site-home h2,
+html[data-theme="dark"] .site-home h3 {
   color: #FFFFFF !important;
 }
 
 .site-home .section--dark .lead,
 .site-home .section--dark p,
 .site-home .section--dark .body,
-.site-home .section--dark span:not(.eyebrow):not(.stat b):not(.branch h3) {
+.site-home .section--dark span:not(.eyebrow):not(.stat b):not(.branch h3),
+html[data-theme="dark"] .site-home .lead,
+html[data-theme="dark"] .site-home p:not(.eyebrow),
+html[data-theme="dark"] .site-home .body {
   color: #F4EEE1 !important;
 }
 
 .site-home .section--dark .stat b,
 .site-home .section--dark .branch h3,
 .site-home .section--dark .ozet__i b,
-.site-home .section--dark .eyebrow {
+.site-home .section--dark .eyebrow,
+html[data-theme="dark"] .site-home .eyebrow {
   color: #D9A441 !important;
 }
 
@@ -3372,6 +3380,7 @@ html.menu-open .site-shop a.nav__cta,
   visibility: visible !important;
   clip-path: none !important;
 }
+
 
 
 
