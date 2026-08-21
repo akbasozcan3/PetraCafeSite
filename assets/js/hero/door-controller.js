@@ -1,12 +1,12 @@
-import * as THREE from '../../vendor/three.module.js?v=20260821m240';
+import * as THREE from '../../vendor/three.module.js?v=20260821m250';
 import {
   resolveDoorUv,
   SCENE_W,
   SCENE_H,
   DEPTH,
   FRAME_PAD,
-} from './config.js?v=20260821m240';
-import { easeInOut, range } from './utils.js?v=20260821m240';
+} from './config.js?v=20260821m250';
+import { easeInOut, range } from './utils.js?v=20260821m250';
 
 function remapUV(geo, u0, u1, v0, v1) {
   const uv = geo.attributes.uv;

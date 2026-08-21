@@ -508,7 +508,37 @@ export default function SiteNav({
       </header>
 
 
-      {/* MOBİLDE TAM EKRAN MENÜ */}
+      {/* SABİT SAĞ ÜST CLOSE BUTONU (Menü ikonuyla TAM AYNI YERDE VE HİZADA) */}
+      {open ? (
+        <button
+          type="button"
+          aria-label="Menüyü kapat"
+          onClick={() => setOpen(false)}
+          style={{
+            position: "fixed",
+            top: "14px",
+            right: "max(18px, env(safe-area-inset-right))",
+            zIndex: 1000000005,
+            width: "44px",
+            height: "44px",
+            background: "transparent",
+            border: 0,
+            color: "#D9A441",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            padding: 0,
+          }}
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9A441" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      ) : null}
+
+      {/* MOBİLDE TAM EKRAN MENÜ PERDESİ */}
       <div
         className={`mobile-menu${open ? " is-open" : ""}`}
         id="mobileMenu"
@@ -526,62 +556,23 @@ export default function SiteNav({
           zIndex: 999999999,
           background: "#0D0F0A",
           backgroundColor: "#0D0F0A",
-          padding: "16px 20px 24px",
+          padding: "64px 20px 24px",
+          overflowY: "auto",
           display: open ? "flex" : "none",
           flexDirection: "column",
           justifyContent: "space-between",
-          boxSizing: "border-box",
-          overflowY: "auto",
         }}
       >
-        {/* SAĞ ÜSTTE CLOSE BUTONU */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            width: "100%",
-            maxWidth: "500px",
-            margin: "0 auto",
-            flexShrink: 0,
-            height: "44px",
-          }}
-        >
-          <button
-            type="button"
-            aria-label="Menüyü kapat"
-            onClick={() => setOpen(false)}
-            style={{
-              width: "44px",
-              height: "44px",
-              background: "transparent",
-              border: 0,
-              color: "#D9A441",
-              fontSize: "30px",
-              fontWeight: "bold",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              padding: 0,
-              lineHeight: 1,
-            }}
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* ORTADA MENÜ LİNKLERİ (DİKEYDE VE YATAYDA TAM ORTALI) */}
         <div
           className="mobile-menu__panel"
           style={{
-            maxWidth: "500px",
+            maxWidth: "540px",
             width: "100%",
-            margin: "auto auto",
-            flex: "0 0 auto",
+            margin: "0 auto",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
+            justifyContent: "space-between",
+            flex: "1 1 auto",
           }}
         >
           <nav aria-label="Mobil menü">
@@ -599,41 +590,24 @@ export default function SiteNav({
               ))}
             </ul>
           </nav>
-        </div>
-
-        {/* ALTTA REZERVASYON VE BİLGİLER */}
-        <div
-          className="mobile-menu__foot"
-          style={{
-            maxWidth: "500px",
-            width: "100%",
-            margin: "0 auto",
-            flexShrink: 0,
-            paddingTop: "8px",
-          }}
-        >
-          <a
-            href={bookHref}
-            className="btn btn--lg mobile-menu__cta"
-            onClick={() => setOpen(false)}
-          >
-            {bookLabel}
-          </a>
-          {showPhone && phoneHref ? (
+          <div className="mobile-menu__foot">
             <a
-              className="mobile-menu__phone"
-              href={`tel:${phoneHref.replace(/^tel:/i, "")}`}
+              href={bookHref}
+              className="btn btn--lg mobile-menu__cta"
+              onClick={() => setOpen(false)}
             >
-              {phone}
+              {bookLabel}
             </a>
-          ) : null}
-          {hours ? (
-            <p className="mobile-menu__hours">
-              {hours}
-            </p>
-          ) : null}
+            {showPhone && phoneHref ? (
+              <a className="mobile-menu__phone" href={`tel:${phoneHref.replace(/^tel:/i, "")}`}>
+                {phone}
+              </a>
+            ) : null}
+            {hours ? <p className="mobile-menu__hours">{hours}</p> : null}
+          </div>
         </div>
       </div>
+
 
 
 
