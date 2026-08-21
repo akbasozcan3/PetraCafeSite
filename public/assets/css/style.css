@@ -2626,8 +2626,9 @@ html.menu-open .hizmet__card {
   z-index: 999999999 !important;
   background: #0D0F0A !important;
   background-color: #0D0F0A !important;
-  padding: 0 0 48px 0 !important;
-  overflow-y: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
   border-top: none !important;
 }
 

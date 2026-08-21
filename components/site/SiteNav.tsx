@@ -337,7 +337,7 @@ export default function SiteNav({
           }
         }
         /* ==========================================================================
-           LÜKS MOBİL NAVBAR & MENÜ (GRADYAN, GOLD GLOW, SOFT DROP-SHADOW)
+           LÜKS MOBİL NAVBAR & MENÜ PERDESİ (FULL SCREEN DRAWER)
            ========================================================================== */
         header.nav.is-menu,
         header.nav.is-solid.is-menu,
@@ -408,6 +408,245 @@ export default function SiteNav({
           header.nav.site-nav .nav__burger span {
             background: #D9A441 !important;
             box-shadow: none !important;
+          }
+        }
+
+        /* Mobil Menü Perdesi */
+        .mobile-menu {
+          position: fixed !important;
+          inset: 0 !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          width: 100vw !important;
+          height: 100dvh !important;
+          max-height: 100dvh !important;
+          z-index: 999999999 !important;
+          background: #0D0F0A !important;
+          background-color: #0D0F0A !important;
+          overflow: hidden !important;
+          display: flex !important;
+          flex-direction: column !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          border: none !important;
+        }
+        .mobile-menu:not(.is-open),
+        .mobile-menu[hidden] {
+          display: none !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+        }
+        .mobile-menu__inner {
+          display: flex !important;
+          flex-direction: column !important;
+          height: 100% !important;
+          width: 100% !important;
+          max-width: 540px !important;
+          margin: 0 auto !important;
+          box-sizing: border-box !important;
+          background: #0D0F0A !important;
+        }
+        .mobile-menu__header {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          padding-top: max(14px, env(safe-area-inset-top)) !important;
+          padding-bottom: 14px !important;
+          padding-left: max(20px, env(safe-area-inset-left)) !important;
+          padding-right: max(20px, env(safe-area-inset-right)) !important;
+          border-bottom: 1px solid rgba(217, 164, 65, 0.25) !important;
+          background: #0D0F0A !important;
+          flex-shrink: 0 !important;
+          z-index: 10 !important;
+        }
+        .mobile-menu__brand {
+          display: flex !important;
+          align-items: center !important;
+          gap: 12px !important;
+          text-decoration: none !important;
+        }
+        .mobile-menu__logo-img {
+          height: 38px !important;
+          width: auto !important;
+          object-fit: contain !important;
+          filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 6px rgba(217,175,55,0.3)) !important;
+        }
+        .mobile-menu__logo-text {
+          font-family: "Playfair Display", Georgia, serif !important;
+          font-size: 1.15rem !important;
+          font-weight: 700 !important;
+          letter-spacing: 0.14em !important;
+          color: #FFFFFF !important;
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
+        }
+        .mobile-menu__close-btn {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 42px !important;
+          height: 42px !important;
+          background: rgba(217, 164, 65, 0.08) !important;
+          border: 1px solid rgba(217, 164, 65, 0.3) !important;
+          border-radius: 50% !important;
+          color: #D9A441 !important;
+          cursor: pointer !important;
+          padding: 0 !important;
+          transition: all 0.2s ease !important;
+        }
+        .mobile-menu__close-btn:hover,
+        .mobile-menu__close-btn:active {
+          background: rgba(217, 164, 65, 0.22) !important;
+          border-color: #D9A441 !important;
+          transform: scale(1.05) !important;
+        }
+        .mobile-menu__body {
+          flex: 1 1 auto !important;
+          overflow-y: auto !important;
+          overscroll-behavior: contain !important;
+          -webkit-overflow-scrolling: touch !important;
+          padding-top: 10px !important;
+          padding-bottom: 14px !important;
+          padding-left: max(20px, env(safe-area-inset-left)) !important;
+          padding-right: max(20px, env(safe-area-inset-right)) !important;
+        }
+        .mobile-menu__links {
+          list-style: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 0 !important;
+          width: 100% !important;
+        }
+        .mobile-menu__links li {
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        .mobile-menu__links a {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: flex-start !important;
+          min-height: 46px !important;
+          padding: 10px 8px !important;
+          border-bottom: 1px solid rgba(217, 164, 65, 0.12) !important;
+          text-decoration: none !important;
+          color: #F4EEE1 !important;
+          transition: background 0.2s ease, color 0.2s ease, padding 0.2s ease !important;
+          border-radius: 6px !important;
+        }
+        .mobile-menu__links a::before {
+          content: none !important;
+          display: none !important;
+        }
+        .mobile-menu__links a:hover,
+        .mobile-menu__links a:active,
+        .mobile-menu__links a.is-active {
+          background: rgba(217, 164, 65, 0.08) !important;
+          color: #D9A441 !important;
+          padding-left: 12px !important;
+        }
+        .mobile-menu__num {
+          font-family: "Inter", system-ui, sans-serif !important;
+          font-size: 0.72rem !important;
+          font-weight: 700 !important;
+          letter-spacing: 0.14em !important;
+          color: #D9A441 !important;
+          width: 32px !important;
+          flex-shrink: 0 !important;
+        }
+        .mobile-menu__title {
+          font-family: "Playfair Display", Georgia, serif !important;
+          font-size: 1.22rem !important;
+          font-weight: 500 !important;
+          letter-spacing: 0.01em !important;
+          flex: 1 1 auto !important;
+          text-align: left !important;
+        }
+        .mobile-menu__arrow {
+          color: rgba(217, 164, 65, 0.35) !important;
+          flex-shrink: 0 !important;
+          transition: transform 0.2s ease, color 0.2s ease !important;
+        }
+        .mobile-menu__links a:hover .mobile-menu__arrow,
+        .mobile-menu__links a:active .mobile-menu__arrow {
+          color: #D9A441 !important;
+          transform: translateX(3px) !important;
+        }
+        .mobile-menu__foot {
+          flex-shrink: 0 !important;
+          padding-top: 14px !important;
+          padding-bottom: max(18px, env(safe-area-inset-bottom)) !important;
+          padding-left: max(20px, env(safe-area-inset-left)) !important;
+          padding-right: max(20px, env(safe-area-inset-right)) !important;
+          border-top: 1px solid rgba(217, 164, 65, 0.2) !important;
+          background: #0D0F0A !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 10px !important;
+        }
+        .mobile-menu__cta,
+        .mobile-menu a.mobile-menu__cta {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 100% !important;
+          min-height: 48px !important;
+          background: #D9A441 !important;
+          color: #0D0F0A !important;
+          font-weight: 700 !important;
+          font-size: 0.95rem !important;
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
+          border-radius: 999px !important;
+          text-decoration: none !important;
+          box-shadow: 0 4px 16px rgba(217, 164, 65, 0.3) !important;
+          transition: background 0.2s ease, transform 0.2s ease !important;
+        }
+        .mobile-menu__cta:hover,
+        .mobile-menu__cta:active {
+          background: #EAE1CE !important;
+          transform: translateY(-1px) !important;
+        }
+        .mobile-menu__phone,
+        .mobile-menu a.mobile-menu__phone {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 8px !important;
+          text-decoration: none !important;
+          font-family: "Playfair Display", Georgia, serif !important;
+          font-size: 1.05rem !important;
+          font-weight: 600 !important;
+          color: #F4EEE1 !important;
+          padding: 4px 0 !important;
+          letter-spacing: 0.03em !important;
+          transition: color 0.2s ease !important;
+        }
+        .mobile-menu__phone svg {
+          color: #D9A441 !important;
+        }
+        .mobile-menu__phone:hover,
+        .mobile-menu__phone:active {
+          color: #D9A441 !important;
+        }
+        .mobile-menu__hours {
+          margin: 0 !important;
+          text-align: center !important;
+          font-size: 0.68rem !important;
+          letter-spacing: 0.12em !important;
+          text-transform: uppercase !important;
+          color: rgba(244, 238, 225, 0.5) !important;
+          font-family: "Inter", system-ui, sans-serif !important;
+          line-height: 1.4 !important;
+        }
+        @media (min-width: 861px) {
+          .mobile-menu {
+            display: none !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
           }
         }
       `}</style>
@@ -504,39 +743,7 @@ export default function SiteNav({
           <span />
           <span />
         </button>
-
       </header>
-
-
-      {/* SABİT SAĞ ÜST CLOSE BUTONU (Menü ikonuyla TAM AYNI YERDE VE HİZADA) */}
-      {open ? (
-        <button
-          type="button"
-          aria-label="Menüyü kapat"
-          onClick={() => setOpen(false)}
-          style={{
-            position: "fixed",
-            top: "14px",
-            right: "max(18px, env(safe-area-inset-right))",
-            zIndex: 1000000005,
-            width: "44px",
-            height: "44px",
-            background: "transparent",
-            border: 0,
-            color: "#D9A441",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            padding: 0,
-          }}
-        >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9A441" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-      ) : null}
 
       {/* MOBİLDE TAM EKRAN MENÜ PERDESİ */}
       <div
@@ -544,52 +751,83 @@ export default function SiteNav({
         id="mobileMenu"
         hidden={!open}
         aria-hidden={!open}
-        style={{
-          position: "fixed",
-          inset: 0,
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: "100vw",
-          height: "100dvh",
-          zIndex: 999999999,
-          background: "#0D0F0A",
-          backgroundColor: "#0D0F0A",
-          padding: "64px 20px 24px",
-          overflowY: "auto",
-          display: open ? "flex" : "none",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
       >
-        <div
-          className="mobile-menu__panel"
-          style={{
-            maxWidth: "540px",
-            width: "100%",
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            flex: "1 1 auto",
-          }}
-        >
-          <nav aria-label="Mobil menü">
-            <ul className="mobile-menu__links">
-              {links.map((link, i) => (
-                <li key={`m-${link.label}-${link.href}`}>
-                  <a
-                    href={navHref(link.href, link.label)}
-                    data-i={String(i + 1).padStart(2, "0")}
-                    onClick={(e) => jumpTo(e, navHref(link.href, link.label))}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+        <div className="mobile-menu__inner">
+          {/* Üst Bar: Logo & Kapat Butonu */}
+          <div className="mobile-menu__header">
+            <Link
+              className="mobile-menu__brand"
+              href={homeHref}
+              aria-label="Ana sayfa"
+              onClick={(e) => {
+                setOpen(false);
+                if (pathname === "/" || pathname === "") {
+                  e.preventDefault();
+                  window.history.replaceState(null, "", "/");
+                  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                  syncHomeNavReveal(false);
+                  setSolid(false);
+                }
+              }}
+            >
+              <BrandLogo
+                className="mobile-menu__logo-img"
+                src={logoUrl}
+                alt={`${navbar.logoText || "PETRA"} logosu`}
+                height={38}
+              />
+              <span className="mobile-menu__logo-text" hidden={hideText}>
+                {navbar.logoText || "PETRA"}
+              </span>
+            </Link>
+
+            <button
+              type="button"
+              className="mobile-menu__close-btn"
+              aria-label="Menüyü kapat"
+              onClick={() => setOpen(false)}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Menü Linkleri (Kaydırılabilir alan) */}
+          <div className="mobile-menu__body">
+            <nav aria-label="Mobil menü">
+              <ul className="mobile-menu__links">
+                {links.map((link, i) => {
+                  const href = navHref(link.href, link.label);
+                  const active =
+                    href === "/menu" || href.startsWith("/menu/") || href === "/#menu"
+                      ? pathname.startsWith("/menu")
+                      : href === "/blog" || href.startsWith("/blog/")
+                        ? pathname.startsWith("/blog")
+                        : false;
+
+                  return (
+                    <li key={`m-${link.label}-${link.href}`}>
+                      <a
+                        href={href}
+                        className={active ? "is-active" : undefined}
+                        onClick={(e) => jumpTo(e, href)}
+                      >
+                        <span className="mobile-menu__num">{String(i + 1).padStart(2, "0")}</span>
+                        <span className="mobile-menu__title">{link.label}</span>
+                        <svg className="mobile-menu__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </div>
+
+          {/* Alt Kısım: Buton, Telefon, Saatler */}
           <div className="mobile-menu__foot">
             <a
               href={bookHref}
@@ -600,23 +838,14 @@ export default function SiteNav({
             </a>
             {showPhone && phoneHref ? (
               <a className="mobile-menu__phone" href={`tel:${phoneHref.replace(/^tel:/i, "")}`}>
-                {phone}
+                <PhoneIcon />
+                <span>{phone || phoneHref}</span>
               </a>
             ) : null}
             {hours ? <p className="mobile-menu__hours">{hours}</p> : null}
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
     </>
   );
 }

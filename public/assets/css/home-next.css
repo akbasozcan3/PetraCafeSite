@@ -2555,89 +2555,16 @@ html.no-motion .site-shop .pd-related {
   }
 
   .mobile-menu {
-    background:
-      radial-gradient(900px 420px at 110% -10%, rgba(232, 184, 75, 0.18), transparent 52%),
-      linear-gradient(180deg, #12150e 0%, #0c0e0a 100%) !important;
+    background: #0D0F0A !important;
   }
   html.menu-open .wa-float,
   html.menu-open a.wa-float {
     display: none !important;
   }
   .mobile-menu {
-    overflow-y: auto !important;
+    overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
-  }
-  .mobile-menu__panel {
-    padding-top: 0 !important;
-    padding-bottom: 12px !important;
-    gap: 0 !important;
-    flex: 1 1 auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justifyContent: space-between !important;
-  }
-
-
-  .mobile-menu__label {
-    margin: 0 0 6px !important;
-    font-family: Inter, system-ui, sans-serif !important;
-    font-size: 0.62rem !important;
-    letter-spacing: 0.28em !important;
-    color: rgba(232, 184, 75, 0.72) !important;
-  }
-  .mobile-menu__links {
-    flex: 1 1 auto;
-    min-height: 0;
-    justify-content: space-evenly;
-  }
-  .mobile-menu__links a {
-    display: grid !important;
-    grid-template-columns: 2.1rem 1fr;
-    align-items: center;
-    min-height: 0 !important;
-    padding: 7px 0 !important;
-    border-bottom: 1px solid rgba(232, 184, 75, 0.14) !important;
-    font-size: clamp(1.05rem, 4.8vw, 1.28rem) !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.01em;
-    color: #fbf8f1 !important;
-  }
-
-  .mobile-menu__links a::before {
-    content: attr(data-i);
-    font-family: Inter, system-ui, sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    color: #e8b84b;
-  }
-  .mobile-menu__links a:active {
-    color: #e8b84b !important;
-  }
-  .mobile-menu__foot {
-    margin-top: 8px;
-    padding-top: 10px;
-    padding-bottom: 0;
-    flex: 0 0 auto;
-  }
-  .mobile-menu__cta,
-  .mobile-menu .btn {
-    width: 100%;
-    min-height: 44px;
-    border-radius: 2px !important;
-    background: #d9a441 !important;
-    color: #12150e !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.06em;
-  }
-  .mobile-menu__hours {
-    margin: 8px 0 0;
-    text-align: center;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(243, 241, 235, 0.55);
   }
 }
 
@@ -3179,23 +3106,6 @@ html.menu-open .site-shop a.nav__cta,
     margin-right: 0 !important;
   }
 
-  .mobile-menu__links {
-    list-style: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100%;
-    align-items: center !important;
-  }
-  .mobile-menu__links li {
-    width: 100%;
-    text-align: center;
-  }
-  .mobile-menu__links a,
-  .mobile-menu a:not(.btn):not(.mobile-menu__cta):not(.mobile-menu__phone) {
-    justify-content: center !important;
-    justify-items: center;
-    text-align: center;
-  }
 }
 
 @media (min-width: 861px) {
