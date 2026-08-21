@@ -416,7 +416,7 @@
           {
             "ad": "Sade menemen",
             "fiyat": "400",
-            "aciklama": "",
+            "aciklama": "Köy yumurtası, domates, tatlı biber ve taze tereyağı ile bakır tavada hazırlanır.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -430,7 +430,7 @@
           {
             "ad": "Sucuklu menemen",
             "fiyat": "600",
-            "aciklama": "",
+            "aciklama": "Özel dana kasap sucuk, domates, biber ve çiftlik yumurtası.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -444,7 +444,7 @@
           {
             "ad": "Kaşarlı menemen",
             "fiyat": "500",
-            "aciklama": "",
+            "aciklama": "Eriyen taze kaşar peyniri, domates, tatlı biber ve tereyağında köy yumurtası.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -458,7 +458,7 @@
           {
             "ad": "Karışık menemen",
             "fiyat": "650",
-            "aciklama": "",
+            "aciklama": "Dana kasap sucuk, eriyen kaşar peyniri, taze domates ve biber eşliğinde.",
             "fav": true,
             "aktif": true,
             "not": "",
@@ -472,7 +472,7 @@
           {
             "ad": "Sade omlet",
             "fiyat": "400",
-            "aciklama": "",
+            "aciklama": "Taze çiftlik yumurtası, tereyağı ve yeşillik garnitürü ile.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -486,7 +486,7 @@
           {
             "ad": "Sucuklu omlet",
             "fiyat": "550",
-            "aciklama": "",
+            "aciklama": "Kızarmış dana kasap sucuk dilimleri ve taze çırpılmış çiftlik yumurtası.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -500,7 +500,7 @@
           {
             "ad": "Kaşarlı omlet",
             "fiyat": "500",
-            "aciklama": "",
+            "aciklama": "İçi bol eriyen taze kaşar peynirli nefis tereyağlı omlet.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -514,7 +514,7 @@
           {
             "ad": "Karışık omlet",
             "fiyat": "600",
-            "aciklama": "",
+            "aciklama": "Dana sucuk, kaşar peyniri, mantar ve tatlı biberli zengin omlet.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -528,7 +528,7 @@
           {
             "ad": "Kaşarlı gözleme",
             "fiyat": "400",
-            "aciklama": "",
+            "aciklama": "İnce açılmış el yapımı yufkada bol kaşar peyniri, çıtır tereyağlı.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -542,7 +542,7 @@
           {
             "ad": "Kavurmalı gözleme",
             "fiyat": "500",
-            "aciklama": "",
+            "aciklama": "Özel Rize usulü dana kavurma ve tereyağlı çıtır el açması yufka.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -556,7 +556,7 @@
           {
             "ad": "Sucuk kaşar gözleme",
             "fiyat": "450",
-            "aciklama": "",
+            "aciklama": "Dana kasap sucuk ve eriyen kaşar peyniri dolgusu ile.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -570,7 +570,7 @@
           {
             "ad": "Kavurma kaşar gözleme",
             "fiyat": "550",
-            "aciklama": "",
+            "aciklama": "Tavada eriyen kaşar peyniri ve enfes dana kavurma kombinasyonu.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -584,7 +584,7 @@
           {
             "ad": "Breakfast Burger",
             "fiyat": "450",
-            "aciklama": "",
+            "aciklama": "Brioche ekmeğinde dana burger köftesi, yumurta, kaşar peyniri ve özel kahvaltı sosu.",
             "fav": false,
             "aktif": true,
             "not": "",
