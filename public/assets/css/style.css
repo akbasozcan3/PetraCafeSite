@@ -2219,5 +2219,34 @@ html.cart-open body {
   }
 }
 
+/* Temaya Duyarlı Kart, Form & İçerik Stilleri (Karanlık/Açık Tema Garantisi) */
+.form,
+.yorum,
+.kat,
+.contact-lines a,
+.corp,
+.tbl-wrap,
+.petra-legal-content {
+  background: var(--card-bg, #ffffff) !important;
+  color: var(--card-text, #0d0f0a) !important;
+  border-color: var(--card-border, rgba(184, 132, 44, 0.25)) !important;
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: var(--input-bg, #ffffff) !important;
+  color: var(--input-text, #0d0f0a) !important;
+  border-color: var(--input-border, rgba(13, 15, 10, 0.15)) !important;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--brass, #d9a441) !important;
+  outline-color: var(--brass, #d9a441) !important;
+}
+
+
 
 

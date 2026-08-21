@@ -116,6 +116,15 @@ function hexRgb(hex: string): string {
   return `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`;
 }
 
+function getLuminance(hex: string): number {
+  const raw = String(hex || "").replace("#", "").trim();
+  if (raw.length < 6) return 0.9;
+  const r = parseInt(raw.slice(0, 2), 16) / 255;
+  const g = parseInt(raw.slice(2, 4), 16) / 255;
+  const b = parseInt(raw.slice(4, 6), 16) / 255;
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
 export function resolveTheme(theme?: Partial<ThemeContent> | null): ThemeContent {
   return { ...DEFAULT_THEME, ...(theme || {}) };
 }
@@ -126,6 +135,8 @@ export function themeToCssVars(
   const t = resolveTheme(theme);
   const inkRgb = hexRgb(t.ink);
   const creamRgb = hexRgb(t.cream);
+  const isDark = getLuminance(t.paper) < 0.45;
+
   return {
     ["--ink" as string]: t.ink,
     ["--paper" as string]: t.paper,
@@ -139,8 +150,8 @@ export function themeToCssVars(
     ["--olive" as string]: t.olive,
     ["--olive-lo" as string]: t.olive,
     ["--crust" as string]: t.brassLo,
-    ["--line" as string]: `rgba(${inkRgb}, 0.12)`,
-    ["--line-d" as string]: `rgba(${creamRgb}, 0.14)`,
+    ["--line" as string]: `rgba(${inkRgb}, 0.14)`,
+    ["--line-d" as string]: `rgba(${creamRgb}, 0.16)`,
     ["--nav-solid-bg" as string]: t.navSolidBg,
     ["--nav-solid-text" as string]: t.navSolidText,
     ["--nav-hero-text" as string]: t.navHeroText,
@@ -148,6 +159,14 @@ export function themeToCssVars(
     ["--cta-text" as string]: t.ctaText,
     ["--footer-bg" as string]: t.footerBg,
     ["--footer-text" as string]: t.footerText,
+    // Akıllı Kontrast Kart & Form Değişkenleri
+    ["--card-bg" as string]: isDark ? "#141810" : "#FFFFFF",
+    ["--card-border" as string]: isDark ? "rgba(217, 164, 65, 0.3)" : "rgba(184, 132, 44, 0.25)",
+    ["--card-text" as string]: isDark ? "#F4EEE1" : "#0D0F0A",
+    ["--card-muted" as string]: isDark ? "#A8A294" : "#5C5749",
+    ["--input-bg" as string]: isDark ? "#0E120A" : "#FFFFFF",
+    ["--input-border" as string]: isDark ? "rgba(217, 164, 65, 0.35)" : "rgba(13, 15, 10, 0.15)",
+    ["--input-text" as string]: isDark ? "#F4EEE1" : "#0D0F0A",
     background: t.paper,
     color: t.ink,
   } as CSSProperties;
@@ -163,4 +182,5 @@ export function themeCssCustomProperties(
   }
   return out;
 }
+
 
