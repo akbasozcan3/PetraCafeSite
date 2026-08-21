@@ -2939,3 +2939,122 @@
     width: 100%;
   }
 }
+
+/* ========================================================================= */
+/* STOREFRONT & MENÜ KOYU TEMA (DARK THEME) ADAPTASYONU                      */
+/* ========================================================================= */
+html[data-theme="dark"] .site-shop,
+.theme-dark .site-shop {
+  --ink: #F4EEE1;
+  --paper: #0D0F0A;
+  --cream: #141810;
+  --muted: #A8A294;
+  --line: rgba(217, 164, 65, 0.25);
+  background: #0D0F0A !important;
+  color: #F4EEE1 !important;
+}
+
+html[data-theme="dark"] .menu-page,
+.theme-dark .menu-page,
+html[data-theme="dark"] .shop-main,
+.theme-dark .shop-main {
+  background: #0D0F0A !important;
+  color: #F4EEE1 !important;
+}
+
+html[data-theme="dark"] .menu-page__hero h1,
+.theme-dark .menu-page__hero h1,
+html[data-theme="dark"] .menu-page__sec-head h2,
+.theme-dark .menu-page__sec-head h2,
+html[data-theme="dark"] .oc-detail h1,
+.theme-dark .oc-detail h1,
+html[data-theme="dark"] .oc-product-row h2,
+.theme-dark .oc-product-row h2 {
+  color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] .menu-page__lead,
+.theme-dark .menu-page__lead,
+html[data-theme="dark"] .menu-page__note,
+.theme-dark .menu-page__note,
+html[data-theme="dark"] .menu-page__sec-head p,
+.theme-dark .menu-page__sec-head p {
+  color: #A8A294 !important;
+}
+
+html[data-theme="dark"] .menu-page__toc,
+.theme-dark .menu-page__toc {
+  background: #141810 !important;
+  border: 1px solid rgba(217, 164, 65, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme="dark"] .menu-page__toc a,
+.theme-dark .menu-page__toc a {
+  color: #EAE1CE !important;
+  background: transparent !important;
+}
+
+html[data-theme="dark"] .menu-page__toc a:hover,
+.theme-dark .menu-page__toc a:hover,
+html[data-theme="dark"] .menu-page__toc a.is-active,
+.theme-dark .menu-page__toc a.is-active {
+  background: var(--brass, #D9A441) !important;
+  color: #0D0F0A !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="dark"] .menu-row,
+.theme-dark .menu-row {
+  border-bottom-color: rgba(217, 164, 65, 0.2) !important;
+}
+
+html[data-theme="dark"] .menu-row__link:hover,
+.theme-dark .menu-row__link:hover {
+  background: rgba(217, 164, 65, 0.08) !important;
+}
+
+html[data-theme="dark"] .menu-row__line h3,
+.theme-dark .menu-row__line h3 {
+  color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] .menu-row__line strong,
+.theme-dark .menu-row__line strong {
+  color: var(--brass, #D9A441) !important;
+}
+
+html[data-theme="dark"] .menu-row__desc,
+.theme-dark .menu-row__desc {
+  color: #A8A294 !important;
+}
+
+html[data-theme="dark"] .fav__row,
+.theme-dark .fav__row,
+html[data-theme="dark"] .auth__card,
+.theme-dark .auth__card,
+html[data-theme="dark"] .acct__card,
+.theme-dark .acct__card,
+html[data-theme="dark"] .oc-card,
+.theme-dark .oc-card {
+  background: #141810 !important;
+  border: 1px solid rgba(217, 164, 65, 0.25) !important;
+  color: #F4EEE1 !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-theme="dark"] .nav__account-btn,
+.theme-dark .nav__account-btn {
+  background: #141810 !important;
+  border: 1px solid rgba(217, 164, 65, 0.3) !important;
+  color: #F4EEE1 !important;
+}
+
+html[data-theme="dark"] .nav__search-pop,
+.theme-dark .nav__search-pop {
+  background: #141810 !important;
+  border: 1px solid rgba(217, 164, 65, 0.3) !important;
+  color: #F4EEE1 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6) !important;
+}
+

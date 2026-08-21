@@ -205,17 +205,17 @@ export default async function BlogIndexPage() {
           align-items: stretch;
           gap: 28px;
           padding: 22px;
-          background: #ffffff;
+          background: var(--card-bg, #ffffff);
           border-radius: 22px;
-          border: 1px solid rgba(13, 15, 10, 0.09);
-          box-shadow: 0 10px 30px rgba(13, 15, 10, 0.03);
+          border: 1px solid var(--card-border, rgba(13, 15, 10, 0.09));
+          box-shadow: 0 10px 30px rgba(13, 15, 10, 0.05);
           text-decoration: none !important;
-          color: inherit !important;
+          color: var(--card-text, #12140E) !important;
           transition: all 0.2s ease;
         }
         .post-magazine-card:hover {
-          border-color: rgba(184, 132, 44, 0.4);
-          box-shadow: 0 14px 36px rgba(184, 132, 44, 0.08);
+          border-color: var(--brass, rgba(184, 132, 44, 0.5));
+          box-shadow: 0 14px 36px rgba(184, 132, 44, 0.15);
           transform: translateY(-2px);
         }
         .post-magazine-card__thumb {
@@ -224,7 +224,7 @@ export default async function BlogIndexPage() {
           height: 210px;
           border-radius: 16px;
           overflow: hidden;
-          background: #f0ede6;
+          background: #141810;
         }
         .post-magazine-card__thumb img {
           width: 100%;
@@ -252,8 +252,8 @@ export default async function BlogIndexPage() {
           text-transform: uppercase;
         }
         .post-magazine-card__badge {
-          background: rgba(217, 164, 65, 0.14);
-          color: #B8842C;
+          background: rgba(217, 164, 65, 0.16);
+          color: var(--brass, #B8842C);
           padding: 3px 10px;
           border-radius: 6px;
           font-size: 0.76rem;
@@ -262,7 +262,7 @@ export default async function BlogIndexPage() {
           display: inline-flex;
           align-items: center;
           gap: 5px;
-          color: #6E6A5C;
+          color: var(--card-muted, #6E6A5C);
           font-size: 0.78rem;
         }
         .post-magazine-card__title {
@@ -270,13 +270,13 @@ export default async function BlogIndexPage() {
           font-size: clamp(1.25rem, 2.2vw, 1.45rem);
           font-weight: 700;
           line-height: 1.3;
-          color: #12140E;
+          color: var(--card-text, #12140E);
           margin: 0 0 10px 0;
         }
         .post-magazine-card__lead {
           font-size: 0.96rem;
           line-height: 1.6;
-          color: #5E594D;
+          color: var(--card-muted, #5E594D);
           margin: 0;
         }
         .post-magazine-card__footer {
@@ -288,26 +288,27 @@ export default async function BlogIndexPage() {
           gap: 8px;
           font-size: 0.88rem;
           font-weight: 700;
-          color: #B8842C;
+          color: var(--brass, #B8842C);
         }
 
         .blog-cta-banner {
-          background: #ffffff;
-          border: 1px solid rgba(184, 132, 44, 0.25);
+          background: var(--card-bg, #ffffff);
+          border: 1px solid var(--card-border, rgba(184, 132, 44, 0.25));
           border-radius: 22px;
           padding: 32px 28px;
           margin-top: 40px;
-          box-shadow: 0 10px 30px rgba(13,15,10,0.03);
+          box-shadow: 0 10px 30px rgba(13,15,10,0.05);
+          color: var(--card-text, #12140E);
         }
         .blog-cta-banner h2 {
           font-family: var(--f-head, "Playfair Display", Georgia, serif);
           font-size: 1.45rem;
-          color: #12140E;
+          color: var(--card-text, #12140E);
           font-weight: 700;
           margin: 0 0 8px 0;
         }
         .blog-cta-banner p {
-          color: #5E594D;
+          color: var(--card-muted, #5E594D);
           font-size: 0.96rem;
           line-height: 1.6;
           margin: 0 0 20px 0;

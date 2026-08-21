@@ -128,8 +128,20 @@ export default async function MenuPage() {
           })}
 
           {content.menu?.not ? (
-            <div className="mt-12 mb-8 rounded-2xl border border-black/10 bg-[#FAF6EE] p-6 text-center shadow-sm">
-              <p className="text-sm font-medium text-[#7C6E53] leading-relaxed max-w-2xl mx-auto">
+            <div
+              style={{
+                marginTop: 48,
+                marginBottom: 32,
+                borderRadius: 20,
+                border: "1px solid var(--card-border, rgba(184, 132, 44, 0.25))",
+                background: "var(--card-bg, #FAF6EE)",
+                color: "var(--card-muted, #7C6E53)",
+                padding: "20px 24px",
+                textAlign: "center",
+                boxShadow: "0 8px 24px -8px rgba(0,0,0,0.15)",
+              }}
+            >
+              <p style={{ margin: 0, fontSize: "0.9rem", fontWeight: 500, lineHeight: 1.6, maxWidth: 640, marginInline: "auto" }}>
                 ℹ️ {content.menu.not}
               </p>
             </div>
