@@ -2552,6 +2552,91 @@ html[data-theme="dark"] .menu-page__toc a.is-active {
   font-weight: 700 !important;
 }
 
+/* ==========================================================================
+   TÜM BÖLÜMLER (SECTION) İÇİN EVRENSEL YÜKSEK KONTRAST & TİPOGRAFİ
+   ========================================================================== */
+
+/* Koyu Zeminli Bölümler: #hakkimizda, #pasta, #rezervasyon, .foot */
+.section--dark,
+#hakkimizda,
+#pasta,
+#rezervasyon,
+.foot {
+  background: #0D1008 !important;
+  color: #FFFFFF !important;
+}
+
+.section--dark .h2,
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4,
+#hakkimizda .h2,
+#pasta .h2,
+#rezervasyon .h2 {
+  color: #FFFFFF !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.section--dark .lead,
+.section--dark .body,
+.section--dark p:not(.eyebrow),
+#hakkimizda p,
+#pasta p:not(.eyebrow),
+#rezervasyon p:not(.eyebrow) {
+  color: #F4EEE1 !important;
+  opacity: 1 !important;
+}
+
+.section--dark .eyebrow,
+#hakkimizda .eyebrow,
+#pasta .eyebrow,
+#rezervasyon .eyebrow {
+  color: #D9A441 !important;
+}
+
+/* Koyu Bölümdeki Rozetler ve Kutular */
+.pasta-copy .facts b,
+.pasta-copy .fact b,
+.pasta-facts b {
+  color: #D9A441 !important;
+}
+.pasta-copy .facts span,
+.pasta-copy .fact span,
+.pasta-facts span {
+  color: #E2DBD0 !important;
+}
+
+/* SSS (#sss) ve Yorumlar (#yorumlar) Bölümleri */
+.faq__item summary {
+  color: var(--ink, #0D0F0A) !important;
+}
+.faq__item p {
+  color: var(--muted, #5C5749) !important;
+}
+html[data-theme="dark"] .faq__item summary {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .faq__item p {
+  color: #E2DBD0 !important;
+}
+
+.yorum blockquote {
+  color: var(--ink, #0D0F0A) !important;
+}
+.yorum figcaption b {
+  color: var(--ink, #0D0F0A) !important;
+}
+html[data-theme="dark"] .yorum blockquote,
+html[data-theme="dark"] .yorum figcaption b {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .yorum figcaption span {
+  color: #C8C2B4 !important;
+}
+
+
 
 
 
