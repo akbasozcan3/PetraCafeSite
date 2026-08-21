@@ -18,7 +18,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
   if (!h) return null;
 
   return (
-    <section className="section section--dark" id="hakkimizda">
+    <section className="section" id="hakkimizda">
       <div className="wrap grid-2">
 
         <div>
@@ -72,18 +72,18 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
               <div
                 className="tilt-card__badge"
                 style={{
-                  background: "var(--card-bg, #141810)",
-                  border: "1px solid var(--card-border, rgba(217, 164, 65, 0.35))",
+                  background: "var(--card-bg, #ffffff)",
+                  border: "1.5px solid var(--card-border, rgba(217, 164, 65, 0.4))",
                   backdropFilter: "blur(14px)",
                   borderRadius: 14,
                   padding: "12px 18px",
                   boxShadow: "0 14px 34px -12px rgba(0, 0, 0, 0.5)",
                 }}
               >
-                <b style={{ color: "var(--card-text, #ffffff)", display: "block", fontSize: "1.15rem", fontWeight: 700 }}>
+                <b style={{ color: "var(--card-text, #0d0f0a)", display: "block", fontSize: "1.18rem", fontWeight: 800 }}>
                   {h.badgeBaslik || "Petra"}
                 </b>
-                <span style={{ color: "var(--brass, #d9a441)", display: "block", fontSize: "0.82rem", fontWeight: 700, marginTop: 2 }}>
+                <span style={{ color: "var(--brass-lo, #b8842c)", display: "block", fontSize: "0.85rem", fontWeight: 800, marginTop: 3, letterSpacing: "0.02em" }}>
                   {h.badgeAlt || "Cafe · Restaurant · Pool"}
                 </span>
               </div>

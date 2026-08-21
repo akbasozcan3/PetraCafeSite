@@ -2768,21 +2768,25 @@ a.nav__cta:hover,
 .tilt-card__badge {
   background: var(--card-bg, #ffffff) !important;
   color: var(--card-text, #0d0f0a) !important;
-  border: 1px solid var(--card-border, rgba(184, 132, 44, 0.3)) !important;
+  border: 1.5px solid var(--brass, #d9a441) !important;
   backdrop-filter: blur(12px) !important;
   box-shadow: 0 14px 34px -12px rgba(0, 0, 0, 0.4) !important;
 }
 .tilt-card__badge b {
   color: var(--card-text, #0d0f0a) !important;
+  font-weight: 800 !important;
+  font-size: 1.18rem !important;
 }
 .tilt-card__badge span {
-  color: var(--brass, #b8842c) !important;
-  font-weight: 700 !important;
+  color: var(--brass-lo, #b8842c) !important;
+  font-weight: 800 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.02em !important;
 }
 html[data-theme="dark"] .tilt-card__badge,
 .theme-dark .tilt-card__badge {
   background: rgba(20, 24, 16, 0.95) !important;
-  border: 1px solid rgba(217, 164, 65, 0.35) !important;
+  border: 1.5px solid rgba(217, 164, 65, 0.4) !important;
 }
 html[data-theme="dark"] .tilt-card__badge b,
 .theme-dark .tilt-card__badge b {

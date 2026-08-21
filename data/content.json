@@ -399,9 +399,23 @@
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.641Z",
             "updatedAt": "2026-08-19T17:09:45.641Z"
+          },
+          {
+            "ad": "Hızlı Kahvaltı Tabağı",
+            "fiyat": "350",
+            "aciklama": "Ezine peyniri, taze kaşar, siyah ve yeşil zeytin, petek bal, tereyağı, haşlanmış yumurta, domates, salatalık ve 2 bardak taze çay.",
+            "fav": false,
+            "aktif": true,
+            "not": "",
+            "slug": "hizli-kahvalti-tabagi",
+            "link": "/menu/kahvalti/hizli-kahvalti-tabagi",
+            "id": "p_hizli-kahvalti-tabagi",
+            "source": "local",
+            "createdAt": "2026-08-21T18:05:00.000Z",
+            "updatedAt": "2026-08-21T18:05:00.000Z"
           }
         ],
-        "adet": "3 çeşit",
+        "adet": "4 çeşit",
         "aktif": true
       },
       {

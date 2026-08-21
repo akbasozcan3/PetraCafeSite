@@ -36,7 +36,7 @@ export default function HomePasta({ pasta }: { pasta: PastaContent | null | unde
   ].filter(Boolean) as { k: string; v: string }[];
 
   return (
-    <section className="section section--dark pasta-sec" id="pasta">
+    <section className="section pasta-sec" id="pasta">
       <div className="wrap pasta-layout">
         <div className="pasta-grid" data-stagger="">
           {shots.map((g, i) => {
