@@ -471,18 +471,66 @@ export default function SiteNav({
         id="mobileMenu"
         hidden={!open}
         aria-hidden={!open}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 99999,
+          background: "#0D0F0A",
+          padding: "24px 20px 48px",
+          overflowY: "auto",
+          display: open ? "block" : "none",
+        }}
       >
-        <button
-          type="button"
-          className="mobile-menu__close-btn"
-          aria-label="Menüyü Kapat"
-          onClick={() => setOpen(false)}
-        >
-          ✕
-        </button>
+        <div className="mobile-menu__panel" style={{ maxWidth: "540px", margin: "0 auto", position: "relative" }}>
+          {/* Üst Başlık & Sağda Parlak Altın Kapatma Butonu */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingBottom: "16px",
+              marginBottom: "16px",
+              borderBottom: "1px solid rgba(217, 164, 65, 0.3)",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "Inter, system-ui, sans-serif",
+                fontSize: "12px",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "#D9A441",
+              }}
+            >
+              {navbar.mobileLabel || "MENÜ"}
+            </span>
 
-        <div className="mobile-menu__panel">
-          <p className="mobile-menu__label">{navbar.mobileLabel || "Menü"}</p>
+            <button
+              type="button"
+              aria-label="Menüyü Kapat"
+              onClick={() => setOpen(false)}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                padding: "7px 16px",
+                borderRadius: "999px",
+                background: "rgba(217, 164, 65, 0.15)",
+                border: "1.5px solid #D9A441",
+                color: "#D9A441",
+                fontSize: "13px",
+                fontWeight: 700,
+                cursor: "pointer",
+                lineHeight: 1,
+              }}
+            >
+              <span style={{ fontSize: "16px", lineHeight: 1 }}>✕</span>
+              <span>Kapat</span>
+            </button>
+          </div>
+
           <nav aria-label="Mobil menü">
             <ul className="mobile-menu__links">
               {links.map((link, i) => (
@@ -515,6 +563,7 @@ export default function SiteNav({
           </div>
         </div>
       </div>
+
 
 
     </>
