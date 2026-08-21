@@ -2637,6 +2637,85 @@ html.menu-open .hizmet__card {
   display: none !important;
 }
 
+/* ==========================================================================
+   TEMA & BUTON KONTRAST GARANTİSİ (GENEL)
+   ========================================================================== */
+.btn,
+a.btn,
+button.btn,
+a.btn:not(.btn--light):not(.nav__cta),
+a.btn:not(.btn--light):not(.nav__cta):link,
+a.btn:not(.btn--light):not(.nav__cta):visited {
+  background: var(--char, #16190F) !important;
+  color: #F4EEE1 !important;
+  border: 1px solid rgba(217, 164, 65, 0.35) !important;
+  text-shadow: none !important;
+}
+
+.btn:hover,
+a.btn:not(.btn--light):not(.nav__cta):hover {
+  background: var(--olive-lo, #5A6838) !important;
+  color: #F4EEE1 !important;
+  border-color: var(--brass, #D9A441) !important;
+}
+
+.btn--light,
+a.btn--light,
+a.btn--light:link,
+a.btn--light:visited,
+a.btn--light:hover,
+a.nav__cta,
+a.nav__cta:link,
+a.nav__cta:visited,
+a.nav__cta:hover,
+.mobile-menu__cta,
+a.mobile-menu__cta {
+  background: var(--brass, #D9A441) !important;
+  color: #0D0F0A !important;
+  font-weight: 700 !important;
+  border: none !important;
+  text-shadow: none !important;
+}
+
+.btn--light:hover,
+a.btn--light:hover,
+a.nav__cta:hover,
+.mobile-menu__cta:hover {
+  background: #EAE1CE !important;
+  color: #0D0F0A !important;
+}
+
+/* Kart, Kutu ve Form Kontrast Adaptasyonu */
+[data-theme="dark"] .yorum,
+.theme-dark .yorum,
+[data-theme="dark"] .faq__item,
+.theme-dark .faq__item,
+[data-theme="dark"] .rmenu__board,
+.theme-dark .rmenu__board,
+[data-theme="dark"] .rmenu__tab,
+.theme-dark .rmenu__tab,
+[data-theme="dark"] .kat,
+.theme-dark .kat,
+[data-theme="dark"] .contact-lines a,
+.theme-dark .contact-lines a,
+[data-theme="dark"] .form,
+.theme-dark .form {
+  background: var(--card-bg, #141810) !important;
+  border: 1px solid var(--card-border, rgba(217, 164, 65, 0.25)) !important;
+  color: var(--card-text, #F4EEE1) !important;
+}
+
+[data-theme="dark"] .field input,
+.theme-dark .field input,
+[data-theme="dark"] .field select,
+.theme-dark .field select,
+[data-theme="dark"] .field textarea,
+.theme-dark .field textarea {
+  background: var(--input-bg, #0E120A) !important;
+  border: 1px solid var(--input-border, rgba(217, 164, 65, 0.35)) !important;
+  color: var(--input-text, #F4EEE1) !important;
+}
+
 
 
 

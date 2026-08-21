@@ -3284,18 +3284,302 @@ html[data-theme="dark"] .site-home .eyebrow {
   color: #E2DBD0 !important;
 }
 
-/* Tüm animasyon gizlemelerini kaldır (Varsayılan %100 Görünür) */
-.site-home [data-fade],
-.site-home [data-split],
-.site-home [data-reveal-mask],
-.site-home [data-stagger],
-.site-home .h2,
-.site-home .lead,
-.site-home .hizmet__card strong {
-  opacity: 1 !important;
-  transform: none !important;
-  visibility: visible !important;
-  clip-path: none !important;
+/* ==========================================================================
+   TEMA & KONTRAST DÜZELTMELERİ (LIGHT & DARK TEMA %100 KUSURSUZ OKUNABİLİRLİK)
+   ========================================================================== */
+
+/* 1. TÜM BUTONLAR İÇİN KONTRAST GARANTİSİ */
+.btn,
+a.btn,
+button.btn,
+a.btn:not(.btn--light):not(.nav__cta),
+a.btn:not(.btn--light):not(.nav__cta):link,
+a.btn:not(.btn--light):not(.nav__cta):visited {
+  background: var(--char, #16190F) !important;
+  color: #F4EEE1 !important;
+  border: 1px solid rgba(217, 164, 65, 0.35) !important;
+  text-shadow: none !important;
+}
+
+.btn:hover,
+a.btn:not(.btn--light):not(.nav__cta):hover {
+  background: var(--olive-lo, #5A6838) !important;
+  color: #F4EEE1 !important;
+  border-color: var(--brass, #D9A441) !important;
+}
+
+/* Altın / Açık Butonlar (Tüm menü, Rezervasyon vb.) */
+.btn--light,
+a.btn--light,
+a.btn--light:link,
+a.btn--light:visited,
+a.btn--light:hover,
+a.nav__cta,
+a.nav__cta:link,
+a.nav__cta:visited,
+a.nav__cta:hover,
+.mobile-menu__cta,
+a.mobile-menu__cta {
+  background: var(--brass, #D9A441) !important;
+  color: #0D0F0A !important;
+  font-weight: 700 !important;
+  border: none !important;
+  text-shadow: none !important;
+}
+
+.btn--light:hover,
+a.btn--light:hover,
+a.nav__cta:hover,
+.mobile-menu__cta:hover {
+  background: #EAE1CE !important;
+  color: #0D0F0A !important;
+}
+
+/* Havuz & Plaj Instagram Butonu */
+.pasta-cta .pasta-ig,
+a.pasta-ig {
+  background: transparent !important;
+  color: var(--brass, #D9A441) !important;
+  border: 1.5px solid var(--brass, #D9A441) !important;
+}
+
+.pasta-cta .pasta-ig:hover,
+a.pasta-ig:hover {
+  background: var(--brass, #D9A441) !important;
+  color: #0D0F0A !important;
+}
+
+/* 2. MENÜ BÖLÜMÜ (#menu) KART VE SEKMELERİ */
+.site-home .rmenu__tab,
+.rmenu__tab {
+  background: var(--card-bg, #FFFFFF) !important;
+  color: var(--card-text, #0D0F0A) !important;
+  border: 1px solid var(--card-border, rgba(13, 15, 10, 0.12)) !important;
+}
+
+.site-home .rmenu__tab em,
+.rmenu__tab em {
+  color: var(--brass-lo, #B8842C) !important;
+}
+
+.site-home .rmenu:has(.rmenu__radio[data-i="0"]:checked) .rmenu__tab[data-i="0"],
+.site-home .rmenu:has(.rmenu__radio[data-i="1"]:checked) .rmenu__tab[data-i="1"],
+.site-home .rmenu:has(.rmenu__radio[data-i="2"]:checked) .rmenu__tab[data-i="2"],
+.site-home .rmenu:has(.rmenu__radio[data-i="3"]:checked) .rmenu__tab[data-i="3"],
+.site-home .rmenu:has(.rmenu__radio[data-i="4"]:checked) .rmenu__tab[data-i="4"],
+.site-home .rmenu:has(.rmenu__radio[data-i="5"]:checked) .rmenu__tab[data-i="5"],
+.site-home .rmenu:has(.rmenu__radio[data-i="6"]:checked) .rmenu__tab[data-i="6"],
+.site-home .rmenu:has(.rmenu__radio[data-i="7"]:checked) .rmenu__tab[data-i="7"],
+.site-home .rmenu:has(.rmenu__radio[data-i="8"]:checked) .rmenu__tab[data-i="8"],
+.site-home .rmenu__tab.is-on,
+.site-home .rmenu__tab:hover {
+  background: var(--brass, #D9A441) !important;
+  border-color: var(--brass, #D9A441) !important;
+  color: #0D0F0A !important;
+}
+
+.site-home .rmenu:has(.rmenu__radio[data-i="0"]:checked) .rmenu__tab[data-i="0"] em,
+.site-home .rmenu:has(.rmenu__radio[data-i="1"]:checked) .rmenu__tab[data-i="1"] em,
+.site-home .rmenu:has(.rmenu__radio[data-i="2"]:checked) .rmenu__tab[data-i="2"] em,
+.site-home .rmenu:has(.rmenu__radio[data-i="3"]:checked) .rmenu__tab[data-i="3"] em,
+.site-home .rmenu:has(.rmenu__radio[data-i="4"]:checked) .rmenu__tab[data-i="4"] em,
+.site-home .rmenu:has(.rmenu__radio[data-i="5"]:checked) .rmenu__tab[data-i="5"] em,
+.site-home .rmenu:has(.rmenu__radio[data-i="6"]:checked) .rmenu__tab[data-i="6"] em,
+.site-home .rmenu:has(.rmenu__radio[data-i="7"]:checked) .rmenu__tab[data-i="7"] em,
+.site-home .rmenu:has(.rmenu__radio[data-i="8"]:checked) .rmenu__tab[data-i="8"] em,
+.site-home .rmenu__tab.is-on em,
+.site-home .rmenu__tab:hover em {
+  color: #0D0F0A !important;
+  font-weight: 700 !important;
+}
+
+.site-home .rmenu__board,
+.rmenu__board {
+  background: var(--card-bg, #FFFFFF) !important;
+  border: 1px solid var(--card-border, rgba(13, 15, 10, 0.12)) !important;
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .rmenu__board-head h3,
+.rmenu__board-head h3 {
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .rmenu__board-head p,
+.rmenu__board-head p {
+  color: var(--card-muted, #6E6A5C) !important;
+}
+
+.site-home .rmenu__item,
+.rmenu__item {
+  color: var(--card-text, #0D0F0A) !important;
+  border-bottom: 1px solid var(--card-border, rgba(13, 15, 10, 0.08)) !important;
+}
+
+.site-home .rmenu__name,
+.rmenu__name {
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .rmenu__desc,
+.rmenu__desc {
+  color: var(--card-muted, #6E6A5C) !important;
+}
+
+.site-home .rmenu__price,
+.rmenu__price {
+  color: var(--brass, #D9A441) !important;
+}
+
+.site-home .rmenu__dots,
+.rmenu__dots {
+  background-image: radial-gradient(circle, var(--brass, #D9A441) 1px, transparent 1px) !important;
+}
+
+.site-home .rmenu__more,
+.rmenu__more {
+  color: var(--brass, #D9A441) !important;
+}
+
+.site-home .rmenu__pick,
+.rmenu__pick {
+  background: var(--card-bg, #FFFFFF) !important;
+  border: 1px solid var(--card-border, rgba(13, 15, 10, 0.12)) !important;
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .rmenu__pick-body strong,
+.rmenu__pick-body strong {
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .rmenu__pick-body em,
+.rmenu__pick-body em {
+  color: var(--card-muted, #6E6A5C) !important;
+}
+
+/* 3. SSS (FAQ) BÖLÜMÜ */
+.site-home .faq__item,
+.faq__item {
+  background: var(--card-bg, #FFFFFF) !important;
+  border: 1px solid var(--card-border, rgba(13, 15, 10, 0.1)) !important;
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .faq__item summary,
+.faq__item summary {
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .faq__chev,
+.faq__chev {
+  color: var(--brass, #D9A441) !important;
+}
+
+.site-home .faq__item p,
+.site-home .faq__a p,
+.faq__item p,
+.faq__a p {
+  color: var(--card-muted, #6E6A5C) !important;
+}
+
+.faq-intro__cta {
+  color: var(--brass, #D9A441) !important;
+}
+
+/* 4. YORUMLAR (REVIEWS) & GOOGLE BADGE */
+.site-home .yorum,
+.yorum {
+  background: var(--card-bg, #FFFFFF) !important;
+  border: 1px solid var(--card-border, rgba(13, 15, 10, 0.1)) !important;
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .yorum blockquote,
+.yorum blockquote {
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .yorum figcaption b,
+.yorum figcaption b {
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .yorum figcaption span,
+.yorum figcaption span {
+  color: var(--card-muted, #6E6A5C) !important;
+}
+
+.site-home .reviews-badge,
+#yorumlar .reviews-badge {
+  background: var(--card-bg, #FFFFFF) !important;
+  border: 1px solid var(--card-border, rgba(13, 15, 10, 0.12)) !important;
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .reviews-score,
+#yorumlar .reviews-score {
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.site-home .reviews-count,
+#yorumlar .reviews-count {
+  color: var(--card-muted, #6E6A5C) !important;
+}
+
+.site-home .reviews-badge-cta,
+#yorumlar .reviews-badge-cta {
+  color: var(--brass, #D9A441) !important;
+  font-weight: 700 !important;
+}
+
+.site-home .reviews-badge-g,
+#yorumlar .reviews-badge-g {
+  background: var(--input-bg, #F7F7F5) !important;
+  border: 1px solid var(--card-border) !important;
+}
+
+/* 5. DİĞER KARTLAR & FORMLAR */
+.kat,
+.contact-lines a {
+  background: var(--card-bg, #FFFFFF) !important;
+  border: 1px solid var(--card-border, rgba(13, 15, 10, 0.12)) !important;
+}
+
+.kat__ic h2,
+.contact-lines a b {
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.contact-lines a span {
+  color: var(--card-muted, #6E6A5C) !important;
+}
+
+.form {
+  background: var(--card-bg, #FFFFFF) !important;
+  border: 1px solid var(--card-border, rgba(13, 15, 10, 0.12)) !important;
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: var(--input-bg, #FFFFFF) !important;
+  border: 1px solid var(--input-border, rgba(13, 15, 10, 0.15)) !important;
+  color: var(--input-text, #0D0F0A) !important;
+}
+
+.field label {
+  color: var(--card-text, #0D0F0A) !important;
+}
+
+/* Koyu Mod İçin Zemin Adaptasyonu */
+html[data-theme="dark"] .section--warm,
+html.theme-dark .section--warm,
+html[data-theme="dark"] .section--brass,
+html.theme-dark .section--brass {
+  background: var(--paper, #0D0F0A) !important;
+  color: var(--ink, #F4EEE1) !important;
 }
 
 
