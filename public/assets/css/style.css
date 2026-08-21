@@ -2601,6 +2601,16 @@ header.nav.is-menu {
   pointer-events: none !important;
 }
 
+html.menu-open main > *:not(.nav):not(.mobile-menu),
+html.menu-open section,
+html.menu-open #scene,
+html.menu-open .gate,
+html.menu-open .hizmetler,
+html.menu-open .cards,
+html.menu-open .card,
+html.menu-open .hizmet__card {
+  visibility: hidden !important;
+}
 
 .mobile-menu {
   position: fixed !important;
@@ -2613,10 +2623,10 @@ header.nav.is-menu {
   height: 100vh !important;
   height: 100dvh !important;
   max-height: 100dvh !important;
-  z-index: 9999999 !important;
+  z-index: 999999999 !important;
   background: #0D0F0A !important;
   background-color: #0D0F0A !important;
-  padding: 16px 20px 48px !important;
+  padding: 0 0 48px 0 !important;
   overflow-y: auto !important;
   border-top: none !important;
 }
@@ -2625,6 +2635,7 @@ header.nav.is-menu {
 .mobile-menu[hidden] {
   display: none !important;
 }
+
 
 
 
