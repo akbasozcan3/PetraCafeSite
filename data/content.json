@@ -107,7 +107,7 @@
         "x": 50,
         "y": 50,
         "size": 34,
-        "color": "#FFFEFA",
+        "color": "#FFFFFF",
         "font": "serif",
         "weight": 700,
         "gizle": false
@@ -125,16 +125,16 @@
         "x": 50,
         "y": 58,
         "size": 14,
-        "color": "#F3F1EB",
+        "color": "#E8B84B",
         "font": "sans",
-        "weight": 500,
+        "weight": 600,
         "gizle": false
       },
       "welcomeLead": {
         "x": 50,
         "y": 62,
         "size": 15,
-        "color": "#F4EEE1",
+        "color": "#FFFFFF",
         "font": "sans",
         "weight": 500,
         "gizle": false

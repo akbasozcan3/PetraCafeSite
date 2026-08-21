@@ -2520,38 +2520,55 @@ html[data-theme="light"] #rezervasyon .eyebrow,
   color: rgba(244, 238, 225, 0.65) !important;
 }
 
-/* 6. Hero Sahnesi (3D/Video) Metinleri Asla Koyu Olmaz - Her Zaman Beyaz & Altın */
+/* 6. Hero Sahnesi (3D/Video) Metinleri - Gölgesiz, Net Beyaz & Altın */
 .gate,
 .gate__stage,
 .gate .hero-welcome,
 .gate .hero-welcome__card,
 .site-home .gate .hero-welcome,
 .site-home .gate .hero-welcome__card {
-  color: #FFFEFA !important;
+  color: #FFFFFF !important;
+  text-shadow: none !important;
 }
 
 .gate .hero-welcome__title,
 .site-home .gate .hero-welcome__title,
 .gate h1.hero-welcome__title,
-h1.hero-welcome__title {
-  color: #FFFEFA !important;
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85), 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+h1.hero-welcome__title,
+.hero-welcome__title {
+  color: #FFFFFF !important;
+  text-shadow: none !important;
 }
 
 .gate .hero-welcome__lead,
 .site-home .gate .hero-welcome__lead,
 .gate p.hero-welcome__lead,
-p.hero-welcome__lead {
-  color: rgba(255, 254, 250, 0.92) !important;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.85) !important;
+p.hero-welcome__lead,
+.hero-welcome__lead {
+  color: #FFFFFF !important;
+  text-shadow: none !important;
 }
 
 .gate .hero-welcome__eyebrow,
 .site-home .gate .hero-welcome__eyebrow,
 .gate p.hero-welcome__eyebrow,
-p.hero-welcome__eyebrow {
-  color: #E8B84B !important;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85) !important;
+p.hero-welcome__eyebrow,
+.hero-welcome__eyebrow {
+  color: #D9A441 !important;
+  text-shadow: none !important;
+}
+
+.gate .gate__boot-text,
+.gate__boot-text,
+#gateBoot .gate__boot-text {
+  color: #D9A441 !important;
+  text-shadow: none !important;
+  font-weight: 600 !important;
+}
+
+.gate__boot-spin,
+#gateBoot .gate__boot-spin {
+  border-top-color: #D9A441 !important;
 }
 
 .gate .gate__scroll,
@@ -2560,13 +2577,13 @@ p.hero-welcome__eyebrow {
 #scrollHint .gate__scroll-text,
 .gate__mouse,
 #scrollHint .gate__mouse {
-  color: #FFFEFA !important;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85) !important;
+  color: #FFFFFF !important;
+  text-shadow: none !important;
 }
 
 .gate__mouse,
 #scrollHint .gate__mouse {
-  border-color: rgba(255, 254, 250, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.75) !important;
 }
 
 /* 7. Footer Marka & Metin Beyazlık Garantisi */
