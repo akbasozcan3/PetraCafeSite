@@ -341,24 +341,34 @@ export default function SiteNav({
             display: flex !important;
             justify-content: space-between !important;
             align-items: center !important;
+            width: 100% !important;
             padding-left: max(16px, env(safe-area-inset-left)) !important;
             padding-right: max(16px, env(safe-area-inset-right)) !important;
           }
           header.nav.site-nav .nav__logo {
+            order: 1 !important;
             margin-right: auto !important;
             margin-left: 0 !important;
+            flex-shrink: 0 !important;
+          }
+          header.nav.site-nav .nav__links,
+          header.nav.site-nav .nav__actions {
+            display: none !important;
           }
           header.nav.site-nav .nav__burger {
+            order: 2 !important;
             margin-left: auto !important;
             margin-right: 0 !important;
             display: inline-flex !important;
             color: #D9A441 !important;
+            flex-shrink: 0 !important;
           }
           header.nav.site-nav .nav__burger span {
             background: #D9A441 !important;
           }
         }
       `}</style>
+
 
       <header
         className={`nav site-nav${solid ? " is-solid" : " is-hero"}${open ? " is-menu" : ""}`}
@@ -424,19 +434,6 @@ export default function SiteNav({
 
 
 
-        <button
-          className={`nav__burger${open ? " is-open" : ""}`}
-          type="button"
-          aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
-          aria-expanded={open}
-          aria-controls="mobileMenu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-
         <div className="nav__actions">
           {showPhone && phoneHref ? (
             <a className="nav__phone" href={`tel:${phoneHref.replace(/^tel:/i, "")}`}>
@@ -453,6 +450,20 @@ export default function SiteNav({
             {bookLabel}
           </a>
         </div>
+
+        <button
+          className={`nav__burger${open ? " is-open" : ""}`}
+          type="button"
+          aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
+          aria-expanded={open}
+          aria-controls="mobileMenu"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
       </header>
 
       <div
