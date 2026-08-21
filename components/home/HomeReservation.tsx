@@ -447,7 +447,9 @@ export default function HomeReservation({
               {currentStep === 1 && (
                 <div>
                   <div className="petra-form__head" style={{ marginBottom: 16 }}>
-                    <p className="petra-form__kicker">1. ADIM</p>
+                    <p className="petra-form__kicker" style={{ color: "var(--brass-lo, #b8842c)", fontWeight: 700, margin: 0, fontSize: 11.5, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+                      1. ADIM
+                    </p>
                     <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--card-text, #0d0f0a)", margin: "4px 0" }}>
                       Ne zaman gelmek istersiniz?
                     </h3>
@@ -609,7 +611,9 @@ export default function HomeReservation({
                   <div className="petra-form__head" style={{ marginBottom: 12 }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                       <div>
-                        <p className="petra-form__kicker">2. ADIM</p>
+                        <p className="petra-form__kicker" style={{ color: "var(--brass-lo, #b8842c)", fontWeight: 700, margin: 0, fontSize: 11.5, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+                          2. ADIM
+                        </p>
                         <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--card-text, #0d0f0a)", margin: "4px 0" }}>
                           Masa / Loca Seçin
                         </h3>
@@ -700,7 +704,9 @@ export default function HomeReservation({
               {currentStep === 3 && (
                 <form onSubmit={submit}>
                   <div className="petra-form__head" style={{ marginBottom: 12 }}>
-                    <p className="petra-form__kicker">3. ADIM (SON)</p>
+                    <p className="petra-form__kicker" style={{ color: "var(--brass-lo, #b8842c)", fontWeight: 700, margin: 0, fontSize: 11.5, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+                      3. ADIM (SON)
+                    </p>
                     <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--card-text, #0d0f0a)", margin: "4px 0" }}>
                       Misafir Bilgileri & Onay
                     </h3>

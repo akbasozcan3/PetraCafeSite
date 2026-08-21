@@ -854,8 +854,24 @@ export default function SiteNav({
           <div className="mobile-menu__foot">
             <a
               href={bookHref}
-              className="btn btn--lg mobile-menu__cta"
+              className="mobile-menu__cta"
               onClick={() => setOpen(false)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                minHeight: "46px",
+                background: "var(--brass, #D9A441)",
+                color: "#0D0F0A",
+                fontWeight: 700,
+                fontSize: "0.92rem",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                borderRadius: 999,
+                textDecoration: "none",
+                boxShadow: "0 4px 16px rgba(217, 164, 65, 0.35)",
+              }}
             >
               {bookLabel}
             </a>
