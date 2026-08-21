@@ -2569,10 +2569,15 @@ header.nav.site-nav {
   background: #D9A441 !important;
 }
 
-header.nav.is-menu {
+header.nav.is-menu,
+header.nav.is-solid.is-menu,
+.site-nav.is-menu {
   background: #0D0F0A !important;
+  background-color: #0D0F0A !important;
   backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border-bottom: 1px solid rgba(217, 164, 65, 0.25) !important;
+  box-shadow: none !important;
 }
 
 .mobile-menu {
@@ -2583,10 +2588,12 @@ header.nav.is-menu {
   right: 0 !important;
   z-index: 99999 !important;
   background: #0D0F0A !important;
+  background-color: #0D0F0A !important;
   padding: 20px 20px 48px !important;
   overflow-y: auto !important;
   border-top: 1px solid rgba(217, 164, 65, 0.25) !important;
 }
+
 
 
 

@@ -336,10 +336,18 @@ export default function SiteNav({
             justify-content: center !important;
           }
         }
-        header.nav.is-menu {
+        header.nav.is-menu,
+        header.nav.is-solid.is-menu,
+        .site-nav.is-menu {
           background: #0D0F0A !important;
+          background-color: #0D0F0A !important;
           backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
           border-bottom: 1px solid rgba(217, 164, 65, 0.25) !important;
+          box-shadow: none !important;
+        }
+        header.nav.is-menu .nav__logo-text {
+          color: #FFFFFF !important;
         }
         @media (max-width: 860px) {
           header.nav.site-nav {
@@ -352,6 +360,7 @@ export default function SiteNav({
           }
           header.nav.site-nav.is-menu {
             background: #0D0F0A !important;
+            background-color: #0D0F0A !important;
           }
           header.nav.site-nav .nav__logo {
             order: 1 !important;
@@ -379,14 +388,10 @@ export default function SiteNav({
         }
       `}</style>
 
-
-
       <header
         className={`nav site-nav${solid ? " is-solid" : " is-hero"}${open ? " is-menu" : ""}`}
         id="nav"
-        hidden={open}
       >
-
         <Link
           className="nav__logo has-logo"
           href={homeHref}
@@ -476,7 +481,7 @@ export default function SiteNav({
 
       </header>
 
-      {/* MOBİLDE TAM EKRAN MENÜ PERDESİ (Arkada hiçbir şey görünmez) */}
+      {/* MOBİLDE MENÜ PERDESİ */}
       <div
         className={`mobile-menu${open ? " is-open" : ""}`}
         id="mobileMenu"
@@ -484,57 +489,20 @@ export default function SiteNav({
         aria-hidden={!open}
         style={{
           position: "fixed",
-          inset: 0,
-          width: "100vw",
-          height: "100dvh",
-          zIndex: 9999999,
+          top: "var(--nav-h, 72px)",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 99999,
           background: "#0D0F0A",
+          backgroundColor: "#0D0F0A",
           padding: "16px 20px 48px",
           overflowY: "auto",
-          display: open ? "flex" : "none",
-          flexDirection: "column",
+          display: open ? "block" : "none",
         }}
       >
-        {/* Üst Kısım: Sadece Sağ Üstte Parlak Altın Kapatma Butonu */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            width: "100%",
-            maxWidth: "540px",
-            margin: "0 auto 16px",
-            paddingBottom: "8px",
-            flexShrink: 0,
-          }}
-        >
-          <button
-            type="button"
-            aria-label="Menüyü kapat"
-            onClick={() => setOpen(false)}
-            style={{
-              width: "44px",
-              height: "44px",
-              borderRadius: "50%",
-              background: "rgba(217, 164, 65, 0.2)",
-              border: "1.5px solid #D9A441",
-              color: "#D9A441",
-              fontSize: "22px",
-              fontWeight: "bold",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              padding: 0,
-              lineHeight: 1,
-            }}
-          >
-            ✕
-          </button>
-        </div>
-
-
         <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto" }}>
+
           <nav aria-label="Mobil menü">
             <ul className="mobile-menu__links">
               {links.map((link, i) => (
