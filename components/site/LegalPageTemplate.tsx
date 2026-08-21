@@ -30,13 +30,14 @@ export default function LegalPageTemplate({
           padding: 20px 0 60px;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           box-sizing: border-box;
+          color: var(--card-text, #0d0f0a);
         }
         .petra-legal-crumbs {
           display: flex;
           align-items: center;
           gap: 8px;
           font-size: 12px;
-          color: #6e6a5c;
+          color: var(--card-muted, #6e6a5c);
           margin-bottom: 20px;
         }
         /* Mobil Yatay Kaydırılabilir Sekmeler */
@@ -65,22 +66,22 @@ export default function LegalPageTemplate({
           transition: all 0.2s ease;
         }
         .petra-legal-mobile-tab-btn.active {
-          background: #12150e !important;
-          color: #ffffff !important;
-          border: 1.5px solid #d9a441 !important;
-          box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+          background: var(--brass, #d9a441) !important;
+          color: #0d0f0a !important;
+          border: 1.5px solid var(--brass, #d9a441) !important;
+          box-shadow: 0 4px 14px rgba(217, 164, 65, 0.3);
         }
         .petra-legal-mobile-tab-btn.active span {
-          color: #ffffff !important;
+          color: #0d0f0a !important;
           font-weight: 700;
         }
         .petra-legal-mobile-tab-btn.inactive {
-          background: #ffffff !important;
-          color: #4a4538 !important;
-          border: 1px solid rgba(13, 15, 10, 0.15) !important;
+          background: var(--card-bg, #ffffff) !important;
+          color: var(--card-text, #4a4538) !important;
+          border: 1px solid var(--card-border, rgba(13, 15, 10, 0.15)) !important;
         }
         .petra-legal-mobile-tab-btn.inactive span {
-          color: #4a4538 !important;
+          color: var(--card-text, #4a4538) !important;
           font-weight: 600;
         }
         /* Masaüstü ve Mobil Düzeni */
@@ -92,24 +93,26 @@ export default function LegalPageTemplate({
         .petra-legal-sidebar {
           width: 300px;
           flex-shrink: 0;
-          background: #ffffff;
+          background: var(--card-bg, #ffffff);
           border-radius: 20px;
-          border: 1.5px solid rgba(184, 132, 44, 0.25);
+          border: 1.5px solid var(--card-border, rgba(184, 132, 44, 0.25));
           padding: 24px;
-          box-shadow: 0 10px 30px -10px rgba(0,0,0,0.06);
+          box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2);
           position: sticky;
           top: 100px;
           box-sizing: border-box;
+          color: var(--card-text, #0d0f0a);
         }
         .petra-legal-content {
           flex: 1;
           min-width: 0;
-          background: #ffffff;
+          background: var(--card-bg, #ffffff);
           border-radius: 24px;
-          border: 1.5px solid rgba(184, 132, 44, 0.25);
+          border: 1.5px solid var(--card-border, rgba(184, 132, 44, 0.25));
           padding: 36px 40px;
-          box-shadow: 0 12px 40px -10px rgba(0,0,0,0.06);
+          box-shadow: 0 12px 40px -10px rgba(0,0,0,0.2);
           box-sizing: border-box;
+          color: var(--card-text, #0d0f0a);
         }
         @media (max-width: 899px) {
           .petra-legal-sidebar {
@@ -132,11 +135,11 @@ export default function LegalPageTemplate({
 
       {/* 1. Breadcrumbs Navigasyon */}
       <nav aria-label="Breadcrumb" className="petra-legal-crumbs">
-        <Link href="/" style={{ color: "#0d0f0a", textDecoration: "none", fontWeight: 600 }}>
+        <Link href="/" style={{ color: "var(--card-text, #0d0f0a)", textDecoration: "none", fontWeight: 600 }}>
           Ana Sayfa
         </Link>
         <span>/</span>
-        <span style={{ color: "#b8842c", fontWeight: 700 }}>{title}</span>
+        <span style={{ color: "var(--brass, #b8842c)", fontWeight: 700 }}>{title}</span>
       </nav>
 
       {/* 2. Mobilde Yatay Kaydırılabilir Hızlı Sekmeler */}
@@ -148,20 +151,12 @@ export default function LegalPageTemplate({
               key={item.slug}
               href={`/${item.slug}`}
               className={`petra-legal-mobile-tab-btn ${isActive ? "active" : "inactive"}`}
-              style={{
-                background: isActive ? "#12150e" : "#ffffff",
-                color: isActive ? "#ffffff" : "#4a4538",
-                border: isActive ? "1.5px solid #d9a441" : "1px solid rgba(13,15,10,0.15)",
-              }}
             >
-              <span style={{ color: isActive ? "#ffffff" : "#4a4538", fontWeight: isActive ? 700 : 600 }}>
-                {item.label}
-              </span>
+              <span>{item.label}</span>
             </Link>
           );
         })}
       </div>
-
 
       {/* 3. Ana Düzen (Sidebar + İçerik) */}
       <div className="petra-legal-layout">
@@ -173,7 +168,7 @@ export default function LegalPageTemplate({
                 width: "8px",
                 height: "8px",
                 borderRadius: "50%",
-                background: "#b8842c",
+                background: "var(--brass, #b8842c)",
                 display: "inline-block",
               }}
             />
@@ -184,7 +179,7 @@ export default function LegalPageTemplate({
                 fontWeight: 800,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "#b8842c",
+                color: "var(--brass, #b8842c)",
               }}
             >
               Yasal & Kurumsal
@@ -207,15 +202,15 @@ export default function LegalPageTemplate({
                       textDecoration: "none",
                       fontSize: "13px",
                       fontWeight: isActive ? 700 : 500,
-                      background: isActive ? "linear-gradient(135deg, #12150e 0%, #1e2417 100%)" : "transparent",
-                      color: isActive ? "#f4eee1" : "#2c2f26",
-                      border: isActive ? "1px solid #b8842c" : "1px solid transparent",
-                      boxShadow: isActive ? "0 4px 14px rgba(0,0,0,0.15)" : "none",
+                      background: isActive ? "var(--brass, #d9a441)" : "transparent",
+                      color: isActive ? "#0d0f0a" : "var(--card-text, #2c2f26)",
+                      border: isActive ? "1px solid var(--brass, #b8842c)" : "1px solid transparent",
+                      boxShadow: isActive ? "0 4px 14px rgba(217, 164, 65, 0.25)" : "none",
                       transition: "all 0.2s ease",
                     }}
                   >
                     <span>{item.label}</span>
-                    {isActive && <span style={{ color: "#d9a441", fontSize: "12px" }}>➔</span>}
+                    {isActive && <span style={{ color: "#0d0f0a", fontSize: "12px", fontWeight: 700 }}>➔</span>}
                   </Link>
                 </li>
               );
@@ -226,12 +221,12 @@ export default function LegalPageTemplate({
             style={{
               marginTop: "24px",
               paddingTop: "20px",
-              borderTop: "1px solid rgba(13, 15, 10, 0.08)",
+              borderTop: "1px solid var(--card-border, rgba(13, 15, 10, 0.08))",
               fontSize: "12px",
-              color: "#6e6a5c",
+              color: "var(--card-muted, #6e6a5c)",
             }}
           >
-            <p style={{ margin: "0 0 4px", fontWeight: 700, color: "#0d0f0a" }}>Sorularınız mı var?</p>
+            <p style={{ margin: "0 0 4px", fontWeight: 700, color: "var(--card-text, #0d0f0a)" }}>Sorularınız mı var?</p>
             <p style={{ margin: "0 0 12px", lineHeight: "1.4" }}>
               Yasal koşullar ve rezervasyon hakkında ekibimizle görüşebilirsiniz.
             </p>
@@ -243,9 +238,9 @@ export default function LegalPageTemplate({
                 gap: "8px",
                 padding: "9px 14px",
                 borderRadius: "10px",
-                background: "#faf6ee",
-                border: "1px solid rgba(184, 132, 44, 0.3)",
-                color: "#9e7b30",
+                background: "rgba(184, 132, 44, 0.15)",
+                border: "1px solid rgba(184, 132, 44, 0.35)",
+                color: "var(--brass, #b8842c)",
                 textDecoration: "none",
                 fontWeight: 700,
                 fontSize: "12px",
@@ -259,7 +254,7 @@ export default function LegalPageTemplate({
 
         {/* Sözleşme İçerik Kartı */}
         <article className="petra-legal-content">
-          <div style={{ borderBottom: "1px solid rgba(13, 15, 10, 0.08)", paddingBottom: "20px", marginBottom: "24px" }}>
+          <div style={{ borderBottom: "1px solid var(--card-border, rgba(13, 15, 10, 0.08))", paddingBottom: "20px", marginBottom: "24px" }}>
             <span
               style={{
                 display: "inline-block",
@@ -269,9 +264,9 @@ export default function LegalPageTemplate({
                 fontWeight: 800,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                background: "#faf6ee",
-                color: "#b8842c",
-                border: "1px solid rgba(184, 132, 44, 0.3)",
+                background: "rgba(184, 132, 44, 0.15)",
+                color: "var(--brass, #b8842c)",
+                border: "1px solid rgba(184, 132, 44, 0.35)",
                 marginBottom: "12px",
               }}
             >
@@ -280,10 +275,10 @@ export default function LegalPageTemplate({
             <h1
               style={{
                 margin: "0 0 10px",
-                fontFamily: "Georgia, 'Times New Roman', serif",
-                fontSize: "24px",
+                fontFamily: "var(--f-head, Georgia, serif)",
+                fontSize: "26px",
                 fontWeight: 700,
-                color: "#12150e",
+                color: "var(--card-text, #12150e)",
                 lineHeight: "1.3",
               }}
             >
@@ -293,8 +288,8 @@ export default function LegalPageTemplate({
               <p
                 style={{
                   margin: 0,
-                  fontSize: "14.5px",
-                  color: "#5c5749",
+                  fontSize: "15px",
+                  color: "var(--card-muted, #5c5749)",
                   lineHeight: "1.6",
                 }}
               >
@@ -306,9 +301,9 @@ export default function LegalPageTemplate({
           {/* Sözleşme Metni */}
           <div
             style={{
-              fontSize: "14px",
+              fontSize: "14.5px",
               lineHeight: "1.8",
-              color: "#2c2f26",
+              color: "var(--card-text, #2c2f26)",
               whiteSpace: "pre-line",
               fontFamily: "'Inter', sans-serif",
             }}
@@ -320,21 +315,21 @@ export default function LegalPageTemplate({
             style={{
               marginTop: "32px",
               paddingTop: "18px",
-              borderTop: "1px solid rgba(13, 15, 10, 0.08)",
+              borderTop: "1px solid var(--card-border, rgba(13, 15, 10, 0.08))",
               display: "flex",
               flexWrap: "wrap",
               alignItems: "center",
               justifyContent: "space-between",
               gap: "12px",
               fontSize: "12px",
-              color: "#8c877a",
+              color: "var(--card-muted, #8c877a)",
             }}
           >
             <span>Son Güncelleme: {new Date().getFullYear()} · Petra Cafe Restaurant</span>
             <Link
               href="/"
               style={{
-                color: "#b8842c",
+                color: "var(--brass, #b8842c)",
                 textDecoration: "none",
                 fontWeight: 700,
                 display: "inline-flex",

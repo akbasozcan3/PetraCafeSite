@@ -29,9 +29,9 @@ export function getPool(): Pool | null {
         dbUrl.includes("localhost") || dbUrl.includes("127.0.0.1")
           ? false
           : { rejectUnauthorized: false },
-      max: 10,
-      idleTimeoutMillis: 30_000,
-      connectionTimeoutMillis: 8_000,
+      max: 3,
+      idleTimeoutMillis: 5_000,
+      connectionTimeoutMillis: 5_000,
     });
     _pool.on("error", (err) => {
       console.error("[DB] Unexpected pool error:", err.message);

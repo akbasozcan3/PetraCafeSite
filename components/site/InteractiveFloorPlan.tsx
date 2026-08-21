@@ -93,10 +93,10 @@ export default function InteractiveFloorPlan({
             borderRadius: 20,
             fontSize: 12,
             fontWeight: 700,
-            border: activeZone === "all" ? "1px solid #b8842c" : "1px solid rgba(13,15,10,0.12)",
+            border: activeZone === "all" ? "1px solid var(--brass, #b8842c)" : "1px solid var(--card-border, rgba(13,15,10,0.12))",
             cursor: "pointer",
-            background: activeZone === "all" ? "#12150e" : "#f6f1e6",
-            color: activeZone === "all" ? "#f4eee1" : "#0d0f0a",
+            background: activeZone === "all" ? "var(--brass, #d9a441)" : "var(--card-bg, #f6f1e6)",
+            color: activeZone === "all" ? "#0D0F0A" : "var(--card-text, #0d0f0a)",
             whiteSpace: "nowrap",
             transition: "all 0.2s ease",
           }}
@@ -116,10 +116,10 @@ export default function InteractiveFloorPlan({
                 borderRadius: 20,
                 fontSize: 12,
                 fontWeight: 700,
-                border: isSelected ? "1px solid #b8842c" : "1px solid rgba(13,15,10,0.12)",
+                border: isSelected ? "1px solid var(--brass, #b8842c)" : "1px solid var(--card-border, rgba(13,15,10,0.12))",
                 cursor: "pointer",
-                background: isSelected ? "#12150e" : "#f6f1e6",
-                color: isSelected ? "#f4eee1" : "#0d0f0a",
+                background: isSelected ? "var(--brass, #d9a441)" : "var(--card-bg, #f6f1e6)",
+                color: isSelected ? "#0D0F0A" : "var(--card-text, #0d0f0a)",
                 whiteSpace: "nowrap",
                 transition: "all 0.2s ease",
               }}
@@ -139,7 +139,7 @@ export default function InteractiveFloorPlan({
           gap: 16,
           fontSize: 11,
           fontWeight: 600,
-          color: "#6e6a5c",
+          color: "var(--card-muted, #6e6a5c)",
           marginBottom: 10,
         }}
       >
@@ -147,17 +147,17 @@ export default function InteractiveFloorPlan({
           <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#16a34a", boxShadow: "0 0 6px #22c55e" }} />
           Müsait Masa
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#b8842c" }}>
-          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#d9a441", boxShadow: "0 0 8px #d9a441" }} />
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "var(--brass, #b8842c)" }}>
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--brass, #d9a441)", boxShadow: "0 0 8px #d9a441" }} />
           Seçtiğiniz Masa
         </span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#9ca3af" }}>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "#ef4444" }}>
           <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444" }} />
           Dolu
         </span>
       </div>
 
-      {/* 3. İnteraktif Kroki Alanı (Beyaz Zemin, Altın Çerçeve, Tam Görünüm) */}
+      {/* 3. İnteraktif Kroki Alanı (Altın Çerçeve, Tam Görünüm) */}
       <div
         style={{
           position: "relative",
@@ -165,7 +165,7 @@ export default function InteractiveFloorPlan({
           borderRadius: 16,
           overflow: "hidden",
           background: "#ffffff",
-          border: "1.5px solid rgba(184, 132, 44, 0.35)",
+          border: "1.5px solid var(--brass, #b8842c)",
           boxShadow: "0 6px 20px -6px rgba(0,0,0,0.12)",
         }}
       >
@@ -308,8 +308,8 @@ export default function InteractiveFloorPlan({
             style={{
               padding: "14px 16px",
               borderRadius: 14,
-              background: "rgba(184, 132, 44, 0.1)",
-              border: "1.5px solid rgba(184, 132, 44, 0.4)",
+              background: "rgba(184, 132, 44, 0.12)",
+              border: "1.5px solid var(--brass, #b8842c)",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -322,7 +322,7 @@ export default function InteractiveFloorPlan({
                   width: 38,
                   height: 38,
                   borderRadius: "50%",
-                  background: "#d9a441",
+                  background: "var(--brass, #d9a441)",
                   color: "#0d0f0a",
                   display: "flex",
                   alignItems: "center",
@@ -336,10 +336,10 @@ export default function InteractiveFloorPlan({
                 <Check style={{ width: 18, height: 18 }} />
               </div>
               <div>
-                <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "#0d0f0a" }}>
+                <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--card-text, #0d0f0a)" }}>
                   {selectedTable.name}
                 </p>
-                <p style={{ margin: "2px 0 0", fontSize: 12, color: "#6e6a5c" }}>
+                <p style={{ margin: "2px 0 0", fontSize: 12, color: "var(--card-muted, #6e6a5c)" }}>
                   {selectedTable.zoneName} · Maks. {selectedTable.capacity} Kişilik
                 </p>
               </div>
@@ -367,16 +367,16 @@ export default function InteractiveFloorPlan({
             style={{
               padding: "12px 14px",
               borderRadius: 14,
-              background: "#f6f1e6",
-              border: "1px solid rgba(13,15,10,0.1)",
+              background: "var(--card-bg, #f6f1e6)",
+              border: "1px solid var(--card-border, rgba(13,15,10,0.1))",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               gap: 8,
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "#6e6a5c" }}>
-              <Sparkles style={{ width: 15, height: 15, color: "#b8842c" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--card-muted, #6e6a5c)" }}>
+              <Sparkles style={{ width: 15, height: 15, color: "var(--brass, #b8842c)" }} />
               <span>Krokiden dokunarak seçin veya listeden belirleyin:</span>
             </div>
 
@@ -391,9 +391,9 @@ export default function InteractiveFloorPlan({
                 borderRadius: 10,
                 fontSize: 12,
                 fontWeight: 700,
-                border: "1px solid rgba(13,15,10,0.15)",
-                background: "#ffffff",
-                color: "#0d0f0a",
+                border: "1px solid var(--input-border, rgba(13,15,10,0.15))",
+                background: "var(--input-bg, #ffffff)",
+                color: "var(--input-text, #0d0f0a)",
                 cursor: "pointer",
                 maxWidth: 180,
               }}
@@ -405,8 +405,6 @@ export default function InteractiveFloorPlan({
                 </option>
               ))}
             </select>
-
-
           </div>
         )}
       </div>

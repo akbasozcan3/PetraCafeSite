@@ -413,11 +413,7 @@ export async function getContentAsync(): Promise<SiteContent> {
       await ensureDatabase();
       return await pgGetContent();
     } catch (err) {
-      console.error("[DB] PostgreSQL okuma hatası:", (err as Error).message);
-      if (process.env.NODE_ENV === "production") {
-        throw err;
-      }
-      console.warn("[DB] Geliştirmede JSON'a dönülüyor.");
+      console.warn("[DB] PostgreSQL okuma hatası, JSON içeriğe dönülüyor:", (err as Error).message);
     }
   }
   return getContent();
@@ -427,11 +423,6 @@ export async function getContentAsync(): Promise<SiteContent> {
 // Dışa açık: saveContent
 // ────────────────────────────────────────────────────────────────
 export async function saveContentAsync(partial: Partial<SiteContent>): Promise<SiteContent> {
-  if (process.env.VERCEL === "1" && !isPostgresEnabled()) {
-    throw new Error(
-      "Vercel'de kalıcı içerik kaydı için DATABASE_URL (Postgres/Neon) gerekli. Site görüntüleme JSON ile çalışır; admin kayıtları için Neon bağlayın."
-    );
-  }
   if (isPostgresEnabled()) {
     try {
       await ensureDatabase();
@@ -446,11 +437,7 @@ export async function saveContentAsync(partial: Partial<SiteContent>): Promise<S
       runPostSaveHooks(partial, next);
       return next;
     } catch (err) {
-      console.error("[DB] PostgreSQL yazma hatası:", (err as Error).message);
-      if (process.env.NODE_ENV === "production") {
-        throw err;
-      }
-      console.warn("[DB] Geliştirmede JSON'a dönülüyor.");
+      console.warn("[DB] PostgreSQL yazma hatası, JSON fallback kullanılıyor:", (err as Error).message);
     }
   }
   // JSON fallback

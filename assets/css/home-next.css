@@ -3582,6 +3582,117 @@ html.theme-dark .section--brass {
   color: var(--ink, #F4EEE1) !important;
 }
 
+/* 1. Hakkımızda Tilt Card Rozeti */
+.tilt-card__badge {
+  background: var(--card-bg, #ffffff) !important;
+  color: var(--card-text, #0d0f0a) !important;
+  border: 1px solid var(--card-border, rgba(184, 132, 44, 0.3)) !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 14px 34px -12px rgba(0, 0, 0, 0.4) !important;
+}
+.tilt-card__badge b {
+  color: var(--card-text, #0d0f0a) !important;
+}
+.tilt-card__badge span {
+  color: var(--brass, #b8842c) !important;
+  font-weight: 700 !important;
+}
+html[data-theme="dark"] .tilt-card__badge,
+.theme-dark .tilt-card__badge {
+  background: rgba(20, 24, 16, 0.95) !important;
+  border: 1px solid rgba(217, 164, 65, 0.35) !important;
+}
+html[data-theme="dark"] .tilt-card__badge b,
+.theme-dark .tilt-card__badge b {
+  color: #ffffff !important;
+}
+html[data-theme="dark"] .tilt-card__badge span,
+.theme-dark .tilt-card__badge span {
+  color: #d9a441 !important;
+}
+
+/* 2. Müşteri Yorumları Avatar & Kontrol Butonları */
+#yorumlar .yorum__avatar,
+.site-home #yorumlar .yorum__avatar {
+  background: var(--brass, #d9a441) !important;
+  color: #0d0f0a !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  box-shadow: 0 4px 12px rgba(217, 164, 65, 0.35) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+}
+
+#yorumlar .reviews-btn,
+.site-home #yorumlar .reviews-btn {
+  background: var(--card-bg, #16190f) !important;
+  border: 1.5px solid var(--brass, #d9a441) !important;
+  color: var(--brass, #d9a441) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+#yorumlar .reviews-btn:hover,
+.site-home #yorumlar .reviews-btn:hover {
+  background: var(--brass, #d9a441) !important;
+  color: #0d0f0a !important;
+}
+#yorumlar .reviews-btn svg,
+.site-home #yorumlar .reviews-btn svg {
+  stroke: currentColor !important;
+}
+
+/* 3. Harita Üzerindeki Adres Kartı */
+.site-home .contact-map__card {
+  background: var(--card-bg, rgba(251, 248, 241, 0.96)) !important;
+  border: 1px solid var(--card-border, rgba(184, 132, 44, 0.3)) !important;
+  color: var(--card-text, #0d0f0a) !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.5) !important;
+}
+.site-home .contact-map__card p,
+.site-home .contact-map__card p span {
+  color: var(--brass, #b8842c) !important;
+}
+.site-home .contact-map__card strong,
+.site-home .contact-map__card strong span {
+  color: var(--card-text, #0d0f0a) !important;
+  font-weight: 600 !important;
+}
+.site-home .contact-map__card em {
+  color: var(--card-muted, #6e6a5c) !important;
+}
+
+html[data-theme="dark"] .site-home .contact-map__card,
+.theme-dark .site-home .contact-map__card {
+  background: rgba(20, 24, 16, 0.95) !important;
+  border-color: rgba(217, 164, 65, 0.35) !important;
+}
+html[data-theme="dark"] .site-home .contact-map__card strong,
+html[data-theme="dark"] .site-home .contact-map__card strong span,
+.theme-dark .site-home .contact-map__card strong,
+.theme-dark .site-home .contact-map__card strong span {
+  color: #ffffff !important;
+}
+html[data-theme="dark"] .site-home .contact-map__card em,
+.theme-dark .site-home .contact-map__card em {
+  color: #c8c2b4 !important;
+}
+
+/* 4. WhatsApp & Sosyal Buton İkonları */
+.site-home .contact-lines__ico.is-wa {
+  background: #25d366 !important;
+  color: #ffffff !important;
+}
+.site-home .contact-lines__ico.is-wa svg {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+
 
 
 
