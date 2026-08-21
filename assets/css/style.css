@@ -2569,6 +2569,8 @@ header.nav.site-nav {
   background: #D9A441 !important;
 }
 
+html.menu-open .nav,
+html.menu-open .nav.is-solid,
 header.nav.is-menu,
 header.nav.is-solid.is-menu,
 .site-nav.is-menu {
@@ -2578,6 +2580,12 @@ header.nav.is-solid.is-menu,
   -webkit-backdrop-filter: none !important;
   border-bottom: 1px solid rgba(217, 164, 65, 0.25) !important;
   box-shadow: none !important;
+  color: #FFFFFF !important;
+}
+
+html.menu-open .nav__logo-text,
+header.nav.is-menu .nav__logo-text {
+  color: #FFFFFF !important;
 }
 
 .mobile-menu {
@@ -2593,6 +2601,7 @@ header.nav.is-solid.is-menu,
   overflow-y: auto !important;
   border-top: 1px solid rgba(217, 164, 65, 0.25) !important;
 }
+
 
 
 
