@@ -508,7 +508,7 @@ export default function SiteNav({
       </header>
 
 
-      {/* MOBİLDE ULTRA LÜKS VE PROFESYONEL MENÜ MODALI */}
+      {/* MOBİLDE TAM EKRAN MENÜ */}
       <div
         className={`mobile-menu${open ? " is-open" : ""}`}
         id="mobileMenu"
@@ -524,103 +524,64 @@ export default function SiteNav({
           width: "100vw",
           height: "100dvh",
           zIndex: 999999999,
-          background: "radial-gradient(ellipse 90% 50% at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 70%), linear-gradient(180deg, #14170F 0%, #0D0F0A 100%)",
+          background: "#0D0F0A",
           backgroundColor: "#0D0F0A",
-          padding: "0 0 24px 0",
-          overflowY: "auto",
+          padding: "16px 20px 24px",
           display: open ? "flex" : "none",
           flexDirection: "column",
           justifyContent: "space-between",
+          boxSizing: "border-box",
+          overflowY: "auto",
         }}
       >
-        {/* ÜST LÜKS BAR: Solda Logo & Yazı, Sağda Dairesel Altın Close Butonu */}
+        {/* SAĞ ÜSTTE CLOSE BUTONU */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             width: "100%",
-            height: "var(--nav-h, 72px)",
-            paddingLeft: "max(20px, env(safe-area-inset-left))",
-            paddingRight: "max(18px, env(safe-area-inset-right))",
-            borderBottom: "1px solid rgba(212, 175, 55, 0.22)",
-            background: "rgba(13, 15, 10, 0.8)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
+            maxWidth: "500px",
+            margin: "0 auto",
             flexShrink: 0,
+            height: "44px",
           }}
         >
-          <Link
-            className="nav__logo has-logo"
-            href={homeHref}
-            aria-label="Ana sayfa"
-            onClick={() => setOpen(false)}
-            style={{ display: "flex", alignItems: "center", gap: "10px", margin: 0, textDecoration: "none" }}
-          >
-            <BrandLogo
-              className="nav__logo-img"
-              src={logoUrl}
-              alt={`${navbar.logoText || "PETRA"} logosu`}
-              height={36}
-              style={{
-                height: "36px",
-                width: "auto",
-                filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 8px rgba(212,175,55,0.4))",
-              }}
-            />
-            <span
-              className="nav__logo-text"
-              hidden={hideText}
-              style={{
-                color: "#FFFFFF",
-                fontFamily: "var(--f-head, Playfair Display, serif)",
-                fontWeight: 700,
-                fontSize: "18px",
-                letterSpacing: "0.14em",
-              }}
-            >
-              {navbar.logoText || "PETRA"}
-            </span>
-          </Link>
-
           <button
             type="button"
             aria-label="Menüyü kapat"
             onClick={() => setOpen(false)}
             style={{
-              width: "42px",
-              height: "42px",
-              borderRadius: "50%",
-              background: "rgba(212, 175, 55, 0.12)",
-              border: "1px solid rgba(212, 175, 55, 0.4)",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.4), inset 0 0 6px rgba(212,175,55,0.15)",
-              color: "#D4AF37",
-              display: "inline-flex",
+              width: "44px",
+              height: "44px",
+              background: "transparent",
+              border: 0,
+              color: "#D9A441",
+              fontSize: "30px",
+              fontWeight: "bold",
+              display: "flex",
               alignItems: "center",
               justifyContent: "center",
               cursor: "pointer",
               padding: 0,
+              lineHeight: 1,
             }}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            ✕
           </button>
         </div>
 
-        {/* ORTA LÜKS PANEL */}
+        {/* ORTADA MENÜ LİNKLERİ (DİKEYDE VE YATAYDA TAM ORTALI) */}
         <div
           className="mobile-menu__panel"
           style={{
-            maxWidth: "540px",
+            maxWidth: "500px",
             width: "100%",
-            margin: "0 auto",
-            padding: "16px 20px 0",
-            flex: "1 1 auto",
+            margin: "auto auto",
+            flex: "0 0 auto",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-around",
+            justifyContent: "center",
           }}
         >
           <nav aria-label="Mobil menü">
@@ -638,32 +599,42 @@ export default function SiteNav({
               ))}
             </ul>
           </nav>
+        </div>
 
-          {/* ALT BÖLÜM: Altın Rezervasyon Butonu & İletişim */}
-          <div className="mobile-menu__foot" style={{ marginTop: "12px", paddingTop: "0" }}>
+        {/* ALTTA REZERVASYON VE BİLGİLER */}
+        <div
+          className="mobile-menu__foot"
+          style={{
+            maxWidth: "500px",
+            width: "100%",
+            margin: "0 auto",
+            flexShrink: 0,
+            paddingTop: "8px",
+          }}
+        >
+          <a
+            href={bookHref}
+            className="btn btn--lg mobile-menu__cta"
+            onClick={() => setOpen(false)}
+          >
+            {bookLabel}
+          </a>
+          {showPhone && phoneHref ? (
             <a
-              href={bookHref}
-              className="btn btn--lg mobile-menu__cta"
-              onClick={() => setOpen(false)}
+              className="mobile-menu__phone"
+              href={`tel:${phoneHref.replace(/^tel:/i, "")}`}
             >
-              {bookLabel}
+              {phone}
             </a>
-            {showPhone && phoneHref ? (
-              <a
-                className="mobile-menu__phone"
-                href={`tel:${phoneHref.replace(/^tel:/i, "")}`}
-              >
-                {phone}
-              </a>
-            ) : null}
-            {hours ? (
-              <p className="mobile-menu__hours">
-                {hours}
-              </p>
-            ) : null}
-          </div>
+          ) : null}
+          {hours ? (
+            <p className="mobile-menu__hours">
+              {hours}
+            </p>
+          ) : null}
         </div>
       </div>
+
 
 
 
