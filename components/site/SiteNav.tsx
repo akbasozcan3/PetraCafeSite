@@ -887,9 +887,25 @@ export default function SiteNav({
               {bookLabel}
             </a>
             {showPhone && phoneHref ? (
-              <a className="mobile-menu__phone" href={`tel:${phoneHref.replace(/^tel:/i, "")}`}>
+              <a
+                className="mobile-menu__phone"
+                href={`tel:${phoneHref.replace(/^tel:/i, "")}`}
+                style={{
+                  color: "#0D0F0A",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  fontWeight: 700,
+                  fontSize: "1.05rem",
+                  fontFamily: '"Playfair Display", Georgia, serif',
+                  textDecoration: "none",
+                  marginTop: "8px",
+                  marginBottom: "4px",
+                }}
+              >
                 <PhoneIcon />
-                <span>{phone || phoneHref}</span>
+                <span style={{ color: "#0D0F0A", fontWeight: 700 }}>{phone || phoneHref}</span>
               </a>
             ) : null}
             {hours ? <p className="mobile-menu__hours">{hours}</p> : null}

@@ -2962,6 +2962,31 @@ html[data-theme="dark"] .mobile-menu,
   display: none !important;
 }
 
+.mobile-menu__phone,
+.mobile-menu a.mobile-menu__phone,
+.mobile-menu__phone span,
+.mobile-menu a.mobile-menu__phone span {
+  color: #0D0F0A !important;
+  font-weight: 700 !important;
+}
+
+.mobile-menu__phone svg,
+.mobile-menu a.mobile-menu__phone svg {
+  color: #B8842C !important;
+  stroke: #B8842C !important;
+}
+
+html[data-theme="dark"] .mobile-menu__phone,
+html[data-theme="dark"] .mobile-menu a.mobile-menu__phone,
+html[data-theme="dark"] .mobile-menu__phone span,
+html[data-theme="dark"] .mobile-menu a.mobile-menu__phone span,
+.theme-dark .mobile-menu__phone,
+.theme-dark .mobile-menu a.mobile-menu__phone,
+.theme-dark .mobile-menu__phone span,
+.theme-dark .mobile-menu a.mobile-menu__phone span {
+  color: #FFFFFF !important;
+}
+
 /* ==========================================================================
    TEMA & BUTON KONTRAST GARANTİSİ (GENEL)
    ========================================================================== */
