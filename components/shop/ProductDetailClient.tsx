@@ -141,11 +141,27 @@ export default function ProductDetailClient({
             href={wa}
             target="_blank"
             rel="noopener noreferrer"
+            style={{
+              background: "var(--brass, #d9a441)",
+              color: "#0d0f0a",
+              fontWeight: 700,
+              boxShadow: "0 6px 20px rgba(217, 164, 65, 0.35)",
+              border: "none",
+            }}
           >
             {waLabel || "WhatsApp ile yazın"}
           </a>
           {tel ? (
-            <a className="pd__btn pd__btn--ghost" href={tel}>
+            <a
+              className="pd__btn pd__btn--ghost"
+              href={tel}
+              style={{
+                background: "var(--card-bg, #141810)",
+                border: "1.5px solid var(--card-border, rgba(217, 164, 65, 0.35))",
+                color: "var(--card-text, #ffffff)",
+                fontWeight: 700,
+              }}
+            >
               {telLabel || "Telefonla Ara"}
             </a>
           ) : null}
