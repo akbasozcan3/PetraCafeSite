@@ -1,6 +1,6 @@
-import { CanvasEngine } from './canvas-engine.js?v=20260821m135';
-import { ASSETS } from './config.js?v=20260821m135';
-import { range } from './utils.js?v=20260821m135';
+import { CanvasEngine } from './canvas-engine.js?v=20260821m140';
+import { ASSETS } from './config.js?v=20260821m140';
+import { range } from './utils.js?v=20260821m140';
 
 window.__FIRINCI_SCENE = window.__FIRINCI_SCENE || 'loading';
 
