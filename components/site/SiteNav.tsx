@@ -522,53 +522,46 @@ export default function SiteNav({
           bottom: 0,
           width: "100vw",
           height: "100dvh",
-          zIndex: 9999999,
+          zIndex: 999999999,
           background: "#0D0F0A",
           backgroundColor: "#0D0F0A",
-          padding: "0 0 48px 0",
+          padding: "72px 20px 48px",
           overflowY: "auto",
           display: open ? "flex" : "none",
           flexDirection: "column",
+          justifyContent: "center",
         }}
       >
-        {/* Menü butonuyla TAM AYNI YERDE, AYNI YÜKSEKLİKTE VE AYNI HİZADA Close Butonu */}
-        <div
+        {/* SABİT SAĞ ÜST CLOSE BUTONU (SVG + ALTIN) */}
+        <button
+          type="button"
+          aria-label="Menüyü kapat"
+          onClick={() => setOpen(false)}
           style={{
-            display: "flex",
+            position: "fixed",
+            top: "14px",
+            right: "max(18px, env(safe-area-inset-right))",
+            zIndex: 1000000001,
+            width: "48px",
+            height: "48px",
+            background: "transparent",
+            border: 0,
+            color: "#D9A441",
+            display: "inline-flex",
             alignItems: "center",
-            justifyContent: "flex-end",
-            width: "100%",
-            height: "var(--nav-h, 72px)",
-            paddingLeft: "max(18px, env(safe-area-inset-left))",
-            paddingRight: "max(18px, env(safe-area-inset-right))",
-            flexShrink: 0,
+            justifyContent: "center",
+            cursor: "pointer",
+            padding: 0,
           }}
         >
-          <button
-            type="button"
-            aria-label="Menüyü kapat"
-            onClick={() => setOpen(false)}
-            style={{
-              width: "44px",
-              height: "44px",
-              background: "transparent",
-              border: 0,
-              color: "#D9A441",
-              fontSize: "30px",
-              fontWeight: "bold",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              padding: 0,
-              lineHeight: 1,
-            }}
-          >
-            ✕
-          </button>
-        </div>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9A441" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
 
-        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto", padding: "0 20px" }}>
+        <div className="mobile-menu__panel" style={{ maxWidth: "540px", width: "100%", margin: "0 auto", padding: "0" }}>
+
 
           <nav aria-label="Mobil menü">
             <ul className="mobile-menu__links">
