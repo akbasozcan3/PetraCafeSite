@@ -74,13 +74,28 @@ export const viewport: Viewport = {
   themeColor: "#080D15",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const content = await getPublicContent().catch(() => null);
+  const rawPaper = String(content?.theme?.paper || "#FBF8F1").replace("#", "").trim();
+  let isDark = false;
+  if (rawPaper.length >= 6) {
+    const r = parseInt(rawPaper.slice(0, 2), 16) / 255;
+    const g = parseInt(rawPaper.slice(2, 4), 16) / 255;
+    const b = parseInt(rawPaper.slice(4, 6), 16) / 255;
+    isDark = 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.45;
+  }
+
   return (
-    <html lang="tr" suppressHydrationWarning>
+    <html
+      lang="tr"
+      data-theme={isDark ? "dark" : "light"}
+      className={isDark ? "theme-dark" : "theme-light"}
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning>{children}</body>
     </html>
   );

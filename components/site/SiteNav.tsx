@@ -355,7 +355,8 @@ export default function SiteNav({
         }
         header.nav.is-menu .nav__logo-img,
         header.nav .nav__logo-img {
-          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 8px rgba(212, 175, 55, 0.3)) !important;
+          filter: none !important;
+          box-shadow: none !important;
         }
         @media (max-width: 860px) {
           header.nav.site-nav {
@@ -474,7 +475,8 @@ export default function SiteNav({
           height: 34px !important;
           width: auto !important;
           object-fit: contain !important;
-          filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 6px rgba(217,175,55,0.3)) !important;
+          filter: none !important;
+          box-shadow: none !important;
         }
         .mobile-menu__logo-text {
           font-family: "Playfair Display", Georgia, serif !important;

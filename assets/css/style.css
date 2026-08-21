@@ -2362,46 +2362,94 @@ html[data-theme="light"] .site-home .hizmet__note {
   font-weight: 700 !important;
 }
 
-/* 4. Koyu Zeminli Bölümler: #hakkimizda, #pasta, #rezervasyon, .foot, .visit */
-.section--dark,
-#hakkimizda,
-#pasta,
-#rezervasyon,
-.foot,
-.visit,
-.site-home .visit-strip {
+/* 4. Tema Duyarlı Bölümler: Dark Modda Koyu, Light Modda Açık */
+html[data-theme="dark"] #hakkimizda,
+html[data-theme="dark"] #pasta,
+html[data-theme="dark"] #rezervasyon,
+html[data-theme="dark"] .section--dark,
+.theme-dark #hakkimizda,
+.theme-dark #pasta,
+.theme-dark #rezervasyon,
+.theme-dark .section--dark {
   background: #0D1008 !important;
   color: #FFFFFF !important;
 }
 
-.section--dark .h2,
-.section--dark h1,
-.section--dark h2,
-.section--dark h3,
-.section--dark h4,
-#hakkimizda .h2,
-#pasta .h2,
-#rezervasyon .h2 {
+html[data-theme="dark"] #hakkimizda .h2,
+html[data-theme="dark"] #pasta .h2,
+html[data-theme="dark"] #rezervasyon .h2,
+.theme-dark #hakkimizda .h2,
+.theme-dark #pasta .h2,
+.theme-dark #rezervasyon .h2 {
   color: #FFFFFF !important;
-  opacity: 1 !important;
-  visibility: visible !important;
 }
 
-.section--dark .lead,
-.section--dark .body,
-.section--dark p:not(.eyebrow),
-#hakkimizda p,
-#pasta p:not(.eyebrow),
-#rezervasyon p:not(.eyebrow) {
+html[data-theme="dark"] #hakkimizda p,
+html[data-theme="dark"] #pasta p:not(.eyebrow),
+html[data-theme="dark"] #rezervasyon p:not(.eyebrow),
+.theme-dark #hakkimizda p,
+.theme-dark #pasta p:not(.eyebrow),
+.theme-dark #rezervasyon p:not(.eyebrow) {
   color: #F4EEE1 !important;
-  opacity: 1 !important;
 }
 
-.section--dark .eyebrow,
-#hakkimizda .eyebrow,
-#pasta .eyebrow,
-#rezervasyon .eyebrow {
+html[data-theme="dark"] #hakkimizda .eyebrow,
+html[data-theme="dark"] #pasta .eyebrow,
+html[data-theme="dark"] #rezervasyon .eyebrow,
+.theme-dark #hakkimizda .eyebrow,
+.theme-dark #pasta .eyebrow,
+.theme-dark #rezervasyon .eyebrow {
   color: #D9A441 !important;
+}
+
+/* Açık Tema (Petra Gold, Zeytin, Terracotta vb.) */
+html:not([data-theme="dark"]):not(.theme-dark) #hakkimizda,
+html:not([data-theme="dark"]):not(.theme-dark) #pasta,
+html:not([data-theme="dark"]):not(.theme-dark) #rezervasyon,
+html[data-theme="light"] #hakkimizda,
+html[data-theme="light"] #pasta,
+html[data-theme="light"] #rezervasyon,
+.theme-light #hakkimizda,
+.theme-light #pasta,
+.theme-light #rezervasyon {
+  background: var(--paper, #FBF8F1) !important;
+  color: var(--ink, #0D0F0A) !important;
+}
+
+html:not([data-theme="dark"]):not(.theme-dark) #hakkimizda .h2,
+html:not([data-theme="dark"]):not(.theme-dark) #pasta .h2,
+html:not([data-theme="dark"]):not(.theme-dark) #rezervasyon .h2,
+html[data-theme="light"] #hakkimizda .h2,
+html[data-theme="light"] #pasta .h2,
+html[data-theme="light"] #rezervasyon .h2,
+.theme-light #hakkimizda .h2,
+.theme-light #pasta .h2,
+.theme-light #rezervasyon .h2 {
+  color: var(--ink, #0D0F0A) !important;
+}
+
+html:not([data-theme="dark"]):not(.theme-dark) #hakkimizda p,
+html:not([data-theme="dark"]):not(.theme-dark) #pasta p:not(.eyebrow),
+html:not([data-theme="dark"]):not(.theme-dark) #rezervasyon p:not(.eyebrow),
+html[data-theme="light"] #hakkimizda p,
+html[data-theme="light"] #pasta p:not(.eyebrow),
+html[data-theme="light"] #rezervasyon p:not(.eyebrow),
+.theme-light #hakkimizda p,
+.theme-light #pasta p:not(.eyebrow),
+.theme-light #rezervasyon p:not(.eyebrow) {
+  color: var(--muted, #5C5749) !important;
+}
+
+html:not([data-theme="dark"]):not(.theme-dark) #hakkimizda .eyebrow,
+html:not([data-theme="dark"]):not(.theme-dark) #pasta .eyebrow,
+html:not([data-theme="dark"]):not(.theme-dark) #rezervasyon .eyebrow,
+html[data-theme="light"] #hakkimizda .eyebrow,
+html[data-theme="light"] #pasta .eyebrow,
+html[data-theme="light"] #rezervasyon .eyebrow,
+.theme-light #hakkimizda .eyebrow,
+.theme-light #pasta .eyebrow,
+.theme-light #rezervasyon .eyebrow {
+  color: var(--brass-lo, #B8842C) !important;
 }
 
 /* Ziyaret Şeridi */
