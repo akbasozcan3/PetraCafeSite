@@ -356,7 +356,8 @@ html.scene-ready.scene-painted #scene {
   font-size: 0.95rem;
   line-height: 1.55;
   white-space: pre-line;
-  color: color-mix(in srgb, var(--footer-text, #f4eee1) 72%, transparent);
+  color: #FFFFFF !important;
+  opacity: 0.95 !important;
 }
 .foot__legal {
   padding: 0.75rem 0 1.5rem;
@@ -3986,15 +3987,21 @@ html .foot {
 }
 
 html .site-home .foot__name,
-html .foot__name {
+html .site-shop .foot__name,
+html .foot__name,
+.foot__name {
   color: #FFFFFF !important;
   font-weight: 700 !important;
+  opacity: 1 !important;
 }
 
 html .site-home .foot__slogan,
+html .site-shop .foot__slogan,
 html .site-home .foot p,
-html .foot p {
-  color: rgba(255, 255, 255, 0.92) !important;
+html .foot p,
+.foot__slogan {
+  color: #FFFFFF !important;
+  opacity: 1 !important;
 }
 
 html .site-home .foot__hours,

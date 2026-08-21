@@ -95,9 +95,9 @@ export default function SiteFooter({
                 alt={`${brand} logosu`}
                 height={48}
               />
-              <p className="foot__name">{brand}</p>
+              <p className="foot__name" style={{ color: "#FFFFFF" }}>{brand}</p>
               {footer?.slogan ? (
-                <p className="foot__slogan">{footer.slogan}</p>
+                <p className="foot__slogan" style={{ color: "#FFFFFF", opacity: 0.95 }}>{footer.slogan}</p>
               ) : null}
               {displayHours(iletisim) ? (
                 <p className="foot__hours">
