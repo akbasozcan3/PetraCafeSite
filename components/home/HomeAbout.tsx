@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { SiteContent } from "@/lib/content/types";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
@@ -5,8 +8,41 @@ import { iconFromLabel } from "@/lib/content/site-icons";
 import SafeImg from "@/components/site/SafeImg";
 import SiteIcon from "@/components/site/SiteIcon";
 import { displayHours, looksLikeHours } from "@/lib/content/hours";
+import { ChevronDown, ChevronUp, BookOpen } from "lucide-react";
+
+interface ParsedBlock {
+  type: "h2" | "h3" | "p";
+  text: string;
+}
+
+function parseParagraphs(body: string[] = []): ParsedBlock[] {
+  const result: ParsedBlock[] = [];
+
+  for (const raw of body) {
+    if (!raw) continue;
+    const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    for (const line of lines) {
+      const chunks = line.split(/(?=#{1,3}\s)/);
+      for (const chunk of chunks) {
+        const trimmed = chunk.trim();
+        if (!trimmed) continue;
+        if (trimmed.startsWith("### ")) {
+          result.push({ type: "h3", text: trimmed.replace(/^###\s+/, "") });
+        } else if (trimmed.startsWith("## ")) {
+          result.push({ type: "h2", text: trimmed.replace(/^##\s+/, "") });
+        } else if (trimmed.startsWith("# ")) {
+          result.push({ type: "h2", text: trimmed.replace(/^#\s+/, "") });
+        } else {
+          result.push({ type: "p", text: trimmed });
+        }
+      }
+    }
+  }
+  return result;
+}
 
 export default function HomeAbout({ content }: { content: SiteContent }) {
+  const [expanded, setExpanded] = useState(false);
   const h = content.hakkimizda;
   const img = resolveMediaUrl(
     liveMedia(
@@ -17,10 +53,14 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
 
   if (!h) return null;
 
+  const parsedBlocks = parseParagraphs(h.body || []);
+  const isLongArticle = parsedBlocks.length > 2 || (h.body || []).join(" ").length > 320;
+  const visibleBlocks = isLongArticle && !expanded ? parsedBlocks.slice(0, 2) : parsedBlocks;
+
   return (
     <section className="section" id="hakkimizda">
-      <div className="wrap grid-2">
-
+      <div className="wrap grid-2 items-start">
+        {/* SOL: METİN VE MAKALE İÇERİĞİ */}
         <div>
           <p className="eyebrow" data-fade="">
             {h.eyebrow || "Hakkımızda"}
@@ -28,24 +68,105 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
           <h1 className="h2" data-split="">
             {h.baslik || "Petra Yaşam Merkezi'nde cafe & restaurant"}
           </h1>
+
           {(h.answerBaslik || h.answerMetin) && (
             <div className="answer" data-fade="">
               <b>{h.answerBaslik || "Kısaca"}</b>
               <p>{h.answerMetin}</p>
             </div>
           )}
+
           {h.lead ? (
-            <p className="lead" data-fade="">
+            <p className="lead" data-fade="" style={{ marginBottom: "1.25rem" }}>
               {h.lead}
             </p>
           ) : null}
-          {(h.body || []).map((text, i) => (
-            <p className="body" data-fade="" key={i}>
-              {text}
-            </p>
-          ))}
+
+          {/* PARAGRAFLAR & BAŞLIKLAR */}
+          <div className="about-content space-y-3.5" data-fade="">
+            {visibleBlocks.map((block, i) => {
+              if (block.type === "h2") {
+                return (
+                  <h3
+                    key={i}
+                    style={{
+                      fontSize: "1.25rem",
+                      fontWeight: 800,
+                      color: "var(--ink, #0D0F0A)",
+                      marginTop: "1.25rem",
+                      marginBottom: "0.5rem",
+                      fontFamily: "var(--font-serif, inherit)",
+                    }}
+                  >
+                    {block.text}
+                  </h3>
+                );
+              }
+              if (block.type === "h3") {
+                return (
+                  <h4
+                    key={i}
+                    style={{
+                      fontSize: "1.08rem",
+                      fontWeight: 700,
+                      color: "var(--brass, #D9A441)",
+                      marginTop: "1rem",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    {block.text}
+                  </h4>
+                );
+              }
+              return (
+                <p className="body" key={i} style={{ lineHeight: 1.75 }}>
+                  {block.text}
+                </p>
+              );
+            })}
+          </div>
+
+          {/* DEVAMINI GÖR / DAHA AZ GÖSTER BUTONU */}
+          {isLongArticle && (
+            <div style={{ marginTop: "1rem", marginBottom: "1.5rem" }}>
+              <button
+                type="button"
+                onClick={() => setExpanded(!expanded)}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "10px 18px",
+                  borderRadius: "12px",
+                  background: expanded ? "rgba(13, 15, 10, 0.06)" : "var(--brass, #D9A441)",
+                  color: expanded ? "var(--ink, #0D0F0A)" : "#0D0F0A",
+                  border: "1px solid var(--brass, #D9A441)",
+                  fontSize: "0.88rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  transition: "all 0.25s ease",
+                  boxShadow: expanded ? "none" : "0 4px 14px rgba(217, 164, 65, 0.3)",
+                }}
+              >
+                {expanded ? (
+                  <>
+                    <span>Daha Az Göster</span>
+                    <ChevronUp size={16} />
+                  </>
+                ) : (
+                  <>
+                    <BookOpen size={16} />
+                    <span>Devamını Gör (Hikayemizi Oku)</span>
+                    <ChevronDown size={16} />
+                  </>
+                )}
+              </button>
+            </div>
+          )}
+
+          {/* ÖZET KARTLARI */}
           {h.ozet?.length ? (
-            <div className="ozet" data-stagger="">
+            <div className="ozet" data-stagger="" style={{ marginTop: "1.5rem" }}>
               {h.ozet.map((item) => (
                 <div className="ozet__i" key={`${item.b}-${item.span}`}>
                   <span className="ozet__ico">
@@ -58,7 +179,9 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             </div>
           ) : null}
         </div>
-        <div data-fade="">
+
+        {/* SAĞ: STICKY TİLT-CARD FOTOĞRAF VE ROZET */}
+        <div data-fade="" style={{ position: "sticky", top: "calc(var(--nav-h, 80px) + 24px)" }}>
           <div className="tilt-card">
             <div className="tilt-card__inner">
               <SafeImg
