@@ -4201,7 +4201,7 @@
     "eyebrow": "İletişim",
     "telefon": "0530 608 90 51",
     "telefonHam": "+905306089051",
-    "telefonAlt": "Rezervasyon · Havuz · Organizasyon",
+    "telefonAlt": "Cafe & Restaurant / Rezervasyon",
     "whatsapp": "https://wa.me/905306089051?text=Merhaba%2C%20Petra%20Cafe%20Restaurant%E2%80%99tan%20bilgi%20%2F%20rezervasyon%20istiyorum.",
     "whatsappBaslik": "WhatsApp’tan yazın",
     "whatsappAlt": "Hızlı yanıt",
@@ -4305,7 +4305,9 @@
         "url": "https://www.google.com/maps/search/?api=1&query=Petra+Cafe+Restaurant+Ta%C5%9Fdelen+%C3%87ekmek%C3%B6y",
         "active": true
       }
-    ]
+    ],
+    "telefon2": "0532 449 45 99",
+    "telefon2Alt": "Petra Yaşam Merkezi / Tesis"
   },
   "sayfalar": {
     "urunler": {
@@ -4404,8 +4406,12 @@
         "baslik": "İletişim",
         "links": [
           {
-            "label": "0530 608 90 51",
+            "label": "Cafe & Rezervasyon: 0530 608 90 51",
             "href": "tel:+905306089051"
+          },
+          {
+            "label": "Tesis: 0532 449 45 99",
+            "href": "tel:+905324494599"
           },
           {
             "label": "WhatsApp",

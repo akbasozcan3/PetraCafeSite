@@ -28,7 +28,16 @@ export default function HomeContact({ content }: { content: SiteContent }) {
           href: `tel:${telHref}`,
           icon: "phone" as const,
           title: tel || telHref,
-          sub: c.telefonAlt || "Rezervasyon & İletişim",
+          sub: c.telefonAlt || "Cafe & Rezervasyon",
+          external: false,
+        }
+      : null,
+    c.telefon2
+      ? {
+          href: `tel:${phoneToTelHref(c.telefon2)}`,
+          icon: "phone" as const,
+          title: c.telefon2,
+          sub: c.telefon2Alt || "Petra Yaşam Merkezi / Tesis",
           external: false,
         }
       : null,

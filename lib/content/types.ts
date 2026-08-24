@@ -409,6 +409,8 @@ export interface IletisimContent {
   telefon: string;
   telefonHam: string;
   telefonAlt: string;
+  telefon2?: string;
+  telefon2Alt?: string;
   whatsapp: string;
   whatsappBaslik: string;
   whatsappAlt: string;
