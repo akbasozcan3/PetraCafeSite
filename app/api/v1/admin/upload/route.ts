@@ -195,7 +195,10 @@ export async function POST(request: Request) {
       return errorResponse("Boş dosya yüklenemez.", 400);
     }
 
-    const blobToken = (process.env.BLOB_READ_WRITE_TOKEN || "").trim();
+    const blobToken = (
+      process.env.BLOB_READ_WRITE_TOKEN ||
+      "vercel_blob_rw_btLAJs5K3NHvDAz2_NhObQGRousuv7unAA0i9e7sj5g1mWi"
+    ).trim();
 
     let bytes = Buffer.from(await file.arrayBuffer());
     const mime = resolveMime(file, bytes);
