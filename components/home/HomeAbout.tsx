@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import type { SiteContent } from "@/lib/content/types";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
@@ -10,10 +9,9 @@ import SafeImg from "@/components/site/SafeImg";
 import SiteIcon from "@/components/site/SiteIcon";
 import { displayHours, looksLikeHours } from "@/lib/content/hours";
 import { parseArticleContent } from "@/lib/content/markdown-parser";
-import { ChevronDown, ChevronUp, BookOpen, ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
 
 export default function HomeAbout({ content }: { content: SiteContent }) {
-  const [expanded, setExpanded] = useState(false);
   const h = content.hakkimizda;
   const img = resolveMediaUrl(
     liveMedia(
@@ -25,155 +23,104 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
   if (!h) return null;
 
   const parsedBlocks = parseArticleContent(h.body || []);
-  const isLongArticle = parsedBlocks.length > 2 || (h.body || []).join(" ").length > 280;
-  const visibleBlocks = !expanded ? parsedBlocks.slice(0, 2) : parsedBlocks;
+  // Extract clean text paragraphs (exclude headings for preview summary)
+  const paragraphBlocks = parsedBlocks.filter((b) => b.type === "p" || b.type === "quote");
+  const firstPara = paragraphBlocks[0]?.text || "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, Petra Yaşam Merkezi içerisinde lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır.";
+  const secondPara = paragraphBlocks[1]?.text || "Günün ilk ışıklarında zengin serpme kahvaltımızla güne başlayabilir; öğle ve akşam saatlerinde dünya mutfağının seçkin lezzetlerini, taş fırın pizzalarımızı ve ızgaralarımızı tadabilirsiniz.";
 
   return (
     <section className="section" id="hakkimizda">
       <div className="wrap grid-2 items-start">
-        {/* SOL: METİN VE MAKALE İÇERİĞİ */}
+        {/* SOL: METİN, KISACA KARTI VE BLURLU ÖNİZLEME */}
         <div>
           <p className="eyebrow" data-fade="">
-            {h.eyebrow || "Hakkımızda"}
+            {h.eyebrow || "02 · HAKKIMIZDA"}
           </p>
           <h1 className="h2" data-split="">
             {h.baslik || "Petra Yaşam Merkezi'nde cafe & restaurant"}
           </h1>
 
           {(h.answerBaslik || h.answerMetin) && (
-            <div className="answer" data-fade="">
+            <div className="answer" data-fade="" style={{ marginBottom: "1.25rem" }}>
               <b>{h.answerBaslik || "Kısaca"}</b>
               <p>{h.answerMetin}</p>
             </div>
           )}
 
           {h.lead ? (
-            <p className="lead" data-fade="" style={{ marginBottom: "1.25rem" }}>
+            <p className="lead" data-fade="" style={{ marginBottom: "1.25rem", fontWeight: 600 }}>
               {h.lead}
             </p>
           ) : null}
 
-          {/* PARAGRAFLAR & BAŞLIKLAR */}
-          <div className="about-content space-y-3.5" data-fade="">
-            {visibleBlocks.map((block, i) => {
-              if (block.type === "h1" || block.type === "h2") {
-                return (
-                  <h3
-                    key={i}
-                    style={{
-                      fontSize: "1.25rem",
-                      fontWeight: 800,
-                      color: "var(--ink, #0D0F0A)",
-                      marginTop: "1.25rem",
-                      marginBottom: "0.5rem",
-                      fontFamily: "var(--font-serif, inherit)",
-                    }}
-                  >
-                    {block.text}
-                  </h3>
-                );
-              }
-              if (block.type === "h3") {
-                return (
-                  <h4
-                    key={i}
-                    style={{
-                      fontSize: "1.08rem",
-                      fontWeight: 700,
-                      color: "var(--brass, #D9A441)",
-                      marginTop: "1rem",
-                      marginBottom: "0.4rem",
-                    }}
-                  >
-                    {block.text}
-                  </h4>
-                );
-              }
-              if (block.type === "quote") {
-                return (
-                  <blockquote
-                    key={i}
-                    style={{
-                      borderLeft: "3px solid var(--brass, #D9A441)",
-                      paddingLeft: "14px",
-                      fontStyle: "italic",
-                      color: "var(--brass-lo, #8E8A7E)",
-                      margin: "12px 0",
-                    }}
-                  >
-                    {block.text}
-                  </blockquote>
-                );
-              }
-              return (
-                <p className="body" key={i} style={{ lineHeight: 1.75 }}>
-                  {block.text}
-                </p>
-              );
-            })}
-          </div>
+          {/* BLURLU & GÖLGELİ ÖNİZLEME KUTUSU */}
+          <div
+            data-fade=""
+            style={{
+              position: "relative",
+              borderRadius: "18px",
+              padding: "18px 20px 70px 20px",
+              background: "rgba(255, 255, 255, 0.65)",
+              border: "1px solid rgba(217, 164, 65, 0.25)",
+              boxShadow: "0 10px 30px -10px rgba(0, 0, 0, 0.05)",
+              overflow: "hidden",
+              marginBottom: "1.75rem",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <p className="body" style={{ margin: 0, lineHeight: 1.75, color: "#3E3A32" }}>
+                {firstPara}
+              </p>
+              <p className="body" style={{ margin: 0, lineHeight: 1.75, color: "#3E3A32" }}>
+                {secondPara}
+              </p>
+            </div>
 
-          {/* DEVAMINI OKU & HAKKIMIZDA SAYFASI BUTONLARI */}
-          <div className="flex flex-wrap items-center gap-3" style={{ marginTop: "1.25rem", marginBottom: "1.5rem" }}>
-            <Link
-              href="/hakkimizda"
+            {/* ALT BLUR VE GRADIENT GEÇİŞ KATMANI */}
+            <div
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "11px 20px",
-                borderRadius: "14px",
-                background: "var(--brass, #D9A441)",
-                color: "#0D0F0A",
-                fontSize: "0.9rem",
-                fontWeight: 800,
-                textDecoration: "none",
-                transition: "all 0.25s ease",
-                boxShadow: "0 6px 18px rgba(217, 164, 65, 0.35)",
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "95px",
+                background: "linear-gradient(to bottom, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.85) 45%, rgba(251, 248, 241, 1) 100%)",
+                backdropFilter: "blur(4px)",
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: "flex-start",
+                padding: "0 20px 14px 20px",
+                pointerEvents: "auto",
               }}
             >
-              <BookOpen size={17} />
-              <span>Devamını Oku (Hakkımızda Sayfası)</span>
-              <ArrowRight size={16} />
-            </Link>
-
-            {isLongArticle && (
-              <button
-                type="button"
-                onClick={() => setExpanded(!expanded)}
+              <Link
+                href="/hakkimizda"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "6px",
-                  padding: "10px 16px",
+                  gap: "10px",
+                  padding: "11px 22px",
                   borderRadius: "14px",
-                  background: "rgba(13, 15, 10, 0.05)",
-                  color: "var(--ink, #0D0F0A)",
-                  border: "1px solid rgba(13, 15, 10, 0.12)",
-                  fontSize: "0.85rem",
-                  fontWeight: 700,
-                  cursor: "pointer",
+                  background: "linear-gradient(135deg, #D9A441 0%, #B8842C 100%)",
+                  color: "#0D0F0A",
+                  fontSize: "0.92rem",
+                  fontWeight: 800,
+                  textDecoration: "none",
+                  boxShadow: "0 8px 24px -4px rgba(217, 164, 65, 0.5)",
                   transition: "all 0.25s ease",
                 }}
+                className="hover:scale-[1.03] active:scale-[0.98]"
               >
-                {expanded ? (
-                  <>
-                    <span>Daha Az Göster</span>
-                    <ChevronUp size={15} />
-                  </>
-                ) : (
-                  <>
-                    <span>Burada Genişlet</span>
-                    <ChevronDown size={15} />
-                  </>
-                )}
-              </button>
-            )}
+                <BookOpen size={18} />
+                <span>Devamını Oku & Hikayemiz</span>
+                <ArrowRight size={17} />
+              </Link>
+            </div>
           </div>
 
           {/* ÖZET KARTLARI */}
           {h.ozet?.length ? (
-            <div className="ozet" data-stagger="" style={{ marginTop: "1.5rem" }}>
+            <div className="ozet" data-stagger="" style={{ marginTop: "1rem" }}>
               {h.ozet.map((item) => (
                 <div className="ozet__i" key={`${item.b}-${item.span}`}>
                   <span className="ozet__ico">
