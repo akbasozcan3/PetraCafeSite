@@ -5,7 +5,11 @@ import { phoneToTelHref, buildWhatsappUrl } from "@/lib/content/contact-utils";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
-import { cleanRawText, formatInlineText } from "@/lib/content/markdown-parser";
+import {
+  cleanRawText,
+  parseArticleContent,
+  renderSemanticBlocks,
+} from "@/lib/content/markdown-parser";
 import {
   UtensilsCrossed,
   Waves,
@@ -24,21 +28,49 @@ export const revalidate = 60;
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getPublicContent().catch(() => null);
   const h = content?.hakkimizda;
+  const brand =
+    content?.brand?.displayName ||
+    content?.seo?.siteName ||
+    "Petra Cafe Restaurant";
   const title = h?.baslik
-    ? `${cleanRawText(h.baslik)} — Petra Cafe Restaurant`
-    : "Hakkımızda — Petra Cafe Restaurant";
+    ? `${cleanRawText(h.baslik)} — ${brand}`
+    : `Hakkımızda — ${brand}`;
   const description =
     cleanRawText(h?.lead || "") ||
     "Petra Cafe Restaurant & Petra Yaşam Merkezi — Çekmeköy Taşdelen'de dünya mutfağı, serpme kahvaltı, açık havuz & plaj ve organizasyon.";
+  const canonicalUrl = "https://petra-cafe-site.vercel.app/hakkimizda";
+  const ogImg = resolveMediaUrl(
+    liveMedia(
+      content?.images?.aboutInterior || content?.images?.icMekan,
+      SITE_PHOTOS.interior
+    )
+  );
+
   return {
     title,
     description,
-    alternates: { canonical: "/hakkimizda" },
+    alternates: { canonical: canonicalUrl },
     openGraph: {
       title,
       description,
+      url: canonicalUrl,
       type: "website",
-      images: [{ url: "/assets/cms/hero-ic.webp", width: 1200, height: 630 }],
+      siteName: brand,
+      locale: "tr_TR",
+      images: [
+        {
+          url: ogImg || "/assets/cms/hero-ic.webp",
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImg || "/assets/cms/hero-ic.webp"],
     },
   };
 }
@@ -61,25 +93,30 @@ export default async function HakkimizdaPage() {
     )
   );
 
-  /* ─── İletişim ─── */
+  /* ─── İletişim & Konum ─── */
+  const brandName = content.brand?.displayName || "Petra Cafe Restaurant";
   const tel = content.iletisim?.telefon || "0530 608 90 51";
   const telHref = phoneToTelHref(tel);
+  const adres =
+    [content.iletisim?.adresSatir1, content.iletisim?.adresSatir2]
+      .filter(Boolean)
+      .join(", ") || "Taşdelen, Çekmeköy / İstanbul";
   const waHref = buildWhatsappUrl(
     content.iletisim?.whatsapp || tel,
     "Merhaba, Petra Cafe Restaurant hakkında bilgi ve rezervasyon için yazıyorum."
   );
 
-  /* ─── Body Paragrafları ─── */
-  const rawParagraphs: string[] = Array.isArray(h.body)
-    ? (h.body as string[]).map((p) => cleanRawText(p)).filter(Boolean)
-    : [cleanRawText(String(h.body || ""))].filter(Boolean);
-
-  const fallbackParagraphs = [
-    "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Zengin menümüz, sıcak atmosferimiz ve ferah açık havuz alanımızla misafirlerimize sadece bir restoran değil, unutulmaz anlar sunan bir buluşma noktası vadediyoruz.",
-    "Günün her saatine uygun lezzetlerimizle hizmetinizdeyiz. Sabahları zengin serpme kahvaltımızla güne enerjik bir başlangıç yapabilir; öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dünya mutfağından seçkin lezzetlerin, marine ızgaraların ve taş fırın çıtır pizzaların tadını çıkarabilirsiniz.",
-    "Yaz aylarında açık yüzme havuzumuz ve pool & beach kulübümüzle serinliğin ve güneşin tadını çıkarabilirsiniz. Doğum günleri, evlilik teklifleri, özel kutlamalar ve kurumsal davetler için sunduğumuz özel organizasyon masaları ve menü seçenekleriyle en değerli anlarınızı kusursuz kılıyoruz.",
-  ];
-  const bodyParagraphs = rawParagraphs.length > 0 ? rawParagraphs : fallbackParagraphs;
+  /* ─── Makale Blokları (Markdown / Semantic HTML) ─── */
+  const rawBody = h.body || [];
+  const articleBlocks = parseArticleContent(
+    rawBody.length > 0
+      ? rawBody
+      : [
+          "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Zengin menümüz, sıcak atmosferimiz ve ferah açık havuz alanımızla misafirlerimize sadece bir restoran değil, unutulmaz anlar sunan bir buluşma noktası vadediyoruz.",
+          "Günün her saatine uygun lezzetlerimizle hizmetinizdeyiz. Sabahları zengin serpme kahvaltımızla güne enerjik bir başlangıç yapabilir; öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dünya mutfağından seçkin lezzetlerin, marine ızgaraların ve taş fırın çıtır pizzaların tadını çıkarabilirsiniz.",
+          "Yaz aylarında açık yüzme havuzumuz ve pool & beach kulübümüzle serinliğin ve güneşin tadını çıkarabilirsiniz. Doğum günleri, evlilik teklifleri, özel kutlamalar ve kurumsal davetler için sunduğumuz özel organizasyon masaları ve menü seçenekleriyle en değerli anlarınızı kusursuz kılıyoruz.",
+        ]
+  );
 
   /* ─── 4'lü Sayaç / İstatistikler ─── */
   const statsList: any[] =
@@ -134,12 +171,60 @@ export default async function HakkimizdaPage() {
   /* ─── SSS / Sıkça Sorulan Sorular ─── */
   const faqs: any[] = (h.faqs as any[])?.length > 0 ? (h.faqs as any[]) : [];
 
+  /* ─── JSON-LD Structured Data (Restaurant & LocalBusiness Schema) ─── */
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: brandName,
+    image: img,
+    telephone: tel,
+    url: "https://petra-cafe-site.vercel.app/hakkimizda",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: adres,
+      addressLocality: "Çekmeköy",
+      addressRegion: "İstanbul",
+      addressCountry: "TR",
+    },
+    servesCuisine: [
+      "Dünya Mutfağı",
+      "Serpme Kahvaltı",
+      "Pizza",
+      "Izgara",
+      "Tatlı",
+      "Kahve",
+    ],
+    priceRange: "₺₺",
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+        opens: "08:00",
+        closes: "02:00",
+      },
+    ],
+  };
+
   return (
-    <div className="page-hakkimizda">
+    <article className="page-hakkimizda">
+      {/* Schema.org JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* ═══════════════════════════════════════════════════════
-          1. EDİTORYAL BAŞLIK (Temiz, Hero/Banner Olmayan Başlık)
+          1. EDİTORYAL BAŞLIK (Tek H1 — SEO Standartlarına Uygun)
           ═══════════════════════════════════════════════════════ */}
-      <section className="about-head-sec">
+      <header className="about-head-sec">
         <nav className="crumbs" aria-label="Breadcrumb">
           <Link href="/">Ana Sayfa</Link>
           <span>/</span>
@@ -169,17 +254,17 @@ export default async function HakkimizdaPage() {
             Menüyü İncele
           </Link>
         </div>
-      </section>
+      </header>
 
       {/* ═══════════════════════════════════════════════════════
-          2. HİKAYE & FOTOĞRAF KARTI (2 Kolon Editoryal Grid)
+          2. HİKAYE & FOTOĞRAF KARTI (Semantic Article Blocks)
           ═══════════════════════════════════════════════════════ */}
-      <section className="about-story-sec">
+      <section className="about-story-sec" aria-labelledby="about-story-heading">
         <div className="about-story-grid">
-          {/* Sol: Metinler */}
+          {/* Sol: Makale İçeriği (Admin Markdown'ı Semantic HTML olarak render edilir) */}
           <div className="about-story-text">
             <p className="eyebrow">BİZİ TANIYIN</p>
-            <h2>
+            <h2 id="about-story-heading">
               {cleanRawText(h.answerBaslik) || "Sadece bir restoran değil, bir yaşam alanı."}
             </h2>
 
@@ -190,30 +275,27 @@ export default async function HakkimizdaPage() {
               </div>
             )}
 
+            {/* Dinamik Semantik HTML Blokları (H2, H3, P, Blockquote, List) */}
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {bodyParagraphs.map((paragraph, pIdx) => (
-                <p key={pIdx}>
-                  {formatInlineText(paragraph)}
-                </p>
-              ))}
+              {renderSemanticBlocks(articleBlocks)}
             </div>
 
-            {/* Hap Etiketler */}
+            {/* Hap Etiketler / Internal Links */}
             <div className="about-story-pills">
-              {["Dünya Mutfağı", "Serpme Kahvaltı", "Pool & Beach", "Özel Davetler", "Nargile Lounge"].map(
-                (tag) => (
-                  <span key={tag}>{tag}</span>
-                )
-              )}
+              <Link href="/menu">Dünya Mutfağı</Link>
+              <Link href="/menu#kat-kahvalti">Serpme Kahvaltı</Link>
+              <Link href="/havuz-plaj">Pool & Beach</Link>
+              <Link href="/#rezervasyon">Özel Davetler</Link>
+              <Link href="/menu#kat-sicak-icecekler">Artisan Kahve</Link>
             </div>
           </div>
 
-          {/* Sağ: Fotoğraf Kartı */}
+          {/* Sağ: Mekân Fotoğraf Kartı */}
           <div>
             <div className="about-photo-card">
               <SafeImg
                 src={img}
-                alt="Petra Cafe Restaurant İç Mekan"
+                alt={`${brandName} Taşdelen İç Mekân ve Restoran Alanı`}
                 fallback={SITE_PHOTOS.interior}
                 width={1200}
                 height={900}
@@ -224,10 +306,10 @@ export default async function HakkimizdaPage() {
                 <span>08:00 – 02:00 AÇIK</span>
               </div>
               <div className="about-photo-card__badge">
-                <b>{cleanRawText(h.badgeBaslik) || "Petra Cafe & Restaurant"}</b>
+                <b>{cleanRawText(h.badgeBaslik) || brandName}</b>
                 <span>
                   <MapPin size={12} style={{ display: "inline", verticalAlign: "middle", marginRight: 4 }} />
-                  Taşdelen, Çekmeköy · İstanbul
+                  {adres}
                 </span>
               </div>
             </div>
@@ -236,9 +318,9 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          3. RAKAMLARLA PETRA (4'lü Sayaç / İstatistikler)
+          3. RAKAMLARLA PETRA (İstatistikler)
           ═══════════════════════════════════════════════════════ */}
-      <section className="about-stats-sec">
+      <section className="about-stats-sec" aria-label="Rakamlarla Petra">
         <div className="about-stats-grid">
           {statsList.map((st: any, i: number) => (
             <div className="about-stat-item" key={i}>
@@ -250,12 +332,12 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          4. 4 ANA DENEYİM KARTI (Ayrıcalıklı Deneyimler)
+          4. 4 ANA DENEYİM KARTI (Ayrıcalıklar)
           ═══════════════════════════════════════════════════════ */}
-      <section className="about-exp-sec">
+      <section className="about-exp-sec" aria-labelledby="about-exp-heading">
         <div className="section__head" style={{ marginBottom: 0 }}>
           <p className="eyebrow">AYRICALIKLAR</p>
-          <h2 className="h2">Petra'da Sizi Neler Bekliyor?</h2>
+          <h2 id="about-exp-heading" className="h2">Petra'da Sizi Neler Bekliyor?</h2>
           <p className="lead">
             Günün ilk ışıklarından gecenin keyifli anlarına kadar her anınıza eşlik eden lezzet ve konfor.
           </p>
@@ -296,22 +378,39 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          5. ÖZEL GÜNLER & KUTLAMALAR (Zarif Koyu Kutu)
+          5. ÖZEL GÜNLER & KUTLAMALAR (%100 Beyaz Yazı & Kontrast)
           ═══════════════════════════════════════════════════════ */}
-      <section className="about-events-sec">
-        <div className="about-events-box">
+      <section className="about-events-sec" aria-labelledby="about-events-heading">
+        <div className="about-events-box" style={{ background: "#16190F", color: "#F4EEE1" }}>
           {/* Sol: Metin */}
           <div>
-            <p className="eyebrow" style={{ color: "var(--brass, #D9A441)" }}>
+            <p className="eyebrow" style={{ color: "var(--brass, #D9A441)", margin: "0 0 10px" }}>
               ÖZEL GÜNLER & ETKİNLİKLER
             </p>
-            <h2>
-              {cleanRawText(h.eventsTitle || "Özel anlarınız için özel bir atmosfer.")}
+            <h2
+              id="about-events-heading"
+              style={{
+                color: "#FFFFFF",
+                fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+                fontSize: "clamp(24px, 3.2vw, 36px)",
+                fontWeight: 600,
+                lineHeight: 1.18,
+                margin: "0 0 14px",
+              }}
+            >
+              {cleanRawText(h.eventsTitle || "Unutulmaz Anlar İçin Özel Organizasyon Masaları")}
             </h2>
-            <p>
+            <p
+              style={{
+                color: "rgba(244, 238, 225, 0.92)",
+                fontSize: "15px",
+                lineHeight: 1.7,
+                margin: "0 0 20px",
+              }}
+            >
               {cleanRawText(
                 h.eventsLead ||
-                  "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde profesyonel masa düzeni, kişiye özel menü planlaması ve pasta servisi sunuyoruz."
+                  "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde; havuz başı terasımız veya klimalı şık salonlarımızda profesyonel masa düzeni, özel menü planlaması ve pasta servisi sunuyoruz."
               )}
             </p>
 
@@ -319,14 +418,14 @@ export default async function HakkimizdaPage() {
               {(
                 ((h.eventsTags as string[])?.length > 0
                   ? (h.eventsTags as string[])
-                  : ["Doğum Günü Kutlamaları", "Evlilik Teklifi & Yıldönümü", "Kurumsal Davetler"])
+                  : ["Doğum Günü Kutlamaları", "Evlilik Teklifi & Yıldönümü", "Kurumsal Şirket Yemekleri"])
               ).map((tag: string, ti: number) => (
                 <span
                   key={ti}
                   style={{
-                    background: "rgba(244, 238, 225, 0.1)",
-                    color: "rgba(244, 238, 225, 0.9)",
-                    borderColor: "rgba(244, 238, 225, 0.2)",
+                    background: "rgba(244, 238, 225, 0.12)",
+                    color: "#FFFFFF",
+                    borderColor: "rgba(244, 238, 225, 0.25)",
                   }}
                 >
                   {cleanRawText(tag)}
@@ -340,12 +439,20 @@ export default async function HakkimizdaPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn"
-                style={{ background: "#25D366", color: "#0B140C" }}
+                style={{ background: "#25D366", color: "#0B140C", fontWeight: 700 }}
               >
                 <MessageCircle size={16} />
                 WhatsApp Rezervasyon
               </a>
-              <a href={`tel:${telHref}`} className="btn btn--ghost" style={{ border: "1px solid rgba(244, 238, 225, 0.3)", color: "#FFFFFF" }}>
+              <a
+                href={`tel:${telHref}`}
+                className="btn btn--ghost"
+                style={{
+                  border: "1.5px solid rgba(244, 238, 225, 0.35)",
+                  color: "#FFFFFF",
+                  fontWeight: 600,
+                }}
+              >
                 <Phone size={15} />
                 {tel}
               </a>
@@ -357,7 +464,7 @@ export default async function HakkimizdaPage() {
             <div className="about-photo-card" style={{ aspectRatio: "4/3" }}>
               <SafeImg
                 src={imgEvents}
-                alt="Petra Özel Gün Masaları"
+                alt="Petra Özel Gün ve Organizasyon Masaları"
                 fallback={SITE_PHOTOS.interior}
                 width={900}
                 height={675}
@@ -376,10 +483,10 @@ export default async function HakkimizdaPage() {
           6. SSS / SIKÇA SORULAN SORULAR (Varsa)
           ═══════════════════════════════════════════════════════ */}
       {faqs.length > 0 && (
-        <section className="section" id="sss" style={{ padding: 0 }}>
+        <section className="section" id="sss" style={{ padding: 0 }} aria-labelledby="about-faq-heading">
           <div className="section__head">
             <p className="eyebrow">MERAK EDİLENLER</p>
-            <h2 className="h2">Sıkça Sorulan Sorular</h2>
+            <h2 id="about-faq-heading" className="h2">Sıkça Sorulan Sorular</h2>
           </div>
           <div className="faq">
             {faqs.map((faq: any, i: number) => (
@@ -393,15 +500,33 @@ export default async function HakkimizdaPage() {
       )}
 
       {/* ═══════════════════════════════════════════════════════
-          7. SON CTA (Rezervasyon & Menü Çağrısı)
+          7. SON CTA (%100 Beyaz Yazı & Yüksek Kontrast)
           ═══════════════════════════════════════════════════════ */}
-      <section className="about-cta-sec">
-        <div className="about-cta-card">
+      <section className="about-cta-sec" aria-label="Rezervasyon & İletişim">
+        <div className="about-cta-card" style={{ background: "#16190F", color: "#F4EEE1" }}>
           <p className="eyebrow" style={{ color: "var(--brass, #D9A441)", margin: 0 }}>
             REZERVASYON & İLETİŞİM
           </p>
-          <h2>Petra'da kendi hikayenizi yazın.</h2>
-          <p>
+          <h2
+            style={{
+              color: "#FFFFFF",
+              fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+              fontSize: "clamp(24px, 3.4vw, 38px)",
+              fontWeight: 600,
+              margin: 0,
+            }}
+          >
+            Petra'da kendi hikayenizi yazın.
+          </h2>
+          <p
+            style={{
+              color: "rgba(244, 238, 225, 0.9)",
+              fontSize: "15.5px",
+              lineHeight: 1.6,
+              maxWidth: "54ch",
+              margin: 0,
+            }}
+          >
             Sevdiklerinizle lezzet, konfor ve keyif dolu anlar için hemen yerinizi ayırtın.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
@@ -409,12 +534,20 @@ export default async function HakkimizdaPage() {
               <CalendarCheck size={16} />
               Masa Rezervasyonu Yap
             </Link>
-            <Link href="/menu" className="btn" style={{ background: "rgba(244, 238, 225, 0.12)", color: "#FFFFFF" }}>
+            <Link
+              href="/menu"
+              className="btn"
+              style={{
+                background: "rgba(244, 238, 225, 0.15)",
+                color: "#FFFFFF",
+                border: "1px solid rgba(244, 238, 225, 0.3)",
+              }}
+            >
               Menüyü İncele
             </Link>
           </div>
         </div>
       </section>
-    </div>
+    </article>
   );
 }
