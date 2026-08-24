@@ -720,7 +720,71 @@ export default function HakkimizdaPanel() {
           />
         </section>
 
-        {/* 10. TESİS İMKANLARI */}
+        {/* 10. SON CTA BÖLÜMÜ — "Petra'da kendi hikayenizi yazın." */}
+        <section className="space-y-4 rounded-2xl border border-[#D9A441]/40 bg-[#1A1813] p-6 shadow-lg">
+          <h3 className="text-base font-bold text-[#E8B84B] flex items-center gap-2">
+            <span>🌟</span> Son CTA Bölümü (Koyu Kart — Sayfanın Alt Çağrısı)
+          </h3>
+          <p className="text-xs text-[#C8B89A] leading-relaxed">
+            Sayfanın en altındaki koyu kutunun başlık, açıklama ve buton metinleri. Bu yazılar{" "}
+            <strong className="text-white">#16190F</strong> koyu arka plan üzerinde{" "}
+            <strong className="text-[#E8B84B]">beyaz / altın rengi</strong> ile görüntülenir.
+          </p>
+          <Input
+            label={`CTA Ana Başlık (H2) — Varsayılan: "Petra'da kendi hikayenizi yazın."`}
+            value={h.ctaTitle || ""}
+            onChange={(e) =>
+              setContent({
+                ...content,
+                hakkimizda: { ...h, ctaTitle: e.target.value },
+              })
+            }
+            placeholder="Petra'da kendi hikayenizi yazın."
+          />
+          <div>
+            <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">
+              CTA Alt Açıklama Metni
+            </label>
+            <textarea
+              value={h.ctaLead || ""}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  hakkimizda: { ...h, ctaLead: e.target.value },
+                })
+              }
+              rows={2}
+              className={fieldClass}
+              placeholder="Sevdiklerinizle lezzet, konfor ve keyif dolu anlar için hemen yerinizi ayırtın."
+            />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Input
+              label="1. Buton Metni (Rezervasyon)"
+              value={h.ctaBtn1 || ""}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  hakkimizda: { ...h, ctaBtn1: e.target.value },
+                })
+              }
+              placeholder="Masa Rezervasyonu Yap"
+            />
+            <Input
+              label="2. Buton Metni (Menü)"
+              value={h.ctaBtn2 || ""}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  hakkimizda: { ...h, ctaBtn2: e.target.value },
+                })
+              }
+              placeholder="Menüyü İncele"
+            />
+          </div>
+        </section>
+
+        {/* 11. TESİS İMKANLARI */}
         <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
           <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
             <span>🏊</span> Tesis Olanakları & İmkânlar (Rozetler)

@@ -35,11 +35,13 @@ export async function generateMetadata(): Promise<Metadata> {
     content?.brand?.displayName ||
     content?.seo?.siteName ||
     "Petra Cafe Restaurant";
-  const title = h?.baslik
-    ? `${cleanRawText(h.baslik)} — ${brand}`
-    : `Hakkımızda — ${brand}`;
+  // SEO: Marka adını çiftleme — sadece bir kez kullan
+  const pageTitle = cleanRawText(h?.baslik || "Hakkımızda");
+  const title = `${pageTitle} | ${brand}`;
   const description =
-    cleanRawText(h?.lead || "") ||
+    cleanRawText(h?.lead || "")
+      .split(/[\n\r]/)
+      .filter(Boolean)[0] ||
     "Petra Cafe Restaurant & Petra Yaşam Merkezi — Çekmeköy Taşdelen'de dünya mutfağı, serpme kahvaltı, açık havuz & plaj ve organizasyon.";
   const canonicalUrl = "https://petra-cafe-site.vercel.app/hakkimizda";
   const ogImg = resolveMediaUrl(
@@ -109,16 +111,11 @@ export default async function HakkimizdaPage() {
     "Merhaba, Petra Cafe Restaurant hakkında bilgi ve rezervasyon için yazıyorum."
   );
 
-  /* ─── Giriş / Lead Temizleme ─── */
+  /* ─── Giriş / Lead — Sadece İLK SATIR göster ─── */
   const rawLead = h.lead || "";
-  const leadLines = rawLead
-    .split(/\r?\n/)
-    .map((l: string) => cleanRawText(l))
-    .filter(Boolean);
   const formattedLead =
-    leadLines.length > 0
-      ? leadLines.join(" — ")
-      : "İstanbul Çekmeköy Taşdelen'de gastronomi, açık yüzme havuzu ve sosyal yaşamı kusursuz bir uyumla buluşturan seçkin bir merkez.";
+    cleanRawText(rawLead.split(/\r?\n/).filter(Boolean)[0] || "") ||
+    "İstanbul Çekmeköy Taşdelen'de gastronomi, açık yüzme havuzu ve sosyal yaşamı kusursuz bir uyumla buluşturan seçkin bir merkez.";
 
   /* ─── Makale Blokları (Markdown / Semantic HTML) ─── */
   const rawBody = h.body || [];
@@ -203,6 +200,25 @@ export default async function HakkimizdaPage() {
   /* ─── SSS / Sıkça Sorulan Sorular ─── */
   const faqs: any[] = (h.faqs as any[])?.length > 0 ? (h.faqs as any[]) : [];
 
+  /* ─── Özel Günler Bölümü Metinleri ─── */
+  const eventsTitle = cleanRawText(h.eventsTitle || "Unutulmaz Anlar İçin Özel Organizasyon Masaları");
+  const eventsLead = cleanRawText(
+    h.eventsLead ||
+      "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde; havuz başı terasımız veya klimalı şık salonlarımızda profesyonel masa düzeni, özel menü planlaması ve pasta servisi sunuyoruz."
+  );
+  const eventsTags: string[] =
+    (h.eventsTags as string[])?.length > 0
+      ? (h.eventsTags as string[])
+      : ["Doğum Günü Kutlamaları", "Evlilik Teklifi & Yıldönümü", "Kurumsal Şirket Yemekleri"];
+
+  /* ─── CTA Bölümü Metinleri ─── */
+  const ctaTitle = cleanRawText(h.ctaTitle || "Petra'da kendi hikayenizi yazın.");
+  const ctaLead = cleanRawText(
+    h.ctaLead || "Sevdiklerinizle lezzet, konfor ve keyif dolu anlar için hemen yerinizi ayırtın."
+  );
+  const ctaBtn1 = cleanRawText(h.ctaBtn1 || "Masa Rezervasyonu Yap");
+  const ctaBtn2 = cleanRawText(h.ctaBtn2 || "Menüyü İncele");
+
   /* ─── JSON-LD Structured Data (Restaurant & LocalBusiness Schema) ─── */
   const jsonLd = {
     "@context": "https://schema.org",
@@ -244,6 +260,12 @@ export default async function HakkimizdaPage() {
       },
     ],
   };
+
+  /* ─── Koyu Bölüm için Ortak Stil Sabitleri ─── */
+  const DARK_BG = "#16190F";
+  const DARK_COLOR = "#F4EEE1";
+  const WHITE = "#FFFFFF";
+  const GOLD = "#D9A441";
 
   return (
     <article className="page-hakkimizda">
@@ -292,7 +314,7 @@ export default async function HakkimizdaPage() {
           ═══════════════════════════════════════════════════════ */}
       <section className="about-story-sec" aria-labelledby="about-story-heading">
         <div className="about-story-grid">
-          {/* Sol: Makale İçeriği (Admin Markdown'ı Semantic HTML olarak render edilir) */}
+          {/* Sol: Makale İçeriği */}
           <div className="about-story-text">
             <p className="eyebrow">BİZİ TANIYIN</p>
             <h2 id="about-story-heading">
@@ -306,7 +328,7 @@ export default async function HakkimizdaPage() {
               </div>
             )}
 
-            {/* Dinamik Semantik HTML Blokları (H2, H3, P, Blockquote, List) */}
+            {/* Dinamik Semantik HTML Blokları */}
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {renderSemanticBlocks(articleBlocks)}
             </div>
@@ -465,14 +487,14 @@ export default async function HakkimizdaPage() {
       )}
 
       {/* ═══════════════════════════════════════════════════════
-          6. ÖZEL GÜNLER & KUTLAMALAR (%100 Beyaz Yazı & Kontrast)
+          6. ÖZEL GÜNLER & KUTLAMALAR — BEYAZ YAZI ZORUNLU
           ═══════════════════════════════════════════════════════ */}
       <section className="about-events-sec" aria-labelledby="about-events-heading">
         <div
           className="about-events-box"
           style={{
-            backgroundColor: "#16190F",
-            color: "#F4EEE1",
+            backgroundColor: DARK_BG,
+            color: DARK_COLOR,
           }}
         >
           {/* Sol: Metin */}
@@ -480,7 +502,7 @@ export default async function HakkimizdaPage() {
             <p
               className="eyebrow"
               style={{
-                color: "#D9A441",
+                color: GOLD,
                 margin: "0 0 10px",
                 fontWeight: 700,
                 letterSpacing: "0.15em",
@@ -488,46 +510,42 @@ export default async function HakkimizdaPage() {
             >
               ÖZEL GÜNLER & ETKİNLİKLER
             </p>
+            {/* H2 — beyaz zorunlu, !important yerine inline style */}
             <h2
               id="about-events-heading"
               style={{
-                color: "#FFFFFF",
+                color: WHITE,
                 fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
                 fontSize: "clamp(24px, 3.2vw, 36px)",
                 fontWeight: 600,
                 lineHeight: 1.18,
                 margin: "0 0 14px",
+                letterSpacing: "-0.01em",
               }}
             >
-              {cleanRawText(h.eventsTitle || "Unutulmaz Anlar İçin Özel Organizasyon Masaları")}
+              {eventsTitle}
             </h2>
             <p
               style={{
-                color: "#F4EEE1",
+                color: DARK_COLOR,
                 fontSize: "15px",
                 lineHeight: 1.7,
                 margin: "0 0 20px",
                 opacity: 0.95,
               }}
             >
-              {cleanRawText(
-                h.eventsLead ||
-                  "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde; havuz başı terasımız veya klimalı şık salonlarımızda profesyonel masa düzeni, özel menü planlaması ve pasta servisi sunuyoruz."
-              )}
+              {eventsLead}
             </p>
 
             <div className="about-story-pills" style={{ marginBottom: 28 }}>
-              {(
-                ((h.eventsTags as string[])?.length > 0
-                  ? (h.eventsTags as string[])
-                  : ["Doğum Günü Kutlamaları", "Evlilik Teklifi & Yıldönümü", "Kurumsal Şirket Yemekleri"])
-              ).map((tag: string, ti: number) => (
+              {eventsTags.map((tag: string, ti: number) => (
                 <span
                   key={ti}
                   style={{
                     backgroundColor: "rgba(244, 238, 225, 0.12)",
-                    color: "#FFFFFF",
+                    color: WHITE,
                     borderColor: "rgba(244, 238, 225, 0.3)",
+                    border: "1px solid rgba(244, 238, 225, 0.3)",
                   }}
                 >
                   {cleanRawText(tag)}
@@ -551,8 +569,9 @@ export default async function HakkimizdaPage() {
                 className="btn btn--ghost"
                 style={{
                   border: "1.5px solid rgba(244, 238, 225, 0.35)",
-                  color: "#FFFFFF",
+                  color: WHITE,
                   fontWeight: 600,
+                  background: "transparent",
                 }}
               >
                 <Phone size={15} />
@@ -602,33 +621,43 @@ export default async function HakkimizdaPage() {
       )}
 
       {/* ═══════════════════════════════════════════════════════
-          8. SON CTA (%100 Beyaz Yazı & Yüksek Kontrast)
+          8. SON CTA — BEYAZ YAZI ZORUNLU, DARK BG
           ═══════════════════════════════════════════════════════ */}
       <section className="about-cta-sec" aria-label="Rezervasyon & İletişim">
         <div
           className="about-cta-card"
           style={{
-            backgroundColor: "#16190F",
-            color: "#F4EEE1",
+            backgroundColor: DARK_BG,
+            color: DARK_COLOR,
           }}
         >
-          <p className="eyebrow" style={{ color: "#D9A441", margin: 0, fontWeight: 700 }}>
+          <p
+            className="eyebrow"
+            style={{
+              color: GOLD,
+              margin: 0,
+              fontWeight: 700,
+              letterSpacing: "0.15em",
+            }}
+          >
             REZERVASYON & İLETİŞİM
           </p>
+          {/* H2 — beyaz zorunlu */}
           <h2
             style={{
-              color: "#FFFFFF",
+              color: WHITE,
               fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
               fontSize: "clamp(24px, 3.4vw, 38px)",
               fontWeight: 600,
               margin: 0,
+              letterSpacing: "-0.01em",
             }}
           >
-            Petra'da kendi hikayenizi yazın.
+            {ctaTitle}
           </h2>
           <p
             style={{
-              color: "#F4EEE1",
+              color: DARK_COLOR,
               fontSize: "15.5px",
               lineHeight: 1.6,
               maxWidth: "54ch",
@@ -636,23 +665,23 @@ export default async function HakkimizdaPage() {
               opacity: 0.95,
             }}
           >
-            Sevdiklerinizle lezzet, konfor ve keyif dolu anlar için hemen yerinizi ayırtın.
+            {ctaLead}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
             <Link href="/#rezervasyon" className="btn btn--light">
               <CalendarCheck size={16} />
-              Masa Rezervasyonu Yap
+              {ctaBtn1}
             </Link>
             <Link
               href="/menu"
               className="btn"
               style={{
                 background: "rgba(244, 238, 225, 0.15)",
-                color: "#FFFFFF",
+                color: WHITE,
                 border: "1px solid rgba(244, 238, 225, 0.3)",
               }}
             >
-              Menüyü İncele
+              {ctaBtn2}
             </Link>
           </div>
         </div>

@@ -74,6 +74,11 @@ export interface HakkimizdaContent {
   eventsLead?: string;
   eventsTags?: string[];
   faqs?: HakkimizdaFaqItem[];
+  /** Son CTA bölümü — sayfanın alt çağrısı */
+  ctaTitle?: string;
+  ctaLead?: string;
+  ctaBtn1?: string;
+  ctaBtn2?: string;
 }
 
 export interface BolumBaslik {

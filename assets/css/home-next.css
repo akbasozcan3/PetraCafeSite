@@ -4447,6 +4447,20 @@ html .site-shop .foot__bar a,
   box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.5);
   border: 1.5px solid rgba(217, 164, 65, 0.35);
 }
+
+/* ─── KRİTİK: Koyu kutular içindeki TÜM metin elementleri beyaz — override yok ─── */
+.page-hakkimizda .about-events-box,
+.page-hakkimizda .about-events-box *:not(button):not(.btn):not(.about-photo-card__badge):not(.about-photo-card__badge *) {
+  color: #F4EEE1 !important;
+}
+.page-hakkimizda .about-events-box h1,
+.page-hakkimizda .about-events-box h2,
+.page-hakkimizda .about-events-box h3,
+.page-hakkimizda .about-events-box h4,
+.page-hakkimizda .about-events-box h5 {
+  color: #FFFFFF !important;
+  font-family: var(--f-head, "Playfair Display", Georgia, serif) !important;
+}
 .about-events-box h2 {
   color: #FFFFFF !important;
   font-family: var(--f-head, "Playfair Display", Georgia, serif);
@@ -4456,7 +4470,7 @@ html .site-shop .foot__bar a,
   margin: 0 0 14px;
 }
 .about-events-box p {
-  color: rgba(244, 238, 225, 0.9) !important;
+  color: rgba(244, 238, 225, 0.92) !important;
   font-size: 15px;
   line-height: 1.7;
   margin: 0 0 20px;
@@ -4478,6 +4492,20 @@ html .site-shop .foot__bar a,
   gap: 14px;
   box-shadow: 0 20px 50px -16px rgba(13, 15, 10, 0.35);
 }
+
+/* ─── KRİTİK: CTA içindeki TÜM metin elementleri beyaz ─── */
+.page-hakkimizda .about-cta-card,
+.page-hakkimizda .about-cta-card *:not(button):not(a.btn) {
+  color: #F4EEE1 !important;
+}
+.page-hakkimizda .about-cta-card h1,
+.page-hakkimizda .about-cta-card h2,
+.page-hakkimizda .about-cta-card h3,
+.page-hakkimizda .about-cta-card h4,
+.page-hakkimizda .about-cta-card h5 {
+  color: #FFFFFF !important;
+  font-family: var(--f-head, "Playfair Display", Georgia, serif) !important;
+}
 .about-cta-card h2 {
   font-family: var(--f-head, "Playfair Display", Georgia, serif);
   font-size: clamp(24px, 3.4vw, 38px);
@@ -4486,7 +4514,7 @@ html .site-shop .foot__bar a,
   margin: 0;
 }
 .about-cta-card p {
-  color: rgba(244, 238, 225, 0.85) !important;
+  color: rgba(244, 238, 225, 0.88) !important;
   font-size: 15.5px;
   line-height: 1.6;
   max-width: 54ch;
