@@ -16,12 +16,16 @@ export const SITE_ICON_OPTIONS = [
   { id: "clock", label: "Saatler" },
   { id: "calendar", label: "Rezervasyon" },
   { id: "globe", label: "Dünya" },
+  { id: "tiktok", label: "TikTok" },
+  { id: "facebook", label: "Facebook" },
 ] as const;
 
 export type SiteIconId = (typeof SITE_ICON_OPTIONS)[number]["id"];
 
 export function iconFromLabel(label: string): SiteIconId {
   const t = (label || "").toLocaleLowerCase("tr-TR");
+  if (/tiktok/.test(t)) return "tiktok";
+  if (/facebook|fb/.test(t)) return "facebook";
   if (/whatsapp/.test(t)) return "whatsapp";
   if (/instagram/.test(t)) return "instagram";
   if (/posta|e-posta|email|mail/.test(t)) return "mail";

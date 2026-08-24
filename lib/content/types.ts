@@ -415,6 +415,8 @@ export interface IletisimContent {
   instagram: string;
   instagramUrl: string;
   instagramAlt: string;
+  tiktokUrl?: string;
+  facebookUrl?: string;
   eposta: string;
   epostaAlt: string;
   adresSatir1: string;

@@ -208,7 +208,18 @@ export default function SiteFooter({
                   {iletisim.socials
                     .filter((s) => s.active !== false && s.url)
                     .map((s) => {
-                      const iconName = s.platform === "whatsapp" ? "whatsapp" : s.platform === "instagram" ? "instagram" : s.platform === "maps" ? "map" : "globe";
+                      const iconName =
+                        s.platform === "whatsapp"
+                          ? "whatsapp"
+                          : s.platform === "instagram"
+                          ? "instagram"
+                          : s.platform === "tiktok"
+                          ? "tiktok"
+                          : s.platform === "facebook"
+                          ? "facebook"
+                          : s.platform === "maps"
+                          ? "map"
+                          : "globe";
                       return (
                         <a
                           key={s.id || s.url}

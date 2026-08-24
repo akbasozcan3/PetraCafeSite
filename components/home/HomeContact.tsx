@@ -50,6 +50,24 @@ export default function HomeContact({ content }: { content: SiteContent }) {
           external: true,
         }
       : null,
+    c.tiktokUrl
+      ? {
+          href: c.tiktokUrl,
+          icon: "tiktok" as const,
+          title: "TikTok",
+          sub: "@petrayasammerkezi",
+          external: true,
+        }
+      : null,
+    c.facebookUrl
+      ? {
+          href: c.facebookUrl,
+          icon: "facebook" as const,
+          title: "Facebook",
+          sub: "Petra Cafe Restaurant",
+          external: true,
+        }
+      : null,
     c.eposta
       ? {
           href: `mailto:${c.eposta}`,

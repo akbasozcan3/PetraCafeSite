@@ -173,7 +173,7 @@
     ],
     "ozet": [
       {
-        "b": "08:00–24:00",
+        "b": "08:00–02:00",
         "span": "cafe her gün"
       },
       {
@@ -4210,63 +4210,102 @@
     "instagramAlt": "Instagram’da Petra",
     "eposta": "",
     "epostaAlt": "E-posta",
-    "adresSatir1": "Sultan Çiftliği Mahallesi, Selen Sokak No:1",
-    "adresSatir2": "Mega Kent Sitesi içi · Petra Yaşam Merkezi",
-    "adresSatir3": "Taşdelen, Çekmeköy / İstanbul",
-    "saatler": "Cafe her gün 08:00 – 24:00 · Havuz 09:00 – 18:00",
+    "adresSatir1": "Megakent Sitesi, Turgut Özal Cad, Selen Sk. No:1/O",
+    "adresSatir2": "Petra Yaşam Merkezi · Sultan Çiftliği Mahallesi",
+    "adresSatir3": "Taşdelen, 34788 Çekmeköy / İstanbul",
+    "saatler": "Cafe her gün 08:00 – 02:00 · Havuz 09:00 – 18:00",
     "saatProgrami": [
       {
         "gun": "Pazartesi",
         "acilis": "08:00",
-        "kapanis": "23:00",
+        "kapanis": "02:00",
         "kapali": false
       },
       {
         "gun": "Salı",
         "acilis": "08:00",
-        "kapanis": "23:00",
+        "kapanis": "02:00",
         "kapali": false
       },
       {
         "gun": "Çarşamba",
         "acilis": "08:00",
-        "kapanis": "23:00",
+        "kapanis": "02:00",
         "kapali": false
       },
       {
         "gun": "Perşembe",
         "acilis": "08:00",
-        "kapanis": "23:00",
+        "kapanis": "02:00",
         "kapali": false
       },
       {
         "gun": "Cuma",
         "acilis": "08:00",
-        "kapanis": "23:00",
+        "kapanis": "02:00",
         "kapali": false
       },
       {
         "gun": "Cumartesi",
         "acilis": "08:00",
-        "kapanis": "23:00",
+        "kapanis": "02:00",
         "kapali": false
       },
       {
         "gun": "Pazar",
         "acilis": "08:00",
-        "kapanis": "23:00",
+        "kapanis": "02:00",
         "kapali": false
       }
     ],
     "ozelPastaNot": "Havuz 09:00–18:00 · yüzme dersi — 0530 608 90 51",
     "koordinat": "41.029976,29.226160",
-    "haritaSorgu": "41.029976,29.226160",
+    "haritaSorgu": "Petra Cafe Restaurant Taşdelen Çekmeköy",
     "haritaButonMetin": "Yol Tarifi Al",
     "etiketAdres": "Adres",
     "etiketSaatler": "Çalışma saatleri",
     "etiketTelefon": "Telefon",
     "etiketWhatsapp": "WhatsApp",
-    "etiketOzelPasta": "Havuz & organizasyon"
+    "etiketOzelPasta": "Havuz & organizasyon",
+    "tiktokUrl": "https://www.tiktok.com/@petrayasammerkezi",
+    "facebookUrl": "https://www.facebook.com/profile.php?id=61590906779525",
+    "socials": [
+      {
+        "id": "soc_instagram",
+        "platform": "instagram",
+        "label": "Instagram (@petracaferestaurant)",
+        "url": "https://www.instagram.com/petracaferestaurant/",
+        "active": true
+      },
+      {
+        "id": "soc_tiktok",
+        "platform": "tiktok",
+        "label": "TikTok (@petrayasammerkezi)",
+        "url": "https://www.tiktok.com/@petrayasammerkezi",
+        "active": true
+      },
+      {
+        "id": "soc_facebook",
+        "platform": "facebook",
+        "label": "Facebook (Petra Cafe)",
+        "url": "https://www.facebook.com/profile.php?id=61590906779525",
+        "active": true
+      },
+      {
+        "id": "soc_whatsapp",
+        "platform": "whatsapp",
+        "label": "WhatsApp Hattı (0530 608 90 51)",
+        "url": "https://wa.me/905306089051?text=Merhaba%2C%20Petra%20Cafe%20Restaurant%E2%80%99tan%20bilgi%20%2F%20rezervasyon%20istiyorum.",
+        "active": true
+      },
+      {
+        "id": "soc_maps",
+        "platform": "maps",
+        "label": "Google Haritalar Konumu",
+        "url": "https://www.google.com/maps/search/?api=1&query=Petra+Cafe+Restaurant+Ta%C5%9Fdelen+%C3%87ekmek%C3%B6y",
+        "active": true
+      }
+    ]
   },
   "sayfalar": {
     "urunler": {
@@ -4375,6 +4414,18 @@
           {
             "label": "Instagram",
             "href": "https://www.instagram.com/petracaferestaurant/"
+          },
+          {
+            "label": "TikTok",
+            "href": "https://www.tiktok.com/@petrayasammerkezi"
+          },
+          {
+            "label": "Facebook",
+            "href": "https://www.facebook.com/profile.php?id=61590906779525"
+          },
+          {
+            "label": "Yol Tarifi Al",
+            "href": "https://www.google.com/maps/search/?api=1&query=Petra+Cafe+Restaurant+Ta%C5%9Fdelen+%C3%87ekmek%C3%B6y"
           }
         ]
       }
@@ -4387,6 +4438,14 @@
       {
         "label": "Instagram",
         "href": "https://www.instagram.com/petracaferestaurant/"
+      },
+      {
+        "label": "TikTok",
+        "href": "https://www.tiktok.com/@petrayasammerkezi"
+      },
+      {
+        "label": "Facebook",
+        "href": "https://www.facebook.com/profile.php?id=61590906779525"
       },
       {
         "label": "Rezervasyon",
@@ -4432,7 +4491,7 @@
     {
       "k": "Saatler",
       "v": "",
-      "n": "Cafe 08:00–24:00 · havuz 09:00–18:00"
+      "n": "Cafe 08:00–02:00 · havuz 09:00–18:00"
     },
     {
       "k": "Rezervasyon",
@@ -4515,11 +4574,11 @@
     "successMetin": "Talebiniz alındı. Onay için sizi arayacağız."
   },
   "yorumlarMeta": {
-    "googleSayacMetin": "30+ Google Yorumu",
-    "googleSkor": "4.87 / 5.0",
+    "googleSayacMetin": "94+ Google Yorumu",
+    "googleSkor": "4.6 / 5.0",
     "dogrulamaEtiketi": "Doğrulanmış Google Yorumu",
-    "googleUrl": "https://www.google.com/maps/search/?api=1&query=Ta%C5%9Fdelen+Restoran+%C3%87ekmek%C3%B6y",
-    "badgeCta": "Google’da gör",
+    "googleUrl": "https://www.google.com/maps/search/?api=1&query=Petra+Cafe+Restaurant+Ta%C5%9Fdelen+%C3%87ekmek%C3%B6y",
+    "badgeCta": "Google’da Gör",
     "unvanVarsayilan": "Misafir"
   },
   "yorumlarSource": "manual",
