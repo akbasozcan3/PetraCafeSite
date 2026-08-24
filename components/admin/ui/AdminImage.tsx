@@ -15,7 +15,14 @@ export default function AdminImage({
   className?: string;
   contain?: boolean;
 }) {
-  const url = src ? withCacheBust(resolveMediaUrl(src), heroMediaVersion(src)) : "";
+  const isDataOrBlob = src?.startsWith("data:") || src?.startsWith("blob:");
+  const resolved = src ? resolveMediaUrl(src) : "";
+  const url = isDataOrBlob
+    ? (src || "")
+    : resolved
+    ? withCacheBust(resolved, heroMediaVersion(src))
+    : "";
+
   const isVector =
     /\.svg(\?|$)/i.test(src || "") ||
     /\.ico(\?|$)/i.test(src || "") ||
@@ -26,7 +33,7 @@ export default function AdminImage({
 
   useEffect(() => {
     setFailed(false);
-  }, [url]);
+  }, [src, url]);
 
   if (!url || failed) {
     return (

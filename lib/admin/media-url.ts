@@ -29,6 +29,7 @@ export function resolveProductionMediaPath(
 
 export function withCacheBust(url: string, key?: string | number): string {
   if (!url) return url;
+  if (url.startsWith("data:") || url.startsWith("blob:")) return url;
   const sep = url.includes("?") ? "&" : "?";
   return `${url}${sep}v=${key ?? Date.now()}`;
 }
