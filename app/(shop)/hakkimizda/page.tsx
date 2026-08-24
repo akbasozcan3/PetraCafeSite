@@ -120,17 +120,31 @@ export default async function HakkimizdaPage() {
   return (
     <div className="shop-about" style={{ padding: "2rem 0 5rem 0" }}>
       
-      {/* 1. ÜST HERO & BREADCRUMB */}
-      <nav className="crumbs" style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#8A9BB0", marginBottom: "1.5rem" }}>
-        <Link href="/" style={{ color: "#6B7A94", textDecoration: "none" }}>Ana Sayfa</Link>
-        <ChevronRight size={14} />
-        <span style={{ color: "var(--brass, #B8842C)" }}>Hakkımızda</span>
+      {/* 1. Breadcrumbs Navigasyon (Kullanım Koşulları Sayfasıyla Birebir) */}
+      <nav
+        aria-label="Breadcrumb"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          fontSize: "12px",
+          color: "var(--card-muted, #6e6a5c)",
+          marginBottom: "24px",
+        }}
+      >
+        <Link href="/" style={{ color: "var(--card-text, #0d0f0a)", textDecoration: "none", fontWeight: 600 }}>
+          Ana Sayfa
+        </Link>
+        <span style={{ color: "var(--card-muted, #6e6a5c)" }}>/</span>
+        <span style={{ color: "var(--brass, #b8842c)", fontWeight: 700 }}>Hakkımızda</span>
       </nav>
 
       <header className="ys-hero" style={{ marginBottom: "2.5rem" }}>
-        <p className="eyebrow" style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.08em", color: "var(--brass, #B8842C)", textTransform: "uppercase", marginBottom: "0.5rem" }}>
-          {cleanRawText(h.eyebrow || "02 · HAKKIMIZDA & YAŞAM ALANIMIZ")}
-        </p>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "6px 14px", borderRadius: "9999px", background: "rgba(217, 164, 65, 0.15)", border: "1px solid rgba(217, 164, 65, 0.35)", marginBottom: "1rem" }}>
+          <span style={{ fontSize: "11px", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--brass, #b8842c)" }}>
+            {cleanRawText(h.eyebrow || "HAKKIMIZDA & YAŞAM MERKEZİ")}
+          </span>
+        </div>
         <h1 className="h2" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 900, lineHeight: 1.18, color: "var(--ink, #0D0F0A)", margin: "0 0 1rem 0", fontFamily: "var(--font-serif, serif)" }}>
           {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde Cafe & Restaurant Deneyimi")}
         </h1>
