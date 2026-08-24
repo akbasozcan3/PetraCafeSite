@@ -89,19 +89,7 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
 
           {cats.map((g, i) => {
             const slug = getCategorySlug(g);
-            let dishes = (g.urunler || []).filter(isProductActive);
-            if (slug === "kahvalti" && dishes.length === 3) {
-              dishes = [
-                ...dishes,
-                {
-                  ad: "Hızlı Kahvaltı Tabağı",
-                  fiyat: "350",
-                  aciklama: "Ezine peyniri, taze kaşar, siyah ve yeşil zeytin, petek bal, tereyağı, haşlanmış yumurta, domates, salatalık ve 2 bardak taze çay.",
-                  slug: "hizli-kahvalti-tabagi",
-                  aktif: true,
-                },
-              ];
-            }
+            const dishes = (g.urunler || []).filter(isProductActive);
             return (
               <div
                 key={slug}

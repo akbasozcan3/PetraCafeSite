@@ -413,9 +413,45 @@
             "source": "local",
             "createdAt": "2026-08-21T18:05:00.000Z",
             "updatedAt": "2026-08-21T18:05:00.000Z"
+          },
+          {
+            "ad": "Sahanda Sucuklu Yumurta",
+            "fiyat": "220",
+            "aciklama": "Köy tereyağında pişirilmiş kasap sucuklu çift göz köy yumurtası.",
+            "fav": true,
+            "aktif": true,
+            "not": "",
+            "slug": "sahanda-sucuklu-yumurta",
+            "link": "/menu/kahvalti/sahanda-sucuklu-yumurta",
+            "id": "p_sahanda-sucuklu-yumurta",
+            "source": "local"
+          },
+          {
+            "ad": "Geleneksel Menemen",
+            "fiyat": "200",
+            "aciklama": "Taze domates, yeşil köy biberi, tereyağı ve çift yumurta. İsteğe göre kaşarlı.",
+            "fav": false,
+            "aktif": true,
+            "not": "",
+            "slug": "geleneksel-menemen",
+            "link": "/menu/kahvalti/geleneksel-menemen",
+            "id": "p_geleneksel-menemen",
+            "source": "local"
+          },
+          {
+            "ad": "Çıtır Pişi & Sigara Böreği Tabağı",
+            "fiyat": "240",
+            "aciklama": "Sıcak kabarmış pişi, çıtır peynirli sigara böreği, ezine peynir ve çeri domates eşliğinde.",
+            "fav": false,
+            "aktif": true,
+            "not": "",
+            "slug": "citir-pisi-sigara-boregi-tabagi",
+            "link": "/menu/kahvalti/citir-pisi-sigara-boregi-tabagi",
+            "id": "p_citir-pisi-sigara-boregi-tabagi",
+            "source": "local"
           }
         ],
-        "adet": "4 çeşit",
+        "adet": "7 çeşit",
         "aktif": true
       },
       {
@@ -1190,13 +1226,85 @@
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.641Z",
             "updatedAt": "2026-08-19T17:09:45.641Z"
+          },
+          {
+            "ad": "Dana Antrikot Izgara",
+            "fiyat": "750",
+            "aciklama": "Özel marine edilmiş 250g dana antrikot, tereyağlı fırın patates, ızgara sebzeler ve biberiye sos.",
+            "fav": true,
+            "aktif": true,
+            "not": "",
+            "slug": "dana-antrikot-izgara",
+            "link": "/menu/izgaralar/dana-antrikot-izgara",
+            "id": "p_dana-antrikot-izgara",
+            "source": "local"
+          },
+          {
+            "ad": "Dana Lokum (Bonfile Dilimleri)",
+            "fiyat": "800",
+            "aciklama": "Tereyağında mühürlenmiş yumuşacık dana bonfile dilimleri, ızgara kuşkonmaz ve patates püresi.",
+            "fav": true,
+            "aktif": true,
+            "not": "",
+            "slug": "dana-lokum-bonfile",
+            "link": "/menu/izgaralar/dana-lokum-bonfile",
+            "id": "p_dana-lokum-bonfile",
+            "source": "local"
+          },
+          {
+            "ad": "Kuzu Pirzola",
+            "fiyat": "780",
+            "aciklama": "Kekik ve zeytinyağı ile dinlendirilmiş 4 parça kuzu pirzola, közlenmiş domates ve biber ile.",
+            "fav": false,
+            "aktif": true,
+            "not": "",
+            "slug": "kuzu-pirzola",
+            "link": "/menu/izgaralar/kuzu-pirzola",
+            "id": "p_kuzu-pirzola",
+            "source": "local"
+          },
+          {
+            "ad": "Karışık Petra Izgara Tabağı",
+            "fiyat": "950",
+            "aciklama": "Izgara köfte, tavuk pirzola, kuzu pirzola, tavuk kanat, pilav, köz sebzeler ve parmak patates.",
+            "fav": true,
+            "aktif": true,
+            "not": "",
+            "slug": "karisik-petra-izgara-tabagi",
+            "link": "/menu/izgaralar/karisik-petra-izgara-tabagi",
+            "id": "p_karisik-petra-izgara-tabagi",
+            "source": "local"
+          },
+          {
+            "ad": "Izgara Somon Balığı",
+            "fiyat": "720",
+            "aciklama": "Fırınlanmış Norveç somon fileto, taze dereotlu patates ezmesi ve limonlu tereyağ sos.",
+            "fav": false,
+            "aktif": true,
+            "not": "",
+            "slug": "izgara-somon-baligi",
+            "link": "/menu/izgaralar/izgara-somon-baligi",
+            "id": "p_izgara-somon-baligi",
+            "source": "local"
+          },
+          {
+            "ad": "Çökertme Kebabı",
+            "fiyat": "650",
+            "aciklama": "Çıtır kibrit patates yatağında sote dana bonfile dilimleri, sarımsaklı süzme yoğurt ve kızgın tereyağ sos.",
+            "fav": true,
+            "aktif": true,
+            "not": "",
+            "slug": "cokertme-kebabi",
+            "link": "/menu/izgaralar/cokertme-kebabi",
+            "id": "p_cokertme-kebabi",
+            "source": "local"
           }
         ],
-        "adet": "3 çeşit",
+        "adet": "9 çeşit",
         "aktif": true
       },
       {
-        "ad": "Beyaz Etler",
+        "ad": "Tavuk & Beyaz Etler",
         "slug": "beyaz-etler",
         "link": "/menu/beyaz-etler",
         "tumLink": "/menu/beyaz-etler",
