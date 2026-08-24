@@ -92,15 +92,20 @@ export default function MenuPanel() {
     const image = dishModal.image.trim();
     const fav = Boolean(dishModal.fav);
 
+    const pSlug = slugifyTr(ad) || `urun-${Date.now()}`;
+    const pId = `p_${pSlug}_${Date.now()}`;
+
     setContent((prev) => {
       if (!prev?.menu) return prev;
       const current = prev.menu;
       const gruplar = [...current.gruplar];
       const grup = gruplar[gi];
       if (!grup) return prev;
+      const catSlug = grup.slug || slugifyTr(grup.ad) || "kategori";
       gruplar[gi] = {
         ...grup,
         urunler: [
+          ...grup.urunler,
           {
             ad,
             fiyat,
@@ -108,9 +113,11 @@ export default function MenuPanel() {
             image: image || undefined,
             fav,
             aktif: true,
+            slug: pSlug,
+            id: pId,
+            link: `/menu/${catSlug}/${pSlug}`,
             source: "local",
           },
-          ...grup.urunler,
         ],
       };
       return { ...prev, menu: { ...current, gruplar } };
@@ -126,7 +133,7 @@ export default function MenuPanel() {
       fav: false,
     });
     setOpen(gi);
-    showMessage(`“${ad}” başarıyla eklendi. Canlıya almak için "Menüyü Kaydet" butonuna basabilirsiniz.`, "success");
+    showMessage(`“${ad}” eklendi. Canlıya almak için "Menüyü Kaydet" butonuna basınız.`, "success");
   };
 
   const handleAddCategoryModalSubmit = (e: React.FormEvent) => {
@@ -348,30 +355,37 @@ export default function MenuPanel() {
       return;
     }
     const fiyat = newDish.fiyat.trim();
+    const pSlug = slugifyTr(ad) || `urun-${Date.now()}`;
+    const pId = `p_${pSlug}_${Date.now()}`;
+
     setContent((prev) => {
       if (!prev?.menu) return prev;
       const current = prev.menu;
       const gruplar = [...current.gruplar];
       const grup = gruplar[gi];
       if (!grup) return prev;
+      const catSlug = grup.slug || slugifyTr(grup.ad) || "kategori";
       gruplar[gi] = {
         ...grup,
         urunler: [
+          ...grup.urunler,
           {
             ad,
             fiyat,
             fav: false,
             aktif: true,
+            slug: pSlug,
+            id: pId,
+            link: `/menu/${catSlug}/${pSlug}`,
             source: "local",
           },
-          ...grup.urunler,
         ],
       };
       return { ...prev, menu: { ...current, gruplar } };
     });
     setNewDish({ ad: "", fiyat: "" });
     setOpen(gi);
-    showMessage(`“${ad}” eklendi — Kaydet’e basınca sitede görünür.`, "success");
+    showMessage(`“${ad}” eklendi — Üstteki "Menüyü Kaydet" butonuna basarak canlıya alınız.`, "success");
   };
 
   return (

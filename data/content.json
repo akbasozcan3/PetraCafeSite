@@ -340,7 +340,7 @@
   },
   "hikaye": null,
   "menu": {
-    "rev": "printed-20260819e",
+    "rev": "printed-20260825-v3",
     "baslik": "Petra Menü",
     "giris": "Kahvaltı, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile. Fiyatlar basılı menü ile aynıdır.",
     "legend": "",
@@ -388,18 +388,18 @@
             "updatedAt": "2026-08-19T17:09:45.641Z"
           },
           {
-            "ad": "Hızlı Kahvaltı Tabağı",
-            "fiyat": "350",
-            "aciklama": "Ezine peyniri, taze kaşar, siyah ve yeşil zeytin, petek bal, tereyağı, haşlanmış yumurta, domates, salatalık ve 2 bardak taze çay.",
+            "ad": "Sahanda Sucuklu Yumurta",
+            "fiyat": "220",
+            "aciklama": "Köy tereyağında pişirilmiş kasap sucuklu çift göz köy yumurtası.",
             "fav": true,
             "aktif": true,
             "not": "",
-            "slug": "hizli-kahvalti-tabagi",
-            "link": "/menu/kahvalti/hizli-kahvalti-tabagi",
-            "id": "p_hizli-kahvalti-tabagi",
+            "slug": "sahanda-sucuklu-yumurta",
+            "link": "/menu/kahvalti/sahanda-sucuklu-yumurta",
+            "id": "p_sahanda-sucuklu-yumurta",
             "source": "local",
-            "createdAt": "2026-08-21T18:05:00.000Z",
-            "updatedAt": "2026-08-21T18:05:00.000Z"
+            "createdAt": "2026-08-25T00:00:00.000Z",
+            "updatedAt": "2026-08-25T00:00:00.000Z"
           },
           {
             "ad": "Kahvaltı Ekstra",
@@ -416,16 +416,18 @@
             "updatedAt": "2026-08-19T17:09:45.641Z"
           },
           {
-            "ad": "Sahanda Sucuklu Yumurta",
-            "fiyat": "220",
-            "aciklama": "Köy tereyağında pişirilmiş kasap sucuklu çift göz köy yumurtası.",
+            "ad": "Hızlı Kahvaltı Tabağı",
+            "fiyat": "350",
+            "aciklama": "Ezine peyniri, taze kaşar, siyah ve yeşil zeytin, petek bal, tereyağı, haşlanmış yumurta, domates, salatalık ve 2 bardak taze çay.",
             "fav": true,
             "aktif": true,
             "not": "",
-            "slug": "sahanda-sucuklu-yumurta",
-            "link": "/menu/kahvalti/sahanda-sucuklu-yumurta",
-            "id": "p_sahanda-sucuklu-yumurta",
-            "source": "local"
+            "slug": "hizli-kahvalti-tabagi",
+            "link": "/menu/kahvalti/hizli-kahvalti-tabagi",
+            "id": "p_hizli-kahvalti-tabagi",
+            "source": "local",
+            "createdAt": "2026-08-21T18:05:00.000Z",
+            "updatedAt": "2026-08-21T18:05:00.000Z"
           },
           {
             "ad": "Geleneksel Menemen",
