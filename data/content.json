@@ -4495,27 +4495,23 @@
   "ziyaret": [
     {
       "k": "Saatler",
-      "v": "08:00 – 02:00",
-      "n": "Cafe açık · Havuz 09:00 – 18:00",
-      "href": "#iletisim"
+      "v": "Cafe her gün 08:00 – 24:00 · Havuz 09:00 – 18:00",
+      "n": "Cafe 08:00–24:00 · havuz 09:00–18:00"
     },
     {
       "k": "Rezervasyon",
       "v": "0530 608 90 51",
-      "n": "Masa, havuz ve özel davetler",
-      "href": "#rezervasyon"
+      "n": "Masa, havuz, yüzme dersi"
     },
     {
       "k": "Havuz & Plaj",
-      "v": "09:00 – 18:00",
-      "n": "Yetişkin & çocuk havuzu, şezlong",
-      "href": "#pasta"
+      "v": "09:00–18:00",
+      "n": "Derinlik 1.45–1.95 m"
     },
     {
       "k": "Konum",
       "v": "Petra Yaşam Merkezi",
-      "n": "Taşdelen · Çekmeköy / İstanbul",
-      "href": "https://maps.google.com/?q=Petra+Yaşam+Merkezi+Taşdelen+Çekmeköy"
+      "n": "Taşdelen · Çekmeköy"
     }
   ],
   "hizmetler": [
