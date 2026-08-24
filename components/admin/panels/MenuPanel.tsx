@@ -10,6 +10,12 @@ import {
   ArrowUp,
   ArrowDown,
   ImageIcon,
+  Save,
+  X,
+  UtensilsCrossed,
+  FolderPlus,
+  Sparkles,
+  Check,
 } from "lucide-react";
 import { api } from "@/lib/api/client";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
@@ -51,6 +57,117 @@ export default function MenuPanel() {
   const [query, setQuery] = useState("");
   const [newCat, setNewCat] = useState("");
   const [newDish, setNewDish] = useState({ ad: "", fiyat: "" });
+
+  const [dishModal, setDishModal] = useState({
+    open: false,
+    categoryIndex: 0,
+    ad: "",
+    fiyat: "",
+    aciklama: "",
+    image: "",
+    fav: false,
+  });
+
+  const [catModal, setCatModal] = useState({
+    open: false,
+    ad: "",
+    aciklama: "",
+    home: true,
+  });
+
+  const handleAddDishModalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const ad = dishModal.ad.trim();
+    if (!ad) {
+      showMessage("Lütfen yemek/tabak adı girin.", "error");
+      return;
+    }
+    const gi = dishModal.categoryIndex;
+    if (gi < 0 || gi >= menu.gruplar.length) {
+      showMessage("Lütfen geçerli bir kategori seçin.", "error");
+      return;
+    }
+    const fiyat = dishModal.fiyat.trim();
+    const aciklama = dishModal.aciklama.trim();
+    const image = dishModal.image.trim();
+    const fav = Boolean(dishModal.fav);
+
+    setContent((prev) => {
+      if (!prev?.menu) return prev;
+      const current = prev.menu;
+      const gruplar = [...current.gruplar];
+      const grup = gruplar[gi];
+      if (!grup) return prev;
+      gruplar[gi] = {
+        ...grup,
+        urunler: [
+          {
+            ad,
+            fiyat,
+            aciklama: aciklama || undefined,
+            image: image || undefined,
+            fav,
+            aktif: true,
+            source: "local",
+          },
+          ...grup.urunler,
+        ],
+      };
+      return { ...prev, menu: { ...current, gruplar } };
+    });
+
+    setDishModal({
+      open: false,
+      categoryIndex: gi,
+      ad: "",
+      fiyat: "",
+      aciklama: "",
+      image: "",
+      fav: false,
+    });
+    setOpen(gi);
+    showMessage(`“${ad}” başarıyla eklendi. Canlıya almak için "Menüyü Kaydet" butonuna basabilirsiniz.`, "success");
+  };
+
+  const handleAddCategoryModalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const ad = catModal.ad.trim();
+    if (!ad) {
+      showMessage("Lütfen kategori adı girin.", "error");
+      return;
+    }
+    const aciklama = catModal.aciklama.trim();
+    const home = Boolean(catModal.home);
+    const used = new Set(
+      menu.gruplar.map((g) => g.slug || slugifyTr(g.ad)).filter(Boolean)
+    );
+    used.add("menu");
+    used.add("urunler");
+    const slug = uniqueSlug(slugifyTr(ad) || "kategori", used);
+    const href = categoryHref(slug);
+    updateMenu({
+      gruplar: [
+        ...menu.gruplar,
+        {
+          ad,
+          slug,
+          adet: "0 çeşit",
+          link: href,
+          tumLink: href,
+          image: "",
+          banner: "",
+          aciklama: aciklama || "",
+          govdeHtml: "",
+          home,
+          aktif: true,
+          urunler: [],
+        },
+      ],
+    });
+    setOpen(menu.gruplar.length);
+    setCatModal({ open: false, ad: "", aciklama: "", home: true });
+    showMessage(`“${ad}” kategorisi eklendi. Şimdi tabak ekleyebilirsiniz.`, "success");
+  };
 
   if (loading || !content) return <AdminLoading />;
 
@@ -262,6 +379,49 @@ export default function MenuPanel() {
       <AdminPageHeader
         title="Menü Yönetimi"
         description={`${menu.gruplar.length} bölüm · ${totalProducts} tabak — ana sayfa menüsü ve kategori sayfaları.`}
+        actions={
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() =>
+                setDishModal({
+                  open: true,
+                  categoryIndex:
+                    open !== null && open >= 0 && open < menu.gruplar.length ? open : 0,
+                  ad: "",
+                  fiyat: "",
+                  aciklama: "",
+                  image: "",
+                  fav: false,
+                })
+              }
+              className="inline-flex items-center gap-2 rounded-xl bg-[#D9A441] px-4 py-2.5 text-sm font-bold text-[#0D0F0A] shadow-md hover:bg-[#E5B555] active:scale-95 transition"
+            >
+              <Plus className="h-4 w-4 stroke-[3]" />
+              <span>+ Yeni Tabak / Yemek Ekle</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                setCatModal({ open: true, ad: "", aciklama: "", home: true })
+              }
+              className="inline-flex items-center gap-2 rounded-xl bg-white/[0.08] px-3.5 py-2.5 text-sm font-semibold text-[#EEE9E0] border border-white/10 hover:bg-white/[0.14] active:scale-95 transition"
+            >
+              <Plus className="h-4 w-4" />
+              <span>+ Kategori Ekle</span>
+            </button>
+
+            <Button
+              onClick={save}
+              disabled={saving}
+              className="shadow-md bg-[#2563EB] hover:bg-[#1D4ED8] text-white"
+            >
+              <Save className="h-4 w-4" />
+              <span>{saving ? "Kaydediliyor…" : "💾 Menüyü Kaydet"}</span>
+            </Button>
+          </div>
+        }
       />
       <div className="mb-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-5">
         <h3 className="text-base font-semibold text-[#F8F8F8] flex items-center gap-2">
@@ -465,7 +625,27 @@ export default function MenuPanel() {
                 </div>
               </button>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  title="Bu kategoriye yeni yemek ekle"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDishModal({
+                      open: true,
+                      categoryIndex: gi,
+                      ad: "",
+                      fiyat: "",
+                      aciklama: "",
+                      image: "",
+                      fav: false,
+                    });
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-[#D9A441]/15 border border-[#D9A441]/40 px-2.5 py-1 text-xs font-bold text-[#D9A441] hover:bg-[#D9A441]/25 transition"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                  <span>+ Yemek Ekle</span>
+                </button>
                 <button
                   type="button"
                   title="Yukarı taşı"
@@ -954,6 +1134,237 @@ export default function MenuPanel() {
       <div className="mt-8">
         <SaveBar onSave={save} saving={saving} />
       </div>
+      {/* 1. HIZLI TABAK / YEMEK EKLE MODALI */}
+      {dishModal.open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setDishModal({ ...dishModal, open: false })}
+        >
+          <div
+            className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#141E2E] p-6 shadow-2xl space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <UtensilsCrossed className="h-5 w-5 text-[#D9A441]" />
+                <span>Yeni Tabak / Yemek Ekle</span>
+              </h3>
+              <button
+                type="button"
+                onClick={() => setDishModal({ ...dishModal, open: false })}
+                className="rounded-lg p-1 text-white/50 hover:bg-white/10 hover:text-white"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddDishModalSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-white/80 mb-1.5">
+                  Kategori Seçin *
+                </label>
+                <select
+                  value={dishModal.categoryIndex}
+                  onChange={(e) =>
+                    setDishModal({ ...dishModal, categoryIndex: Number(e.target.value) })
+                  }
+                  className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2.5 text-sm text-white focus:border-[#D9A441] focus:outline-none"
+                >
+                  {menu.gruplar.map((g, idx) => (
+                    <option key={g.slug || idx} value={idx}>
+                      {g.ad} ({g.urunler.length} ürün)
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-3">
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-semibold text-white/80 mb-1.5">
+                    Yemek / Tabak Adı *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Örn: Dana Antrikot Izgara"
+                    value={dishModal.ad}
+                    onChange={(e) => setDishModal({ ...dishModal, ad: e.target.value })}
+                    className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2.5 text-sm text-white focus:border-[#D9A441] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-white/80 mb-1.5">
+                    Fiyat (TL)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Örn: 450"
+                    value={dishModal.fiyat}
+                    onChange={(e) => setDishModal({ ...dishModal, fiyat: e.target.value })}
+                    className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2.5 text-sm font-bold text-[#D9A441] focus:border-[#D9A441] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-white/80 mb-1.5">
+                  Açıklama / İçerik Detayı
+                </label>
+                <textarea
+                  rows={2}
+                  placeholder="Örn: 250g marine edilmiş dana antrikot, fırın patates, köz biber ile."
+                  value={dishModal.aciklama}
+                  onChange={(e) => setDishModal({ ...dishModal, aciklama: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2.5 text-sm text-white placeholder-white/40 focus:border-[#D9A441] focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-white/80 mb-1.5">
+                  Görsel Yükle veya Görsel URL
+                </label>
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="text"
+                    placeholder="Görsel URL veya alttan yükleyin (/assets/...)"
+                    value={dishModal.image}
+                    onChange={(e) => setDishModal({ ...dishModal, image: e.target.value })}
+                    className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2 text-xs text-white focus:border-[#D9A441] focus:outline-none"
+                  />
+                </div>
+                <div className="mt-2">
+                  <Upload
+                    label="Fotoğraf Seç / Yükle"
+                    accept="image/*"
+                    uploadKey="menu-new-dish"
+                    onComplete={(results) => {
+                      const first = results?.[0];
+                      if (first?.url) {
+                        setDishModal({ ...dishModal, image: first.url });
+                      }
+                    }}
+                    onError={(err) => showMessage(err.message, "error")}
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <label className="flex items-center gap-2 text-xs text-white/90 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={dishModal.fav}
+                    onChange={(e) => setDishModal({ ...dishModal, fav: e.target.checked })}
+                    className="h-4 w-4 rounded border-white/20 bg-[#0D1117] text-[#D9A441] focus:ring-0"
+                  />
+                  <span>★ Öne Çıkan / Şefin Tavsiyesi Olarak İşaretle</span>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setDishModal({ ...dishModal, open: false })}
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-semibold text-white/80 hover:bg-white/10"
+                >
+                  İptal
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-xl bg-[#D9A441] px-5 py-2.5 text-xs font-bold text-[#0D0F0A] hover:bg-[#E5B555] shadow-md flex items-center gap-1.5"
+                >
+                  <Plus className="h-4 w-4 stroke-[3]" />
+                  <span>Yemeği Menüye Ekle</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* 2. HIZLI KATEGORİ EKLE MODALI */}
+      {catModal.open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setCatModal({ ...catModal, open: false })}
+        >
+          <div
+            className="w-full max-w-md rounded-2xl border border-white/10 bg-[#141E2E] p-6 shadow-2xl space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <FolderPlus className="h-5 w-5 text-[#D9A441]" />
+                <span>Yeni Menü Kategorisi Ekle</span>
+              </h3>
+              <button
+                type="button"
+                onClick={() => setCatModal({ ...catModal, open: false })}
+                className="rounded-lg p-1 text-white/50 hover:bg-white/10 hover:text-white"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddCategoryModalSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-white/80 mb-1.5">
+                  Kategori Adı *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Örn: Taş Fırın Pideler, Özel Kokteyller"
+                  value={catModal.ad}
+                  onChange={(e) => setCatModal({ ...catModal, ad: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2.5 text-sm text-white focus:border-[#D9A441] focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-white/80 mb-1.5">
+                  Kategori Açıklaması
+                </label>
+                <textarea
+                  rows={2}
+                  placeholder="Örn: Özel fırın lezzetleri ve tereyağlı çıtır pideler."
+                  value={catModal.aciklama}
+                  onChange={(e) => setCatModal({ ...catModal, aciklama: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2.5 text-sm text-white placeholder-white/40 focus:border-[#D9A441] focus:outline-none"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <label className="flex items-center gap-2 text-xs text-white/90 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={catModal.home}
+                    onChange={(e) => setCatModal({ ...catModal, home: e.target.checked })}
+                    className="h-4 w-4 rounded border-white/20 bg-[#0D1117] text-[#D9A441] focus:ring-0"
+                  />
+                  <span>Ana Sayfa Menü Sekmelerinde Göster</span>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setCatModal({ ...catModal, open: false })}
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-semibold text-white/80 hover:bg-white/10"
+                >
+                  İptal
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-xl bg-[#D9A441] px-5 py-2.5 text-xs font-bold text-[#0D0F0A] hover:bg-[#E5B555] shadow-md flex items-center gap-1.5"
+                >
+                  <Plus className="h-4 w-4 stroke-[3]" />
+                  <span>Kategoriyi Ekle</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }

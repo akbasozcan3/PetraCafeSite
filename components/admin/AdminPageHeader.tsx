@@ -9,14 +9,24 @@ import AdminSplash from "@/components/admin/ui/AdminSplash";
 export default function AdminPageHeader({
   title,
   description,
+  action,
+  actions,
 }: {
   title: string;
   description?: string;
+  action?: React.ReactNode;
+  actions?: React.ReactNode;
 }) {
+  const rightAction = action || actions;
   return (
-    <div className="mb-6">
-      <h1 className="text-2xl font-semibold tracking-tight text-[#F8F8F8]">{title}</h1>
-      {description && <p className="mt-1 text-sm text-[#8A9BB0]">{description}</p>}
+    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight text-[#F8F8F8]">{title}</h1>
+        {description && <p className="mt-1 text-sm text-[#8A9BB0]">{description}</p>}
+      </div>
+      {rightAction ? (
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">{rightAction}</div>
+      ) : null}
     </div>
   );
 }
