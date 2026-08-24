@@ -11,13 +11,10 @@ import {
   Phone, 
   UtensilsCrossed, 
   Waves, 
-  CalendarCheck, 
   Flame, 
   Coffee, 
   Clock, 
   ShieldCheck, 
-  Award, 
-  Users, 
   PartyPopper, 
   Car, 
   Wifi, 
@@ -25,12 +22,10 @@ import {
   CheckCircle2, 
   MessageCircle, 
   HelpCircle, 
-  HeartHandshake, 
   Cake, 
   Heart, 
   Briefcase,
-  ChevronRight,
-  ArrowUpRight
+  ChevronRight
 } from "lucide-react";
 
 export const revalidate = 60;
@@ -94,9 +89,7 @@ export default async function HakkimizdaPage() {
   );
 
   const telCafe = content.iletisim?.telefon || "0530 608 90 51";
-  const telTesis = content.iletisim?.telefon2 || "0532 449 45 99";
   const telCafeHref = phoneToTelHref(telCafe);
-  const telTesisHref = phoneToTelHref(telTesis);
   const waHref = buildWhatsappUrl(
     content.iletisim?.whatsapp || telCafe, 
     "Merhaba, Petra Cafe Restaurant & Yaşam Merkezi hakkında bilgi ve rezervasyon için yazıyorum."
@@ -171,28 +164,6 @@ export default async function HakkimizdaPage() {
   const timelineList = (h.timeline && h.timeline.length > 0) ? h.timeline : defaultTimeline;
   const timelineIcons = [Sun, Waves, UtensilsCrossed, Flame];
 
-  // Temel Değerler / Standartlar (Admin dinamik + fallback)
-  const defaultValues = [
-    {
-      title: "Tavizsiz Hijyen & Kalite",
-      desc: "Mutfaktan havuza kadar her alanda düzenli denetimler, laboratuvar onaylı su analizleri ve en taze güvenilir gıda hammaddeleri."
-    },
-    {
-      title: "Usta Şefler & Zengin Menü",
-      desc: "Her biri kendi alanında uzman mutfak ve bar ekibimizin reçeteleriyle hazırlanan 240'ı aşkın özgün lezzet alternatifi."
-    },
-    {
-      title: "Güler Yüzlü Misafirperverlik",
-      desc: "Sizi ve ailenizi her gelişinizde evinizde hissettiren samimi, hızlı ve özenli hizmet anlayışı."
-    },
-    {
-      title: "Her Yaşa Uygun Yaşam Alanı",
-      desc: "Çocuk havuzundan sakin çalışma alanlarına, arkadaş buluşmalarından özel kutlama masalarına kadar herkese açık ferah atmosfer."
-    }
-  ];
-  const valuesList = (h.values && h.values.length > 0) ? h.values : defaultValues;
-  const valueIcons = [ShieldCheck, Award, HeartHandshake, Users];
-
   // Tesis İmkânları (Admin dinamik + fallback)
   const defaultAmenities = [
     "Açık Yüzme & Çocuk Havuzu",
@@ -248,84 +219,83 @@ export default async function HakkimizdaPage() {
   const parsedBlocks = parseArticleContent(h.body || []);
 
   return (
-    <div id="hakkimizda-page" className="min-h-screen bg-[#050505] text-white selection:bg-[#D4AF37] selection:text-black font-sans pb-20 w-full">
+    <div id="hakkimizda-page" className="barber-about">
       
-      {/* 1. HERO ÜST VİTRİN VE BREADCRUMB (THE BARBER YASIN STİLİ) */}
-      <div className="relative pt-[120px] bg-[#0A0A0A] overflow-hidden group">
+      {/* 1. HERO VİTRİN BÖLÜMÜ (THE BARBER YASIN STİLİ) */}
+      <div className="barber-hero">
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30 grayscale transition-transform duration-[4s] ease-out group-hover:scale-105"
+          className="barber-hero__bg"
           style={{ backgroundImage: `url('${img || "/assets/cms/hero-ic.webp"}')` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#0A0A0A]/70 to-[#0A0A0A]/40 z-0" />
+        <div className="barber-hero__overlay" />
         
-        <div className="relative z-10 max-w-7xl mx-auto px-5 lg:px-10 py-14 md:py-20">
-          <nav className="flex items-center gap-2 text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-5">
-            <Link href="/" className="hover:text-white/80 transition-colors">
+        <div className="barber-container barber-hero__content">
+          <nav className="barber-hero__nav">
+            <Link href="/">
               Ana Sayfa
             </Link>
-            <ChevronRight size={10} className="text-white/30" />
-            <span className="text-white/80">Hakkımızda</span>
+            <ChevronRight size={10} style={{ opacity: 0.3 }} />
+            <span style={{ color: "rgba(255, 255, 255, 0.8)" }}>Hakkımızda</span>
           </nav>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light text-white tracking-tight leading-[1.1] mb-4">
+          <h1 className="barber-hero__title">
             {cleanRawText(h.baslik || "Hakkımızda")}
           </h1>
 
-          <p className="text-white/55 text-base md:text-xl font-light max-w-2xl leading-relaxed">
+          <p className="barber-hero__lead">
             {cleanRawText(h.lead || "Sade, temiz ve profesyonel hizmet anlayışımızla tanışın.")}
           </p>
 
-          <div className="flex items-center gap-3 mt-8">
-            <span className="w-12 h-px bg-white/50" />
-            <span className="w-3 h-px bg-white/20" />
+          <div className="barber-hero__divider">
+            <span />
+            <span />
           </div>
         </div>
 
-        <div className="relative z-10 h-px bg-white/[0.08]" />
+        <div className="barber-hero__line" />
       </div>
 
-      {/* 2. ANA HİKAYE VE VİTRİN BÖLÜMÜ (2 SÜTUN: SOL STICKY GÖRSEL, SAĞ PROSE HİKAYE) */}
-      <section className="relative py-20 md:py-28 bg-[#050505] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-5 lg:px-10 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+      {/* 2. ANA HİKAYE BÖLÜMÜ (2 SÜTUN: SOL STICKY KART, SAĞ EDİTORYAL METİN) */}
+      <section className="barber-story-sec">
+        <div className="barber-container">
+          <div className="barber-story-grid">
             
             {/* Sol Sütun: Sticky Lüks Fotoğraf Kartı */}
-            <div className="relative h-[560px] lg:h-[640px] rounded-2xl overflow-hidden border border-white/10 group lg:sticky lg:top-32 shadow-2xl">
+            <div className="barber-sticky-card">
               <div 
-                className="absolute inset-0 bg-center bg-cover bg-no-repeat transition-transform duration-[1.5s] group-hover:scale-105"
+                className="barber-sticky-card__bg"
                 style={{ backgroundImage: `url('${img}')` }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+              <div className="barber-sticky-card__gradient" />
               
-              <div className="absolute bottom-8 left-8 right-8 z-10">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
-                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#22C55E]">
+              <div className="barber-sticky-card__info">
+                <div className="barber-status-badge">
+                  <span className="barber-status-dot" />
+                  <span className="barber-status-text">
                     ŞU AN AÇIK · 08:00 – 02:00
                   </span>
                 </div>
-                <p className="text-2xl md:text-3xl font-serif font-light text-white">
+                <p className="barber-sticky-title">
                   {cleanRawText(h.badgeBaslik || "Petra Yaşam Merkezi")}
                 </p>
-                <p className="text-white/60 font-bold tracking-[0.25em] uppercase text-[10px] mt-1.5 flex items-center gap-2">
-                  <MapPin size={12} className="text-[#D4AF37]" />
+                <p className="barber-sticky-loc">
+                  <MapPin size={12} color="#D4AF37" />
                   <span>Taşdelen, Çekmeköy / İstanbul</span>
                 </p>
 
-                {/* Hızlı İletişim Butonları */}
-                <div className="flex flex-wrap items-center gap-2.5 mt-5 pt-5 border-t border-white/10">
+                <div className="barber-sticky-actions">
                   <a
                     href={`tel:${telCafeHref}`}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-semibold tracking-wide transition-all"
+                    className="barber-action-btn barber-action-btn--phone"
                   >
-                    <Phone size={13} className="text-[#D4AF37]" />
+                    <Phone size={13} color="#D4AF37" />
                     <span>{telCafe}</span>
                   </a>
                   <a
                     href={waHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#25D366]/20 hover:bg-[#25D366]/30 border border-[#25D366]/40 text-[#4ADE80] text-xs font-semibold tracking-wide transition-all"
+                    className="barber-action-btn barber-action-btn--wa"
                   >
                     <MessageCircle size={13} />
                     <span>WhatsApp</span>
@@ -336,67 +306,58 @@ export default async function HakkimizdaPage() {
 
             {/* Sağ Sütun: Başlık, Kısaca & Editoryal Metin */}
             <div>
-              <div className="flex items-center gap-4 mb-6">
-                <span className="w-8 h-[1px] bg-white/60" />
-                <p className="text-[10px] font-bold tracking-[0.35em] text-white/60 uppercase">
+              <div className="barber-eyebrow-box">
+                <span className="barber-eyebrow-line" />
+                <p className="barber-eyebrow-text">
                   {cleanRawText(h.eyebrow || "HAKKIMIZDA & YAŞAM FELSEFEMİZ")}
                 </p>
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-serif font-light tracking-tight text-white mb-8 leading-[1.12]">
+              <h2 className="barber-story-title">
                 {cleanRawText(h.baslik || "Petra Cafe Restaurant")}
               </h2>
 
-              {/* Kısaca Kutusu (Öne Çıkan Bilgi) */}
+              {/* Kısaca Kutusu */}
               {h.answerMetin && (
-                <div className="p-6 rounded-2xl bg-[#0A0A0A] border border-white/10 mb-8 backdrop-blur-md">
-                  <div className="flex items-center gap-2 mb-2 text-[#D4AF37]">
+                <div className="barber-answer-box">
+                  <div className="barber-answer-head">
                     <Sparkles size={14} />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
+                    <span>
                       {cleanRawText(h.answerBaslik || "Kısaca")}
                     </span>
                   </div>
-                  <p className="text-white/80 font-light text-base leading-relaxed m-0">
+                  <p className="barber-answer-p">
                     {formatInlineText(h.answerMetin)}
                   </p>
                 </div>
               )}
 
-              {/* Paragraflar */}
-              <div className="prose prose-invert max-w-none text-white/60 font-light leading-relaxed space-y-5 text-base md:text-lg">
+              {/* Makale Paragrafları */}
+              <div className="barber-prose">
                 {parsedBlocks.map((block, idx) => {
                   if (block.type === "h1" || block.type === "h2") {
                     return (
-                      <h3
-                        key={idx}
-                        className="text-2xl md:text-3xl font-serif font-light text-white mt-10 mb-4 pt-6 border-t border-white/10"
-                      >
+                      <h3 key={idx}>
                         {cleanRawText(block.text || "")}
                       </h3>
                     );
                   }
                   if (block.type === "h3") {
                     return (
-                      <h4
-                        key={idx}
-                        className="text-xl font-serif text-[#D4AF37] mt-6 mb-2"
-                      >
+                      <h4 key={idx}>
                         {cleanRawText(block.text || "")}
                       </h4>
                     );
                   }
                   if (block.type === "quote") {
                     return (
-                      <blockquote
-                        key={idx}
-                        className="border-l-2 border-[#D4AF37] pl-5 py-2 my-6 italic text-white/80 bg-white/[0.02] rounded-r-xl"
-                      >
+                      <blockquote key={idx}>
                         {formatInlineText(block.text || "")}
                       </blockquote>
                     );
                   }
                   return (
-                    <p key={idx} className="m-0 text-white/65 font-light leading-relaxed">
+                    <p key={idx}>
                       {formatInlineText(block.text || "")}
                     </p>
                   );
@@ -404,28 +365,28 @@ export default async function HakkimizdaPage() {
               </div>
 
               {/* 3 Ana Değer Sütunu (The Barber 3'lü Stat Grid Stili) */}
-              <div className="grid grid-cols-3 gap-6 pt-10 mt-10 border-t border-white/[0.08]">
-                <div className="flex flex-col">
-                  <span className="text-2xl md:text-3xl font-serif font-medium text-white mb-1.5">
+              <div className="barber-pillars-grid">
+                <div className="barber-pillar-item">
+                  <span className="barber-pillar-title">
                     Gastronomi
                   </span>
-                  <span className="text-[9px] text-white/40 font-bold uppercase tracking-[0.2em]">
+                  <span className="barber-pillar-sub">
                     Seçkin Dünya Mutfağı
                   </span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-2xl md:text-3xl font-serif font-medium text-white mb-1.5">
+                <div className="barber-pillar-item">
+                  <span className="barber-pillar-title">
                     Pool & Beach
                   </span>
-                  <span className="text-[9px] text-white/40 font-bold uppercase tracking-[0.2em]">
+                  <span className="barber-pillar-sub">
                     Açık Havuz & Teras
                   </span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-2xl md:text-3xl font-serif font-medium text-white mb-1.5">
+                <div className="barber-pillar-item">
+                  <span className="barber-pillar-title">
                     Konfor
                   </span>
-                  <span className="text-[9px] text-white/40 font-bold uppercase tracking-[0.2em]">
+                  <span className="barber-pillar-sub">
                     Seçkin Yaşam Alanı
                   </span>
                 </div>
@@ -437,31 +398,28 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-      {/* 3. RAKAMLARLA PETRA (4'LÜ MİNİMALİST KARTLAR) */}
-      <section className="py-16 bg-[#080808] border-y border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-5 lg:px-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* 3. RAKAMLARLA PETRA (4'LÜ ŞERİT) */}
+      <section className="barber-stats-sec">
+        <div className="barber-container">
+          <div className="barber-stats-grid">
             {statsList.map((st: any, i: number) => {
               const StatIcon = statIcons[i % statIcons.length] || Sparkles;
               return (
-                <div 
-                  key={i} 
-                  className="p-7 rounded-2xl bg-[#0C0C0C] border border-white/[0.08] hover:border-white/20 transition-all flex flex-col justify-between"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl md:text-3xl font-serif font-light text-white tracking-tight">
+                <div key={i} className="barber-stat-card">
+                  <div className="barber-stat-card__top">
+                    <span className="barber-stat-num">
                       {cleanRawText(st.b || "")}
                     </span>
-                    <div className="w-9 h-9 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#D4AF37]">
+                    <div className="barber-stat-icon">
                       <StatIcon size={16} />
                     </div>
                   </div>
                   <div>
-                    <span className="block text-sm font-semibold text-white/90 mb-1">
+                    <span className="barber-stat-label">
                       {cleanRawText(st.span || "")}
                     </span>
                     {st.sub && (
-                      <span className="text-xs text-white/45 leading-relaxed block">
+                      <span className="barber-stat-desc">
                         {cleanRawText(st.sub)}
                       </span>
                     )}
@@ -473,62 +431,59 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-      {/* 4. 4 ANA YAŞAM DENEYİMİ (LÜKS MİNİMALİST KARTLAR) */}
-      <section className="py-24 bg-[#050505]">
-        <div className="max-w-7xl mx-auto px-5 lg:px-10">
-          <div className="max-w-xl mb-16">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="w-8 h-px bg-white/60" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/60">
+      {/* 4. 4 ANA YAŞAM DENEYİMİ */}
+      <section className="barber-exp-sec">
+        <div className="barber-container">
+          <div className="barber-section-head">
+            <div className="barber-eyebrow-box">
+              <span className="barber-eyebrow-line" />
+              <p className="barber-eyebrow-text">
                 AYRICALIKLI YAŞAM KONSEPTİ
-              </span>
+              </p>
             </div>
-            <h2 className="text-3xl md:text-5xl font-serif font-light text-white tracking-tight leading-[1.15]">
+            <h2 className="barber-section-title">
               Petra'da Sizi Neler Bekliyor?
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="barber-exp-grid">
             {experiencesList.map((item: any, i: number) => {
               const Icon = expIcons[i % expIcons.length] || UtensilsCrossed;
               const feats: string[] = Array.isArray(item.features) ? item.features : [];
               return (
-                <div
-                  key={i}
-                  className="p-8 rounded-2xl bg-[#0A0A0A] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between group"
-                >
+                <div key={i} className="barber-exp-card">
                   <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-[#D4AF37] group-hover:scale-110 transition-transform">
+                    <div className="barber-exp-card__top">
+                      <div className="barber-exp-icon">
                         <Icon size={22} />
                       </div>
                       {item.hours && (
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-white/60 bg-white/[0.06] px-3 py-1.5 rounded-full border border-white/10">
+                        <span className="barber-exp-hours">
                           {item.hours}
                         </span>
                       )}
                     </div>
 
                     {item.tag && (
-                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] block mb-2">
+                      <span className="barber-exp-tag">
                         {item.tag}
                       </span>
                     )}
 
-                    <h3 className="text-xl font-serif font-medium text-white mb-3">
+                    <h3 className="barber-exp-title">
                       {cleanRawText(item.title || "")}
                     </h3>
 
-                    <p className="text-sm text-white/50 leading-relaxed font-light mb-6">
+                    <p className="barber-exp-desc">
                       {cleanRawText(item.desc || "")}
                     </p>
                   </div>
 
                   {feats.length > 0 && (
-                    <div className="pt-5 border-t border-white/[0.08] space-y-2">
+                    <div className="barber-exp-feats">
                       {feats.map((feat, fidx) => (
-                        <div key={fidx} className="flex items-center gap-2 text-xs text-white/70 font-light">
-                          <CheckCircle2 size={13} className="text-[#D4AF37] shrink-0" />
+                        <div key={fidx} className="barber-exp-feat">
+                          <CheckCircle2 size={13} color="#D4AF37" style={{ flexShrink: 0 }} />
                           <span>{cleanRawText(feat)}</span>
                         </div>
                       ))}
@@ -542,43 +497,40 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* 5. BİR GÜNÜN PETRA'DAKİ AKIŞI (TIMELINE) */}
-      <section className="py-20 bg-[#080808] border-y border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-5 lg:px-10">
-          <div className="text-center max-w-xl mx-auto mb-16">
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 block mb-3">
+      <section className="barber-time-sec">
+        <div className="barber-container">
+          <div className="barber-time-head">
+            <span className="barber-time-eyebrow">
               24 SAAT YAŞAM DOLU
             </span>
-            <h2 className="text-3xl md:text-5xl font-serif font-light text-white tracking-tight mb-3">
+            <h2 className="barber-time-title">
               Bir Günün Petra'daki Akışı
             </h2>
-            <p className="text-white/45 text-sm md:text-base font-light">
+            <p className="barber-time-sub">
               Sabahın ilk ışıklarından gecenin keyifli sohbetlerine uzanan gün boyu lezzet ve dinlenme.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="barber-time-grid">
             {timelineList.map((step: any, idx: number) => {
               const StepIcon = timelineIcons[idx % timelineIcons.length] || Sun;
               return (
-                <div 
-                  key={idx}
-                  className="p-7 rounded-2xl bg-[#0C0C0C] border border-white/[0.08] hover:border-white/20 transition-all flex flex-col justify-between"
-                >
+                <div key={idx} className="barber-time-card">
                   <div>
-                    <div className="flex items-center justify-between mb-5">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-white/80 bg-white/10 px-3 py-1 rounded-md">
+                    <div className="barber-time-card__top">
+                      <span className="barber-time-badge">
                         {cleanRawText(step.time || "")}
                       </span>
-                      <div className="w-8 h-8 rounded-lg bg-white/[0.06] flex items-center justify-center text-[#D4AF37]">
+                      <div className="barber-stat-icon" style={{ width: 32, height: 32 }}>
                         <StepIcon size={16} />
                       </div>
                     </div>
 
-                    <h3 className="text-lg font-serif font-medium text-white mb-2">
+                    <h3 className="barber-time-card-title">
                       {cleanRawText(step.title || "")}
                     </h3>
 
-                    <p className="text-xs text-white/50 leading-relaxed font-light m-0">
+                    <p className="barber-time-card-desc">
                       {cleanRawText(step.desc || "")}
                     </p>
                   </div>
@@ -589,38 +541,34 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-      {/* 6. ÖZEL GÜNLER & ORGANİZASYON KUTUSU (LÜKS THE BARBER STİLİ) */}
-      <section className="py-20 bg-[#050505]">
-        <div className="max-w-7xl mx-auto px-5 lg:px-10">
-          <div className="rounded-3xl bg-[#0A0A0A] border border-white/10 p-8 md:p-14 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden">
+      {/* 6. ÖZEL GÜNLER & ORGANİZASYON KUTUSU */}
+      <section className="barber-events-sec">
+        <div className="barber-container">
+          <div className="barber-events-box">
             
             {/* Sol Alan: Başlık, Açıklama ve SVG İkonlu Rozetler */}
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <PartyPopper size={16} className="text-[#D4AF37]" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4AF37]">
+              <div className="barber-eyebrow-box" style={{ marginBottom: 16 }}>
+                <PartyPopper size={16} color="#D4AF37" />
+                <span className="barber-eyebrow-text" style={{ color: "#D4AF37" }}>
                   ÖZEL GÜNLER & KUTLAMALAR
                 </span>
               </div>
 
-              <h3 className="text-3xl md:text-5xl font-serif font-light text-white tracking-tight leading-[1.15] mb-5">
+              <h3 className="barber-events-title">
                 {cleanRawText(eventsTitle)}
               </h3>
 
-              <p className="text-white/60 font-light text-base leading-relaxed mb-8 max-w-xl">
+              <p className="barber-events-lead">
                 {cleanRawText(eventsLead)}
               </p>
 
-              {/* EMOJİSİZ, LÜKS SVG İKONLU ROZETLER */}
-              <div className="flex flex-wrap gap-3">
+              <div className="barber-events-tags">
                 {eventsTags.map((tag: string, tidx: number) => {
                   const TagIcon = getEventTagIcon(tag);
                   return (
-                    <div 
-                      key={tidx} 
-                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.04] border border-white/15 text-white/85 text-xs font-medium tracking-wide hover:border-white/30 transition-colors"
-                    >
-                      <TagIcon size={14} className="text-[#D4AF37]" />
+                    <div key={tidx} className="barber-event-tag">
+                      <TagIcon size={14} color="#D4AF37" />
                       <span>{cleanRawText(tag)}</span>
                     </div>
                   );
@@ -629,22 +577,22 @@ export default async function HakkimizdaPage() {
             </div>
 
             {/* Sağ Alan: Rezervasyon & Teklif Kartı */}
-            <div className="bg-[#050505] p-8 md:p-10 rounded-2xl border border-white/10 space-y-6">
+            <div className="barber-events-form-box">
               <div>
-                <h4 className="text-xl md:text-2xl font-serif font-light text-white mb-2">
+                <h4 className="barber-events-form-title">
                   Etkinlik Detayları & Rezervasyon
                 </h4>
-                <p className="text-white/50 text-sm font-light leading-relaxed m-0">
+                <p className="barber-events-form-desc">
                   Kişi sayısı ve etkinlik tarihinizi ileterek organizasyon ekibimizden hızlıca özel menü ve süsleme teklifi alabilirsiniz.
                 </p>
               </div>
 
-              <div className="space-y-3 pt-2">
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, paddingTop: 6 }}>
                 <a
                   href={waHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-[#25D366] text-[#0B140C] font-bold text-xs uppercase tracking-[0.2em] hover:bg-[#20BD5A] transition-all shadow-lg"
+                  className="barber-events-btn-wa"
                 >
                   <MessageCircle size={16} />
                   <span>WhatsApp ile Teklif Alın</span>
@@ -652,9 +600,9 @@ export default async function HakkimizdaPage() {
 
                 <a
                   href={`tel:${telCafeHref}`}
-                  className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/20 text-white font-bold text-xs uppercase tracking-[0.2em] transition-all"
+                  className="barber-events-btn-phone"
                 >
-                  <Phone size={15} className="text-[#D4AF37]" />
+                  <Phone size={15} color="#D4AF37" />
                   <span>Telefon: {telCafe}</span>
                 </a>
               </div>
@@ -664,30 +612,27 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-      {/* 7. TESİS İMKÂNLARI (6'LI MİNİMALİST KARTLAR) */}
-      <section className="py-16 bg-[#080808] border-y border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-5 lg:px-10">
-          <div className="text-center max-w-xl mx-auto mb-12">
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 block mb-2">
+      {/* 7. TESİS İMKÂNLARI */}
+      <section className="barber-amenities-sec">
+        <div className="barber-container">
+          <div className="barber-time-head" style={{ marginBottom: 40 }}>
+            <span className="barber-time-eyebrow">
               KONFOR VE OLANAKLAR
             </span>
-            <h2 className="text-2xl md:text-4xl font-serif font-light text-white">
+            <h2 className="barber-time-title" style={{ fontSize: "clamp(24px, 3vw, 36px)" }}>
               Tesis İmkânlarımız
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="barber-amenities-grid">
             {amenitiesList.map((label: string, idx: number) => {
               const AmenityIcon = amenityIcons[idx % amenityIcons.length] || ShieldCheck;
               return (
-                <div 
-                  key={idx}
-                  className="p-5 rounded-xl bg-[#0C0C0C] border border-white/[0.08] flex items-center gap-4 hover:border-white/20 transition-all"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center text-[#D4AF37] shrink-0">
+                <div key={idx} className="barber-amenity-card">
+                  <div className="barber-amenity-icon">
                     <AmenityIcon size={18} />
                   </div>
-                  <span className="text-sm font-medium text-white/85">
+                  <span className="barber-amenity-text">
                     {cleanRawText(label)}
                   </span>
                 </div>
@@ -698,33 +643,30 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* 8. SIKÇA SORULAN SORULAR */}
-      <section className="py-20 bg-[#050505]">
-        <div className="max-w-7xl mx-auto px-5 lg:px-10">
-          <div className="text-center max-w-xl mx-auto mb-14">
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 block mb-2">
+      <section className="barber-faq-sec">
+        <div className="barber-container">
+          <div className="barber-time-head" style={{ marginBottom: 48 }}>
+            <span className="barber-time-eyebrow">
               MERAK EDİLENLER
             </span>
-            <h2 className="text-3xl md:text-5xl font-serif font-light text-white mb-2">
+            <h2 className="barber-time-title">
               Sıkça Sorulan Sorular
             </h2>
-            <p className="text-white/45 text-sm font-light">
+            <p className="barber-time-sub">
               Rezervasyon, havuz ve çalışma saatleri hakkında en çok sorulanlar.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <div className="barber-faq-grid">
             {faqsList.map((faq: any, idx: number) => (
-              <div
-                key={idx}
-                className="p-7 rounded-2xl bg-[#0A0A0A] border border-white/[0.08] hover:border-white/20 transition-all flex flex-col gap-3"
-              >
-                <div className="flex items-start gap-3">
-                  <HelpCircle size={18} className="text-[#D4AF37] shrink-0 mt-0.5" />
-                  <h3 className="text-base font-serif font-medium text-white m-0">
+              <div key={idx} className="barber-faq-card">
+                <div className="barber-faq-q">
+                  <HelpCircle size={18} color="#D4AF37" style={{ flexShrink: 0, marginTop: 2 }} />
+                  <h3>
                     {cleanRawText(faq.q || "")}
                   </h3>
                 </div>
-                <p className="text-sm text-white/50 font-light leading-relaxed m-0 pl-7">
+                <p className="barber-faq-a">
                   {cleanRawText(faq.a || "")}
                 </p>
               </div>
@@ -733,32 +675,32 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-      {/* 9. ALT ÇAĞRI & REZERVASYON CTA (THE BARBER YASIN STİLİ) */}
-      <section className="py-20 bg-[#080808] border-t border-white/[0.08]">
-        <div className="max-w-7xl mx-auto px-5 lg:px-10">
-          <div className="text-center max-w-2xl mx-auto space-y-6">
-            <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4AF37] block">
+      {/* 9. ALT ÇAĞRI & REZERVASYON (THE BARBER CTA) */}
+      <section className="barber-cta-sec">
+        <div className="barber-container">
+          <div className="barber-cta-content">
+            <span className="barber-time-eyebrow" style={{ color: "#D4AF37" }}>
               REZERVASYON & İLETİŞİM
             </span>
 
-            <h2 className="text-3xl md:text-6xl font-serif font-light text-white tracking-tight leading-[1.1]">
+            <h2 className="barber-cta-title">
               Masanızı veya Locanızı Hemen Ayırtın
             </h2>
 
-            <p className="text-white/50 text-sm md:text-base font-light leading-relaxed max-w-lg mx-auto">
+            <p className="barber-cta-desc">
               Hafta sonu zengin serpme kahvaltı, şefin spesiyalleriyle akşam yemeği veya açık havuzda VIP localarımız için yerinizi ayırtın.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+            <div className="barber-cta-btns">
               <Link
                 href="/#rezervasyon"
-                className="inline-flex items-center justify-center px-8 py-3.5 border border-white/40 text-white hover:bg-white hover:text-black rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl"
+                className="barber-cta-btn--primary"
               >
                 Online Masa Ayırtın
               </Link>
               <Link
                 href="/menu"
-                className="inline-flex items-center justify-center px-8 py-3.5 border border-white/20 text-white/70 hover:text-white hover:border-white/40 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300"
+                className="barber-cta-btn--secondary"
               >
                 Tüm Menüyü İncele
               </Link>

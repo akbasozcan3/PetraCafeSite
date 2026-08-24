@@ -1,0 +1,1110 @@
+/* ==========================================================================
+   THE BARBER YASIN STİLİ HAKKIMIZDA SAYFASI STİLLERİ
+   ========================================================================== */
+
+/* Full Width Breakout */
+.site-shop__body:has(.barber-about),
+.site-shop__body:has(#hakkimizda-page) {
+  padding: 0 !important;
+  background: #050505 !important;
+}
+
+.site-shop__body:has(.barber-about) .oc-shell,
+.site-shop__body:has(.barber-about) .wrap,
+.site-shop__body:has(.barber-about) .shop-main,
+.site-shop__body:has(#hakkimizda-page) .oc-shell,
+.site-shop__body:has(#hakkimizda-page) .wrap,
+.site-shop__body:has(#hakkimizda-page) .shop-main {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #050505 !important;
+}
+
+.barber-about {
+  background-color: #050505;
+  color: #FFFFFF;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.barber-about ::selection {
+  background: #D4AF37;
+  color: #000000;
+}
+
+.barber-container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(16px, 4vw, 40px);
+  padding-right: clamp(16px, 4vw, 40px);
+}
+
+/* Tipografi */
+.barber-font-serif {
+  font-family: "Playfair Display", Georgia, serif !important;
+}
+
+.barber-font-sans {
+  font-family: "Inter", system-ui, -apple-system, sans-serif !important;
+}
+
+/* 1. HERO BÖLÜMÜ */
+.barber-hero {
+  position: relative;
+  padding-top: 130px;
+  background-color: #0A0A0A;
+  overflow: hidden;
+}
+
+.barber-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.28;
+  filter: grayscale(100%);
+  transition: transform 4s ease-out;
+}
+
+.barber-hero:hover .barber-hero__bg {
+  transform: scale(1.05);
+}
+
+.barber-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #050505 0%, rgba(10, 10, 10, 0.7) 60%, rgba(10, 10, 10, 0.4) 100%);
+  z-index: 1;
+}
+
+.barber-hero__content {
+  position: relative;
+  z-index: 10;
+  padding-top: 48px;
+  padding-bottom: 72px;
+}
+
+.barber-hero__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 20px;
+}
+
+.barber-hero__nav a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.barber-hero__nav a:hover {
+  color: #FFFFFF;
+}
+
+.barber-hero__title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(36px, 6vw, 68px);
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 16px 0;
+}
+
+.barber-hero__lead {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-weight: 300;
+  max-width: 640px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.barber-hero__divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.barber-hero__divider span:first-child {
+  width: 48px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.barber-hero__divider span:last-child {
+  width: 12px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.barber-hero__line {
+  position: relative;
+  z-index: 10;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* 2. ANA HİKAYE BÖLÜMÜ (2 SÜTUN: SOL STICKY KART, SAĞ EDİTORYAL METİN) */
+.barber-story-sec {
+  position: relative;
+  padding: clamp(64px, 8vw, 120px) 0;
+  background-color: #050505;
+}
+
+.barber-story-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .barber-story-grid {
+    grid-template-columns: 1fr 1.15fr;
+    gap: 80px;
+  }
+}
+
+.barber-sticky-card {
+  position: relative;
+  height: clamp(480px, 60vh, 640px);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 1024px) {
+  .barber-sticky-card {
+    position: sticky;
+    top: 110px;
+  }
+}
+
+.barber-sticky-card__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 1.5s ease;
+}
+
+.barber-sticky-card:hover .barber-sticky-card__bg {
+  transform: scale(1.05);
+}
+
+.barber-sticky-card__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+}
+
+.barber-sticky-card__info {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  right: 32px;
+  z-index: 10;
+}
+
+.barber-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.barber-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #22C55E;
+}
+
+.barber-status-text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #22C55E;
+}
+
+.barber-sticky-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 300;
+  color: #FFFFFF;
+  margin: 0 0 6px 0;
+}
+
+.barber-sticky-loc {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.barber-sticky-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.barber-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.barber-action-btn--phone {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.barber-action-btn--phone:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.barber-action-btn--wa {
+  background-color: rgba(37, 211, 102, 0.2);
+  color: #4ADE80;
+  border: 1px solid rgba(37, 211, 102, 0.35);
+}
+
+.barber-action-btn--wa:hover {
+  background-color: rgba(37, 211, 102, 0.3);
+}
+
+/* Sağ Sütun: Editoryal Hikaye */
+.barber-eyebrow-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.barber-eyebrow-line {
+  width: 32px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.barber-eyebrow-text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.barber-story-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 300;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 32px 0;
+}
+
+.barber-answer-box {
+  padding: 24px;
+  border-radius: 16px;
+  background-color: #0A0A0A;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 32px;
+  backdrop-filter: blur(12px);
+}
+
+.barber-answer-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #D4AF37;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.barber-answer-p {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.barber-prose {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: clamp(15px, 1.3vw, 17px);
+  font-weight: 300;
+  line-height: 1.85;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.barber-prose h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 300;
+  color: #FFFFFF;
+  margin: 24px 0 6px 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.barber-prose h4 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 18px;
+  color: #D4AF37;
+  margin: 16px 0 4px 0;
+}
+
+.barber-prose blockquote {
+  border-left: 2px solid #D4AF37;
+  padding: 12px 20px;
+  margin: 16px 0;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 0 12px 12px 0;
+}
+
+.barber-prose p {
+  margin: 0;
+}
+
+/* 3 Ana Değer Sütunu (The Barber 3'lü Stat Grid Stili) */
+.barber-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding-top: 40px;
+  margin-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.barber-pillar-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.barber-pillar-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 400;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+}
+
+.barber-pillar-sub {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+/* 3. RAKAMLARLA PETRA (4'LÜ ŞERİT) */
+.barber-stats-sec {
+  padding: 64px 0;
+  background-color: #080808;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.barber-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .barber-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .barber-stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.barber-stat-card {
+  padding: 28px;
+  border-radius: 18px;
+  background-color: #0C0C0C;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.barber-stat-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+.barber-stat-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.barber-stat-num {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(26px, 2.5vw, 32px);
+  font-weight: 300;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+.barber-stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #D4AF37;
+}
+
+.barber-stat-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.barber-stat-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.5;
+  display: block;
+}
+
+/* 4. 4 ANA YAŞAM DENEYİMİ */
+.barber-exp-sec {
+  padding: clamp(64px, 8vw, 100px) 0;
+  background-color: #050505;
+}
+
+.barber-section-head {
+  max-width: 580px;
+  margin-bottom: 56px;
+}
+
+.barber-section-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 300;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.barber-exp-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .barber-exp-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .barber-exp-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.barber-exp-card {
+  padding: 32px 28px;
+  border-radius: 18px;
+  background-color: #0A0A0A;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.barber-exp-card:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-4px);
+  background-color: #0D0D0D;
+}
+
+.barber-exp-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.barber-exp-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #D4AF37;
+  transition: transform 0.3s ease;
+}
+
+.barber-exp-card:hover .barber-exp-icon {
+  transform: scale(1.1);
+}
+
+.barber-exp-hours {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.barber-exp-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #D4AF37;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.barber-exp-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin: 0 0 12px 0;
+}
+
+.barber-exp-desc {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.52);
+  line-height: 1.65;
+  font-weight: 300;
+  margin: 0 0 24px 0;
+}
+
+.barber-exp-feats {
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.barber-exp-feat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 300;
+}
+
+/* 5. 24 SAAT ZAMAN AKIŞI (TIMELINE) */
+.barber-time-sec {
+  padding: clamp(64px, 8vw, 90px) 0;
+  background-color: #080808;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.barber-time-head {
+  text-align: center;
+  max-width: 580px;
+  margin: 0 auto 56px auto;
+}
+
+.barber-time-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.45);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.barber-time-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(28px, 3.8vw, 44px);
+  font-weight: 300;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px 0;
+}
+
+.barber-time-sub {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+}
+
+.barber-time-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .barber-time-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .barber-time-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.barber-time-card {
+  padding: 28px;
+  border-radius: 18px;
+  background-color: #0C0C0C;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.barber-time-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.barber-time-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.barber-time-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 4px 12px;
+  border-radius: 6px;
+}
+
+.barber-time-card-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin: 0 0 8px 0;
+}
+
+.barber-time-card-desc {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.48);
+  line-height: 1.6;
+  font-weight: 300;
+  margin: 0;
+}
+
+/* 6. ÖZEL GÜNLER & ORGANİZASYON KUTUSU */
+.barber-events-sec {
+  padding: clamp(64px, 8vw, 90px) 0;
+  background-color: #050505;
+}
+
+.barber-events-box {
+  border-radius: 28px;
+  background-color: #0A0A0A;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: clamp(32px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .barber-events-box {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+.barber-events-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(28px, 3.8vw, 44px);
+  font-weight: 300;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 16px 0;
+}
+
+.barber-events-lead {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  margin: 0 0 28px 0;
+}
+
+.barber-events-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.barber-event-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+}
+
+.barber-event-tag:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.barber-events-form-box {
+  background-color: #050505;
+  padding: clamp(28px, 4vw, 40px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.barber-events-form-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: #FFFFFF;
+  margin: 0 0 6px 0;
+}
+
+.barber-events-form-desc {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.barber-events-btn-wa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background-color: #25D366;
+  color: #0B140C;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+}
+
+.barber-events-btn-wa:hover {
+  background-color: #20BD5A;
+  transform: translateY(-1px);
+}
+
+.barber-events-btn-phone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.barber-events-btn-phone:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* 7. TESİS OLANAKLARI & FAQ */
+.barber-amenities-sec {
+  padding: 64px 0;
+  background-color: #080808;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.barber-amenities-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .barber-amenities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .barber-amenities-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.barber-amenity-card {
+  padding: 20px 24px;
+  border-radius: 14px;
+  background-color: #0C0C0C;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.barber-amenity-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.barber-amenity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #D4AF37;
+  flex-shrink: 0;
+}
+
+.barber-amenity-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* SSS Bölümü */
+.barber-faq-sec {
+  padding: clamp(64px, 8vw, 90px) 0;
+  background-color: #050505;
+}
+
+.barber-faq-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .barber-faq-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.barber-faq-card {
+  padding: 28px;
+  border-radius: 18px;
+  background-color: #0A0A0A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.barber-faq-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.barber-faq-q {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.barber-faq-q h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.barber-faq-a {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
+  line-height: 1.65;
+  margin: 0;
+  padding-left: 28px;
+}
+
+/* 8. ALT REZERVASYON ÇAĞRISI (THE BARBER CTA) */
+.barber-cta-sec {
+  padding: clamp(72px, 9vw, 110px) 0;
+  background-color: #080808;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.barber-cta-content {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.barber-cta-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(32px, 5.5vw, 56px);
+  font-weight: 300;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.barber-cta-desc {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.65;
+  max-width: 520px;
+  margin: 0;
+}
+
+.barber-cta-btns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.barber-cta-btn--primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.barber-cta-btn--primary:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+.barber-cta-btn--secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.barber-cta-btn--secondary:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+}
