@@ -4,7 +4,6 @@ import { getPublicContent } from "@/lib/db/content";
 import { phoneToTelHref, buildWhatsappUrl } from "@/lib/content/contact-utils";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
-import SafeImg from "@/components/site/SafeImg";
 import { parseArticleContent, formatInlineText, cleanRawText } from "@/lib/content/markdown-parser";
 import { 
   Sparkles, 
@@ -15,22 +14,23 @@ import {
   CalendarCheck, 
   Flame, 
   Coffee, 
-  Clock,
-  ShieldCheck,
-  Award,
-  Users,
-  PartyPopper,
-  Car,
-  Wifi,
-  Sun,
-  CheckCircle2,
-  Navigation,
-  MessageCircle,
-  HelpCircle,
-  HeartHandshake,
-  Cake,
-  Heart,
-  Briefcase
+  Clock, 
+  ShieldCheck, 
+  Award, 
+  Users, 
+  PartyPopper, 
+  Car, 
+  Wifi, 
+  Sun, 
+  CheckCircle2, 
+  MessageCircle, 
+  HelpCircle, 
+  HeartHandshake, 
+  Cake, 
+  Heart, 
+  Briefcase,
+  ChevronRight,
+  ArrowUpRight
 } from "lucide-react";
 
 export const revalidate = 60;
@@ -104,10 +104,10 @@ export default async function HakkimizdaPage() {
 
   // İstatistikler (Admin dinamik + fallback)
   const statsList = (h.stats && h.stats.length > 0) ? h.stats : (h.ozet && h.ozet.length > 0 ? h.ozet : [
-    { b: "08:00 – 02:00", span: "Cafe & Restoran Açık", sub: "Haftanın 7 günü kesintisiz lezzet ve keyif" },
-    { b: "240+ Çeşit", span: "Zengin Dünya Menüsü", sub: "Kahvaltı, ızgara, taş fırın pizza ve İtalyan tatlılar" },
-    { b: "09:00 – 18:00", span: "Açık Havuz & Beach Kulübü", sub: "Yetişkin & çocuk havuzu, şezlonglar ve VIP localar" },
-    { b: "1000+ m²", span: "Sosyal Yaşam & Teras Alanı", sub: "Doğum günü, özel kutlama ve kurumsal davetler" }
+    { b: "08:00 – 02:00", span: "Cafe & Restoran Açık", sub: "Haftanın 7 günü kesintisiz lezzet" },
+    { b: "240+ Çeşit", span: "Zengin Dünya Menüsü", sub: "Kahvaltı, ızgara, pizza ve tatlılar" },
+    { b: "09:00 – 18:00", span: "Açık Havuz & Beach", sub: "Yetişkin & çocuk havuzu, localar" },
+    { b: "1000+ m²", span: "Sosyal Yaşam Alanı", sub: "Özel davet ve kutlama terasları" }
   ]);
   const statIcons = [Clock, UtensilsCrossed, Waves, Sparkles];
 
@@ -235,7 +235,7 @@ export default async function HakkimizdaPage() {
     "Kurumsal Şirket Yemekleri"
   ];
 
-  // Etkinlik rozetleri için akıllı Lucide ikon seçimi
+  // Etkinlik rozetleri için SVG Lucide ikon seçimi
   const getEventTagIcon = (tag: string) => {
     const t = cleanRawText(tag).toLowerCase();
     if (t.includes("doğum") || t.includes("pasta") || t.includes("kutlama") || t.includes("birthday")) return Cake;
@@ -248,964 +248,521 @@ export default async function HakkimizdaPage() {
   const parsedBlocks = parseArticleContent(h.body || []);
 
   return (
-    <div className="shop-about" style={{ padding: "16px 0 60px", color: "var(--ink, #0D0F0A)", maxWidth: "1280px", margin: "0 auto" }}>
+    <div id="hakkimizda-page" className="min-h-screen bg-[#050505] text-white selection:bg-[#D4AF37] selection:text-black font-sans pb-20 w-full">
       
-      {/* 1. BREADCRUMBS VE ÜST NAVİGASYON */}
-      <nav 
-        aria-label="Breadcrumb" 
-        style={{ 
-          display: "flex", 
-          alignItems: "center", 
-          gap: "8px", 
-          fontSize: "13px", 
-          color: "var(--muted, #6E6A5C)", 
-          marginBottom: "28px" 
-        }}
-      >
-        <Link 
-          href="/" 
-          style={{ 
-            color: "var(--ink, #0D0F0A)", 
-            textDecoration: "none", 
-            fontWeight: 600, 
-            transition: "color 0.2s ease" 
-          }}
-        >
-          Ana Sayfa
-        </Link>
-        <span style={{ color: "var(--brass, #D9A441)" }}>/</span>
-        <span style={{ color: "var(--brass-lo, #B8842C)", fontWeight: 700 }}>Hakkımızda</span>
-      </nav>
-
-      {/* 2. HERO ÜST VİTRİN VE HIZLI AKSİYON ALANI */}
-      <div 
-        style={{ 
-          background: "linear-gradient(135deg, #16190F 0%, #0D0F0A 100%)",
-          borderRadius: "28px",
-          padding: "clamp(28px, 5vw, 48px)",
-          color: "#FFFFFF",
-          marginBottom: "48px",
-          position: "relative",
-          overflow: "hidden",
-          border: "1px solid rgba(217, 164, 65, 0.35)",
-          boxShadow: "0 20px 48px -12px rgba(0, 0, 0, 0.4)"
-        }}
-      >
-        {/* Arka Plan Altın Işıma */}
+      {/* 1. HERO ÜST VİTRİN VE BREADCRUMB (THE BARBER YASIN STİLİ) */}
+      <div className="relative pt-[120px] bg-[#0A0A0A] overflow-hidden group">
         <div 
-          style={{
-            position: "absolute",
-            top: "-40%",
-            right: "-10%",
-            width: "500px",
-            height: "500px",
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(217, 164, 65, 0.2) 0%, rgba(217, 164, 65, 0) 70%)",
-            pointerEvents: "none"
-          }}
+          className="absolute inset-0 bg-cover bg-center opacity-30 grayscale transition-transform duration-[4s] ease-out group-hover:scale-105"
+          style={{ backgroundImage: `url('${img || "/assets/cms/hero-ic.webp"}')` }}
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#0A0A0A]/70 to-[#0A0A0A]/40 z-0" />
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-5 lg:px-10 py-14 md:py-20">
+          <nav className="flex items-center gap-2 text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-5">
+            <Link href="/" className="hover:text-white/80 transition-colors">
+              Ana Sayfa
+            </Link>
+            <ChevronRight size={10} className="text-white/30" />
+            <span className="text-white/80">Hakkımızda</span>
+          </nav>
 
-        <div style={{ position: "relative", zIndex: 2, maxWidth: "840px" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "30px", background: "rgba(217, 164, 65, 0.18)", border: "1px solid rgba(217, 164, 65, 0.4)", marginBottom: "16px" }}>
-            <Sparkles size={14} color="#E5B555" />
-            <span style={{ fontSize: "11px", fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "#E5B555" }}>
-              {cleanRawText(h.eyebrow || "PETRA YAŞAM MERKEZİ & CAFE RESTAURANT")}
-            </span>
-          </div>
-
-          <h1 
-            style={{ 
-              fontSize: "clamp(28px, 4.5vw, 48px)", 
-              fontWeight: 800, 
-              margin: "0 0 16px 0", 
-              lineHeight: 1.15, 
-              fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
-              color: "#FFFFFF",
-              letterSpacing: "-0.02em"
-            }}
-          >
-            {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde Cafe & Restaurant")}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light text-white tracking-tight leading-[1.1] mb-4">
+            {cleanRawText(h.baslik || "Hakkımızda")}
           </h1>
 
-          <p 
-            style={{ 
-              fontSize: "clamp(15px, 2vw, 18px)", 
-              color: "rgba(244, 238, 225, 0.88)", 
-              lineHeight: 1.65, 
-              margin: "0 0 28px 0", 
-              fontWeight: 400,
-              maxWidth: "760px",
-              fontFamily: "var(--f-body, sans-serif)"
-            }}
-          >
-            {formatInlineText(h.lead || "Keyif, konfor ve kalite — kahvaltıdan akşam yemeğine, havuz kenarından organizasyona.")}
+          <p className="text-white/55 text-base md:text-xl font-light max-w-2xl leading-relaxed">
+            {cleanRawText(h.lead || "Sade, temiz ve profesyonel hizmet anlayışımızla tanışın.")}
           </p>
 
-          {/* Hızlı Butonlar */}
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px" }}>
-            <Link
-              href="/#rezervasyon"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "13px 26px",
-                borderRadius: "12px",
-                background: "linear-gradient(135deg, #E5B555 0%, #C49030 100%)",
-                color: "#0D0F0A",
-                fontWeight: 800,
-                fontSize: "0.92rem",
-                textDecoration: "none",
-                boxShadow: "0 6px 20px rgba(229, 181, 85, 0.35)",
-                transition: "transform 0.2s ease"
-              }}
-            >
-              <CalendarCheck size={17} />
-              <span>Online Masa & Loca Ayırtın</span>
-            </Link>
-
-            <Link
-              href="/menu"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "13px 22px",
-                borderRadius: "12px",
-                background: "rgba(255, 255, 255, 0.12)",
-                color: "#FFFFFF",
-                fontWeight: 700,
-                fontSize: "0.92rem",
-                textDecoration: "none",
-                border: "1px solid rgba(255, 255, 255, 0.25)",
-                backdropFilter: "blur(8px)"
-              }}
-            >
-              <UtensilsCrossed size={16} color="#E5B555" />
-              <span>Tüm Menüyü İncele</span>
-            </Link>
-
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "13px 20px",
-                borderRadius: "12px",
-                background: "rgba(37, 211, 102, 0.18)",
-                color: "#4ADE80",
-                fontWeight: 800,
-                fontSize: "0.92rem",
-                textDecoration: "none",
-                border: "1px solid rgba(74, 222, 128, 0.35)",
-              }}
-            >
-              <MessageCircle size={17} />
-              <span>WhatsApp Bilgi & Destek</span>
-            </a>
+          <div className="flex items-center gap-3 mt-8">
+            <span className="w-12 h-px bg-white/50" />
+            <span className="w-3 h-px bg-white/20" />
           </div>
         </div>
+
+        <div className="relative z-10 h-px bg-white/[0.08]" />
       </div>
 
-      {/* 3. İSTATİSTİKLER (DİNAMİK GRID) */}
-      <div 
-        style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", 
-          gap: "16px", 
-          marginBottom: "48px" 
-        }}
-      >
-        {statsList.map((st: any, i: number) => {
-          const StatIcon = statIcons[i % statIcons.length] || Sparkles;
-          return (
-            <div key={i} style={{ padding: "20px 24px", borderRadius: "18px", background: "#FFFFFF", border: "1.5px solid rgba(184, 132, 44, 0.2)", boxShadow: "0 6px 18px rgba(0,0,0,0.03)", display: "flex", flexDirection: "column", gap: "4px" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontSize: "1.65rem", fontWeight: 800, color: "var(--brass-lo, #B8842C)", fontFamily: "var(--f-head, serif)", letterSpacing: "-0.01em" }}>
-                  {cleanRawText(st.b || "")}
-                </span>
-                <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(217, 164, 65, 0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <StatIcon size={18} color="#D9A441" />
-                </div>
-              </div>
-              <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--ink, #0D0F0A)" }}>
-                {cleanRawText(st.span || "")}
-              </span>
-              {st.sub && (
-                <span style={{ fontSize: "0.78rem", color: "var(--muted, #6E6A5C)" }}>
-                  {cleanRawText(st.sub)}
-                </span>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* 4. 2 KOLONLU EDİTORYAL HİKAYE VE VİTRİN DÜZENİ */}
-      <div 
-        style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", 
-          gap: "44px", 
-          alignItems: "start", 
-          marginBottom: "56px" 
-        }}
-      >
-        
-        {/* Sol Kolon: Başlık, Kısaca & Hikaye Paragrafları */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
-          
-          {/* Kısaca Kutusu (Öne Çıkan Bilgi) */}
-          {h.answerMetin && (
-            <div 
-              style={{ 
-                background: "linear-gradient(135deg, rgba(184, 132, 44, 0.08) 0%, rgba(217, 164, 65, 0.03) 100%)", 
-                border: "1.5px solid rgba(184, 132, 44, 0.3)", 
-                borderRadius: "18px", 
-                padding: "20px 24px",
-                position: "relative"
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-                <Sparkles size={16} color="#B8842C" />
-                <b style={{ color: "#9E6E1A", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em" }}>
-                  {cleanRawText(h.answerBaslik || "Kısaca Petra")}
-                </b>
-              </div>
-              <p style={{ margin: 0, fontSize: "15px", color: "var(--ink, #0D0F0A)", lineHeight: 1.7, fontWeight: 500 }}>
-                {formatInlineText(h.answerMetin)}
-              </p>
-            </div>
-          )}
-
-          {/* Makale Paragrafları */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-            <h2 
-              style={{ 
-                fontSize: "clamp(22px, 3vw, 28px)", 
-                fontWeight: 800, 
-                color: "var(--ink, #0D0F0A)", 
-                margin: "8px 0 0 0",
-                fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
-                lineHeight: 1.25,
-                letterSpacing: "-0.015em"
-              }}
-            >
-              Gastronomi, Konfor ve Keyif Dolu Bir Yaşam Alanı
-            </h2>
-
-            {parsedBlocks.map((block, idx) => {
-              if (block.type === "h1" || block.type === "h2") {
-                return (
-                  <h3
-                    key={idx}
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: 800,
-                      color: "var(--ink, #0D0F0A)",
-                      margin: "14px 0 2px 0",
-                      paddingBottom: "6px",
-                      borderBottom: "1px solid rgba(13, 15, 10, 0.08)",
-                      fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
-                    }}
-                  >
-                    {cleanRawText(block.text || "")}
-                  </h3>
-                );
-              }
-              if (block.type === "h3") {
-                return (
-                  <h4
-                    key={idx}
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: 700,
-                      color: "var(--brass-lo, #B8842C)",
-                      margin: "10px 0 2px 0",
-                    }}
-                  >
-                    {cleanRawText(block.text || "")}
-                  </h4>
-                );
-              }
-              if (block.type === "quote") {
-                return (
-                  <blockquote
-                    key={idx}
-                    style={{
-                      borderLeft: "4px solid #D9A441",
-                      padding: "12px 20px",
-                      margin: "10px 0",
-                      fontStyle: "italic",
-                      color: "#4A4538",
-                      background: "rgba(184, 132, 44, 0.06)",
-                      borderRadius: "0 12px 12px 0",
-                      fontSize: "15px",
-                      lineHeight: 1.7
-                    }}
-                  >
-                    {formatInlineText(block.text || "")}
-                  </blockquote>
-                );
-              }
-              return (
-                <p 
-                  key={idx} 
-                  style={{ 
-                    margin: 0, 
-                    fontSize: "15.5px", 
-                    lineHeight: 1.85, 
-                    color: "#383C30" 
-                  }}
-                >
-                  {formatInlineText(block.text || "")}
-                </p>
-              );
-            })}
-          </div>
-
-          {/* Temel Değerler (Dinamik Liste) */}
-          <div style={{ paddingTop: "12px", borderTop: "1px solid rgba(13, 15, 10, 0.08)" }}>
-            <h3 style={{ fontSize: "18px", fontWeight: 800, color: "var(--ink, #0D0F0A)", marginBottom: "16px", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
-              Bizi Farklı Kılan Temel Değerlerimiz
-            </h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "14px" }}>
-              {valuesList.map((v: any, i: number) => {
-                const Icon = valueIcons[i % valueIcons.length] || ShieldCheck;
-                return (
-                  <div 
-                    key={i}
-                    style={{
-                      padding: "16px",
-                      borderRadius: "14px",
-                      background: "#FFFFFF",
-                      border: "1px solid rgba(184, 132, 44, 0.18)",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "6px"
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <Icon size={16} />
-                      </div>
-                      <b style={{ fontSize: "14px", fontWeight: 800, color: "var(--ink, #0D0F0A)" }}>{cleanRawText(v.title || "")}</b>
-                    </div>
-                    <p style={{ margin: 0, fontSize: "13px", color: "var(--muted, #6E6A5C)", lineHeight: 1.6 }}>{cleanRawText(v.desc || "")}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-        </div>
-
-        {/* Sağ Kolon: Sticky Vitrin Kartı & Hızlı İletişim */}
-        <div style={{ position: "sticky", top: "calc(var(--nav-h, 80px) + 20px)", display: "flex", flexDirection: "column", gap: "20px" }}>
-          
-          <div className="tilt-card">
-            <div className="tilt-card__inner" style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 18px 40px -12px rgba(0,0,0,0.25)" }}>
-              <SafeImg
-                src={img}
-                alt="Petra Yaşam Merkezi Cafe Restaurant"
-                fallback={SITE_PHOTOS.interior}
-                width={1800}
-                height={1350}
-                loading="eager"
+      {/* 2. ANA HİKAYE VE VİTRİN BÖLÜMÜ (2 SÜTUN: SOL STICKY GÖRSEL, SAĞ PROSE HİKAYE) */}
+      <section className="relative py-20 md:py-28 bg-[#050505] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-5 lg:px-10 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+            
+            {/* Sol Sütun: Sticky Lüks Fotoğraf Kartı */}
+            <div className="relative h-[560px] lg:h-[640px] rounded-2xl overflow-hidden border border-white/10 group lg:sticky lg:top-32 shadow-2xl">
+              <div 
+                className="absolute inset-0 bg-center bg-cover bg-no-repeat transition-transform duration-[1.5s] group-hover:scale-105"
+                style={{ backgroundImage: `url('${img}')` }}
               />
-              <div
-                className="tilt-card__badge"
-                style={{
-                  background: "rgba(255, 255, 255, 0.95)",
-                  border: "1.5px solid rgba(217, 164, 65, 0.4)",
-                  backdropFilter: "blur(14px)",
-                  borderRadius: 16,
-                  padding: "14px 20px",
-                  boxShadow: "0 14px 34px -12px rgba(0, 0, 0, 0.3)",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "2px" }}>
-                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#22C55E", display: "inline-block" }} />
-                  <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", color: "#22C55E", letterSpacing: "0.08em" }}>
-                    ŞU AN AÇIK (08:00 – 02:00)
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+              
+              <div className="absolute bottom-8 left-8 right-8 z-10">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#22C55E]">
+                    ŞU AN AÇIK · 08:00 – 02:00
                   </span>
                 </div>
-                <b style={{ color: "var(--ink, #0D0F0A)", display: "block", fontSize: "1.18rem", fontWeight: 800, fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
+                <p className="text-2xl md:text-3xl font-serif font-light text-white">
                   {cleanRawText(h.badgeBaslik || "Petra Yaşam Merkezi")}
-                </b>
-                <span style={{ color: "var(--brass-lo, #B8842C)", display: "block", fontSize: "0.85rem", fontWeight: 800, marginTop: 2 }}>
-                  {cleanRawText(h.badgeAlt || "Cafe · Restaurant · Pool & Beach")}
-                </span>
+                </p>
+                <p className="text-white/60 font-bold tracking-[0.25em] uppercase text-[10px] mt-1.5 flex items-center gap-2">
+                  <MapPin size={12} className="text-[#D4AF37]" />
+                  <span>Taşdelen, Çekmeköy / İstanbul</span>
+                </p>
+
+                {/* Hızlı İletişim Butonları */}
+                <div className="flex flex-wrap items-center gap-2.5 mt-5 pt-5 border-t border-white/10">
+                  <a
+                    href={`tel:${telCafeHref}`}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-semibold tracking-wide transition-all"
+                  >
+                    <Phone size={13} className="text-[#D4AF37]" />
+                    <span>{telCafe}</span>
+                  </a>
+                  <a
+                    href={waHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#25D366]/20 hover:bg-[#25D366]/30 border border-[#25D366]/40 text-[#4ADE80] text-xs font-semibold tracking-wide transition-all"
+                  >
+                    <MessageCircle size={13} />
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* İletişim & Lokasyon Kartı */}
-          <div 
-            style={{ 
-              padding: "24px", 
-              borderRadius: "22px", 
-              background: "#FFFFFF", 
-              border: "1.5px solid rgba(184, 132, 44, 0.22)", 
-              boxShadow: "0 8px 24px rgba(0,0,0,0.04)", 
-              display: "flex", 
-              flexDirection: "column", 
-              gap: "14px" 
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <h4 style={{ fontSize: "0.88rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--ink, #0D0F0A)", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
-                <MapPin size={18} color="#D9A441" />
-                Konum & İletişim
-              </h4>
-              <span style={{ fontSize: "11px", fontWeight: 800, color: "#9E6E1A", background: "rgba(184,132,44,0.12)", padding: "3px 8px", borderRadius: "6px" }}>
-                Taşdelen / Çekmeköy
-              </span>
+            {/* Sağ Sütun: Başlık, Kısaca & Editoryal Metin */}
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <span className="w-8 h-[1px] bg-white/60" />
+                <p className="text-[10px] font-bold tracking-[0.35em] text-white/60 uppercase">
+                  {cleanRawText(h.eyebrow || "HAKKIMIZDA & YAŞAM FELSEFEMİZ")}
+                </p>
+              </div>
+
+              <h2 className="text-3xl md:text-5xl font-serif font-light tracking-tight text-white mb-8 leading-[1.12]">
+                {cleanRawText(h.baslik || "Petra Cafe Restaurant")}
+              </h2>
+
+              {/* Kısaca Kutusu (Öne Çıkan Bilgi) */}
+              {h.answerMetin && (
+                <div className="p-6 rounded-2xl bg-[#0A0A0A] border border-white/10 mb-8 backdrop-blur-md">
+                  <div className="flex items-center gap-2 mb-2 text-[#D4AF37]">
+                    <Sparkles size={14} />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
+                      {cleanRawText(h.answerBaslik || "Kısaca")}
+                    </span>
+                  </div>
+                  <p className="text-white/80 font-light text-base leading-relaxed m-0">
+                    {formatInlineText(h.answerMetin)}
+                  </p>
+                </div>
+              )}
+
+              {/* Paragraflar */}
+              <div className="prose prose-invert max-w-none text-white/60 font-light leading-relaxed space-y-5 text-base md:text-lg">
+                {parsedBlocks.map((block, idx) => {
+                  if (block.type === "h1" || block.type === "h2") {
+                    return (
+                      <h3
+                        key={idx}
+                        className="text-2xl md:text-3xl font-serif font-light text-white mt-10 mb-4 pt-6 border-t border-white/10"
+                      >
+                        {cleanRawText(block.text || "")}
+                      </h3>
+                    );
+                  }
+                  if (block.type === "h3") {
+                    return (
+                      <h4
+                        key={idx}
+                        className="text-xl font-serif text-[#D4AF37] mt-6 mb-2"
+                      >
+                        {cleanRawText(block.text || "")}
+                      </h4>
+                    );
+                  }
+                  if (block.type === "quote") {
+                    return (
+                      <blockquote
+                        key={idx}
+                        className="border-l-2 border-[#D4AF37] pl-5 py-2 my-6 italic text-white/80 bg-white/[0.02] rounded-r-xl"
+                      >
+                        {formatInlineText(block.text || "")}
+                      </blockquote>
+                    );
+                  }
+                  return (
+                    <p key={idx} className="m-0 text-white/65 font-light leading-relaxed">
+                      {formatInlineText(block.text || "")}
+                    </p>
+                  );
+                })}
+              </div>
+
+              {/* 3 Ana Değer Sütunu (The Barber 3'lü Stat Grid Stili) */}
+              <div className="grid grid-cols-3 gap-6 pt-10 mt-10 border-t border-white/[0.08]">
+                <div className="flex flex-col">
+                  <span className="text-2xl md:text-3xl font-serif font-medium text-white mb-1.5">
+                    Gastronomi
+                  </span>
+                  <span className="text-[9px] text-white/40 font-bold uppercase tracking-[0.2em]">
+                    Seçkin Dünya Mutfağı
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-2xl md:text-3xl font-serif font-medium text-white mb-1.5">
+                    Pool & Beach
+                  </span>
+                  <span className="text-[9px] text-white/40 font-bold uppercase tracking-[0.2em]">
+                    Açık Havuz & Teras
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-2xl md:text-3xl font-serif font-medium text-white mb-1.5">
+                    Konfor
+                  </span>
+                  <span className="text-[9px] text-white/40 font-bold uppercase tracking-[0.2em]">
+                    Seçkin Yaşam Alanı
+                  </span>
+                </div>
+              </div>
+
             </div>
 
-            <p style={{ margin: 0, fontSize: "0.88rem", color: "#4A4538", lineHeight: 1.65, fontWeight: 500 }}>
-              Megakent Sitesi, Turgut Özal Cad, Selen Sk. No:1/O, Petra Yaşam Merkezi, Taşdelen, Çekmeköy / İstanbul
-            </p>
-            
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", paddingTop: "4px" }}>
-              <a
-                href={`tel:${telCafeHref}`}
-                style={{ 
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center",
-                  gap: "8px", 
-                  padding: "11px", 
-                  borderRadius: "12px", 
-                  background: "var(--ink, #0D0F0A)", 
-                  color: "#FFFFFF", 
-                  fontSize: "0.82rem", 
-                  fontWeight: 800, 
-                  textDecoration: "none" 
-                }}
-              >
-                <Phone size={14} color="#D9A441" />
-                <span>Kafe: {telCafe}</span>
-              </a>
-              <a
-                href={`tel:${telTesisHref}`}
-                style={{ 
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center",
-                  gap: "8px", 
-                  padding: "11px", 
-                  borderRadius: "12px", 
-                  background: "#16190F", 
-                  color: "#FFFFFF", 
-                  fontSize: "0.82rem", 
-                  fontWeight: 800, 
-                  textDecoration: "none" 
-                }}
-              >
-                <Phone size={14} color="#D9A441" />
-                <span>Tesis: {telTesis}</span>
-              </a>
-            </div>
-
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ 
-                width: "100%", 
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                gap: "8px", 
-                padding: "12px", 
-                borderRadius: "12px", 
-                background: "#25D366", 
-                color: "#0B140C", 
-                fontSize: "0.88rem", 
-                fontWeight: 800, 
-                textDecoration: "none", 
-                boxSizing: "border-box",
-                boxShadow: "0 4px 14px rgba(37, 211, 102, 0.25)"
-              }}
-            >
-              <MessageCircle size={17} />
-              <span>WhatsApp'tan Doğrudan Yazın</span>
-            </a>
-
-            <a
-              href="https://maps.google.com/?q=Petra+Yaşam+Merkezi+Taşdelen+Çekmeköy"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                padding: "10px",
-                borderRadius: "10px",
-                background: "rgba(13, 15, 10, 0.05)",
-                color: "var(--ink, #0D0F0A)",
-                fontSize: "0.82rem",
-                fontWeight: 700,
-                textDecoration: "none",
-                border: "1px solid rgba(13, 15, 10, 0.1)"
-              }}
-            >
-              <Navigation size={14} color="#B8842C" />
-              <span>Google Maps ile Yol Tarifi Al</span>
-            </a>
           </div>
-
         </div>
+      </section>
 
-      </div>
-
-      {/* 5. DÖRT TEMEL YAŞAM DENEYİMİ SÜTUNU */}
-      <section style={{ margin: "64px 0" }}>
-        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 36px auto" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "8px", background: "rgba(184, 132, 44, 0.12)", padding: "5px 14px", borderRadius: "20px" }}>
-            <Sparkles size={13} color="#B8842C" />
-            <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "#B8842C" }}>
-              AYRICALIKLI YAŞAM KONSEPTİ
-            </span>
-          </div>
-          <h2 style={{ fontSize: "clamp(2rem, 3.8vw, 2.7rem)", fontWeight: 800, color: "var(--ink, #0D0F0A)", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", margin: "0 0 10px 0", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
-            Petra'da Sizi Neler Bekliyor?
-          </h2>
-          <p style={{ margin: 0, fontSize: "1rem", color: "var(--muted, #6E6A5C)", lineHeight: 1.6 }}>
-            Günün her anına özel gurme tatlar, açık havada serinlik ve huzurlu sosyal buluşma alanları.
-          </p>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
-          {experiencesList.map((item: any, i: number) => {
-            const Icon = expIcons[i % expIcons.length] || UtensilsCrossed;
-            const feats: string[] = Array.isArray(item.features) ? item.features : [];
-            return (
-              <div
-                key={i}
-                style={{ 
-                  padding: "28px 24px", 
-                  borderRadius: "22px", 
-                  background: "#FFFFFF", 
-                  border: "1.5px solid rgba(184, 132, 44, 0.22)", 
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.03)", 
-                  display: "flex", 
-                  flexDirection: "column", 
-                  justifyContent: "space-between",
-                  transition: "transform 0.2s ease, box-shadow 0.2s ease"
-                }}
-              >
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
-                    <div style={{ width: "48px", height: "48px", borderRadius: "14px", background: "linear-gradient(135deg, rgba(217, 164, 65, 0.2) 0%, rgba(217, 164, 65, 0.08) 100%)", color: "#9E6E1A", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <Icon size={24} />
+      {/* 3. RAKAMLARLA PETRA (4'LÜ MİNİMALİST KARTLAR) */}
+      <section className="py-16 bg-[#080808] border-y border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-5 lg:px-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {statsList.map((st: any, i: number) => {
+              const StatIcon = statIcons[i % statIcons.length] || Sparkles;
+              return (
+                <div 
+                  key={i} 
+                  className="p-7 rounded-2xl bg-[#0C0C0C] border border-white/[0.08] hover:border-white/20 transition-all flex flex-col justify-between"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-2xl md:text-3xl font-serif font-light text-white tracking-tight">
+                      {cleanRawText(st.b || "")}
+                    </span>
+                    <div className="w-9 h-9 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#D4AF37]">
+                      <StatIcon size={16} />
                     </div>
-                    {item.hours && (
-                      <span style={{ fontSize: "0.78rem", fontWeight: 800, color: "#9E6E1A", background: "#F7F2E7", padding: "4px 10px", borderRadius: "8px", border: "1px solid rgba(184, 132, 44, 0.25)" }}>
-                        {item.hours}
+                  </div>
+                  <div>
+                    <span className="block text-sm font-semibold text-white/90 mb-1">
+                      {cleanRawText(st.span || "")}
+                    </span>
+                    {st.sub && (
+                      <span className="text-xs text-white/45 leading-relaxed block">
+                        {cleanRawText(st.sub)}
                       </span>
                     )}
                   </div>
-
-                  {item.tag && (
-                    <span style={{ fontSize: "0.74rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#B8842C", display: "block", marginBottom: "4px" }}>
-                      {item.tag}
-                    </span>
-                  )}
-                  
-                  <h3 style={{ fontSize: "1.25rem", fontWeight: 800, color: "var(--ink, #0D0F0A)", margin: "0 0 10px 0", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
-                    {cleanRawText(item.title || "")}
-                  </h3>
-                  
-                  <p style={{ margin: "0 0 18px 0", fontSize: "0.92rem", color: "#4A4538", lineHeight: 1.7 }}>
-                    {cleanRawText(item.desc || "")}
-                  </p>
                 </div>
-
-                {feats.length > 0 && (
-                  <div style={{ paddingTop: "14px", borderTop: "1px solid rgba(13, 15, 10, 0.06)", display: "flex", flexDirection: "column", gap: "6px" }}>
-                    {feats.map((feat, fidx) => (
-                      <div key={fidx} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.82rem", color: "#2C2F26", fontWeight: 600 }}>
-                        <CheckCircle2 size={14} color="#B8842C" />
-                        <span>{cleanRawText(feat)}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* 6. BİR GÜNÜN PETRA'DAKİ AKIŞI (TIMELINE) */}
-      <section 
-        style={{ 
-          margin: "64px 0", 
-          padding: "clamp(32px, 5vw, 48px)", 
-          borderRadius: "28px", 
-          background: "linear-gradient(180deg, #F9F5EC 0%, #FFFFFF 100%)",
-          border: "1.5px solid rgba(184, 132, 44, 0.25)"
-        }}
-      >
-        <div style={{ textAlign: "center", maxWidth: "620px", margin: "0 auto 36px auto" }}>
-          <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
-            24 SAAT YAŞAM DOLU
-          </span>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 800, color: "var(--ink, #0D0F0A)", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", margin: "0 0 8px 0", letterSpacing: "-0.015em" }}>
-            Bir Günün Petra'daki Akışı
-          </h2>
-          <p style={{ margin: 0, fontSize: "0.95rem", color: "var(--muted, #6E6A5C)" }}>
-            Sabahın taze enerjisinden gecenin keyifli sohbetlerine uzanan gün boyu deneyim.
-          </p>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "20px", position: "relative" }}>
-          {timelineList.map((step: any, idx: number) => {
-            const StepIcon = timelineIcons[idx % timelineIcons.length] || Sun;
-            return (
-              <div 
-                key={idx}
-                style={{
-                  padding: "24px",
-                  borderRadius: "20px",
-                  background: "#FFFFFF",
-                  border: "1px solid rgba(184, 132, 44, 0.2)",
-                  boxShadow: "0 4px 16px rgba(0,0,0,0.03)",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px"
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: "0.78rem", fontWeight: 800, color: "#FFFFFF", background: "var(--ink, #0D0F0A)", padding: "4px 10px", borderRadius: "8px" }}>
-                    {cleanRawText(step.time || "")}
-                  </span>
-                  <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <StepIcon size={18} />
-                  </div>
-                </div>
-
-                <h3 style={{ fontSize: "1.05rem", fontWeight: 800, color: "var(--ink, #0D0F0A)", margin: 0, fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
-                  {cleanRawText(step.title || "")}
-                </h3>
-
-                <p style={{ margin: 0, fontSize: "0.88rem", color: "#5C584C", lineHeight: 1.65 }}>
-                  {cleanRawText(step.desc || "")}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* 7. ÖZEL DAVETLER & ORGANİZASYON KUTUSU (LÜKS & YÜKSEK KONTRAST) */}
-      <section style={{ margin: "56px 0" }}>
-        <div 
-          style={{ 
-            borderRadius: "28px", 
-            background: "linear-gradient(135deg, #16190F 0%, #0D0F0A 100%)", 
-            color: "#FFFFFF", 
-            padding: "clamp(32px, 5vw, 52px)", 
-            display: "grid", 
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", 
-            gap: "36px", 
-            alignItems: "center",
-            border: "1.5px solid rgba(217, 164, 65, 0.35)", 
-            boxShadow: "0 24px 50px rgba(0,0,0,0.3)" 
-          }}
-        >
-          {/* Sol Kolon */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", width: "fit-content", padding: "6px 14px", borderRadius: "30px", background: "rgba(217, 164, 65, 0.18)", border: "1px solid rgba(217, 164, 65, 0.4)" }}>
-              <PartyPopper size={15} color="#E5B555" />
-              <span style={{ fontSize: "11px", fontWeight: 800, color: "#E5B555", textTransform: "uppercase", letterSpacing: "0.14em" }}>
-                ÖZEL GÜNLER & KUTLAMALAR
+      {/* 4. 4 ANA YAŞAM DENEYİMİ (LÜKS MİNİMALİST KARTLAR) */}
+      <section className="py-24 bg-[#050505]">
+        <div className="max-w-7xl mx-auto px-5 lg:px-10">
+          <div className="max-w-xl mb-16">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-8 h-px bg-white/60" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/60">
+                AYRICALIKLI YAŞAM KONSEPTİ
               </span>
             </div>
-
-            <h3 
-              style={{ 
-                fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", 
-                fontWeight: 800, 
-                fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", 
-                color: "#FFFFFF", 
-                margin: 0, 
-                lineHeight: 1.2,
-                letterSpacing: "-0.015em"
-              }}
-            >
-              {cleanRawText(eventsTitle)}
-            </h3>
-
-            <p 
-              style={{ 
-                margin: 0, 
-                fontSize: "0.98rem", 
-                color: "rgba(244, 238, 225, 0.88)", 
-                lineHeight: 1.7,
-                fontFamily: "var(--f-body, sans-serif)"
-              }}
-            >
-              {cleanRawText(eventsLead)}
-            </p>
-
-            {/* SVG İkonlu Lüks Etkinlik Rozetleri (EMOJİSİZ) */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", paddingTop: "4px" }}>
-              {eventsTags.map((tag: string, tidx: number) => {
-                const TagIcon = getEventTagIcon(tag);
-                return (
-                  <div 
-                    key={tidx} 
-                    style={{ 
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "8px 16px", 
-                      borderRadius: "30px", 
-                      background: "rgba(217, 164, 65, 0.12)", 
-                      border: "1px solid rgba(217, 164, 65, 0.3)", 
-                      fontSize: "0.85rem", 
-                      fontWeight: 700, 
-                      color: "#E5B555" 
-                    }}
-                  >
-                    <TagIcon size={15} color="#E5B555" />
-                    <span>{cleanRawText(tag)}</span>
-                  </div>
-                );
-              })}
-            </div>
+            <h2 className="text-3xl md:text-5xl font-serif font-light text-white tracking-tight leading-[1.15]">
+              Petra'da Sizi Neler Bekliyor?
+            </h2>
           </div>
 
-          {/* Sağ Kolon: Rezervasyon & Teklif Kartı */}
-          <div 
-            style={{ 
-              display: "flex", 
-              flexDirection: "column", 
-              gap: "16px", 
-              background: "rgba(255, 255, 255, 0.04)", 
-              padding: "30px", 
-              borderRadius: "22px", 
-              border: "1px solid rgba(217, 164, 65, 0.25)",
-              backdropFilter: "blur(12px)"
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "rgba(217, 164, 65, 0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <CalendarCheck size={18} color="#E5B555" />
-              </div>
-              <h4 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 800, color: "#FFFFFF", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
-                Etkinlik Detayları & Rezervasyon
-              </h4>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {experiencesList.map((item: any, i: number) => {
+              const Icon = expIcons[i % expIcons.length] || UtensilsCrossed;
+              const feats: string[] = Array.isArray(item.features) ? item.features : [];
+              return (
+                <div
+                  key={i}
+                  className="p-8 rounded-2xl bg-[#0A0A0A] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-[#D4AF37] group-hover:scale-110 transition-transform">
+                        <Icon size={22} />
+                      </div>
+                      {item.hours && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-white/60 bg-white/[0.06] px-3 py-1.5 rounded-full border border-white/10">
+                          {item.hours}
+                        </span>
+                      )}
+                    </div>
 
-            <p style={{ margin: 0, fontSize: "0.9rem", color: "rgba(244, 238, 225, 0.78)", lineHeight: 1.6 }}>
-              Kişi sayısı ve etkinlik tarihinizi ileterek organizasyon ekibimizden hızlıca özel menü teklifi alabilirsiniz.
-            </p>
-            
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                padding: "13px",
-                borderRadius: "12px",
-                background: "#25D366",
-                color: "#0B140C",
-                fontWeight: 800,
-                fontSize: "0.92rem",
-                textDecoration: "none",
-                boxShadow: "0 6px 20px rgba(37, 211, 102, 0.3)",
-                transition: "transform 0.2s ease"
-              }}
-            >
-              <MessageCircle size={18} />
-              <span>Organizasyon İçin WhatsApp'tan Yazın</span>
-            </a>
+                    {item.tag && (
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] block mb-2">
+                        {item.tag}
+                      </span>
+                    )}
 
-            <a
-              href={`tel:${telCafeHref}`}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                padding: "12px",
-                borderRadius: "12px",
-                background: "rgba(255, 255, 255, 0.08)",
-                color: "#FFFFFF",
-                fontWeight: 700,
-                fontSize: "0.88rem",
-                textDecoration: "none",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                transition: "background 0.2s ease"
-              }}
-            >
-              <Phone size={15} color="#E5B555" />
-              <span>Telefonla Arayın: {telCafe}</span>
-            </a>
+                    <h3 className="text-xl font-serif font-medium text-white mb-3">
+                      {cleanRawText(item.title || "")}
+                    </h3>
+
+                    <p className="text-sm text-white/50 leading-relaxed font-light mb-6">
+                      {cleanRawText(item.desc || "")}
+                    </p>
+                  </div>
+
+                  {feats.length > 0 && (
+                    <div className="pt-5 border-t border-white/[0.08] space-y-2">
+                      {feats.map((feat, fidx) => (
+                        <div key={fidx} className="flex items-center gap-2 text-xs text-white/70 font-light">
+                          <CheckCircle2 size={13} className="text-[#D4AF37] shrink-0" />
+                          <span>{cleanRawText(feat)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* 8. TESİS İMKANLARI GRID */}
-      <section style={{ margin: "56px 0" }}>
-        <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 28px auto" }}>
-          <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
-            KONFOR VE OLANAKLAR
-          </span>
-          <h2 style={{ fontSize: "clamp(1.6rem, 3.2vw, 2.2rem)", fontWeight: 800, color: "var(--ink, #0D0F0A)", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", margin: 0, letterSpacing: "-0.015em" }}>
-            Tesis İmkânlarımız
-          </h2>
-        </div>
+      {/* 5. BİR GÜNÜN PETRA'DAKİ AKIŞI (TIMELINE) */}
+      <section className="py-20 bg-[#080808] border-y border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-5 lg:px-10">
+          <div className="text-center max-w-xl mx-auto mb-16">
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 block mb-3">
+              24 SAAT YAŞAM DOLU
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif font-light text-white tracking-tight mb-3">
+              Bir Günün Petra'daki Akışı
+            </h2>
+            <p className="text-white/45 text-sm md:text-base font-light">
+              Sabahın ilk ışıklarından gecenin keyifli sohbetlerine uzanan gün boyu lezzet ve dinlenme.
+            </p>
+          </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "14px" }}>
-          {amenitiesList.map((label: string, idx: number) => {
-            const AmenityIcon = amenityIcons[idx % amenityIcons.length] || ShieldCheck;
-            return (
-              <div 
-                key={idx}
-                style={{
-                  padding: "16px 20px",
-                  borderRadius: "16px",
-                  background: "#FFFFFF",
-                  border: "1px solid rgba(184, 132, 44, 0.2)",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.02)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px"
-                }}
-              >
-                <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <AmenityIcon size={18} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {timelineList.map((step: any, idx: number) => {
+              const StepIcon = timelineIcons[idx % timelineIcons.length] || Sun;
+              return (
+                <div 
+                  key={idx}
+                  className="p-7 rounded-2xl bg-[#0C0C0C] border border-white/[0.08] hover:border-white/20 transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-white/80 bg-white/10 px-3 py-1 rounded-md">
+                        {cleanRawText(step.time || "")}
+                      </span>
+                      <div className="w-8 h-8 rounded-lg bg-white/[0.06] flex items-center justify-center text-[#D4AF37]">
+                        <StepIcon size={16} />
+                      </div>
+                    </div>
+
+                    <h3 className="text-lg font-serif font-medium text-white mb-2">
+                      {cleanRawText(step.title || "")}
+                    </h3>
+
+                    <p className="text-xs text-white/50 leading-relaxed font-light m-0">
+                      {cleanRawText(step.desc || "")}
+                    </p>
+                  </div>
                 </div>
-                <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--ink, #0D0F0A)" }}>
-                  {cleanRawText(label)}
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. ÖZEL GÜNLER & ORGANİZASYON KUTUSU (LÜKS THE BARBER STİLİ) */}
+      <section className="py-20 bg-[#050505]">
+        <div className="max-w-7xl mx-auto px-5 lg:px-10">
+          <div className="rounded-3xl bg-[#0A0A0A] border border-white/10 p-8 md:p-14 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden">
+            
+            {/* Sol Alan: Başlık, Açıklama ve SVG İkonlu Rozetler */}
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <PartyPopper size={16} className="text-[#D4AF37]" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4AF37]">
+                  ÖZEL GÜNLER & KUTLAMALAR
                 </span>
               </div>
-            );
-          })}
-        </div>
-      </section>
 
-      {/* 9. SIKÇA SORULAN SORULAR */}
-      <section style={{ margin: "56px 0" }}>
-        <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 32px auto" }}>
-          <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
-            MERAK EDİLENLER
-          </span>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.3rem)", fontWeight: 800, color: "var(--ink, #0D0F0A)", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", margin: "0 0 8px 0", letterSpacing: "-0.015em" }}>
-            Sıkça Sorulan Sorular
-          </h2>
-          <p style={{ margin: 0, fontSize: "0.95rem", color: "var(--muted, #6E6A5C)" }}>
-            Hakkımızda, rezervasyon ve tesis işleyişi hakkında en çok sorulanlar.
-          </p>
-        </div>
+              <h3 className="text-3xl md:text-5xl font-serif font-light text-white tracking-tight leading-[1.15] mb-5">
+                {cleanRawText(eventsTitle)}
+              </h3>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "16px" }}>
-          {faqsList.map((faq: any, idx: number) => (
-            <div
-              key={idx}
-              style={{
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "#FFFFFF",
-                border: "1.5px solid rgba(184, 132, 44, 0.2)",
-                boxShadow: "0 4px 14px rgba(0,0,0,0.03)",
-                display: "flex",
-                flexDirection: "column",
-                gap: "8px"
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                <HelpCircle size={18} color="#B8842C" style={{ flexShrink: 0, marginTop: "2px" }} />
-                <h3 style={{ fontSize: "1rem", fontWeight: 800, color: "var(--ink, #0D0F0A)", margin: 0 }}>
-                  {cleanRawText(faq.q || "")}
-                </h3>
-              </div>
-              <p style={{ margin: "4px 0 0 28px", fontSize: "0.88rem", color: "#5C584C", lineHeight: 1.65 }}>
-                {cleanRawText(faq.a || "")}
+              <p className="text-white/60 font-light text-base leading-relaxed mb-8 max-w-xl">
+                {cleanRawText(eventsLead)}
               </p>
+
+              {/* EMOJİSİZ, LÜKS SVG İKONLU ROZETLER */}
+              <div className="flex flex-wrap gap-3">
+                {eventsTags.map((tag: string, tidx: number) => {
+                  const TagIcon = getEventTagIcon(tag);
+                  return (
+                    <div 
+                      key={tidx} 
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.04] border border-white/15 text-white/85 text-xs font-medium tracking-wide hover:border-white/30 transition-colors"
+                    >
+                      <TagIcon size={14} className="text-[#D4AF37]" />
+                      <span>{cleanRawText(tag)}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          ))}
+
+            {/* Sağ Alan: Rezervasyon & Teklif Kartı */}
+            <div className="bg-[#050505] p-8 md:p-10 rounded-2xl border border-white/10 space-y-6">
+              <div>
+                <h4 className="text-xl md:text-2xl font-serif font-light text-white mb-2">
+                  Etkinlik Detayları & Rezervasyon
+                </h4>
+                <p className="text-white/50 text-sm font-light leading-relaxed m-0">
+                  Kişi sayısı ve etkinlik tarihinizi ileterek organizasyon ekibimizden hızlıca özel menü ve süsleme teklifi alabilirsiniz.
+                </p>
+              </div>
+
+              <div className="space-y-3 pt-2">
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-[#25D366] text-[#0B140C] font-bold text-xs uppercase tracking-[0.2em] hover:bg-[#20BD5A] transition-all shadow-lg"
+                >
+                  <MessageCircle size={16} />
+                  <span>WhatsApp ile Teklif Alın</span>
+                </a>
+
+                <a
+                  href={`tel:${telCafeHref}`}
+                  className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/20 text-white font-bold text-xs uppercase tracking-[0.2em] transition-all"
+                >
+                  <Phone size={15} className="text-[#D4AF37]" />
+                  <span>Telefon: {telCafe}</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
-      {/* 10. REZERVASYON & ÇAĞRI CTA BANNER */}
-      <section style={{ marginTop: "56px" }}>
-        <div 
-          style={{ 
-            borderRadius: "28px", 
-            background: "linear-gradient(135deg, #16190F 0%, #0D0F0A 100%)", 
-            color: "#FFFFFF", 
-            padding: "clamp(32px, 5vw, 48px)", 
-            display: "flex", 
-            flexWrap: "wrap", 
-            alignItems: "center", 
-            justifyContent: "space-between", 
-            gap: "28px", 
-            border: "1px solid rgba(217, 164, 65, 0.35)", 
-            boxShadow: "0 24px 50px rgba(0,0,0,0.3)" 
-          }}
-        >
-          <div style={{ maxWidth: "580px", display: "flex", flexDirection: "column", gap: "10px" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", width: "fit-content", padding: "5px 12px", borderRadius: "20px", background: "rgba(217, 164, 65, 0.18)" }}>
-              <CalendarCheck size={15} color="#E5B555" />
-              <span style={{ fontSize: "11px", fontWeight: 800, color: "#E5B555", textTransform: "uppercase", letterSpacing: "0.12em" }}>
-                REZERVASYON & İLETİŞİM
-              </span>
-            </div>
-            <h3 style={{ fontSize: "clamp(1.7rem, 3.5vw, 2.4rem)", fontWeight: 800, fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", color: "#FFFFFF", margin: 0, lineHeight: 1.25, letterSpacing: "-0.015em" }}>
-              Masanızı veya Locanızı Hemen Ayırtın
-            </h3>
-            <p style={{ margin: 0, fontSize: "0.95rem", color: "rgba(244, 238, 225, 0.85)", lineHeight: 1.65, fontFamily: "var(--f-body, sans-serif)" }}>
-              Hafta sonu zengin serpme kahvaltı, şefin spesiyalleriyle akşam yemeği veya açık havuzda VIP localarımız için yerinizi kolayca ayırtın.
+      {/* 7. TESİS İMKÂNLARI (6'LI MİNİMALİST KARTLAR) */}
+      <section className="py-16 bg-[#080808] border-y border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-5 lg:px-10">
+          <div className="text-center max-w-xl mx-auto mb-12">
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 block mb-2">
+              KONFOR VE OLANAKLAR
+            </span>
+            <h2 className="text-2xl md:text-4xl font-serif font-light text-white">
+              Tesis İmkânlarımız
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {amenitiesList.map((label: string, idx: number) => {
+              const AmenityIcon = amenityIcons[idx % amenityIcons.length] || ShieldCheck;
+              return (
+                <div 
+                  key={idx}
+                  className="p-5 rounded-xl bg-[#0C0C0C] border border-white/[0.08] flex items-center gap-4 hover:border-white/20 transition-all"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center text-[#D4AF37] shrink-0">
+                    <AmenityIcon size={18} />
+                  </div>
+                  <span className="text-sm font-medium text-white/85">
+                    {cleanRawText(label)}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. SIKÇA SORULAN SORULAR */}
+      <section className="py-20 bg-[#050505]">
+        <div className="max-w-7xl mx-auto px-5 lg:px-10">
+          <div className="text-center max-w-xl mx-auto mb-14">
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 block mb-2">
+              MERAK EDİLENLER
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif font-light text-white mb-2">
+              Sıkça Sorulan Sorular
+            </h2>
+            <p className="text-white/45 text-sm font-light">
+              Rezervasyon, havuz ve çalışma saatleri hakkında en çok sorulanlar.
             </p>
           </div>
 
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "14px" }}>
-            <Link
-              href="/#rezervasyon"
-              style={{ 
-                padding: "15px 30px", 
-                borderRadius: "14px", 
-                background: "linear-gradient(135deg, #E5B555 0%, #C49030 100%)", 
-                color: "#0D0F0A", 
-                fontWeight: 800, 
-                fontSize: "0.95rem", 
-                textDecoration: "none", 
-                boxShadow: "0 8px 24px rgba(229,181,85,0.4)" 
-              }}
-            >
-              Online Rezervasyon Yap
-            </Link>
-            <Link
-              href="/menu"
-              style={{ 
-                padding: "15px 26px", 
-                borderRadius: "14px", 
-                background: "rgba(255,255,255,0.12)", 
-                color: "#FFFFFF", 
-                fontWeight: 700, 
-                fontSize: "0.95rem", 
-                textDecoration: "none", 
-                border: "1px solid rgba(255,255,255,0.25)",
-                backdropFilter: "blur(8px)"
-              }}
-            >
-              Menüyü İncele
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {faqsList.map((faq: any, idx: number) => (
+              <div
+                key={idx}
+                className="p-7 rounded-2xl bg-[#0A0A0A] border border-white/[0.08] hover:border-white/20 transition-all flex flex-col gap-3"
+              >
+                <div className="flex items-start gap-3">
+                  <HelpCircle size={18} className="text-[#D4AF37] shrink-0 mt-0.5" />
+                  <h3 className="text-base font-serif font-medium text-white m-0">
+                    {cleanRawText(faq.q || "")}
+                  </h3>
+                </div>
+                <p className="text-sm text-white/50 font-light leading-relaxed m-0 pl-7">
+                  {cleanRawText(faq.a || "")}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 9. ALT ÇAĞRI & REZERVASYON CTA (THE BARBER YASIN STİLİ) */}
+      <section className="py-20 bg-[#080808] border-t border-white/[0.08]">
+        <div className="max-w-7xl mx-auto px-5 lg:px-10">
+          <div className="text-center max-w-2xl mx-auto space-y-6">
+            <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4AF37] block">
+              REZERVASYON & İLETİŞİM
+            </span>
+
+            <h2 className="text-3xl md:text-6xl font-serif font-light text-white tracking-tight leading-[1.1]">
+              Masanızı veya Locanızı Hemen Ayırtın
+            </h2>
+
+            <p className="text-white/50 text-sm md:text-base font-light leading-relaxed max-w-lg mx-auto">
+              Hafta sonu zengin serpme kahvaltı, şefin spesiyalleriyle akşam yemeği veya açık havuzda VIP localarımız için yerinizi ayırtın.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+              <Link
+                href="/#rezervasyon"
+                className="inline-flex items-center justify-center px-8 py-3.5 border border-white/40 text-white hover:bg-white hover:text-black rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl"
+              >
+                Online Masa Ayırtın
+              </Link>
+              <Link
+                href="/menu"
+                className="inline-flex items-center justify-center px-8 py-3.5 border border-white/20 text-white/70 hover:text-white hover:border-white/40 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300"
+              >
+                Tüm Menüyü İncele
+              </Link>
+            </div>
           </div>
         </div>
       </section>

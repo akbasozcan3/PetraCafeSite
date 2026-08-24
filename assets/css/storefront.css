@@ -3059,3 +3059,17 @@ html[data-theme="dark"] .nav__search-pop,
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6) !important;
 }
 
+/* The Barber Yasin Stili Full-Width Hakkimizda Sayfası */
+.site-shop__body:has(#hakkimizda-page) {
+  padding: 0 !important;
+}
+.site-shop__body:has(#hakkimizda-page) .oc-shell,
+.site-shop__body:has(#hakkimizda-page) .wrap,
+.site-shop__body:has(#hakkimizda-page) .shop-main {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
