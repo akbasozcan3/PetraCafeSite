@@ -2590,14 +2590,15 @@ p.hero-welcome__eyebrow,
 .foot,
 .site-home .foot,
 .site-shop .foot {
-  background: var(--footer-bg, #0D0F0A);
-  color: var(--footer-text, #FFFFFF);
+  background: var(--paper, #FBF8F1) !important;
+  background-color: var(--paper, #FBF8F1) !important;
+  color: #0D0F0A !important;
 }
 
 .foot__name,
 .site-home .foot__name,
 .site-shop .foot__name {
-  color: #FFFFFF !important;
+  color: #0D0F0A !important;
   font-weight: 700 !important;
   font-size: 1.25rem !important;
   letter-spacing: 0.08em !important;
@@ -2606,7 +2607,7 @@ p.hero-welcome__eyebrow,
 .foot__slogan,
 .site-home .foot__slogan,
 .site-shop .foot__slogan {
-  color: #FFFFFF !important;
+  color: #5C5749 !important;
   font-size: 0.95rem !important;
   line-height: 1.6 !important;
   opacity: 1 !important;
@@ -2615,7 +2616,7 @@ p.hero-welcome__eyebrow,
 .foot__legal,
 .site-home .foot__legal,
 .site-shop .foot__legal {
-  color: rgba(244, 238, 225, 0.45) !important;
+  color: #8E8A7E !important;
   padding: 8px 0 24px !important;
   max-width: 72rem !important;
   font-size: 0.74rem !important;
@@ -2625,7 +2626,7 @@ p.hero-welcome__eyebrow,
 .foot__legal-line,
 .site-home .foot__legal-line,
 .site-shop .foot__legal-line {
-  color: rgba(244, 238, 225, 0.45) !important;
+  color: #8E8A7E !important;
   font-size: 0.74rem !important;
   line-height: 1.5 !important;
   margin: 0.35rem 0 0 !important;
@@ -2635,9 +2636,27 @@ p.hero-welcome__eyebrow,
 .foot__hours,
 .site-home .foot__hours,
 .site-shop .foot__hours {
-  color: #FFFFFF !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(217, 164, 65, 0.4) !important;
+  color: #0D0F0A !important;
+  background: rgba(184, 132, 44, 0.12) !important;
+  border: 1px solid rgba(184, 132, 44, 0.35) !important;
+}
+
+.foot__hours span,
+.site-home .foot__hours span {
+  color: #0D0F0A !important;
+  font-weight: 600 !important;
+}
+
+.foot__hours svg,
+.site-home .foot__hours svg {
+  color: #B8842C !important;
+}
+
+.foot h4,
+.site-home .foot h4,
+.site-shop .foot h4 {
+  color: #B8842C !important;
+  font-weight: 700 !important;
 }
 
 .foot__hours span,

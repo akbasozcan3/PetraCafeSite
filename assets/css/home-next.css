@@ -3977,20 +3977,22 @@ html .site-home .pasta-sec .pasta-price .pasta-note {
 }
 
 /* ========================================================
-   FOOTER: ADMİN TEMA VE ZEMİN UYUMLU
+   FOOTER: PREMIUM AÇIK KREM & ALTIN DETAYLAR
    ======================================================== */
 html .site-home .foot,
 html .site-shop .foot,
-html .foot {
-  background: var(--footer-bg, #0D0F0A) !important;
-  color: var(--footer-text, #FFFFFF) !important;
+html .foot,
+.foot {
+  background: var(--paper, #FBF8F1) !important;
+  background-color: var(--paper, #FBF8F1) !important;
+  color: #0D0F0A !important;
 }
 
 html .site-home .foot__name,
 html .site-shop .foot__name,
 html .foot__name,
 .foot__name {
-  color: #FFFFFF !important;
+  color: #0D0F0A !important;
   font-weight: 700 !important;
   opacity: 1 !important;
 }
@@ -3998,7 +4000,7 @@ html .foot__name,
 html .site-home .foot__slogan,
 html .site-shop .foot__slogan,
 .foot__slogan {
-  color: #FFFFFF !important;
+  color: #5C5749 !important;
   opacity: 1 !important;
 }
 
@@ -4006,7 +4008,7 @@ html .site-home .foot__legal,
 html .site-shop .foot__legal,
 html .foot__legal,
 .foot__legal {
-  color: rgba(244, 238, 225, 0.45) !important;
+  color: #8E8A7E !important;
   padding: 8px 0 24px !important;
   max-width: 72rem !important;
   font-size: 0.74rem !important;
@@ -4017,7 +4019,7 @@ html .site-home .foot__legal-line,
 html .site-shop .foot__legal-line,
 html .foot__legal-line,
 .foot__legal-line {
-  color: rgba(244, 238, 225, 0.45) !important;
+  color: #8E8A7E !important;
   font-size: 0.74rem !important;
   line-height: 1.5 !important;
   margin: 0.35rem 0 0 !important;
@@ -4025,31 +4027,62 @@ html .foot__legal-line,
 }
 
 html .site-home .foot__hours,
-html .foot__hours {
-  color: #FFFFFF !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(217, 164, 65, 0.4) !important;
+html .site-shop .foot__hours,
+html .foot__hours,
+.foot__hours {
+  color: #0D0F0A !important;
+  background: rgba(184, 132, 44, 0.12) !important;
+  border: 1px solid rgba(184, 132, 44, 0.35) !important;
 }
 
 html .site-home .foot__hours span,
-html .foot__hours span {
-  color: #FFFFFF !important;
+html .site-shop .foot__hours span,
+html .foot__hours span,
+.foot__hours span {
+  color: #0D0F0A !important;
+}
+
+html .site-home .foot__hours svg,
+html .site-shop .foot__hours svg,
+.foot__hours svg {
+  color: #B8842C !important;
 }
 
 html .site-home .foot h4,
-html .foot h4 {
-  color: #D9A441 !important;
+html .site-shop .foot h4,
+html .foot h4,
+.foot h4 {
+  color: #B8842C !important;
   font-weight: 700 !important;
 }
 
 html .site-home .foot__col a,
+html .site-shop .foot__col a,
 html .site-home .foot__reach-a,
+html .site-shop .foot__reach-a,
 html .foot__col a,
-html .foot__reach-a {
-  color: rgba(255, 255, 255, 0.9) !important;
+html .foot__reach-a,
+.foot__col a,
+.foot__reach-a {
+  color: #1A1D14 !important;
 }
 
 html .site-home .foot__reach-a span,
-html .foot__reach-a span {
-  color: #FFFFFF !important;
+html .site-shop .foot__reach-a span,
+html .foot__reach-a span,
+.foot__reach-a span {
+  color: #0D0F0A !important;
+}
+
+html .site-home .foot__bar,
+html .site-shop .foot__bar,
+.foot__bar {
+  border-top: 1px solid rgba(13, 15, 10, 0.1) !important;
+  color: #5C5749 !important;
+}
+
+html .site-home .foot__bar a,
+html .site-shop .foot__bar a,
+.foot__bar a {
+  color: #5C5749 !important;
 }

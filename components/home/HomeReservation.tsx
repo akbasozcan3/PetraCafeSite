@@ -303,7 +303,11 @@ export default function HomeReservation({
   };
 
   return (
-    <section className="section rsv-sec" id="rezervasyon">
+    <section
+      className="section rsv-sec"
+      id="rezervasyon"
+      style={{ scrollMarginTop: "calc(var(--nav-h, 72px) + 24px)" }}
+    >
       <div className="wrap rsv" style={{ alignItems: "center" }}>
         {/* Sol Alan: Tanıtım & Fotoğraf */}
         <div>

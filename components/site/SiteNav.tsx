@@ -182,7 +182,7 @@ export default function SiteNav({
           Number.parseFloat(
             getComputedStyle(document.documentElement).getPropertyValue("--nav-h")
           ) || 72;
-        const top = el.getBoundingClientRect().top + window.scrollY - navH - 18;
+        const top = el.getBoundingClientRect().top + window.scrollY - navH - 24;
         window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
         history.replaceState(null, "", `#${hash}`);
         window.dispatchEvent(new Event("hashchange"));
@@ -793,7 +793,7 @@ export default function SiteNav({
             href={bookHref}
             className="btn btn--sm btn--light nav__cta"
             hidden={open}
-            onClick={() => setOpen(false)}
+            onClick={(e) => jumpTo(e, bookHref)}
           >
             {bookLabel}
           </a>
@@ -866,7 +866,7 @@ export default function SiteNav({
             <a
               href={bookHref}
               className="mobile-menu__cta"
-              onClick={() => setOpen(false)}
+              onClick={(e) => jumpTo(e, bookHref)}
               style={{
                 display: "flex",
                 alignItems: "center",

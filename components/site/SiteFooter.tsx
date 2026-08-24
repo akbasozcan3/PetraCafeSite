@@ -118,16 +118,6 @@ export default function SiteFooter({
                 src={content.images?.logo}
                 alt={`${brand} logosu`}
                 height={52}
-                style={
-                  isDark
-                    ? {
-                        padding: "6px 12px",
-                        background: "rgba(255, 255, 255, 0.96)",
-                        borderRadius: "10px",
-                        boxShadow: "0 4px 14px rgba(0,0,0,0.3)",
-                      }
-                    : undefined
-                }
               />
               <p className="foot__name" style={{ color: nameColor }}>{brand}</p>
               {footer?.slogan ? (
