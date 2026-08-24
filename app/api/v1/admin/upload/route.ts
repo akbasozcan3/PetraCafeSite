@@ -196,12 +196,6 @@ export async function POST(request: Request) {
     }
 
     const blobToken = (process.env.BLOB_READ_WRITE_TOKEN || "").trim();
-    if (process.env.VERCEL && !blobToken) {
-      return errorResponse(
-        "Vercel Blob bağlayın: Storage → Blob → BLOB_READ_WRITE_TOKEN.",
-        503
-      );
-    }
 
     let bytes = Buffer.from(await file.arrayBuffer());
     const mime = resolveMime(file, bytes);
@@ -243,6 +237,9 @@ export async function POST(request: Request) {
         contentType: mime === "image/svg+xml" ? "image/svg+xml; charset=utf-8" : mime,
       });
       publicPath = result.url;
+    } else if (process.env.VERCEL) {
+      // Vercel üzerinde Blob bağlanmamışsa Data URI olarak anında kaydet (sıfır hata)
+      publicPath = `data:${mime};base64,${bytes.toString("base64")}`;
     } else {
       await writeUploadFile("site", filename, bytes);
       publicPath = `/uploads/site/${filename}`;
