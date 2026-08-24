@@ -3060,11 +3060,11 @@ html[data-theme="dark"] .nav__search-pop,
 }
 
 
-/* ─── HAKKIMIZDA SAYFASI — shop-main kısıtını kaldır ─── */
+/* ─── HAKKIMIZDA SAYFASI — Temiz container ve üst boşluk ─── */
 .shop-main:has(.page-hakkimizda),
 .oc-main:has(.page-hakkimizda) {
-  max-width: 100% !important;
+  max-width: 1200px !important;
   width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0 auto !important;
+  padding: 24px 0 80px !important;
 }
