@@ -176,20 +176,25 @@ export default function SiteNav({
     setOpen(false);
     window.setTimeout(
       () => {
-        const el = document.getElementById(hash);
+        let el = document.getElementById(hash);
+        if (hash === "rezervasyon" && typeof window !== "undefined" && window.innerWidth <= 860) {
+          const formEl = document.getElementById("rezervasyonForm");
+          if (formEl) el = formEl;
+        }
         if (!el) return;
         const navH =
           Number.parseFloat(
             getComputedStyle(document.documentElement).getPropertyValue("--nav-h")
           ) || 72;
-        const top = el.getBoundingClientRect().top + window.scrollY - navH - 24;
+        const offset = window.innerWidth <= 860 ? 14 : 24;
+        const top = el.getBoundingClientRect().top + window.scrollY - navH - offset;
         window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
         history.replaceState(null, "", `#${hash}`);
         window.dispatchEvent(new Event("hashchange"));
         setSolid(true);
         syncHomeNavReveal(true);
       },
-      open ? 160 : 0
+      open ? 180 : 0
     );
   };
 
