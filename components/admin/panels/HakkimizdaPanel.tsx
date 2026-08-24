@@ -52,6 +52,11 @@ export default function HakkimizdaPanel() {
       <AdminPageHeader
         title="Hakkımızda"
         description="Ana sayfadaki Hakkımızda bölümünün tüm yazıları, özet kartları ve görseli."
+        actions={
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+            <span>{saving ? "Kaydediliyor…" : "💾 Hakkımızda Kaydet"}</span>
+          </Button>
+        }
       />
       <SectionHint anchor="hakkimizda" label="Hakkımızda" />
       <AdminAlert message={message} />

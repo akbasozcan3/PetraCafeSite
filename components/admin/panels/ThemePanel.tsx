@@ -55,8 +55,13 @@ export default function ThemePanel() {
   return (
     <>
       <AdminPageHeader
-        title="Tema & renkler"
+        title="Tema & Renkler"
         description="Admin → Site → Tema. Palet seçin veya renkleri tek tek değiştirin, kaydedin. Navbar, butonlar, zemin, yazı ve footer güncellenir; 3D kapı fotoğraflarına dokunulmaz."
+        actions={
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+            <span>{saving ? "Kaydediliyor…" : "💾 Temayı Kaydet"}</span>
+          </Button>
+        }
       />
       <AdminAlert message={message} type={messageType} />
 

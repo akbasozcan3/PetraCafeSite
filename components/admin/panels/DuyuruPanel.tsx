@@ -124,6 +124,12 @@ export default function DuyuruPanel() {
       <AdminPageHeader
         title="Duyuru Bandı Yönetimi"
         description="Web sitenizin en üstünde yer alan duyuru, kampanya ve bildirim bandını canlı yönetin."
+        actions={
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md flex items-center gap-2">
+            <Save className="h-4 w-4" />
+            <span>{saving ? "Kaydediliyor…" : "💾 Duyuruyu Kaydet"}</span>
+          </Button>
+        }
       />
 
       {message && (

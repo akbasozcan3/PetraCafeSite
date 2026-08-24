@@ -75,6 +75,11 @@ export default function AnasayfaPanel() {
       <AdminPageHeader
         title="Ana sayfa CMS"
         description="Sitedeki sırayla tüm bölümler. Aç/kapa, yazıları düzenle, ilgili görsel ve liste ekranlarına geç."
+        actions={
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+            <span>{saving ? "Kaydediliyor…" : "💾 Değişiklikleri Kaydet"}</span>
+          </Button>
+        }
       />
       <AdminAlert message={message} />
 

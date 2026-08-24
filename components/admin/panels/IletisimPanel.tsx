@@ -104,6 +104,11 @@ export default function IletisimPanel() {
       <AdminPageHeader
         title="İletişim"
         description="Telefon, adres, WhatsApp ve gün gün açılış–kapanış. Saatler footer, menü, rezervasyon ve S.S.S. ile aynı kaynaktan gelir."
+        actions={
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+            <span>{saving ? "Kaydediliyor…" : "💾 İletişimi Kaydet"}</span>
+          </Button>
+        }
       />
       <SectionHint anchor="iletisim" label="İletişim" />
       <AdminAlert message={message} />
@@ -144,6 +149,18 @@ export default function IletisimPanel() {
             label="Telefon alt yazı"
             value={content.iletisim?.telefonAlt ?? ""}
             onChange={(e) => update("telefonAlt", e.target.value)}
+          />
+          <Input
+            label="2. Telefon (Petra Yaşam Merkezi / Tesis)"
+            value={content.iletisim?.telefon2 ?? ""}
+            onChange={(e) => update("telefon2", e.target.value)}
+            placeholder="0532 449 45 99"
+          />
+          <Input
+            label="2. Telefon alt yazı"
+            value={content.iletisim?.telefon2Alt ?? ""}
+            onChange={(e) => update("telefon2Alt", e.target.value)}
+            placeholder="Petra Yaşam Merkezi / Tesis"
           />
           <Input
             label="WhatsApp linki (otomatik)"

@@ -80,6 +80,11 @@ export default function SiteSettingsPanel() {
             <AdminPageHeader
               title="Site & SEO"
               description="Mağaza adı, SEO, footer, WhatsApp butonu ve yasal metinler."
+              actions={
+                <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+                  <span>{saving ? "Kaydediliyor…" : "💾 Ayarları Kaydet"}</span>
+                </Button>
+              }
             />
             <AdminAlert message={message} type={messageType} />
 
