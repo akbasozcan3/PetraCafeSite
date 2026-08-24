@@ -19,11 +19,11 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
 
   if (!h) return null;
 
-  const wordLimit = h.homeWordLimit && h.homeWordLimit > 0 ? h.homeWordLimit : 100;
   const combinedBody = (Array.isArray(h.body) ? h.body.join(" ") : String(h.body || "")).trim();
-  const words = combinedBody.split(/\s+/).filter(Boolean);
-  const teaserText = words.length > wordLimit
-    ? words.slice(0, wordLimit).join(" ") + "..."
+  // 100-120 karakterlik net önizleme
+  const charLimit = 110;
+  const teaserText = combinedBody.length > charLimit
+    ? combinedBody.slice(0, charLimit) + "..."
     : (combinedBody || "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır.");
 
   return (
@@ -47,10 +47,37 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
               {formatInlineText(h.lead)}
             </p>
           ) : null}
-          <p className="body" data-fade="">
-            {formatInlineText(teaserText)}
-          </p>
-          <div data-fade="" style={{ marginTop: "1.25rem", marginBottom: "1.75rem" }}>
+
+          {/* 100 KARAKTERLİK METİN + AŞAĞI DOĞRU BLURLU/GRADIENT FADE KATMANI */}
+          <div
+            data-fade=""
+            style={{
+              position: "relative",
+              maxHeight: "75px",
+              overflow: "hidden",
+              marginBottom: "1.25rem",
+            }}
+          >
+            <p className="body" style={{ margin: 0, lineHeight: 1.75 }}>
+              {formatInlineText(teaserText)}
+            </p>
+
+            {/* AŞAĞI DOĞRU YUMUŞAK GRADIENT FADE + BLUR EFEKTİ */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "50px",
+                background: "linear-gradient(to bottom, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.7) 45%, var(--paper, #FBF8F1) 100%)",
+                backdropFilter: "blur(2px)",
+                pointerEvents: "none",
+              }}
+            />
+          </div>
+
+          <div data-fade="" style={{ marginBottom: "1.75rem" }}>
             <Link
               href="/hakkimizda"
               className="btn btn--brass"
@@ -72,6 +99,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
               <span>→</span>
             </Link>
           </div>
+
           {h.ozet?.length ? (
             <div className="ozet" data-stagger="">
               {h.ozet.map((item) => (
@@ -86,6 +114,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             </div>
           ) : null}
         </div>
+
         <div data-fade="">
           <div className="tilt-card">
             <div className="tilt-card__inner">
