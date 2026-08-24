@@ -161,36 +161,37 @@
     "metin": ""
   },
   "hakkimizda": {
-    "eyebrow": "Hakkımızda",
-    "baslik": "Petra Yaşam Merkezi'nde cafe & restaurant",
-    "answerBaslik": "Kısaca",
-    "answerMetin": "Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve, nargile ve havuz–plaj sunar. 0530 608 90 51.",
-    "lead": "Keyif, konfor ve kalite — kahvaltıdan akşam yemeğine, havuz kenarından organizasyona.",
+    "eyebrow": "HAKKIMIZDA & YAŞAM ALANIMIZ",
+    "baslik": "Petra Yaşam Merkezi'nde Cafe & Restaurant Deneyimi",
+    "answerBaslik": "Kısaca Petra",
+    "answerMetin": "Petra Cafe Restaurant; Çekmeköy Taşdelen'de Petra Yaşam Merkezi bünyesinde zengin dünya mutfağı, serpme kahvaltı, taş fırın lezzetleri, İtalyan tatlı ve kokteylleri, açık yüzme havuzu ve VIP localarıyla günün her saati kesintisiz hizmet veren ayrıcalıklı bir yaşam kompleksidir.",
+    "lead": "Keyif, lezzet ve konforun buluştuğu nokta — sabahtan geceye leziz sofralar, havuz kenarında serin anlar ve unutulmaz anılar.",
     "body": [
-      "Menümüzde serpme kahvaltı, dünya mutfağı, İtalyan tatlı ve kokteyller, kahve ve nargile bulunur. Havuz kenarında veya salonda servis edilir.",
-      "Mekânımız Sultançiftliği Mahallesi, Selen Sokak No:1, Megakent / Petra Yaşam Merkezi’ndedir. Havuz, plaj ve kafe-restoran aynı çatı altındadır.",
-      "Doğum günü, kurumsal davet ve özel günler için organizasyon masası kurulur. Yüzme dersleri birebir veya grup olarak planlanır."
+      "Petra Cafe Restaurant; İstanbul Anadolu Yakası'nın yükselen değeri Çekmeköy Taşdelen'de, Megakent Sitesi içerisinde yer alan Petra Yaşam Merkezi'nde konuklarını ağırlamaktadır. Şehrin gürültüsünden uzak, ferah ve huzurlu bir ortamda; gastronomi ile sosyal yaşamı aynı çatı altında buluşturuyoruz.",
+      "Günün ilk ışıklarında zengin serpme kahvaltımız, sıcak pişilerimiz ve taze demlenmiş çay eşliğinde başlayan lezzet yolculuğumuz; öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dana antrikot, taş fırın pizzalar, el yapımı burgerler ve taze makarnalarla devam eder.",
+      "Yaz sezonunda 09:00 - 18:00 saatleri arasında hizmet veren açık yüzme havuzumuz, çocuk havuzumuz ve güneşlenme alanlarımızla Petra; aileniz ve sevdiklerinizle tatil konseptini şehre taşıyor. Havuz başında serinlerken özel kokteyllerimiz, İtalyan tatlılarımız ve zengin nargile seçeneklerimiz gününüze eşlik eder.",
+      "Doğum günleri, evlilik teklifleri, kurumsal yemekler, mezuniyet ve özel kutlamalarınız için profesyonel ekibimizle özel masa düzenlemeleri ve menü planlamaları sunuyoruz."
     ],
     "ozet": [
       {
         "b": "08:00–02:00",
-        "span": "cafe her gün"
+        "span": "Cafe & Mutfak Her Gün"
       },
       {
         "b": "09:00–18:00",
-        "span": "havuz"
+        "span": "Havuz & Beach Sezonu"
       },
       {
-        "b": "Kahvaltı",
-        "span": "serpme servis"
+        "b": "240+ Çeşit",
+        "span": "Zengin Dünya Menüsü"
       },
       {
-        "b": "Dünya",
-        "span": "mutfağı"
+        "b": "VIP Localar",
+        "span": "Havuz Kenarı & Salon"
       }
     ],
-    "badgeBaslik": "Petra",
-    "badgeAlt": "Cafe · Restaurant · Pool"
+    "badgeBaslik": "Petra Yaşam Merkezi",
+    "badgeAlt": "Cafe · Restaurant · Pool & Beach"
   },
   "bolumlar": {
     "menu": {
