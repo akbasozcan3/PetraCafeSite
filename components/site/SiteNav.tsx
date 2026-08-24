@@ -8,7 +8,7 @@ import { resolveHref } from "@/lib/site/resolveHref";
 import BrandLogo from "@/components/site/BrandLogo";
 
 const DEFAULT_LINKS: NavLink[] = [
-  { label: "Hakkımızda", href: "#hakkimizda" },
+  { label: "Hakkımızda", href: "/hakkimizda" },
   { label: "Hizmetler", href: "#hizmetler" },
   { label: "Menü", href: "/menu" },
   { label: "Havuz & Plaj", href: "#pasta" },

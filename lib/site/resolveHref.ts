@@ -2,7 +2,9 @@
 export function resolveHref(href: string): string {
   if (!href) return "#";
   if (/^(https?:|tel:|mailto:|whatsapp:)/i.test(href)) return href;
-  if (href === "#menu" || href === "/#menu") return "/menu";
+  if (href === "#hakkimizda" || href === "/#hakkimizda" || href === "hakkimizda") return "/hakkimizda";
+  if (href === "#menu" || href === "/#menu" || href === "menu") return "/menu";
+  if (href === "#blog" || href === "/#blog" || href === "blog") return "/blog";
   if (href.startsWith("#")) return `/${href}`;
   if (href.startsWith("/")) {
     if (/^\/(sepet|favoriler|checkout|hesabim)(\/|$)/i.test(href)) return "/menu";

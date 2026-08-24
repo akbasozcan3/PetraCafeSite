@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { SiteContent } from "@/lib/content/types";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
@@ -8,38 +9,8 @@ import { iconFromLabel } from "@/lib/content/site-icons";
 import SafeImg from "@/components/site/SafeImg";
 import SiteIcon from "@/components/site/SiteIcon";
 import { displayHours, looksLikeHours } from "@/lib/content/hours";
-import { ChevronDown, ChevronUp, BookOpen } from "lucide-react";
-
-interface ParsedBlock {
-  type: "h2" | "h3" | "p";
-  text: string;
-}
-
-function parseParagraphs(body: string[] = []): ParsedBlock[] {
-  const result: ParsedBlock[] = [];
-
-  for (const raw of body) {
-    if (!raw) continue;
-    const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
-    for (const line of lines) {
-      const chunks = line.split(/(?=#{1,3}\s)/);
-      for (const chunk of chunks) {
-        const trimmed = chunk.trim();
-        if (!trimmed) continue;
-        if (trimmed.startsWith("### ")) {
-          result.push({ type: "h3", text: trimmed.replace(/^###\s+/, "") });
-        } else if (trimmed.startsWith("## ")) {
-          result.push({ type: "h2", text: trimmed.replace(/^##\s+/, "") });
-        } else if (trimmed.startsWith("# ")) {
-          result.push({ type: "h2", text: trimmed.replace(/^#\s+/, "") });
-        } else {
-          result.push({ type: "p", text: trimmed });
-        }
-      }
-    }
-  }
-  return result;
-}
+import { parseArticleContent } from "@/lib/content/markdown-parser";
+import { ChevronDown, ChevronUp, BookOpen, ArrowRight } from "lucide-react";
 
 export default function HomeAbout({ content }: { content: SiteContent }) {
   const [expanded, setExpanded] = useState(false);
@@ -53,9 +24,9 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
 
   if (!h) return null;
 
-  const parsedBlocks = parseParagraphs(h.body || []);
-  const isLongArticle = parsedBlocks.length > 2 || (h.body || []).join(" ").length > 320;
-  const visibleBlocks = isLongArticle && !expanded ? parsedBlocks.slice(0, 2) : parsedBlocks;
+  const parsedBlocks = parseArticleContent(h.body || []);
+  const isLongArticle = parsedBlocks.length > 2 || (h.body || []).join(" ").length > 280;
+  const visibleBlocks = !expanded ? parsedBlocks.slice(0, 2) : parsedBlocks;
 
   return (
     <section className="section" id="hakkimizda">
@@ -85,7 +56,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
           {/* PARAGRAFLAR & BAŞLIKLAR */}
           <div className="about-content space-y-3.5" data-fade="">
             {visibleBlocks.map((block, i) => {
-              if (block.type === "h2") {
+              if (block.type === "h1" || block.type === "h2") {
                 return (
                   <h3
                     key={i}
@@ -118,6 +89,22 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
                   </h4>
                 );
               }
+              if (block.type === "quote") {
+                return (
+                  <blockquote
+                    key={i}
+                    style={{
+                      borderLeft: "3px solid var(--brass, #D9A441)",
+                      paddingLeft: "14px",
+                      fontStyle: "italic",
+                      color: "var(--brass-lo, #8E8A7E)",
+                      margin: "12px 0",
+                    }}
+                  >
+                    {block.text}
+                  </blockquote>
+                );
+              }
               return (
                 <p className="body" key={i} style={{ lineHeight: 1.75 }}>
                   {block.text}
@@ -126,43 +113,63 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             })}
           </div>
 
-          {/* DEVAMINI GÖR / DAHA AZ GÖSTER BUTONU */}
-          {isLongArticle && (
-            <div style={{ marginTop: "1rem", marginBottom: "1.5rem" }}>
+          {/* DEVAMINI OKU & HAKKIMIZDA SAYFASI BUTONLARI */}
+          <div className="flex flex-wrap items-center gap-3" style={{ marginTop: "1.25rem", marginBottom: "1.5rem" }}>
+            <Link
+              href="/hakkimizda"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "11px 20px",
+                borderRadius: "14px",
+                background: "var(--brass, #D9A441)",
+                color: "#0D0F0A",
+                fontSize: "0.9rem",
+                fontWeight: 800,
+                textDecoration: "none",
+                transition: "all 0.25s ease",
+                boxShadow: "0 6px 18px rgba(217, 164, 65, 0.35)",
+              }}
+            >
+              <BookOpen size={17} />
+              <span>Devamını Oku (Hakkımızda Sayfası)</span>
+              <ArrowRight size={16} />
+            </Link>
+
+            {isLongArticle && (
               <button
                 type="button"
                 onClick={() => setExpanded(!expanded)}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "8px",
-                  padding: "10px 18px",
-                  borderRadius: "12px",
-                  background: expanded ? "rgba(13, 15, 10, 0.06)" : "var(--brass, #D9A441)",
-                  color: expanded ? "var(--ink, #0D0F0A)" : "#0D0F0A",
-                  border: "1px solid var(--brass, #D9A441)",
-                  fontSize: "0.88rem",
+                  gap: "6px",
+                  padding: "10px 16px",
+                  borderRadius: "14px",
+                  background: "rgba(13, 15, 10, 0.05)",
+                  color: "var(--ink, #0D0F0A)",
+                  border: "1px solid rgba(13, 15, 10, 0.12)",
+                  fontSize: "0.85rem",
                   fontWeight: 700,
                   cursor: "pointer",
                   transition: "all 0.25s ease",
-                  boxShadow: expanded ? "none" : "0 4px 14px rgba(217, 164, 65, 0.3)",
                 }}
               >
                 {expanded ? (
                   <>
                     <span>Daha Az Göster</span>
-                    <ChevronUp size={16} />
+                    <ChevronUp size={15} />
                   </>
                 ) : (
                   <>
-                    <BookOpen size={16} />
-                    <span>Devamını Gör (Hikayemizi Oku)</span>
-                    <ChevronDown size={16} />
+                    <span>Burada Genişlet</span>
+                    <ChevronDown size={15} />
                   </>
                 )}
               </button>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* ÖZET KARTLARI */}
           {h.ozet?.length ? (

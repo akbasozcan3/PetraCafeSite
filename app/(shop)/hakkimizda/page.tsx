@@ -22,6 +22,7 @@ import {
   Flame,
   Coffee
 } from "lucide-react";
+import { parseArticleContent } from "@/lib/content/markdown-parser";
 
 export const revalidate = 60;
 
@@ -153,11 +154,65 @@ export default async function HakkimizdaPage() {
               </div>
             )}
 
-            {(h.body || []).map((para, idx) => (
-              <p key={idx} className="text-base leading-relaxed text-[#3E3A32]">
-                {para}
-              </p>
-            ))}
+            {/* Ayrıştırılmış Makale / Hikaye Blokları */}
+            <div className="space-y-4">
+              {parseArticleContent(h.body || []).map((block, idx) => {
+                if (block.type === "h1") {
+                  return (
+                    <h2
+                      key={idx}
+                      className="text-2xl sm:text-3xl font-extrabold text-[#0D0F0A] font-serif pt-4 pb-1 border-b border-[#0D0F0A]/10"
+                    >
+                      {block.text}
+                    </h2>
+                  );
+                }
+                if (block.type === "h2") {
+                  return (
+                    <h3
+                      key={idx}
+                      className="text-xl sm:text-2xl font-bold text-[#0D0F0A] font-serif pt-3 pb-1"
+                    >
+                      {block.text}
+                    </h3>
+                  );
+                }
+                if (block.type === "h3") {
+                  return (
+                    <h4
+                      key={idx}
+                      className="text-base sm:text-lg font-bold text-[#B8842C] pt-2"
+                    >
+                      {block.text}
+                    </h4>
+                  );
+                }
+                if (block.type === "quote") {
+                  return (
+                    <blockquote
+                      key={idx}
+                      className="border-l-4 border-[#D9A441] pl-4 py-2 my-3 italic text-[#5A554A] bg-[#F4EEE1]/50 rounded-r-xl"
+                    >
+                      {block.text}
+                    </blockquote>
+                  );
+                }
+                if (block.type === "list" && block.items) {
+                  return (
+                    <ul key={idx} className="space-y-2 pl-5 list-disc text-sm text-[#3E3A32]">
+                      {block.items.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  );
+                }
+                return (
+                  <p key={idx} className="text-base leading-relaxed text-[#3E3A32]">
+                    {block.text}
+                  </p>
+                );
+              })}
+            </div>
 
             {/* İstatistikler */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-[#0D0F0A]/10">
