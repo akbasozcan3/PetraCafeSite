@@ -4,6 +4,7 @@ import { getPublicContent } from "@/lib/db/content";
 import { phoneToTelHref, buildWhatsappUrl } from "@/lib/content/contact-utils";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
+import SafeImg from "@/components/site/SafeImg";
 import { parseArticleContent, formatInlineText, cleanRawText } from "@/lib/content/markdown-parser";
 import { 
   Sparkles, 
@@ -25,7 +26,12 @@ import {
   Cake, 
   Heart, 
   Briefcase,
-  ChevronRight
+  ChevronRight,
+  Navigation,
+  BookOpen,
+  CalendarCheck,
+  Award,
+  HeartHandshake
 } from "lucide-react";
 
 export const revalidate = 60;
@@ -90,28 +96,21 @@ export default async function HakkimizdaPage() {
   );
 
   const telCafe = content.iletisim?.telefon || "0530 608 90 51";
+  const telTesis = content.iletisim?.telefon2 || "0532 449 45 99";
   const telCafeHref = phoneToTelHref(telCafe);
   const waHref = buildWhatsappUrl(
     content.iletisim?.whatsapp || telCafe, 
     "Merhaba, Petra Cafe Restaurant & Yaşam Merkezi hakkında bilgi ve rezervasyon için yazıyorum."
   );
 
-  // Hero Lead Yönetimi: Hero başlığı altında kısa, temiz 1-2 cümlelik özet
-  const heroLead = h.lead && h.lead.trim().length <= 150 
-    ? cleanRawText(h.lead) 
-    : "Sade, temiz ve profesyonel hizmet anlayışımızla tanışın.";
-
-  // Gövde Metni Hazırlığı: h.body veya uzun h.lead varsa paragraflara ayrıştır
+  // Gövde Metni Hazırlığı
   let bodySource: string | string[] = h.body;
   if (!bodySource || (Array.isArray(bodySource) && bodySource.length === 0)) {
     bodySource = h.lead || "";
-  } else if (h.lead && h.lead.trim().length > 150 && Array.isArray(bodySource) && !bodySource.includes(h.lead)) {
-    bodySource = [h.lead, ...bodySource];
   }
-
   const parsedBlocks = parseArticleContent(bodySource);
 
-  // İstatistikler (The Barber 4'lü Stat Grid)
+  // İstatistikler (Dinamik)
   const statsList = (h.stats && h.stats.length > 0) ? h.stats : (h.ozet && h.ozet.length > 0 ? h.ozet : [
     { b: "08:00 – 02:00", span: "Cafe & Restoran Açık", sub: "Haftanın 7 günü kesintisiz lezzet ve keyif" },
     { b: "240+ Çeşit", span: "Zengin Dünya Menüsü", sub: "Kahvaltı, ızgara, taş fırın pizza ve tatlılar" },
@@ -120,7 +119,7 @@ export default async function HakkimizdaPage() {
   ]);
   const statIcons = [Clock, UtensilsCrossed, Waves, Sparkles];
 
-  // 4 Temel Deneyim Alanı (The Barber 4'lü Kart Grid)
+  // 4 Temel Deneyim Alanı (Dinamik)
   const defaultExperiences = [
     {
       title: "Zengin Serpme Kahvaltı",
@@ -154,7 +153,7 @@ export default async function HakkimizdaPage() {
   const experiencesList = (h.experiences && h.experiences.length > 0) ? h.experiences : defaultExperiences;
   const expIcons = [Coffee, UtensilsCrossed, Waves, Flame];
 
-  // Bir Günün Petra'daki Akışı (24 Saat Timeline)
+  // Bir Günün Petra'daki Akışı (Timeline)
   const defaultTimeline = [
     {
       time: "08:00 – 12:00",
@@ -180,7 +179,7 @@ export default async function HakkimizdaPage() {
   const timelineList = (h.timeline && h.timeline.length > 0) ? h.timeline : defaultTimeline;
   const timelineIcons = [Sun, Waves, UtensilsCrossed, Flame];
 
-  // Tesis İmkânları (6'lı Kartlar)
+  // Tesis İmkânları
   const defaultAmenities = [
     "Açık Yüzme & Çocuk Havuzu",
     "Açık Teras & Klimalı Salonlar",
@@ -222,7 +221,6 @@ export default async function HakkimizdaPage() {
     "Kurumsal Şirket Yemekleri"
   ];
 
-  // Etkinlik rozetleri için SVG Lucide ikon seçimi
   const getEventTagIcon = (tag: string) => {
     const t = cleanRawText(tag).toLowerCase();
     if (t.includes("doğum") || t.includes("pasta") || t.includes("kutlama") || t.includes("birthday")) return Cake;
@@ -233,516 +231,838 @@ export default async function HakkimizdaPage() {
   };
 
   return (
-    <div id="hakkimizda-page" className="barber-about" style={{ backgroundColor: "#050505", color: "#FFFFFF" }}>
+    <div className="petra-about-page" style={{ width: "100%", padding: "20px 0 60px", fontFamily: "var(--f-body, 'Inter', sans-serif)", color: "var(--card-text, #0D0F0A)", boxSizing: "border-box" }}>
       
-      {/* 1. HERO VİTRİN BÖLÜMÜ (THE BARBER YASIN STİLİ) */}
-      <div className="barber-hero">
-        <div 
-          className="barber-hero__bg"
-          style={{ backgroundImage: `url('${img || "/assets/cms/hero-ic.webp"}')` }}
-        />
-        <div className="barber-hero__overlay" />
+      {/* 1. BREADCRUMBS (REZERVASYON KOŞULLARI İLE BİREBİR AYNI) */}
+      <nav 
+        aria-label="Breadcrumb" 
+        style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          gap: "8px", 
+          fontSize: "12px", 
+          color: "var(--card-muted, #6e6a5c)", 
+          marginBottom: "24px" 
+        }}
+      >
+        <Link href="/" style={{ color: "var(--card-text, #0d0f0a)", textDecoration: "none", fontWeight: 600 }}>
+          Ana Sayfa
+        </Link>
+        <span>/</span>
+        <span style={{ color: "var(--brass-lo, #b8842c)", fontWeight: 700 }}>Hakkımızda</span>
+      </nav>
+
+      {/* 2. ANA 2 KOLONLU DÜZEN */}
+      <div style={{ display: "flex", gap: "32px", alignItems: "flex-start", flexWrap: "wrap" }}>
         
-        <div className="barber-container barber-hero__content">
-          <nav className="barber-hero__nav">
-            <Link href="/" style={{ color: "rgba(255, 255, 255, 0.5)" }}>
-              Ana Sayfa
-            </Link>
-            <ChevronRight size={10} style={{ opacity: 0.4 }} />
-            <span style={{ color: "#FFFFFF" }}>Hakkımızda</span>
-          </nav>
+        {/* SOL SÜTUN (STICKY KENAR ÇUBUĞU - FOTOĞRAF, HIZLI LİNKLER VE İLETİŞİM) */}
+        <aside 
+          style={{ 
+            width: "320px", 
+            flexShrink: 0, 
+            display: "flex", 
+            flexDirection: "column", 
+            gap: "20px",
+            position: "sticky",
+            top: "100px"
+          }}
+        >
+          
+          {/* Sol: Menü & Sayfa Navigasyon Kartı */}
+          <div 
+            style={{ 
+              background: "var(--card-bg, #ffffff)", 
+              borderRadius: "20px", 
+              border: "1.5px solid var(--card-border, rgba(184, 132, 44, 0.25))", 
+              padding: "20px", 
+              boxShadow: "0 10px 30px -10px rgba(0,0,0,0.06)" 
+            }}
+          >
+            <span style={{ fontSize: "11px", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--brass-lo, #b8842c)", display: "block", marginBottom: "14px" }}>
+              KURUMSAL & HAKKIMIZDA
+            </span>
 
-          <h1 className="barber-hero__title" style={{ color: "#FFFFFF" }}>
-            {cleanRawText(h.baslik || "Hakkımızda")}
-          </h1>
-
-          <p className="barber-hero__lead" style={{ color: "rgba(255, 255, 255, 0.6)" }}>
-            {heroLead}
-          </p>
-
-          <div className="barber-hero__divider">
-            <span />
-            <span />
-          </div>
-        </div>
-
-        <div className="barber-hero__line" />
-      </div>
-
-      {/* 2. ANA HİKAYE BÖLÜMÜ (2 SÜTUN: SOL STICKY KART, SAĞ EDİTORYAL METİN) */}
-      <section className="barber-story-sec">
-        <div className="barber-container">
-          <div className="barber-story-grid">
-            
-            {/* Sol Sütun: Sticky Lüks Fotoğraf Kartı */}
-            <div className="barber-sticky-card">
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               <div 
-                className="barber-sticky-card__bg"
-                style={{ backgroundImage: `url('${img}')` }}
-              />
-              <div className="barber-sticky-card__gradient" />
-              
-              <div className="barber-sticky-card__info">
-                <div className="barber-status-badge">
-                  <span className="barber-status-dot" />
-                  <span className="barber-status-text">
-                    ŞU AN AÇIK · 08:00 – 02:00
-                  </span>
+                style={{ 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "space-between", 
+                  padding: "12px 16px", 
+                  borderRadius: "14px", 
+                  background: "var(--brass, #d9a441)", 
+                  color: "#0d0f0a", 
+                  fontWeight: 700, 
+                  fontSize: "14px",
+                  boxShadow: "0 4px 14px rgba(217, 164, 65, 0.3)"
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <BookOpen size={16} />
+                  <span>Hakkımızda & Hikaye</span>
                 </div>
-                <p className="barber-sticky-title" style={{ color: "#FFFFFF" }}>
-                  {cleanRawText(h.badgeBaslik || "Petra Yaşam Merkezi")}
-                </p>
-                <p className="barber-sticky-loc" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
-                  <MapPin size={12} color="#D4AF37" />
-                  <span>Taşdelen, Çekmeköy / İstanbul</span>
-                </p>
-
-                <div className="barber-sticky-actions">
-                  <a
-                    href={`tel:${telCafeHref}`}
-                    className="barber-action-btn barber-action-btn--phone"
-                  >
-                    <Phone size={13} color="#D4AF37" />
-                    <span>{telCafe}</span>
-                  </a>
-                  <a
-                    href={waHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="barber-action-btn barber-action-btn--wa"
-                  >
-                    <MessageCircle size={13} />
-                    <span>WhatsApp</span>
-                  </a>
-                </div>
+                <span>→</span>
               </div>
+
+              <Link 
+                href="/menu"
+                style={{ 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "space-between", 
+                  padding: "11px 16px", 
+                  borderRadius: "12px", 
+                  background: "rgba(13,15,10,0.03)", 
+                  color: "var(--card-text, #383c30)", 
+                  fontWeight: 600, 
+                  fontSize: "13.5px",
+                  textDecoration: "none"
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <UtensilsCrossed size={15} color="#b8842c" />
+                  <span>Menü & Lezzetler</span>
+                </div>
+                <span style={{ opacity: 0.4 }}>→</span>
+              </Link>
+
+              <Link 
+                href="/#rezervasyon"
+                style={{ 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "space-between", 
+                  padding: "11px 16px", 
+                  borderRadius: "12px", 
+                  background: "rgba(13,15,10,0.03)", 
+                  color: "var(--card-text, #383c30)", 
+                  fontWeight: 600, 
+                  fontSize: "13.5px",
+                  textDecoration: "none"
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <CalendarCheck size={15} color="#b8842c" />
+                  <span>Masa & Havuz Rezervasyon</span>
+                </div>
+                <span style={{ opacity: 0.4 }}>→</span>
+              </Link>
+
+              <Link 
+                href="/rezervasyon-kosullari"
+                style={{ 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "space-between", 
+                  padding: "11px 16px", 
+                  borderRadius: "12px", 
+                  background: "rgba(13,15,10,0.03)", 
+                  color: "var(--card-text, #383c30)", 
+                  fontWeight: 600, 
+                  fontSize: "13.5px",
+                  textDecoration: "none"
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <ShieldCheck size={15} color="#b8842c" />
+                  <span>Rezervasyon Koşulları</span>
+                </div>
+                <span style={{ opacity: 0.4 }}>→</span>
+              </Link>
             </div>
-
-            {/* Sağ Sütun: Başlık, Kısaca & Editoryal Metin (BEYAZ/ALTIN KONTRASTLI) */}
-            <div>
-              <div className="barber-eyebrow-box">
-                <span className="barber-eyebrow-line" />
-                <p className="barber-eyebrow-text" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
-                  {cleanRawText(h.eyebrow || "HAKKIMIZDA & YAŞAM FELSEFEMİZ")}
-                </p>
-              </div>
-
-              <h2 className="barber-story-title" style={{ color: "#FFFFFF" }}>
-                {cleanRawText(h.baslik || "Petra Cafe Restaurant")}
-              </h2>
-
-              {/* Kısaca Kutusu */}
-              {h.answerMetin && (
-                <div className="barber-answer-box">
-                  <div className="barber-answer-head">
-                    <Sparkles size={14} color="#D4AF37" />
-                    <span style={{ color: "#D4AF37" }}>
-                      {cleanRawText(h.answerBaslik || "Kısaca")}
-                    </span>
-                  </div>
-                  <p className="barber-answer-p" style={{ color: "rgba(255, 255, 255, 0.85)" }}>
-                    {formatInlineText(h.answerMetin, "#FFFFFF")}
-                  </p>
-                </div>
-              )}
-
-              {/* Makale Paragrafları ve Dinamik Başlıklar (#, ##, ###, **, *) */}
-              <div className="barber-prose">
-                {parsedBlocks.map((block, idx) => {
-                  if (block.type === "h1") {
-                    return (
-                      <h2 key={idx} className="barber-h2" style={{ color: "#FFFFFF" }}>
-                        {cleanRawText(block.text || "")}
-                      </h2>
-                    );
-                  }
-                  if (block.type === "h2") {
-                    return (
-                      <h3 key={idx} className="barber-h3" style={{ color: "#D4AF37" }}>
-                        {cleanRawText(block.text || "")}
-                      </h3>
-                    );
-                  }
-                  if (block.type === "h3") {
-                    return (
-                      <h4 key={idx} className="barber-h4" style={{ color: "#FFFFFF" }}>
-                        {cleanRawText(block.text || "")}
-                      </h4>
-                    );
-                  }
-                  if (block.type === "quote") {
-                    return (
-                      <blockquote key={idx} style={{ color: "rgba(255, 255, 255, 0.9)" }}>
-                        {formatInlineText(block.text || "", "#FFFFFF")}
-                      </blockquote>
-                    );
-                  }
-                  if (block.type === "list" && block.items) {
-                    return (
-                      <ul key={idx} style={{ paddingLeft: "20px", margin: "10px 0", display: "flex", flexDirection: "column", gap: "6px" }}>
-                        {block.items.map((item, lidx) => (
-                          <li key={lidx} style={{ color: "rgba(255, 255, 255, 0.78)" }}>
-                            {formatInlineText(item, "#FFFFFF")}
-                          </li>
-                        ))}
-                      </ul>
-                    );
-                  }
-                  return (
-                    <p key={idx} style={{ color: "rgba(255, 255, 255, 0.75)" }}>
-                      {formatInlineText(block.text || "", "#FFFFFF")}
-                    </p>
-                  );
-                })}
-              </div>
-
-              {/* 3 Ana Değer Sütunu (The Barber 3'lü Stat Grid Stili) */}
-              <div className="barber-pillars-grid">
-                <div className="barber-pillar-item">
-                  <span className="barber-pillar-title" style={{ color: "#FFFFFF" }}>
-                    Gastronomi
-                  </span>
-                  <span className="barber-pillar-sub">
-                    Seçkin Dünya Mutfağı
-                  </span>
-                </div>
-                <div className="barber-pillar-item">
-                  <span className="barber-pillar-title" style={{ color: "#FFFFFF" }}>
-                    Pool & Beach
-                  </span>
-                  <span className="barber-pillar-sub">
-                    Açık Havuz & Teras
-                  </span>
-                </div>
-                <div className="barber-pillar-item">
-                  <span className="barber-pillar-title" style={{ color: "#FFFFFF" }}>
-                    Konfor
-                  </span>
-                  <span className="barber-pillar-sub">
-                    Seçkin Yaşam Alanı
-                  </span>
-                </div>
-              </div>
-
-            </div>
-
           </div>
-        </div>
-      </section>
 
-      {/* 3. RAKAMLARLA PETRA (4'LÜ ŞERİT) */}
-      <section className="barber-stats-sec">
-        <div className="barber-container">
-          <div className="barber-stats-grid">
-            {statsList.map((st: any, i: number) => {
-              const StatIcon = statIcons[i % statIcons.length] || Sparkles;
+          {/* Sol: Mekan İç Fotoğrafı & Rozeti */}
+          <div 
+            style={{ 
+              borderRadius: "20px", 
+              overflow: "hidden", 
+              border: "1.5px solid var(--card-border, rgba(184, 132, 44, 0.25))", 
+              background: "var(--card-bg, #ffffff)",
+              boxShadow: "0 10px 30px -10px rgba(0,0,0,0.08)",
+              position: "relative"
+            }}
+          >
+            <div style={{ position: "relative", width: "100%", height: "200px" }}>
+              <SafeImg
+                src={img}
+                alt="Petra Yaşam Merkezi İç Mekan"
+                fallback={SITE_PHOTOS.interior}
+                width={600}
+                height={400}
+              />
+              <div 
+                style={{ 
+                  position: "absolute", 
+                  top: "12px", 
+                  left: "12px", 
+                  background: "rgba(13, 15, 10, 0.8)", 
+                  backdropFilter: "blur(8px)", 
+                  padding: "4px 10px", 
+                  borderRadius: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px"
+                }}
+              >
+                <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#22C55E" }} />
+                <span style={{ fontSize: "10px", fontWeight: 800, color: "#FFFFFF", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  AÇIK (08:00 – 02:00)
+                </span>
+              </div>
+            </div>
+
+            <div style={{ padding: "16px 18px" }}>
+              <b style={{ display: "block", fontSize: "16px", fontWeight: 800, color: "var(--card-text, #0d0f0a)", fontFamily: "var(--f-head, serif)" }}>
+                {cleanRawText(h.badgeBaslik || "Petra Yaşam Merkezi")}
+              </b>
+              <span style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "var(--brass-lo, #b8842c)", marginTop: "2px" }}>
+                {cleanRawText(h.badgeAlt || "Cafe · Restaurant · Pool")}
+              </span>
+              <p style={{ margin: "8px 0 0 0", fontSize: "12px", color: "var(--card-muted, #6e6a5c)", display: "flex", alignItems: "center", gap: "4px" }}>
+                <MapPin size={13} color="#b8842c" />
+                <span>Taşdelen, Çekmeköy / İstanbul</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Sol: Hızlı İletişim Kutusu */}
+          <div 
+            style={{ 
+              background: "var(--card-bg, #ffffff)", 
+              borderRadius: "20px", 
+              border: "1.5px solid var(--card-border, rgba(184, 132, 44, 0.25))", 
+              padding: "20px", 
+              boxShadow: "0 10px 30px -10px rgba(0,0,0,0.06)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "12px"
+            }}
+          >
+            <div>
+              <b style={{ fontSize: "13px", fontWeight: 700, color: "var(--card-text, #0d0f0a)", display: "block" }}>
+                Sorularınız mı var?
+              </b>
+              <span style={{ fontSize: "12px", color: "var(--card-muted, #6e6a5c)" }}>
+                Masa ve etkinlik planlaması için bize dilediğiniz an ulaşabilirsiniz.
+              </span>
+            </div>
+
+            <a
+              href={`tel:${telCafeHref}`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                padding: "11px",
+                borderRadius: "12px",
+                background: "rgba(13,15,10,0.05)",
+                color: "var(--card-text, #0d0f0a)",
+                fontSize: "13px",
+                fontWeight: 700,
+                textDecoration: "none",
+                border: "1px solid rgba(13,15,10,0.1)"
+              }}
+            >
+              <Phone size={14} color="#b8842c" />
+              <span>{telCafe}</span>
+            </a>
+
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                padding: "11px",
+                borderRadius: "12px",
+                background: "#25D366",
+                color: "#0b140c",
+                fontSize: "13px",
+                fontWeight: 800,
+                textDecoration: "none",
+                boxShadow: "0 4px 14px rgba(37,211,102,0.25)"
+              }}
+            >
+              <MessageCircle size={16} />
+              <span>WhatsApp İletişim</span>
+            </a>
+          </div>
+
+        </aside>
+
+        {/* SAĞ SÜTUN (BEYAZ LÜKS ANA KART - RESMİ BİLDİRİM FORMATI) */}
+        <main 
+          style={{ 
+            flex: "1 1 600px", 
+            minWidth: 0, 
+            background: "var(--card-bg, #ffffff)", 
+            borderRadius: "24px", 
+            border: "1.5px solid var(--card-border, rgba(184, 132, 44, 0.25))", 
+            padding: "clamp(28px, 4vw, 44px)", 
+            boxShadow: "0 12px 40px -10px rgba(0,0,0,0.08)",
+            boxSizing: "border-box"
+          }}
+        >
+          
+          {/* Üst Başlık & Rozet */}
+          <div style={{ marginBottom: "24px" }}>
+            <span 
+              style={{ 
+                display: "inline-block", 
+                padding: "6px 14px", 
+                borderRadius: "999px", 
+                background: "rgba(217, 164, 65, 0.14)", 
+                border: "1px solid rgba(217, 164, 65, 0.35)", 
+                color: "var(--brass-lo, #b8842c)", 
+                fontSize: "11px", 
+                fontWeight: 800, 
+                letterSpacing: "0.12em", 
+                textTransform: "uppercase",
+                marginBottom: "12px" 
+              }}
+            >
+              {cleanRawText(h.eyebrow || "HAKKIMIZDA & YAŞAM FELSEFEMİZ")}
+            </span>
+
+            <h1 
+              style={{ 
+                fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", 
+                fontSize: "clamp(26px, 3.5vw, 38px)", 
+                fontWeight: 600, 
+                color: "var(--card-text, #0D0F0A)", 
+                margin: "0 0 12px 0", 
+                lineHeight: 1.2,
+                letterSpacing: "-0.01em"
+              }}
+            >
+              {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde cafe & restaurant")}
+            </h1>
+
+            <p style={{ fontSize: "16px", color: "var(--card-muted, #5C584C)", lineHeight: 1.65, margin: 0, fontWeight: 400 }}>
+              {cleanRawText(h.lead || "Keyif, konfor ve kalite — sabahın ilk ışıklarındaki kahvaltıdan akşam yemeğine.")}
+            </p>
+          </div>
+
+          {/* Kısaca Kutusu (Öne Çıkan Bilgi) */}
+          {h.answerMetin && (
+            <div 
+              style={{ 
+                background: "rgba(217, 164, 65, 0.08)", 
+                borderLeft: "4px solid var(--brass, #D9A441)", 
+                borderRadius: "14px", 
+                padding: "18px 22px", 
+                marginBottom: "32px" 
+              }}
+            >
+              <b style={{ color: "var(--brass-lo, #B8842C)", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "6px" }}>
+                {cleanRawText(h.answerBaslik || "Kısaca")}
+              </b>
+              <p style={{ margin: 0, fontSize: "15px", color: "var(--card-text, #0D0F0A)", lineHeight: 1.7, fontWeight: 500 }}>
+                {formatInlineText(h.answerMetin, "#0D0F0A")}
+              </p>
+            </div>
+          )}
+
+          {/* Dinamik Makale Paragrafları ve Başlıklar (#, ##, ###, **, *) */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "40px" }}>
+            {parsedBlocks.map((block, idx) => {
+              if (block.type === "h1") {
+                return (
+                  <h2 
+                    key={idx} 
+                    style={{ 
+                      fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", 
+                      fontSize: "24px", 
+                      fontWeight: 600, 
+                      color: "var(--card-text, #0D0F0A)", 
+                      margin: "28px 0 6px 0", 
+                      paddingBottom: "8px", 
+                      borderBottom: "1px solid rgba(13,15,10,0.08)",
+                      lineHeight: 1.25 
+                    }}
+                  >
+                    {cleanRawText(block.text || "")}
+                  </h2>
+                );
+              }
+              if (block.type === "h2") {
+                return (
+                  <h3 
+                    key={idx} 
+                    style={{ 
+                      fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", 
+                      fontSize: "20px", 
+                      fontWeight: 600, 
+                      color: "var(--brass-lo, #B8842C)", 
+                      margin: "20px 0 4px 0",
+                      lineHeight: 1.3 
+                    }}
+                  >
+                    {cleanRawText(block.text || "")}
+                  </h3>
+                );
+              }
+              if (block.type === "h3") {
+                return (
+                  <h4 
+                    key={idx} 
+                    style={{ 
+                      fontSize: "16px", 
+                      fontWeight: 700, 
+                      color: "var(--card-text, #0D0F0A)", 
+                      margin: "16px 0 2px 0" 
+                    }}
+                  >
+                    {cleanRawText(block.text || "")}
+                  </h4>
+                );
+              }
+              if (block.type === "quote") {
+                return (
+                  <blockquote 
+                    key={idx} 
+                    style={{ 
+                      borderLeft: "3px solid var(--brass, #D9A441)", 
+                      padding: "12px 20px", 
+                      background: "rgba(217, 164, 65, 0.06)", 
+                      fontStyle: "italic", 
+                      color: "#4A4538", 
+                      borderRadius: "0 12px 12px 0",
+                      margin: "14px 0" 
+                    }}
+                  >
+                    {formatInlineText(block.text || "", "#0D0F0A")}
+                  </blockquote>
+                );
+              }
+              if (block.type === "list" && block.items) {
+                return (
+                  <ul key={idx} style={{ paddingLeft: "20px", margin: "8px 0", display: "flex", flexDirection: "column", gap: "6px" }}>
+                    {block.items.map((item, lidx) => (
+                      <li key={lidx} style={{ color: "#383C30", fontSize: "15.5px", lineHeight: 1.7 }}>
+                        {formatInlineText(item, "#0D0F0A")}
+                      </li>
+                    ))}
+                  </ul>
+                );
+              }
               return (
-                <div key={i} className="barber-stat-card">
-                  <div className="barber-stat-card__top">
-                    <span className="barber-stat-num" style={{ color: "#FFFFFF" }}>
-                      {cleanRawText(st.b || "")}
-                    </span>
-                    <div className="barber-stat-icon">
-                      <StatIcon size={16} />
+                <p key={idx} style={{ margin: 0, fontSize: "15.5px", lineHeight: 1.85, color: "#383C30" }}>
+                  {formatInlineText(block.text || "", "#0D0F0A")}
+                </p>
+              );
+            })}
+          </div>
+
+          {/* 3 TEMEL DEĞER SÜTUNU */}
+          <div 
+            style={{ 
+              display: "grid", 
+              gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", 
+              gap: "16px", 
+              paddingTop: "28px", 
+              borderTop: "1px solid rgba(13,15,10,0.08)",
+              marginBottom: "40px" 
+            }}
+          >
+            <div style={{ padding: "16px", borderRadius: "14px", background: "rgba(13,15,10,0.02)", border: "1px solid rgba(13,15,10,0.06)" }}>
+              <b style={{ display: "block", fontFamily: "var(--f-head, serif)", fontSize: "20px", color: "var(--brass-lo, #B8842C)", marginBottom: "2px" }}>
+                Gastronomi
+              </b>
+              <span style={{ fontSize: "12px", color: "var(--card-muted, #6E6A5C)", fontWeight: 600 }}>
+                Seçkin Dünya Mutfağı & Izgaralar
+              </span>
+            </div>
+
+            <div style={{ padding: "16px", borderRadius: "14px", background: "rgba(13,15,10,0.02)", border: "1px solid rgba(13,15,10,0.06)" }}>
+              <b style={{ display: "block", fontFamily: "var(--f-head, serif)", fontSize: "20px", color: "var(--brass-lo, #B8842C)", marginBottom: "2px" }}>
+                Pool & Beach
+              </b>
+              <span style={{ fontSize: "12px", color: "var(--card-muted, #6E6A5C)", fontWeight: 600 }}>
+                Açık Yüzme Havuzu & VIP Loca
+              </span>
+            </div>
+
+            <div style={{ padding: "16px", borderRadius: "14px", background: "rgba(13,15,10,0.02)", border: "1px solid rgba(13,15,10,0.06)" }}>
+              <b style={{ display: "block", fontFamily: "var(--f-head, serif)", fontSize: "20px", color: "var(--brass-lo, #B8842C)", marginBottom: "2px" }}>
+                Konfor
+              </b>
+              <span style={{ fontSize: "12px", color: "var(--card-muted, #6E6A5C)", fontWeight: 600 }}>
+                Ferah Teras & Özel Kutlamalar
+              </span>
+            </div>
+          </div>
+
+          {/* 4'LÜ İSTATİSTİK SAYACI (BEYAZ KARTLAR) */}
+          <div style={{ marginBottom: "40px" }}>
+            <h2 style={{ fontFamily: "var(--f-head, serif)", fontSize: "20px", fontWeight: 600, color: "var(--card-text, #0D0F0A)", marginBottom: "16px" }}>
+              Rakamlarla Petra Yaşam Merkezi
+            </h2>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "14px" }}>
+              {statsList.map((st: any, i: number) => {
+                const StatIcon = statIcons[i % statIcons.length] || Sparkles;
+                return (
+                  <div key={i} style={{ padding: "16px 18px", borderRadius: "16px", background: "#FFFFFF", border: "1px solid rgba(184, 132, 44, 0.2)", boxShadow: "0 4px 12px rgba(0,0,0,0.02)" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "4px" }}>
+                      <span style={{ fontSize: "1.45rem", fontWeight: 800, color: "var(--brass-lo, #B8842C)", fontFamily: "var(--f-head, serif)" }}>
+                        {cleanRawText(st.b || "")}
+                      </span>
+                      <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "rgba(217, 164, 65, 0.12)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <StatIcon size={15} />
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <span className="barber-stat-label" style={{ color: "#FFFFFF" }}>
+                    <span style={{ fontSize: "13px", fontWeight: 700, color: "var(--card-text, #0D0F0A)", display: "block" }}>
                       {cleanRawText(st.span || "")}
                     </span>
                     {st.sub && (
-                      <span className="barber-stat-desc">
+                      <span style={{ fontSize: "11px", color: "var(--card-muted, #6E6A5C)", display: "block", marginTop: "2px" }}>
                         {cleanRawText(st.sub)}
                       </span>
                     )}
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. 4 ANA YAŞAM DENEYİMİ */}
-      <section className="barber-exp-sec">
-        <div className="barber-container">
-          <div className="barber-section-head">
-            <div className="barber-eyebrow-box">
-              <span className="barber-eyebrow-line" />
-              <p className="barber-eyebrow-text" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
-                AYRICALIKLI YAŞAM KONSEPTİ
-              </p>
+                );
+              })}
             </div>
-            <h2 className="barber-section-title" style={{ color: "#FFFFFF" }}>
+          </div>
+
+          {/* 4 TEMEL YAŞAM DENEYİMİ */}
+          <div style={{ marginBottom: "40px" }}>
+            <h2 style={{ fontFamily: "var(--f-head, serif)", fontSize: "20px", fontWeight: 600, color: "var(--card-text, #0D0F0A)", marginBottom: "16px" }}>
               Petra'da Sizi Neler Bekliyor?
             </h2>
-          </div>
 
-          <div className="barber-exp-grid">
-            {experiencesList.map((item: any, i: number) => {
-              const Icon = expIcons[i % expIcons.length] || UtensilsCrossed;
-              const feats: string[] = Array.isArray(item.features) ? item.features : [];
-              return (
-                <div key={i} className="barber-exp-card">
-                  <div>
-                    <div className="barber-exp-card__top">
-                      <div className="barber-exp-icon">
-                        <Icon size={22} />
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px" }}>
+              {experiencesList.map((item: any, i: number) => {
+                const Icon = expIcons[i % expIcons.length] || UtensilsCrossed;
+                const feats: string[] = Array.isArray(item.features) ? item.features : [];
+                return (
+                  <div 
+                    key={i} 
+                    style={{ 
+                      padding: "20px", 
+                      borderRadius: "16px", 
+                      background: "rgba(13,15,10,0.015)", 
+                      border: "1.5px solid rgba(184, 132, 44, 0.2)",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between" 
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+                        <div style={{ width: "38px", height: "38px", borderRadius: "10px", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Icon size={20} />
+                        </div>
+                        {item.hours && (
+                          <span style={{ fontSize: "11px", fontWeight: 800, color: "#9E6E1A", background: "#F7F2E7", padding: "3px 8px", borderRadius: "6px", border: "1px solid rgba(184, 132, 44, 0.25)" }}>
+                            {item.hours}
+                          </span>
+                        )}
                       </div>
-                      {item.hours && (
-                        <span className="barber-exp-hours">
-                          {item.hours}
+
+                      {item.tag && (
+                        <span style={{ fontSize: "10px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#B8842C", display: "block", marginBottom: "2px" }}>
+                          {item.tag}
                         </span>
                       )}
+
+                      <h3 style={{ fontSize: "16px", fontWeight: 700, color: "var(--card-text, #0D0F0A)", margin: "0 0 6px 0", fontFamily: "var(--f-head, serif)" }}>
+                        {cleanRawText(item.title || "")}
+                      </h3>
+
+                      <p style={{ margin: "0 0 14px 0", fontSize: "13px", color: "#4A4538", lineHeight: 1.6 }}>
+                        {cleanRawText(item.desc || "")}
+                      </p>
                     </div>
 
-                    {item.tag && (
-                      <span className="barber-exp-tag">
-                        {item.tag}
-                      </span>
+                    {feats.length > 0 && (
+                      <div style={{ paddingTop: "12px", borderTop: "1px solid rgba(13,15,10,0.06)", display: "flex", flexDirection: "column", gap: "4px" }}>
+                        {feats.map((feat, fidx) => (
+                          <div key={fidx} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", color: "#2C2F26", fontWeight: 600 }}>
+                            <CheckCircle2 size={13} color="#B8842C" />
+                            <span>{cleanRawText(feat)}</span>
+                          </div>
+                        ))}
+                      </div>
                     )}
-
-                    <h3 className="barber-exp-title" style={{ color: "#FFFFFF" }}>
-                      {cleanRawText(item.title || "")}
-                    </h3>
-
-                    <p className="barber-exp-desc">
-                      {cleanRawText(item.desc || "")}
-                    </p>
                   </div>
-
-                  {feats.length > 0 && (
-                    <div className="barber-exp-feats">
-                      {feats.map((feat, fidx) => (
-                        <div key={fidx} className="barber-exp-feat">
-                          <CheckCircle2 size={13} color="#D4AF37" style={{ flexShrink: 0 }} />
-                          <span>{cleanRawText(feat)}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* 5. BİR GÜNÜN PETRA'DAKİ AKIŞI (TIMELINE) */}
-      <section className="barber-time-sec">
-        <div className="barber-container">
-          <div className="barber-time-head">
-            <span className="barber-time-eyebrow">
-              24 SAAT YAŞAM DOLU
-            </span>
-            <h2 className="barber-time-title" style={{ color: "#FFFFFF" }}>
+          {/* 24 SAAT ZAMAN AKIŞI (TIMELINE) */}
+          <div style={{ marginBottom: "40px" }}>
+            <h2 style={{ fontFamily: "var(--f-head, serif)", fontSize: "20px", fontWeight: 600, color: "var(--card-text, #0D0F0A)", marginBottom: "16px" }}>
               Bir Günün Petra'daki Akışı
             </h2>
-            <p className="barber-time-sub">
-              Sabahın ilk ışıklarından gecenin keyifli sohbetlerine uzanan gün boyu lezzet ve dinlenme.
-            </p>
-          </div>
 
-          <div className="barber-time-grid">
-            {timelineList.map((step: any, idx: number) => {
-              const StepIcon = timelineIcons[idx % timelineIcons.length] || Sun;
-              return (
-                <div key={idx} className="barber-time-card">
-                  <div>
-                    <div className="barber-time-card__top">
-                      <span className="barber-time-badge">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "14px" }}>
+              {timelineList.map((step: any, idx: number) => {
+                const StepIcon = timelineIcons[idx % timelineIcons.length] || Sun;
+                return (
+                  <div 
+                    key={idx} 
+                    style={{ 
+                      padding: "16px", 
+                      borderRadius: "14px", 
+                      background: "#FFFFFF", 
+                      border: "1px solid rgba(184, 132, 44, 0.2)",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "6px" 
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <span style={{ fontSize: "11px", fontWeight: 800, color: "#FFFFFF", background: "var(--card-text, #0D0F0A)", padding: "3px 8px", borderRadius: "6px" }}>
                         {cleanRawText(step.time || "")}
                       </span>
-                      <div className="barber-stat-icon" style={{ width: 32, height: 32 }}>
-                        <StepIcon size={16} />
+                      <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "rgba(217, 164, 65, 0.12)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <StepIcon size={14} />
                       </div>
                     </div>
 
-                    <h3 className="barber-time-card-title" style={{ color: "#FFFFFF" }}>
+                    <h4 style={{ fontSize: "14px", fontWeight: 700, color: "var(--card-text, #0D0F0A)", margin: "4px 0 0 0" }}>
                       {cleanRawText(step.title || "")}
-                    </h3>
+                    </h4>
 
-                    <p className="barber-time-card-desc">
+                    <p style={{ margin: 0, fontSize: "12px", color: "var(--card-muted, #5C584C)", lineHeight: 1.55 }}>
                       {cleanRawText(step.desc || "")}
                     </p>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* 6. ÖZEL GÜNLER & ORGANİZASYON KUTUSU */}
-      <section className="barber-events-sec">
-        <div className="barber-container">
-          <div className="barber-events-box">
-            
-            {/* Sol Alan: Başlık, Açıklama ve SVG İkonlu Rozetler */}
-            <div>
-              <div className="barber-eyebrow-box" style={{ marginBottom: 16 }}>
-                <PartyPopper size={16} color="#D4AF37" />
-                <span className="barber-eyebrow-text" style={{ color: "#D4AF37" }}>
-                  ÖZEL GÜNLER & KUTLAMALAR
-                </span>
-              </div>
-
-              <h3 className="barber-events-title" style={{ color: "#FFFFFF" }}>
-                {cleanRawText(eventsTitle)}
-              </h3>
-
-              <p className="barber-events-lead">
-                {cleanRawText(eventsLead)}
-              </p>
-
-              <div className="barber-events-tags">
-                {eventsTags.map((tag: string, tidx: number) => {
-                  const TagIcon = getEventTagIcon(tag);
-                  return (
-                    <div key={tidx} className="barber-event-tag">
-                      <TagIcon size={14} color="#D4AF37" />
-                      <span>{cleanRawText(tag)}</span>
-                    </div>
-                  );
-                })}
-              </div>
+          {/* ÖZEL GÜNLER & ORGANİZASYON KUTUSU */}
+          <div 
+            style={{ 
+              borderRadius: "20px", 
+              background: "linear-gradient(135deg, #16190F 0%, #0D0F0A 100%)", 
+              color: "#FFFFFF", 
+              padding: "28px", 
+              marginBottom: "40px",
+              border: "1.5px solid rgba(217, 164, 65, 0.35)",
+              boxShadow: "0 14px 34px rgba(0,0,0,0.2)"
+            }}
+          >
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "4px 12px", borderRadius: "20px", background: "rgba(217, 164, 65, 0.18)", marginBottom: "12px" }}>
+              <PartyPopper size={14} color="#E5B555" />
+              <span style={{ fontSize: "10px", fontWeight: 800, color: "#E5B555", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                ÖZEL GÜNLER & KUTLAMALAR
+              </span>
             </div>
 
-            {/* Sağ Alan: Rezervasyon & Teklif Kartı */}
-            <div className="barber-events-form-box">
-              <div>
-                <h4 className="barber-events-form-title" style={{ color: "#FFFFFF" }}>
-                  Etkinlik Detayları & Rezervasyon
-                </h4>
-                <p className="barber-events-form-desc">
-                  Kişi sayısı ve etkinlik tarihinizi ileterek organizasyon ekibimizden hızlıca özel menü ve süsleme teklifi alabilirsiniz.
-                </p>
-              </div>
+            <h3 style={{ fontFamily: "var(--f-head, serif)", fontSize: "22px", fontWeight: 600, color: "#FFFFFF", margin: "0 0 10px 0" }}>
+              {cleanRawText(eventsTitle)}
+            </h3>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, paddingTop: 6 }}>
-                <a
-                  href={waHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="barber-events-btn-wa"
-                >
-                  <MessageCircle size={16} />
-                  <span>WhatsApp ile Teklif Alın</span>
-                </a>
+            <p style={{ margin: "0 0 18px 0", fontSize: "14px", color: "rgba(244, 238, 225, 0.85)", lineHeight: 1.65 }}>
+              {cleanRawText(eventsLead)}
+            </p>
 
-                <a
-                  href={`tel:${telCafeHref}`}
-                  className="barber-events-btn-phone"
-                  style={{ color: "#FFFFFF" }}
-                >
-                  <Phone size={15} color="#D4AF37" />
-                  <span>Telefon: {telCafe}</span>
-                </a>
-              </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "20px" }}>
+              {eventsTags.map((tag: string, tidx: number) => {
+                const TagIcon = getEventTagIcon(tag);
+                return (
+                  <div 
+                    key={tidx} 
+                    style={{ 
+                      display: "inline-flex", 
+                      alignItems: "center", 
+                      gap: "6px", 
+                      padding: "6px 14px", 
+                      borderRadius: "20px", 
+                      background: "rgba(217, 164, 65, 0.12)", 
+                      border: "1px solid rgba(217, 164, 65, 0.3)", 
+                      fontSize: "12px", 
+                      fontWeight: 700, 
+                      color: "#E5B555" 
+                    }}
+                  >
+                    <TagIcon size={13} color="#E5B555" />
+                    <span>{cleanRawText(tag)}</span>
+                  </div>
+                );
+              })}
             </div>
 
-          </div>
-        </div>
-      </section>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "11px 20px",
+                  borderRadius: "12px",
+                  background: "#25D366",
+                  color: "#0B140C",
+                  fontWeight: 800,
+                  fontSize: "13px",
+                  textDecoration: "none"
+                }}
+              >
+                <MessageCircle size={16} />
+                <span>WhatsApp ile Organizasyon Teklifi Al</span>
+              </a>
 
-      {/* 7. TESİS İMKÂNLARI */}
-      <section className="barber-amenities-sec">
-        <div className="barber-container">
-          <div className="barber-time-head" style={{ marginBottom: 40 }}>
-            <span className="barber-time-eyebrow">
-              KONFOR VE OLANAKLAR
-            </span>
-            <h2 className="barber-time-title" style={{ fontSize: "clamp(24px, 3vw, 36px)", color: "#FFFFFF" }}>
+              <a
+                href={`tel:${telCafeHref}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "11px 18px",
+                  borderRadius: "12px",
+                  background: "rgba(255,255,255,0.1)",
+                  color: "#FFFFFF",
+                  fontWeight: 700,
+                  fontSize: "13px",
+                  textDecoration: "none",
+                  border: "1px solid rgba(255,255,255,0.2)"
+                }}
+              >
+                <Phone size={14} color="#E5B555" />
+                <span>{telCafe}</span>
+              </a>
+            </div>
+          </div>
+
+          {/* TESİS OLANAKLARI (6'LI KARTLAR) */}
+          <div style={{ marginBottom: "40px" }}>
+            <h2 style={{ fontFamily: "var(--f-head, serif)", fontSize: "20px", fontWeight: 600, color: "var(--card-text, #0D0F0A)", marginBottom: "16px" }}>
               Tesis İmkânlarımız
             </h2>
-          </div>
 
-          <div className="barber-amenities-grid">
-            {amenitiesList.map((label: string, idx: number) => {
-              const AmenityIcon = amenityIcons[idx % amenityIcons.length] || ShieldCheck;
-              return (
-                <div key={idx} className="barber-amenity-card">
-                  <div className="barber-amenity-icon">
-                    <AmenityIcon size={18} />
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px" }}>
+              {amenitiesList.map((label: string, idx: number) => {
+                const AmenityIcon = amenityIcons[idx % amenityIcons.length] || ShieldCheck;
+                return (
+                  <div 
+                    key={idx} 
+                    style={{ 
+                      padding: "14px 16px", 
+                      borderRadius: "14px", 
+                      background: "#FFFFFF", 
+                      border: "1px solid rgba(184, 132, 44, 0.2)", 
+                      display: "flex", 
+                      alignItems: "center", 
+                      gap: "10px" 
+                    }}
+                  >
+                    <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <AmenityIcon size={16} />
+                    </div>
+                    <span style={{ fontSize: "13px", fontWeight: 700, color: "var(--card-text, #0D0F0A)" }}>
+                      {cleanRawText(label)}
+                    </span>
                   </div>
-                  <span className="barber-amenity-text" style={{ color: "rgba(255, 255, 255, 0.9)" }}>
-                    {cleanRawText(label)}
-                  </span>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* 8. SIKÇA SORULAN SORULAR */}
-      <section className="barber-faq-sec">
-        <div className="barber-container">
-          <div className="barber-time-head" style={{ marginBottom: 48 }}>
-            <span className="barber-time-eyebrow">
-              MERAK EDİLENLER
-            </span>
-            <h2 className="barber-time-title" style={{ color: "#FFFFFF" }}>
+          {/* SIKÇA SORULAN SORULAR */}
+          <div style={{ marginBottom: "36px" }}>
+            <h2 style={{ fontFamily: "var(--f-head, serif)", fontSize: "20px", fontWeight: 600, color: "var(--card-text, #0D0F0A)", marginBottom: "16px" }}>
               Sıkça Sorulan Sorular
             </h2>
-            <p className="barber-time-sub">
-              Rezervasyon, havuz ve çalışma saatleri hakkında en çok sorulanlar.
-            </p>
-          </div>
 
-          <div className="barber-faq-grid">
-            {faqsList.map((faq: any, idx: number) => (
-              <div key={idx} className="barber-faq-card">
-                <div className="barber-faq-q">
-                  <HelpCircle size={18} color="#D4AF37" style={{ flexShrink: 0, marginTop: 2 }} />
-                  <h3 style={{ color: "#FFFFFF" }}>
-                    {cleanRawText(faq.q || "")}
-                  </h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {faqsList.map((faq: any, idx: number) => (
+                <div 
+                  key={idx} 
+                  style={{ 
+                    padding: "18px 20px", 
+                    borderRadius: "16px", 
+                    background: "rgba(13,15,10,0.015)", 
+                    border: "1px solid rgba(184, 132, 44, 0.2)" 
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
+                    <HelpCircle size={17} color="#B8842C" style={{ flexShrink: 0, marginTop: "2px" }} />
+                    <b style={{ fontSize: "14.5px", fontWeight: 700, color: "var(--card-text, #0D0F0A)" }}>
+                      {cleanRawText(faq.q || "")}
+                    </b>
+                  </div>
+                  <p style={{ margin: "6px 0 0 25px", fontSize: "13.5px", color: "var(--card-muted, #5C584C)", lineHeight: 1.65 }}>
+                    {cleanRawText(faq.a || "")}
+                  </p>
                 </div>
-                <p className="barber-faq-a">
-                  {cleanRawText(faq.a || "")}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* 9. ALT ÇAĞRI & REZERVASYON (THE BARBER CTA) */}
-      <section className="barber-cta-sec">
-        <div className="barber-container">
-          <div className="barber-cta-content">
-            <span className="barber-time-eyebrow" style={{ color: "#D4AF37" }}>
-              REZERVASYON & İLETİŞİM
-            </span>
+          {/* ALT REZERVASYON ÇAĞRISI */}
+          <div 
+            style={{ 
+              borderRadius: "18px", 
+              background: "rgba(217, 164, 65, 0.08)", 
+              border: "1.5px solid rgba(217, 164, 65, 0.3)", 
+              padding: "24px", 
+              display: "flex", 
+              flexWrap: "wrap", 
+              alignItems: "center", 
+              justifyContent: "space-between", 
+              gap: "16px" 
+            }}
+          >
+            <div>
+              <b style={{ display: "block", fontSize: "16px", fontWeight: 700, color: "var(--card-text, #0D0F0A)" }}>
+                Masanızı veya Locanızı Hemen Ayırtın
+              </b>
+              <span style={{ fontSize: "13px", color: "var(--card-muted, #6E6A5C)" }}>
+                Hafta sonu zengin serpme kahvaltı ve açık havuz keyfi için yerinizi önceden ayırtın.
+              </span>
+            </div>
 
-            <h2 className="barber-cta-title" style={{ color: "#FFFFFF" }}>
-              Masanızı veya Locanızı Hemen Ayırtın
-            </h2>
-
-            <p className="barber-cta-desc">
-              Hafta sonu zengin serpme kahvaltı, şefin spesiyalleriyle akşam yemeği veya açık havuzda VIP localarımız için yerinizi ayırtın.
-            </p>
-
-            <div className="barber-cta-btns">
+            <div style={{ display: "flex", gap: "10px" }}>
               <Link
                 href="/#rezervasyon"
-                className="barber-cta-btn--primary"
-                style={{ color: "#FFFFFF" }}
+                style={{
+                  padding: "11px 22px",
+                  borderRadius: "12px",
+                  background: "var(--brass, #D9A441)",
+                  color: "#0D0F0A",
+                  fontWeight: 800,
+                  fontSize: "13px",
+                  textDecoration: "none",
+                  boxShadow: "0 4px 14px rgba(217,164,65,0.3)"
+                }}
               >
-                Online Masa Ayırtın
+                Online Rezervasyon
               </Link>
               <Link
                 href="/menu"
-                className="barber-cta-btn--secondary"
-                style={{ color: "rgba(255, 255, 255, 0.75)" }}
+                style={{
+                  padding: "11px 18px",
+                  borderRadius: "12px",
+                  background: "var(--card-bg, #FFFFFF)",
+                  color: "var(--card-text, #0D0F0A)",
+                  fontWeight: 700,
+                  fontSize: "13px",
+                  textDecoration: "none",
+                  border: "1px solid rgba(13,15,10,0.15)"
+                }}
               >
-                Tüm Menüyü İncele
+                Menüyü Gör
               </Link>
             </div>
           </div>
-        </div>
-      </section>
+
+        </main>
+
+      </div>
 
     </div>
   );

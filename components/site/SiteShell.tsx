@@ -28,7 +28,6 @@ export default async function SiteShell({
       <link rel="stylesheet" href="/assets/css/style.css?v=20260819nav9" />
       <link rel="stylesheet" href="/assets/css/home-next.css?v=70" />
       <link rel="stylesheet" href="/assets/css/storefront.css?v=55" />
-      <link rel="stylesheet" href="/assets/css/hakkimizda-barber.css?v=2" />
 
       <SiteNav
         navbar={content.navbar}
