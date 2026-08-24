@@ -6,7 +6,6 @@ import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
 import { cleanRawText, formatInlineText } from "@/lib/content/markdown-parser";
-import { displayHours, looksLikeHours } from "@/lib/content/hours";
 import {
   UtensilsCrossed,
   Waves,
@@ -16,10 +15,8 @@ import {
   CalendarCheck,
   Phone,
   MessageCircle,
-  Clock,
   Sparkles,
   MapPin,
-  HelpCircle,
 } from "lucide-react";
 
 export const revalidate = 60;
@@ -134,7 +131,7 @@ export default async function HakkimizdaPage() {
 
   const expIcons = [UtensilsCrossed, Coffee, Waves, PartyPopper];
 
-  /* ─── SSS / Sıkça Sorulan Sorular (varsa) ─── */
+  /* ─── SSS / Sıkça Sorulan Sorular ─── */
   const faqs: any[] = (h.faqs as any[])?.length > 0 ? (h.faqs as any[]) : [];
 
   return (
@@ -150,21 +147,21 @@ export default async function HakkimizdaPage() {
             <span aria-current="page">Hakkımızda</span>
           </nav>
 
-          <div className="about-head-sec__badge" data-fade="">
+          <div className="about-head-sec__badge">
             <Sparkles size={14} />
             <span>{cleanRawText(h.eyebrow) || "PETRA YAŞAM MERKEZİ"}</span>
           </div>
 
-          <h1 className="about-head-sec__title" data-split="">
+          <h1 className="about-head-sec__title">
             {cleanRawText(h.baslik) || "Petra Yaşam Merkezi'nde cafe & restaurant"}
           </h1>
 
-          <p className="about-head-sec__lead" data-fade="">
+          <p className="about-head-sec__lead">
             {cleanRawText(h.lead) ||
               "İstanbul Çekmeköy Taşdelen'de gastronomi, açık yüzme havuzu ve sosyal yaşamı kusursuz bir uyumla buluşturan seçkin bir merkez."}
           </p>
 
-          <div className="about-head-sec__actions" data-fade="">
+          <div className="about-head-sec__actions">
             <Link href="/#rezervasyon" className="btn btn--light">
               <CalendarCheck size={16} />
               Masa Rezervasyonu
@@ -184,19 +181,19 @@ export default async function HakkimizdaPage() {
           <div className="about-story-grid">
             {/* Sol: Metinler */}
             <div className="about-story-text">
-              <p className="eyebrow" data-fade="">BİZİ TANIYIN</p>
-              <h2 className="h2" data-split="" style={{ margin: 0 }}>
+              <p className="eyebrow">BİZİ TANIYIN</p>
+              <h2>
                 {cleanRawText(h.answerBaslik) || "Sadece bir restoran değil, bir yaşam alanı."}
               </h2>
 
               {h.answerMetin && (
-                <div className="answer" data-fade="" style={{ margin: "4px 0" }}>
+                <div className="answer" style={{ margin: "4px 0" }}>
                   <b>Kısaca</b>
                   <p>{cleanRawText(h.answerMetin)}</p>
                 </div>
               )}
 
-              <div data-fade="" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {bodyParagraphs.map((paragraph, pIdx) => (
                   <p key={pIdx}>
                     {formatInlineText(paragraph)}
@@ -205,7 +202,7 @@ export default async function HakkimizdaPage() {
               </div>
 
               {/* Hap Etiketler */}
-              <div className="about-story-pills" data-fade="">
+              <div className="about-story-pills">
                 {["Dünya Mutfağı", "Serpme Kahvaltı", "Pool & Beach", "Özel Davetler", "Nargile Lounge"].map(
                   (tag) => (
                     <span key={tag}>{tag}</span>
@@ -215,7 +212,7 @@ export default async function HakkimizdaPage() {
             </div>
 
             {/* Sağ: Fotoğraf Kartı */}
-            <div data-fade="">
+            <div>
               <div className="about-photo-card">
                 <SafeImg
                   src={img}
@@ -247,14 +244,10 @@ export default async function HakkimizdaPage() {
           ═══════════════════════════════════════════════════════ */}
       <section className="about-stats-sec">
         <div className="wrap">
-          <div className="about-stats-grid" data-stagger="">
+          <div className="about-stats-grid">
             {statsList.map((st: any, i: number) => (
               <div className="about-stat-item" key={i}>
-                <b>
-                  {looksLikeHours(st.b)
-                    ? displayHours(content.iletisim)
-                    : cleanRawText(st.b)}
-                </b>
+                <b>{cleanRawText(st.b)}</b>
                 <span>{cleanRawText(st.span)}</span>
               </div>
             ))}
@@ -268,14 +261,14 @@ export default async function HakkimizdaPage() {
       <section className="about-exp-sec">
         <div className="wrap">
           <div className="section__head" style={{ marginBottom: 0 }}>
-            <p className="eyebrow" data-fade="">AYRICALIKLAR</p>
-            <h2 className="h2" data-split="">Petra'da Sizi Neler Bekliyor?</h2>
-            <p className="lead" data-fade="">
+            <p className="eyebrow">AYRICALIKLAR</p>
+            <h2 className="h2">Petra'da Sizi Neler Bekliyor?</h2>
+            <p className="lead">
               Günün ilk ışıklarından gecenin keyifli anlarına kadar her anınıza eşlik eden lezzet ve konfor.
             </p>
           </div>
 
-          <div className="about-exp-grid" data-stagger="">
+          <div className="about-exp-grid">
             {experiences.map((item: any, i: number) => {
               const IconComp = expIcons[i % expIcons.length];
               return (
@@ -315,7 +308,7 @@ export default async function HakkimizdaPage() {
           ═══════════════════════════════════════════════════════ */}
       <section className="about-events-sec">
         <div className="wrap">
-          <div className="about-events-box" data-fade="">
+          <div className="about-events-box">
             {/* Sol: Metin */}
             <div>
               <p className="eyebrow" style={{ color: "var(--brass, #D9A441)" }}>
@@ -361,7 +354,7 @@ export default async function HakkimizdaPage() {
                   <MessageCircle size={16} />
                   WhatsApp Rezervasyon
                 </a>
-                <a href={`tel:${telHref}`} className="btn btn--ghost" style={{ border: "1px solid rgba(244, 238, 225, 0.3)" }}>
+                <a href={`tel:${telHref}`} className="btn btn--ghost" style={{ border: "1px solid rgba(244, 238, 225, 0.3)", color: "#FFFFFF" }}>
                   <Phone size={15} />
                   {tel}
                 </a>
@@ -396,10 +389,10 @@ export default async function HakkimizdaPage() {
         <section className="section" id="sss">
           <div className="wrap">
             <div className="section__head">
-              <p className="eyebrow" data-fade="">MERAK EDİLENLER</p>
-              <h2 className="h2" data-split="">Sıkça Sorulan Sorular</h2>
+              <p className="eyebrow">MERAK EDİLENLER</p>
+              <h2 className="h2">Sıkça Sorulan Sorular</h2>
             </div>
-            <div className="faq" data-fade="">
+            <div className="faq">
               {faqs.map((faq: any, i: number) => (
                 <details className="faq__item" key={i}>
                   <summary>{cleanRawText(faq.q || faq.soru)}</summary>
@@ -416,7 +409,7 @@ export default async function HakkimizdaPage() {
           ═══════════════════════════════════════════════════════ */}
       <section className="about-cta-sec">
         <div className="wrap">
-          <div className="about-cta-card" data-fade="">
+          <div className="about-cta-card">
             <p className="eyebrow" style={{ color: "var(--brass, #D9A441)", margin: 0 }}>
               REZERVASYON & İLETİŞİM
             </p>
