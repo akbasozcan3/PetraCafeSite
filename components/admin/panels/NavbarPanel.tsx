@@ -124,6 +124,11 @@ export default function NavbarPanel() {
       <AdminPageHeader
         title="Navbar ve Menü Yönetimi"
         description="Üst çubuk: logo, menü linkleri ve en sağdaki Rezervasyon butonu."
+        actions={
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+            <span>{saving ? "Kaydediliyor…" : "💾 Menüyü Kaydet"}</span>
+          </Button>
+        }
       />
       <AdminAlert message={message} type={messageType} />
 
@@ -551,8 +556,6 @@ export default function NavbarPanel() {
           })}
         </div>
       </section>
-
-      <SaveBar onSave={save} saving={saving} />
     </>
   );
 }

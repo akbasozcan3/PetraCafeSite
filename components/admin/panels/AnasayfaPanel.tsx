@@ -83,13 +83,10 @@ export default function AnasayfaPanel() {
       />
       <AdminAlert message={message} />
 
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#C8703A]/25 bg-[#C8703A]/8 px-4 py-3">
+      <div className="mb-6 rounded-2xl border border-[#C8703A]/25 bg-[#C8703A]/8 px-4 py-3">
         <span className="text-sm text-[#EEE9E0]">
           Bölüm sıralaması sabittir (Hakkımızda → Hizmetler → Menü → Havuz → Galeri → Blog → Yorumlar → SSS → Rezervasyon → İletişim). Görünürlüğü açıp kapatabilirsiniz.
         </span>
-        <Button onClick={save} disabled={saving} size="sm">
-          {saving ? "Kaydediliyor…" : "Kaydet"}
-        </Button>
       </div>
 
       <section className="mb-6 space-y-3 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
@@ -572,8 +569,6 @@ export default function AnasayfaPanel() {
           </label>
         </div>
       </section>
-
-      <SaveBar onSave={save} saving={saving} />
     </>
   );
 }

@@ -212,8 +212,6 @@ export default function ThemePanel() {
           <ColorField label="Footer yazı" value={theme.footerText} onChange={(footerText) => patch({ footerText })} />
         </div>
       </section>
-
-      <SaveBar onSave={save} saving={saving} />
     </>
   );
 }

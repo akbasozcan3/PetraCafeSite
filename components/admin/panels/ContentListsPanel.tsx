@@ -45,7 +45,15 @@ function ListPanel<T>({
 }) {
   return (
     <>
-      <AdminPageHeader title={title} description={description} />
+      <AdminPageHeader
+        title={title}
+        description={description}
+        actions={
+          <Button onClick={onSave} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+            <span>{saving ? "Kaydediliyor…" : `💾 ${title} Kaydet`}</span>
+          </Button>
+        }
+      />
       {topNode}
       <AdminAlert message={message} type={message.includes("başarısız") || message.includes("Unauthorized") || messageType === "error" ? "error" : message ? "success" : "info"} />
       <section className={itemsClassName || "space-y-4"}>
@@ -70,8 +78,9 @@ function ListPanel<T>({
             </div>
           );
         })}
-        <Button variant="outline" onClick={() => onChange([...items, newItem()])}><Plus className="h-4 w-4" /> Ekle</Button>
-        <SaveBar onSave={onSave} saving={saving} />
+        <div>
+          <Button variant="outline" onClick={() => onChange([...items, newItem()])}><Plus className="h-4 w-4" /> Yeni Öğe Ekle</Button>
+        </div>
       </section>
     </>
   );

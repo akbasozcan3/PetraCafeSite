@@ -555,8 +555,6 @@ export default function SiteSettingsPanel() {
                 </div>
               ))}
             </section>
-
-            <SaveBar onSave={save} saving={saving} label="Site Ayarlarını Kaydet" />
           </>
         );
       }}

@@ -338,8 +338,6 @@ export default function HakkimizdaPanel() {
             />
           </div>
         </section>
-
-        <SaveBar onSave={save} saving={saving} />
       </div>
     </>
   );
@@ -373,6 +371,11 @@ export function HeroPanel() {
       <AdminPageHeader
         title="Kapı / Hero"
         description="Ana sayfa giriş sahnesi, karşılama yazısı ve kayan şerit kelimeleri."
+        actions={
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+            <span>{saving ? "Kaydediliyor…" : "💾 Hero Kaydet"}</span>
+          </Button>
+        }
       />
       <AdminAlert message={message} />
       <div className="space-y-6">
@@ -707,8 +710,6 @@ export function HeroPanel() {
             <Plus className="h-4 w-4" /> Kelime ekle
           </Button>
         </section>
-
-        <SaveBar onSave={save} saving={saving} />
       </div>
     </>
   );
@@ -721,11 +722,29 @@ export function PastaPanel() {
   if (loading || !content) return <AdminLoading />;
   const p = content.pasta;
 
+  const save = async () => {
+    setSaving(true);
+    try {
+      const res = await api.updateContent({ pasta: content.pasta });
+      setContent(res.data);
+      setMessage("Havuz & Plaj kaydedildi.");
+    } catch (e) {
+      setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <>
       <AdminPageHeader
         title="Havuz, Plaj ve Organizasyon"
         description="Saatler, tarife, yüzme dersi, kurallar ve Instagram — afiş bilgileri burada. Görsel zorunlu değil."
+        actions={
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+            <span>{saving ? "Kaydediliyor…" : "💾 Havuz & Plaj Kaydet"}</span>
+          </Button>
+        }
       />
       <SectionHint anchor="pasta" label="Havuz & Plaj" />
       <AdminAlert message={message} />
@@ -1173,21 +1192,6 @@ export function PastaPanel() {
         >
           <Plus className="h-4 w-4" /> Görsel ekle
         </Button>
-        <SaveBar
-          onSave={async () => {
-            setSaving(true);
-            try {
-              const res = await api.updateContent({ pasta: content.pasta });
-              setContent(res.data);
-              setMessage("Havuz & Plaj kaydedildi.");
-            } catch (e) {
-              setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
-            } finally {
-              setSaving(false);
-            }
-          }}
-          saving={saving}
-        />
       </section>
     </>
   );
@@ -1198,6 +1202,24 @@ export function BolumlarPanel() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   if (loading || !content) return <AdminLoading />;
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      const res = await api.updateContent({
+        bolumlar: content.bolumlar,
+        ziyaret: content.ziyaret,
+        hizmetler: content.hizmetler,
+        rezervasyon: content.rezervasyon,
+      });
+      setContent(res.data);
+      setMessage("Bölüm metinleri kaydedildi.");
+    } catch (e) {
+      setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const keys = ["hizmetler", "menu", "galeri", "yorumlar", "sss", "rezervasyon"] as const;
   const labels: Record<(typeof keys)[number], string> = {
@@ -1559,26 +1581,6 @@ export function BolumlarPanel() {
           />
         </section>
 
-        <SaveBar
-          onSave={async () => {
-            setSaving(true);
-            try {
-              const res = await api.updateContent({
-                bolumlar: content.bolumlar,
-                ziyaret: content.ziyaret,
-                hizmetler,
-                rezervasyon: content.rezervasyon,
-              });
-              setContent(res.data);
-              setMessage("Bölüm metinleri kaydedildi.");
-            } catch (e) {
-              setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
-            } finally {
-              setSaving(false);
-            }
-          }}
-          saving={saving}
-        />
       </div>
     </>
   );

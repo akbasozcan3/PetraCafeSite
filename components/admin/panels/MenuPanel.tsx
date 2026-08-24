@@ -1130,10 +1130,6 @@ export default function MenuPanel() {
           <Plus className="h-4 w-4" /> Yeni Kategori Ekle
         </Button>
       </div>
-
-      <div className="mt-8">
-        <SaveBar onSave={save} saving={saving} />
-      </div>
       {/* 1. HIZLI TABAK / YEMEK EKLE MODALI */}
       {dishModal.open && (
         <div
