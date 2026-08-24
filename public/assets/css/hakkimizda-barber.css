@@ -1,5 +1,5 @@
 /* ==========================================================================
-   THE BARBER YASIN STİLİ HAKKIMIZDA SAYFASI STİLLERİ
+   THE BARBER YASIN STİLİ HAKKIMIZDA SAYFASI - EKSİKSİZ VE YÜKSEK KONTRASTLI CSS
    ========================================================================== */
 
 /* Full Width Breakout */
@@ -23,12 +23,16 @@
 }
 
 .barber-about {
-  background-color: #050505;
-  color: #FFFFFF;
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background-color: #050505 !important;
+  color: #FFFFFF !important;
+  font-family: "Inter", system-ui, -apple-system, sans-serif !important;
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
+}
+
+.barber-about * {
+  box-sizing: border-box;
 }
 
 .barber-about ::selection {
@@ -37,26 +41,17 @@
 }
 
 .barber-container {
-  max-width: 1280px;
+  max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-
-/* Tipografi */
-.barber-font-serif {
-  font-family: "Playfair Display", Georgia, serif !important;
-}
-
-.barber-font-sans {
-  font-family: "Inter", system-ui, -apple-system, sans-serif !important;
+  padding-left: clamp(20px, 4vw, 48px);
+  padding-right: clamp(20px, 4vw, 48px);
 }
 
 /* 1. HERO BÖLÜMÜ */
 .barber-hero {
   position: relative;
-  padding-top: 130px;
+  padding-top: 120px;
   background-color: #0A0A0A;
   overflow: hidden;
 }
@@ -66,7 +61,7 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  opacity: 0.28;
+  opacity: 0.35;
   filter: grayscale(100%);
   transition: transform 4s ease-out;
 }
@@ -78,15 +73,15 @@
 .barber-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, #050505 0%, rgba(10, 10, 10, 0.7) 60%, rgba(10, 10, 10, 0.4) 100%);
+  background: linear-gradient(to top, #050505 0%, rgba(10, 10, 10, 0.75) 50%, rgba(10, 10, 10, 0.4) 100%);
   z-index: 1;
 }
 
 .barber-hero__content {
   position: relative;
   z-index: 10;
-  padding-top: 48px;
-  padding-bottom: 72px;
+  padding-top: 40px;
+  padding-bottom: 64px;
 }
 
 .barber-hero__nav {
@@ -97,44 +92,44 @@
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.4) !important;
   margin-bottom: 20px;
 }
 
 .barber-hero__nav a {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5) !important;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .barber-hero__nav a:hover {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 
 .barber-hero__title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-weight: 300;
-  font-size: clamp(36px, 6vw, 68px);
-  color: #FFFFFF;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-weight: 300 !important;
+  font-size: clamp(34px, 5.5vw, 64px) !important;
+  color: #FFFFFF !important;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  margin: 0 0 16px 0;
+  margin: 0 0 16px 0 !important;
 }
 
 .barber-hero__lead {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: clamp(16px, 1.8vw, 20px);
-  font-weight: 300;
-  max-width: 640px;
+  color: rgba(255, 255, 255, 0.55) !important;
+  font-size: clamp(16px, 1.8vw, 19px) !important;
+  font-weight: 300 !important;
+  max-width: 680px;
   line-height: 1.65;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .barber-hero__divider {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 32px;
+  margin-top: 28px;
 }
 
 .barber-hero__divider span:first-child {
@@ -159,7 +154,7 @@
 /* 2. ANA HİKAYE BÖLÜMÜ (2 SÜTUN: SOL STICKY KART, SAĞ EDİTORYAL METİN) */
 .barber-story-sec {
   position: relative;
-  padding: clamp(64px, 8vw, 120px) 0;
+  padding: clamp(56px, 7vw, 100px) 0;
   background-color: #050505;
 }
 
@@ -173,23 +168,23 @@
 @media (min-width: 1024px) {
   .barber-story-grid {
     grid-template-columns: 1fr 1.15fr;
-    gap: 80px;
+    gap: 72px;
   }
 }
 
 .barber-sticky-card {
   position: relative;
-  height: clamp(480px, 60vh, 640px);
+  height: clamp(480px, 58vh, 620px);
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
 }
 
 @media (min-width: 1024px) {
   .barber-sticky-card {
     position: sticky;
-    top: 110px;
+    top: 100px;
   }
 }
 
@@ -208,14 +203,14 @@
 .barber-sticky-card__gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.35) 50%, transparent 100%);
 }
 
 .barber-sticky-card__info {
   position: absolute;
-  bottom: 32px;
-  left: 32px;
-  right: 32px;
+  bottom: 28px;
+  left: 28px;
+  right: 28px;
   z-index: 10;
 }
 
@@ -238,27 +233,27 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #22C55E;
+  color: #22C55E !important;
 }
 
 .barber-sticky-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(24px, 2.5vw, 32px);
-  font-weight: 300;
-  color: #FFFFFF;
-  margin: 0 0 6px 0;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(24px, 2.5vw, 30px) !important;
+  font-weight: 400 !important;
+  color: #FFFFFF !important;
+  margin: 0 0 4px 0 !important;
 }
 
 .barber-sticky-loc {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.65) !important;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .barber-sticky-actions {
@@ -266,9 +261,9 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .barber-action-btn {
@@ -285,8 +280,8 @@
 
 .barber-action-btn--phone {
   background-color: rgba(255, 255, 255, 0.1);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .barber-action-btn--phone:hover {
@@ -295,7 +290,7 @@
 
 .barber-action-btn--wa {
   background-color: rgba(37, 211, 102, 0.2);
-  color: #4ADE80;
+  color: #4ADE80 !important;
   border: 1px solid rgba(37, 211, 102, 0.35);
 }
 
@@ -307,8 +302,8 @@
 .barber-eyebrow-box {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
 .barber-eyebrow-line {
@@ -322,26 +317,26 @@
   font-weight: 700;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
-  margin: 0;
+  color: rgba(255, 255, 255, 0.6) !important;
+  margin: 0 !important;
 }
 
 .barber-story-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(32px, 4.5vw, 56px);
-  font-weight: 300;
-  color: #FFFFFF;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(30px, 4vw, 48px) !important;
+  font-weight: 300 !important;
+  color: #FFFFFF !important;
   letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin: 0 0 32px 0;
+  line-height: 1.15;
+  margin: 0 0 28px 0 !important;
 }
 
 .barber-answer-box {
-  padding: 24px;
+  padding: 22px 24px;
   border-radius: 16px;
-  background-color: #0A0A0A;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 32px;
+  background-color: #0C0C0C;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 30px;
   backdrop-filter: blur(12px);
 }
 
@@ -349,7 +344,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #D4AF37;
+  color: #D4AF37 !important;
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
@@ -358,38 +353,64 @@
 }
 
 .barber-answer-p {
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 300;
-  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 300 !important;
+  font-size: 15px !important;
   line-height: 1.7;
-  margin: 0;
+  margin: 0 !important;
 }
 
+/* Editoryal Makale Paragrafları ve Başlıklar */
 .barber-prose {
-  color: rgba(255, 255, 255, 0.62);
-  font-size: clamp(15px, 1.3vw, 17px);
-  font-weight: 300;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: clamp(15px, 1.3vw, 17px) !important;
+  font-weight: 300 !important;
   line-height: 1.85;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
-.barber-prose h3 {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(22px, 2.5vw, 28px);
-  font-weight: 300;
-  color: #FFFFFF;
-  margin: 24px 0 6px 0;
+.barber-prose p {
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: clamp(15px, 1.3vw, 17px) !important;
+  font-weight: 300 !important;
+  line-height: 1.85 !important;
+  margin: 0 !important;
+}
+
+/* H1 (# Başlık) - Beyaz Playfair Serif Başlık */
+.barber-prose h2,
+.barber-h2 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(24px, 2.5vw, 30px) !important;
+  font-weight: 400 !important;
+  color: #FFFFFF !important;
+  margin: 28px 0 6px 0 !important;
   padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  line-height: 1.2 !important;
 }
 
-.barber-prose h4 {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 18px;
-  color: #D4AF37;
-  margin: 16px 0 4px 0;
+/* H2 (## Alt Başlık) - Altın Sarısı Playfair Serif Başlık */
+.barber-prose h3,
+.barber-h3 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 21px !important;
+  font-weight: 400 !important;
+  color: #D4AF37 !important;
+  margin: 20px 0 4px 0 !important;
+  line-height: 1.3 !important;
+}
+
+/* H3 (### Küçük Başlık) - Beyaz Vurgulu Başlık */
+.barber-prose h4,
+.barber-h4 {
+  font-family: "Inter", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #FFFFFF !important;
+  margin: 16px 0 2px 0 !important;
 }
 
 .barber-prose blockquote {
@@ -397,23 +418,24 @@
   padding: 12px 20px;
   margin: 16px 0;
   font-style: italic;
-  color: rgba(255, 255, 255, 0.85);
-  background-color: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.03);
   border-radius: 0 12px 12px 0;
 }
 
-.barber-prose p {
-  margin: 0;
+.barber-prose strong {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
 }
 
 /* 3 Ana Değer Sütunu (The Barber 3'lü Stat Grid Stili) */
 .barber-pillars-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  padding-top: 40px;
-  margin-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 20px;
+  padding-top: 36px;
+  margin-top: 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .barber-pillar-item {
@@ -422,27 +444,28 @@
 }
 
 .barber-pillar-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(20px, 2.2vw, 28px);
-  font-weight: 400;
-  color: #FFFFFF;
-  margin-bottom: 6px;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(20px, 2.2vw, 28px) !important;
+  font-weight: 400 !important;
+  color: #FFFFFF !important;
+  margin: 0 0 4px 0 !important;
 }
 
 .barber-pillar-sub {
   font-size: 9px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.45) !important;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.2em;
+  margin: 0 !important;
 }
 
 /* 3. RAKAMLARLA PETRA (4'LÜ ŞERİT) */
 .barber-stats-sec {
-  padding: 64px 0;
+  padding: 56px 0;
   background-color: #080808;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .barber-stats-grid {
@@ -464,7 +487,7 @@
 }
 
 .barber-stat-card {
-  padding: 28px;
+  padding: 26px;
   border-radius: 18px;
   background-color: #0C0C0C;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -475,7 +498,7 @@
 }
 
 .barber-stat-card:hover {
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
 }
 
@@ -483,14 +506,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .barber-stat-num {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(26px, 2.5vw, 32px);
-  font-weight: 300;
-  color: #FFFFFF;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(24px, 2.5vw, 30px) !important;
+  font-weight: 300 !important;
+  color: #FFFFFF !important;
   letter-spacing: -0.02em;
 }
 
@@ -503,43 +526,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #D4AF37;
+  color: #D4AF37 !important;
 }
 
 .barber-stat-label {
   font-size: 14px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95) !important;
   margin-bottom: 4px;
   display: block;
 }
 
 .barber-stat-desc {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.45) !important;
   line-height: 1.5;
   display: block;
 }
 
 /* 4. 4 ANA YAŞAM DENEYİMİ */
 .barber-exp-sec {
-  padding: clamp(64px, 8vw, 100px) 0;
+  padding: clamp(64px, 8vw, 96px) 0;
   background-color: #050505;
 }
 
 .barber-section-head {
-  max-width: 580px;
-  margin-bottom: 56px;
+  max-width: 600px;
+  margin-bottom: 48px;
 }
 
 .barber-section-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(30px, 4vw, 48px);
-  font-weight: 300;
-  color: #FFFFFF;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(28px, 4vw, 44px) !important;
+  font-weight: 300 !important;
+  color: #FFFFFF !important;
   letter-spacing: -0.02em;
   line-height: 1.15;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .barber-exp-grid {
@@ -561,7 +584,7 @@
 }
 
 .barber-exp-card {
-  padding: 32px 28px;
+  padding: 30px 26px;
   border-radius: 18px;
   background-color: #0A0A0A;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -572,7 +595,7 @@
 }
 
 .barber-exp-card:hover {
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-4px);
   background-color: #0D0D0D;
 }
@@ -581,19 +604,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .barber-exp-icon {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 14px;
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #D4AF37;
+  color: #D4AF37 !important;
   transition: transform 0.3s ease;
 }
 
@@ -606,8 +629,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.6);
-  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.65) !important;
+  background-color: rgba(255, 255, 255, 0.06);
   padding: 5px 12px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -618,29 +641,29 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: #D4AF37;
+  color: #D4AF37 !important;
   display: block;
   margin-bottom: 8px;
 }
 
 .barber-exp-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 20px;
-  font-weight: 400;
-  color: #FFFFFF;
-  margin: 0 0 12px 0;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  color: #FFFFFF !important;
+  margin: 0 0 10px 0 !important;
 }
 
 .barber-exp-desc {
-  font-size: 13.5px;
-  color: rgba(255, 255, 255, 0.52);
+  font-size: 13.5px !important;
+  color: rgba(255, 255, 255, 0.55) !important;
   line-height: 1.65;
   font-weight: 300;
-  margin: 0 0 24px 0;
+  margin: 0 0 20px 0 !important;
 }
 
 .barber-exp-feats {
-  padding-top: 18px;
+  padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
@@ -652,22 +675,22 @@
   align-items: center;
   gap: 8px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.75) !important;
   font-weight: 300;
 }
 
 /* 5. 24 SAAT ZAMAN AKIŞI (TIMELINE) */
 .barber-time-sec {
-  padding: clamp(64px, 8vw, 90px) 0;
+  padding: clamp(56px, 7vw, 84px) 0;
   background-color: #080808;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .barber-time-head {
   text-align: center;
   max-width: 580px;
-  margin: 0 auto 56px auto;
+  margin: 0 auto 48px auto;
 }
 
 .barber-time-eyebrow {
@@ -675,25 +698,25 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3em;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.5) !important;
   display: block;
   margin-bottom: 10px;
 }
 
 .barber-time-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(28px, 3.8vw, 44px);
-  font-weight: 300;
-  color: #FFFFFF;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(28px, 3.8vw, 42px) !important;
+  font-weight: 300 !important;
+  color: #FFFFFF !important;
   letter-spacing: -0.02em;
-  margin: 0 0 10px 0;
+  margin: 0 0 10px 0 !important;
 }
 
 .barber-time-sub {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.48) !important;
   font-size: 14px;
   font-weight: 300;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .barber-time-grid {
@@ -715,7 +738,7 @@
 }
 
 .barber-time-card {
-  padding: 28px;
+  padding: 26px;
   border-radius: 18px;
   background-color: #0C0C0C;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -726,7 +749,7 @@
 }
 
 .barber-time-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.22);
   transform: translateY(-2px);
 }
 
@@ -734,7 +757,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .barber-time-badge {
@@ -742,26 +765,26 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9) !important;
   background-color: rgba(255, 255, 255, 0.08);
   padding: 4px 12px;
   border-radius: 6px;
 }
 
 .barber-time-card-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 18px;
-  font-weight: 400;
-  color: #FFFFFF;
-  margin: 0 0 8px 0;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  color: #FFFFFF !important;
+  margin: 0 0 8px 0 !important;
 }
 
 .barber-time-card-desc {
-  font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.48);
+  font-size: 12.5px !important;
+  color: rgba(255, 255, 255, 0.5) !important;
   line-height: 1.6;
   font-weight: 300;
-  margin: 0;
+  margin: 0 !important;
 }
 
 /* 6. ÖZEL GÜNLER & ORGANİZASYON KUTUSU */
@@ -773,11 +796,11 @@
 .barber-events-box {
   border-radius: 28px;
   background-color: #0A0A0A;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: clamp(32px, 5vw, 64px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: clamp(32px, 5vw, 56px);
   display: grid;
   grid-template-columns: 1fr;
-  gap: 48px;
+  gap: 44px;
   align-items: center;
 }
 
@@ -788,21 +811,21 @@
 }
 
 .barber-events-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(28px, 3.8vw, 44px);
-  font-weight: 300;
-  color: #FFFFFF;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(28px, 3.8vw, 42px) !important;
+  font-weight: 300 !important;
+  color: #FFFFFF !important;
   letter-spacing: -0.02em;
   line-height: 1.15;
-  margin: 0 0 16px 0;
+  margin: 0 0 14px 0 !important;
 }
 
 .barber-events-lead {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 15px;
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 15px !important;
   font-weight: 300;
   line-height: 1.7;
-  margin: 0 0 28px 0;
+  margin: 0 0 24px 0 !important;
 }
 
 .barber-events-tags {
@@ -817,9 +840,9 @@
   gap: 8px;
   padding: 8px 18px;
   border-radius: 999px;
-  background-color: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9) !important;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -827,34 +850,34 @@
 }
 
 .barber-event-tag:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.09);
 }
 
 .barber-events-form-box {
   background-color: #050505;
-  padding: clamp(28px, 4vw, 40px);
+  padding: clamp(26px, 3.5vw, 36px);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .barber-events-form-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 22px;
-  font-weight: 300;
-  color: #FFFFFF;
-  margin: 0 0 6px 0;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 21px !important;
+  font-weight: 300 !important;
+  color: #FFFFFF !important;
+  margin: 0 0 6px 0 !important;
 }
 
 .barber-events-form-desc {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.52) !important;
+  font-size: 13.5px !important;
   font-weight: 300;
   line-height: 1.6;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .barber-events-btn-wa {
@@ -865,7 +888,7 @@
   padding: 14px 24px;
   border-radius: 999px;
   background-color: #25D366;
-  color: #0B140C;
+  color: #0B140C !important;
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
@@ -887,9 +910,9 @@
   gap: 10px;
   padding: 14px 24px;
   border-radius: 999px;
-  background-color: rgba(255, 255, 255, 0.06);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
@@ -899,16 +922,16 @@
 }
 
 .barber-events-btn-phone:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 /* 7. TESİS OLANAKLARI & FAQ */
 .barber-amenities-sec {
-  padding: 64px 0;
+  padding: 56px 0;
   background-color: #080808;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .barber-amenities-grid {
@@ -930,37 +953,37 @@
 }
 
 .barber-amenity-card {
-  padding: 20px 24px;
+  padding: 18px 22px;
   border-radius: 14px;
   background-color: #0C0C0C;
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   transition: border-color 0.2s ease;
 }
 
 .barber-amenity-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .barber-amenity-icon {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #D4AF37;
+  color: #D4AF37 !important;
   flex-shrink: 0;
 }
 
 .barber-amenity-text {
   font-size: 14px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* SSS Bölümü */
@@ -984,18 +1007,18 @@
 }
 
 .barber-faq-card {
-  padding: 28px;
+  padding: 26px;
   border-radius: 18px;
   background-color: #0A0A0A;
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   transition: border-color 0.2s ease;
 }
 
 .barber-faq-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .barber-faq-q {
@@ -1005,26 +1028,26 @@
 }
 
 .barber-faq-q h3 {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 17px;
-  font-weight: 400;
-  color: #FFFFFF;
-  margin: 0;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 17px !important;
+  font-weight: 400 !important;
+  color: #FFFFFF !important;
+  margin: 0 !important;
   line-height: 1.4;
 }
 
 .barber-faq-a {
-  font-size: 13.5px;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 13.5px !important;
+  color: rgba(255, 255, 255, 0.52) !important;
   font-weight: 300;
   line-height: 1.65;
-  margin: 0;
+  margin: 0 !important;
   padding-left: 28px;
 }
 
 /* 8. ALT REZERVASYON ÇAĞRISI (THE BARBER CTA) */
 .barber-cta-sec {
-  padding: clamp(72px, 9vw, 110px) 0;
+  padding: clamp(72px, 9vw, 100px) 0;
   background-color: #080808;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -1036,26 +1059,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 22px;
 }
 
 .barber-cta-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(32px, 5.5vw, 56px);
-  font-weight: 300;
-  color: #FFFFFF;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: clamp(30px, 5vw, 52px) !important;
+  font-weight: 300 !important;
+  color: #FFFFFF !important;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .barber-cta-desc {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 15px;
+  color: rgba(255, 255, 255, 0.52) !important;
+  font-size: 15px !important;
   font-weight: 300;
   line-height: 1.65;
   max-width: 520px;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .barber-cta-btns {
@@ -1064,16 +1087,16 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .barber-cta-btn--primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 36px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #FFFFFF;
+  padding: 15px 34px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: #FFFFFF !important;
   border-radius: 999px;
   font-size: 11px;
   font-weight: 700;
@@ -1085,16 +1108,16 @@
 
 .barber-cta-btn--primary:hover {
   background-color: #FFFFFF;
-  color: #000000;
+  color: #000000 !important;
 }
 
 .barber-cta-btn--secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 36px;
+  padding: 15px 34px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.75) !important;
   border-radius: 999px;
   font-size: 11px;
   font-weight: 700;
@@ -1106,5 +1129,5 @@
 
 .barber-cta-btn--secondary:hover {
   border-color: rgba(255, 255, 255, 0.5);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }

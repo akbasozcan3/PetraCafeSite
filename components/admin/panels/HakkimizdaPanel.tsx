@@ -208,11 +208,23 @@ export default function HakkimizdaPanel() {
         <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
-              <span>📝</span> Makale Paragrafları (/hakkimizda Sayfası)
+              <span>📝</span> Makale Paragrafları & Başlıklar (/hakkimizda Sayfası)
             </h3>
             <span className="text-xs font-semibold text-[#D9A441] bg-[#D9A441]/10 px-2.5 py-1 rounded-lg border border-[#D9A441]/30">
               {h.body?.length || 0} Paragraf
             </span>
+          </div>
+
+          <div className="rounded-xl border border-[#D9A441]/30 bg-[#1A1813] p-4 text-xs space-y-2">
+            <b className="text-[#E8B84B] flex items-center gap-1.5 font-bold">
+              <span>💡</span> Başlık ve Yazı Biçimlendirme İpuçları:
+            </b>
+            <div className="grid gap-2 sm:grid-cols-2 text-[#C8B89A]">
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono"># Büyük Başlık</code> ➔ Beyaz Büyük Başlık (H1)</div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">## Alt Başlık</code> ➔ Altın Sarısı Başlık (H2)</div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">**Kalın Yazı**</code> ➔ <strong>Kalın Metin</strong></div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">&gt; Alıntı Cümlesi</code> ➔ Vurgulu Alıntı Kutusu</div>
+            </div>
           </div>
 
           {(h.body || []).map((p: string, i: number) => (

@@ -16,22 +16,26 @@ export function cleanRawText(text: string): string {
 }
 
 /** Formats inline markdown like **bold**, *italic* safely into React elements */
-export function formatInlineText(text: string): React.ReactNode {
+export function formatInlineText(text: string, boldColor?: string): React.ReactNode {
   if (!text) return "";
-  const cleaned = text.replace(/#{1,4}\s*/g, ""); // Strip any stray # symbols
+  const cleaned = text.replace(/^#{1,4}\s*/gm, "");
 
   // Split by bold **text**
   const parts = cleaned.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((part, index) => {
     if (part.startsWith("**") && part.endsWith("**")) {
       return (
-        <strong key={index} style={{ fontWeight: 800, color: "var(--ink, #0D0F0A)" }}>
+        <strong key={index} style={{ fontWeight: 700, color: boldColor || "inherit" }}>
           {part.slice(2, -2)}
         </strong>
       );
     }
     if (part.startsWith("*") && part.endsWith("*")) {
-      return <em key={index}>{part.slice(1, -1)}</em>;
+      return (
+        <em key={index} style={{ fontStyle: "italic", opacity: 0.9 }}>
+          {part.slice(1, -1)}
+        </em>
+      );
     }
     return part;
   });
@@ -42,33 +46,57 @@ export function parseArticleContent(input: string | string[] = []): ArticleBlock
   const rawText = Array.isArray(input) ? input.join("\n\n") : String(input || "");
   if (!rawText.trim()) return blocks;
 
-  // Insert line breaks before any inline "# ", "## ", "### " headings
-  const normalized = rawText
-    .replace(/(?<!\n)(#{1,4}\s+)/g, "\n\n$1")
-    .split(/\r?\n\s*\r?\n/)
-    .map((s) => s.trim())
-    .filter(Boolean);
+  const lines = rawText.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  let currentParagraph = "";
 
-  for (const chunk of normalized) {
-    if (/^####\s+/.test(chunk)) {
-      blocks.push({ type: "h3", text: chunk.replace(/^####\s+/, "").trim() });
-    } else if (/^###\s+/.test(chunk)) {
-      blocks.push({ type: "h3", text: chunk.replace(/^###\s+/, "").trim() });
-    } else if (/^##\s+/.test(chunk)) {
-      blocks.push({ type: "h2", text: chunk.replace(/^##\s+/, "").trim() });
-    } else if (/^#\s+/.test(chunk)) {
-      blocks.push({ type: "h1", text: chunk.replace(/^#\s+/, "").trim() });
-    } else if (/^>\s+/.test(chunk)) {
-      blocks.push({ type: "quote", text: chunk.replace(/^>\s+/, "").trim() });
-    } else if (/^[-*•]\s+/.test(chunk)) {
-      const items = chunk
-        .split(/\r?\n/)
-        .map((l) => l.replace(/^[-*•]\s+/, "").trim())
-        .filter(Boolean);
-      blocks.push({ type: "list", items });
+  for (const line of lines) {
+    if (/^####\s+/.test(line)) {
+      if (currentParagraph) {
+        blocks.push({ type: "p", text: currentParagraph });
+        currentParagraph = "";
+      }
+      blocks.push({ type: "h3", text: line.replace(/^####\s+/, "").trim() });
+    } else if (/^###\s+/.test(line)) {
+      if (currentParagraph) {
+        blocks.push({ type: "p", text: currentParagraph });
+        currentParagraph = "";
+      }
+      blocks.push({ type: "h3", text: line.replace(/^###\s+/, "").trim() });
+    } else if (/^##\s+/.test(line)) {
+      if (currentParagraph) {
+        blocks.push({ type: "p", text: currentParagraph });
+        currentParagraph = "";
+      }
+      blocks.push({ type: "h2", text: line.replace(/^##\s+/, "").trim() });
+    } else if (/^#\s+/.test(line)) {
+      if (currentParagraph) {
+        blocks.push({ type: "p", text: currentParagraph });
+        currentParagraph = "";
+      }
+      blocks.push({ type: "h1", text: line.replace(/^#\s+/, "").trim() });
+    } else if (/^>\s+/.test(line)) {
+      if (currentParagraph) {
+        blocks.push({ type: "p", text: currentParagraph });
+        currentParagraph = "";
+      }
+      blocks.push({ type: "quote", text: line.replace(/^>\s+/, "").trim() });
+    } else if (/^[-*•]\s+/.test(line)) {
+      if (currentParagraph) {
+        blocks.push({ type: "p", text: currentParagraph });
+        currentParagraph = "";
+      }
+      blocks.push({ type: "list", items: [line.replace(/^[-*•]\s+/, "").trim()] });
     } else {
-      blocks.push({ type: "p", text: chunk });
+      if (currentParagraph) {
+        currentParagraph += " " + line;
+      } else {
+        currentParagraph = line;
+      }
     }
+  }
+
+  if (currentParagraph) {
+    blocks.push({ type: "p", text: currentParagraph });
   }
 
   return blocks;

@@ -66,16 +66,17 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HakkimizdaPage() {
   const content = await getPublicContent();
   const h = content.hakkimizda || {
-    eyebrow: "HAKKIMIZDA & YAŞAM MERKEZİ",
-    baslik: "Petra Yaşam Merkezi'nde Cafe & Restaurant",
-    answerBaslik: "Kısaca Petra",
-    answerMetin: "Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve, nargile ve açık havuz–plaj kulübü sunar.",
-    lead: "Keyif, konfor ve kalite — sabahın ilk ışıklarındaki kahvaltıdan akşam yemeğine, havuz başı serinliğinden en özel kutlamalara.",
+    eyebrow: "HAKKIMIZDA",
+    baslik: "Petra Yaşam Merkezi'nde cafe & restaurant",
+    answerBaslik: "Kısaca",
+    answerMetin: "Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve, nargile ve havuz–plaj sunar.",
+    lead: "Keyif, konfor ve kalite — kahvaltıdan akşam yemeğine, havuz kenarından organizasyona.",
     body: [
-      "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, Petra Yaşam Merkezi içerisinde gastronomi, dinlenme ve sosyal yaşamı kusursuz bir uyumla buluşturan ayrıcalıklı bir mekândır. Ferah iç salonları, havuz başı açık terası ve zengin menüsüyle Petra; yalnızca bir yeme-içme alanı değil, sevdiklerinizle paylaştığınız anları unutulmaz kılan seçkin bir yaşam merkezidir.",
-      "Günün ilk saatlerinde fırından yeni çıkmış sıcak pişiler, yöresel peynirler ve sahanda sıcacık lezzetlerle hazırlanan zengin serpme kahvaltımız güne eşsiz bir başlangıç sunar. Öğle ve akşam saatlerinde ise usta şeflerimizin elinden çıkan marine dana antrikotlar, taş fırında pişen çıtır pizzalar, taze el yapımı makarnalar ve gurme burgerler menümüzün baş tacıdır.",
-      "Yaz aylarında 09:00 – 18:00 saatleri arasında hizmet veren açık yüzme havuzumuz, çocuk havuzumuz, konforlu şezlonglarımız ve VIP localarımızla şehir hayatının stresinden uzak, tatil konseptinde bir serinlik vadediyoruz.",
-      "Doğum günleri, evlilik teklifleri, mezuniyet kutlamaları ve kurumsal yemekler için profesyonel ekibimizle özel masa süslemeleri ve kişiye özel menü planlamaları sunuyoruz."
+      "# Petra Cafe Restaurant",
+      "## Gastronomi, Konfor ve Sosyal Yaşam",
+      "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, Petra Yaşam Merkezi içerisinde lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Günün her saatine eşlik eden zengin menüsü, ferah atmosferi ve havuz başı deneyimiyle Petra; yalnızca yemek yemek için değil, sevdiklerinizle unutulmaz anlar biriktirmek için tasarlandı.",
+      "Günün ilk ışıklarında zengin serpme kahvaltımız ve çıtır lezzetlerimizle güne harika bir başlangıç yapabilir; öğle ve akşam saatlerinde dünya mutfağının seçkin lezzetlerini, taş fırın pizzalarımızı ve ızgaralarımızı tadabilirsiniz.",
+      "Yaz aylarında açık yüzme havuzumuz ve pool & beach alanımızla şehir hayatının stresinden uzaklaşıp serinliğin tadını çıkarabilirsiniz. Doğum günleri, evlilik teklifleri ve kurumsal davetleriniz için sunduğumuz özel organizasyon masalarıyla en değerli anlarınızı kusursuz kılıyoruz."
     ],
     badgeBaslik: "Petra Yaşam Merkezi",
     badgeAlt: "Cafe · Restaurant · Pool"
@@ -95,16 +96,31 @@ export default async function HakkimizdaPage() {
     "Merhaba, Petra Cafe Restaurant & Yaşam Merkezi hakkında bilgi ve rezervasyon için yazıyorum."
   );
 
-  // İstatistikler (Admin dinamik + fallback)
+  // Hero Lead Yönetimi: Hero başlığı altında kısa, temiz 1-2 cümlelik özet
+  const heroLead = h.lead && h.lead.trim().length <= 150 
+    ? cleanRawText(h.lead) 
+    : "Sade, temiz ve profesyonel hizmet anlayışımızla tanışın.";
+
+  // Gövde Metni Hazırlığı: h.body veya uzun h.lead varsa paragraflara ayrıştır
+  let bodySource: string | string[] = h.body;
+  if (!bodySource || (Array.isArray(bodySource) && bodySource.length === 0)) {
+    bodySource = h.lead || "";
+  } else if (h.lead && h.lead.trim().length > 150 && Array.isArray(bodySource) && !bodySource.includes(h.lead)) {
+    bodySource = [h.lead, ...bodySource];
+  }
+
+  const parsedBlocks = parseArticleContent(bodySource);
+
+  // İstatistikler (The Barber 4'lü Stat Grid)
   const statsList = (h.stats && h.stats.length > 0) ? h.stats : (h.ozet && h.ozet.length > 0 ? h.ozet : [
-    { b: "08:00 – 02:00", span: "Cafe & Restoran Açık", sub: "Haftanın 7 günü kesintisiz lezzet" },
-    { b: "240+ Çeşit", span: "Zengin Dünya Menüsü", sub: "Kahvaltı, ızgara, pizza ve tatlılar" },
-    { b: "09:00 – 18:00", span: "Açık Havuz & Beach", sub: "Yetişkin & çocuk havuzu, localar" },
-    { b: "1000+ m²", span: "Sosyal Yaşam Alanı", sub: "Özel davet ve kutlama terasları" }
+    { b: "08:00 – 02:00", span: "Cafe & Restoran Açık", sub: "Haftanın 7 günü kesintisiz lezzet ve keyif" },
+    { b: "240+ Çeşit", span: "Zengin Dünya Menüsü", sub: "Kahvaltı, ızgara, taş fırın pizza ve tatlılar" },
+    { b: "09:00 – 18:00", span: "Açık Havuz & Beach Kulübü", sub: "Yetişkin & çocuk havuzu, şezlonglar ve VIP localar" },
+    { b: "1000+ m²", span: "Sosyal Yaşam & Teras Alanı", sub: "Doğum günü, özel kutlama ve kurumsal davetler" }
   ]);
   const statIcons = [Clock, UtensilsCrossed, Waves, Sparkles];
 
-  // 4 Temel Deneyim Alanı (Admin dinamik + fallback)
+  // 4 Temel Deneyim Alanı (The Barber 4'lü Kart Grid)
   const defaultExperiences = [
     {
       title: "Zengin Serpme Kahvaltı",
@@ -138,7 +154,7 @@ export default async function HakkimizdaPage() {
   const experiencesList = (h.experiences && h.experiences.length > 0) ? h.experiences : defaultExperiences;
   const expIcons = [Coffee, UtensilsCrossed, Waves, Flame];
 
-  // Bir Günün Petra'daki Akışı (Admin dinamik + fallback)
+  // Bir Günün Petra'daki Akışı (24 Saat Timeline)
   const defaultTimeline = [
     {
       time: "08:00 – 12:00",
@@ -164,7 +180,7 @@ export default async function HakkimizdaPage() {
   const timelineList = (h.timeline && h.timeline.length > 0) ? h.timeline : defaultTimeline;
   const timelineIcons = [Sun, Waves, UtensilsCrossed, Flame];
 
-  // Tesis İmkânları (Admin dinamik + fallback)
+  // Tesis İmkânları (6'lı Kartlar)
   const defaultAmenities = [
     "Açık Yüzme & Çocuk Havuzu",
     "Açık Teras & Klimalı Salonlar",
@@ -176,7 +192,7 @@ export default async function HakkimizdaPage() {
   const amenitiesList = (h.amenities && h.amenities.length > 0) ? h.amenities : defaultAmenities;
   const amenityIcons = [Waves, UtensilsCrossed, PartyPopper, Car, Wifi, ShieldCheck];
 
-  // Sıkça Sorulan Sorular (Admin dinamik + fallback)
+  // Sıkça Sorulan Sorular
   const defaultFaqs = [
     {
       q: "Serpme kahvaltı ve restoran için rezervasyon gerekli mi?",
@@ -197,7 +213,7 @@ export default async function HakkimizdaPage() {
   ];
   const faqsList = (h.faqs && h.faqs.length > 0) ? h.faqs : defaultFaqs;
 
-  // Özel Günler / Organizasyonlar (Admin dinamik + fallback)
+  // Özel Günler / Organizasyonlar
   const eventsTitle = h.eventsTitle || "Unutulmaz Anlar İçin Özel Organizasyon Masaları";
   const eventsLead = h.eventsLead || "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde; havuz başı terasımız veya klimalı şık salonlarımızda profesyonel masa düzeni, özel menü planlaması ve pasta servisi sunuyoruz.";
   const eventsTags = (h.eventsTags && h.eventsTags.length > 0) ? h.eventsTags : [
@@ -216,10 +232,8 @@ export default async function HakkimizdaPage() {
     return Sparkles;
   };
 
-  const parsedBlocks = parseArticleContent(h.body || []);
-
   return (
-    <div id="hakkimizda-page" className="barber-about">
+    <div id="hakkimizda-page" className="barber-about" style={{ backgroundColor: "#050505", color: "#FFFFFF" }}>
       
       {/* 1. HERO VİTRİN BÖLÜMÜ (THE BARBER YASIN STİLİ) */}
       <div className="barber-hero">
@@ -231,19 +245,19 @@ export default async function HakkimizdaPage() {
         
         <div className="barber-container barber-hero__content">
           <nav className="barber-hero__nav">
-            <Link href="/">
+            <Link href="/" style={{ color: "rgba(255, 255, 255, 0.5)" }}>
               Ana Sayfa
             </Link>
-            <ChevronRight size={10} style={{ opacity: 0.3 }} />
-            <span style={{ color: "rgba(255, 255, 255, 0.8)" }}>Hakkımızda</span>
+            <ChevronRight size={10} style={{ opacity: 0.4 }} />
+            <span style={{ color: "#FFFFFF" }}>Hakkımızda</span>
           </nav>
 
-          <h1 className="barber-hero__title">
+          <h1 className="barber-hero__title" style={{ color: "#FFFFFF" }}>
             {cleanRawText(h.baslik || "Hakkımızda")}
           </h1>
 
-          <p className="barber-hero__lead">
-            {cleanRawText(h.lead || "Sade, temiz ve profesyonel hizmet anlayışımızla tanışın.")}
+          <p className="barber-hero__lead" style={{ color: "rgba(255, 255, 255, 0.6)" }}>
+            {heroLead}
           </p>
 
           <div className="barber-hero__divider">
@@ -275,10 +289,10 @@ export default async function HakkimizdaPage() {
                     ŞU AN AÇIK · 08:00 – 02:00
                   </span>
                 </div>
-                <p className="barber-sticky-title">
+                <p className="barber-sticky-title" style={{ color: "#FFFFFF" }}>
                   {cleanRawText(h.badgeBaslik || "Petra Yaşam Merkezi")}
                 </p>
-                <p className="barber-sticky-loc">
+                <p className="barber-sticky-loc" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
                   <MapPin size={12} color="#D4AF37" />
                   <span>Taşdelen, Çekmeköy / İstanbul</span>
                 </p>
@@ -304,16 +318,16 @@ export default async function HakkimizdaPage() {
               </div>
             </div>
 
-            {/* Sağ Sütun: Başlık, Kısaca & Editoryal Metin */}
+            {/* Sağ Sütun: Başlık, Kısaca & Editoryal Metin (BEYAZ/ALTIN KONTRASTLI) */}
             <div>
               <div className="barber-eyebrow-box">
                 <span className="barber-eyebrow-line" />
-                <p className="barber-eyebrow-text">
+                <p className="barber-eyebrow-text" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
                   {cleanRawText(h.eyebrow || "HAKKIMIZDA & YAŞAM FELSEFEMİZ")}
                 </p>
               </div>
 
-              <h2 className="barber-story-title">
+              <h2 className="barber-story-title" style={{ color: "#FFFFFF" }}>
                 {cleanRawText(h.baslik || "Petra Cafe Restaurant")}
               </h2>
 
@@ -321,44 +335,62 @@ export default async function HakkimizdaPage() {
               {h.answerMetin && (
                 <div className="barber-answer-box">
                   <div className="barber-answer-head">
-                    <Sparkles size={14} />
-                    <span>
+                    <Sparkles size={14} color="#D4AF37" />
+                    <span style={{ color: "#D4AF37" }}>
                       {cleanRawText(h.answerBaslik || "Kısaca")}
                     </span>
                   </div>
-                  <p className="barber-answer-p">
-                    {formatInlineText(h.answerMetin)}
+                  <p className="barber-answer-p" style={{ color: "rgba(255, 255, 255, 0.85)" }}>
+                    {formatInlineText(h.answerMetin, "#FFFFFF")}
                   </p>
                 </div>
               )}
 
-              {/* Makale Paragrafları */}
+              {/* Makale Paragrafları ve Dinamik Başlıklar (#, ##, ###, **, *) */}
               <div className="barber-prose">
                 {parsedBlocks.map((block, idx) => {
-                  if (block.type === "h1" || block.type === "h2") {
+                  if (block.type === "h1") {
                     return (
-                      <h3 key={idx}>
+                      <h2 key={idx} className="barber-h2" style={{ color: "#FFFFFF" }}>
+                        {cleanRawText(block.text || "")}
+                      </h2>
+                    );
+                  }
+                  if (block.type === "h2") {
+                    return (
+                      <h3 key={idx} className="barber-h3" style={{ color: "#D4AF37" }}>
                         {cleanRawText(block.text || "")}
                       </h3>
                     );
                   }
                   if (block.type === "h3") {
                     return (
-                      <h4 key={idx}>
+                      <h4 key={idx} className="barber-h4" style={{ color: "#FFFFFF" }}>
                         {cleanRawText(block.text || "")}
                       </h4>
                     );
                   }
                   if (block.type === "quote") {
                     return (
-                      <blockquote key={idx}>
-                        {formatInlineText(block.text || "")}
+                      <blockquote key={idx} style={{ color: "rgba(255, 255, 255, 0.9)" }}>
+                        {formatInlineText(block.text || "", "#FFFFFF")}
                       </blockquote>
                     );
                   }
+                  if (block.type === "list" && block.items) {
+                    return (
+                      <ul key={idx} style={{ paddingLeft: "20px", margin: "10px 0", display: "flex", flexDirection: "column", gap: "6px" }}>
+                        {block.items.map((item, lidx) => (
+                          <li key={lidx} style={{ color: "rgba(255, 255, 255, 0.78)" }}>
+                            {formatInlineText(item, "#FFFFFF")}
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
                   return (
-                    <p key={idx}>
-                      {formatInlineText(block.text || "")}
+                    <p key={idx} style={{ color: "rgba(255, 255, 255, 0.75)" }}>
+                      {formatInlineText(block.text || "", "#FFFFFF")}
                     </p>
                   );
                 })}
@@ -367,7 +399,7 @@ export default async function HakkimizdaPage() {
               {/* 3 Ana Değer Sütunu (The Barber 3'lü Stat Grid Stili) */}
               <div className="barber-pillars-grid">
                 <div className="barber-pillar-item">
-                  <span className="barber-pillar-title">
+                  <span className="barber-pillar-title" style={{ color: "#FFFFFF" }}>
                     Gastronomi
                   </span>
                   <span className="barber-pillar-sub">
@@ -375,7 +407,7 @@ export default async function HakkimizdaPage() {
                   </span>
                 </div>
                 <div className="barber-pillar-item">
-                  <span className="barber-pillar-title">
+                  <span className="barber-pillar-title" style={{ color: "#FFFFFF" }}>
                     Pool & Beach
                   </span>
                   <span className="barber-pillar-sub">
@@ -383,7 +415,7 @@ export default async function HakkimizdaPage() {
                   </span>
                 </div>
                 <div className="barber-pillar-item">
-                  <span className="barber-pillar-title">
+                  <span className="barber-pillar-title" style={{ color: "#FFFFFF" }}>
                     Konfor
                   </span>
                   <span className="barber-pillar-sub">
@@ -407,7 +439,7 @@ export default async function HakkimizdaPage() {
               return (
                 <div key={i} className="barber-stat-card">
                   <div className="barber-stat-card__top">
-                    <span className="barber-stat-num">
+                    <span className="barber-stat-num" style={{ color: "#FFFFFF" }}>
                       {cleanRawText(st.b || "")}
                     </span>
                     <div className="barber-stat-icon">
@@ -415,7 +447,7 @@ export default async function HakkimizdaPage() {
                     </div>
                   </div>
                   <div>
-                    <span className="barber-stat-label">
+                    <span className="barber-stat-label" style={{ color: "#FFFFFF" }}>
                       {cleanRawText(st.span || "")}
                     </span>
                     {st.sub && (
@@ -437,11 +469,11 @@ export default async function HakkimizdaPage() {
           <div className="barber-section-head">
             <div className="barber-eyebrow-box">
               <span className="barber-eyebrow-line" />
-              <p className="barber-eyebrow-text">
+              <p className="barber-eyebrow-text" style={{ color: "rgba(255, 255, 255, 0.65)" }}>
                 AYRICALIKLI YAŞAM KONSEPTİ
               </p>
             </div>
-            <h2 className="barber-section-title">
+            <h2 className="barber-section-title" style={{ color: "#FFFFFF" }}>
               Petra'da Sizi Neler Bekliyor?
             </h2>
           </div>
@@ -470,7 +502,7 @@ export default async function HakkimizdaPage() {
                       </span>
                     )}
 
-                    <h3 className="barber-exp-title">
+                    <h3 className="barber-exp-title" style={{ color: "#FFFFFF" }}>
                       {cleanRawText(item.title || "")}
                     </h3>
 
@@ -503,7 +535,7 @@ export default async function HakkimizdaPage() {
             <span className="barber-time-eyebrow">
               24 SAAT YAŞAM DOLU
             </span>
-            <h2 className="barber-time-title">
+            <h2 className="barber-time-title" style={{ color: "#FFFFFF" }}>
               Bir Günün Petra'daki Akışı
             </h2>
             <p className="barber-time-sub">
@@ -526,7 +558,7 @@ export default async function HakkimizdaPage() {
                       </div>
                     </div>
 
-                    <h3 className="barber-time-card-title">
+                    <h3 className="barber-time-card-title" style={{ color: "#FFFFFF" }}>
                       {cleanRawText(step.title || "")}
                     </h3>
 
@@ -555,7 +587,7 @@ export default async function HakkimizdaPage() {
                 </span>
               </div>
 
-              <h3 className="barber-events-title">
+              <h3 className="barber-events-title" style={{ color: "#FFFFFF" }}>
                 {cleanRawText(eventsTitle)}
               </h3>
 
@@ -579,7 +611,7 @@ export default async function HakkimizdaPage() {
             {/* Sağ Alan: Rezervasyon & Teklif Kartı */}
             <div className="barber-events-form-box">
               <div>
-                <h4 className="barber-events-form-title">
+                <h4 className="barber-events-form-title" style={{ color: "#FFFFFF" }}>
                   Etkinlik Detayları & Rezervasyon
                 </h4>
                 <p className="barber-events-form-desc">
@@ -601,6 +633,7 @@ export default async function HakkimizdaPage() {
                 <a
                   href={`tel:${telCafeHref}`}
                   className="barber-events-btn-phone"
+                  style={{ color: "#FFFFFF" }}
                 >
                   <Phone size={15} color="#D4AF37" />
                   <span>Telefon: {telCafe}</span>
@@ -619,7 +652,7 @@ export default async function HakkimizdaPage() {
             <span className="barber-time-eyebrow">
               KONFOR VE OLANAKLAR
             </span>
-            <h2 className="barber-time-title" style={{ fontSize: "clamp(24px, 3vw, 36px)" }}>
+            <h2 className="barber-time-title" style={{ fontSize: "clamp(24px, 3vw, 36px)", color: "#FFFFFF" }}>
               Tesis İmkânlarımız
             </h2>
           </div>
@@ -632,7 +665,7 @@ export default async function HakkimizdaPage() {
                   <div className="barber-amenity-icon">
                     <AmenityIcon size={18} />
                   </div>
-                  <span className="barber-amenity-text">
+                  <span className="barber-amenity-text" style={{ color: "rgba(255, 255, 255, 0.9)" }}>
                     {cleanRawText(label)}
                   </span>
                 </div>
@@ -649,7 +682,7 @@ export default async function HakkimizdaPage() {
             <span className="barber-time-eyebrow">
               MERAK EDİLENLER
             </span>
-            <h2 className="barber-time-title">
+            <h2 className="barber-time-title" style={{ color: "#FFFFFF" }}>
               Sıkça Sorulan Sorular
             </h2>
             <p className="barber-time-sub">
@@ -662,7 +695,7 @@ export default async function HakkimizdaPage() {
               <div key={idx} className="barber-faq-card">
                 <div className="barber-faq-q">
                   <HelpCircle size={18} color="#D4AF37" style={{ flexShrink: 0, marginTop: 2 }} />
-                  <h3>
+                  <h3 style={{ color: "#FFFFFF" }}>
                     {cleanRawText(faq.q || "")}
                   </h3>
                 </div>
@@ -683,7 +716,7 @@ export default async function HakkimizdaPage() {
               REZERVASYON & İLETİŞİM
             </span>
 
-            <h2 className="barber-cta-title">
+            <h2 className="barber-cta-title" style={{ color: "#FFFFFF" }}>
               Masanızı veya Locanızı Hemen Ayırtın
             </h2>
 
@@ -695,12 +728,14 @@ export default async function HakkimizdaPage() {
               <Link
                 href="/#rezervasyon"
                 className="barber-cta-btn--primary"
+                style={{ color: "#FFFFFF" }}
               >
                 Online Masa Ayırtın
               </Link>
               <Link
                 href="/menu"
                 className="barber-cta-btn--secondary"
+                style={{ color: "rgba(255, 255, 255, 0.75)" }}
               >
                 Tüm Menüyü İncele
               </Link>
