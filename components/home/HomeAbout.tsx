@@ -19,9 +19,12 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
 
   if (!h) return null;
 
-  const rawBody = Array.isArray(h.body) ? h.body : [String(h.body || "")];
-  const firstText = rawBody[0] || "Menümüzde serpme kahvaltı, dünya mutfağı, İtalyan tatlı ve kokteyller, kahve ve nargile bulunur. Havuz kenarında veya salonda servis edilir.";
-  const secondText = rawBody[1] || "";
+  const wordLimit = h.homeWordLimit && h.homeWordLimit > 0 ? h.homeWordLimit : 100;
+  const combinedBody = (Array.isArray(h.body) ? h.body.join(" ") : String(h.body || "")).trim();
+  const words = combinedBody.split(/\s+/).filter(Boolean);
+  const teaserText = words.length > wordLimit
+    ? words.slice(0, wordLimit).join(" ") + "..."
+    : (combinedBody || "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır.");
 
   return (
     <section className="section" id="hakkimizda">
@@ -45,13 +48,8 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             </p>
           ) : null}
           <p className="body" data-fade="">
-            {formatInlineText(firstText)}
+            {formatInlineText(teaserText)}
           </p>
-          {secondText && (
-            <p className="body" data-fade="">
-              {formatInlineText(secondText)}
-            </p>
-          )}
           <div data-fade="" style={{ marginTop: "1.25rem", marginBottom: "1.75rem" }}>
             <Link
               href="/hakkimizda"

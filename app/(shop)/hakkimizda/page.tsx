@@ -118,198 +118,207 @@ export default async function HakkimizdaPage() {
   const parsedBlocks = parseArticleContent(h.body || []);
 
   return (
-    <div style={{ background: "#FBF8F1", minHeight: "100vh", color: "#0D0F0A", paddingBottom: "5rem" }}>
+    <div className="shop-about" style={{ padding: "2rem 0 5rem 0" }}>
       
       {/* 1. ÜST HERO & BREADCRUMB */}
-      <section style={{ maxWidth: "1120px", margin: "0 auto", padding: "2.5rem 1.25rem 1.5rem 1.25rem" }}>
-        <nav style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#8A9BB0", marginBottom: "1.5rem" }}>
-          <Link href="/" style={{ color: "#6B7A94", textDecoration: "none" }}>Ana Sayfa</Link>
-          <ChevronRight size={14} />
-          <span style={{ color: "#B8842C" }}>Hakkımızda</span>
-        </nav>
+      <nav className="crumbs" style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#8A9BB0", marginBottom: "1.5rem" }}>
+        <Link href="/" style={{ color: "#6B7A94", textDecoration: "none" }}>Ana Sayfa</Link>
+        <ChevronRight size={14} />
+        <span style={{ color: "var(--brass, #B8842C)" }}>Hakkımızda</span>
+      </nav>
 
-        <div style={{ maxWidth: "800px" }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "6px 14px", borderRadius: "9999px", fontSize: "0.78rem", fontWeight: 800, background: "rgba(217, 164, 65, 0.15)", color: "#9E6E1A", border: "1px solid rgba(217, 164, 65, 0.35)", letterSpacing: "0.04em", marginBottom: "1rem" }}>
-            <Sparkles size={14} color="#D9A441" />
-            {cleanRawText(h.eyebrow || "HAKKIMIZDA & YAŞAM ALANIMIZ")}
-          </span>
-          <h1 style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 900, lineHeight: 1.18, color: "#0D0F0A", margin: "0 0 1rem 0", fontFamily: "var(--font-serif, serif)" }}>
-            {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde Cafe & Restaurant Deneyimi")}
-          </h1>
-          {h.lead && (
-            <p style={{ fontSize: "1.12rem", fontWeight: 500, color: "#524D41", lineHeight: 1.65, margin: 0 }}>
-              {formatInlineText(h.lead)}
-            </p>
-          )}
-        </div>
-      </section>
+      <header className="ys-hero" style={{ marginBottom: "2.5rem" }}>
+        <p className="eyebrow" style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.08em", color: "var(--brass, #B8842C)", textTransform: "uppercase", marginBottom: "0.5rem" }}>
+          {cleanRawText(h.eyebrow || "02 · HAKKIMIZDA & YAŞAM ALANIMIZ")}
+        </p>
+        <h1 className="h2" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 900, lineHeight: 1.18, color: "var(--ink, #0D0F0A)", margin: "0 0 1rem 0", fontFamily: "var(--font-serif, serif)" }}>
+          {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde Cafe & Restaurant Deneyimi")}
+        </h1>
+        {h.lead && (
+          <p className="lead" style={{ fontSize: "1.12rem", fontWeight: 500, color: "var(--brass-lo, #524D41)", lineHeight: 1.65, margin: 0 }}>
+            {formatInlineText(h.lead)}
+          </p>
+        )}
+      </header>
 
-      {/* 2. ANA HİKAYE VE VİTRİN KARTI */}
-      <section style={{ maxWidth: "1120px", margin: "0 auto", padding: "1rem 1.25rem 2.5rem 1.25rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "3rem", alignItems: "start" }}>
+      {/* 2. ANA HİKAYE VE VİTRİN KARTI (2 KOLONLU HİZALAMA) */}
+      <div className="grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "3rem", alignItems: "start", marginBottom: "4rem" }}>
+        
+        {/* Sol Kolon: Biçimlendirilmiş Hikaye Metni */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           
-          {/* Sol Kolon: Biçimlendirilmiş Hikaye Metni */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-            
-            {h.answerMetin && (
-              <div style={{ borderRadius: "18px", border: "1px solid rgba(217, 164, 65, 0.35)", background: "#F5EFE3", padding: "1.25rem 1.5rem", boxShadow: "0 4px 12px rgba(0,0,0,0.03)" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-                  <Award size={16} color="#B8842C" />
-                  <b style={{ fontSize: "0.82rem", fontWeight: 800, color: "#9E6E1A", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    {cleanRawText(h.answerBaslik || "Kısaca Petra")}
-                  </b>
-                </div>
-                <p style={{ margin: 0, fontSize: "0.94rem", color: "#3E3A32", lineHeight: 1.65, fontWeight: 500 }}>
-                  {formatInlineText(h.answerMetin)}
-                </p>
-              </div>
-            )}
+          {h.answerMetin && (
+            <div className="answer" style={{ borderRadius: "16px", border: "1px solid rgba(217, 164, 65, 0.35)", background: "rgba(217, 164, 65, 0.12)", padding: "1.25rem 1.5rem" }}>
+              <b style={{ fontSize: "0.85rem", fontWeight: 800, color: "#9E6E1A", textTransform: "uppercase", letterSpacing: "0.05em", display: "block", marginBottom: "4px" }}>
+                ✦ {cleanRawText(h.answerBaslik || "Kısaca Petra")}
+              </b>
+              <p style={{ margin: 0, fontSize: "0.95rem", color: "var(--ink, #3E3A32)", lineHeight: 1.65, fontWeight: 500 }}>
+                {formatInlineText(h.answerMetin)}
+              </p>
+            </div>
+          )}
 
-            {/* Hikaye Paragrafları */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {parsedBlocks.map((block, idx) => {
-                if (block.type === "h1") {
-                  return (
-                    <h2
-                      key={idx}
-                      style={{ fontSize: "1.6rem", fontWeight: 900, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: "1.5rem 0 0.5rem 0", borderBottom: "1px solid rgba(13,15,10,0.1)", paddingBottom: "6px" }}
-                    >
-                      {cleanRawText(block.text || "")}
-                    </h2>
-                  );
-                }
-                if (block.type === "h2") {
-                  return (
-                    <h3
-                      key={idx}
-                      style={{ fontSize: "1.3rem", fontWeight: 800, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: "1.25rem 0 0.4rem 0" }}
-                    >
-                      {cleanRawText(block.text || "")}
-                    </h3>
-                  );
-                }
-                if (block.type === "h3") {
-                  return (
-                    <h4
-                      key={idx}
-                      style={{ fontSize: "1.05rem", fontWeight: 800, color: "#B8842C", margin: "1rem 0 0.3rem 0" }}
-                    >
-                      {cleanRawText(block.text || "")}
-                    </h4>
-                  );
-                }
-                if (block.type === "quote") {
-                  return (
-                    <blockquote
-                      key={idx}
-                      style={{ borderLeft: "4px solid #D9A441", padding: "10px 16px", margin: "12px 0", fontStyle: "italic", color: "#5A554A", background: "rgba(244, 238, 225, 0.6)", borderRadius: "0 12px 12px 0" }}
-                    >
-                      {formatInlineText(block.text || "")}
-                    </blockquote>
-                  );
-                }
+          {/* Hikaye Paragrafları */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+            {parsedBlocks.map((block, idx) => {
+              if (block.type === "h1") {
                 return (
-                  <p key={idx} style={{ margin: 0, fontSize: "1rem", lineHeight: 1.8, color: "#38342C" }}>
-                    {formatInlineText(block.text || "")}
-                  </p>
+                  <h2
+                    key={idx}
+                    style={{ fontSize: "1.5rem", fontWeight: 900, color: "var(--ink, #0D0F0A)", fontFamily: "var(--font-serif, serif)", margin: "1.5rem 0 0.5rem 0", borderBottom: "1px solid rgba(13,15,10,0.1)", paddingBottom: "6px" }}
+                  >
+                    {cleanRawText(block.text || "")}
+                  </h2>
                 );
-              })}
-            </div>
-
-            {/* İstatistik & Güven Rozetleri */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "12px", paddingTop: "1.5rem", borderTop: "1px solid rgba(13,15,10,0.1)" }}>
-              <div style={{ padding: "16px", borderRadius: "16px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
-                <span style={{ fontSize: "1.4rem", fontWeight: 900, color: "#B8842C", display: "block" }}>08:00 – 02:00</span>
-                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#6E6A5C", marginTop: "4px", display: "block" }}>Cafe & Restoran Açık</span>
-              </div>
-              <div style={{ padding: "16px", borderRadius: "16px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
-                <span style={{ fontSize: "1.4rem", fontWeight: 900, color: "#B8842C", display: "block" }}>09:00 – 18:00</span>
-                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#6E6A5C", marginTop: "4px", display: "block" }}>Havuz & Beach Kulübü</span>
-              </div>
-              <div style={{ padding: "16px", borderRadius: "16px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
-                <span style={{ fontSize: "1.4rem", fontWeight: 900, color: "#B8842C", display: "block" }}>240+ Çeşit</span>
-                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#6E6A5C", marginTop: "4px", display: "block" }}>Zengin Dünya Menüsü</span>
-              </div>
-            </div>
+              }
+              if (block.type === "h2") {
+                return (
+                  <h3
+                    key={idx}
+                    style={{ fontSize: "1.25rem", fontWeight: 800, color: "var(--ink, #0D0F0A)", fontFamily: "var(--font-serif, serif)", margin: "1.25rem 0 0.4rem 0" }}
+                  >
+                    {cleanRawText(block.text || "")}
+                  </h3>
+                );
+              }
+              if (block.type === "h3") {
+                return (
+                  <h4
+                    key={idx}
+                    style={{ fontSize: "1.05rem", fontWeight: 800, color: "var(--brass, #B8842C)", margin: "1rem 0 0.3rem 0" }}
+                  >
+                    {cleanRawText(block.text || "")}
+                  </h4>
+                );
+              }
+              if (block.type === "quote") {
+                return (
+                  <blockquote
+                    key={idx}
+                    style={{ borderLeft: "4px solid var(--brass, #D9A441)", padding: "10px 16px", margin: "12px 0", fontStyle: "italic", color: "var(--brass-lo, #5A554A)", background: "rgba(217, 164, 65, 0.08)", borderRadius: "0 12px 12px 0" }}
+                  >
+                    {formatInlineText(block.text || "")}
+                  </blockquote>
+                );
+              }
+              return (
+                <p key={idx} className="body" style={{ margin: 0, fontSize: "1rem", lineHeight: 1.8, color: "var(--ink, #38342C)" }}>
+                  {formatInlineText(block.text || "")}
+                </p>
+              );
+            })}
           </div>
 
-          {/* Sağ Kolon: Görsel & Hızlı İletişim Kartı */}
-          <div style={{ position: "sticky", top: "110px", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-            <div style={{ position: "relative", borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 40px rgba(0,0,0,0.15)", border: "4px solid #FFFFFF" }}>
+          {/* İstatistik Rozetleri */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "12px", paddingTop: "1.5rem", borderTop: "1px solid rgba(13,15,10,0.1)" }}>
+            <div style={{ padding: "16px", borderRadius: "16px", background: "var(--card-bg, #FFFFFF)", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
+              <span style={{ fontSize: "1.35rem", fontWeight: 900, color: "var(--brass, #B8842C)", display: "block" }}>08:00 – 02:00</span>
+              <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--brass-lo, #6E6A5C)", marginTop: "4px", display: "block" }}>Cafe & Restoran Açık</span>
+            </div>
+            <div style={{ padding: "16px", borderRadius: "16px", background: "var(--card-bg, #FFFFFF)", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
+              <span style={{ fontSize: "1.35rem", fontWeight: 900, color: "var(--brass, #B8842C)", display: "block" }}>09:00 – 18:00</span>
+              <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--brass-lo, #6E6A5C)", marginTop: "4px", display: "block" }}>Havuz & Beach Kulübü</span>
+            </div>
+            <div style={{ padding: "16px", borderRadius: "16px", background: "var(--card-bg, #FFFFFF)", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
+              <span style={{ fontSize: "1.35rem", fontWeight: 900, color: "var(--brass, #B8842C)", display: "block" }}>240+ Çeşit</span>
+              <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--brass-lo, #6E6A5C)", marginTop: "4px", display: "block" }}>Zengin Dünya Menüsü</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Sağ Kolon: Sticky Tilt-Card & Hızlı İletişim Kartı */}
+        <div style={{ position: "sticky", top: "calc(var(--nav-h, 80px) + 24px)", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          <div className="tilt-card">
+            <div className="tilt-card__inner">
               <SafeImg
                 src={img}
                 alt="Petra Yaşam Merkezi Cafe Restaurant"
                 fallback={SITE_PHOTOS.interior}
-                width={900}
-                height={675}
-                className="w-full h-[380px] object-cover block"
+                width={1800}
+                height={1350}
+                loading="eager"
               />
-              <div style={{ position: "absolute", bottom: "16px", left: "16px", right: "16px", padding: "14px 18px", borderRadius: "16px", background: "rgba(255, 255, 255, 0.95)", backdropFilter: "blur(12px)", border: "1px solid rgba(217, 164, 65, 0.4)", boxShadow: "0 10px 25px rgba(0,0,0,0.12)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div>
-                  <b style={{ fontSize: "1.05rem", fontWeight: 900, color: "#0D0F0A", display: "block" }}>{cleanRawText(h.badgeBaslik || "Petra")}</b>
-                  <span style={{ fontSize: "0.8rem", fontWeight: 800, color: "#B8842C" }}>{cleanRawText(h.badgeAlt || "Cafe · Restaurant · Pool")}</span>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.78rem", fontWeight: 800, color: "#065F46", background: "#D1FAE5", padding: "4px 10px", borderRadius: "8px" }}>
-                    <Star size={12} fill="#059669" color="#059669" />
-                    4.6 ★ (94+ Yorum)
-                  </span>
-                  <span style={{ fontSize: "0.72rem", color: "#6E6A5C", fontWeight: 600, display: "block", marginTop: "2px" }}>Çekmeköy Taşdelen</span>
-                </div>
-              </div>
-            </div>
-
-            {/* İletişim & Hat Bilgileri */}
-            <div style={{ padding: "20px", borderRadius: "20px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.1)", boxShadow: "0 4px 16px rgba(0,0,0,0.04)", display: "flex", flexDirection: "column", gap: "12px" }}>
-              <h4 style={{ fontSize: "0.82rem", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.06em", color: "#0D0F0A", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
-                <MapPin size={16} color="#D9A441" />
-                Adres ve İletişim Hatları
-              </h4>
-              <p style={{ margin: 0, fontSize: "0.85rem", color: "#5A554A", lineHeight: 1.6, fontWeight: 500 }}>
-                Megakent Sitesi, Turgut Özal Cad, Selen Sk. No:1/O, Petra Yaşam Merkezi, Taşdelen, Çekmeköy / İstanbul
-              </p>
-              
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", paddingTop: "4px" }}>
-                <a
-                  href={`tel:${telCafeHref}`}
-                  style={{ display: "flex", alignItems: "center", gap: "6px", padding: "10px", borderRadius: "12px", background: "#0D0F0A", color: "#FFFFFF", fontSize: "0.78rem", fontWeight: 800, textDecoration: "none" }}
-                >
-                  <Phone size={14} color="#D9A441" />
-                  <span>Kafe: {telCafe}</span>
-                </a>
-                <a
-                  href={`tel:${telTesisHref}`}
-                  style={{ display: "flex", alignItems: "center", gap: "6px", padding: "10px", borderRadius: "12px", background: "#141E2E", color: "#FFFFFF", fontSize: "0.78rem", fontWeight: 800, textDecoration: "none" }}
-                >
-                  <Phone size={14} color="#D9A441" />
-                  <span>Tesis: {telTesis}</span>
-                </a>
-              </div>
-
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "11px", borderRadius: "12px", background: "#25D366", color: "#FFFFFF", fontSize: "0.85rem", fontWeight: 800, textDecoration: "none", boxShadow: "0 4px 12px rgba(37,211,102,0.25)", boxSizing: "border-box" }}
+              <div
+                className="tilt-card__badge"
+                style={{
+                  background: "var(--card-bg, #ffffff)",
+                  border: "1.5px solid var(--card-border, rgba(217, 164, 65, 0.4))",
+                  backdropFilter: "blur(14px)",
+                  borderRadius: 14,
+                  padding: "12px 18px",
+                  boxShadow: "0 14px 34px -12px rgba(0, 0, 0, 0.5)",
+                }}
               >
-                WhatsApp'tan Doğrudan Yazın
-              </a>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                  <div>
+                    <b style={{ color: "var(--card-text, #0d0f0a)", display: "block", fontSize: "1.12rem", fontWeight: 800 }}>
+                      {cleanRawText(h.badgeBaslik || "Petra Yaşam Merkezi")}
+                    </b>
+                    <span style={{ color: "var(--brass-lo, #b8842c)", display: "block", fontSize: "0.82rem", fontWeight: 800, marginTop: 2 }}>
+                      {cleanRawText(h.badgeAlt || "Cafe · Restaurant · Pool")}
+                    </span>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.78rem", fontWeight: 800, color: "#065F46", background: "#D1FAE5", padding: "4px 8px", borderRadius: "8px" }}>
+                      <Star size={12} fill="#059669" color="#059669" />
+                      4.6 ★
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
+          {/* İletişim & Hat Bilgileri */}
+          <div style={{ padding: "20px", borderRadius: "20px", background: "var(--card-bg, #FFFFFF)", border: "1px solid rgba(13,15,10,0.1)", boxShadow: "0 4px 16px rgba(0,0,0,0.04)", display: "flex", flexDirection: "column", gap: "12px" }}>
+            <h4 style={{ fontSize: "0.82rem", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--ink, #0D0F0A)", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+              <MapPin size={16} color="var(--brass, #D9A441)" />
+              Adres ve İletişim Hatları
+            </h4>
+            <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--brass-lo, #5A554A)", lineHeight: 1.6, fontWeight: 500 }}>
+              Megakent Sitesi, Turgut Özal Cad, Selen Sk. No:1/O, Petra Yaşam Merkezi, Taşdelen, Çekmeköy / İstanbul
+            </p>
+            
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", paddingTop: "4px" }}>
+              <a
+                href={`tel:${telCafeHref}`}
+                style={{ display: "flex", alignItems: "center", gap: "6px", padding: "10px", borderRadius: "12px", background: "#0D0F0A", color: "#FFFFFF", fontSize: "0.78rem", fontWeight: 800, textDecoration: "none" }}
+              >
+                <Phone size={14} color="#D9A441" />
+                <span>Kafe: {telCafe}</span>
+              </a>
+              <a
+                href={`tel:${telTesisHref}`}
+                style={{ display: "flex", alignItems: "center", gap: "6px", padding: "10px", borderRadius: "12px", background: "#141E2E", color: "#FFFFFF", fontSize: "0.78rem", fontWeight: 800, textDecoration: "none" }}
+              >
+                <Phone size={14} color="#D9A441" />
+                <span>Tesis: {telTesis}</span>
+              </a>
+            </div>
+
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "11px", borderRadius: "12px", background: "#25D366", color: "#FFFFFF", fontSize: "0.85rem", fontWeight: 800, textDecoration: "none", boxShadow: "0 4px 12px rgba(37,211,102,0.25)", boxSizing: "border-box" }}
+            >
+              WhatsApp'tan Doğrudan Yazın
+            </a>
+          </div>
         </div>
-      </section>
+
+      </div>
 
       {/* 3. DÖRT ANA DENEYİM SÜTUNU */}
-      <section style={{ maxWidth: "1120px", margin: "0 auto", padding: "3rem 1.25rem" }}>
+      <section style={{ margin: "4rem 0" }}>
         <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 2.5rem auto" }}>
-          <span style={{ fontSize: "0.8rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
+          <span style={{ fontSize: "0.8rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--brass, #B8842C)", display: "block", marginBottom: "6px" }}>
             AYRICALIKLI YAŞAM
           </span>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", fontWeight: 900, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: "0 0 8px 0" }}>
+          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 900, color: "var(--ink, #0D0F0A)", fontFamily: "var(--font-serif, serif)", margin: "0 0 8px 0" }}>
             Petra'da Sizi Neler Bekliyor?
           </h2>
-          <p style={{ margin: 0, fontSize: "0.95rem", color: "#6E6A5C" }}>
+          <p style={{ margin: 0, fontSize: "0.95rem", color: "var(--brass-lo, #6E6A5C)" }}>
             Günün her anına özel lezzetler ve huzurlu sosyal alanlar.
           </p>
         </div>
@@ -320,19 +329,19 @@ export default async function HakkimizdaPage() {
             return (
               <div
                 key={i}
-                style={{ padding: "1.75rem", borderRadius: "24px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 6px 20px rgba(0,0,0,0.03)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}
+                style={{ padding: "1.75rem", borderRadius: "24px", background: "var(--card-bg, #FFFFFF)", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 6px 20px rgba(0,0,0,0.03)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}
               >
                 <div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
-                    <div style={{ width: "48px", height: "48px", borderRadius: "14px", background: "rgba(217, 164, 65, 0.15)", color: "#9E6E1A", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: "48px", height: "48px", borderRadius: "14px", background: "rgba(217, 164, 65, 0.15)", color: "var(--brass, #9E6E1A)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                       <Icon size={24} />
                     </div>
-                    <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "#9E6E1A", background: "#F5EFE3", padding: "4px 10px", borderRadius: "9999px", border: "1px solid rgba(217, 164, 65, 0.25)" }}>
+                    <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "var(--brass, #9E6E1A)", background: "rgba(217, 164, 65, 0.1)", padding: "4px 10px", borderRadius: "9999px", border: "1px solid rgba(217, 164, 65, 0.25)" }}>
                       {item.tag}
                     </span>
                   </div>
-                  <h3 style={{ fontSize: "1.18rem", fontWeight: 800, color: "#0D0F0A", margin: "0 0 8px 0", fontFamily: "var(--font-serif, serif)" }}>{item.title}</h3>
-                  <p style={{ margin: 0, fontSize: "0.9rem", color: "#5A554A", lineHeight: 1.65 }}>{item.desc}</p>
+                  <h3 style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--ink, #0D0F0A)", margin: "0 0 8px 0", fontFamily: "var(--font-serif, serif)" }}>{item.title}</h3>
+                  <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--brass-lo, #5A554A)", lineHeight: 1.65 }}>{item.desc}</p>
                 </div>
               </div>
             );
@@ -341,7 +350,7 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* 4. REZERVASYON & ÖZEL GÜNLER CTA */}
-      <section style={{ maxWidth: "1120px", margin: "0 auto", padding: "1rem 1.25rem" }}>
+      <section>
         <div style={{ borderRadius: "28px", background: "#141E2E", color: "#FFFFFF", padding: "clamp(2rem, 5vw, 3.5rem)", boxShadow: "0 25px 50px rgba(0,0,0,0.25)", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "2rem", border: "1px solid rgba(255,255,255,0.1)" }}>
           <div style={{ maxWidth: "560px", display: "flex", flexDirection: "column", gap: "10px" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "0.8rem", fontWeight: 800, color: "#D9A441", textTransform: "uppercase", letterSpacing: "0.06em" }}>
@@ -359,7 +368,8 @@ export default async function HakkimizdaPage() {
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px" }}>
             <Link
               href="/#rezervasyon"
-              style={{ padding: "14px 28px", borderRadius: "14px", background: "#D9A441", color: "#0D0F0A", fontWeight: 800, fontSize: "0.95rem", textDecoration: "none", boxShadow: "0 8px 24px rgba(217, 164, 65, 0.4)" }}
+              className="btn btn--brass"
+              style={{ padding: "14px 28px", borderRadius: "14px", background: "var(--brass, #D9A441)", color: "#0D0F0A", fontWeight: 800, fontSize: "0.95rem", textDecoration: "none", boxShadow: "0 8px 24px rgba(217, 164, 65, 0.4)" }}
             >
               Online Rezervasyon Yap
             </Link>

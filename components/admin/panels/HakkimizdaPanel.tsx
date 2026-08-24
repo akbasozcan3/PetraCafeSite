@@ -119,11 +119,52 @@ export default function HakkimizdaPanel() {
         </section>
 
         <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-          <h3 className="font-semibold text-[#F8F8F8]">Paragraflar</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-[#F8F8F8]">Paragraflar & Makale</h3>
+            <span className="text-xs font-semibold text-[#D9A441] bg-[#D9A441]/10 px-2.5 py-1 rounded-lg border border-[#D9A441]/30">
+              Toplam: {((h.lead || "") + " " + (h.body || []).join(" ")).trim().split(/\s+/).filter(Boolean).length} Kelime
+            </span>
+          </div>
+
+          <div className="rounded-xl border border-[#D9A441]/30 bg-[#D9A441]/10 p-4 space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-bold text-[#E8B84B]">
+                Ana Sayfa Kelime Limiti (Önizleme)
+              </label>
+              <span className="text-xs font-bold text-[#FFFFFF]">
+                {h.homeWordLimit || 100} Kelime
+              </span>
+            </div>
+            <p className="text-xs text-[#8A9BB0]">
+              Ana sayfadaki Hakkımızda alanında makalenin kaç kelimesinin gösterileceğini belirler. Devamı için "Devamını Oku →" butonu yer alır.
+            </p>
+            <input
+              type="number"
+              min={30}
+              max={500}
+              value={h.homeWordLimit || 100}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  hakkimizda: {
+                    ...h,
+                    homeWordLimit: parseInt(e.target.value, 10) || 100,
+                  },
+                })
+              }
+              className={fieldClass}
+            />
+          </div>
+
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">
-              Giriş paragrafı
-            </label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-sm font-medium text-[#8A9BB0]">
+                Giriş paragrafı
+              </label>
+              <span className="text-[11px] text-[#6B7A94]">
+                {(h.lead || "").trim().split(/\s+/).filter(Boolean).length} kelime
+              </span>
+            </div>
             <textarea
               value={h.lead}
               onChange={(e) =>
@@ -139,9 +180,14 @@ export default function HakkimizdaPanel() {
           {(h.body || []).map((p, i) => (
             <div key={i} className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-[#8A9BB0]">
-                  Paragraf {i + 1}
-                </label>
+                <div className="flex items-center gap-2">
+                  <label className="text-sm font-medium text-[#8A9BB0]">
+                    Paragraf {i + 1}
+                  </label>
+                  <span className="text-[11px] text-[#6B7A94]">
+                    ({(p || "").trim().split(/\s+/).filter(Boolean).length} kelime)
+                  </span>
+                </div>
                 <Button
                   variant="ghost"
                   size="sm"

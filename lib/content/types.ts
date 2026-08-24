@@ -31,6 +31,7 @@ export interface HakkimizdaContent {
   ozet: { b: string; span: string }[];
   badgeBaslik: string;
   badgeAlt: string;
+  homeWordLimit?: number;
 }
 
 export interface BolumBaslik {
