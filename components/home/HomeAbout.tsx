@@ -9,7 +9,7 @@ import SafeImg from "@/components/site/SafeImg";
 import SiteIcon from "@/components/site/SiteIcon";
 import { displayHours, looksLikeHours } from "@/lib/content/hours";
 import { parseArticleContent, formatInlineText, cleanRawText } from "@/lib/content/markdown-parser";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function HomeAbout({ content }: { content: SiteContent }) {
   const h = content.hakkimizda;
@@ -25,17 +25,16 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
   const parsedBlocks = parseArticleContent(h.body || []);
   const paragraphBlocks = parsedBlocks.filter((b) => b.type === "p" || b.type === "quote");
   
-  // Compact preview paragraphs for homepage
-  const firstPara = paragraphBlocks[0]?.text || "Petra Cafe Restaurant; lezzetin, keyfin, konforun ve güzel anların buluştuğu yer.";
-  const secondPara = paragraphBlocks[1]?.text || "";
+  const firstPara = paragraphBlocks[0]?.text || "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, Petra Yaşam Merkezi içerisinde lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır.";
+  const secondPara = paragraphBlocks[1]?.text || "Günün ilk ışıklarında zengin serpme kahvaltımızla güne başlayabilir; öğle ve akşam saatlerinde dünya mutfağının seçkin lezzetlerini, taş fırın pizzalarımızı ve ızgaralarımızı tadabilirsiniz.";
 
   return (
     <section className="section" id="hakkimizda">
       <div className="wrap grid-2 items-center">
-        {/* SOL: SADE, ŞIK VE KISA TANITIM METNİ */}
+        {/* SOL: SADE VE KISA ÖNİZLEME (TEASER) */}
         <div>
           <p className="eyebrow" data-fade="">
-            {cleanRawText(h.eyebrow || "Hakkımızda")}
+            {cleanRawText(h.eyebrow || "02 · HAKKIMIZDA")}
           </p>
           <h1 className="h2" data-split="">
             {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde cafe & restaurant")}
@@ -54,41 +53,64 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             </p>
           ) : null}
 
-          {/* PARAGRAF METNİ (KISA, NET VE FORMATLI) */}
-          <div className="space-y-2 mb-6" data-fade="">
-            <p className="body" style={{ margin: 0, lineHeight: 1.7, color: "#3E3A32" }}>
-              {formatInlineText(firstPara)}
-            </p>
-            {secondPara && (
-              <p className="body" style={{ margin: 0, lineHeight: 1.7, color: "#3E3A32" }}>
-                {formatInlineText(secondPara)}
+          {/* KONTROLLÜ YÜKSEKLİK VE AŞAĞI DOĞRU BLUR/FADE KATMANI */}
+          <div
+            data-fade=""
+            style={{
+              position: "relative",
+              maxHeight: "145px",
+              overflow: "hidden",
+              marginBottom: "1.25rem",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              <p className="body" style={{ margin: 0, lineHeight: 1.75, color: "#3E3A32" }}>
+                {formatInlineText(firstPara)}
               </p>
-            )}
+              {secondPara && (
+                <p className="body" style={{ margin: 0, lineHeight: 1.75, color: "#3E3A32" }}>
+                  {formatInlineText(secondPara)}
+                </p>
+              )}
+            </div>
+
+            {/* AŞAĞI DOĞRU YUMUŞAK GRADIENT FADE + HAFİF BLUR EFEKTİ */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "85px",
+                background: "linear-gradient(to bottom, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.65) 45%, rgba(251, 248, 241, 1) 100%)",
+                backdropFilter: "blur(1.5px)",
+                pointerEvents: "none",
+              }}
+            />
           </div>
 
-          {/* DEVAMINI OKU & HAKKIMIZDA SAYFASI BUTONU */}
-          <div className="mb-6" data-fade="">
+          {/* DOĞRUDAN /hakkimizda ROUTE NAVIGATION BUTONU */}
+          <div data-fade="" style={{ marginBottom: "1.75rem" }}>
             <Link
               href="/hakkimizda"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "10px",
-                padding: "11px 22px",
+                gap: "8px",
+                padding: "12px 24px",
                 borderRadius: "14px",
                 background: "linear-gradient(135deg, #D9A441 0%, #B8842C 100%)",
                 color: "#0D0F0A",
                 fontSize: "0.92rem",
                 fontWeight: 800,
                 textDecoration: "none",
-                boxShadow: "0 8px 24px -4px rgba(217, 164, 65, 0.4)",
+                boxShadow: "0 8px 24px -4px rgba(217, 164, 65, 0.45)",
                 transition: "all 0.25s ease",
               }}
               className="hover:scale-[1.02] active:scale-[0.98]"
             >
-              <BookOpen size={18} />
-              <span>Devamını Oku & Hikayemiz</span>
-              <ArrowRight size={17} />
+              <span>Devamını Oku</span>
+              <ArrowRight size={18} />
             </Link>
           </div>
 
