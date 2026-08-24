@@ -186,8 +186,15 @@ export default function SiteNav({
           Number.parseFloat(
             getComputedStyle(document.documentElement).getPropertyValue("--nav-h")
           ) || 72;
-        const offset = window.innerWidth <= 860 ? 14 : 24;
-        const top = el.getBoundingClientRect().top + window.scrollY - navH - offset;
+        const rect = el.getBoundingClientRect();
+        const availableHeight = window.innerHeight - navH;
+        let top: number;
+        if (window.innerWidth > 860 && rect.height < availableHeight) {
+          top = rect.top + window.scrollY - navH - Math.max(16, (availableHeight - rect.height) / 2);
+        } else {
+          const offset = window.innerWidth <= 860 ? 14 : 24;
+          top = rect.top + window.scrollY - navH - offset;
+        }
         window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
         history.replaceState(null, "", `#${hash}`);
         window.dispatchEvent(new Event("hashchange"));

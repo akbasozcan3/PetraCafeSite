@@ -315,7 +315,7 @@ export default function HomeReservation({
             {bolum?.eyebrow || "Rezervasyon"}
           </p>
           <h2 className="h2" data-split="">
-            {bolum?.baslik || "Masanızı ayırtın"}
+            {(bolum?.baslik || "Masanızı ayırtın").replace(/Masınızı/gi, "Masanızı")}
           </h2>
           {bolum?.lead ? (
             <p className="lead" data-fade="">
