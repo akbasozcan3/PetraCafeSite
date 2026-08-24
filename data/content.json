@@ -161,37 +161,35 @@
     "metin": ""
   },
   "hakkimizda": {
-    "eyebrow": "HAKKIMIZDA & YAŞAM ALANIMIZ",
-    "baslik": "Petra Yaşam Merkezi'nde Cafe & Restaurant Deneyimi",
-    "answerBaslik": "Kısaca Petra",
-    "answerMetin": "Petra Cafe Restaurant; Çekmeköy Taşdelen'de Petra Yaşam Merkezi bünyesinde zengin dünya mutfağı, serpme kahvaltı, taş fırın lezzetleri, İtalyan tatlı ve kokteylleri, açık yüzme havuzu ve VIP localarıyla günün her saati kesintisiz hizmet veren ayrıcalıklı bir yaşam kompleksidir.",
-    "lead": "Keyif, lezzet ve konforun buluştuğu nokta — sabahtan geceye leziz sofralar, havuz kenarında serin anlar ve unutulmaz anılar.",
+    "eyebrow": "Hakkımızda",
+    "baslik": "Petra Yaşam Merkezi'nde cafe & restaurant",
+    "answerBaslik": "Kısaca",
+    "answerMetin": "Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve, nargile ve havuz–plaj sunar.",
+    "lead": "Keyif, konfor ve kalite — kahvaltıdan akşam yemeğine, havuz kenarından organizasyona.",
     "body": [
-      "Petra Cafe Restaurant; İstanbul Anadolu Yakası'nın yükselen değeri Çekmeköy Taşdelen'de, Megakent Sitesi içerisinde yer alan Petra Yaşam Merkezi'nde konuklarını ağırlamaktadır. Şehrin gürültüsünden uzak, ferah ve huzurlu bir ortamda; gastronomi ile sosyal yaşamı aynı çatı altında buluşturuyoruz.",
-      "Günün ilk ışıklarında zengin serpme kahvaltımız, sıcak pişilerimiz ve taze demlenmiş çay eşliğinde başlayan lezzet yolculuğumuz; öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dana antrikot, taş fırın pizzalar, el yapımı burgerler ve taze makarnalarla devam eder.",
-      "Yaz sezonunda 09:00 - 18:00 saatleri arasında hizmet veren açık yüzme havuzumuz, çocuk havuzumuz ve güneşlenme alanlarımızla Petra; aileniz ve sevdiklerinizle tatil konseptini şehre taşıyor. Havuz başında serinlerken özel kokteyllerimiz, İtalyan tatlılarımız ve zengin nargile seçeneklerimiz gününüze eşlik eder.",
-      "Doğum günleri, evlilik teklifleri, kurumsal yemekler, mezuniyet ve özel kutlamalarınız için profesyonel ekibimizle özel masa düzenlemeleri ve menü planlamaları sunuyoruz."
+      "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, Petra Yaşam Merkezi içerisinde lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Günün her saatine eşlik eden zengin menüsü, ferah atmosferi ve havuz başı deneyimiyle Petra; yalnızca yemek yemek için değil, sevdiklerinizle unutulmaz anlar biriktirmek için tasarlandı.",
+      "Günün ilk ışıklarında zengin serpme kahvaltımız ve çıtır lezzetlerimizle güne harika bir başlangıç yapabilir; öğle ve akşam saatlerinde dünya mutfağının seçkin lezzetlerini, taş fırın pizzalarımızı ve ızgaralarımızı tadabilirsiniz."
     ],
     "ozet": [
       {
         "b": "08:00–02:00",
-        "span": "Cafe & Mutfak Her Gün"
+        "span": "cafe her gün"
       },
       {
         "b": "09:00–18:00",
-        "span": "Havuz & Beach Sezonu"
+        "span": "havuz"
       },
       {
-        "b": "240+ Çeşit",
-        "span": "Zengin Dünya Menüsü"
+        "b": "Kahvaltı",
+        "span": "serpme servis"
       },
       {
-        "b": "VIP Localar",
-        "span": "Havuz Kenarı & Salon"
+        "b": "Dünya",
+        "span": "mutfağı"
       }
     ],
-    "badgeBaslik": "Petra Yaşam Merkezi",
-    "badgeAlt": "Cafe · Restaurant · Pool & Beach"
+    "badgeBaslik": "Petra",
+    "badgeAlt": "Cafe · Restaurant · Pool"
   },
   "bolumlar": {
     "menu": {
