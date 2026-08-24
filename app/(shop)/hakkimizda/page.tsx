@@ -7,6 +7,7 @@ import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
 import {
   cleanRawText,
+  formatInlineText,
   parseArticleContent,
   renderSemanticBlocks,
 } from "@/lib/content/markdown-parser";
@@ -21,6 +22,8 @@ import {
   MessageCircle,
   Sparkles,
   MapPin,
+  Clock,
+  ShieldCheck,
 } from "lucide-react";
 
 export const revalidate = 60;
@@ -106,6 +109,17 @@ export default async function HakkimizdaPage() {
     "Merhaba, Petra Cafe Restaurant hakkında bilgi ve rezervasyon için yazıyorum."
   );
 
+  /* ─── Giriş / Lead Temizleme ─── */
+  const rawLead = h.lead || "";
+  const leadLines = rawLead
+    .split(/\r?\n/)
+    .map((l: string) => cleanRawText(l))
+    .filter(Boolean);
+  const formattedLead =
+    leadLines.length > 0
+      ? leadLines.join(" — ")
+      : "İstanbul Çekmeköy Taşdelen'de gastronomi, açık yüzme havuzu ve sosyal yaşamı kusursuz bir uyumla buluşturan seçkin bir merkez.";
+
   /* ─── Makale Blokları (Markdown / Semantic HTML) ─── */
   const rawBody = h.body || [];
   const articleBlocks = parseArticleContent(
@@ -119,16 +133,15 @@ export default async function HakkimizdaPage() {
   );
 
   /* ─── 4'lü Sayaç / İstatistikler ─── */
+  const rawStats = (h.stats || h.ozet || []) as any[];
   const statsList: any[] =
-    (h.stats as any[])?.length > 0
-      ? (h.stats as any[])
-      : (h.ozet as any[])?.length > 0
-      ? (h.ozet as any[])
+    rawStats.length > 0
+      ? rawStats
       : [
-          { b: "08:00 – 02:00", span: "Hizmet Saatleri" },
-          { b: "240+", span: "Menü Çeşidi" },
-          { b: "1000+ m²", span: "Sosyal Yaşam Alanı" },
-          { b: "09:00 – 18:00", span: "Pool & Beach" },
+          { b: "08:00 – 02:00", span: "Hizmet Saatleri", sub: "Her gün kesintisiz açık" },
+          { b: "240+", span: "Menü Çeşidi", sub: "Dünya mutfağı ve lezzetler" },
+          { b: "1000+ m²", span: "Sosyal Yaşam Alanı", sub: "Açık havuz ve restoran" },
+          { b: "09:00 – 18:00", span: "Pool & Beach", sub: "Yaz sezonu boyunca" },
         ];
 
   /* ─── 4 Ana Deneyim Kartı ─── */
@@ -141,6 +154,7 @@ export default async function HakkimizdaPage() {
             title: "Dünya Mutfağı & Izgaralar",
             desc: "Marine dana antrikot, taş fırında çıtır pizzalar, el yapımı makarnalar ve taze Akdeniz salataları.",
             tag: "Usta Şeflerden",
+            hours: "11:30 – 01:30",
             features: ["Taş Fırın Pizza", "Marine Izgara Etler", "El Yapımı Makarnalar"],
           },
           {
@@ -148,6 +162,7 @@ export default async function HakkimizdaPage() {
             title: "Zengin Serpme Kahvaltı",
             desc: "Taş fırından sıcak pişiler, köy peynirleri, sucuklu yumurta, bal-kaymak ve sınırsız demlik çay.",
             tag: "Her Sabah Taze",
+            hours: "08:00 – 14:00",
             features: ["Sınırsız Demlik Çay", "Taş Fırın Pişi", "Doğal Köy Ürünleri"],
           },
           {
@@ -155,6 +170,7 @@ export default async function HakkimizdaPage() {
             title: "Pool & Beach Kulübü",
             desc: "Tertemiz yetişkin ve çocuk havuzu, konforlu şezlonglar, VIP localar ve cankurtaran desteği.",
             tag: "Yaz Sezonu Boyunca",
+            hours: "09:00 – 18:00",
             features: ["Yetişkin & Çocuk Havuzu", "VIP Loca & Şezlong", "Hijyenik Su Analizi"],
           },
           {
@@ -162,11 +178,27 @@ export default async function HakkimizdaPage() {
             title: "Özel Gün & Organizasyon",
             desc: "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetler için özel masa ve menü planlaması.",
             tag: "Unutulmaz Anlar",
+            hours: "Tüm Gün Rezervasyonlu",
             features: ["Özel Masa Süslemesi", "Kişiye Özel Menü", "Pasta Servisi"],
           },
         ];
 
   const expIcons = [UtensilsCrossed, Coffee, Waves, PartyPopper];
+
+  /* ─── Tesis İmkânları / Amenities ─── */
+  const rawAmenities: any = h.amenities;
+  const amenitiesList: string[] = Array.isArray(rawAmenities)
+    ? (rawAmenities as string[])
+    : typeof rawAmenities === "string" && rawAmenities.trim()
+    ? rawAmenities.split(",").map((s: string) => s.trim()).filter(Boolean)
+    : [
+        "Açık Yüzme & Çocuk Havuzu",
+        "Açık Teras & Klimalı Salonlar",
+        "Geniş Otopark İmkânı",
+        "Ücretsiz Yüksek Hızlı Wi-Fi",
+        "Nargile & Lounge Alanı",
+        "Özel Organizasyon & Davet Masaları",
+      ];
 
   /* ─── SSS / Sıkça Sorulan Sorular ─── */
   const faqs: any[] = (h.faqs as any[])?.length > 0 ? (h.faqs as any[]) : [];
@@ -241,8 +273,7 @@ export default async function HakkimizdaPage() {
         </h1>
 
         <p className="about-head-sec__lead">
-          {cleanRawText(h.lead) ||
-            "İstanbul Çekmeköy Taşdelen'de gastronomi, açık yüzme havuzu ve sosyal yaşamı kusursuz bir uyumla buluşturan seçkin bir merkez."}
+          {formatInlineText(formattedLead)}
         </p>
 
         <div className="about-head-sec__actions">
@@ -326,6 +357,11 @@ export default async function HakkimizdaPage() {
             <div className="about-stat-item" key={i}>
               <b>{cleanRawText(st.b)}</b>
               <span>{cleanRawText(st.span)}</span>
+              {st.sub ? (
+                <small style={{ display: "block", fontSize: "11.5px", color: "var(--muted, #6E6A5C)", marginTop: "4px", fontWeight: 500 }}>
+                  {cleanRawText(st.sub)}
+                </small>
+              ) : null}
             </div>
           ))}
         </div>
@@ -359,6 +395,12 @@ export default async function HakkimizdaPage() {
                     <span className="about-exp-card__tag">{cleanRawText(item.tag)}</span>
                   )}
                   <h3>{cleanRawText(item.title)}</h3>
+                  {item.hours ? (
+                    <div style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "12px", color: "var(--brass-lo, #B8842C)", fontWeight: 700, marginBottom: "8px" }}>
+                      <Clock size={12} />
+                      <span>{cleanRawText(item.hours)}</span>
+                    </div>
+                  ) : null}
                   <p>{cleanRawText(item.desc)}</p>
                 </div>
                 {Array.isArray(item.features) && item.features.length > 0 && (
@@ -378,13 +420,72 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          5. ÖZEL GÜNLER & KUTLAMALAR (%100 Beyaz Yazı & Kontrast)
+          5. TESİS İMKÂNLARI & AYRICALIKLAR
+          ═══════════════════════════════════════════════════════ */}
+      {amenitiesList.length > 0 && (
+        <section
+          style={{
+            padding: "24px 28px",
+            background: "#FFFFFF",
+            borderRadius: "20px",
+            border: "1px solid var(--line, rgba(13, 15, 10, 0.1))",
+            boxShadow: "0 4px 16px -6px rgba(13, 15, 10, 0.05)",
+          }}
+          aria-label="Tesis İmkânları"
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
+            <ShieldCheck size={18} color="var(--brass-lo, #B8842C)" />
+            <h3 style={{ margin: 0, fontSize: "16px", fontWeight: 700, color: "var(--ink, #0D0F0A)" }}>
+              Tesis Olanakları & Hizmet Standartları
+            </h3>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            {amenitiesList.map((amenity, idx) => (
+              <span
+                key={idx}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  padding: "7px 16px",
+                  borderRadius: "999px",
+                  background: "rgba(124, 139, 79, 0.1)",
+                  border: "1px solid rgba(124, 139, 79, 0.25)",
+                  color: "var(--ink, #0D0F0A)",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                }}
+              >
+                <CheckCircle2 size={13} color="var(--olive-lo, #5A6838)" />
+                {cleanRawText(amenity)}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════
+          6. ÖZEL GÜNLER & KUTLAMALAR (%100 Beyaz Yazı & Kontrast)
           ═══════════════════════════════════════════════════════ */}
       <section className="about-events-sec" aria-labelledby="about-events-heading">
-        <div className="about-events-box" style={{ background: "#16190F", color: "#F4EEE1" }}>
+        <div
+          className="about-events-box"
+          style={{
+            backgroundColor: "#16190F",
+            color: "#F4EEE1",
+          }}
+        >
           {/* Sol: Metin */}
           <div>
-            <p className="eyebrow" style={{ color: "var(--brass, #D9A441)", margin: "0 0 10px" }}>
+            <p
+              className="eyebrow"
+              style={{
+                color: "#D9A441",
+                margin: "0 0 10px",
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+              }}
+            >
               ÖZEL GÜNLER & ETKİNLİKLER
             </p>
             <h2
@@ -402,10 +503,11 @@ export default async function HakkimizdaPage() {
             </h2>
             <p
               style={{
-                color: "rgba(244, 238, 225, 0.92)",
+                color: "#F4EEE1",
                 fontSize: "15px",
                 lineHeight: 1.7,
                 margin: "0 0 20px",
+                opacity: 0.95,
               }}
             >
               {cleanRawText(
@@ -423,9 +525,9 @@ export default async function HakkimizdaPage() {
                 <span
                   key={ti}
                   style={{
-                    background: "rgba(244, 238, 225, 0.12)",
+                    backgroundColor: "rgba(244, 238, 225, 0.12)",
                     color: "#FFFFFF",
-                    borderColor: "rgba(244, 238, 225, 0.25)",
+                    borderColor: "rgba(244, 238, 225, 0.3)",
                   }}
                 >
                   {cleanRawText(tag)}
@@ -480,7 +582,7 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          6. SSS / SIKÇA SORULAN SORULAR (Varsa)
+          7. SSS / SIKÇA SORULAN SORULAR (Varsa)
           ═══════════════════════════════════════════════════════ */}
       {faqs.length > 0 && (
         <section className="section" id="sss" style={{ padding: 0 }} aria-labelledby="about-faq-heading">
@@ -500,11 +602,17 @@ export default async function HakkimizdaPage() {
       )}
 
       {/* ═══════════════════════════════════════════════════════
-          7. SON CTA (%100 Beyaz Yazı & Yüksek Kontrast)
+          8. SON CTA (%100 Beyaz Yazı & Yüksek Kontrast)
           ═══════════════════════════════════════════════════════ */}
       <section className="about-cta-sec" aria-label="Rezervasyon & İletişim">
-        <div className="about-cta-card" style={{ background: "#16190F", color: "#F4EEE1" }}>
-          <p className="eyebrow" style={{ color: "var(--brass, #D9A441)", margin: 0 }}>
+        <div
+          className="about-cta-card"
+          style={{
+            backgroundColor: "#16190F",
+            color: "#F4EEE1",
+          }}
+        >
+          <p className="eyebrow" style={{ color: "#D9A441", margin: 0, fontWeight: 700 }}>
             REZERVASYON & İLETİŞİM
           </p>
           <h2
@@ -520,11 +628,12 @@ export default async function HakkimizdaPage() {
           </h2>
           <p
             style={{
-              color: "rgba(244, 238, 225, 0.9)",
+              color: "#F4EEE1",
               fontSize: "15.5px",
               lineHeight: 1.6,
               maxWidth: "54ch",
               margin: 0,
+              opacity: 0.95,
             }}
           >
             Sevdiklerinizle lezzet, konfor ve keyif dolu anlar için hemen yerinizi ayırtın.
