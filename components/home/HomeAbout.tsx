@@ -19,7 +19,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
 
   if (!h) return null;
 
-  // Admin'den belirlenen kelime limiti (varsayılan 100 kelime, 503 veya üzeri)
+  // Admin'den belirlenen kelime limiti (varsayılan 100 kelime)
   const wordLimit = typeof h.homeWordLimit === "number" && h.homeWordLimit > 0 ? h.homeWordLimit : 100;
   
   const rawParagraphs: string[] = Array.isArray(h.body) 
@@ -28,7 +28,8 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
 
   const fallbackParagraphs = [
     "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Zengin menümüz, sıcak atmosferimiz ve ferah açık havuz alanımızla misafirlerimize sadece bir restoran değil, unutulmaz anlar sunan bir buluşma noktası vadediyoruz.",
-    "Günün her saatine uygun lezzetlerimizle hizmetinizdeyiz. Sabahları zengin serpme kahvaltımızla güne enerjik bir başlangıç yapabilir, öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dünya mutfağından seçkin lezzetlerin, ızgaraların ve çıtır taş fırın pizzaların tadını çıkarabilirsiniz."
+    "Günün her saatine uygun lezzetlerimizle hizmetinizdeyiz. Sabahları zengin serpme kahvaltımızla güne enerjik bir başlangıç yapabilir, öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dünya mutfağından seçkin lezzetlerin, ızgaraların ve çıtır taş fırın pizzaların tadını çıkarabilirsiniz.",
+    "Yaz aylarında açık yüzme havuzumuz ve pool & beach alanımızla şehir hayatının stresinden uzaklaşıp serinliğin ve güneşin tadını çıkarabilirsiniz. Doğum günleri, evlilik teklifleri, özel kutlamalar ve kurumsal etkinlikler için sunduğumuz özel organizasyon masaları ve menü seçenekleriyle en değerli anlarınızı kusursuz kılıyoruz."
   ];
 
   const sourceParagraphs = rawParagraphs.length > 0 ? rawParagraphs : fallbackParagraphs;
@@ -84,44 +85,83 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             </p>
           ) : null}
 
-          {/* ADMİNDEN BELİRLENEN KELİME LİMİTİNE GÖRE DİNAMİK PARAGRAFLAR */}
-          <div data-fade="" style={{ marginBottom: "1.5rem", display: "flex", flexDirection: "column", gap: "14px" }}>
-            {displayParagraphs.map((paragraph, pIdx) => (
-              <p 
-                key={pIdx} 
-                className="body" 
-                style={{ 
-                  margin: 0, 
-                  lineHeight: 1.85, 
-                  fontSize: "0.95rem",
-                  color: "#383C30" 
+          {/* DİNAMİK PARAGRAFLAR + ELEGANT BLUR & FADE EFEKTİ */}
+          <div 
+            data-fade="" 
+            style={{ 
+              position: "relative",
+              marginBottom: "1.5rem"
+            }}
+          >
+            <div
+              style={{
+                display: "flex", 
+                flexDirection: "column", 
+                gap: "14px",
+                maskImage: isTruncated 
+                  ? "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.35) 85%, rgba(0,0,0,0) 100%)" 
+                  : "none",
+                WebkitMaskImage: isTruncated 
+                  ? "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.35) 85%, rgba(0,0,0,0) 100%)" 
+                  : "none",
+                paddingBottom: isTruncated ? "24px" : "0"
+              }}
+            >
+              {displayParagraphs.map((paragraph, pIdx) => (
+                <p 
+                  key={pIdx} 
+                  className="body" 
+                  style={{ 
+                    margin: 0, 
+                    lineHeight: 1.85, 
+                    fontSize: "0.95rem",
+                    color: "#383C30" 
+                  }}
+                >
+                  {formatInlineText(paragraph)}
+                </p>
+              ))}
+            </div>
+
+            {/* Yumuşak Blur & Arka Plan Erimesi Katmanı */}
+            {isTruncated && (
+              <div 
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: "80px",
+                  background: "linear-gradient(180deg, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.6) 50%, rgba(251, 248, 241, 0.95) 100%)",
+                  pointerEvents: "none",
+                  backdropFilter: "blur(2px)",
+                  WebkitBackdropFilter: "blur(2px)"
                 }}
-              >
-                {formatInlineText(paragraph)}
-              </p>
-            ))}
+              />
+            )}
           </div>
 
-          {/* DOĞRUDAN /hakkimizda ROUTE NAVIGATION BUTONU */}
+          {/* SİYAH HAP TASARIMLI "DEVAMINI OKU" BUTONU */}
           <div data-fade="" style={{ marginBottom: "1.75rem" }}>
             <Link
               href="/hakkimizda"
-              className="btn btn--brass"
+              className="btn btn--char"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                padding: "11px 22px",
-                borderRadius: "12px",
-                fontWeight: 800,
+                padding: "12px 24px",
+                borderRadius: "999px",
+                fontWeight: 700,
                 fontSize: "0.92rem",
                 textDecoration: "none",
-                background: "var(--brass, #D9A441)",
-                color: "#0D0F0A",
-                boxShadow: "0 6px 18px rgba(217, 164, 65, 0.35)",
+                background: "#0D0F0A",
+                color: "#FFFFFF",
+                boxShadow: "0 6px 18px rgba(13, 15, 10, 0.25)",
+                transition: "all 0.2s ease"
               }}
             >
-              <span>{isTruncated ? "Devamını Oku & Tüm Detaylar" : "Hakkımızda Sayfasını İncele"}</span>
+              <span>Devamını Oku</span>
               <span>→</span>
             </Link>
           </div>
