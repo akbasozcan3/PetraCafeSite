@@ -2590,8 +2590,8 @@ p.hero-welcome__eyebrow,
 .foot,
 .site-home .foot,
 .site-shop .foot {
-  background: #0D0F0A !important;
-  color: #FFFFFF !important;
+  background: var(--footer-bg, #0D0F0A);
+  color: var(--footer-text, #FFFFFF);
 }
 
 .foot__name,

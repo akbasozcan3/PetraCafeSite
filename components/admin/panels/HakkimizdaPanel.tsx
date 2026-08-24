@@ -576,6 +576,49 @@ export function HeroPanel() {
               </div>
               </>
             )}
+
+            {/* Hero Loadingi (Kapı Açılıyor) */}
+            <div className="mt-4 pt-4 border-t border-white/[0.08] space-y-3">
+              <h4 className="text-sm font-semibold text-[#E8B84B]">Hero Loadingi (Kapı Açılıyor)</h4>
+              <p className="text-xs text-[#8A9BB0]">
+                3D kapı ve hero sahneleri yüklenirken ekranda dönen çemberin ve yükleme yazısının içeriği ve rengi.
+              </p>
+              <div className="grid gap-3 md:grid-cols-2">
+                <Input
+                  label="Hero Loading Metni"
+                  value={content.hero.bootText || ""}
+                  placeholder="Kapı açılıyor"
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      hero: {
+                        ...content.hero,
+                        bootText: e.target.value,
+                      },
+                    })
+                  }
+                />
+                <ColorField
+                  label="Hero Loading Rengi (Metin & Dönen İkon)"
+                  value={content.hero.textStyles?.boot?.color || "#D9A441"}
+                  onChange={(val) =>
+                    setContent({
+                      ...content,
+                      hero: {
+                        ...content.hero,
+                        textStyles: {
+                          ...(content.hero.textStyles || {}),
+                          boot: {
+                            ...(content.hero.textStyles?.boot || {}),
+                            color: val,
+                          },
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+            </div>
           </div>
           <HeroTextEditor
             imageUrl={

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { displayHours, nextBookableDate, reservationSlotsForDate } from "@/lib/content/hours";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
@@ -45,6 +45,39 @@ export default function HomeReservation({
 
   // Steps Durumu: 1 = Tarih/Saat/Kişi, 2 = Masa Seçimi, 3 = İletişim & Onay/Ödeme
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
+  const formRef = useRef<HTMLDivElement>(null);
+  const isFirstMount = useRef(true);
+
+  // Adımlar arasında geçiş yapıldığında formun başına profesyonel yumuşak scroll
+  useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+
+    const scrollToForm = () => {
+      if (!formRef.current) return;
+      const navH =
+        parseInt(
+          getComputedStyle(document.documentElement).getPropertyValue("--nav-h") || "72",
+          10
+        ) || 72;
+      const offset = navH + 20; // Form başlığı header'ın altında kalmayacak şekilde rahat boşluk
+      const elementPosition = formRef.current.getBoundingClientRect().top + window.scrollY;
+      const targetY = Math.max(0, elementPosition - offset);
+
+      window.scrollTo({
+        top: targetY,
+        behavior: "smooth",
+      });
+    };
+
+    const frameId = requestAnimationFrame(() => {
+      setTimeout(scrollToForm, 30);
+    });
+
+    return () => cancelAnimationFrame(frameId);
+  }, [currentStep]);
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -310,6 +343,8 @@ export default function HomeReservation({
 
         {/* Sağ Alan: Adımlı Rezervasyon Formu (Steps Wizard) */}
         <div
+          ref={formRef}
+          id="rezervasyonForm"
           className="form petra-form rsv__form"
           data-fade=""
           style={{

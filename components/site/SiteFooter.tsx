@@ -47,10 +47,12 @@ export default function SiteFooter({
 }: {
   content: Pick<
     SiteContent,
-    "footer" | "images" | "brand" | "waFloat" | "iletisim" | "legal"
+    "footer" | "images" | "brand" | "waFloat" | "iletisim" | "legal" | "theme"
   >;
 }) {
   const footer = content.footer;
+  const footerBg = content.theme?.footerBg || "#0D0F0A";
+  const footerText = content.theme?.footerText || "#FFFFFF";
   const year = new Date().getFullYear();
   const brand =
     content.brand?.displayName || footer?.markaAdi || "Petra Cafe Restaurant";
@@ -85,7 +87,17 @@ export default function SiteFooter({
 
   return (
     <>
-      <footer className="foot" data-fade="">
+      <footer
+        className="foot"
+        data-fade=""
+        style={{
+          background: footerBg,
+          backgroundColor: footerBg,
+          color: footerText,
+          ["--footer-bg" as string]: footerBg,
+          ["--footer-text" as string]: footerText,
+        }}
+      >
         <div className="wrap">
           <div className="foot__grid" data-stagger="">
             <div className="foot__brand">

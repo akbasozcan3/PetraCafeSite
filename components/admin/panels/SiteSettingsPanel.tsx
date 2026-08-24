@@ -5,6 +5,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { api } from "@/lib/api/client";
 import { useAdminContent } from "@/lib/context/AdminContentContext";
 import Input from "@/components/admin/ui/Input";
+import ColorField from "@/components/admin/ui/ColorField";
 import Button from "@/components/admin/ui/Button";
 import SaveBar from "@/components/admin/ui/SaveBar";
 import AdminPageHeader, {
@@ -12,6 +13,7 @@ import AdminPageHeader, {
   AdminGate,
 } from "@/components/admin/AdminPageHeader";
 import type { FooterColumn, FooterLink } from "@/lib/content/types";
+import { resolveTheme } from "@/lib/content/theme";
 
 export default function SiteSettingsPanel() {
   const { setContent } = useAdminContent();
@@ -371,6 +373,26 @@ export default function SiteSettingsPanel() {
                     setContent({
                       ...content,
                       footer: { ...footer, whatsappEtiket: e.target.value },
+                    })
+                  }
+                />
+                <ColorField
+                  label="Footer Arka Plan Rengi (Zemin)"
+                  value={resolveTheme(content.theme).footerBg}
+                  onChange={(val) =>
+                    setContent({
+                      ...content,
+                      theme: { ...resolveTheme(content.theme), footerBg: val },
+                    })
+                  }
+                />
+                <ColorField
+                  label="Footer Yazı Rengi"
+                  value={resolveTheme(content.theme).footerText}
+                  onChange={(val) =>
+                    setContent({
+                      ...content,
+                      theme: { ...resolveTheme(content.theme), footerText: val },
                     })
                   }
                 />

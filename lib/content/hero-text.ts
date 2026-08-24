@@ -28,7 +28,7 @@ export const HERO_TEXT_LABELS: Record<HeroTextKey, string> = {
   mark: "Marka",
   slogan: "Slogan",
   scroll: "Kaydır ipucu",
-  boot: "Yüklenirken",
+  boot: "Hero Loadingi (Kapı Açılıyor)",
   welcomeEyebrow: "Karşılama üst etiket",
   welcomeTitle: "Karşılama başlık",
   welcomeLead: "Karşılama alt metin",
@@ -172,6 +172,7 @@ export function buildHeroTextCss(desktop?: HeroTextMap | null, mobile?: HeroText
         ? "#scrollHint.gate__scroll,.gate .gate__scroll{display:none!important}"
         : typeCss(".gate .gate__scroll-text,#scrollHint .gate__scroll-text", map.scroll, 12),
       layerCss(".gate .gate__boot-text", map.boot),
+      `.gate .gate__boot-spin, .gate__boot-spin { border-top-color: ${map.boot.color || "#D9A441"} !important; }`,
       typeCss(".gate .hero-welcome__eyebrow", map.welcomeEyebrow, eyeMax),
       typeCss(".gate .hero-welcome__title", map.welcomeTitle, titleMax),
       typeCss(".gate .hero-welcome__lead", map.welcomeLead, leadMax),

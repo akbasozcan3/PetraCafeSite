@@ -3872,7 +3872,7 @@ html .site-home #gateBoot .gate__boot-text,
 html #gateBoot .gate__boot-text,
 #gateBoot p,
 .gate__boot-text {
-  color: #D9A441 !important;
+  color: var(--hero-boot-color, #D9A441) !important;
   text-shadow: none !important;
   font-weight: 600 !important;
 }
@@ -3880,7 +3880,7 @@ html #gateBoot .gate__boot-text,
 html .site-home .gate__boot-spin,
 html #gateBoot .gate__boot-spin,
 .gate__boot-spin {
-  border-top-color: #D9A441 !important;
+  border-top-color: var(--hero-boot-color, #D9A441) !important;
 }
 
 html .site-home .gate .gate__scroll-text,
@@ -3977,13 +3977,13 @@ html .site-home .pasta-sec .pasta-price .pasta-note {
 }
 
 /* ========================================================
-   FOOTER: HER ZAMAN NET BEYAZ VE ALTIN
+   FOOTER: ADMİN TEMA VE ZEMİN UYUMLU
    ======================================================== */
 html .site-home .foot,
 html .site-shop .foot,
 html .foot {
-  background: #0D0F0A !important;
-  color: #FFFFFF !important;
+  background: var(--footer-bg, #0D0F0A) !important;
+  color: var(--footer-text, #FFFFFF) !important;
 }
 
 html .site-home .foot__name,
