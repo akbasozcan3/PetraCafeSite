@@ -22,7 +22,7 @@ import {
   Flame,
   Coffee
 } from "lucide-react";
-import { parseArticleContent } from "@/lib/content/markdown-parser";
+import { parseArticleContent, formatInlineText, cleanRawText } from "@/lib/content/markdown-parser";
 
 export const revalidate = 60;
 
@@ -163,7 +163,7 @@ export default async function HakkimizdaPage() {
                       key={idx}
                       className="text-2xl sm:text-3xl font-extrabold text-[#0D0F0A] font-serif pt-4 pb-1 border-b border-[#0D0F0A]/10"
                     >
-                      {block.text}
+                      {cleanRawText(block.text || "")}
                     </h2>
                   );
                 }
@@ -173,7 +173,7 @@ export default async function HakkimizdaPage() {
                       key={idx}
                       className="text-xl sm:text-2xl font-bold text-[#0D0F0A] font-serif pt-3 pb-1"
                     >
-                      {block.text}
+                      {cleanRawText(block.text || "")}
                     </h3>
                   );
                 }
@@ -183,7 +183,7 @@ export default async function HakkimizdaPage() {
                       key={idx}
                       className="text-base sm:text-lg font-bold text-[#B8842C] pt-2"
                     >
-                      {block.text}
+                      {cleanRawText(block.text || "")}
                     </h4>
                   );
                 }
@@ -193,7 +193,7 @@ export default async function HakkimizdaPage() {
                       key={idx}
                       className="border-l-4 border-[#D9A441] pl-4 py-2 my-3 italic text-[#5A554A] bg-[#F4EEE1]/50 rounded-r-xl"
                     >
-                      {block.text}
+                      {formatInlineText(block.text || "")}
                     </blockquote>
                   );
                 }
@@ -201,14 +201,14 @@ export default async function HakkimizdaPage() {
                   return (
                     <ul key={idx} className="space-y-2 pl-5 list-disc text-sm text-[#3E3A32]">
                       {block.items.map((item, i) => (
-                        <li key={i}>{item}</li>
+                        <li key={i}>{formatInlineText(item)}</li>
                       ))}
                     </ul>
                   );
                 }
                 return (
                   <p key={idx} className="text-base leading-relaxed text-[#3E3A32]">
-                    {block.text}
+                    {formatInlineText(block.text || "")}
                   </p>
                 );
               })}
