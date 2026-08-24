@@ -704,7 +704,7 @@ export default function HakkimizdaPanel() {
                 },
               })
             }
-            placeholder="🎂 Doğum Günü Kutlamaları, 💍 Evlilik Teklifi & Yıldönümü, 👔 Kurumsal Şirket Yemekleri"
+            placeholder="Doğum Günü Kutlamaları, Evlilik Teklifi & Yıldönümü, Kurumsal Şirket Yemekleri"
           />
         </section>
 

@@ -166,9 +166,9 @@ export const DEFAULT_CONTENT: SiteContent = {
     eventsTitle: "Unutulmaz Anlar İçin Özel Organizasyon Masaları",
     eventsLead: "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde; havuz başı terasımız veya klimalı şık salonlarımızda profesyonel masa düzeni, özel menü planlaması ve pasta servisi sunuyoruz.",
     eventsTags: [
-      "🎂 Doğum Günü Kutlamaları",
-      "💍 Evlilik Teklifi & Yıldönümü",
-      "👔 Kurumsal Şirket Yemekleri"
+      "Doğum Günü Kutlamaları",
+      "Evlilik Teklifi & Yıldönümü",
+      "Kurumsal Şirket Yemekleri"
     ],
     amenities: [
       "Açık Yüzme & Çocuk Havuzu",

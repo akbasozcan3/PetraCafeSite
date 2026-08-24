@@ -27,7 +27,10 @@ import {
   Navigation,
   MessageCircle,
   HelpCircle,
-  HeartHandshake
+  HeartHandshake,
+  Cake,
+  Heart,
+  Briefcase
 } from "lucide-react";
 
 export const revalidate = 60;
@@ -106,6 +109,7 @@ export default async function HakkimizdaPage() {
     { b: "09:00 – 18:00", span: "Açık Havuz & Beach Kulübü", sub: "Yetişkin & çocuk havuzu, şezlonglar ve VIP localar" },
     { b: "1000+ m²", span: "Sosyal Yaşam & Teras Alanı", sub: "Doğum günü, özel kutlama ve kurumsal davetler" }
   ]);
+  const statIcons = [Clock, UtensilsCrossed, Waves, Sparkles];
 
   // 4 Temel Deneyim Alanı (Admin dinamik + fallback)
   const defaultExperiences = [
@@ -226,15 +230,25 @@ export default async function HakkimizdaPage() {
   const eventsTitle = h.eventsTitle || "Unutulmaz Anlar İçin Özel Organizasyon Masaları";
   const eventsLead = h.eventsLead || "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde; havuz başı terasımız veya klimalı şık salonlarımızda profesyonel masa düzeni, özel menü planlaması ve pasta servisi sunuyoruz.";
   const eventsTags = (h.eventsTags && h.eventsTags.length > 0) ? h.eventsTags : [
-    "🎂 Doğum Günü Kutlamaları",
-    "💍 Evlilik Teklifi & Yıldönümü",
-    "👔 Kurumsal Şirket Yemekleri"
+    "Doğum Günü Kutlamaları",
+    "Evlilik Teklifi & Yıldönümü",
+    "Kurumsal Şirket Yemekleri"
   ];
+
+  // Etkinlik rozetleri için akıllı Lucide ikon seçimi
+  const getEventTagIcon = (tag: string) => {
+    const t = cleanRawText(tag).toLowerCase();
+    if (t.includes("doğum") || t.includes("pasta") || t.includes("kutlama") || t.includes("birthday")) return Cake;
+    if (t.includes("evlilik") || t.includes("teklif") || t.includes("yıldönüm") || t.includes("düğün") || t.includes("nişan") || t.includes("sevgi")) return Heart;
+    if (t.includes("kurumsal") || t.includes("şirket") || t.includes("toplantı") || t.includes("iş") || t.includes("yemek")) return Briefcase;
+    if (t.includes("özel") || t.includes("parti") || t.includes("davet")) return PartyPopper;
+    return Sparkles;
+  };
 
   const parsedBlocks = parseArticleContent(h.body || []);
 
   return (
-    <div className="shop-about" style={{ padding: "16px 0 60px", color: "#0D0F0A", maxWidth: "1280px", margin: "0 auto" }}>
+    <div className="shop-about" style={{ padding: "16px 0 60px", color: "var(--ink, #0D0F0A)", maxWidth: "1280px", margin: "0 auto" }}>
       
       {/* 1. BREADCRUMBS VE ÜST NAVİGASYON */}
       <nav 
@@ -244,14 +258,14 @@ export default async function HakkimizdaPage() {
           alignItems: "center", 
           gap: "8px", 
           fontSize: "13px", 
-          color: "#6E6A5C", 
+          color: "var(--muted, #6E6A5C)", 
           marginBottom: "28px" 
         }}
       >
         <Link 
           href="/" 
           style={{ 
-            color: "#0D0F0A", 
+            color: "var(--ink, #0D0F0A)", 
             textDecoration: "none", 
             fontWeight: 600, 
             transition: "color 0.2s ease" 
@@ -259,25 +273,25 @@ export default async function HakkimizdaPage() {
         >
           Ana Sayfa
         </Link>
-        <span style={{ color: "#D9A441" }}>/</span>
-        <span style={{ color: "#B8842C", fontWeight: 700 }}>Hakkımızda</span>
+        <span style={{ color: "var(--brass, #D9A441)" }}>/</span>
+        <span style={{ color: "var(--brass-lo, #B8842C)", fontWeight: 700 }}>Hakkımızda</span>
       </nav>
 
       {/* 2. HERO ÜST VİTRİN VE HIZLI AKSİYON ALANI */}
       <div 
         style={{ 
-          background: "linear-gradient(135deg, #141E2E 0%, #0A0F18 100%)",
+          background: "linear-gradient(135deg, #16190F 0%, #0D0F0A 100%)",
           borderRadius: "28px",
           padding: "clamp(28px, 5vw, 48px)",
           color: "#FFFFFF",
           marginBottom: "48px",
           position: "relative",
           overflow: "hidden",
-          border: "1px solid rgba(217, 164, 65, 0.3)",
-          boxShadow: "0 20px 48px -12px rgba(0, 0, 0, 0.35)"
+          border: "1px solid rgba(217, 164, 65, 0.35)",
+          boxShadow: "0 20px 48px -12px rgba(0, 0, 0, 0.4)"
         }}
       >
-        {/* Arka Plan Işık Efekti */}
+        {/* Arka Plan Altın Işıma */}
         <div 
           style={{
             position: "absolute",
@@ -286,7 +300,7 @@ export default async function HakkimizdaPage() {
             width: "500px",
             height: "500px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(217, 164, 65, 0.18) 0%, rgba(217, 164, 65, 0) 70%)",
+            background: "radial-gradient(circle, rgba(217, 164, 65, 0.2) 0%, rgba(217, 164, 65, 0) 70%)",
             pointerEvents: "none"
           }}
         />
@@ -301,13 +315,13 @@ export default async function HakkimizdaPage() {
 
           <h1 
             style={{ 
-              fontSize: "clamp(28px, 4.5vw, 46px)", 
-              fontWeight: 900, 
+              fontSize: "clamp(28px, 4.5vw, 48px)", 
+              fontWeight: 800, 
               margin: "0 0 16px 0", 
-              lineHeight: 1.18, 
-              fontFamily: "var(--font-serif, 'Playfair Display', Georgia, serif)",
+              lineHeight: 1.15, 
+              fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
               color: "#FFFFFF",
-              letterSpacing: "-0.01em"
+              letterSpacing: "-0.02em"
             }}
           >
             {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde Cafe & Restaurant")}
@@ -316,11 +330,12 @@ export default async function HakkimizdaPage() {
           <p 
             style={{ 
               fontSize: "clamp(15px, 2vw, 18px)", 
-              color: "rgba(255, 255, 255, 0.88)", 
+              color: "rgba(244, 238, 225, 0.88)", 
               lineHeight: 1.65, 
               margin: "0 0 28px 0", 
               fontWeight: 400,
-              maxWidth: "760px"
+              maxWidth: "760px",
+              fontFamily: "var(--f-body, sans-serif)"
             }}
           >
             {formatInlineText(h.lead || "Keyif, konfor ve kalite — kahvaltıdan akşam yemeğine, havuz kenarından organizasyona.")}
@@ -338,7 +353,7 @@ export default async function HakkimizdaPage() {
                 borderRadius: "12px",
                 background: "linear-gradient(135deg, #E5B555 0%, #C49030 100%)",
                 color: "#0D0F0A",
-                fontWeight: 900,
+                fontWeight: 800,
                 fontSize: "0.92rem",
                 textDecoration: "none",
                 boxShadow: "0 6px 20px rgba(229, 181, 85, 0.35)",
@@ -359,7 +374,7 @@ export default async function HakkimizdaPage() {
                 borderRadius: "12px",
                 background: "rgba(255, 255, 255, 0.12)",
                 color: "#FFFFFF",
-                fontWeight: 800,
+                fontWeight: 700,
                 fontSize: "0.92rem",
                 textDecoration: "none",
                 border: "1px solid rgba(255, 255, 255, 0.25)",
@@ -395,7 +410,7 @@ export default async function HakkimizdaPage() {
         </div>
       </div>
 
-      {/* 3. İSTATİSTİKLER & PRESTİJ GÖSTERGELERİ (DİNAMİK GRID) */}
+      {/* 3. İSTATİSTİKLER (DİNAMİK GRID) */}
       <div 
         style={{ 
           display: "grid", 
@@ -404,24 +419,29 @@ export default async function HakkimizdaPage() {
           marginBottom: "48px" 
         }}
       >
-        {statsList.map((st: any, i: number) => (
-          <div key={i} style={{ padding: "20px 24px", borderRadius: "18px", background: "#FFFFFF", border: "1.5px solid rgba(184, 132, 44, 0.2)", boxShadow: "0 6px 18px rgba(0,0,0,0.03)", display: "flex", flexDirection: "column", gap: "4px" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <span style={{ fontSize: "1.65rem", fontWeight: 900, color: "#B8842C", fontFamily: "var(--font-serif, serif)" }}>
-                {cleanRawText(st.b || "")}
+        {statsList.map((st: any, i: number) => {
+          const StatIcon = statIcons[i % statIcons.length] || Sparkles;
+          return (
+            <div key={i} style={{ padding: "20px 24px", borderRadius: "18px", background: "#FFFFFF", border: "1.5px solid rgba(184, 132, 44, 0.2)", boxShadow: "0 6px 18px rgba(0,0,0,0.03)", display: "flex", flexDirection: "column", gap: "4px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: "1.65rem", fontWeight: 800, color: "var(--brass-lo, #B8842C)", fontFamily: "var(--f-head, serif)", letterSpacing: "-0.01em" }}>
+                  {cleanRawText(st.b || "")}
+                </span>
+                <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(217, 164, 65, 0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <StatIcon size={18} color="#D9A441" />
+                </div>
+              </div>
+              <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--ink, #0D0F0A)" }}>
+                {cleanRawText(st.span || "")}
               </span>
-              <Clock size={20} color="#D9A441" />
+              {st.sub && (
+                <span style={{ fontSize: "0.78rem", color: "var(--muted, #6E6A5C)" }}>
+                  {cleanRawText(st.sub)}
+                </span>
+              )}
             </div>
-            <span style={{ fontSize: "0.88rem", fontWeight: 800, color: "#0D0F0A" }}>
-              {cleanRawText(st.span || "")}
-            </span>
-            {st.sub && (
-              <span style={{ fontSize: "0.78rem", color: "#6E6A5C" }}>
-                {cleanRawText(st.sub)}
-              </span>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* 4. 2 KOLONLU EDİTORYAL HİKAYE VE VİTRİN DÜZENİ */}
@@ -451,11 +471,11 @@ export default async function HakkimizdaPage() {
             >
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
                 <Sparkles size={16} color="#B8842C" />
-                <b style={{ color: "#9E6E1A", fontSize: "13px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                <b style={{ color: "#9E6E1A", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em" }}>
                   {cleanRawText(h.answerBaslik || "Kısaca Petra")}
                 </b>
               </div>
-              <p style={{ margin: 0, fontSize: "15px", color: "#2C2F26", lineHeight: 1.7, fontWeight: 500 }}>
+              <p style={{ margin: 0, fontSize: "15px", color: "var(--ink, #0D0F0A)", lineHeight: 1.7, fontWeight: 500 }}>
                 {formatInlineText(h.answerMetin)}
               </p>
             </div>
@@ -465,12 +485,13 @@ export default async function HakkimizdaPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
             <h2 
               style={{ 
-                fontSize: "clamp(20px, 3vw, 26px)", 
-                fontWeight: 900, 
-                color: "#0D0F0A", 
+                fontSize: "clamp(22px, 3vw, 28px)", 
+                fontWeight: 800, 
+                color: "var(--ink, #0D0F0A)", 
                 margin: "8px 0 0 0",
-                fontFamily: "var(--font-serif, serif)",
-                lineHeight: 1.3
+                fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+                lineHeight: 1.25,
+                letterSpacing: "-0.015em"
               }}
             >
               Gastronomi, Konfor ve Keyif Dolu Bir Yaşam Alanı
@@ -482,13 +503,13 @@ export default async function HakkimizdaPage() {
                   <h3
                     key={idx}
                     style={{
-                      fontSize: "19px",
+                      fontSize: "20px",
                       fontWeight: 800,
-                      color: "#0D0F0A",
+                      color: "var(--ink, #0D0F0A)",
                       margin: "14px 0 2px 0",
                       paddingBottom: "6px",
                       borderBottom: "1px solid rgba(13, 15, 10, 0.08)",
-                      fontFamily: "var(--font-serif, serif)",
+                      fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
                     }}
                   >
                     {cleanRawText(block.text || "")}
@@ -502,7 +523,7 @@ export default async function HakkimizdaPage() {
                     style={{
                       fontSize: "16px",
                       fontWeight: 700,
-                      color: "#B8842C",
+                      color: "var(--brass-lo, #B8842C)",
                       margin: "10px 0 2px 0",
                     }}
                   >
@@ -548,7 +569,7 @@ export default async function HakkimizdaPage() {
 
           {/* Temel Değerler (Dinamik Liste) */}
           <div style={{ paddingTop: "12px", borderTop: "1px solid rgba(13, 15, 10, 0.08)" }}>
-            <h3 style={{ fontSize: "17px", fontWeight: 900, color: "#0D0F0A", marginBottom: "16px", fontFamily: "var(--font-serif, serif)" }}>
+            <h3 style={{ fontSize: "18px", fontWeight: 800, color: "var(--ink, #0D0F0A)", marginBottom: "16px", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
               Bizi Farklı Kılan Temel Değerlerimiz
             </h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "14px" }}>
@@ -571,9 +592,9 @@ export default async function HakkimizdaPage() {
                       <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <Icon size={16} />
                       </div>
-                      <b style={{ fontSize: "14px", fontWeight: 800, color: "#0D0F0A" }}>{cleanRawText(v.title || "")}</b>
+                      <b style={{ fontSize: "14px", fontWeight: 800, color: "var(--ink, #0D0F0A)" }}>{cleanRawText(v.title || "")}</b>
                     </div>
-                    <p style={{ margin: 0, fontSize: "13px", color: "#6E6A5C", lineHeight: 1.6 }}>{cleanRawText(v.desc || "")}</p>
+                    <p style={{ margin: 0, fontSize: "13px", color: "var(--muted, #6E6A5C)", lineHeight: 1.6 }}>{cleanRawText(v.desc || "")}</p>
                   </div>
                 );
               })}
@@ -612,10 +633,10 @@ export default async function HakkimizdaPage() {
                     ŞU AN AÇIK (08:00 – 02:00)
                   </span>
                 </div>
-                <b style={{ color: "#0D0F0A", display: "block", fontSize: "1.18rem", fontWeight: 900, fontFamily: "var(--font-serif, serif)" }}>
+                <b style={{ color: "var(--ink, #0D0F0A)", display: "block", fontSize: "1.18rem", fontWeight: 800, fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
                   {cleanRawText(h.badgeBaslik || "Petra Yaşam Merkezi")}
                 </b>
-                <span style={{ color: "#B8842C", display: "block", fontSize: "0.85rem", fontWeight: 800, marginTop: 2 }}>
+                <span style={{ color: "var(--brass-lo, #B8842C)", display: "block", fontSize: "0.85rem", fontWeight: 800, marginTop: 2 }}>
                   {cleanRawText(h.badgeAlt || "Cafe · Restaurant · Pool & Beach")}
                 </span>
               </div>
@@ -636,7 +657,7 @@ export default async function HakkimizdaPage() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <h4 style={{ fontSize: "0.88rem", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.06em", color: "#0D0F0A", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+              <h4 style={{ fontSize: "0.88rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--ink, #0D0F0A)", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
                 <MapPin size={18} color="#D9A441" />
                 Konum & İletişim
               </h4>
@@ -659,7 +680,7 @@ export default async function HakkimizdaPage() {
                   gap: "8px", 
                   padding: "11px", 
                   borderRadius: "12px", 
-                  background: "#0D0F0A", 
+                  background: "var(--ink, #0D0F0A)", 
                   color: "#FFFFFF", 
                   fontSize: "0.82rem", 
                   fontWeight: 800, 
@@ -678,7 +699,7 @@ export default async function HakkimizdaPage() {
                   gap: "8px", 
                   padding: "11px", 
                   borderRadius: "12px", 
-                  background: "#141E2E", 
+                  background: "#16190F", 
                   color: "#FFFFFF", 
                   fontSize: "0.82rem", 
                   fontWeight: 800, 
@@ -703,7 +724,7 @@ export default async function HakkimizdaPage() {
                 padding: "12px", 
                 borderRadius: "12px", 
                 background: "#25D366", 
-                color: "#FFFFFF", 
+                color: "#0B140C", 
                 fontSize: "0.88rem", 
                 fontWeight: 800, 
                 textDecoration: "none", 
@@ -728,7 +749,7 @@ export default async function HakkimizdaPage() {
                 padding: "10px",
                 borderRadius: "10px",
                 background: "rgba(13, 15, 10, 0.05)",
-                color: "#0D0F0A",
+                color: "var(--ink, #0D0F0A)",
                 fontSize: "0.82rem",
                 fontWeight: 700,
                 textDecoration: "none",
@@ -744,16 +765,19 @@ export default async function HakkimizdaPage() {
 
       </div>
 
-      {/* 5. DÖRT TEMEL YAŞAM DENEYİMİ SÜTUNU (DİNAMİK) */}
+      {/* 5. DÖRT TEMEL YAŞAM DENEYİMİ SÜTUNU */}
       <section style={{ margin: "64px 0" }}>
         <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 36px auto" }}>
-          <span style={{ fontSize: "0.82rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#B8842C", display: "inline-block", marginBottom: "8px", background: "rgba(184, 132, 44, 0.12)", padding: "4px 14px", borderRadius: "20px" }}>
-            ✦ AYRICALIKLI YAŞAM KONSEPTİ
-          </span>
-          <h2 style={{ fontSize: "clamp(2rem, 3.8vw, 2.7rem)", fontWeight: 900, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: "0 0 10px 0", lineHeight: 1.2 }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "8px", background: "rgba(184, 132, 44, 0.12)", padding: "5px 14px", borderRadius: "20px" }}>
+            <Sparkles size={13} color="#B8842C" />
+            <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "#B8842C" }}>
+              AYRICALIKLI YAŞAM KONSEPTİ
+            </span>
+          </div>
+          <h2 style={{ fontSize: "clamp(2rem, 3.8vw, 2.7rem)", fontWeight: 800, color: "var(--ink, #0D0F0A)", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", margin: "0 0 10px 0", lineHeight: 1.2, letterSpacing: "-0.02em" }}>
             Petra'da Sizi Neler Bekliyor?
           </h2>
-          <p style={{ margin: 0, fontSize: "1rem", color: "#6E6A5C", lineHeight: 1.6 }}>
+          <p style={{ margin: 0, fontSize: "1rem", color: "var(--muted, #6E6A5C)", lineHeight: 1.6 }}>
             Günün her anına özel gurme tatlar, açık havada serinlik ve huzurlu sosyal buluşma alanları.
           </p>
         </div>
@@ -790,12 +814,12 @@ export default async function HakkimizdaPage() {
                   </div>
 
                   {item.tag && (
-                    <span style={{ fontSize: "0.74rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", color: "#B8842C", display: "block", marginBottom: "4px" }}>
+                    <span style={{ fontSize: "0.74rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#B8842C", display: "block", marginBottom: "4px" }}>
                       {item.tag}
                     </span>
                   )}
                   
-                  <h3 style={{ fontSize: "1.25rem", fontWeight: 800, color: "#0D0F0A", margin: "0 0 10px 0", fontFamily: "var(--font-serif, serif)" }}>
+                  <h3 style={{ fontSize: "1.25rem", fontWeight: 800, color: "var(--ink, #0D0F0A)", margin: "0 0 10px 0", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
                     {cleanRawText(item.title || "")}
                   </h3>
                   
@@ -820,7 +844,7 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-      {/* 6. BİR GÜNÜN PETRA'DAKİ AKIŞI (DİNAMİK TIMELINE) */}
+      {/* 6. BİR GÜNÜN PETRA'DAKİ AKIŞI (TIMELINE) */}
       <section 
         style={{ 
           margin: "64px 0", 
@@ -831,13 +855,13 @@ export default async function HakkimizdaPage() {
         }}
       >
         <div style={{ textAlign: "center", maxWidth: "620px", margin: "0 auto 36px auto" }}>
-          <span style={{ fontSize: "0.8rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
+          <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
             24 SAAT YAŞAM DOLU
           </span>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 900, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: "0 0 8px 0" }}>
+          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 800, color: "var(--ink, #0D0F0A)", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", margin: "0 0 8px 0", letterSpacing: "-0.015em" }}>
             Bir Günün Petra'daki Akışı
           </h2>
-          <p style={{ margin: 0, fontSize: "0.95rem", color: "#6E6A5C" }}>
+          <p style={{ margin: 0, fontSize: "0.95rem", color: "var(--muted, #6E6A5C)" }}>
             Sabahın taze enerjisinden gecenin keyifli sohbetlerine uzanan gün boyu deneyim.
           </p>
         </div>
@@ -860,7 +884,7 @@ export default async function HakkimizdaPage() {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: "0.78rem", fontWeight: 900, color: "#FFFFFF", background: "#0D0F0A", padding: "4px 10px", borderRadius: "8px" }}>
+                  <span style={{ fontSize: "0.78rem", fontWeight: 800, color: "#FFFFFF", background: "var(--ink, #0D0F0A)", padding: "4px 10px", borderRadius: "8px" }}>
                     {cleanRawText(step.time || "")}
                   </span>
                   <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -868,7 +892,7 @@ export default async function HakkimizdaPage() {
                   </div>
                 </div>
 
-                <h3 style={{ fontSize: "1.05rem", fontWeight: 800, color: "#0D0F0A", margin: 0, fontFamily: "var(--font-serif, serif)" }}>
+                <h3 style={{ fontSize: "1.05rem", fontWeight: 800, color: "var(--ink, #0D0F0A)", margin: 0, fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
                   {cleanRawText(step.title || "")}
                 </h3>
 
@@ -881,12 +905,12 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-      {/* 7. ÖZEL DAVETLER & ORGANİZASYON KUTUSU (DİNAMİK) */}
+      {/* 7. ÖZEL DAVETLER & ORGANİZASYON KUTUSU (LÜKS & YÜKSEK KONTRAST) */}
       <section style={{ margin: "56px 0" }}>
         <div 
           style={{ 
             borderRadius: "28px", 
-            background: "linear-gradient(135deg, #161D2B 0%, #0F141E 100%)", 
+            background: "linear-gradient(135deg, #16190F 0%, #0D0F0A 100%)", 
             color: "#FFFFFF", 
             padding: "clamp(32px, 5vw, 52px)", 
             display: "grid", 
@@ -897,33 +921,93 @@ export default async function HakkimizdaPage() {
             boxShadow: "0 24px 50px rgba(0,0,0,0.3)" 
           }}
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "0.8rem", fontWeight: 800, color: "#E5B555", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-              <PartyPopper size={16} color="#E5B555" />
-              ÖZEL GÜNLER & KUTLAMALAR
-            </span>
-            <h3 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", fontWeight: 900, fontFamily: "var(--font-serif, serif)", color: "#FFFFFF", margin: 0, lineHeight: 1.2 }}>
+          {/* Sol Kolon */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", width: "fit-content", padding: "6px 14px", borderRadius: "30px", background: "rgba(217, 164, 65, 0.18)", border: "1px solid rgba(217, 164, 65, 0.4)" }}>
+              <PartyPopper size={15} color="#E5B555" />
+              <span style={{ fontSize: "11px", fontWeight: 800, color: "#E5B555", textTransform: "uppercase", letterSpacing: "0.14em" }}>
+                ÖZEL GÜNLER & KUTLAMALAR
+              </span>
+            </div>
+
+            <h3 
+              style={{ 
+                fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", 
+                fontWeight: 800, 
+                fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", 
+                color: "#FFFFFF", 
+                margin: 0, 
+                lineHeight: 1.2,
+                letterSpacing: "-0.015em"
+              }}
+            >
               {cleanRawText(eventsTitle)}
             </h3>
-            <p style={{ margin: 0, fontSize: "0.95rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.7 }}>
+
+            <p 
+              style={{ 
+                margin: 0, 
+                fontSize: "0.98rem", 
+                color: "rgba(244, 238, 225, 0.88)", 
+                lineHeight: 1.7,
+                fontFamily: "var(--f-body, sans-serif)"
+              }}
+            >
               {cleanRawText(eventsLead)}
             </p>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", paddingTop: "6px" }}>
-              {eventsTags.map((tag: string, tidx: number) => (
-                <span key={tidx} style={{ padding: "6px 14px", borderRadius: "8px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", fontSize: "0.82rem", fontWeight: 700, color: "#E5B555" }}>
-                  {cleanRawText(tag)}
-                </span>
-              ))}
+            {/* SVG İkonlu Lüks Etkinlik Rozetleri (EMOJİSİZ) */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", paddingTop: "4px" }}>
+              {eventsTags.map((tag: string, tidx: number) => {
+                const TagIcon = getEventTagIcon(tag);
+                return (
+                  <div 
+                    key={tidx} 
+                    style={{ 
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "8px 16px", 
+                      borderRadius: "30px", 
+                      background: "rgba(217, 164, 65, 0.12)", 
+                      border: "1px solid rgba(217, 164, 65, 0.3)", 
+                      fontSize: "0.85rem", 
+                      fontWeight: 700, 
+                      color: "#E5B555" 
+                    }}
+                  >
+                    <TagIcon size={15} color="#E5B555" />
+                    <span>{cleanRawText(tag)}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px", background: "rgba(255,255,255,0.05)", padding: "28px", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.12)" }}>
-            <h4 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "#FFFFFF", fontFamily: "var(--font-serif, serif)" }}>
-              Etkinlik Detayları & Rezervasyon
-            </h4>
-            <p style={{ margin: 0, fontSize: "0.88rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.6 }}>
-              Kişi sayısı ve etkinlik tarihinizi ileterek organizasyon ekibimizden hızlıca teklif alabilirsiniz.
+          {/* Sağ Kolon: Rezervasyon & Teklif Kartı */}
+          <div 
+            style={{ 
+              display: "flex", 
+              flexDirection: "column", 
+              gap: "16px", 
+              background: "rgba(255, 255, 255, 0.04)", 
+              padding: "30px", 
+              borderRadius: "22px", 
+              border: "1px solid rgba(217, 164, 65, 0.25)",
+              backdropFilter: "blur(12px)"
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "rgba(217, 164, 65, 0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <CalendarCheck size={18} color="#E5B555" />
+              </div>
+              <h4 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 800, color: "#FFFFFF", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)" }}>
+                Etkinlik Detayları & Rezervasyon
+              </h4>
+            </div>
+
+            <p style={{ margin: 0, fontSize: "0.9rem", color: "rgba(244, 238, 225, 0.78)", lineHeight: 1.6 }}>
+              Kişi sayısı ve etkinlik tarihinizi ileterek organizasyon ekibimizden hızlıca özel menü teklifi alabilirsiniz.
             </p>
             
             <a
@@ -938,11 +1022,12 @@ export default async function HakkimizdaPage() {
                 padding: "13px",
                 borderRadius: "12px",
                 background: "#25D366",
-                color: "#FFFFFF",
+                color: "#0B140C",
                 fontWeight: 800,
                 fontSize: "0.92rem",
                 textDecoration: "none",
-                boxShadow: "0 6px 20px rgba(37, 211, 102, 0.3)"
+                boxShadow: "0 6px 20px rgba(37, 211, 102, 0.3)",
+                transition: "transform 0.2s ease"
               }}
             >
               <MessageCircle size={18} />
@@ -958,12 +1043,13 @@ export default async function HakkimizdaPage() {
                 gap: "8px",
                 padding: "12px",
                 borderRadius: "12px",
-                background: "rgba(255,255,255,0.1)",
+                background: "rgba(255, 255, 255, 0.08)",
                 color: "#FFFFFF",
                 fontWeight: 700,
                 fontSize: "0.88rem",
                 textDecoration: "none",
-                border: "1px solid rgba(255,255,255,0.2)"
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                transition: "background 0.2s ease"
               }}
             >
               <Phone size={15} color="#E5B555" />
@@ -973,13 +1059,13 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-      {/* 8. TESİS İMKANLARI GRID (DİNAMİK) */}
+      {/* 8. TESİS İMKANLARI GRID */}
       <section style={{ margin: "56px 0" }}>
         <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 28px auto" }}>
-          <span style={{ fontSize: "0.8rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
+          <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
             KONFOR VE OLANAKLAR
           </span>
-          <h2 style={{ fontSize: "clamp(1.6rem, 3.2vw, 2.2rem)", fontWeight: 900, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: 0 }}>
+          <h2 style={{ fontSize: "clamp(1.6rem, 3.2vw, 2.2rem)", fontWeight: 800, color: "var(--ink, #0D0F0A)", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", margin: 0, letterSpacing: "-0.015em" }}>
             Tesis İmkânlarımız
           </h2>
         </div>
@@ -1004,7 +1090,7 @@ export default async function HakkimizdaPage() {
                 <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <AmenityIcon size={18} />
                 </div>
-                <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#0D0F0A" }}>
+                <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--ink, #0D0F0A)" }}>
                   {cleanRawText(label)}
                 </span>
               </div>
@@ -1013,16 +1099,16 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-      {/* 9. SIKÇA SORULAN SORULAR (DİNAMİK) */}
+      {/* 9. SIKÇA SORULAN SORULAR */}
       <section style={{ margin: "56px 0" }}>
         <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 32px auto" }}>
-          <span style={{ fontSize: "0.8rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
+          <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
             MERAK EDİLENLER
           </span>
-          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.3rem)", fontWeight: 900, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: "0 0 8px 0" }}>
+          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.3rem)", fontWeight: 800, color: "var(--ink, #0D0F0A)", fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", margin: "0 0 8px 0", letterSpacing: "-0.015em" }}>
             Sıkça Sorulan Sorular
           </h2>
-          <p style={{ margin: 0, fontSize: "0.95rem", color: "#6E6A5C" }}>
+          <p style={{ margin: 0, fontSize: "0.95rem", color: "var(--muted, #6E6A5C)" }}>
             Hakkımızda, rezervasyon ve tesis işleyişi hakkında en çok sorulanlar.
           </p>
         </div>
@@ -1044,7 +1130,7 @@ export default async function HakkimizdaPage() {
             >
               <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                 <HelpCircle size={18} color="#B8842C" style={{ flexShrink: 0, marginTop: "2px" }} />
-                <h3 style={{ fontSize: "1rem", fontWeight: 800, color: "#0D0F0A", margin: 0 }}>
+                <h3 style={{ fontSize: "1rem", fontWeight: 800, color: "var(--ink, #0D0F0A)", margin: 0 }}>
                   {cleanRawText(faq.q || "")}
                 </h3>
               </div>
@@ -1061,7 +1147,7 @@ export default async function HakkimizdaPage() {
         <div 
           style={{ 
             borderRadius: "28px", 
-            background: "linear-gradient(135deg, #0A0F18 0%, #141E2E 100%)", 
+            background: "linear-gradient(135deg, #16190F 0%, #0D0F0A 100%)", 
             color: "#FFFFFF", 
             padding: "clamp(32px, 5vw, 48px)", 
             display: "flex", 
@@ -1069,19 +1155,21 @@ export default async function HakkimizdaPage() {
             alignItems: "center", 
             justifyContent: "space-between", 
             gap: "28px", 
-            border: "1px solid rgba(217, 164, 65, 0.3)", 
+            border: "1px solid rgba(217, 164, 65, 0.35)", 
             boxShadow: "0 24px 50px rgba(0,0,0,0.3)" 
           }}
         >
           <div style={{ maxWidth: "580px", display: "flex", flexDirection: "column", gap: "10px" }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "0.8rem", fontWeight: 800, color: "#E5B555", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-              <CalendarCheck size={16} color="#E5B555" />
-              REZERVASYON & İLETİŞİM
-            </span>
-            <h3 style={{ fontSize: "clamp(1.7rem, 3.5vw, 2.4rem)", fontWeight: 900, fontFamily: "var(--font-serif, serif)", color: "#FFFFFF", margin: 0, lineHeight: 1.25 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", width: "fit-content", padding: "5px 12px", borderRadius: "20px", background: "rgba(217, 164, 65, 0.18)" }}>
+              <CalendarCheck size={15} color="#E5B555" />
+              <span style={{ fontSize: "11px", fontWeight: 800, color: "#E5B555", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                REZERVASYON & İLETİŞİM
+              </span>
+            </div>
+            <h3 style={{ fontSize: "clamp(1.7rem, 3.5vw, 2.4rem)", fontWeight: 800, fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", color: "#FFFFFF", margin: 0, lineHeight: 1.25, letterSpacing: "-0.015em" }}>
               Masanızı veya Locanızı Hemen Ayırtın
             </h3>
-            <p style={{ margin: 0, fontSize: "0.95rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.65 }}>
+            <p style={{ margin: 0, fontSize: "0.95rem", color: "rgba(244, 238, 225, 0.85)", lineHeight: 1.65, fontFamily: "var(--f-body, sans-serif)" }}>
               Hafta sonu zengin serpme kahvaltı, şefin spesiyalleriyle akşam yemeği veya açık havuzda VIP localarımız için yerinizi kolayca ayırtın.
             </p>
           </div>
@@ -1094,7 +1182,7 @@ export default async function HakkimizdaPage() {
                 borderRadius: "14px", 
                 background: "linear-gradient(135deg, #E5B555 0%, #C49030 100%)", 
                 color: "#0D0F0A", 
-                fontWeight: 900, 
+                fontWeight: 800, 
                 fontSize: "0.95rem", 
                 textDecoration: "none", 
                 boxShadow: "0 8px 24px rgba(229,181,85,0.4)" 
@@ -1109,7 +1197,7 @@ export default async function HakkimizdaPage() {
                 borderRadius: "14px", 
                 background: "rgba(255,255,255,0.12)", 
                 color: "#FFFFFF", 
-                fontWeight: 800, 
+                fontWeight: 700, 
                 fontSize: "0.95rem", 
                 textDecoration: "none", 
                 border: "1px solid rgba(255,255,255,0.25)",
