@@ -217,13 +217,17 @@ export default function HakkimizdaPanel() {
 
           <div className="rounded-xl border border-[#D9A441]/30 bg-[#1A1813] p-4 text-xs space-y-2">
             <b className="text-[#E8B84B] flex items-center gap-1.5 font-bold">
-              <span>💡</span> Başlık ve Yazı Biçimlendirme İpuçları:
+              <span>💡</span> Başlık ve Yazı Biçimlendirme İpuçları (SEO Uyumlu):
             </b>
             <div className="grid gap-2 sm:grid-cols-2 text-[#C8B89A]">
-              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono"># Büyük Başlık</code> ➔ Beyaz Büyük Başlık (H1)</div>
-              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">## Alt Başlık</code> ➔ Altın Sarısı Başlık (H2)</div>
-              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">**Kalın Yazı**</code> ➔ <strong>Kalın Metin</strong></div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">## Başlık (H2)</code> ➔ Ana Bölüm Başlığı</div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">### Başlık (H3)</code> ➔ Alt Bölüm Başlığı</div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">#### Başlık (H4)</code> ➔ Bronz Vurgulu Başlık</div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">##### Başlık (H5)</code> ➔ Küçük Rozet Başlık</div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">**Kalın Metin**</code> ➔ <strong>Vurgulu Yazı</strong></div>
               <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">&gt; Alıntı Cümlesi</code> ➔ Vurgulu Alıntı Kutusu</div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">- Liste Maddesi</code> ➔ Madde İmli Liste</div>
+              <div><code className="text-[#E8B84B] bg-black/40 px-1.5 py-0.5 rounded font-mono">[Menü](/menu)</code> ➔ Tıklanabilir İç Link</div>
             </div>
           </div>
 

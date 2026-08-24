@@ -219,46 +219,84 @@ export default async function HakkimizdaPage() {
   const ctaBtn1 = cleanRawText(h.ctaBtn1 || "Masa Rezervasyonu Yap");
   const ctaBtn2 = cleanRawText(h.ctaBtn2 || "Menüyü İncele");
 
-  /* ─── JSON-LD Structured Data (Restaurant & LocalBusiness Schema) ─── */
+  /* ─── JSON-LD Structured Data (@graph: Restaurant + BreadcrumbList + FAQPage) ─── */
+  const jsonLdGraph: any[] = [
+    {
+      "@type": "Restaurant",
+      "@id": "https://petra-cafe-site.vercel.app/#restaurant",
+      name: brandName,
+      image: img,
+      telephone: tel,
+      url: "https://petra-cafe-site.vercel.app/hakkimizda",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: adres,
+        addressLocality: "Çekmeköy",
+        addressRegion: "İstanbul",
+        addressCountry: "TR",
+      },
+      servesCuisine: [
+        "Dünya Mutfağı",
+        "Serpme Kahvaltı",
+        "Pizza",
+        "Izgara",
+        "Tatlı",
+        "Kahve",
+      ],
+      priceRange: "₺₺",
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          opens: "08:00",
+          closes: "02:00",
+        },
+      ],
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Ana Sayfa",
+          item: "https://petra-cafe-site.vercel.app/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Hakkımızda",
+          item: "https://petra-cafe-site.vercel.app/hakkimizda",
+        },
+      ],
+    },
+  ];
+
+  if (faqs.length > 0) {
+    jsonLdGraph.push({
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: cleanRawText(faq.q || faq.soru),
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: cleanRawText(faq.a || faq.cevap),
+        },
+      })),
+    });
+  }
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Restaurant",
-    name: brandName,
-    image: img,
-    telephone: tel,
-    url: "https://petra-cafe-site.vercel.app/hakkimizda",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: adres,
-      addressLocality: "Çekmeköy",
-      addressRegion: "İstanbul",
-      addressCountry: "TR",
-    },
-    servesCuisine: [
-      "Dünya Mutfağı",
-      "Serpme Kahvaltı",
-      "Pizza",
-      "Izgara",
-      "Tatlı",
-      "Kahve",
-    ],
-    priceRange: "₺₺",
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-        ],
-        opens: "08:00",
-        closes: "02:00",
-      },
-    ],
+    "@graph": jsonLdGraph,
   };
 
   /* ─── Koyu Bölüm için Ortak Stil Sabitleri ─── */

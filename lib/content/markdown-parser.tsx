@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 export interface ArticleBlock {
-  type: "h1" | "h2" | "h3" | "p" | "quote" | "list";
+  type: "h1" | "h2" | "h3" | "h4" | "h5" | "p" | "quote" | "list";
   text?: string;
   items?: string[];
 }
@@ -11,15 +11,15 @@ export interface ArticleBlock {
 export function cleanRawText(text: string): string {
   if (!text) return "";
   return text
-    .replace(/^#{1,4}\s+/gm, "")
-    .replace(/(?:\s|^)#{1,4}\s+/g, " ")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/(?:\s|^)#{1,6}\s+/g, " ")
     .trim();
 }
 
 /** Formats inline markdown like **bold**, *italic*, [link](url) safely into React elements */
 export function formatInlineText(text: string, boldColor?: string): React.ReactNode {
   if (!text) return "";
-  const cleaned = text.replace(/^#{1,4}\s*/gm, "");
+  const cleaned = text.replace(/^#{1,6}\s*/gm, "");
 
   // Match links [text](url) and bold **text** and italic *text*
   const tokenRegex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g;
@@ -95,56 +95,58 @@ export function parseArticleContent(input: string | string[] = []): ArticleBlock
 
   const lines = rawText.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
   let currentParagraph = "";
+  let currentListItems: string[] = [];
+
+  const flushParagraph = () => {
+    if (currentParagraph) {
+      blocks.push({ type: "p", text: currentParagraph });
+      currentParagraph = "";
+    }
+  };
+
+  const flushList = () => {
+    if (currentListItems.length > 0) {
+      blocks.push({ type: "list", items: [...currentListItems] });
+      currentListItems = [];
+    }
+  };
 
   for (const line of lines) {
-    if (/^####\s+/.test(line)) {
-      if (currentParagraph) {
-        blocks.push({ type: "p", text: currentParagraph });
-        currentParagraph = "";
-      }
-      blocks.push({ type: "h3", text: line.replace(/^####\s+/, "").trim() });
-    } else if (/^###\s+/.test(line)) {
-      if (currentParagraph) {
-        blocks.push({ type: "p", text: currentParagraph });
-        currentParagraph = "";
-      }
-      blocks.push({ type: "h3", text: line.replace(/^###\s+/, "").trim() });
-    } else if (/^##\s+/.test(line)) {
-      if (currentParagraph) {
-        blocks.push({ type: "p", text: currentParagraph });
-        currentParagraph = "";
-      }
-      blocks.push({ type: "h2", text: line.replace(/^##\s+/, "").trim() });
-    } else if (/^#\s+/.test(line)) {
-      if (currentParagraph) {
-        blocks.push({ type: "p", text: currentParagraph });
-        currentParagraph = "";
-      }
-      blocks.push({ type: "h1", text: line.replace(/^#\s+/, "").trim() });
-    } else if (/^>\s+/.test(line)) {
-      if (currentParagraph) {
-        blocks.push({ type: "p", text: currentParagraph });
-        currentParagraph = "";
-      }
-      blocks.push({ type: "quote", text: line.replace(/^>\s+/, "").trim() });
-    } else if (/^[-*•]\s+/.test(line)) {
-      if (currentParagraph) {
-        blocks.push({ type: "p", text: currentParagraph });
-        currentParagraph = "";
-      }
-      blocks.push({ type: "list", items: [line.replace(/^[-*•]\s+/, "").trim()] });
+    if (/^[-*•]\s+/.test(line)) {
+      flushParagraph();
+      currentListItems.push(line.replace(/^[-*•]\s+/, "").trim());
     } else {
-      if (currentParagraph) {
-        currentParagraph += " " + line;
+      flushList();
+      if (/^#####\s+/.test(line)) {
+        flushParagraph();
+        blocks.push({ type: "h5", text: line.replace(/^#####\s+/, "").trim() });
+      } else if (/^####\s+/.test(line)) {
+        flushParagraph();
+        blocks.push({ type: "h4", text: line.replace(/^####\s+/, "").trim() });
+      } else if (/^###\s+/.test(line)) {
+        flushParagraph();
+        blocks.push({ type: "h3", text: line.replace(/^###\s+/, "").trim() });
+      } else if (/^##\s+/.test(line)) {
+        flushParagraph();
+        blocks.push({ type: "h2", text: line.replace(/^##\s+/, "").trim() });
+      } else if (/^#\s+/.test(line)) {
+        flushParagraph();
+        blocks.push({ type: "h2", text: line.replace(/^#\s+/, "").trim() });
+      } else if (/^>\s+/.test(line)) {
+        flushParagraph();
+        blocks.push({ type: "quote", text: line.replace(/^>\s+/, "").trim() });
       } else {
-        currentParagraph = line;
+        if (currentParagraph) {
+          currentParagraph += " " + line;
+        } else {
+          currentParagraph = line;
+        }
       }
     }
   }
 
-  if (currentParagraph) {
-    blocks.push({ type: "p", text: currentParagraph });
-  }
+  flushList();
+  flushParagraph();
 
   return blocks;
 }
@@ -187,6 +189,39 @@ export function renderSemanticBlocks(blocks: ArticleBlock[]): React.ReactNode[] 
           >
             {formatInlineText(block.text || "")}
           </h3>
+        );
+      case "h4":
+        return (
+          <h4
+            key={idx}
+            style={{
+              fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+              fontSize: "clamp(16px, 1.8vw, 19px)",
+              fontWeight: 600,
+              lineHeight: 1.35,
+              color: "var(--brass-lo, #B8842C)",
+              margin: "12px 0 4px",
+            }}
+          >
+            {formatInlineText(block.text || "")}
+          </h4>
+        );
+      case "h5":
+        return (
+          <h5
+            key={idx}
+            style={{
+              fontFamily: "var(--f-body, 'Inter', sans-serif)",
+              fontSize: "14.5px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+              color: "var(--muted, #6E6A5C)",
+              margin: "10px 0 4px",
+            }}
+          >
+            {formatInlineText(block.text || "")}
+          </h5>
         );
       case "quote":
         return (
