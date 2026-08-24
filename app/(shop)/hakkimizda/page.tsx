@@ -6,9 +6,21 @@ import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
 import { cleanRawText, formatInlineText } from "@/lib/content/markdown-parser";
-import { iconFromLabel } from "@/lib/content/site-icons";
-import SiteIcon from "@/components/site/SiteIcon";
 import { displayHours, looksLikeHours } from "@/lib/content/hours";
+import {
+  UtensilsCrossed,
+  Waves,
+  Coffee,
+  PartyPopper,
+  CheckCircle2,
+  CalendarCheck,
+  Phone,
+  MessageCircle,
+  Clock,
+  Sparkles,
+  MapPin,
+  HelpCircle,
+} from "lucide-react";
 
 export const revalidate = 60;
 
@@ -25,7 +37,12 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     alternates: { canonical: "/hakkimizda" },
-    openGraph: { title, description, type: "website" },
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      images: [{ url: "/assets/cms/hero-ic.webp", width: 1200, height: 630 }],
+    },
   };
 }
 
@@ -40,14 +57,11 @@ export default async function HakkimizdaPage() {
       SITE_PHOTOS.interior
     )
   );
-  const bannerImg = resolveMediaUrl(
+  const imgEvents = resolveMediaUrl(
     liveMedia(
-      content.images?.havuzPlaj || content.images?.icMekan || content.images?.aboutInterior,
-      SITE_PHOTOS.gallery
+      content.images?.galeri?.[0] || content.images?.icMekan || content.images?.aboutInterior,
+      SITE_PHOTOS.interior
     )
-  );
-  const img2 = resolveMediaUrl(
-    liveMedia(content.images?.galeri?.[0] || content.images?.icMekan, SITE_PHOTOS.interior)
   );
 
   /* ─── İletişim ─── */
@@ -55,201 +69,171 @@ export default async function HakkimizdaPage() {
   const telHref = phoneToTelHref(tel);
   const waHref = buildWhatsappUrl(
     content.iletisim?.whatsapp || tel,
-    "Merhaba, Petra Cafe Restaurant hakkında bilgi almak istiyorum."
+    "Merhaba, Petra Cafe Restaurant hakkında bilgi ve rezervasyon için yazıyorum."
   );
 
-  /* ─── Body paragrafları (HomeAbout ile aynı mantık) ─── */
+  /* ─── Body Paragrafları ─── */
   const rawParagraphs: string[] = Array.isArray(h.body)
     ? (h.body as string[]).map((p) => cleanRawText(p)).filter(Boolean)
     : [cleanRawText(String(h.body || ""))].filter(Boolean);
 
   const fallbackParagraphs = [
     "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Zengin menümüz, sıcak atmosferimiz ve ferah açık havuz alanımızla misafirlerimize sadece bir restoran değil, unutulmaz anlar sunan bir buluşma noktası vadediyoruz.",
-    "Günün her saatine uygun lezzetlerimizle hizmetinizdeyiz. Sabahları zengin serpme kahvaltımızla güne enerjik bir başlangıç yapabilir, öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dünya mutfağından seçkin lezzetlerin, ızgaraların ve çıtır taş fırın pizzaların tadını çıkarabilirsiniz.",
-    "Yaz aylarında açık yüzme havuzumuz ve pool & beach alanımızla şehir hayatının stresinden uzaklaşıp serinliğin ve güneşin tadını çıkarabilirsiniz. Doğum günleri, evlilik teklifleri, özel kutlamalar ve kurumsal etkinlikler için sunduğumuz özel organizasyon masaları ve menü seçenekleriyle en değerli anlarınızı kusursuz kılıyoruz.",
+    "Günün her saatine uygun lezzetlerimizle hizmetinizdeyiz. Sabahları zengin serpme kahvaltımızla güne enerjik bir başlangıç yapabilir; öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dünya mutfağından seçkin lezzetlerin, marine ızgaraların ve taş fırın çıtır pizzaların tadını çıkarabilirsiniz.",
+    "Yaz aylarında açık yüzme havuzumuz ve pool & beach kulübümüzle serinliğin ve güneşin tadını çıkarabilirsiniz. Doğum günleri, evlilik teklifleri, özel kutlamalar ve kurumsal davetler için sunduğumuz özel organizasyon masaları ve menü seçenekleriyle en değerli anlarınızı kusursuz kılıyoruz.",
   ];
   const bodyParagraphs = rawParagraphs.length > 0 ? rawParagraphs : fallbackParagraphs;
 
-  /* ─── Özet (stats) ─── */
-  const ozetList: any[] =
-    (h.ozet as any[])?.length > 0
+  /* ─── 4'lü Sayaç / İstatistikler ─── */
+  const statsList: any[] =
+    (h.stats as any[])?.length > 0
+      ? (h.stats as any[])
+      : (h.ozet as any[])?.length > 0
       ? (h.ozet as any[])
       : [
-          { b: "08:00 – 02:00", span: "Günlük Hizmet" },
+          { b: "08:00 – 02:00", span: "Hizmet Saatleri" },
           { b: "240+", span: "Menü Çeşidi" },
-          { b: "1000 m²", span: "Yaşam Alanı" },
-          { b: "9 Yıl", span: "Mutfak Tecrübesi" },
+          { b: "1000+ m²", span: "Sosyal Yaşam Alanı" },
+          { b: "09:00 – 18:00", span: "Pool & Beach" },
         ];
 
-  /* ─── Hizmetler ─── */
-  const hizmetler = (content.hizmetler as any[])?.length
-    ? (content.hizmetler as any[]).slice(0, 6)
-    : [
-        { label: "Restoran & Izgara" },
-        { label: "Serpme Kahvaltı" },
-        { label: "Pool & Beach" },
-        { label: "Özel Organizasyon" },
-        { label: "Nargile Lounge" },
-        { label: "Artisan Kahve" },
-      ];
-
-  /* ─── Deneyimler (Steps — ana sayfadan steps sınıfı) ─── */
+  /* ─── 4 Ana Deneyim Kartı ─── */
   const experiences: any[] =
     (h.experiences as any[])?.length > 0
       ? (h.experiences as any[])
       : [
           {
             n: "01",
-            title: "Dünya Mutfağı",
-            desc: "Marine etler, taş fırın pizzalar, el yapımı makarnalar ve taze Akdeniz salataları.",
+            title: "Dünya Mutfağı & Izgaralar",
+            desc: "Marine dana antrikot, taş fırında çıtır pizzalar, el yapımı makarnalar ve taze Akdeniz salataları.",
+            tag: "Usta Şeflerden",
+            features: ["Taş Fırın Pizza", "Marine Izgara Etler", "El Yapımı Makarnalar"],
           },
           {
             n: "02",
-            title: "Serpme Kahvaltı",
-            desc: "Taş fırından sıcak pişiler, köy peynirleri, sucuklu yumurta, bal-kaymak ve demlik çay.",
+            title: "Zengin Serpme Kahvaltı",
+            desc: "Taş fırından sıcak pişiler, köy peynirleri, sucuklu yumurta, bal-kaymak ve sınırsız demlik çay.",
+            tag: "Her Sabah Taze",
+            features: ["Sınırsız Demlik Çay", "Taş Fırın Pişi", "Doğal Köy Ürünleri"],
           },
           {
             n: "03",
-            title: "Pool & Beach",
-            desc: "Yetişkin & çocuk havuzu, VIP şezlonglar, cankurtaran ve yaz sezonunun keyfini çıkar.",
+            title: "Pool & Beach Kulübü",
+            desc: "Tertemiz yetişkin ve çocuk havuzu, konforlu şezlonglar, VIP localar ve cankurtaran desteği.",
+            tag: "Yaz Sezonu Boyunca",
+            features: ["Yetişkin & Çocuk Havuzu", "VIP Loca & Şezlong", "Hijyenik Su Analizi"],
           },
           {
             n: "04",
-            title: "Özel Günler",
-            desc: "Doğum günü, evlilik teklifi, mezuniyet ve kurumsal davetler için özel masa ve menü.",
+            title: "Özel Gün & Organizasyon",
+            desc: "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetler için özel masa ve menü planlaması.",
+            tag: "Unutulmaz Anlar",
+            features: ["Özel Masa Süslemesi", "Kişiye Özel Menü", "Pasta Servisi"],
           },
         ];
 
-  /* ─── Soru-Cevap (FAQ varsa göster) ─── */
-  const faqList: any[] =
-    (h.faqs as any[])?.length > 0
-      ? (h.faqs as any[]).slice(0, 4)
-      : [];
+  const expIcons = [UtensilsCrossed, Coffee, Waves, PartyPopper];
+
+  /* ─── SSS / Sıkça Sorulan Sorular (varsa) ─── */
+  const faqs: any[] = (h.faqs as any[])?.length > 0 ? (h.faqs as any[]) : [];
 
   return (
-    <>
+    <div className="page-hakkimizda">
       {/* ═══════════════════════════════════════════════════════
-          BREADCRUMB + SAYFA BAŞLIĞI  (style.css .crumbs + .page)
+          1. EDİTORYAL BAŞLIK (Temiz, Hero/Banner Olmayan Başlık)
           ═══════════════════════════════════════════════════════ */}
-      <div className="wrap" style={{ paddingTop: "clamp(28px, 4vw, 44px)" }}>
-        <nav className="crumbs" aria-label="Breadcrumb">
-          <Link href="/">Ana Sayfa</Link>
-          <span>/</span>
-          <span aria-current="page">Hakkımızda</span>
-        </nav>
-      </div>
+      <section className="about-head-sec">
+        <div className="wrap">
+          <nav className="crumbs" aria-label="Breadcrumb">
+            <Link href="/">Ana Sayfa</Link>
+            <span>/</span>
+            <span aria-current="page">Hakkımızda</span>
+          </nav>
 
-      {/* ═══════════════════════════════════════════════════════
-          1. HERO — About Hero (tam-genişlik banner)
-          ═══════════════════════════════════════════════════════ */}
-      <div className="about-hero">
-        <img
-          className="about-hero__bg"
-          src={img}
-          alt=""
-          aria-hidden="true"
-          loading="eager"
-          fetchPriority="high"
-          width={1800}
-          height={900}
-        />
-        <div className="about-hero__overlay" aria-hidden="true" />
-        <div className="wrap about-hero__inner">
-          <p className="about-hero__eyebrow" data-fade="">
-            <span>Petra Yaşam Merkezi</span>
-          </p>
-          <h1 className="about-hero__title" data-split="">
-            {cleanRawText(h.baslik) || "Sadece bir restoran değil, bir yaşam alanı."}
+          <div className="about-head-sec__badge" data-fade="">
+            <Sparkles size={14} />
+            <span>{cleanRawText(h.eyebrow) || "PETRA YAŞAM MERKEZİ"}</span>
+          </div>
+
+          <h1 className="about-head-sec__title" data-split="">
+            {cleanRawText(h.baslik) || "Petra Yaşam Merkezi'nde cafe & restaurant"}
           </h1>
-          <p className="about-hero__lead" data-fade="">
+
+          <p className="about-head-sec__lead" data-fade="">
             {cleanRawText(h.lead) ||
-              "İstanbul Çekmeköy Taşdelen'de gastronomi, açık havuz ve sosyal yaşamı kusursuz buluşturan seçkin bir merkez."}
+              "İstanbul Çekmeköy Taşdelen'de gastronomi, açık yüzme havuzu ve sosyal yaşamı kusursuz bir uyumla buluşturan seçkin bir merkez."}
           </p>
+
+          <div className="about-head-sec__actions" data-fade="">
+            <Link href="/#rezervasyon" className="btn btn--light">
+              <CalendarCheck size={16} />
+              Masa Rezervasyonu
+            </Link>
+            <Link href="/menu" className="btn">
+              Menüyü İncele
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* ═══════════════════════════════════════════════════════
-          2. HAKKIMIZDA DETAY  (HomeAbout ile aynı layout: grid-2)
+          2. HİKAYE & FOTOĞRAF KARTI (2 Kolon Editoryal Grid)
           ═══════════════════════════════════════════════════════ */}
-      <section className="section" id="hakkimizda-detay">
-        <div className="wrap grid-2">
+      <section className="about-story-sec">
+        <div className="wrap">
+          <div className="about-story-grid">
+            {/* Sol: Metinler */}
+            <div className="about-story-text">
+              <p className="eyebrow" data-fade="">BİZİ TANIYIN</p>
+              <h2 className="h2" data-split="" style={{ margin: 0 }}>
+                {cleanRawText(h.answerBaslik) || "Sadece bir restoran değil, bir yaşam alanı."}
+              </h2>
 
-          {/* Sol: Metin İçeriği */}
-          <div>
-            <p className="eyebrow" data-fade="">
-              {cleanRawText(h.eyebrow) || "Hakkımızda"}
-            </p>
-            <h2 className="h2" data-split="">
-              {cleanRawText(h.answerBaslik) || "Petra'yı farklı kılan ne?"}
-            </h2>
+              {h.answerMetin && (
+                <div className="answer" data-fade="" style={{ margin: "4px 0" }}>
+                  <b>Kısaca</b>
+                  <p>{cleanRawText(h.answerMetin)}</p>
+                </div>
+              )}
 
-            {h.answerMetin && (
-              <div className="answer" data-fade="">
-                <b>Kısaca</b>
-                <p>{cleanRawText(h.answerMetin)}</p>
-              </div>
-            )}
-
-            <div data-fade="" style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: "1.5rem" }}>
-              {bodyParagraphs.map((paragraph, pIdx) => (
-                <p
-                  key={pIdx}
-                  className="body"
-                  style={{ margin: 0, lineHeight: 1.85, fontSize: "0.95rem", color: "#383C30" }}
-                >
-                  {formatInlineText(paragraph)}
-                </p>
-              ))}
-            </div>
-
-            {/* Özet Kartları (HomeAbout .ozet sınıfı) */}
-            {ozetList.length > 0 && (
-              <div className="ozet" data-stagger="">
-                {ozetList.map((item: any, i: number) => (
-                  <div className="ozet__i" key={i}>
-                    <span className="ozet__ico" aria-hidden="true">
-                      <SiteIcon name={iconFromLabel(`${item.b} ${item.span}`)} size={20} />
-                    </span>
-                    <b>
-                      {looksLikeHours(item.b)
-                        ? displayHours(content.iletisim)
-                        : cleanRawText(item.b)}
-                    </b>
-                    <span>{cleanRawText(item.span)}</span>
-                  </div>
+              <div data-fade="" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {bodyParagraphs.map((paragraph, pIdx) => (
+                  <p key={pIdx}>
+                    {formatInlineText(paragraph)}
+                  </p>
                 ))}
               </div>
-            )}
-          </div>
 
-          {/* Sağ: Tilt Card Fotoğraf (HomeAbout ile birebir aynı) */}
-          <div data-fade="">
-            <div className="tilt-card">
-              <div className="tilt-card__inner">
+              {/* Hap Etiketler */}
+              <div className="about-story-pills" data-fade="">
+                {["Dünya Mutfağı", "Serpme Kahvaltı", "Pool & Beach", "Özel Davetler", "Nargile Lounge"].map(
+                  (tag) => (
+                    <span key={tag}>{tag}</span>
+                  )
+                )}
+              </div>
+            </div>
+
+            {/* Sağ: Fotoğraf Kartı */}
+            <div data-fade="">
+              <div className="about-photo-card">
                 <SafeImg
                   src={img}
-                  alt={cleanRawText(h.badgeBaslik) ? `${cleanRawText(h.badgeBaslik)} — iç mekân` : "Petra Restaurant iç mekân"}
+                  alt="Petra Cafe Restaurant İç Mekan"
                   fallback={SITE_PHOTOS.interior}
+                  width={1200}
+                  height={900}
                   loading="eager"
-                  width={1800}
-                  height={1350}
                 />
-                <div
-                  className="tilt-card__badge"
-                  style={{
-                    background: "var(--card-bg, #ffffff)",
-                    border: "1.5px solid var(--card-border, rgba(217, 164, 65, 0.4))",
-                    backdropFilter: "blur(14px)",
-                    borderRadius: 14,
-                    padding: "12px 18px",
-                    boxShadow: "0 14px 34px -12px rgba(0, 0, 0, 0.5)",
-                  }}
-                >
-                  <b style={{ color: "var(--card-text, #0d0f0a)", display: "block", fontSize: "1.18rem", fontWeight: 800 }}>
-                    {cleanRawText(h.badgeBaslik) || "Petra"}
-                  </b>
-                  <span style={{ color: "var(--brass-lo, #b8842c)", display: "block", fontSize: "0.85rem", fontWeight: 800, marginTop: 3, letterSpacing: "0.02em" }}>
-                    {cleanRawText(h.badgeAlt) || "Cafe · Restaurant · Pool"}
+                <div className="about-photo-card__status">
+                  <span className="about-photo-card__dot" />
+                  <span>08:00 – 02:00 AÇIK</span>
+                </div>
+                <div className="about-photo-card__badge">
+                  <b>{cleanRawText(h.badgeBaslik) || "Petra Cafe & Restaurant"}</b>
+                  <span>
+                    <MapPin size={12} style={{ display: "inline", verticalAlign: "middle", marginRight: 4 }} />
+                    Taşdelen, Çekmeköy · İstanbul
                   </span>
                 </div>
               </div>
@@ -259,156 +243,13 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          3. HİZMET KARTLARİ — (.section--warm .hizmet__grid gibi)
-             Ancak burada .cards (dark cards style) kullanalım
+          3. RAKAMLARLA PETRA (4'lü Sayaç / İstatistikler)
           ═══════════════════════════════════════════════════════ */}
-      <section className="section section--dark" id="hizmetlerimiz">
+      <section className="about-stats-sec">
         <div className="wrap">
-          <div className="section__head">
-            <p className="eyebrow" data-fade="">Sunduklarımız</p>
-            <h2 className="h2" data-split="">Petra'da Sizi Neler Bekliyor?</h2>
-            <p className="lead" data-fade="">
-              Sabah kahvaltısından gece lezzetlerine, havuz kenarından özel organizasyona kadar.
-            </p>
-          </div>
-          <div className="cards" data-stagger="">
-            {experiences.map((item: any, i: number) => (
-              <div className="card" key={i}>
-                <span className="card__n">{item.n || `0${i + 1}`}</span>
-                <h3>{cleanRawText(item.title)}</h3>
-                <p>{cleanRawText(item.desc)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          4. GÖRSEL BANNER — (about-banner CSS zaten home-next.css'te var)
-          ═══════════════════════════════════════════════════════ */}
-      <div className="about-banner">
-        <img
-          className="about-banner__bg"
-          src={bannerImg}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          width={1800}
-          height={900}
-        />
-        <div className="about-banner__overlay" aria-hidden="true" />
-        <div className="about-banner__inner">
-          <p className="about-hero__eyebrow" data-fade="" style={{ justifyContent: "center" }}>
-            Petra Yaşam Merkezi
-          </p>
-          <h2 className="about-banner__title" data-split="">
-            Günün her anının tadını çıkar.
-          </h2>
-          <p className="about-banner__lead" data-fade="">
-            Sevdiklerinizle kahvaltıdan geceye, havuz kenarında serinlikten özel kutlamalara.
-          </p>
-          <Link href="/#rezervasyon" className="btn btn--light" data-fade="">
-            Rezervasyon Yap
-          </Link>
-        </div>
-      </div>
-
-      {/* ═══════════════════════════════════════════════════════
-          5. GRİD-2: İkinci Görsel + Metin (Özel Günler)
-          ═══════════════════════════════════════════════════════ */}
-      <section className="section section--warm">
-        <div className="wrap grid-2">
-
-          {/* Sol: Metin */}
-          <div>
-            <p className="eyebrow" data-fade="">Özel Anlar</p>
-            <h2 className="h2" data-split="">
-              Özel günleriniz Petra'da daha anlamlı.
-            </h2>
-            <p className="body" data-fade="">
-              {cleanRawText(h.eventsLead || "Doğum günleri, evlilik teklifleri, mezuniyet kutlamaları ve kurumsal davetler için özel masa düzeni, kişiye özel menü ve pasta servisi sunuyoruz.")}
-            </p>
-
-            {/* Hap Etiketler */}
-            <div className="pills" data-fade="">
-              {(
-                (h.eventsTags as string[])?.length > 0
-                  ? (h.eventsTags as string[])
-                  : [
-                      "Doğum Günü",
-                      "Evlilik Teklifi",
-                      "Yıldönümü",
-                      "Kurumsal Davet",
-                      "Mezuniyet",
-                    ]
-              ).map((tag: string, i: number) => (
-                <span key={i}>{cleanRawText(tag)}</span>
-              ))}
-            </div>
-
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 8 }} data-fade="">
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn"
-                style={{ background: "#25D366", color: "#0B140C" }}
-              >
-                WhatsApp Rezervasyon
-              </a>
-              <a href={`tel:${telHref}`} className="btn btn--light">
-                {tel}
-              </a>
-            </div>
-          </div>
-
-          {/* Sağ: İkinci Tilt-Card */}
-          <div data-fade="">
-            <div className="tilt-card">
-              <div className="tilt-card__inner">
-                <SafeImg
-                  src={img2}
-                  alt="Petra Özel Gün ve Organizasyon"
-                  fallback={SITE_PHOTOS.interior}
-                  loading="lazy"
-                  width={1800}
-                  height={1350}
-                />
-                <div
-                  className="tilt-card__badge"
-                  style={{
-                    background: "rgba(13,15,10,0.84)",
-                    border: "1.5px solid rgba(217,164,65,0.4)",
-                    backdropFilter: "blur(12px)",
-                    borderRadius: 14,
-                    padding: "12px 18px",
-                  }}
-                >
-                  <b style={{ color: "#FFFFFF", display: "block", fontSize: "1.05rem", fontWeight: 800 }}>
-                    Özel Gün Masaları
-                  </b>
-                  <span style={{ color: "var(--brass, #D9A441)", display: "block", fontSize: "0.82rem", fontWeight: 700, marginTop: 3 }}>
-                    Kutlama · Davet · Organizasyon
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          6. STATS / İSTATİSTİK (style.css .stats .stat)
-          ═══════════════════════════════════════════════════════ */}
-      <section className="section">
-        <div className="wrap">
-          <div className="section__head" style={{ maxWidth: 540 }}>
-            <p className="eyebrow" data-fade="">Rakamlarla Petra</p>
-            <h2 className="h2" data-split="">Güven ve Kalitenin Kanıtı</h2>
-          </div>
-          <div className="stats" data-stagger="">
-            {ozetList.map((st: any, i: number) => (
-              <div className="stat" key={i}>
+          <div className="about-stats-grid" data-stagger="">
+            {statsList.map((st: any, i: number) => (
+              <div className="about-stat-item" key={i}>
                 <b>
                   {looksLikeHours(st.b)
                     ? displayHours(content.iletisim)
@@ -422,17 +263,144 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          7. SSS / FAQ (style.css .faq — varsa göster)
+          4. 4 ANA DENEYİM KARTI (Ayrıcalıklı Deneyimler)
           ═══════════════════════════════════════════════════════ */}
-      {faqList.length > 0 && (
-        <section className="section section--warm" id="sss">
+      <section className="about-exp-sec">
+        <div className="wrap">
+          <div className="section__head" style={{ marginBottom: 0 }}>
+            <p className="eyebrow" data-fade="">AYRICALIKLAR</p>
+            <h2 className="h2" data-split="">Petra'da Sizi Neler Bekliyor?</h2>
+            <p className="lead" data-fade="">
+              Günün ilk ışıklarından gecenin keyifli anlarına kadar her anınıza eşlik eden lezzet ve konfor.
+            </p>
+          </div>
+
+          <div className="about-exp-grid" data-stagger="">
+            {experiences.map((item: any, i: number) => {
+              const IconComp = expIcons[i % expIcons.length];
+              return (
+                <article className="about-exp-card" key={i}>
+                  <div>
+                    <div className="about-exp-card__top">
+                      <span className="about-exp-card__n">{item.n || `0${i + 1}`}</span>
+                      <div className="about-exp-card__ico" aria-hidden="true">
+                        <IconComp size={22} />
+                      </div>
+                    </div>
+                    {item.tag && (
+                      <span className="about-exp-card__tag">{cleanRawText(item.tag)}</span>
+                    )}
+                    <h3>{cleanRawText(item.title)}</h3>
+                    <p>{cleanRawText(item.desc)}</p>
+                  </div>
+                  {Array.isArray(item.features) && item.features.length > 0 && (
+                    <ul className="about-exp-card__feats">
+                      {item.features.map((feat: string, fi: number) => (
+                        <li key={fi}>
+                          <CheckCircle2 size={14} color="var(--olive-lo, #5A6838)" />
+                          <span>{cleanRawText(feat)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          5. ÖZEL GÜNLER & KUTLAMALAR (Zarif Koyu Kutu)
+          ═══════════════════════════════════════════════════════ */}
+      <section className="about-events-sec">
+        <div className="wrap">
+          <div className="about-events-box" data-fade="">
+            {/* Sol: Metin */}
+            <div>
+              <p className="eyebrow" style={{ color: "var(--brass, #D9A441)" }}>
+                ÖZEL GÜNLER & ETKİNLİKLER
+              </p>
+              <h2>
+                {cleanRawText(h.eventsTitle || "Özel anlarınız için özel bir atmosfer.")}
+              </h2>
+              <p>
+                {cleanRawText(
+                  h.eventsLead ||
+                    "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde profesyonel masa düzeni, kişiye özel menü planlaması ve pasta servisi sunuyoruz."
+                )}
+              </p>
+
+              <div className="about-story-pills" style={{ marginBottom: 28 }}>
+                {(
+                  ((h.eventsTags as string[])?.length > 0
+                    ? (h.eventsTags as string[])
+                    : ["Doğum Günü Kutlamaları", "Evlilik Teklifi & Yıldönümü", "Kurumsal Davetler"])
+                ).map((tag: string, ti: number) => (
+                  <span
+                    key={ti}
+                    style={{
+                      background: "rgba(244, 238, 225, 0.1)",
+                      color: "rgba(244, 238, 225, 0.9)",
+                      borderColor: "rgba(244, 238, 225, 0.2)",
+                    }}
+                  >
+                    {cleanRawText(tag)}
+                  </span>
+                ))}
+              </div>
+
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn"
+                  style={{ background: "#25D366", color: "#0B140C" }}
+                >
+                  <MessageCircle size={16} />
+                  WhatsApp Rezervasyon
+                </a>
+                <a href={`tel:${telHref}`} className="btn btn--ghost" style={{ border: "1px solid rgba(244, 238, 225, 0.3)" }}>
+                  <Phone size={15} />
+                  {tel}
+                </a>
+              </div>
+            </div>
+
+            {/* Sağ: Fotoğraf */}
+            <div>
+              <div className="about-photo-card" style={{ aspectRatio: "4/3" }}>
+                <SafeImg
+                  src={imgEvents}
+                  alt="Petra Özel Gün Masaları"
+                  fallback={SITE_PHOTOS.interior}
+                  width={900}
+                  height={675}
+                  loading="lazy"
+                />
+                <div className="about-photo-card__badge">
+                  <b>Özel Gün & Organizasyon Masaları</b>
+                  <span>Kutlama · Davet · Romantik Masalar</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          6. SSS / SIKÇA SORULAN SORULAR (Varsa)
+          ═══════════════════════════════════════════════════════ */}
+      {faqs.length > 0 && (
+        <section className="section" id="sss">
           <div className="wrap">
             <div className="section__head">
-              <p className="eyebrow" data-fade="">Sık Sorulan Sorular</p>
-              <h2 className="h2" data-split="">Merak ettikleriniz</h2>
+              <p className="eyebrow" data-fade="">MERAK EDİLENLER</p>
+              <h2 className="h2" data-split="">Sıkça Sorulan Sorular</h2>
             </div>
             <div className="faq" data-fade="">
-              {faqList.map((faq: any, i: number) => (
+              {faqs.map((faq: any, i: number) => (
                 <details className="faq__item" key={i}>
                   <summary>{cleanRawText(faq.q || faq.soru)}</summary>
                   <p>{cleanRawText(faq.a || faq.cevap)}</p>
@@ -444,27 +412,30 @@ export default async function HakkimizdaPage() {
       )}
 
       {/* ═══════════════════════════════════════════════════════
-          8. CTA KUTUSU (style.css .cta-box)
+          7. SON CTA (Rezervasyon & Menü Çağrısı)
           ═══════════════════════════════════════════════════════ */}
-      <section className="section">
+      <section className="about-cta-sec">
         <div className="wrap">
-          <div className="cta-box" data-fade="">
+          <div className="about-cta-card" data-fade="">
+            <p className="eyebrow" style={{ color: "var(--brass, #D9A441)", margin: 0 }}>
+              REZERVASYON & İLETİŞİM
+            </p>
             <h2>Petra'da kendi hikayenizi yazın.</h2>
             <p>
               Sevdiklerinizle lezzet, konfor ve keyif dolu anlar için hemen yerinizi ayırtın.
-              Her zaman özel, her zaman kusursuz.
             </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
               <Link href="/#rezervasyon" className="btn btn--light">
-                Rezervasyon Yap
+                <CalendarCheck size={16} />
+                Masa Rezervasyonu Yap
               </Link>
-              <Link href="/menu" className="btn">
+              <Link href="/menu" className="btn" style={{ background: "rgba(244, 238, 225, 0.12)", color: "#FFFFFF" }}>
                 Menüyü İncele
               </Link>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

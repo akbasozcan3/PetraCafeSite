@@ -3060,3 +3060,11 @@ html[data-theme="dark"] .nav__search-pop,
 }
 
 
+/* ─── HAKKIMIZDA SAYFASI — shop-main kısıtını kaldır ─── */
+.shop-main:has(.page-hakkimizda),
+.oc-main:has(.page-hakkimizda) {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
