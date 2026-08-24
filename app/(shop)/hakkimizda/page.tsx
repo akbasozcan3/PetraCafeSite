@@ -11,20 +11,15 @@ import {
   Sparkles, 
   MapPin, 
   Phone, 
-  Clock, 
   ChevronRight, 
   UtensilsCrossed, 
   Waves, 
-  Cake, 
   CalendarCheck, 
-  Users, 
   Award,
   Flame,
   Coffee,
-  ShieldCheck,
   Star,
-  ArrowRight,
-  HeartHandshake
+  ArrowRight
 } from "lucide-react";
 
 export const revalidate = 60;
@@ -87,13 +82,6 @@ export default async function HakkimizdaPage() {
     )
   );
 
-  const poolImg = resolveMediaUrl(
-    liveMedia(
-      content.images?.heroCephe || content.images?.ogImage,
-      SITE_PHOTOS.gallery
-    )
-  );
-
   const telCafe = content.iletisim?.telefon || "0530 608 90 51";
   const telTesis = content.iletisim?.telefon2 || "0532 449 45 99";
   const telCafeHref = phoneToTelHref(telCafe);
@@ -130,26 +118,26 @@ export default async function HakkimizdaPage() {
   const parsedBlocks = parseArticleContent(h.body || []);
 
   return (
-    <main className="min-h-screen bg-[#FBF8F1] text-[#0D0F0A] pt-24 pb-24 selection:bg-[#D9A441]/30">
+    <div style={{ background: "#FBF8F1", minHeight: "100vh", color: "#0D0F0A", paddingBottom: "5rem" }}>
       
       {/* 1. ÜST HERO & BREADCRUMB */}
-      <section className="wrap max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-10">
-        <nav className="flex items-center gap-2 text-xs font-bold text-[#8A9BB0] uppercase tracking-wider mb-6">
-          <Link href="/" className="hover:text-[#D9A441] transition">Ana Sayfa</Link>
-          <ChevronRight className="h-3.5 w-3.5" />
-          <span className="text-[#B8842C]">Hakkımızda</span>
+      <section style={{ maxWidth: "1120px", margin: "0 auto", padding: "2.5rem 1.25rem 1.5rem 1.25rem" }}>
+        <nav style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "#8A9BB0", marginBottom: "1.5rem" }}>
+          <Link href="/" style={{ color: "#6B7A94", textDecoration: "none" }}>Ana Sayfa</Link>
+          <ChevronRight size={14} />
+          <span style={{ color: "#B8842C" }}>Hakkımızda</span>
         </nav>
 
-        <div className="max-w-3xl space-y-4">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-[#D9A441]/15 text-[#9E6E1A] border border-[#D9A441]/35 tracking-wide">
-            <Sparkles className="h-3.5 w-3.5 text-[#D9A441]" />
+        <div style={{ maxWidth: "800px" }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "6px 14px", borderRadius: "9999px", fontSize: "0.78rem", fontWeight: 800, background: "rgba(217, 164, 65, 0.15)", color: "#9E6E1A", border: "1px solid rgba(217, 164, 65, 0.35)", letterSpacing: "0.04em", marginBottom: "1rem" }}>
+            <Sparkles size={14} color="#D9A441" />
             {cleanRawText(h.eyebrow || "HAKKIMIZDA & YAŞAM ALANIMIZ")}
           </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#0D0F0A] leading-[1.18] font-serif">
+          <h1 style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 900, lineHeight: 1.18, color: "#0D0F0A", margin: "0 0 1rem 0", fontFamily: "var(--font-serif, serif)" }}>
             {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde Cafe & Restaurant Deneyimi")}
           </h1>
           {h.lead && (
-            <p className="text-base sm:text-lg text-[#524D41] leading-relaxed font-medium pt-1">
+            <p style={{ fontSize: "1.12rem", fontWeight: 500, color: "#524D41", lineHeight: 1.65, margin: 0 }}>
               {formatInlineText(h.lead)}
             </p>
           )}
@@ -157,34 +145,34 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* 2. ANA HİKAYE VE VİTRİN KARTI */}
-      <section className="wrap max-w-5xl mx-auto px-4 sm:px-6 py-4">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+      <section style={{ maxWidth: "1120px", margin: "0 auto", padding: "1rem 1.25rem 2.5rem 1.25rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "3rem", alignItems: "start" }}>
           
           {/* Sol Kolon: Biçimlendirilmiş Hikaye Metni */}
-          <div className="lg:col-span-7 space-y-5 text-[#2D2A24]">
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             
             {h.answerMetin && (
-              <div className="rounded-2xl border border-[#D9A441]/35 bg-[#F5EFE3] p-5 shadow-sm space-y-2">
-                <div className="flex items-center gap-2">
-                  <Award className="h-4 w-4 text-[#B8842C]" />
-                  <b className="text-xs font-extrabold text-[#9E6E1A] uppercase tracking-wider">
+              <div style={{ borderRadius: "18px", border: "1px solid rgba(217, 164, 65, 0.35)", background: "#F5EFE3", padding: "1.25rem 1.5rem", boxShadow: "0 4px 12px rgba(0,0,0,0.03)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+                  <Award size={16} color="#B8842C" />
+                  <b style={{ fontSize: "0.82rem", fontWeight: 800, color: "#9E6E1A", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                     {cleanRawText(h.answerBaslik || "Kısaca Petra")}
                   </b>
                 </div>
-                <p className="text-sm text-[#3E3A32] leading-relaxed font-medium">
+                <p style={{ margin: 0, fontSize: "0.94rem", color: "#3E3A32", lineHeight: 1.65, fontWeight: 500 }}>
                   {formatInlineText(h.answerMetin)}
                 </p>
               </div>
             )}
 
             {/* Hikaye Paragrafları */}
-            <div className="space-y-4 pt-1">
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               {parsedBlocks.map((block, idx) => {
                 if (block.type === "h1") {
                   return (
                     <h2
                       key={idx}
-                      className="text-2xl sm:text-3xl font-black text-[#0D0F0A] font-serif pt-4 pb-1 border-b border-[#0D0F0A]/10"
+                      style={{ fontSize: "1.6rem", fontWeight: 900, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: "1.5rem 0 0.5rem 0", borderBottom: "1px solid rgba(13,15,10,0.1)", paddingBottom: "6px" }}
                     >
                       {cleanRawText(block.text || "")}
                     </h2>
@@ -194,7 +182,7 @@ export default async function HakkimizdaPage() {
                   return (
                     <h3
                       key={idx}
-                      className="text-xl sm:text-2xl font-bold text-[#0D0F0A] font-serif pt-3 pb-1"
+                      style={{ fontSize: "1.3rem", fontWeight: 800, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: "1.25rem 0 0.4rem 0" }}
                     >
                       {cleanRawText(block.text || "")}
                     </h3>
@@ -204,7 +192,7 @@ export default async function HakkimizdaPage() {
                   return (
                     <h4
                       key={idx}
-                      className="text-base sm:text-lg font-bold text-[#B8842C] pt-2"
+                      style={{ fontSize: "1.05rem", fontWeight: 800, color: "#B8842C", margin: "1rem 0 0.3rem 0" }}
                     >
                       {cleanRawText(block.text || "")}
                     </h4>
@@ -214,14 +202,14 @@ export default async function HakkimizdaPage() {
                   return (
                     <blockquote
                       key={idx}
-                      className="border-l-4 border-[#D9A441] pl-4 py-2.5 my-3 italic text-[#5A554A] bg-[#F4EEE1]/60 rounded-r-xl"
+                      style={{ borderLeft: "4px solid #D9A441", padding: "10px 16px", margin: "12px 0", fontStyle: "italic", color: "#5A554A", background: "rgba(244, 238, 225, 0.6)", borderRadius: "0 12px 12px 0" }}
                     >
                       {formatInlineText(block.text || "")}
                     </blockquote>
                   );
                 }
                 return (
-                  <p key={idx} className="text-base leading-relaxed text-[#38342C]">
+                  <p key={idx} style={{ margin: 0, fontSize: "1rem", lineHeight: 1.8, color: "#38342C" }}>
                     {formatInlineText(block.text || "")}
                   </p>
                 );
@@ -229,71 +217,71 @@ export default async function HakkimizdaPage() {
             </div>
 
             {/* İstatistik & Güven Rozetleri */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-6 border-t border-[#0D0F0A]/10">
-              <div className="p-4 rounded-2xl bg-white border border-[#0D0F0A]/08 shadow-sm">
-                <span className="text-xl sm:text-2xl font-black text-[#B8842C] block">08:00 – 02:00</span>
-                <span className="text-xs font-bold text-[#6E6A5C] mt-1 block">Cafe & Restoran Açık</span>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "12px", paddingTop: "1.5rem", borderTop: "1px solid rgba(13,15,10,0.1)" }}>
+              <div style={{ padding: "16px", borderRadius: "16px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
+                <span style={{ fontSize: "1.4rem", fontWeight: 900, color: "#B8842C", display: "block" }}>08:00 – 02:00</span>
+                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#6E6A5C", marginTop: "4px", display: "block" }}>Cafe & Restoran Açık</span>
               </div>
-              <div className="p-4 rounded-2xl bg-white border border-[#0D0F0A]/08 shadow-sm">
-                <span className="text-xl sm:text-2xl font-black text-[#B8842C] block">09:00 – 18:00</span>
-                <span className="text-xs font-bold text-[#6E6A5C] mt-1 block">Havuz & Beach Kulübü</span>
+              <div style={{ padding: "16px", borderRadius: "16px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
+                <span style={{ fontSize: "1.4rem", fontWeight: 900, color: "#B8842C", display: "block" }}>09:00 – 18:00</span>
+                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#6E6A5C", marginTop: "4px", display: "block" }}>Havuz & Beach Kulübü</span>
               </div>
-              <div className="p-4 rounded-2xl bg-white border border-[#0D0F0A]/08 shadow-sm col-span-2 sm:col-span-1">
-                <span className="text-xl sm:text-2xl font-black text-[#B8842C] block">240+ Çeşit</span>
-                <span className="text-xs font-bold text-[#6E6A5C] mt-1 block">Zengin Dünya Menüsü</span>
+              <div style={{ padding: "16px", borderRadius: "16px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 4px 14px rgba(0,0,0,0.03)" }}>
+                <span style={{ fontSize: "1.4rem", fontWeight: 900, color: "#B8842C", display: "block" }}>240+ Çeşit</span>
+                <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#6E6A5C", marginTop: "4px", display: "block" }}>Zengin Dünya Menüsü</span>
               </div>
             </div>
           </div>
 
           {/* Sağ Kolon: Görsel & Hızlı İletişim Kartı */}
-          <div className="lg:col-span-5 sticky top-28 space-y-6">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+          <div style={{ position: "sticky", top: "110px", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <div style={{ position: "relative", borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 40px rgba(0,0,0,0.15)", border: "4px solid #FFFFFF" }}>
               <SafeImg
                 src={img}
                 alt="Petra Yaşam Merkezi Cafe Restaurant"
                 fallback={SITE_PHOTOS.interior}
                 width={900}
                 height={675}
-                className="w-full h-[360px] sm:h-[420px] object-cover"
+                className="w-full h-[380px] object-cover block"
               />
-              <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-[#D9A441]/40 shadow-xl flex items-center justify-between">
+              <div style={{ position: "absolute", bottom: "16px", left: "16px", right: "16px", padding: "14px 18px", borderRadius: "16px", background: "rgba(255, 255, 255, 0.95)", backdropFilter: "blur(12px)", border: "1px solid rgba(217, 164, 65, 0.4)", boxShadow: "0 10px 25px rgba(0,0,0,0.12)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div>
-                  <b className="text-base font-extrabold text-[#0D0F0A] block">{cleanRawText(h.badgeBaslik || "Petra")}</b>
-                  <span className="text-xs font-bold text-[#B8842C]">{cleanRawText(h.badgeAlt || "Cafe · Restaurant · Pool")}</span>
+                  <b style={{ fontSize: "1.05rem", fontWeight: 900, color: "#0D0F0A", display: "block" }}>{cleanRawText(h.badgeBaslik || "Petra")}</b>
+                  <span style={{ fontSize: "0.8rem", fontWeight: 800, color: "#B8842C" }}>{cleanRawText(h.badgeAlt || "Cafe · Restaurant · Pool")}</span>
                 </div>
-                <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-xs font-extrabold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-lg block mb-0.5">
-                    <Star className="h-3 w-3 fill-emerald-700 text-emerald-700" />
+                <div style={{ textAlign: "right" }}>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.78rem", fontWeight: 800, color: "#065F46", background: "#D1FAE5", padding: "4px 10px", borderRadius: "8px" }}>
+                    <Star size={12} fill="#059669" color="#059669" />
                     4.6 ★ (94+ Yorum)
                   </span>
-                  <span className="text-[11px] text-[#6E6A5C] font-semibold">Çekmeköy Taşdelen</span>
+                  <span style={{ fontSize: "0.72rem", color: "#6E6A5C", fontWeight: 600, display: "block", marginTop: "2px" }}>Çekmeköy Taşdelen</span>
                 </div>
               </div>
             </div>
 
             {/* İletişim & Hat Bilgileri */}
-            <div className="p-5 rounded-2xl bg-white border border-[#0D0F0A]/10 shadow-sm space-y-3.5">
-              <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#0D0F0A] flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-[#D9A441]" />
+            <div style={{ padding: "20px", borderRadius: "20px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.1)", boxShadow: "0 4px 16px rgba(0,0,0,0.04)", display: "flex", flexDirection: "column", gap: "12px" }}>
+              <h4 style={{ fontSize: "0.82rem", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.06em", color: "#0D0F0A", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+                <MapPin size={16} color="#D9A441" />
                 Adres ve İletişim Hatları
               </h4>
-              <p className="text-xs text-[#5A554A] leading-relaxed font-medium">
+              <p style={{ margin: 0, fontSize: "0.85rem", color: "#5A554A", lineHeight: 1.6, fontWeight: 500 }}>
                 Megakent Sitesi, Turgut Özal Cad, Selen Sk. No:1/O, Petra Yaşam Merkezi, Taşdelen, Çekmeköy / İstanbul
               </p>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", paddingTop: "4px" }}>
                 <a
                   href={`tel:${telCafeHref}`}
-                  className="flex items-center gap-2 p-2.5 rounded-xl bg-[#0D0F0A] text-white text-xs font-bold hover:bg-[#2A2820] transition"
+                  style={{ display: "flex", alignItems: "center", gap: "6px", padding: "10px", borderRadius: "12px", background: "#0D0F0A", color: "#FFFFFF", fontSize: "0.78rem", fontWeight: 800, textDecoration: "none" }}
                 >
-                  <Phone className="h-3.5 w-3.5 text-[#D9A441]" />
+                  <Phone size={14} color="#D9A441" />
                   <span>Kafe: {telCafe}</span>
                 </a>
                 <a
                   href={`tel:${telTesisHref}`}
-                  className="flex items-center gap-2 p-2.5 rounded-xl bg-[#141E2E] text-white text-xs font-bold hover:bg-[#1E2E44] transition"
+                  style={{ display: "flex", alignItems: "center", gap: "6px", padding: "10px", borderRadius: "12px", background: "#141E2E", color: "#FFFFFF", fontSize: "0.78rem", fontWeight: 800, textDecoration: "none" }}
                 >
-                  <Phone className="h-3.5 w-3.5 text-[#D9A441]" />
+                  <Phone size={14} color="#D9A441" />
                   <span>Tesis: {telTesis}</span>
                 </a>
               </div>
@@ -302,7 +290,7 @@ export default async function HakkimizdaPage() {
                 href={waHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 p-2.5 rounded-xl bg-[#25D366] text-white text-xs font-extrabold hover:bg-[#1EBE5D] transition shadow-sm"
+                style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "11px", borderRadius: "12px", background: "#25D366", color: "#FFFFFF", fontSize: "0.85rem", fontWeight: 800, textDecoration: "none", boxShadow: "0 4px 12px rgba(37,211,102,0.25)", boxSizing: "border-box" }}
               >
                 WhatsApp'tan Doğrudan Yazın
               </a>
@@ -313,38 +301,38 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* 3. DÖRT ANA DENEYİM SÜTUNU */}
-      <section className="wrap max-w-5xl mx-auto px-4 sm:px-6 py-14">
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <span className="text-xs font-extrabold uppercase tracking-widest text-[#B8842C] block">
+      <section style={{ maxWidth: "1120px", margin: "0 auto", padding: "3rem 1.25rem" }}>
+        <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 2.5rem auto" }}>
+          <span style={{ fontSize: "0.8rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#B8842C", display: "block", marginBottom: "6px" }}>
             AYRICALIKLI YAŞAM
           </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0D0F0A] font-serif">
+          <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", fontWeight: 900, color: "#0D0F0A", fontFamily: "var(--font-serif, serif)", margin: "0 0 8px 0" }}>
             Petra'da Sizi Neler Bekliyor?
           </h2>
-          <p className="text-sm text-[#6E6A5C]">
+          <p style={{ margin: 0, fontSize: "0.95rem", color: "#6E6A5C" }}>
             Günün her anına özel lezzetler ve huzurlu sosyal alanlar.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem" }}>
           {features.map((item, i) => {
             const Icon = item.icon;
             return (
               <div
                 key={i}
-                className="p-6 sm:p-7 rounded-3xl bg-white border border-[#0D0F0A]/08 shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col justify-between"
+                style={{ padding: "1.75rem", borderRadius: "24px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.08)", boxShadow: "0 6px 20px rgba(0,0,0,0.03)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-2xl bg-[#D9A441]/15 text-[#9E6E1A] flex items-center justify-center group-hover:bg-[#D9A441] group-hover:text-[#0D0F0A] transition">
-                      <Icon className="h-6 w-6" />
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
+                    <div style={{ width: "48px", height: "48px", borderRadius: "14px", background: "rgba(217, 164, 65, 0.15)", color: "#9E6E1A", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <Icon size={24} />
                     </div>
-                    <span className="text-[11px] font-extrabold text-[#9E6E1A] bg-[#F5EFE3] px-3 py-1 rounded-full border border-[#D9A441]/25">
+                    <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "#9E6E1A", background: "#F5EFE3", padding: "4px 10px", borderRadius: "9999px", border: "1px solid rgba(217, 164, 65, 0.25)" }}>
                       {item.tag}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-[#0D0F0A] mb-2 font-serif">{item.title}</h3>
-                  <p className="text-sm text-[#5A554A] leading-relaxed">{item.desc}</p>
+                  <h3 style={{ fontSize: "1.18rem", fontWeight: 800, color: "#0D0F0A", margin: "0 0 8px 0", fontFamily: "var(--font-serif, serif)" }}>{item.title}</h3>
+                  <p style={{ margin: 0, fontSize: "0.9rem", color: "#5A554A", lineHeight: 1.65 }}>{item.desc}</p>
                 </div>
               </div>
             );
@@ -353,31 +341,31 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* 4. REZERVASYON & ÖZEL GÜNLER CTA */}
-      <section className="wrap max-w-5xl mx-auto px-4 sm:px-6 pt-4">
-        <div className="rounded-3xl bg-[#141E2E] text-white p-8 sm:p-12 shadow-2xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-8 border border-white/10">
-          <div className="max-w-xl space-y-3 text-center sm:text-left">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#D9A441] uppercase tracking-wider">
-              <CalendarCheck className="h-4 w-4" />
+      <section style={{ maxWidth: "1120px", margin: "0 auto", padding: "1rem 1.25rem" }}>
+        <div style={{ borderRadius: "28px", background: "#141E2E", color: "#FFFFFF", padding: "clamp(2rem, 5vw, 3.5rem)", boxShadow: "0 25px 50px rgba(0,0,0,0.25)", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "2rem", border: "1px solid rgba(255,255,255,0.1)" }}>
+          <div style={{ maxWidth: "560px", display: "flex", flexDirection: "column", gap: "10px" }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "0.8rem", fontWeight: 800, color: "#D9A441", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              <CalendarCheck size={16} />
               REZERVASYON & ÖZEL DAVETLER
             </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold font-serif text-white">
+            <h3 style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)", fontWeight: 900, fontFamily: "var(--font-serif, serif)", color: "#FFFFFF", margin: 0 }}>
               Masanızı veya Locanızı Hemen Ayırtın
             </h3>
-            <p className="text-sm text-white/75 leading-relaxed">
+            <p style={{ margin: 0, fontSize: "0.95rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.65 }}>
               Hafta sonu serpme kahvaltı, akşam yemeği veya havuz başı VIP localarımız için yerinizi ayırtın. Doğum günü ve özel kutlamalarınız için bizi arayabilirsiniz.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px" }}>
             <Link
               href="/#rezervasyon"
-              className="px-7 py-3.5 rounded-xl bg-[#D9A441] text-[#0D0F0A] font-extrabold text-sm hover:bg-[#E5B555] transition shadow-lg w-full sm:w-auto text-center"
+              style={{ padding: "14px 28px", borderRadius: "14px", background: "#D9A441", color: "#0D0F0A", fontWeight: 800, fontSize: "0.95rem", textDecoration: "none", boxShadow: "0 8px 24px rgba(217, 164, 65, 0.4)" }}
             >
               Online Rezervasyon Yap
             </Link>
             <Link
               href="/menu"
-              className="px-6 py-3.5 rounded-xl bg-white/10 text-white font-bold text-sm hover:bg-white/20 transition border border-white/15 w-full sm:w-auto text-center"
+              style={{ padding: "14px 24px", borderRadius: "14px", background: "rgba(255,255,255,0.1)", color: "#FFFFFF", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none", border: "1px solid rgba(255,255,255,0.15)" }}
             >
               Menüyü İncele
             </Link>
@@ -385,6 +373,6 @@ export default async function HakkimizdaPage() {
         </div>
       </section>
 
-    </main>
+    </div>
   );
 }
