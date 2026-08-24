@@ -1,4 +1,4 @@
-export type TableZoneId = "loca" | "masalar";
+export type TableZoneId = string;
 
 export interface RestaurantTable {
   id: string;
@@ -23,8 +23,8 @@ export interface RestaurantTable {
 export interface TableZone {
   id: TableZoneId;
   name: string;
-  description: string;
-  badge: string;
+  description?: string;
+  badge?: string;
 }
 
 export const TABLE_ZONES: TableZone[] = [
@@ -38,7 +38,25 @@ export const TABLE_ZONES: TableZone[] = [
     id: "masalar",
     name: "Havuz Başı Masalar",
     description: "Havuz etrafındaki standart masalar (2-4 Kişilik)",
-    badge: "MASA",
+    badge: "HAVUZ",
+  },
+  {
+    id: "salon",
+    name: "İç Salon & Restoran",
+    description: "Kapalı alan, klimalı ana restoran masaları",
+    badge: "SALON",
+  },
+  {
+    id: "teras",
+    name: "Teras & Balkon",
+    description: "Ferah havadar teras masaları",
+    badge: "TERAS",
+  },
+  {
+    id: "bahce",
+    name: "Bahçe & Açık Alan",
+    description: "Açık hava bahçe alanı masaları",
+    badge: "BAHÇE",
   },
 ];
 

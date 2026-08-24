@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { RestaurantTable } from "@/lib/content/tables-data";
-import { Save, Plus, Trash2, Move, ZoomIn, ZoomOut, Sparkles, Check, AlertCircle } from "lucide-react";
+import { RestaurantTable, TableZone, TABLE_ZONES } from "@/lib/content/tables-data";
+import { Save, Plus, Trash2, Move, ZoomIn, ZoomOut, Sparkles, Check, AlertCircle, MapPin, X, Edit2 } from "lucide-react";
 
 export default function AdminMasaPlaniPage() {
   const [tables, setTables] = useState<RestaurantTable[]>([]);
@@ -10,6 +10,11 @@ export default function AdminMasaPlaniPage() {
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState<{ type: "ok" | "err"; text: string } | null>(null);
+  const [zones, setZones] = useState<TableZone[]>(TABLE_ZONES);
+  const [showZoneModal, setShowZoneModal] = useState(false);
+  const [newZoneName, setNewZoneName] = useState("");
+  const [newZoneBadge, setNewZoneBadge] = useState("");
+  const [newZoneDesc, setNewZoneDesc] = useState("");
 
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -21,6 +26,9 @@ export default function AdminMasaPlaniPage() {
         if (Array.isArray(d?.tables)) {
           setTables(d.tables);
           if (d.tables.length > 0) setSelectedId(d.tables[0].id);
+        }
+        if (Array.isArray(d?.zones) && d.zones.length > 0) {
+          setZones(d.zones);
         }
       })
       .catch((err) => console.error("Masa yükleme hatası:", err));
@@ -86,6 +94,59 @@ export default function AdminMasaPlaniPage() {
     );
   };
 
+  const handleAddZone = (e: React.FormEvent) => {
+    e.preventDefault();
+    const name = newZoneName.trim();
+    if (!name) return;
+    const id = name.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '') || `zone-${Date.now()}`;
+    
+    if (zones.some(z => z.id === id)) {
+      alert("Bu isimde bir bölge zaten mevcut.");
+      return;
+    }
+
+    const newZone: TableZone = {
+      id,
+      name,
+      badge: newZoneBadge.trim() || name.toUpperCase().slice(0, 8),
+      description: newZoneDesc.trim() || undefined,
+    };
+
+    const nextZones = [...zones, newZone];
+    setZones(nextZones);
+    setNewZoneName("");
+    setNewZoneBadge("");
+    setNewZoneDesc("");
+
+    // If a table is selected, switch it to the newly created zone
+    if (selectedId) {
+      handleUpdateField("zoneId", id);
+      handleUpdateField("zoneName", name);
+      handleUpdateField("isVip", id.includes("vip") || id.includes("loca"));
+    }
+  };
+
+  const handleDeleteZone = (zoneId: string) => {
+    if (zones.length <= 1) {
+      alert("En az bir bölge kalmalıdır.");
+      return;
+    }
+    if (confirm("Bu bölgeyi silmek istediğinize emin misiniz?")) {
+      const nextZones = zones.filter(z => z.id !== zoneId);
+      setZones(nextZones);
+      // Reassign any tables in deleted zone to the first remaining zone
+      const fallbackZone = nextZones[0];
+      setTables(prev => prev.map(t => t.zoneId === zoneId ? {
+        ...t,
+        zoneId: fallbackZone.id,
+        zoneName: fallbackZone.name,
+        isVip: fallbackZone.id.includes("vip") || fallbackZone.id.includes("loca")
+      } : t));
+    }
+  };
+
   const handleAddNewTable = () => {
     const newNum = tables.length + 1;
     const newTable: RestaurantTable = {
@@ -120,7 +181,7 @@ export default function AdminMasaPlaniPage() {
       const res = await fetch("/api/v1/tables", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tables }),
+        body: JSON.stringify({ tables, zones }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Kaydedilemedi.");
@@ -466,13 +527,30 @@ export default function AdminMasaPlaniPage() {
                   <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#8A9BB0", display: "block", marginBottom: 4 }}>
                     Bölge
                   </label>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
+                    <label style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", color: "#8A9BB0" }}>
+                      Bölge / Alan
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setShowZoneModal(true)}
+                      style={{ background: "none", border: "none", color: "#D9A441", fontSize: 11, fontWeight: 700, cursor: "pointer", padding: 0 }}
+                    >
+                      + Yeni Bölge
+                    </button>
+                  </div>
                   <select
                     value={selectedTable.zoneId}
                     onChange={(e) => {
-                      const zid = e.target.value as "loca" | "masalar";
+                      const zid = e.target.value;
+                      if (zid === "__new__") {
+                        setShowZoneModal(true);
+                        return;
+                      }
+                      const found = zones.find((z) => z.id === zid);
                       handleUpdateField("zoneId", zid);
-                      handleUpdateField("zoneName", zid === "loca" ? "VIP Localar" : "Havuz Masaları");
-                      handleUpdateField("isVip", zid === "loca");
+                      handleUpdateField("zoneName", found ? found.name : zid);
+                      handleUpdateField("isVip", zid.toLowerCase().includes("vip") || zid.toLowerCase().includes("loca"));
                     }}
                     style={{
                       width: "100%",
@@ -485,8 +563,12 @@ export default function AdminMasaPlaniPage() {
                       boxSizing: "border-box",
                     }}
                   >
-                    <option value="masalar">Havuz Masası</option>
-                    <option value="loca">VIP Loca</option>
+                    {zones.map((z) => (
+                      <option key={z.id} value={z.id}>
+                        {z.name}
+                      </option>
+                    ))}
+                    <option value="__new__">➕ + Yeni Bölge Oluştur / Yönet...</option>
                   </select>
                 </div>
 
@@ -667,6 +749,207 @@ export default function AdminMasaPlaniPage() {
           )}
         </div>
       </div>
+      {/* BÖLGE VE ALAN YÖNETİMİ MODALI */}
+      {showZoneModal && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "rgba(0,0,0,0.8)",
+            backdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 16,
+          }}
+          onClick={() => setShowZoneModal(false)}
+        >
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 540,
+              background: "#141E2E",
+              border: "1px solid rgba(255,255,255,0.12)",
+              borderRadius: 20,
+              padding: 24,
+              boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+              color: "#EEE9E0",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: 12, marginBottom: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <MapPin size={20} color="#D9A441" />
+                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: "#FFFFFF" }}>
+                  Masa Bölgeleri & Alan Yönetimi
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowZoneModal(false)}
+                style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", padding: 4 }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <p style={{ fontSize: 12, color: "#8A9BB0", margin: "0 0 16px 0" }}>
+              Mekanın farklı alanlarını (VIP Localar, Havuz Başı, İç Salon, Teras, Bahçe vb.) buradan ekleyip masalarınıza atayabilirsiniz.
+            </p>
+
+            {/* MEVCUT BÖLGELER LİSTESİ */}
+            <div style={{ maxHeight: 220, overflowY: "auto", display: "flex", flexDirection: "column", gap: 8, marginBottom: 20, paddingRight: 4 }}>
+              {zones.map((z) => {
+                const count = tables.filter((t) => t.zoneId === z.id).length;
+                return (
+                  <div
+                    key={z.id}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "10px 14px",
+                      borderRadius: 12,
+                      background: "#0D1117",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: "#FFFFFF" }}>{z.name}</span>
+                        {z.badge && (
+                          <span style={{ fontSize: 10, background: "rgba(217,164,65,0.15)", color: "#D9A441", padding: "2px 6px", borderRadius: 4, fontWeight: 700 }}>
+                            {z.badge}
+                          </span>
+                        )}
+                      </div>
+                      <span style={{ fontSize: 11, color: "#8A9BB0" }}>
+                        {count} masa bu bölgeye ait
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      title="Bölgeyi sil"
+                      onClick={() => handleDeleteZone(z.id)}
+                      style={{
+                        background: "rgba(239,68,68,0.1)",
+                        border: "1px solid rgba(239,68,68,0.2)",
+                        color: "#EF4444",
+                        borderRadius: 8,
+                        padding: "6px 8px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* YENİ BÖLGE EKLE FORMU */}
+            <form onSubmit={handleAddZone} style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 16 }}>
+              <span style={{ fontSize: 12, fontWeight: 700, color: "#D9A441", display: "block", marginBottom: 10 }}>
+                ➕ Yeni Bölge Ekle
+              </span>
+              <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 10, marginBottom: 10 }}>
+                <div>
+                  <label style={{ fontSize: 11, color: "#8A9BB0", display: "block", marginBottom: 4 }}>Bölge Adı *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Örn: İç Salon, Teras, Bahçe"
+                    value={newZoneName}
+                    onChange={(e) => setNewZoneName(e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "8px 12px",
+                      borderRadius: 10,
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "#0D1117",
+                      color: "#FFFFFF",
+                      fontSize: 13,
+                      boxSizing: "border-box",
+                    }}
+                  />
+                </div>
+                <div>
+                  <label style={{ fontSize: 11, color: "#8A9BB0", display: "block", marginBottom: 4 }}>Kısa Etiket</label>
+                  <input
+                    type="text"
+                    placeholder="Örn: TERAS"
+                    value={newZoneBadge}
+                    onChange={(e) => setNewZoneBadge(e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "8px 12px",
+                      borderRadius: 10,
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "#0D1117",
+                      color: "#FFFFFF",
+                      fontSize: 13,
+                      boxSizing: "border-box",
+                    }}
+                  />
+                </div>
+              </div>
+              <div style={{ marginBottom: 14 }}>
+                <label style={{ fontSize: 11, color: "#8A9BB0", display: "block", marginBottom: 4 }}>Açıklama (Opsiyonel)</label>
+                <input
+                  type="text"
+                  placeholder="Örn: Şömineli ve klimalı kapalı alan masaları"
+                  value={newZoneDesc}
+                  onChange={(e) => setNewZoneDesc(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "8px 12px",
+                    borderRadius: 10,
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    background: "#0D1117",
+                    color: "#FFFFFF",
+                    fontSize: 13,
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
+                <button
+                  type="button"
+                  onClick={() => setShowZoneModal(false)}
+                  style={{
+                    padding: "9px 16px",
+                    borderRadius: 10,
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    background: "rgba(255,255,255,0.05)",
+                    color: "#EEE9E0",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  Kapat
+                </button>
+                <button
+                  type="submit"
+                  style={{
+                    padding: "9px 18px",
+                    borderRadius: 10,
+                    border: "none",
+                    background: "#D9A441",
+                    color: "#0D0F0A",
+                    fontSize: 12,
+                    fontWeight: 800,
+                    cursor: "pointer",
+                  }}
+                >
+                  + Bölgeyi Ekle
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
