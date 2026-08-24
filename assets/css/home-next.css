@@ -3997,11 +3997,31 @@ html .foot__name,
 
 html .site-home .foot__slogan,
 html .site-shop .foot__slogan,
-html .site-home .foot p,
-html .foot p,
 .foot__slogan {
   color: #FFFFFF !important;
   opacity: 1 !important;
+}
+
+html .site-home .foot__legal,
+html .site-shop .foot__legal,
+html .foot__legal,
+.foot__legal {
+  color: rgba(244, 238, 225, 0.45) !important;
+  padding: 8px 0 24px !important;
+  max-width: 72rem !important;
+  font-size: 0.74rem !important;
+  line-height: 1.5 !important;
+}
+
+html .site-home .foot__legal-line,
+html .site-shop .foot__legal-line,
+html .foot__legal-line,
+.foot__legal-line {
+  color: rgba(244, 238, 225, 0.45) !important;
+  font-size: 0.74rem !important;
+  line-height: 1.5 !important;
+  margin: 0.35rem 0 0 !important;
+  font-weight: 400 !important;
 }
 
 html .site-home .foot__hours,
