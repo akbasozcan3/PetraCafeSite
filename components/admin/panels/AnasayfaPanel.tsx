@@ -120,48 +120,68 @@ export default function AnasayfaPanel() {
       </section>
 
       <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-        <h3 className="font-semibold text-[#F8F8F8]">Ziyaret şeridi (kısa kartlar)</h3>
-        <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="font-semibold text-[#F8F8F8] flex items-center gap-2">
+              <span className="text-[#D9A441]">✦</span> Ziyaret & Hızlı Bilgi Şeridi (4'lü Kart Vitrini)
+            </h3>
+            <p className="text-xs text-white/50 mt-1">
+              Ana sayfanın üst kısmında yer alan Saatler, Rezervasyon, Havuz ve Konum bilgi kartlarını buradan özelleştirebilirsiniz.
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
           {ziyaret.map((item, i) => (
             <div
               key={i}
-              className="flex flex-wrap items-center gap-2 rounded-xl border border-white/[0.06] bg-[#0E1522] p-3"
+              className="grid gap-3 rounded-xl border border-white/[0.06] bg-[#0E1522] p-4 md:grid-cols-[1fr_1.2fr_1.5fr_1fr_auto]"
             >
               <Input
-                label="Başlık"
+                label="Üst Başlık (Ör: SAATLER)"
                 value={item.k}
+                placeholder="Saatler"
                 onChange={(e) => {
                   const arr = [...ziyaret];
                   arr[i] = { ...arr[i], k: e.target.value };
                   setContent({ ...content, ziyaret: arr });
                 }}
-                className="w-32"
               />
               <Input
-                label="Vurgu (saat/sayı)"
+                label="Vurgu / Büyük Yazı"
                 value={item.v}
+                placeholder="08:00 – 02:00"
                 onChange={(e) => {
                   const arr = [...ziyaret];
                   arr[i] = { ...arr[i], v: e.target.value };
                   setContent({ ...content, ziyaret: arr });
                 }}
-                className="w-32"
               />
               <Input
-                label="Açıklama"
+                label="Alt Açıklama"
                 value={item.n}
+                placeholder="Cafe açık · Havuz 09:00–18:00"
                 onChange={(e) => {
                   const arr = [...ziyaret];
                   arr[i] = { ...arr[i], n: e.target.value };
                   setContent({ ...content, ziyaret: arr });
                 }}
-                className="flex-1 min-w-[140px]"
+              />
+              <Input
+                label="Bağlantı / Link (Opsiyonel)"
+                value={item.href || ""}
+                placeholder="#rezervasyon veya tel:..."
+                onChange={(e) => {
+                  const arr = [...ziyaret];
+                  arr[i] = { ...arr[i], href: e.target.value };
+                  setContent({ ...content, ziyaret: arr });
+                }}
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="self-end"
+                className="self-end text-red-400 hover:text-red-300"
                 onClick={() =>
                   setContent({
                     ...content,
@@ -169,7 +189,7 @@ export default function AnasayfaPanel() {
                   })
                 }
               >
-                <Trash2 className="h-4 w-4 text-red-400" />
+                <Trash2 className="h-4 w-4" />
               </Button>
             </div>
           ))}
@@ -179,11 +199,12 @@ export default function AnasayfaPanel() {
             onClick={() =>
               setContent({
                 ...content,
-                ziyaret: [...ziyaret, { k: "", v: "", n: "" }],
+                ziyaret: [...ziyaret, { k: "", v: "", n: "", href: "" }],
               })
             }
+            className="border-dashed border-white/20 text-[#D9A441]"
           >
-            <Plus className="h-4 w-4" /> Kart ekle
+            <Plus className="h-4 w-4 mr-1" /> Yeni Bilgi Kartı Ekle
           </Button>
         </div>
       </section>

@@ -21,6 +21,39 @@ export interface NavbarContent {
   links: NavLink[];
 }
 
+export interface HakkimizdaStat {
+  b: string;
+  span: string;
+  sub?: string;
+}
+
+export interface HakkimizdaExperience {
+  title: string;
+  desc: string;
+  hours: string;
+  tag: string;
+  features?: string[];
+  icon?: string;
+}
+
+export interface HakkimizdaTimelineItem {
+  time: string;
+  title: string;
+  desc: string;
+  icon?: string;
+}
+
+export interface HakkimizdaValueItem {
+  title: string;
+  desc: string;
+  icon?: string;
+}
+
+export interface HakkimizdaFaqItem {
+  q: string;
+  a: string;
+}
+
 export interface HakkimizdaContent {
   eyebrow: string;
   baslik: string;
@@ -32,6 +65,15 @@ export interface HakkimizdaContent {
   badgeBaslik: string;
   badgeAlt: string;
   homeWordLimit?: number;
+  stats?: HakkimizdaStat[];
+  experiences?: HakkimizdaExperience[];
+  timeline?: HakkimizdaTimelineItem[];
+  values?: HakkimizdaValueItem[];
+  amenities?: string[];
+  eventsTitle?: string;
+  eventsLead?: string;
+  eventsTags?: string[];
+  faqs?: HakkimizdaFaqItem[];
 }
 
 export interface BolumBaslik {
@@ -77,6 +119,7 @@ export interface ZiyaretItem {
   k: string;
   v: string;
   n: string;
+  href?: string;
 }
 
 export interface RezervasyonCopy {

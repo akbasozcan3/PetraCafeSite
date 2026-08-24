@@ -94,9 +94,25 @@ const gruplar = [
         { fav: true }
       ),
       item(
+        "Hızlı Kahvaltı Tabağı",
+        350,
+        "Ezine peyniri, taze kaşar, siyah ve yeşil zeytin, petek bal, tereyağı, haşlanmış yumurta, domates, salatalık ve 2 bardak taze çay.",
+        { fav: true }
+      ),
+      item(
         "Kahvaltı Ekstra",
         "",
         "Bal-kaymak, sucuk ızgara, pişi, domates-salatalık, peynir tabağı, zeytin tabağı, yumurtalı sigara böreği, sosis tabağı — ekstra ücrete tabidir."
+      ),
+      item(
+        "Sahanda Sucuklu Yumurta",
+        220,
+        "Köy tereyağında pişirilmiş kasap sucuklu çift göz köy yumurtası."
+      ),
+      item(
+        "Çıtır Pişi & Sigara Böreği Tabağı",
+        240,
+        "Sıcak kabarmış pişi, çıtır peynirli sigara böreği, ezine peynir ve çeri domates eşliğinde."
       ),
     ],
     { home: true }

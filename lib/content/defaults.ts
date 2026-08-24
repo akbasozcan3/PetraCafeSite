@@ -79,13 +79,123 @@ export const DEFAULT_CONTENT: SiteContent = {
       "Doğum günü, kurumsal davet ve özel günler için organizasyon masası kurulur. Yüzme dersleri birebir veya grup olarak planlanır.",
     ],
     ozet: [
-      { b: "08:00–24:00", span: "cafe her gün" },
-      { b: "09:00–18:00", span: "havuz" },
-      { b: "Kahvaltı", span: "serpme servis" },
-      { b: "Yüzme", span: "birebir ve grup" },
+      { b: "08:00–02:00", span: "cafe her gün" },
+      { b: "240+ Çeşit", span: "dünya menüsü" },
+      { b: "09:00–18:00", span: "havuz & beach" },
+      { b: "1000+ m²", span: "yaşam & etkinlik" },
     ],
     badgeBaslik: "Petra",
     badgeAlt: "Cafe · Restaurant · Pool",
+    homeWordLimit: 100,
+    stats: [
+      { b: "08:00 – 02:00", span: "Cafe & Restoran Açık", sub: "Haftanın 7 günü kesintisiz lezzet ve keyif" },
+      { b: "240+ Çeşit", span: "Zengin Dünya Menüsü", sub: "Kahvaltı, ızgara, taş fırın pizza ve İtalyan tatlılar" },
+      { b: "09:00 – 18:00", span: "Açık Havuz & Beach Kulübü", sub: "Yetişkin & çocuk havuzu, şezlonglar ve VIP localar" },
+      { b: "1000+ m²", span: "Sosyal Yaşam & Teras Alanı", sub: "Doğum günü, özel kutlama ve kurumsal davetler" }
+    ],
+    experiences: [
+      {
+        title: "Zengin Serpme Kahvaltı",
+        desc: "Taş fırından yeni çıkmış sıcacık çıtır pişiler, seçkin köy peynirleri, sahanda sucuklu yumurta, bal-kaymak ve sınırsız demlik çay eşliğinde doyumsuz sabahlar.",
+        hours: "08:00 – 14:00",
+        tag: "Her Sabah Taze",
+        features: ["Sınırsız Demlik Çay", "Taş Fırın Çıtır Pişi", "Yöresel Doğal Lezzetler"]
+      },
+      {
+        title: "Dünya Mutfağı & Izgaralar",
+        desc: "Marine edilmiş dana antrikot, odun ateşinde çıtır pizzalar, el yapımı gurme burgerler, taze İtalyan makarnaları ve taptaze Akdeniz salataları.",
+        hours: "11:30 – 23:30",
+        tag: "Usta Şeflerden",
+        features: ["Taş Fırın Pizza", "Marine Izgara Etler", "El Yapımı Makarnalar"]
+      },
+      {
+        title: "Pool & Beach Kulübü",
+        desc: "09:00 – 18:00 saatleri arasında tertemiz yetişkin ve çocuk havuzu, konforlu şezlonglar, VIP localar, cankurtaran desteği ve serinletici kokteyller.",
+        hours: "09:00 – 18:00",
+        tag: "Yaz Sezonu Boyunca",
+        features: ["Yetişkin & Çocuk Havuzu", "VIP Loca & Şezlong", "Sürekli Su Hijyen Analizi"]
+      },
+      {
+        title: "İtalyan Tatlıları & Nargile",
+        desc: "Hakiki İtalyan mascarpone ile hazırlanan tiramisu, cannoli, imza kahveler, ferahlatıcı kokteyller ve açık havada birinci sınıf nargile deneyimi.",
+        hours: "08:00 – 02:00",
+        tag: "Geceye Kadar Keyif",
+        features: ["Orijinal Mascarpone Tiramisu", "3. Nesil Özel Kahveler", "Seçkin Premium Tütünler"]
+      }
+    ],
+    timeline: [
+      {
+        time: "08:00 – 12:00",
+        title: "Güne Enerjik ve Taze Başlangıç",
+        desc: "Kuş sesleri ve temiz hava eşliğinde taş fırından yeni çıkan pişiler, köy peynirleri ve demlik çay ile zengin serpme kahvaltı."
+      },
+      {
+        time: "12:00 – 17:00",
+        title: "Güneş, Havuz ve Serinlik",
+        desc: "Yaz günlerinde açık yüzme havuzunda yüzme, şezlongda güneşlenme ve buz gibi imza kokteyller eşliğinde serinletici anlar."
+      },
+      {
+        time: "17:00 – 21:00",
+        title: "Şefin İmzasıyla Dünya Mutfağı",
+        desc: "Akşamın ilk ışıklarıyla marine ızgaralar, taş fırın pizzalar ve gurme makarna tabakları ile damak çatlatan lezzet şöleni."
+      },
+      {
+        time: "21:00 – 02:00",
+        title: "Tatlı Sohbetler & Nargile Keyfi",
+        desc: "İtalyan tatlıları, artisan kahveler ve açık-kapalı ferah lounge alanlarında gecenin tadını çıkaran keyifli buluşmalar."
+      }
+    ],
+    values: [
+      {
+        title: "Tavizsiz Hijyen & Kalite",
+        desc: "Mutfaktan havuza kadar her alanda düzenli denetimler, laboratuvar onaylı su analizleri ve en taze güvenilir gıda hammaddeleri."
+      },
+      {
+        title: "Usta Şefler & Zengin Menü",
+        desc: "Her biri kendi alanında uzman mutfak ve bar ekibimizin reçeteleriyle hazırlanan 240'ı aşkın özgün lezzet alternatifi."
+      },
+      {
+        title: "Güler Yüzlü Misafirperverlik",
+        desc: "Sizi ve ailenizi her gelişinizde evinizde hissettiren samimi, hızlı ve özenli hizmet anlayışı."
+      },
+      {
+        title: "Her Yaşa Uygun Yaşam Alanı",
+        desc: "Çocuk havuzundan sakin çalışma alanlarına, arkadaş buluşmalarından özel kutlama masalarına kadar herkese açık ferah atmosfer."
+      }
+    ],
+    eventsTitle: "Unutulmaz Anlar İçin Özel Organizasyon Masaları",
+    eventsLead: "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde; havuz başı terasımız veya klimalı şık salonlarımızda profesyonel masa düzeni, özel menü planlaması ve pasta servisi sunuyoruz.",
+    eventsTags: [
+      "🎂 Doğum Günü Kutlamaları",
+      "💍 Evlilik Teklifi & Yıldönümü",
+      "👔 Kurumsal Şirket Yemekleri"
+    ],
+    amenities: [
+      "Açık Yüzme & Çocuk Havuzu",
+      "Açık Teras & Klimalı Salonlar",
+      "Özel Gün & Organizasyon Masaları",
+      "Geniş Otopark İmkânı",
+      "Yüksek Hızlı Ücretsiz Wi-Fi",
+      "Profesyonel Cankurtaran & Güvenlik"
+    ],
+    faqs: [
+      {
+        q: "Serpme kahvaltı ve restoran için rezervasyon gerekli mi?",
+        a: "Hafta içi günlerde rezervasyonsuz katılım mümkündür. Ancak cuma, cumartesi ve pazar günleri yoğunluk yaşandığından, masa ve havuz başı yerinizi önceden ayırtmanızı tavsiye ederiz."
+      },
+      {
+        q: "Açık yüzme havuzu kullanım saatleri ve şartları nelerdir?",
+        a: "Havuzumuz yaz sezonu boyunca her gün 09:00 – 18:00 saatleri arasında açıktır. Yetişkin ve çocuk havuzlarımız cankurtaran gözetiminde olup şezlong ve şemsiye kullanımı fiyata dahildir."
+      },
+      {
+        q: "Doğum günü, evlilik teklifi veya özel davet düzenleyebilir miyiz?",
+        a: "Evet! Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal yemekler için özel masa süslemesi, pasta servisi ve kişiye özel menü seçenekleri sunuyoruz. 0530 608 90 51 veya WhatsApp hattımızdan rezervasyon oluşturabilirsiniz."
+      },
+      {
+        q: "Petra Yaşam Merkezi'ne ulaşım ve otopark durumu nasıldır?",
+        a: "Tesisimiz Çekmeköy Taşdelen Megakent Sitesi içerisinde yer almaktadır. Araçla gelen misafirlerimiz için geniş otopark alanı mevcuttur."
+      }
+    ]
   },
   bolumlar: {
     menu: {
@@ -448,10 +558,10 @@ Yiyecek & İçecek Hizmetleri, Cafe & Restoran İşletmeciliği, Açık Yüzme H
   },
   theme: DEFAULT_THEME,
   ziyaret: [
-    { k: "Saatler", v: "", n: "Cafe 08:00–24:00 · havuz 09:00–18:00" },
-    { k: "Rezervasyon", v: "", n: "Masa, havuz, yüzme dersi" },
-    { k: "Havuz & Plaj", v: "09:00–18:00", n: "Derinlik 1.45–1.95 m" },
-    { k: "Konum", v: "Petra Yaşam Merkezi", n: "Çekmeköy · Taşdelen" },
+    { k: "Saatler", v: "08:00 – 02:00", n: "Cafe açık · Havuz 09:00–18:00", href: "#iletisim" },
+    { k: "Rezervasyon", v: "0530 608 90 51", n: "Masa, havuz ve özel davetler", href: "#rezervasyon" },
+    { k: "Havuz & Plaj", v: "09:00 – 18:00", n: "Yetişkin & çocuk havuzu, şezlong", href: "#pasta" },
+    { k: "Konum", v: "Petra Yaşam Merkezi", n: "Taşdelen · Çekmeköy / İstanbul", href: "https://maps.google.com/?q=Petra+Yaşam+Merkezi+Taşdelen+Çekmeköy" },
   ],
   hizmetler: [
     { label: "Restoran", icon: "utensils", href: "/menu", aciklama: "Salon ve teras servisi" },

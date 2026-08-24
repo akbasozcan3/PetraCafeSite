@@ -388,6 +388,20 @@
             "updatedAt": "2026-08-19T17:09:45.641Z"
           },
           {
+            "ad": "Hızlı Kahvaltı Tabağı",
+            "fiyat": "350",
+            "aciklama": "Ezine peyniri, taze kaşar, siyah ve yeşil zeytin, petek bal, tereyağı, haşlanmış yumurta, domates, salatalık ve 2 bardak taze çay.",
+            "fav": true,
+            "aktif": true,
+            "not": "",
+            "slug": "hizli-kahvalti-tabagi",
+            "link": "/menu/kahvalti/hizli-kahvalti-tabagi",
+            "id": "p_hizli-kahvalti-tabagi",
+            "source": "local",
+            "createdAt": "2026-08-21T18:05:00.000Z",
+            "updatedAt": "2026-08-21T18:05:00.000Z"
+          },
+          {
             "ad": "Kahvaltı Ekstra",
             "fiyat": "",
             "aciklama": "Bal-kaymak, sucuk ızgara, pişi, domates-salatalık, peynir tabağı, zeytin tabağı, yumurtalı sigara böreği, sosis tabağı — ekstra ücrete tabidir.",
@@ -400,20 +414,6 @@
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.641Z",
             "updatedAt": "2026-08-19T17:09:45.641Z"
-          },
-          {
-            "ad": "Hızlı Kahvaltı Tabağı",
-            "fiyat": "350",
-            "aciklama": "Ezine peyniri, taze kaşar, siyah ve yeşil zeytin, petek bal, tereyağı, haşlanmış yumurta, domates, salatalık ve 2 bardak taze çay.",
-            "fav": false,
-            "aktif": true,
-            "not": "",
-            "slug": "hizli-kahvalti-tabagi",
-            "link": "/menu/kahvalti/hizli-kahvalti-tabagi",
-            "id": "p_hizli-kahvalti-tabagi",
-            "source": "local",
-            "createdAt": "2026-08-21T18:05:00.000Z",
-            "updatedAt": "2026-08-21T18:05:00.000Z"
           },
           {
             "ad": "Sahanda Sucuklu Yumurta",
@@ -4495,23 +4495,27 @@
   "ziyaret": [
     {
       "k": "Saatler",
-      "v": "",
-      "n": "Cafe 08:00–02:00 · havuz 09:00–18:00"
+      "v": "08:00 – 02:00",
+      "n": "Cafe açık · Havuz 09:00 – 18:00",
+      "href": "#iletisim"
     },
     {
       "k": "Rezervasyon",
-      "v": "",
-      "n": "Masa, havuz, yüzme dersi"
+      "v": "0530 608 90 51",
+      "n": "Masa, havuz ve özel davetler",
+      "href": "#rezervasyon"
     },
     {
       "k": "Havuz & Plaj",
-      "v": "09:00–18:00",
-      "n": "Derinlik 1.45–1.95 m"
+      "v": "09:00 – 18:00",
+      "n": "Yetişkin & çocuk havuzu, şezlong",
+      "href": "#pasta"
     },
     {
       "k": "Konum",
       "v": "Petra Yaşam Merkezi",
-      "n": "Taşdelen · Çekmeköy"
+      "n": "Taşdelen · Çekmeköy / İstanbul",
+      "href": "https://maps.google.com/?q=Petra+Yaşam+Merkezi+Taşdelen+Çekmeköy"
     }
   ],
   "hizmetler": [

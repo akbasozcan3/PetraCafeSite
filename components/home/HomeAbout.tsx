@@ -19,19 +19,46 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
 
   if (!h) return null;
 
-  // Extract clean text and limit to 40 words / characters as configured in admin
-  const wordLimit = h.homeWordLimit && h.homeWordLimit > 0 ? h.homeWordLimit : 40;
+  // Admin'den belirlenen kelime limiti (varsayılan 100 kelime, 503 veya üzeri)
+  const wordLimit = typeof h.homeWordLimit === "number" && h.homeWordLimit > 0 ? h.homeWordLimit : 100;
   
-  const rawBody = Array.isArray(h.body) ? h.body.join(" ") : String(h.body || "");
-  const sourceText = rawBody.trim() || (h.lead && h.lead.length > 100 ? h.lead : "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır.");
-  
-  const words = sourceText.split(/\s+/).filter(Boolean);
-  const teaserText = words.length > wordLimit
-    ? words.slice(0, wordLimit).join(" ") + "..."
-    : sourceText;
+  const rawParagraphs: string[] = Array.isArray(h.body) 
+    ? h.body.map((p) => cleanRawText(p)).filter(Boolean)
+    : [cleanRawText(String(h.body || ""))].filter(Boolean);
 
-  // Only show lead separately if it is short (< 120 chars) to prevent massive text blocks
-  const showShortLead = h.lead && h.lead.trim().length <= 120 && h.lead.trim() !== teaserText.trim();
+  const fallbackParagraphs = [
+    "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Zengin menümüz, sıcak atmosferimiz ve ferah açık havuz alanımızla misafirlerimize sadece bir restoran değil, unutulmaz anlar sunan bir buluşma noktası vadediyoruz.",
+    "Günün her saatine uygun lezzetlerimizle hizmetinizdeyiz. Sabahları zengin serpme kahvaltımızla güne enerjik bir başlangıç yapabilir, öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dünya mutfağından seçkin lezzetlerin, ızgaraların ve çıtır taş fırın pizzaların tadını çıkarabilirsiniz."
+  ];
+
+  const sourceParagraphs = rawParagraphs.length > 0 ? rawParagraphs : fallbackParagraphs;
+  const allWords = sourceParagraphs.join(" ").split(/\s+/).filter(Boolean);
+  const isTruncated = allWords.length > wordLimit;
+
+  // Kelime sınırına göre paragrafları oluştur
+  let wordsCount = 0;
+  const displayParagraphs: string[] = [];
+
+  for (const p of sourceParagraphs) {
+    const pWords = p.split(/\s+/).filter(Boolean);
+    if (wordsCount + pWords.length <= wordLimit) {
+      displayParagraphs.push(p);
+      wordsCount += pWords.length;
+    } else {
+      const remaining = wordLimit - wordsCount;
+      if (remaining > 0) {
+        displayParagraphs.push(pWords.slice(0, remaining).join(" ") + "...");
+      }
+      break;
+    }
+  }
+
+  if (displayParagraphs.length === 0 && sourceParagraphs.length > 0) {
+    displayParagraphs.push(allWords.slice(0, wordLimit).join(" ") + "...");
+  }
+
+  // Lead metni kısa ve ana metinden farklıysa göster
+  const showShortLead = h.lead && h.lead.trim().length <= 140 && !sourceParagraphs[0]?.includes(h.lead.trim());
 
   return (
     <section className="section" id="hakkimizda">
@@ -57,33 +84,22 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             </p>
           ) : null}
 
-          {/* 40 KELİMELİK NET ÖNİZLEME + AŞAĞI DOĞRU BLURLU/GRADIENT FADE KATMANI */}
-          <div
-            data-fade=""
-            style={{
-              position: "relative",
-              maxHeight: "80px",
-              overflow: "hidden",
-              marginBottom: "1.25rem",
-            }}
-          >
-            <p className="body" style={{ margin: 0, lineHeight: 1.75 }}>
-              {formatInlineText(teaserText)}
-            </p>
-
-            {/* AŞAĞI DOĞRU YUMUŞAK GRADIENT FADE + BLUR EFEKTİ */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: "55px",
-                background: "linear-gradient(to bottom, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.8) 50%, var(--paper, #FBF8F1) 100%)",
-                backdropFilter: "blur(2px)",
-                pointerEvents: "none",
-              }}
-            />
+          {/* ADMİNDEN BELİRLENEN KELİME LİMİTİNE GÖRE DİNAMİK PARAGRAFLAR */}
+          <div data-fade="" style={{ marginBottom: "1.5rem", display: "flex", flexDirection: "column", gap: "14px" }}>
+            {displayParagraphs.map((paragraph, pIdx) => (
+              <p 
+                key={pIdx} 
+                className="body" 
+                style={{ 
+                  margin: 0, 
+                  lineHeight: 1.85, 
+                  fontSize: "0.95rem",
+                  color: "#383C30" 
+                }}
+              >
+                {formatInlineText(paragraph)}
+              </p>
+            ))}
           </div>
 
           {/* DOĞRUDAN /hakkimizda ROUTE NAVIGATION BUTONU */}
@@ -105,7 +121,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
                 boxShadow: "0 6px 18px rgba(217, 164, 65, 0.35)",
               }}
             >
-              <span>Devamını Oku</span>
+              <span>{isTruncated ? "Devamını Oku & Tüm Detaylar" : "Hakkımızda Sayfasını İncele"}</span>
               <span>→</span>
             </Link>
           </div>

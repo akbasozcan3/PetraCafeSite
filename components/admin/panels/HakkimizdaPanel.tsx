@@ -29,7 +29,7 @@ export default function HakkimizdaPanel() {
   const [message, setMessage] = useState("");
 
   if (loading || !content) return <AdminLoading />;
-  const h = content.hakkimizda;
+  const h = content.hakkimizda || ({} as any);
 
   const save = async () => {
     setSaving(true);
@@ -39,7 +39,7 @@ export default function HakkimizdaPanel() {
         images: content.images,
       });
       setContent(res.data);
-      setMessage("Hakkımızda kaydedildi.");
+      setMessage("Hakkımızda başarıyla kaydedildi.");
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "Kayıt başarısız");
     } finally {
@@ -47,101 +47,127 @@ export default function HakkimizdaPanel() {
     }
   };
 
+  const totalWords = ((h.lead || "") + " " + (h.body || []).join(" ")).trim().split(/\s+/).filter(Boolean).length;
+
   return (
     <>
       <AdminPageHeader
-        title="Hakkımızda"
-        description="Ana sayfadaki Hakkımızda bölümünün tüm yazıları, özet kartları ve görseli."
+        title="Hakkımızda & Yaşam Merkezi Yönetimi"
+        description="Ana sayfa ve /hakkimizda sayfasındaki tüm metinler, kelime limiti, 4 yaşam deneyimi, istatistikler, zaman çizelgesi, organizasyonlar ve S.S.S."
         actions={
-          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
-            <span>{saving ? "Kaydediliyor…" : "💾 Hakkımızda Kaydet"}</span>
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-5 py-2.5 rounded-xl shadow-lg transition-transform active:scale-95 flex items-center gap-2">
+            <span>{saving ? "Kaydediliyor…" : "💾 Tüm Değişiklikleri Kaydet"}</span>
           </Button>
         }
       />
       <SectionHint anchor="hakkimizda" label="Hakkımızda" />
       <AdminAlert message={message} />
+
       <div className="space-y-6">
-        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-          <h3 className="font-semibold text-[#F8F8F8]">Başlıklar</h3>
+        
+        {/* 1. BAŞLIKLAR VE GİRİŞ */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+            <span>🏷️</span> Üst Başlıklar ve Giriş Metni
+          </h3>
           <div className="grid gap-4 md:grid-cols-2">
             <Input
-              label="Üst etiket (HAKKIMIZDA)"
-              value={h.eyebrow}
+              label="Üst etiket (Eyebrow)"
+              value={h.eyebrow || ""}
               onChange={(e) =>
                 setContent({
                   ...content,
                   hakkimizda: { ...h, eyebrow: e.target.value },
                 })
               }
+              placeholder="HAKKIMIZDA & YAŞAM MERKEZİ"
             />
             <Input
-              label="Ana başlık"
-              value={h.baslik}
+              label="Ana Başlık (H1)"
+              value={h.baslik || ""}
               onChange={(e) =>
                 setContent({
                   ...content,
                   hakkimizda: { ...h, baslik: e.target.value },
                 })
               }
+              placeholder="Petra Yaşam Merkezi'nde Cafe & Restaurant"
+            />
+          </div>
+          <div>
+            <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">
+              Giriş / Vurgu Cümlesi (Lead)
+            </label>
+            <textarea
+              value={h.lead || ""}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  hakkimizda: { ...h, lead: e.target.value },
+                })
+              }
+              rows={2}
+              className={fieldClass}
+              placeholder="Keyif, konfor ve kalite — kahvaltıdan akşam yemeğine, havuz kenarından organizasyona."
             />
           </div>
         </section>
 
-        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-          <h3 className="font-semibold text-[#F8F8F8]">Kısaca kutusu</h3>
+        {/* 2. KISACA KUTUSU */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+            <span>💡</span> Kısaca Kutusu (Öne Çıkan Bilgi)
+          </h3>
           <Input
-            label="Kutu etiketi"
-            value={h.answerBaslik}
+            label="Kutu Başlığı"
+            value={h.answerBaslik || ""}
             onChange={(e) =>
               setContent({
                 ...content,
                 hakkimizda: { ...h, answerBaslik: e.target.value },
               })
             }
-            placeholder="Kısaca"
+            placeholder="Kısaca Petra"
           />
           <div>
             <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">
-              Kısaca metni
+              Kısaca Özeti Metni
             </label>
             <textarea
-              value={h.answerMetin}
+              value={h.answerMetin || ""}
               onChange={(e) =>
                 setContent({
                   ...content,
                   hakkimizda: { ...h, answerMetin: e.target.value },
                 })
               }
-              rows={4}
+              rows={3}
               className={fieldClass}
+              placeholder="Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve, nargile ve havuz–plaj sunar."
             />
           </div>
         </section>
 
-        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
+        {/* 3. ANA SAYFA KELİME LİMİTİ & ÖNİZLEME AYARI */}
+        <section className="space-y-4 rounded-2xl border border-[#D9A441]/40 bg-[#1A1813] p-6 shadow-lg">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-[#F8F8F8]">Paragraflar & Makale</h3>
-            <span className="text-xs font-semibold text-[#D9A441] bg-[#D9A441]/10 px-2.5 py-1 rounded-lg border border-[#D9A441]/30">
-              Toplam: {((h.lead || "") + " " + (h.body || []).join(" ")).trim().split(/\s+/).filter(Boolean).length} Kelime
+            <h3 className="text-base font-bold text-[#E8B84B] flex items-center gap-2">
+              <span>🔢</span> Ana Sayfa Kelime Limiti (Önizleme Ayarı)
+            </h3>
+            <span className="text-xs font-bold text-[#E8B84B] bg-[#D9A441]/20 px-3 py-1 rounded-full border border-[#D9A441]/40">
+              Şu Anki Ayar: {h.homeWordLimit || 100} Kelime (Toplam Makale: {totalWords} Kelime)
             </span>
           </div>
+          
+          <p className="text-xs text-[#C8B89A] leading-relaxed">
+            Ana sayfadaki "Hakkımızda" bölümünde makalenin kaç kelimesinin gösterileceğini belirler. Metin bu kelime sayısına ulaştığında kesilir ve altına <strong className="text-white">"Devamını Oku →"</strong> butonu eklenerek kullanıcı <strong className="text-[#E8B84B]">/hakkimizda</strong> sayfasına yönlendirilir.
+          </p>
 
-          <div className="rounded-xl border border-[#D9A441]/30 bg-[#D9A441]/10 p-4 space-y-2">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-bold text-[#E8B84B]">
-                Ana Sayfa Kelime Limiti (Önizleme)
-              </label>
-              <span className="text-xs font-bold text-[#FFFFFF]">
-                {h.homeWordLimit || 100} Kelime
-              </span>
-            </div>
-            <p className="text-xs text-[#8A9BB0]">
-              Ana sayfadaki Hakkımızda alanında makalenin kaç kelimesinin gösterileceğini belirler. Devamı için "Devamını Oku →" butonu yer alır.
-            </p>
+          <div className="grid gap-3 md:grid-cols-[1fr_auto]">
             <input
               type="number"
-              min={30}
-              max={500}
+              min={10}
+              max={5000}
               value={h.homeWordLimit || 100}
               onChange={(e) =>
                 setContent({
@@ -154,34 +180,46 @@ export default function HakkimizdaPanel() {
               }
               className={fieldClass}
             />
+            <div className="flex flex-wrap gap-2 items-center">
+              {[40, 80, 150, 300, 500, totalWords || 600].map((preset, pIdx) => (
+                <button
+                  key={pIdx}
+                  type="button"
+                  onClick={() =>
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, homeWordLimit: preset },
+                    })
+                  }
+                  className={`text-xs px-3 py-2 rounded-lg font-bold border transition-colors ${
+                    (h.homeWordLimit || 100) === preset
+                      ? "bg-[#D9A441] text-[#0D0F0A] border-[#D9A441]"
+                      : "bg-white/5 text-[#E8B84B] border-white/10 hover:bg-white/10"
+                  }`}
+                >
+                  {pIdx === 5 ? `Tümü (${preset})` : `${preset} Kelime`}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 4. PARAGRAFLAR & DETAYLI MAKALE */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+              <span>📝</span> Makale Paragrafları (/hakkimizda Sayfası)
+            </h3>
+            <span className="text-xs font-semibold text-[#D9A441] bg-[#D9A441]/10 px-2.5 py-1 rounded-lg border border-[#D9A441]/30">
+              {h.body?.length || 0} Paragraf
+            </span>
           </div>
 
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-medium text-[#8A9BB0]">
-                Giriş paragrafı
-              </label>
-              <span className="text-[11px] text-[#6B7A94]">
-                {(h.lead || "").trim().split(/\s+/).filter(Boolean).length} kelime
-              </span>
-            </div>
-            <textarea
-              value={h.lead}
-              onChange={(e) =>
-                setContent({
-                  ...content,
-                  hakkimizda: { ...h, lead: e.target.value },
-                })
-              }
-              rows={3}
-              className={fieldClass}
-            />
-          </div>
-          {(h.body || []).map((p, i) => (
-            <div key={i} className="space-y-2">
+          {(h.body || []).map((p: string, i: number) => (
+            <div key={i} className="space-y-2 rounded-xl border border-white/[0.06] bg-[#0D1117] p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <label className="text-sm font-medium text-[#8A9BB0]">
+                  <label className="text-sm font-semibold text-[#8A9BB0]">
                     Paragraf {i + 1}
                   </label>
                   <span className="text-[11px] text-[#6B7A94]">
@@ -191,24 +229,24 @@ export default function HakkimizdaPanel() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-red-400"
+                  className="text-red-400 hover:text-red-300"
                   onClick={() =>
                     setContent({
                       ...content,
                       hakkimizda: {
                         ...h,
-                        body: h.body.filter((_, j) => j !== i),
+                        body: h.body.filter((_: any, j: number) => j !== i),
                       },
                     })
                   }
                 >
-                  <Trash2 className="h-4 w-4" /> Sil
+                  <Trash2 className="h-4 w-4 mr-1" /> Sil
                 </Button>
               </div>
               <textarea
                 value={p}
                 onChange={(e) => {
-                  const body = [...h.body];
+                  const body = [...(h.body || [])];
                   body[i] = e.target.value;
                   setContent({
                     ...content,
@@ -217,9 +255,11 @@ export default function HakkimizdaPanel() {
                 }}
                 rows={3}
                 className={fieldClass}
+                placeholder={`Paragraf ${i + 1} içeriği...`}
               />
             </div>
           ))}
+
           <Button
             variant="outline"
             size="sm"
@@ -229,113 +269,581 @@ export default function HakkimizdaPanel() {
                 hakkimizda: { ...h, body: [...(h.body || []), ""] },
               })
             }
+            className="border-dashed border-white/20 text-[#D9A441] hover:bg-white/5"
           >
-            <Plus className="h-4 w-4" /> Paragraf ekle
+            <Plus className="h-4 w-4 mr-1" /> Yeni Paragraf Ekle
           </Button>
         </section>
 
-        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-          <h3 className="font-semibold text-[#F8F8F8]">Özet kartları</h3>
-          <p className="text-xs text-[#6B7A94]">
-            Metnin altındaki küçük istatistik kutuları (ör. Her gün / taze üretim).
-          </p>
-          <div className="space-y-2">
-            {(h.ozet || []).map((item, i) => (
+        {/* 5. RAKAMLARLA PETRA / İSTATİSTİKLER */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+              <span>📊</span> Rakamlarla Petra (İstatistik Göstergeleri)
+            </h3>
+            <p className="text-xs text-[#8A9BB0]">
+              /hakkimizda sayfasının üstündeki 4'lü sayaç/istatistik kartları.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            {((h.stats || h.ozet || []) as any[]).map((item: any, i: number) => (
               <div
                 key={i}
-                className="grid gap-2 rounded-xl border border-white/[0.06] bg-[#0D1117] p-3 md:grid-cols-[1fr_1fr_auto]"
+                className="grid gap-3 rounded-xl border border-white/[0.06] bg-[#0D1117] p-4 md:grid-cols-[1fr_1.5fr_1.5fr_auto]"
               >
                 <Input
-                  label="Kalın satır"
-                  value={item.b}
+                  label="Büyük Değer (Ör: 08:00 – 02:00)"
+                  value={item.b || ""}
                   onChange={(e) => {
-                    const ozet = [...h.ozet];
-                    ozet[i] = { ...ozet[i], b: e.target.value };
+                    const stats = [...((h.stats || h.ozet || []) as any[])];
+                    stats[i] = { ...stats[i], b: e.target.value };
                     setContent({
                       ...content,
-                      hakkimizda: { ...h, ozet },
+                      hakkimizda: { ...h, stats },
                     });
                   }}
                 />
                 <Input
-                  label="Alt satır"
-                  value={item.span}
+                  label="Başlık (Ör: Cafe & Restoran Açık)"
+                  value={item.span || ""}
                   onChange={(e) => {
-                    const ozet = [...h.ozet];
-                    ozet[i] = { ...ozet[i], span: e.target.value };
+                    const stats = [...((h.stats || h.ozet || []) as any[])];
+                    stats[i] = { ...stats[i], span: e.target.value };
                     setContent({
                       ...content,
-                      hakkimizda: { ...h, ozet },
+                      hakkimizda: { ...h, stats },
                     });
                   }}
+                />
+                <Input
+                  label="Alt Açıklama"
+                  value={item.sub || ""}
+                  onChange={(e) => {
+                    const stats = [...((h.stats || h.ozet || []) as any[])];
+                    stats[i] = { ...stats[i], sub: e.target.value };
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, stats },
+                    });
+                  }}
+                  placeholder="Haftanın 7 günü kesintisiz lezzet"
                 />
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="self-end"
-                  onClick={() =>
+                  className="self-end text-red-400 hover:text-red-300"
+                  onClick={() => {
+                    const stats = ((h.stats || h.ozet || []) as any[]).filter((_: any, j: number) => j !== i);
                     setContent({
                       ...content,
-                      hakkimizda: {
-                        ...h,
-                        ozet: h.ozet.filter((_, j) => j !== i),
-                      },
-                    })
-                  }
+                      hakkimizda: { ...h, stats },
+                    });
+                  }}
                 >
-                  <Trash2 className="h-4 w-4 text-red-400" />
+                  <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
             ))}
+
             <Button
               variant="outline"
               size="sm"
-              onClick={() =>
+              onClick={() => {
+                const stats = [...((h.stats || h.ozet || []) as any[]), { b: "", span: "", sub: "" }];
                 setContent({
                   ...content,
-                  hakkimizda: {
-                    ...h,
-                    ozet: [...(h.ozet || []), { b: "", span: "" }],
-                  },
-                })
-              }
+                  hakkimizda: { ...h, stats },
+                });
+              }}
+              className="border-dashed border-white/20 text-[#D9A441]"
             >
-              <Plus className="h-4 w-4" /> Kart ekle
+              <Plus className="h-4 w-4 mr-1" /> İstatistik Kartı Ekle
             </Button>
           </div>
         </section>
 
-        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-          <h3 className="font-semibold text-[#F8F8F8]">Fotoğraf ve rozet</h3>
+        {/* 6. DÖRT TEMEL YAŞAM DENEYİMİ (EXPERIENCES) */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+              <span>🍽️</span> 4 Ana Yaşam Deneyimi (Kartlar)
+            </h3>
+            <p className="text-xs text-[#8A9BB0]">
+              Kahvaltı, Dünya Mutfağı, Havuz & Beach, Tatlı & Nargile kartları.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {(h.experiences || []).map((exp: any, i: number) => (
+              <div key={i} className="rounded-xl border border-white/[0.08] bg-[#0D1117] p-4 space-y-3">
+                <div className="flex items-center justify-between border-b border-white/[0.06] pb-2">
+                  <span className="text-sm font-bold text-[#D9A441]">
+                    Deneyim #{i + 1}: {exp.title || "Yeni Deneyim"}
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-red-400 hover:text-red-300"
+                    onClick={() => {
+                      const experiences = (h.experiences || []).filter((_: any, j: number) => j !== i);
+                      setContent({
+                        ...content,
+                        hakkimizda: { ...h, experiences },
+                      });
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4 mr-1" /> Sil
+                  </Button>
+                </div>
+
+                <div className="grid gap-3 md:grid-cols-3">
+                  <Input
+                    label="Deneyim Başlığı"
+                    value={exp.title || ""}
+                    onChange={(e) => {
+                      const experiences = [...(h.experiences || [])];
+                      experiences[i] = { ...experiences[i], title: e.target.value };
+                      setContent({
+                        ...content,
+                        hakkimizda: { ...h, experiences },
+                      });
+                    }}
+                    placeholder="Zengin Serpme Kahvaltı"
+                  />
+                  <Input
+                    label="Servis Saatleri"
+                    value={exp.hours || ""}
+                    onChange={(e) => {
+                      const experiences = [...(h.experiences || [])];
+                      experiences[i] = { ...experiences[i], hours: e.target.value };
+                      setContent({
+                        ...content,
+                        hakkimizda: { ...h, experiences },
+                      });
+                    }}
+                    placeholder="08:00 – 14:00"
+                  />
+                  <Input
+                    label="Vurgu Etiketi"
+                    value={exp.tag || ""}
+                    onChange={(e) => {
+                      const experiences = [...(h.experiences || [])];
+                      experiences[i] = { ...experiences[i], tag: e.target.value };
+                      setContent({
+                        ...content,
+                        hakkimizda: { ...h, experiences },
+                      });
+                    }}
+                    placeholder="Her Sabah Taze"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-[#8A9BB0]">
+                    Açıklama Metni
+                  </label>
+                  <textarea
+                    value={exp.desc || ""}
+                    onChange={(e) => {
+                      const experiences = [...(h.experiences || [])];
+                      experiences[i] = { ...experiences[i], desc: e.target.value };
+                      setContent({
+                        ...content,
+                        hakkimizda: { ...h, experiences },
+                      });
+                    }}
+                    rows={2}
+                    className={fieldClass}
+                    placeholder="Deneyim açıklaması..."
+                  />
+                </div>
+
+                <Input
+                  label="Özellik Maddeleri (Virgülle ayırarak yazın)"
+                  value={Array.isArray(exp.features) ? exp.features.join(", ") : (exp.features || "")}
+                  onChange={(e) => {
+                    const experiences = [...(h.experiences || [])];
+                    experiences[i] = {
+                      ...experiences[i],
+                      features: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+                    };
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, experiences },
+                    });
+                  }}
+                  placeholder="Sınırsız Demlik Çay, Taş Fırın Çıtır Pişi, Yöresel Doğal Lezzetler"
+                />
+              </div>
+            ))}
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const experiences = [
+                  ...(h.experiences || []),
+                  { title: "", hours: "", tag: "", desc: "", features: [] },
+                ];
+                setContent({
+                  ...content,
+                  hakkimizda: { ...h, experiences },
+                });
+              }}
+              className="border-dashed border-white/20 text-[#D9A441]"
+            >
+              <Plus className="h-4 w-4 mr-1" /> Deneyim Kartı Ekle
+            </Button>
+          </div>
+        </section>
+
+        {/* 7. BİR GÜNÜN PETRA'DAKİ AKIŞI (TIMELINE) */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+              <span>⏰</span> Bir Günün Petra'daki Akışı (24 Saat Zaman Çizelgesi)
+            </h3>
+          </div>
+
+          <div className="space-y-3">
+            {(h.timeline || []).map((step: any, i: number) => (
+              <div key={i} className="grid gap-3 rounded-xl border border-white/[0.06] bg-[#0D1117] p-4 md:grid-cols-[1fr_1.5fr_2fr_auto]">
+                <Input
+                  label="Saat Dilimi"
+                  value={step.time || ""}
+                  onChange={(e) => {
+                    const timeline = [...(h.timeline || [])];
+                    timeline[i] = { ...timeline[i], time: e.target.value };
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, timeline },
+                    });
+                  }}
+                  placeholder="08:00 – 12:00"
+                />
+                <Input
+                  label="Başlık"
+                  value={step.title || ""}
+                  onChange={(e) => {
+                    const timeline = [...(h.timeline || [])];
+                    timeline[i] = { ...timeline[i], title: e.target.value };
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, timeline },
+                    });
+                  }}
+                  placeholder="Güne Enerjik ve Taze Başlangıç"
+                />
+                <Input
+                  label="Açıklama"
+                  value={step.desc || ""}
+                  onChange={(e) => {
+                    const timeline = [...(h.timeline || [])];
+                    timeline[i] = { ...timeline[i], desc: e.target.value };
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, timeline },
+                    });
+                  }}
+                  placeholder="Zaman çizelgesi açıklaması..."
+                />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="self-end text-red-400 hover:text-red-300"
+                  onClick={() => {
+                    const timeline = (h.timeline || []).filter((_: any, j: number) => j !== i);
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, timeline },
+                    });
+                  }}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const timeline = [
+                  ...(h.timeline || []),
+                  { time: "", title: "", desc: "" },
+                ];
+                setContent({
+                  ...content,
+                  hakkimizda: { ...h, timeline },
+                });
+              }}
+              className="border-dashed border-white/20 text-[#D9A441]"
+            >
+              <Plus className="h-4 w-4 mr-1" /> Zaman Dilimi Ekle
+            </Button>
+          </div>
+        </section>
+
+        {/* 8. TEMEL DEĞERLERİMİZ (VALUES) */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+              <span>🛡️</span> Temel Değerlerimiz & Standartlarımız
+            </h3>
+          </div>
+
+          <div className="space-y-3">
+            {(h.values || []).map((val: any, i: number) => (
+              <div key={i} className="grid gap-3 rounded-xl border border-white/[0.06] bg-[#0D1117] p-4 md:grid-cols-[1.5fr_2.5fr_auto]">
+                <Input
+                  label="Değer Başlığı"
+                  value={val.title || ""}
+                  onChange={(e) => {
+                    const values = [...(h.values || [])];
+                    values[i] = { ...values[i], title: e.target.value };
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, values },
+                    });
+                  }}
+                  placeholder="Tavizsiz Hijyen & Kalite"
+                />
+                <Input
+                  label="Açıklama"
+                  value={val.desc || ""}
+                  onChange={(e) => {
+                    const values = [...(h.values || [])];
+                    values[i] = { ...values[i], desc: e.target.value };
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, values },
+                    });
+                  }}
+                  placeholder="Değer açıklaması..."
+                />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="self-end text-red-400 hover:text-red-300"
+                  onClick={() => {
+                    const values = (h.values || []).filter((_: any, j: number) => j !== i);
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, values },
+                    });
+                  }}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const values = [
+                  ...(h.values || []),
+                  { title: "", desc: "" },
+                ];
+                setContent({
+                  ...content,
+                  hakkimizda: { ...h, values },
+                });
+              }}
+              className="border-dashed border-white/20 text-[#D9A441]"
+            >
+              <Plus className="h-4 w-4 mr-1" /> Değer Maddesi Ekle
+            </Button>
+          </div>
+        </section>
+
+        {/* 9. ÖZEL GÜNLER & ORGANİZASYON */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+            <span>🎉</span> Özel Gün & Organizasyon Vitrini
+          </h3>
+          <Input
+            label="Bölüm Başlığı"
+            value={h.eventsTitle || ""}
+            onChange={(e) =>
+              setContent({
+                ...content,
+                hakkimizda: { ...h, eventsTitle: e.target.value },
+              })
+            }
+            placeholder="Unutulmaz Anlar İçin Özel Organizasyon Masaları"
+          />
+          <div>
+            <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">
+              Açıklama Metni
+            </label>
+            <textarea
+              value={h.eventsLead || ""}
+              onChange={(e) =>
+                setContent({
+                  ...content,
+                  hakkimizda: { ...h, eventsLead: e.target.value },
+                })
+              }
+              rows={2}
+              className={fieldClass}
+              placeholder="Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde..."
+            />
+          </div>
+          <Input
+            label="Öne Çıkan Etiketler (Virgülle ayırarak yazın)"
+            value={Array.isArray(h.eventsTags) ? h.eventsTags.join(", ") : (h.eventsTags || "")}
+            onChange={(e) =>
+              setContent({
+                ...content,
+                hakkimizda: {
+                  ...h,
+                  eventsTags: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+                },
+              })
+            }
+            placeholder="🎂 Doğum Günü Kutlamaları, 💍 Evlilik Teklifi & Yıldönümü, 👔 Kurumsal Şirket Yemekleri"
+          />
+        </section>
+
+        {/* 10. TESİS İMKANLARI */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+            <span>🏊</span> Tesis Olanakları & İmkânlar (Rozetler)
+          </h3>
+          <Input
+            label="İmkân Maddeleri (Virgülle ayırarak yazın)"
+            value={Array.isArray(h.amenities) ? h.amenities.join(", ") : (h.amenities || "")}
+            onChange={(e) =>
+              setContent({
+                ...content,
+                hakkimizda: {
+                  ...h,
+                  amenities: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+                },
+              })
+            }
+            placeholder="Açık Yüzme & Çocuk Havuzu, Açık Teras & Klimalı Salonlar, Geniş Otopark İmkânı, Ücretsiz Wi-Fi"
+          />
+        </section>
+
+        {/* 11. SIKÇA SORULAN SORULAR */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+              <span>❓</span> Sıkça Sorulan Sorular (Hakkımızda S.S.S.)
+            </h3>
+          </div>
+
+          <div className="space-y-3">
+            {(h.faqs || []).map((faq: any, i: number) => (
+              <div key={i} className="rounded-xl border border-white/[0.06] bg-[#0D1117] p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#D9A441]">Soru #{i + 1}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-red-400 hover:text-red-300"
+                    onClick={() => {
+                      const faqs = (h.faqs || []).filter((_: any, j: number) => j !== i);
+                      setContent({
+                        ...content,
+                        hakkimizda: { ...h, faqs },
+                      });
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4 mr-1" /> Sil
+                  </Button>
+                </div>
+                <Input
+                  label="Soru"
+                  value={faq.q || ""}
+                  onChange={(e) => {
+                    const faqs = [...(h.faqs || [])];
+                    faqs[i] = { ...faqs[i], q: e.target.value };
+                    setContent({
+                      ...content,
+                      hakkimizda: { ...h, faqs },
+                    });
+                  }}
+                  placeholder="Serpme kahvaltı için rezervasyon gerekli mi?"
+                />
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-[#8A9BB0]">Cevap</label>
+                  <textarea
+                    value={faq.a || ""}
+                    onChange={(e) => {
+                      const faqs = [...(h.faqs || [])];
+                      faqs[i] = { ...faqs[i], a: e.target.value };
+                      setContent({
+                        ...content,
+                        hakkimizda: { ...h, faqs },
+                      });
+                    }}
+                    rows={2}
+                    className={fieldClass}
+                    placeholder="Cevap metni..."
+                  />
+                </div>
+              </div>
+            ))}
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const faqs = [
+                  ...(h.faqs || []),
+                  { q: "", a: "" },
+                ];
+                setContent({
+                  ...content,
+                  hakkimizda: { ...h, faqs },
+                });
+              }}
+              className="border-dashed border-white/20 text-[#D9A441]"
+            >
+              <Plus className="h-4 w-4 mr-1" /> Soru Ekle
+            </Button>
+          </div>
+        </section>
+
+        {/* 12. GÖRSEL VE ROZET */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+            <span>🖼️</span> Fotoğraf ve Rozet Ayarları
+          </h3>
           <div className="grid gap-4 md:grid-cols-2">
             <Input
-              label="Rozet başlık"
-              value={h.badgeBaslik}
+              label="Rozet Başlık"
+              value={h.badgeBaslik || ""}
               onChange={(e) =>
                 setContent({
                   ...content,
                   hakkimizda: { ...h, badgeBaslik: e.target.value },
                 })
               }
-              placeholder="Taze"
+              placeholder="Petra Yaşam Merkezi"
             />
             <Input
-              label="Rozet alt metin"
-              value={h.badgeAlt}
+              label="Rozet Alt Metin"
+              value={h.badgeAlt || ""}
               onChange={(e) =>
                 setContent({
                   ...content,
                   hakkimizda: { ...h, badgeAlt: e.target.value },
                 })
               }
-              placeholder="Lezzetli · Doğal"
+              placeholder="Cafe · Restaurant · Pool & Beach"
             />
           </div>
           <div>
-            <h4 className="mb-2 font-medium text-[#EEE9E0]">Hakkımızda görseli</h4>
+            <h4 className="mb-2 font-medium text-[#EEE9E0]">Hakkımızda Görseli</h4>
             {content.images?.aboutInterior ? (
               <div className="mb-3 flex items-center gap-3">
-                <div className="h-28 w-40 overflow-hidden rounded-lg">
+                <div className="h-28 w-40 overflow-hidden rounded-lg border border-white/10">
                   <AdminImage src={content.images.aboutInterior} alt="Hakkımızda" />
                 </div>
                 <Button
@@ -361,7 +869,7 @@ export default function HakkimizdaPanel() {
               </div>
             ) : (
               <p className="mb-2 text-sm text-[#8A9BB0]">
-                Henüz görsel yok — boş bırakılırsa sitedeki mevcut fotoğraf kalır.
+                Henüz özel görsel yok — sitedeki varsayılan fotoğraf kullanılmaktadır.
               </p>
             )}
             <Upload
@@ -371,7 +879,7 @@ export default function HakkimizdaPanel() {
                 try {
                   const res = await api.getAdminContent();
                   setContent(res.data);
-                  setMessage("Görsel yüklendi.");
+                  setMessage("Görsel başarıyla yüklendi.");
                 } catch (err) {
                   setMessage(
                     err instanceof Error
@@ -384,6 +892,7 @@ export default function HakkimizdaPanel() {
             />
           </div>
         </section>
+
       </div>
     </>
   );
@@ -1424,15 +1933,17 @@ export function BolumlarPanel() {
         })}
 
         <section className="rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-4">
-          <h3 className="mb-1 font-medium text-[#C8703A]">Ziyaret şeridi</h3>
+          <h3 className="mb-1 font-semibold text-[#D9A441] flex items-center gap-2">
+            <span>✦</span> Ziyaret & Hızlı Bilgi Şeridi
+          </h3>
           <p className="mb-3 text-xs text-[#6B7A94]">
-            Ana sayfadaki bilgi kartları. Değer boşsa saat / telefon iletişimden gelir.
+            Ana sayfadaki 4'lü vitrin kartları (Saatler, Rezervasyon, Havuz ve Konum).
           </p>
           <div className="space-y-3">
             {ziyaret.map((item, i) => (
-              <div key={i} className="grid gap-2 md:grid-cols-[1fr_1fr_1fr_auto]">
+              <div key={i} className="grid gap-2 rounded-xl border border-white/[0.06] bg-[#0E1522] p-3 md:grid-cols-[1fr_1.2fr_1.5fr_1fr_auto]">
                 <Input
-                  label="Etiket"
+                  label="Etiket (Ör: Saatler)"
                   value={item.k}
                   onChange={(e) => {
                     const next = [...ziyaret];
@@ -1441,8 +1952,9 @@ export function BolumlarPanel() {
                   }}
                 />
                 <Input
-                  label="Değer"
+                  label="Vurgu / Değer"
                   value={item.v}
+                  placeholder="08:00 – 02:00"
                   onChange={(e) => {
                     const next = [...ziyaret];
                     next[i] = { ...item, v: e.target.value };
@@ -1450,18 +1962,29 @@ export function BolumlarPanel() {
                   }}
                 />
                 <Input
-                  label="Alt satır"
+                  label="Alt Açıklama"
                   value={item.n}
+                  placeholder="Cafe açık · Havuz 09:00–18:00"
                   onChange={(e) => {
                     const next = [...ziyaret];
                     next[i] = { ...item, n: e.target.value };
                     setContent({ ...content, ziyaret: next });
                   }}
                 />
+                <Input
+                  label="Link (Opsiyonel)"
+                  value={item.href || ""}
+                  placeholder="#rezervasyon vb."
+                  onChange={(e) => {
+                    const next = [...ziyaret];
+                    next[i] = { ...item, href: e.target.value };
+                    setContent({ ...content, ziyaret: next });
+                  }}
+                />
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="self-end"
+                  className="self-end text-red-400 hover:text-red-300"
                   onClick={() =>
                     setContent({
                       ...content,
@@ -1469,7 +1992,7 @@ export function BolumlarPanel() {
                     })
                   }
                 >
-                  <Trash2 className="h-4 w-4 text-red-400" />
+                  <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
             ))}
@@ -1479,11 +2002,12 @@ export function BolumlarPanel() {
               onClick={() =>
                 setContent({
                   ...content,
-                  ziyaret: [...ziyaret, { k: "", v: "", n: "" }],
+                  ziyaret: [...ziyaret, { k: "", v: "", n: "", href: "" }],
                 })
               }
+              className="border-dashed border-white/20 text-[#D9A441]"
             >
-              <Plus className="h-4 w-4" /> Kart ekle
+              <Plus className="h-4 w-4 mr-1" /> Kart Ekle
             </Button>
           </div>
         </section>
