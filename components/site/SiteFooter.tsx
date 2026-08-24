@@ -113,12 +113,15 @@ export default function SiteFooter({
         <div className="wrap">
           <div className="foot__grid" data-stagger="">
             <div className="foot__brand">
-              <BrandLogo
-                className="foot__mark"
-                src={content.images?.logo}
-                alt={`${brand} logosu`}
-                height={52}
-              />
+              <div style={{ maxWidth: footer?.logoWidth ? `${footer.logoWidth}px` : "160px" }}>
+                <BrandLogo
+                  className="foot__mark"
+                  src={content.images?.logo}
+                  alt={`${brand} logosu`}
+                  height={footer?.logoHeight || 52}
+                  style={{ maxWidth: `${footer?.logoWidth || 160}px`, height: "auto" }}
+                />
+              </div>
               <p className="foot__name" style={{ color: nameColor }}>{brand}</p>
               {footer?.slogan ? (
                 <p className="foot__slogan" style={{ color: sloganColor, opacity: isDark ? 0.95 : 1 }}>{footer.slogan}</p>

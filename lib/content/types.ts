@@ -351,6 +351,8 @@ export interface FooterContent {
   iletisimBaslik?: string;
   whatsappEtiket?: string;
   barLinks?: FooterLink[];
+  logoWidth?: number;
+  logoHeight?: number;
 }
 
 export interface WaFloatContent {

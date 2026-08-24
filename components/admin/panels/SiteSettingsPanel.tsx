@@ -14,6 +14,7 @@ import AdminPageHeader, {
 } from "@/components/admin/AdminPageHeader";
 import type { FooterColumn, FooterLink } from "@/lib/content/types";
 import { resolveTheme } from "@/lib/content/theme";
+import AdminImage from "@/components/admin/ui/AdminImage";
 
 export default function SiteSettingsPanel() {
   const { setContent } = useAdminContent();
@@ -339,7 +340,73 @@ export default function SiteSettingsPanel() {
             </section>
 
             <section className="mb-6 space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6">
-              <h3 className="font-semibold text-[#F8F8F8]">Footer</h3>
+              <h3 className="font-semibold text-[#F8F8F8]">Footer & Logo Ayarları</h3>
+
+              {/* Footer Logo Önizleme ve Boyut Ayarları */}
+              <div className="rounded-xl border border-white/[0.08] bg-[#0D1117] p-4 space-y-3">
+                <label className="text-sm font-semibold text-[#D9A441] block">
+                  Footer Logo Önizleme & Boyutlandırma
+                </label>
+                <div className="flex flex-wrap items-center gap-6">
+                  <div className="flex items-center justify-center p-3 rounded-lg bg-[#141E2E] border border-white/[0.1] min-w-[120px] min-h-[70px]">
+                    <div style={{ width: `${footer.logoWidth || 160}px`, height: `${footer.logoHeight || 52}px` }}>
+                      <AdminImage
+                        src={content.images?.logo}
+                        alt="Footer Logo Önizleme"
+                        contain
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex-1 grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="text-xs text-[#8A9BB0] mb-1 block">
+                        Genişlik: <b className="text-white">{footer.logoWidth || 160}px</b>
+                      </label>
+                      <input
+                        type="range"
+                        min={60}
+                        max={300}
+                        step={5}
+                        value={footer.logoWidth || 160}
+                        onChange={(e) =>
+                          setContent({
+                            ...content,
+                            footer: {
+                              ...footer,
+                              logoWidth: parseInt(e.target.value, 10),
+                            },
+                          })
+                        }
+                        className="w-full accent-[#D9A441]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs text-[#8A9BB0] mb-1 block">
+                        Yükseklik: <b className="text-white">{footer.logoHeight || 52}px</b>
+                      </label>
+                      <input
+                        type="range"
+                        min={30}
+                        max={140}
+                        step={2}
+                        value={footer.logoHeight || 52}
+                        onChange={(e) =>
+                          setContent({
+                            ...content,
+                            footer: {
+                              ...footer,
+                              logoHeight: parseInt(e.target.value, 10),
+                            },
+                          })
+                        }
+                        className="w-full accent-[#D9A441]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="grid gap-3 md:grid-cols-2">
                 <Input
                   label="Marka adı"

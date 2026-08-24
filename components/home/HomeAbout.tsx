@@ -19,12 +19,19 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
 
   if (!h) return null;
 
-  const combinedBody = (Array.isArray(h.body) ? h.body.join(" ") : String(h.body || "")).trim();
-  // 100-120 karakterlik net önizleme
-  const charLimit = 110;
-  const teaserText = combinedBody.length > charLimit
-    ? combinedBody.slice(0, charLimit) + "..."
-    : (combinedBody || "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır.");
+  // Extract clean text and limit to 40 words / characters as configured in admin
+  const wordLimit = h.homeWordLimit && h.homeWordLimit > 0 ? h.homeWordLimit : 40;
+  
+  const rawBody = Array.isArray(h.body) ? h.body.join(" ") : String(h.body || "");
+  const sourceText = rawBody.trim() || (h.lead && h.lead.length > 100 ? h.lead : "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır.");
+  
+  const words = sourceText.split(/\s+/).filter(Boolean);
+  const teaserText = words.length > wordLimit
+    ? words.slice(0, wordLimit).join(" ") + "..."
+    : sourceText;
+
+  // Only show lead separately if it is short (< 120 chars) to prevent massive text blocks
+  const showShortLead = h.lead && h.lead.trim().length <= 120 && h.lead.trim() !== teaserText.trim();
 
   return (
     <section className="section" id="hakkimizda">
@@ -36,24 +43,26 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
           <h1 className="h2" data-split="">
             {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde cafe & restaurant")}
           </h1>
+          
           {(h.answerBaslik || h.answerMetin) && (
             <div className="answer" data-fade="">
               <b>{cleanRawText(h.answerBaslik || "Kısaca")}</b>
               <p>{cleanRawText(h.answerMetin)}</p>
             </div>
           )}
-          {h.lead ? (
+          
+          {showShortLead ? (
             <p className="lead" data-fade="">
               {formatInlineText(h.lead)}
             </p>
           ) : null}
 
-          {/* 100 KARAKTERLİK METİN + AŞAĞI DOĞRU BLURLU/GRADIENT FADE KATMANI */}
+          {/* 40 KELİMELİK NET ÖNİZLEME + AŞAĞI DOĞRU BLURLU/GRADIENT FADE KATMANI */}
           <div
             data-fade=""
             style={{
               position: "relative",
-              maxHeight: "75px",
+              maxHeight: "80px",
               overflow: "hidden",
               marginBottom: "1.25rem",
             }}
@@ -69,14 +78,15 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                height: "50px",
-                background: "linear-gradient(to bottom, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.7) 45%, var(--paper, #FBF8F1) 100%)",
+                height: "55px",
+                background: "linear-gradient(to bottom, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.8) 50%, var(--paper, #FBF8F1) 100%)",
                 backdropFilter: "blur(2px)",
                 pointerEvents: "none",
               }}
             />
           </div>
 
+          {/* DOĞRUDAN /hakkimizda ROUTE NAVIGATION BUTONU */}
           <div data-fade="" style={{ marginBottom: "1.75rem" }}>
             <Link
               href="/hakkimizda"
@@ -100,6 +110,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
             </Link>
           </div>
 
+          {/* ÖZET KARTLARI */}
           {h.ozet?.length ? (
             <div className="ozet" data-stagger="">
               {h.ozet.map((item) => (
@@ -115,6 +126,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
           ) : null}
         </div>
 
+        {/* SAĞ: TİLT-CARD FOTOĞRAF VE ROZET */}
         <div data-fade="">
           <div className="tilt-card">
             <div className="tilt-card__inner">
