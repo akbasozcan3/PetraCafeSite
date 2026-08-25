@@ -26,7 +26,8 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-export const revalidate = 60;
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getPublicContent().catch(() => null);

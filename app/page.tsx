@@ -21,7 +21,8 @@ import { buildInstagramUrl } from "@/lib/content/contact-utils";
 import { formatHoursFaq, isHoursQuestion, openingHoursJsonLd } from "@/lib/content/hours";
 import { isHomeSectionOn } from "@/lib/content/sections";
 
-export const revalidate = 300;
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getPublicContent();
