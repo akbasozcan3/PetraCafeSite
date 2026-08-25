@@ -352,77 +352,84 @@
   "pasta": {
     "eyebrow": "Havuz & Plaj",
     "baslik": "Pool & Beach",
-    "lead": "Petra Yaşam Merkezi’nde temiz bakımlı havuz, çocuk havuzu, güneşlenme alanları ve kafe-restoran. Petra’da her an özel.",
+    "lead": "Petra Yaşam Merkezi’nde temiz bakımlı havuz, çocuk havuzu, güneşlenme şezlongları, VIP hasır localar, yüzme eğitimleri ve havuz başı kafe-restoran.",
     "maddeler": [
-      "Temiz ve bakımlı havuz",
-      "Çocuk havuzu",
-      "Güneşlenme alanları",
-      "Lezzetli menü",
-      "Ferah ve konforlu ortam",
-      "Yüzme kursumuz vardır"
+      "Temiz ve bakımlı açık yüzme havuzu",
+      "Çocuk havuzu & güvenli alan",
+      "Güneşlenme şezlongları & VIP hasır localar",
+      "Lezzetli dünya mutfağı ve kokteyl menüsü",
+      "Ferah ve konforlu açık hava ortamı",
+      "Profesyonel yüzme kursu ve eğitimleri"
     ],
     "body": "Bilgi ve rezervasyon: 0530 608 90 51 · Instagram @petracaferestaurant.",
-    "ctaLabel": "Havuz & rezervasyon",
+    "ctaLabel": "Havuz Rezervasyonu",
     "ctaHref": "#rezervasyon",
+    "fiyatBaslik": "GÜNLÜK HAVUZ GİRİŞ ÜCRETLERİMİZ",
+    "fiyatGorsel": "/assets/cms/petra-havuz-fiyat-listesi-2026.jpg",
     "gorseller": [
       {
-        "src": "/assets/cms/hero-ic.webp",
-        "alt": "Salon ve sofra"
+        "src": "/assets/cms/petra-pool-beach-loca.jpg",
+        "alt": "Petra Pool & Beach Hasır Localar ve Havuz Keyfi"
       },
       {
-        "src": "/assets/cms/galeri-cephe.webp",
-        "alt": "Petra Yaşam Merkezi"
+        "src": "/assets/cms/petra-nargile-havuz-gece.jpg",
+        "alt": "Gece Havuz Kenarı Nargile & Lounge"
       },
       {
-        "src": "/assets/cms/hero-cephe.webp",
-        "alt": "Cephe"
+        "src": "/assets/cms/petra-restoran-salon-organizasyon.jpg",
+        "alt": "Petra Restoran Salonu ve Özel Gün Masaları"
       },
       {
-        "src": "/assets/cms/hero-ic.webp",
-        "alt": "İç mekân"
+        "src": "/assets/cms/petra-havuz-fiyat-listesi-2026.jpg",
+        "alt": "Petra Havuz 2026 Fiyat Listesi"
       }
     ],
-    "slogan": "Lezzet, keyif ve serinliğin buluştuğu yer",
-    "cafeSaat": "08:00 – 24:00",
+    "slogan": "Keyif, Konfor ve Kalite Petra'da Bir Arada!",
+    "cafeSaat": "08:00 – 02:00",
     "havuzSaat": "09:00 – 18:00",
     "derinlik": "1.45 m – 1.95 m",
-    "fiyatBaslik": "Petra House fiyat listesi",
     "fiyatlar": [
       {
-        "kategori": "2–10 yaş",
-        "haftaIci": "400 TL",
-        "haftaSonu": "450 TL"
+        "kategori": "0 – 2 Yaş",
+        "haftaIci": "Ücretsiz",
+        "haftaSonu": "Ücretsiz"
       },
       {
-        "kategori": "10–18 yaş",
-        "haftaIci": "600 TL",
-        "haftaSonu": "650 TL"
+        "kategori": "02 – 10 Yaş (Çocuk)",
+        "haftaIci": "350 TL",
+        "haftaSonu": "350 TL"
+      },
+      {
+        "kategori": "10 – 18 Yaş (Genç)",
+        "haftaIci": "500 TL",
+        "haftaSonu": "500 TL"
       },
       {
         "kategori": "Yetişkin",
-        "haftaIci": "800 TL",
-        "haftaSonu": "850 TL"
+        "haftaIci": "750 TL",
+        "haftaSonu": "750 TL"
       }
     ],
-    "fiyatNot": "0–2 yaş ücretsiz. Dışarıdan yiyecek ve içecek getirilmez. Havuz için mayo ve bone zorunludur.",
-    "dersBaslik": "Havuz yüzme derslerimiz başlamıştır",
-    "dersLead": "Sağlıklı bir yaşam, güvenli eğitim, profesyonel eğitmenler — her yaşa uygun.",
+    "fiyatNot": "0–2 yaş ücretsizdir. Giriş ücretine şezlong, şemsiye ve havuz kullanımı dahildir. Dışarıdan yiyecek ve içecek getirilmez. Havuz için mayo ve bone zorunludur.",
+    "dersBaslik": "Havuz Yüzme Derslerimiz Başlamıştır",
+    "dersLead": "Sağlıklı bir yaşam, güvenli eğitim, profesyonel eğitmenler — her yaş grubuna özel yüzme kursları.",
     "dersler": [
       {
-        "baslik": "Birebir dersler",
-        "kicker": "Kişiye özel program",
-        "metin": "Daha hızlı ve etkili gelişim."
+        "baslik": "Birebir Özel Dersler",
+        "kicker": "Kişiye Özel Program",
+        "metin": "Uzman antrenör eşliğinde hızlı, güvenli ve etkili yüzme gelişimi."
       },
       {
-        "baslik": "Grup dersleri",
-        "kicker": "Eğlenerek öğren",
-        "metin": "Motivasyon ve sosyalleşme."
+        "baslik": "Grup Yüzme Eğitimleri",
+        "kicker": "Eğlenerek Öğren",
+        "metin": "Çocuklar ve gençler için motivasyon dolu sosyalleşme ve temel yüzme teknikleri."
       }
     ],
     "kurallar": [
-      "Dışarıdan yiyecek ve içecek sokulmaz.",
+      "Dışarıdan yiyecek ve içecek getirilmez.",
       "0–2 yaş havuz girişi ücretsizdir.",
-      "Mayo ve bone zorunludur."
+      "Havuz kullanımı için mayo ve bone zorunludur.",
+      "Cankurtaran ve havuz görevlilerinin talimatlarına uyulmalıdır."
     ],
     "instagramEtiket": "@petracaferestaurant",
     "instagramHref": "https://www.instagram.com/petracaferestaurant/"
@@ -468,7 +475,7 @@
   },
   "hikaye": null,
   "menu": {
-    "rev": "printed-20260825-v6",
+    "rev": "printed-20260825-v7",
     "baslik": "Petra Menü",
     "giris": "Kahvaltı, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile. Fiyatlar basılı menü ile aynıdır.",
     "legend": "",
@@ -4223,33 +4230,33 @@
   },
   "galeri": [
     {
-      "src": "/assets/cms/galeri-cephe.webp",
-      "baslik": "Cephe · Petra",
+      "src": "/assets/cms/petra-pool-beach-loca.jpg",
+      "baslik": "Pool & Beach & VIP Hasır Localar",
       "boy": "wide"
     },
     {
-      "src": "/assets/cms/hero-ic.webp",
-      "baslik": "Salon",
+      "src": "/assets/cms/petra-nargile-havuz-gece.jpg",
+      "baslik": "Gece Havuz Kenarı Nargile & Lounge",
       "boy": "half"
     },
     {
-      "src": "/assets/cms/hero-cephe.webp",
-      "baslik": "Akşam ışığı",
+      "src": "/assets/cms/petra-restoran-salon-organizasyon.jpg",
+      "baslik": "Petra Restoran Salonu & Davet Masaları",
       "boy": "half"
     },
     {
-      "src": "/assets/cms/hero-ic.webp",
-      "baslik": "İç mekân",
+      "src": "/assets/cms/petra-havuz-fiyat-listesi-2026.jpg",
+      "baslik": "2026 Günlük Havuz Giriş Fiyat Listesi",
       "boy": "third"
     },
     {
       "src": "/assets/cms/galeri-cephe.webp",
-      "baslik": "Sofra",
+      "baslik": "Petra Yaşam Merkezi Cephe",
       "boy": "third"
     },
     {
-      "src": "/assets/cms/hero-cephe.webp",
-      "baslik": "Giriş",
+      "src": "/assets/cms/hero-ic.webp",
+      "baslik": "İç Mekân & Sofra Düzeni",
       "boy": "third"
     }
   ],

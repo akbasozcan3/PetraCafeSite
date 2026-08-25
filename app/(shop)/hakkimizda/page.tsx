@@ -95,8 +95,8 @@ export default async function HakkimizdaPage() {
   );
   const imgEvents = resolveMediaUrl(
     liveMedia(
-      content.images?.galeri?.[0] || content.images?.icMekan || content.images?.aboutInterior,
-      SITE_PHOTOS.interior
+      content.images?.events || content.images?.galeri?.[0] || "/assets/cms/petra-restoran-salon-organizasyon.jpg",
+      "/assets/cms/petra-restoran-salon-organizasyon.jpg"
     )
   );
 
