@@ -269,7 +269,10 @@ export default function SiteNav({
         header.nav.site-nav {
           position: fixed !important;
           inset: 0 0 auto !important;
-          z-index: 60 !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          z-index: 99999 !important;
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
@@ -278,6 +281,22 @@ export default function SiteNav({
           box-sizing: border-box !important;
           width: 100% !important;
           height: 72px !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+        }
+        .site-shop header.nav.site-nav,
+        .page header.nav.site-nav,
+        header.nav.site-nav.is-solid {
+          background: #FBF8F1 !important;
+          background-color: #FBF8F1 !important;
+          backdrop-filter: blur(14px) saturate(1.3) !important;
+          -webkit-backdrop-filter: blur(14px) saturate(1.3) !important;
+          box-shadow: 0 1px 0 rgba(13, 15, 10, 0.12) !important;
+          color: #0D0F0A !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: none !important;
         }
         header.nav.site-nav .nav__logo {
           margin-right: 0 !important;
@@ -328,6 +347,18 @@ export default function SiteNav({
           header.nav.site-nav .nav__links ul li a {
             padding: 6px clamp(6px, 0.8vw, 12px) !important;
             font-size: clamp(13px, 0.95vw, 14.5px) !important;
+          }
+        }
+        header.nav.site-nav.is-solid .nav__links a,
+        .site-shop header.nav.site-nav .nav__links a,
+        .page header.nav.site-nav .nav__links a {
+          color: #0D0F0A !important;
+        }
+        header.nav.site-nav.is-solid .nav__logo-text,
+        .site-shop header.nav.site-nav .nav__logo-text,
+        .page header.nav.site-nav .nav__logo-text {
+          color: #0D0F0A !important;
+        }
         header.nav.is-solid.is-menu,
         .site-nav.is-menu {
           background: #0D0F0A !important;
