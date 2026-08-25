@@ -73,9 +73,10 @@ export default function IletisimPanel() {
     try {
       const res = await api.updateContent({
         iletisim: content.iletisim,
+        waFloat: content.waFloat,
       });
       setContent(res.data);
-      setMessage("İletişim kaydedildi. Telefon, adres ve çalışma saatleri siteye yansıdı.");
+      setMessage("İletişim ve WhatsApp ayarları başarıyla kaydedildi. Değişiklikler anında tüm siteye yansıdı.");
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Kayıt başarısız");
     } finally {
@@ -99,13 +100,82 @@ export default function IletisimPanel() {
     });
   };
 
+  const currentWaPhone =
+    content.iletisim?.telefonHam ||
+    content.iletisim?.telefon ||
+    "0530 608 90 51";
+  const currentWaDigits = phoneToWaDigits(currentWaPhone) || "905306089051";
+
+  // Mevcut hazır mesajı waFloat.onYazi veya iletisim.whatsapp text parametresinden al
+  const currentWaMessage = (() => {
+    if (content.waFloat?.onYazi?.trim()) return content.waFloat.onYazi;
+    const m = String(content.iletisim?.whatsapp || "").match(/[?&]text=([^&]*)/);
+    if (m) {
+      try {
+        return decodeURIComponent(m[1]);
+      } catch {
+        // ignore
+      }
+    }
+    return "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum.";
+  })();
+
+  const updateWaMessage = (newMsg: string) => {
+    if (!content) return;
+    const nextWaUrl = buildWhatsappUrl(currentWaPhone, newMsg);
+    setContent({
+      ...content,
+      waFloat: {
+        ...(content.waFloat || {
+          baslik: "WhatsApp",
+          alt: "Bilgi & Rezervasyon",
+          ariaLabel: "WhatsApp ile yazın",
+        }),
+        onYazi: newMsg,
+      },
+      iletisim: {
+        ...content.iletisim,
+        whatsapp: nextWaUrl,
+      },
+    });
+  };
+
+  const presetTemplates = [
+    {
+      title: "🌟 Genel / Standart (Önerilen)",
+      text: "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum.",
+    },
+    {
+      title: "🏊 Havuz & Plaj & Yüzme Kursu",
+      text: "Merhaba, Petra Havuz & Plaj giriş ücretleri, çocuk havuzu ve yüzme kursu hakkında bilgi almak istiyorum.",
+    },
+    {
+      title: "🍽️ Masa & Restoran Rezervasyonu",
+      text: "Merhaba, Petra Cafe Restaurant'ta masa rezervasyonu yaptırmak istiyorum. Bilgi alabilir miyim?",
+    },
+    {
+      title: "🏋️ Spor Salonu & Fitness",
+      text: "Merhaba, Petra Spor Salonu üyelik, kayıt ve antrenman imkanları hakkında bilgi almak istiyorum.",
+    },
+    {
+      title: "🎂 Özel Gün & Havuz Başı Davet",
+      text: "Merhaba, havuz başı özel gün kutlaması ve organizasyon detayları hakkında bilgi almak istiyorum.",
+    },
+  ];
+
+  const fullLiveWaUrl = buildWhatsappUrl(currentWaPhone, currentWaMessage);
+
   return (
     <>
       <AdminPageHeader
-        title="İletişim"
-        description="Telefon, adres, WhatsApp ve gün gün açılış–kapanış. Saatler footer, menü, rezervasyon ve S.S.S. ile aynı kaynaktan gelir."
+        title="İletişim & WhatsApp Yönetimi"
+        description="Telefon, adres, çalışma saatleri ve interaktif WhatsApp karşılama mesajı önizlemesi."
         actions={
-          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+          <Button
+            onClick={save}
+            disabled={saving}
+            className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md"
+          >
             <span>{saving ? "Kaydediliyor…" : "💾 İletişimi Kaydet"}</span>
           </Button>
         }
@@ -113,20 +183,23 @@ export default function IletisimPanel() {
       <SectionHint anchor="iletisim" label="İletişim" />
       <AdminAlert message={message} />
 
+      {/* 1. TELEFON & GENEL İLETİŞİM */}
       <section className="mb-6 space-y-4 rounded-2xl border border-[#C8703A]/25 bg-[#141E2E]/80 p-6">
-        <h3 className="font-semibold text-[#F8F8F8]">Telefon & WhatsApp</h3>
+        <h3 className="font-semibold text-[#F8F8F8] flex items-center gap-2">
+          📞 Telefon Numaraları & Hızlı Arama
+        </h3>
         <p className="text-xs text-[#6B7A94]">
           Tek numarayı yazın — arama linki, yüzen WhatsApp butonu, kategori ürün listeleri ve footer birlikte güncellenir.
         </p>
         <div className="grid gap-4 md:grid-cols-2">
           <Input
-            label="Telefon numarası"
+            label="1. Telefon Numarası (Görünen)"
             value={content.iletisim?.telefon ?? ""}
             onChange={(e) => updatePhone(e.target.value)}
             placeholder="0530 608 90 51"
           />
           <Input
-            label="Telefon (tel: linki)"
+            label="1. Telefon (tel: uluslararası link)"
             value={content.iletisim?.telefonHam ?? ""}
             onChange={(e) => {
               if (!content) return;
@@ -138,7 +211,7 @@ export default function IletisimPanel() {
                   ...content.iletisim,
                   telefonHam: ham,
                   whatsapp: digits
-                    ? buildWhatsappUrl(digits, "Merhaba, masa ayırtmak istiyorum.")
+                    ? buildWhatsappUrl(digits, currentWaMessage)
                     : content.iletisim.whatsapp,
                 },
               });
@@ -146,9 +219,10 @@ export default function IletisimPanel() {
             placeholder="+905306089051"
           />
           <Input
-            label="Telefon alt yazı"
+            label="1. Telefon Alt Yazısı"
             value={content.iletisim?.telefonAlt ?? ""}
             onChange={(e) => update("telefonAlt", e.target.value)}
+            placeholder="Cafe & Restaurant / Rezervasyon"
           />
           <Input
             label="2. Telefon (Petra Yaşam Merkezi / Tesis)"
@@ -157,48 +231,217 @@ export default function IletisimPanel() {
             placeholder="0532 449 45 99"
           />
           <Input
-            label="2. Telefon alt yazı"
+            label="2. Telefon Alt Yazısı"
             value={content.iletisim?.telefon2Alt ?? ""}
             onChange={(e) => update("telefon2Alt", e.target.value)}
             placeholder="Petra Yaşam Merkezi / Tesis"
           />
           <Input
-            label="WhatsApp linki (otomatik)"
-            value={waPreview}
+            label="Doğrudan WhatsApp Bağlantısı (URL)"
+            value={fullLiveWaUrl}
             onChange={(e) => update("whatsapp", e.target.value)}
-            placeholder="https://wa.me/905..."
+            placeholder="https://wa.me/905306089051?text=..."
           />
         </div>
-        {phoneToWaDigits(content.iletisim?.telefonHam || content.iletisim?.telefon || waPreview) ? (
-          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-sm text-[#C8D0DC]">
-            <span className="text-[#6B7A94]">WhatsApp iletişim numarası: </span>
-            <a
-              href={buildWhatsappUrl(
-                content.iletisim?.telefonHam || content.iletisim?.telefon || waPreview,
-                "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum."
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-emerald-400 underline-offset-2 hover:underline"
-            >
-              wa.me/{phoneToWaDigits(content.iletisim?.telefonHam || content.iletisim?.telefon || waPreview)}
-            </a>
-            <p className="mt-1 text-xs text-[#6B7A94]">
-              Web sitesindeki tüm WhatsApp butonları bu numaraya ve profesyonel hazır karşılama mesajına gider.
+      </section>
+
+      {/* 2. CANLI WHATSAPP SOHBET ÖNİZLEMESİ & MESAJ ŞABLONU */}
+      <section className="mb-6 space-y-5 rounded-2xl border border-emerald-500/30 bg-[#0E1B2A]/90 p-6 shadow-xl">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-500/20 pb-4">
+          <div>
+            <h3 className="text-lg font-bold text-emerald-400 flex items-center gap-2">
+              <span>💬</span> WhatsApp Hazır Mesaj Şablonu & Canlı Sohbet Simülasyonu
+            </h3>
+            <p className="text-xs text-[#94A3B8] mt-1">
+              Kullanıcı sitedeki herhangi bir WhatsApp butonuna tıkladığında mesaj kutusunda otomatik belirecek hazır mesaj.
             </p>
           </div>
-        ) : null}
-        <div className="grid gap-4 md:grid-cols-2">
-          <Input
-            label="WhatsApp başlık"
-            value={content.iletisim?.whatsappBaslik ?? ""}
-            onChange={(e) => update("whatsappBaslik", e.target.value)}
-          />
-          <Input
-            label="WhatsApp alt yazı"
-            value={content.iletisim?.whatsappAlt ?? ""}
-            onChange={(e) => update("whatsappAlt", e.target.value)}
-          />
+          <a
+            href={fullLiveWaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 shadow-lg transition-transform hover:scale-105 active:scale-95"
+          >
+            <span>🚀</span> WhatsApp'ta Canlı Test Et
+          </a>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-12 items-start">
+          {/* Sol Taraf: Mesaj Düzenleme & Şablonlar */}
+          <div className="lg:col-span-7 space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-[#E2E8F0] mb-2">
+                Otomatik Karşılama / Hazır Mesaj Metni
+              </label>
+              <textarea
+                rows={4}
+                value={currentWaMessage}
+                onChange={(e) => updateWaMessage(e.target.value)}
+                placeholder="Müşterinin WhatsApp kutusunda otomatik hazır çıkacak mesaj..."
+                className="w-full rounded-xl border border-white/10 bg-[#162234] p-3.5 text-sm text-[#F8FAFC] placeholder-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              />
+              <p className="mt-1.5 text-xs text-[#94A3B8]">
+                💡 Mesaj otomatik gönderilmez; sadece kullanıcının WhatsApp mesaj kutusuna hazır olarak doldurulur. Kullanıcı isterse düzenleyip gönderir.
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-[#94A3B8] mb-2">
+                ⚡ Hızlı Şablon Seçiciler (Tek Tıkla Uygula):
+              </label>
+              <div className="grid gap-2 sm:grid-cols-1">
+                {presetTemplates.map((tpl, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => updateWaMessage(tpl.text)}
+                    className={`text-left p-2.5 rounded-xl border text-xs transition-all ${
+                      currentWaMessage === tpl.text
+                        ? "border-emerald-500 bg-emerald-500/15 text-emerald-300 font-medium"
+                        : "border-white/10 bg-[#162234]/70 text-[#CBD5E1] hover:border-emerald-500/50 hover:bg-[#1E2E42]"
+                    }`}
+                  >
+                    <b className="block text-emerald-400 mb-0.5">{tpl.title}</b>
+                    <span className="opacity-90">{tpl.text}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 pt-2">
+              <Input
+                label="Kayan WhatsApp Buton Başlığı"
+                value={content.waFloat?.baslik ?? "WhatsApp"}
+                onChange={(e) => {
+                  setContent({
+                    ...content,
+                    waFloat: {
+                      ...(content.waFloat || {
+                        alt: "Bilgi & Rezervasyon",
+                        onYazi: currentWaMessage,
+                        ariaLabel: "WhatsApp ile yazın",
+                      }),
+                      baslik: e.target.value,
+                    },
+                  });
+                }}
+                placeholder="WhatsApp"
+              />
+              <Input
+                label="Kayan WhatsApp Buton Alt Yazısı"
+                value={content.waFloat?.alt ?? "Bilgi & Rezervasyon"}
+                onChange={(e) => {
+                  setContent({
+                    ...content,
+                    waFloat: {
+                      ...(content.waFloat || {
+                        baslik: "WhatsApp",
+                        onYazi: currentWaMessage,
+                        ariaLabel: "WhatsApp ile yazın",
+                      }),
+                      alt: e.target.value,
+                    },
+                  });
+                }}
+                placeholder="Bilgi & Rezervasyon"
+              />
+            </div>
+          </div>
+
+          {/* Sağ Taraf: Canlı WhatsApp Telefon Mockup'ı */}
+          <div className="lg:col-span-5 flex flex-col items-center">
+            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-2 flex items-center gap-1.5">
+              <span>📱</span> Müşteri Ekranında Nasıl Görünür? (Canlı Önizleme)
+            </p>
+
+            {/* Mockup Çerçevesi */}
+            <div className="w-full max-w-[340px] rounded-[32px] border-[6px] border-[#2C394B] bg-[#0B141A] shadow-2xl overflow-hidden text-white font-sans">
+              {/* WhatsApp Header */}
+              <div className="bg-[#1F2C34] px-3 py-2.5 flex items-center justify-between border-b border-[#2A3942]">
+                <div className="flex items-center gap-2">
+                  <div className="text-[#8696A0] text-sm">‹</div>
+                  <div className="w-9 h-9 rounded-full bg-[#00A884] flex items-center justify-center font-bold text-white text-xs overflow-hidden border border-[#00A884]">
+                    PETRA
+                  </div>
+                  <div>
+                    <b className="block text-xs text-[#E9EDEF] font-semibold truncate max-w-[130px]">
+                      Petra Yaşam Merkezi
+                    </b>
+                    <span className="block text-[10px] text-[#00A884] font-medium leading-none mt-0.5">
+                      🟢 çevrimiçi · İşletme
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-[#8696A0] text-xs">
+                  <span>📹</span>
+                  <span>📞</span>
+                  <span>⋮</span>
+                </div>
+              </div>
+
+              {/* Sohbet Gövdesi */}
+              <div
+                className="p-3.5 space-y-3 min-h-[220px] flex flex-col justify-end"
+                style={{
+                  backgroundColor: "#0B141A",
+                  backgroundImage:
+                    "radial-gradient(circle at 50% 50%, rgba(30, 42, 54, 0.4) 0%, transparent 80%)",
+                }}
+              >
+                {/* Güvenlik Rozeti */}
+                <div className="bg-[#182229] border border-[#222E35] rounded-lg p-2 text-center text-[10px] text-[#FFD279] shadow-sm">
+                  🔒 Mesajlar uçtan uca şifrelidir. Petra Cafe Restaurant & Yaşam Merkezi
+                </div>
+
+                {/* Tarih */}
+                <div className="text-center">
+                  <span className="bg-[#182229] text-[#8696A0] text-[9px] font-semibold px-2.5 py-0.5 rounded-md uppercase tracking-wider">
+                    Bugün
+                  </span>
+                </div>
+
+                {/* Giden Mesaj Balonu */}
+                <div className="flex justify-end">
+                  <div className="bg-[#005C4B] text-[#E9EDEF] rounded-2xl rounded-tr-none px-3.5 py-2.5 max-w-[88%] shadow-md text-xs leading-relaxed relative">
+                    <p className="whitespace-pre-wrap">{currentWaMessage}</p>
+                    <div className="flex items-center justify-end gap-1 mt-1 text-[10px] text-[#8696A0]">
+                      <span>13:25</span>
+                      <span className="text-[#53BDEB] font-bold">✓✓</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Alt Mesaj Yazma Barı Mockup */}
+              <div className="bg-[#1F2C34] p-2 flex items-center gap-2 border-t border-[#2A3942]">
+                <div className="text-base text-[#8696A0]">😊</div>
+                <div className="flex-1 bg-[#2A3942] rounded-full px-3 py-1.5 text-[11px] text-[#8696A0] truncate">
+                  Mesaj yazın...
+                </div>
+                <div className="text-base text-[#8696A0]">📎</div>
+                <div className="w-7 h-7 rounded-full bg-[#00A884] flex items-center justify-center text-white text-xs">
+                  ➤
+                </div>
+              </div>
+            </div>
+
+            {/* Test Linki ve Bilgi */}
+            <div className="mt-3 text-center space-y-1.5">
+              <span className="inline-block text-[11px] text-[#94A3B8]">
+                Hedef Numara: <b className="text-emerald-400">+{currentWaDigits}</b>
+              </span>
+              <div className="flex items-center justify-center gap-2">
+                <a
+                  href={fullLiveWaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-emerald-400 hover:text-emerald-300 underline font-medium"
+                >
+                  🔗 wa.me/{currentWaDigits} test et →
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
