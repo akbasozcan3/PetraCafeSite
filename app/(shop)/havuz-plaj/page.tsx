@@ -127,29 +127,30 @@ export default async function HavuzPlajPage() {
       <section
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "18px",
-          marginTop: "10px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+          gap: "22px",
+          marginTop: "16px",
+          marginBottom: "10px",
         }}
       >
         <figure
+          className="havuz-showcase-fig"
           style={{
             margin: 0,
-            borderRadius: "20px",
+            borderRadius: "22px",
             overflow: "hidden",
-            border: "1.5px solid rgba(217, 164, 65, 0.25)",
-            boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.12)",
+            border: "1.5px solid rgba(217, 164, 65, 0.28)",
+            boxShadow: "0 12px 32px -8px rgba(13, 15, 10, 0.16)",
             background: "#16190F",
             position: "relative",
-            aspectRatio: "16 / 10",
-            maxHeight: "260px",
+            height: "340px",
           }}
         >
           <SafeImg
             src="/assets/cms/petra-pool-beach-loca.jpg"
             alt="Petra Pool & Beach Hasır Localar"
             fallback={SITE_PHOTOS.facade}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
           <div
             style={{
@@ -157,34 +158,34 @@ export default async function HavuzPlajPage() {
               bottom: 0,
               left: 0,
               right: 0,
-              padding: "12px 16px",
-              background: "linear-gradient(to top, rgba(0,0,0,0.88), transparent)",
+              padding: "18px 20px",
+              background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 65%, transparent 100%)",
               color: "#FFFFFF",
             }}
           >
-            <b style={{ fontSize: "13.5px", display: "block" }}>Pool & Beach & VIP Hasır Localar</b>
-            <span style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.85)" }}>Serinletici havuz keyfi ve güneşlenme</span>
+            <b style={{ fontSize: "15px", display: "block", marginBottom: "3px" }}>Pool & Beach & VIP Hasır Localar</b>
+            <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.85)" }}>Serinletici havuz keyfi ve güneşlenme alanı</span>
           </div>
         </figure>
 
         <figure
+          className="havuz-showcase-fig"
           style={{
             margin: 0,
-            borderRadius: "20px",
+            borderRadius: "22px",
             overflow: "hidden",
-            border: "1.5px solid rgba(217, 164, 65, 0.25)",
-            boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.12)",
+            border: "1.5px solid rgba(217, 164, 65, 0.28)",
+            boxShadow: "0 12px 32px -8px rgba(13, 15, 10, 0.16)",
             background: "#16190F",
             position: "relative",
-            aspectRatio: "16 / 10",
-            maxHeight: "260px",
+            height: "340px",
           }}
         >
           <SafeImg
             src="/assets/cms/petra-nargile-havuz-gece.jpg"
             alt="Gece Havuz Kenarı Nargile & Lounge"
             fallback={SITE_PHOTOS.facade}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
           <div
             style={{
@@ -192,34 +193,34 @@ export default async function HavuzPlajPage() {
               bottom: 0,
               left: 0,
               right: 0,
-              padding: "12px 16px",
-              background: "linear-gradient(to top, rgba(0,0,0,0.88), transparent)",
+              padding: "18px 20px",
+              background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 65%, transparent 100%)",
               color: "#FFFFFF",
             }}
           >
-            <b style={{ fontSize: "13.5px", display: "block" }}>Gece Havuz Kenarı Nargile & Lounge</b>
-            <span style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.85)" }}>Işıklı atmosfer ve ferah teras keyfi</span>
+            <b style={{ fontSize: "15px", display: "block", marginBottom: "3px" }}>Gece Havuz Kenarı Nargile & Lounge</b>
+            <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.85)" }}>Işıklı atmosfer ve ferah teras keyfi</span>
           </div>
         </figure>
 
         <figure
+          className="havuz-showcase-fig"
           style={{
             margin: 0,
-            borderRadius: "20px",
+            borderRadius: "22px",
             overflow: "hidden",
-            border: "1.5px solid rgba(217, 164, 65, 0.25)",
-            boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.12)",
+            border: "1.5px solid rgba(217, 164, 65, 0.28)",
+            boxShadow: "0 12px 32px -8px rgba(13, 15, 10, 0.16)",
             background: "#16190F",
             position: "relative",
-            aspectRatio: "16 / 10",
-            maxHeight: "260px",
+            height: "340px",
           }}
         >
           <SafeImg
             src="/assets/cms/petra-restoran-salon-organizasyon.jpg"
             alt="Petra Restoran Salonu ve Özel Davet Alanı"
             fallback={SITE_PHOTOS.facade}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
           <div
             style={{
@@ -227,13 +228,13 @@ export default async function HavuzPlajPage() {
               bottom: 0,
               left: 0,
               right: 0,
-              padding: "12px 16px",
-              background: "linear-gradient(to top, rgba(0,0,0,0.88), transparent)",
+              padding: "18px 20px",
+              background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 65%, transparent 100%)",
               color: "#FFFFFF",
             }}
           >
-            <b style={{ fontSize: "13.5px", display: "block" }}>Özel Günler & Restoran Salonu</b>
-            <span style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.85)" }}>Doğum günü, kutlama ve davet masaları</span>
+            <b style={{ fontSize: "15px", display: "block", marginBottom: "3px" }}>Özel Günler & Restoran Salonu</b>
+            <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.85)" }}>Doğum günü, kutlama ve davet masaları</span>
           </div>
         </figure>
       </section>
