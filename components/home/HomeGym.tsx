@@ -18,65 +18,99 @@ export default function HomeGym({ content }: { content: SiteContent }) {
   const posterImg = "/assets/cms/petra-spor-salonu-afis.jpg";
 
   return (
-    <section className="section" id="spor-salonu" aria-label="Petra Spor Salonu" style={{ paddingTop: "20px", paddingBottom: "20px" }}>
+    <section
+      className="section home-gym-sec"
+      id="spor-salonu"
+      aria-label="Petra Spor Salonu"
+      style={{
+        paddingTop: "clamp(64px, 8vw, 110px)",
+        paddingBottom: "clamp(64px, 8vw, 110px)",
+      }}
+    >
       <style>{`
+        .home-gym-sec {
+          position: relative;
+        }
         .gym-card-clean {
-          background: #111610;
-          border: 1px solid rgba(217, 164, 65, 0.3);
-          border-radius: 24px;
-          padding: clamp(24px, 4vw, 44px);
-          box-shadow: none !important;
+          background: linear-gradient(145deg, #161D15 0%, #0E130D 100%);
+          border: 1.5px solid rgba(217, 164, 65, 0.32);
+          border-radius: 28px;
+          padding: clamp(32px, 5vw, 56px);
+          box-shadow: 0 24px 70px -20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
           position: relative;
           overflow: hidden;
+          max-width: min(1140px, 100%);
+          margin-inline: auto;
+        }
+        .gym-card-clean::before {
+          content: "";
+          position: absolute;
+          top: -120px;
+          right: -120px;
+          width: 280px;
+          height: 280px;
+          background: radial-gradient(circle, rgba(217, 164, 65, 0.12) 0%, transparent 70%);
+          pointer-events: none;
+        }
+        .gym-grid-layout {
+          display: grid;
+          grid-template-columns: 1.15fr 0.85fr;
+          gap: clamp(32px, 5vw, 56px);
+          align-items: center;
+          justify-content: center;
+        }
+        @media (max-width: 960px) {
+          .gym-grid-layout {
+            grid-template-columns: 1fr;
+            text-align: left;
+          }
         }
         .gym-clean-title {
           color: #FFFFFF !important;
           -webkit-text-fill-color: #FFFFFF !important;
           font-family: var(--f-head, 'Playfair Display', Georgia, serif);
-          font-size: clamp(26px, 3.6vw, 40px) !important;
+          font-size: clamp(28px, 4vw, 44px) !important;
           font-weight: 700 !important;
-          line-height: 1.18;
-          margin: 0 0 14px;
+          line-height: 1.16;
+          margin: 0 0 16px;
+          letter-spacing: -0.01em;
         }
         .gym-clean-lead {
-          color: #DDD6C8 !important;
-          -webkit-text-fill-color: #DDD6C8 !important;
-          font-size: clamp(14px, 1.5vw, 15.5px);
-          line-height: 1.7;
-          margin: 0 0 24px;
-          max-width: 54ch;
+          color: #E2DBD0 !important;
+          -webkit-text-fill-color: #E2DBD0 !important;
+          font-size: clamp(14.5px, 1.6vw, 16px);
+          line-height: 1.72;
+          margin: 0 0 28px;
+          max-width: 52ch;
         }
         .gym-clean-poster-box {
-          border-radius: 18px;
+          border-radius: 20px;
           overflow: hidden;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          box-shadow: none !important;
+          border: 1.5px solid rgba(217, 164, 65, 0.22);
+          box-shadow: 0 18px 45px -12px rgba(0, 0, 0, 0.6);
           background: #000000;
           display: flex;
           align-items: center;
           justify-content: center;
-          max-width: 440px;
+          max-width: 420px;
           margin: 0 auto;
+          transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .gym-clean-poster-box:hover {
+          transform: translateY(-4px);
         }
         .gym-clean-poster-box img {
           width: 100%;
           height: auto;
           display: block;
           object-fit: cover;
-          border-radius: 18px;
+          border-radius: 19px;
         }
       `}</style>
 
-      <div className="wrap">
+      <div className="wrap" style={{ display: "flex", justifyContent: "center" }}>
         <div className="gym-card-clean">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "clamp(24px, 3.5vw, 40px)",
-              alignItems: "center",
-            }}
-          >
+          <div className="gym-grid-layout">
             {/* SOL KOLON: YAZILAR VE BUTONLAR */}
             <div>
               <div
