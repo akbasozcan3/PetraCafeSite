@@ -10,6 +10,7 @@ import HomeServices from "@/components/home/HomeServices";
 import HomeVisit from "@/components/home/HomeVisit";
 import HomeMenuPreview from "@/components/home/HomeMenuPreview";
 import HomePasta from "@/components/home/HomePasta";
+import HomeGym from "@/components/home/HomeGym";
 import HomeGallery from "@/components/home/HomeGallery";
 import HomeReviews from "@/components/home/HomeReviews";
 import HomeFaq from "@/components/home/HomeFaq";
@@ -221,6 +222,7 @@ export default async function HomePage() {
       {isHomeSectionOn(content, "pasta") ? (
         <HomePasta pasta={content.pasta} />
       ) : null}
+      <HomeGym content={content} />
       {isHomeSectionOn(content, "galeri") ? (
         <HomeGallery bolum={content.bolumlar?.galeri} items={content.galeri || []} />
       ) : null}

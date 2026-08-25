@@ -408,6 +408,7 @@ export default async function HakkimizdaPage() {
                 { href: "/menu", label: "Dünya Mutfağı" },
                 { href: "/menu#kat-kahvalti", label: "Serpme Kahvaltı" },
                 { href: "/havuz-plaj", label: "Pool & Beach" },
+                { href: "/spor-salonu", label: "Spor Salonu" },
                 { href: "/#rezervasyon", label: "Özel Davetler" },
                 { href: "/menu#kat-sicak-icecekler", label: "Artisan Kahve" },
               ].map((pill, pIdx) => (

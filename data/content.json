@@ -35,7 +35,11 @@
       },
       {
         "label": "Havuz & Plaj",
-        "href": "#pasta"
+        "href": "/havuz-plaj"
+      },
+      {
+        "label": "Spor Salonu",
+        "href": "/spor-salonu"
       },
       {
         "label": "Galeri",
@@ -172,6 +176,7 @@
       "### Usta Şeflerin Elinden Dünya Mutfağı & Taş Fırın Lezzetleri\nGünün her saatine hitap eden zengin menümüzde; taş fırından yeni çıkan çıtır İtalyan pizzaları, özenle marine edilmiş dana antrikot ve ızgara spesiyalleri, el yapımı taze makarnalar, enfes burgerler, taze Akdeniz salataları ve çıtır atıştırmalıklar yer almaktadır. Her tabak, en taze yerel malzemeler ve usta şeflerimizin titiz dokunuşlarıyla hazırlanarak masanıza servis edilir.",
       "### Doğa ve Havuz Manzaralı Geleneksel Serpme Kahvaltı\nGüne enerjik ve keyifli bir başlangıç yapmak isteyenler için hazırladığımız serpme kahvaltımızda; sıcak kabarmış pişiler, Ezine ve yöresel peynir çeşitleri, sahanda sucuklu köy yumurtası, geleneksel menemen, petek bal-kaymak ve sınırsız demlik çay eşliğinde kahvaltı kültürünü bir şölene dönüştürüyoruz.",
       "### Açık Havuz, Pool & Beach Kulübü ve Yüzme Eğitimleri\nYaz aylarında Petra Yaşam Merkezi açık yüzme havuzumuz; hem yetişkinler hem de çocuklar için tertemiz, hijyenik ve güvenli bir tatil atmosferi sunar. Konforlu güneşlenme şezlongları, VIP havuz locaları, serinletici mocktail ve taze meyve kokteylleri ile sıcak yaz günlerinin tadını çıkarabilir; profesyonel antrenörler eşliğinde yüzme derslerine katılabilirsiniz.",
+      "### Petra Spor Salonu & Zinde Yaşam Kültürü\nPetra Yaşam Merkezi bünyesinde hizmet veren Petra Spor Salonu; modern kardiyo ve serbest ağırlık ekipmanları, ferah antrenman alanları ve hijyenik soyunma odalarıyla haftanın 7 günü 07:00 – 23:00 saatleri arasında formunu korumak ve hedeflerine ulaşmak isteyen tüm spor severlere hizmet sunar.",
       "### Özel Günler, Doğum Günü ve Kutlama Masaları\nDoğum günleri, evlilik teklifleri, yıldönümü yemekleri, baby shower, mezuniyet ve kurumsal şirket davetleriniz için havuz başı terasımızda veya klimalı salonlarımızda kişiye özel romantik masa süslemeleri, pasta ve volkan sunumları ve özel menü seçenekleriyle en unutulmaz anlarınıza ev sahipliği yapıyoruz.",
       "> \"Petra'da her tabak bir tutku, her köşe samimi bir anıdır. Misafirlerimize yalnızca kaliteli lezzetler değil, aileleri ve sevdikleriyle birlikte keyif alacakları güvenli ve huzurlu bir buluşma noktası vadediyoruz.\""
     ],
@@ -189,12 +194,12 @@
       {
         "b": "1000+ m²",
         "span": "Sosyal Yaşam Alanı",
-        "sub": "Açık havuz, teras ve klimalı salon"
+        "sub": "Açık havuz, teras, salon ve spor"
       },
       {
-        "b": "09:00 – 18:00",
-        "span": "Pool & Beach",
-        "sub": "Yaz sezonu boyunca havuz keyfi"
+        "b": "07:00 – 23:00",
+        "span": "Spor Salonu",
+        "sub": "Kardiyo, ağırlık ve fitness"
       }
     ],
     "experiences": [
@@ -232,6 +237,18 @@
           "VIP Loca & Şezlong",
           "Günlük Hijyenik Su Analizi",
           "Özel Yüzme Dersleri"
+        ]
+      },
+      {
+        "title": "Petra Spor Salonu",
+        "desc": "Modern kardiyo ve serbest ağırlık ekipmanları, ferah havalandırmalı antrenman salonu ve sağlıklı yaşam kültürü.",
+        "hours": "07:00 – 23:00",
+        "tag": "Haftanın 7 Günü",
+        "features": [
+          "Kardiyo İstasyonları",
+          "Serbest Ağırlık & Dambıl",
+          "Fonksiyonel Egzersiz",
+          "Havuz & Cafe Entegrasyonu"
         ]
       },
       {
@@ -435,6 +452,58 @@
     "instagramEtiket": "@petracaferestaurant",
     "instagramHref": "https://www.instagram.com/petracaferestaurant/"
   },
+  "sporSalonu": {
+    "eyebrow": "PETRA YAŞAM MERKEZİ",
+    "baslik": "Petra Spor Salonu",
+    "lead": "Çekmeköy Taşdelen Megakent Sitesi içerisinde; modern kardiyo ve serbest ağırlık ekipmanları, ferah antrenman alanları ve sağlıklı yaşam kültürüyle formunuzu zirveye taşıyın.",
+    "saatler": "Haftanın 7 Günü: 07:00 – 23:00",
+    "telefon": "0530 608 90 51",
+    "telefon2": "+90 216 706 80 51",
+    "instagram": "@petrasporsalonu",
+    "instagramUrl": "https://www.instagram.com/petrasporsalonu",
+    "body": [
+      "## Çekmeköy'ün Dinamik Spor ve Yaşam Alanı\nPetra Spor Salonu; Petra Yaşam Merkezi bünyesinde modern antrenman standartlarını, hijyenik ve havalandırmalı salon konseptiyle buluşturuyor. Günün her saati zinde kalmak, formunuzu korumak veya hedeflerinize ulaşmak için tasarlanan geniş egzersiz alanlarımızda sağlıklı bir spor deneyimi sunuyoruz.",
+      "### Antrenman Alanlarımız\nKardiyo istasyonları, serbest ağırlık dambıl ve barbell alanları, çok fonksiyonlu istasyon makineleri ve esneme / mobilite bölümleriyle tüm vücut kas gruplarınızı dengeli ve güvenli şekilde çalıştırabilirsiniz.",
+      "### Ekipman ve İmkanlar\nDüzenli bakımları yapılan profesyonel fitness makineleri, hijyenik soyunma odaları, duşlar, kilitli dolaplar ve Petra Cafe & Restaurant'ın sağlıklı içecek ve protein takviyesi seçenekleriyle spor keyfini eksiksiz yaşayın.",
+      "### Petra'da Spor Deneyimi\nYalnızca bir spor salonu değil; antrenman sonrası açık yüzme havuzunda serinleyebileceğiniz veya havuz başı kafede dinlenebileceğiniz çok yönlü bir yaşam merkezi ayrıcalığı."
+    ],
+    "alanlar": [
+      {
+        "baslik": "Kardiyo İstasyonları",
+        "kicker": "Kondisyon & Yağ Yakımı",
+        "metin": "Koşu bantları, eliptik bisikletler ve kondisyon aletleriyle dayanıklılığınızı artırın.",
+        "ikon": "flame"
+      },
+      {
+        "baslik": "Serbest Ağırlık & Dambıl",
+        "kicker": "Güç & Kas Gelişimi",
+        "metin": "Farklı kilo kademelerinde dambıl, barbell ve sehpalarla hedefinize odaklanın.",
+        "ikon": "dumbbell"
+      },
+      {
+        "baslik": "Fonksiyonel İstasyonlar",
+        "kicker": "Tüm Vücut Formu",
+        "metin": "Kablo makineleri, lat pulldown, chest press ve bacak egzersiz istasyonları.",
+        "ikon": "activity"
+      },
+      {
+        "baslik": "Esneme & Mobilite",
+        "kicker": "Esneklik & Toparlanma",
+        "metin": "Mat egzersizleri, foam roller ve soğuma hareketleri için ayrılmış ferah zemin.",
+        "ikon": "heart-pulse"
+      }
+    ],
+    "imkanlar": [
+      "Modern Kardiyo ve Fitness Ekipmanları",
+      "Havalandırmalı & Ferah Antrenman Salonu",
+      "Hijyenik Soyunma Odaları ve Duşlar",
+      "Açık Havuz & Pool Kulübü Entegrasyonu",
+      "Petra Cafe Sağlıklı İçecekler",
+      "Geniş Ücretsiz Otopark"
+    ],
+    "ctaTitle": "Hedeflerinize Petra ile Ulaşın",
+    "ctaLead": "Petra Spor Salonu üyelik paketleri, kullanım saatleri ve detaylı bilgi için bize hemen ulaşın veya Instagram'dan takip edin."
+  },
   "makaleler": [
     {
       "slug": "rezervasyon-rehberi",
@@ -476,7 +545,7 @@
   },
   "hikaye": null,
   "menu": {
-    "rev": "printed-20260825-v9",
+    "rev": "printed-20260825-v10",
     "baslik": "Petra Menü",
     "giris": "Kahvaltı, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile. Fiyatlar basılı menü ile aynıdır.",
     "legend": "",
@@ -4339,12 +4408,16 @@
     "telefon": "0530 608 90 51",
     "telefonHam": "+905306089051",
     "telefonAlt": "Cafe & Restaurant / Rezervasyon",
+    "telefon2": "0532 449 45 99",
+    "telefon2Alt": "Petra Yaşam Merkezi / Tesis",
     "whatsapp": "https://wa.me/905306089051?text=Merhaba%2C%20Petra%20Cafe%20Restaurant%E2%80%99tan%20bilgi%20%2F%20rezervasyon%20istiyorum.",
     "whatsappBaslik": "WhatsApp’tan yazın",
     "whatsappAlt": "Hızlı yanıt",
     "instagram": "@petracaferestaurant",
     "instagramUrl": "https://www.instagram.com/petracaferestaurant/",
-    "instagramAlt": "Instagram’da Petra",
+    "instagramAlt": "Instagram’da Petra Cafe",
+    "instagramSpor": "@petrasporsalonu",
+    "instagramSporUrl": "https://www.instagram.com/petrasporsalonu",
     "tiktokUrl": "https://www.tiktok.com/@petrayasammerkezi",
     "facebookUrl": "https://www.facebook.com/profile.php?id=61590906779525",
     "eposta": "",
@@ -4410,8 +4483,15 @@
       {
         "id": "soc_instagram",
         "platform": "instagram",
-        "label": "Instagram (@petracaferestaurant)",
+        "label": "Instagram — Petra Cafe (@petracaferestaurant)",
         "url": "https://www.instagram.com/petracaferestaurant/",
+        "active": true
+      },
+      {
+        "id": "soc_instagram_spor",
+        "platform": "instagram",
+        "label": "Instagram — Petra Spor Salonu (@petrasporsalonu)",
+        "url": "https://www.instagram.com/petrasporsalonu",
         "active": true
       },
       {
@@ -4442,9 +4522,7 @@
         "url": "https://www.google.com/maps/search/?api=1&query=Petra+Cafe+Restaurant+Ta%C5%9Fdelen+%C3%87ekmek%C3%B6y",
         "active": true
       }
-    ],
-    "telefon2": "0532 449 45 99",
-    "telefon2Alt": "Petra Yaşam Merkezi / Tesis"
+    ]
   },
   "sayfalar": {
     "urunler": {

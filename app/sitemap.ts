@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${origin}/menu`, lastModified: now, changeFrequency: "weekly", priority: 0.95 },
     { url: `${origin}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
     { url: `${origin}/havuz-plaj`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${origin}/spor-salonu`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${origin}/gizlilik-politikasi`, lastModified: now, changeFrequency: "monthly", priority: 0.3 },
     { url: `${origin}/kullanim-kosullari`, lastModified: now, changeFrequency: "monthly", priority: 0.3 },
     { url: `${origin}/cerez-politikasi`, lastModified: now, changeFrequency: "monthly", priority: 0.3 },

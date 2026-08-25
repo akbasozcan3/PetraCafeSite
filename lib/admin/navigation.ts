@@ -26,6 +26,7 @@ import {
   Inbox,
   Home,
   CreditCard,
+  Dumbbell,
   type LucideIcon,
 } from "lucide-react";
 import type { Permission } from "@/lib/admin/roles";
@@ -122,6 +123,14 @@ export const adminNavItems: AdminNavItem[] = [
     label: "Havuz & Plaj",
     description: "Havuz tarifesi, yüzme ve organizasyon bölümü",
     icon: Waves,
+    group: "Ana Sayfa",
+    permission: "content:read",
+  },
+  {
+    href: "/admin/spor-salonu",
+    label: "Spor Salonu",
+    description: "Spor salonu sayfası, antrenman alanları ve saatler",
+    icon: Dumbbell,
     group: "Ana Sayfa",
     permission: "content:read",
   },

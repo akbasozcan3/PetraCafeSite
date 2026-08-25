@@ -525,9 +525,36 @@ export interface SayfalarContent {
   };
 }
 
+export interface SporSalonuContent {
+  eyebrow: string;
+  baslik: string;
+  lead: string;
+  body: string[];
+  saatler?: string;
+  telefon?: string;
+  telefon2?: string;
+  instagram?: string;
+  instagramUrl?: string;
+  gorseller?: { src: string; alt: string }[];
+  alanlar?: {
+    baslik: string;
+    kicker: string;
+    metin: string;
+    ikon?: string;
+  }[];
+  imkanlar?: string[];
+  deneyimler?: {
+    baslik: string;
+    metin: string;
+  }[];
+  ctaTitle?: string;
+  ctaLead?: string;
+}
+
 export interface SiteContent {
   images: Record<string, string>;
   navbar: NavbarContent;
+  sporSalonu?: SporSalonuContent;
   hero: {
     fallbackMark: string;
     fallbackTagline: string;
