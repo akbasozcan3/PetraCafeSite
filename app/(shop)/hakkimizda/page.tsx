@@ -527,7 +527,7 @@ export default async function HakkimizdaPage() {
       {/* ═══════════════════════════════════════════════════════
           6. ÖZEL GÜNLER & KUTLAMALAR — BEYAZ YAZI ZORUNLU
           ═══════════════════════════════════════════════════════ */}
-      <section className="about-events-sec" aria-labelledby="about-events-heading">
+      <section className="section--dark about-events-sec" aria-labelledby="about-events-heading">
         <div
           className="about-events-box"
           style={{
@@ -548,7 +548,7 @@ export default async function HakkimizdaPage() {
             >
               ÖZEL GÜNLER & ETKİNLİKLER
             </p>
-            {/* H2 — beyaz zorunlu, !important yerine inline style */}
+            {/* H2 — beyaz zorunlu */}
             <h2
               id="about-events-heading"
               style={{
@@ -661,7 +661,7 @@ export default async function HakkimizdaPage() {
       {/* ═══════════════════════════════════════════════════════
           8. SON CTA — BEYAZ YAZI ZORUNLU, DARK BG
           ═══════════════════════════════════════════════════════ */}
-      <section className="about-cta-sec" aria-label="Rezervasyon & İletişim">
+      <section className="section--dark about-cta-sec" aria-label="Rezervasyon & İletişim">
         <div
           className="about-cta-card"
           style={{
@@ -712,11 +712,11 @@ export default async function HakkimizdaPage() {
             </Link>
             <Link
               href="/menu"
-              className="btn"
+              className="btn btn--ghost"
               style={{
-                background: "rgba(244, 238, 225, 0.15)",
+                background: "rgba(244, 238, 225, 0.12)",
                 color: WHITE,
-                border: "1px solid rgba(244, 238, 225, 0.3)",
+                border: "1.5px solid rgba(244, 238, 225, 0.4)",
               }}
             >
               {ctaBtn2}
