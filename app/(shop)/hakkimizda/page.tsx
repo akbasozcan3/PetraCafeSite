@@ -17,6 +17,7 @@ import {
   UtensilsCrossed,
   Waves,
   Coffee,
+  Dumbbell,
   PartyPopper,
   CheckCircle2,
   CalendarCheck,
@@ -137,13 +138,13 @@ export default async function HakkimizdaPage() {
     rawStats.length > 0
       ? rawStats
       : [
-          { b: "08:00 – 02:00", span: "Hizmet Saatleri", sub: "Her gün kesintisiz açık" },
+          { b: "08:00 – 02:00", span: "Hizmet Saatleri", sub: "Haftanın 7 günü kesintisiz açık" },
           { b: "240+", span: "Menü Çeşidi", sub: "Dünya mutfağı ve lezzetler" },
-          { b: "1000+ m²", span: "Sosyal Yaşam Alanı", sub: "Açık havuz ve restoran" },
-          { b: "09:00 – 18:00", span: "Pool & Beach", sub: "Yaz sezonu boyunca" },
+          { b: "1000+ m²", span: "Sosyal Yaşam Alanı", sub: "Açık havuz, teras ve salon" },
+          { b: "07:00 – 23:00", span: "Spor Salonu", sub: "Kardiyo, ağırlık ve fitness" },
         ];
 
-  /* ─── 4 Ana Deneyim Kartı ─── */
+  /* ─── 5 Ana Yaşam Deneyimi Kartı ─── */
   const experiences: any[] =
     (h.experiences as any[])?.length > 0
       ? (h.experiences as any[])
@@ -174,6 +175,14 @@ export default async function HakkimizdaPage() {
           },
           {
             n: "04",
+            title: "Petra Spor Salonu",
+            desc: "Modern kardiyo ve serbest ağırlık ekipmanları, ferah havalandırmalı antrenman salonu.",
+            tag: "Haftanın 7 Günü",
+            hours: "07:00 – 23:00",
+            features: ["Kardiyo İstasyonları", "Serbest Ağırlık Alanı", "Fitness Eğitimi"],
+          },
+          {
+            n: "05",
             title: "Özel Gün & Organizasyon",
             desc: "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetler için özel masa ve menü planlaması.",
             tag: "Unutulmaz Anlar",
@@ -182,7 +191,7 @@ export default async function HakkimizdaPage() {
           },
         ];
 
-  const expIcons = [UtensilsCrossed, Coffee, Waves, PartyPopper];
+  const expIcons = [UtensilsCrossed, Coffee, Waves, Dumbbell, PartyPopper];
 
   /* ─── Zaman Çizelgesi (Timeline / Bir Günün Akışı) ─── */
   const timeline: any[] = (h.timeline as any[])?.length > 0 ? (h.timeline as any[]) : [];
