@@ -369,68 +369,214 @@ export default async function HavuzPlajPage() {
       {/* 4. YÜZME DERSLERİ & KURSLAR */}
       <section
         style={{
-          background: "#FFFFFF",
+          background: "linear-gradient(135deg, #FFFFFF 0%, #FBF9F4 100%)",
           borderRadius: "24px",
-          border: "1.5px solid rgba(13, 15, 10, 0.08)",
+          border: "1.5px solid rgba(217, 164, 65, 0.25)",
           padding: "clamp(28px, 4vw, 44px)",
-          boxShadow: "0 10px 30px -10px rgba(13, 15, 10, 0.06)",
+          boxShadow: "0 14px 36px -12px rgba(13, 15, 10, 0.08)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-          <GraduationCap size={24} color="var(--brass-lo, #B8842C)" />
-          <h2 style={{ fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 600, color: "var(--ink, #0D0F0A)", margin: 0 }}>
-            {cleanRawText(p.dersBaslik || "") || "Havuz Yüzme Derslerimiz"}
-          </h2>
-        </div>
-        <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#555A4C", maxWidth: "68ch", margin: "0 0 24px" }}>
-          {cleanRawText(p.dersLead || "") ||
-            "Sağlıklı bir yaşam, güvenli eğitim ve profesyonel lisanslı antrenörler eşliğinde her yaş grubuna özel birebir ve grup yüzme dersleri."}
-        </p>
-
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: "18px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "clamp(24px, 4vw, 44px)",
+            alignItems: "center",
           }}
         >
-          <div
-            style={{
-              background: "var(--cream-2, #F3EDE0)",
-              borderRadius: "18px",
-              padding: "22px 20px",
-              border: "1px solid rgba(13, 15, 10, 0.08)",
-            }}
-          >
-            <span style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--brass-lo, #B8842C)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              Kişiye Özel Program
-            </span>
-            <h3 style={{ fontFamily: "var(--f-head, serif)", fontSize: "18px", fontWeight: 600, color: "var(--ink, #0D0F0A)", margin: "6px 0 8px" }}>
-              Birebir Özel Yüzme Dersi
-            </h3>
-            <p style={{ fontSize: "13.5px", color: "#555A4C", lineHeight: 1.6, margin: 0 }}>
-              Kişisel seviyenize uygun antrenman takvimi, stil geliştirme ve hızlı adaptasyon.
+          {/* Sol Kolon: Kurs Bilgileri & Fiyatlar */}
+          <div>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "6px 14px",
+                borderRadius: "999px",
+                background: "rgba(220, 38, 38, 0.1)",
+                color: "#DC2626",
+                fontSize: "12px",
+                fontWeight: 700,
+                marginBottom: "14px",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                border: "1px solid rgba(220, 38, 38, 0.2)",
+              }}
+            >
+              <span>🔥</span>
+              <span>Kayıtlarımız Başlamıştır</span>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+              <GraduationCap size={28} color="var(--brass-lo, #B8842C)" />
+              <h2
+                style={{
+                  fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+                  fontSize: "clamp(24px, 3.5vw, 34px)",
+                  fontWeight: 700,
+                  color: "var(--ink, #0D0F0A)",
+                  margin: 0,
+                }}
+              >
+                Yüzme Kursu & Özel Dersler
+              </h2>
+            </div>
+
+            <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#555A4C", margin: "0 0 24px" }}>
+              Uzman eğitmenlerimiz eşliğinde, çocuklarınızın suya olan güvenini artırmak ve temel yüzme becerilerini öğrenmelerini amaçlıyoruz.
             </p>
+
+            {/* Program & Detaylar Kartları */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: "14px",
+                marginBottom: "24px",
+              }}
+            >
+              {/* Program Kartı */}
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: "16px",
+                  padding: "16px",
+                  border: "1.5px solid rgba(13, 15, 10, 0.1)",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.03)",
+                }}
+              >
+                <div
+                  style={{
+                    background: "#E53935",
+                    color: "#FFFFFF",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    padding: "4px 10px",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                    marginBottom: "12px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  Program
+                </div>
+                <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "13.5px", color: "#333D29", lineHeight: 1.8 }}>
+                  <li><b>SALI - PERŞEMBE</b></li>
+                  <li>Başlangıç: <b>08:45</b> · Bitiş: <b>09:30</b></li>
+                  <li><b>5 – 8 Yaş</b> Grubu</li>
+                  <li><b>9 – 12 Yaş</b> Grubu</li>
+                </ul>
+              </div>
+
+              {/* Detaylar & Fiyatlar Kartı */}
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: "16px",
+                  padding: "16px",
+                  border: "1.5px solid rgba(13, 15, 10, 0.1)",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.03)",
+                }}
+              >
+                <div
+                  style={{
+                    background: "#E53935",
+                    color: "#FFFFFF",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    padding: "4px 10px",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                    marginBottom: "12px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  Ücret Tarifesi
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px", fontSize: "13.5px", color: "#333D29" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px dashed rgba(0,0,0,0.1)", paddingBottom: "6px" }}>
+                    <span>Grup Ders Fiyatı:</span>
+                    <b style={{ color: "#B8842C", fontSize: "15px" }}>7.000 TL</b>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px dashed rgba(0,0,0,0.1)", paddingBottom: "6px" }}>
+                    <span>Özel Ders Fiyatı:</span>
+                    <b style={{ color: "#B8842C", fontSize: "15px" }}>9.000 TL</b>
+                  </div>
+                  <span style={{ fontSize: "11.5px", color: "#667085" }}>
+                    * Uzman lisanslı antrenörler eşliğinde hijyenik ortam.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* İletişim & WhatsApp Butonları */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center" }}>
+              <a
+                href={buildWhatsappUrl(
+                  tel,
+                  "Merhaba, Petra Yaşam Merkezi yüzme kursu ön kaydı ve detayları hakkında bilgi almak istiyorum."
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+                style={{
+                  background: "#25D366",
+                  color: "#FFFFFF",
+                  fontWeight: 700,
+                  padding: "12px 22px",
+                  borderRadius: "14px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  boxShadow: "0 6px 18px rgba(37, 211, 102, 0.25)",
+                }}
+              >
+                <MessageCircle size={18} />
+                WhatsApp ile Kursa Kayıt Ol
+              </a>
+
+              <a
+                href={phoneToTelHref(tel)}
+                className="btn btn--ghost"
+                style={{
+                  padding: "12px 18px",
+                  borderRadius: "14px",
+                  fontWeight: 600,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <Phone size={16} />
+                {tel}
+              </a>
+            </div>
           </div>
 
-          <div
+          {/* Sağ Kolon: Yüzme Kursu Resmi Afişi */}
+          <figure
             style={{
-              background: "var(--cream-2, #F3EDE0)",
-              borderRadius: "18px",
-              padding: "22px 20px",
-              border: "1px solid rgba(13, 15, 10, 0.08)",
+              margin: 0,
+              borderRadius: "24px",
+              overflow: "hidden",
+              border: "2px solid rgba(217, 164, 65, 0.3)",
+              boxShadow: "0 16px 40px -12px rgba(13, 15, 10, 0.2)",
+              background: "#FFFFFF",
+              maxWidth: "420px",
+              marginInline: "auto",
             }}
           >
-            <span style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--olive-lo, #5A6838)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              Eğlenerek Öğren
-            </span>
-            <h3 style={{ fontFamily: "var(--f-head, serif)", fontSize: "18px", fontWeight: 600, color: "var(--ink, #0D0F0A)", margin: "6px 0 8px" }}>
-              Çocuk & Yetişkin Grup Dersleri
-            </h3>
-            <p style={{ fontSize: "13.5px", color: "#555A4C", lineHeight: 1.6, margin: 0 }}>
-              Sosyal ve motive edici bir atmosferde yüzme tekniklerini öğrenme imkânı.
-            </p>
-          </div>
+            <SafeImg
+              src="/assets/cms/petra-yuzme-kursu-afis.png"
+              alt="Petra Yaşam Merkezi Yüzme Kursu Afişi — Kayıtlarımız Başlamıştır"
+              fallback="/assets/cms/petra-yuzme-kursu-afis.png"
+              width={600}
+              height={800}
+              className="w-full h-auto object-cover block"
+            />
+          </figure>
         </div>
       </section>
 

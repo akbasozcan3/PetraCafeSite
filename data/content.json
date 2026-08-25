@@ -374,6 +374,10 @@
     "fiyatGorsel": "/assets/cms/petra-havuz-fiyat-listesi-2026.jpg",
     "gorseller": [
       {
+        "src": "/assets/cms/petra-yuzme-kursu-afis.png",
+        "alt": "Petra Yüzme Kursu Afişi — Kayıtlarımız Başlamıştır"
+      },
+      {
         "src": "/assets/cms/petra-pool-beach-loca.jpg",
         "alt": "Petra Pool & Beach Hasır Localar ve Havuz Keyfi"
       },
@@ -417,20 +421,36 @@
       }
     ],
     "fiyatNot": "0–2 yaş ücretsizdir. Giriş ücretine yetişkin havuzu, ayrı çocuk havuzu, şezlong ve şemsiye kullanımı dahildir. Havuz alanı 09:00 - 18:00 saatleri arasında açıktır. Dışarıdan yiyecek ve içecek getirilmez.",
-    "dersBaslik": "Havuz Yüzme Kursu ve Özel Derslerimiz",
-    "dersLead": "Sağlıklı bir yaşam ve güvenli eğitim için her yaş grubuna özel profesyonel yüzme kursu eğitimi (0530 608 90 51).",
+    "dersBaslik": "YÜZME KURSU — Kayıtlarımız Başlamıştır",
+    "dersLead": "Uzman eğitmenlerimiz eşliğinde, çocuklarınızın suya olan güvenini artırmak ve temel yüzme becerilerini öğrenmelerini amaçlıyoruz.",
     "dersler": [
+      {
+        "baslik": "Grup Yüzme Dersi",
+        "kicker": "Salı - Perşembe (08:45 – 09:30)",
+        "metin": "5–8 yaş ve 9–12 yaş çocuk grupları için temel teknik ve güvenli su adaptasyonu eğitimi. Fiyat: 7.000 TL"
+      },
       {
         "baslik": "Birebir Özel Yüzme Dersi",
         "kicker": "Kişiye Özel Program",
-        "metin": "Uzman antrenör eşliğinde yaş sınırı olmaksızın hızlı ve güvenli yüzme eğitimi."
-      },
-      {
-        "baslik": "Çocuk & Genç Grup Eğitimleri",
-        "kicker": "Güvenli Çocuk Havuzu",
-        "metin": "Çocukların güvenle yüzebileceği ayrı çocuk havuzunda temel yüzme teknikleri ve su adaptasyonu."
+        "metin": "Uzman antrenör eşliğinde yaş sınırı olmaksızın hızlı, güvenli ve birebir yüzme eğitimi. Fiyat: 9.000 TL"
       }
     ],
+    "yuzmeKursu": {
+      "baslik": "YÜZME KURSU",
+      "rozet": "Kayıtlarımız Başlamıştır",
+      "lead": "Uzman eğitmenlerimiz eşliğinde, çocuklarınızın suya olan güvenini artırmak ve temel yüzme becerilerini öğrenmelerini amaçlıyoruz.",
+      "programGunler": "SALI - PERŞEMBE",
+      "programSaat": "08:45 – 09:30",
+      "yasGruplari": [
+        "5–8 Yaş",
+        "9–12 Yaş"
+      ],
+      "grupFiyat": "7.000 TL",
+      "ozelFiyat": "9.000 TL",
+      "afisGorsel": "/assets/cms/petra-yuzme-kursu-afis.png",
+      "telefon": "0530 608 90 51",
+      "instagram": "@petracaferestaurant"
+    },
     "kurallar": [
       "Tesis bünyesinde çocukların güvenle zaman geçirebileceği ayrı bir çocuk havuzu mevcuttur.",
       "Büyük havuzun derinliği kademeli olarak 1.45 metre ile 1.95 metre arasında değişmektedir.",
