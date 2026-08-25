@@ -225,6 +225,19 @@ export interface PastaContent {
   ctaLabel: string;
   ctaHref: string;
   gorseller: { src: string; alt: string }[];
+  yuzmeKursu?: {
+    baslik?: string;
+    rozet?: string;
+    lead?: string;
+    programGunler?: string;
+    programSaat?: string;
+    yasGruplari?: string[];
+    grupFiyat?: string;
+    ozelFiyat?: string;
+    afisGorsel?: string;
+    telefon?: string;
+    instagram?: string;
+  };
 }
 
 export interface GaleriItem {

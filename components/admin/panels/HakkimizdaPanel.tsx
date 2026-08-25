@@ -1621,7 +1621,133 @@ export function PastaPanel() {
           className={fieldClass}
         />
 
-        <h4 className="pt-2 font-medium text-[#EEE9E0]">Yüzme dersleri</h4>
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-3">
+          <h4 className="font-semibold text-emerald-400 flex items-center gap-2">
+            🏊‍♂️ Yüzme Kursu Programı & Ücret Tarifesi
+          </h4>
+          <p className="text-xs text-[#94A3B8]">
+            Havuz & Plaj sayfasındaki resmi Yüzme Kursu bilgi kartlarını buradan yönetebilirsiniz.
+          </p>
+          <div className="grid gap-3 md:grid-cols-2">
+            <Input
+              label="Kurs Başlığı"
+              value={p.yuzmeKursu?.baslik || p.dersBaslik || "YÜZME KURSU"}
+              onChange={(e) => {
+                const yk = p.yuzmeKursu || ({} as any);
+                setContent({
+                  ...content,
+                  pasta: {
+                    ...p,
+                    dersBaslik: e.target.value,
+                    yuzmeKursu: { ...yk, baslik: e.target.value },
+                  },
+                });
+              }}
+              placeholder="YÜZME KURSU"
+            />
+            <Input
+              label="Durum Rozeti"
+              value={p.yuzmeKursu?.rozet || "Kayıtlarımız Başlamıştır"}
+              onChange={(e) => {
+                const yk = p.yuzmeKursu || ({} as any);
+                setContent({
+                  ...content,
+                  pasta: {
+                    ...p,
+                    yuzmeKursu: { ...yk, rozet: e.target.value },
+                  },
+                });
+              }}
+              placeholder="Kayıtlarımız Başlamıştır"
+            />
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            <Input
+              label="Program Günleri"
+              value={p.yuzmeKursu?.programGunler || "SALI - PERŞEMBE"}
+              onChange={(e) => {
+                const yk = p.yuzmeKursu || ({} as any);
+                setContent({
+                  ...content,
+                  pasta: {
+                    ...p,
+                    yuzmeKursu: { ...yk, programGunler: e.target.value },
+                  },
+                });
+              }}
+              placeholder="SALI - PERŞEMBE"
+            />
+            <Input
+              label="Ders Saatleri"
+              value={p.yuzmeKursu?.programSaat || "08:45 – 09:30"}
+              onChange={(e) => {
+                const yk = p.yuzmeKursu || ({} as any);
+                setContent({
+                  ...content,
+                  pasta: {
+                    ...p,
+                    yuzmeKursu: { ...yk, programSaat: e.target.value },
+                  },
+                });
+              }}
+              placeholder="08:45 – 09:30"
+            />
+            <Input
+              label="Yaş Grupları"
+              value={
+                Array.isArray(p.yuzmeKursu?.yasGruplari)
+                  ? p.yuzmeKursu.yasGruplari.join(", ")
+                  : "5–8 Yaş, 9–12 Yaş"
+              }
+              onChange={(e) => {
+                const yk = p.yuzmeKursu || ({} as any);
+                const arr = e.target.value.split(",").map((s) => s.trim()).filter(Boolean);
+                setContent({
+                  ...content,
+                  pasta: {
+                    ...p,
+                    yuzmeKursu: { ...yk, yasGruplari: arr },
+                  },
+                });
+              }}
+              placeholder="5–8 Yaş, 9–12 Yaş"
+            />
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            <Input
+              label="Grup Ders Ücreti"
+              value={p.yuzmeKursu?.grupFiyat || "7.000 TL"}
+              onChange={(e) => {
+                const yk = p.yuzmeKursu || ({} as any);
+                setContent({
+                  ...content,
+                  pasta: {
+                    ...p,
+                    yuzmeKursu: { ...yk, grupFiyat: e.target.value },
+                  },
+                });
+              }}
+              placeholder="7.000 TL"
+            />
+            <Input
+              label="Özel Ders Ücreti"
+              value={p.yuzmeKursu?.ozelFiyat || "9.000 TL"}
+              onChange={(e) => {
+                const yk = p.yuzmeKursu || ({} as any);
+                setContent({
+                  ...content,
+                  pasta: {
+                    ...p,
+                    yuzmeKursu: { ...yk, ozelFiyat: e.target.value },
+                  },
+                });
+              }}
+              placeholder="9.000 TL"
+            />
+          </div>
+        </div>
+
+        <h4 className="pt-2 font-medium text-[#EEE9E0]">Ders Türleri & Açıklamaları</h4>
         <Input
           label="Ders başlığı"
           value={p.dersBaslik || ""}

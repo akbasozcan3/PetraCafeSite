@@ -374,10 +374,6 @@
     "fiyatGorsel": "/assets/cms/petra-havuz-fiyat-listesi-2026.jpg",
     "gorseller": [
       {
-        "src": "/assets/cms/petra-yuzme-kursu-afis.png",
-        "alt": "Petra Yüzme Kursu Afişi — Kayıtlarımız Başlamıştır"
-      },
-      {
         "src": "/assets/cms/petra-pool-beach-loca.jpg",
         "alt": "Petra Pool & Beach Hasır Localar ve Havuz Keyfi"
       },

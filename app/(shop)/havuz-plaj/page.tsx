@@ -555,28 +555,71 @@ export default async function HavuzPlajPage() {
             </div>
           </div>
 
-          {/* Sağ Kolon: Yüzme Kursu Resmi Afişi */}
-          <figure
+          {/* Sağ Kolon: Kursun Avantajları & Kalite Standartları */}
+          <div
             style={{
-              margin: 0,
-              borderRadius: "24px",
-              overflow: "hidden",
-              border: "2px solid rgba(217, 164, 65, 0.3)",
-              boxShadow: "0 16px 40px -12px rgba(13, 15, 10, 0.2)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "14px",
               background: "#FFFFFF",
-              maxWidth: "420px",
-              marginInline: "auto",
+              borderRadius: "20px",
+              padding: "24px",
+              border: "1.5px solid rgba(217, 164, 65, 0.2)",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.04)",
             }}
           >
-            <SafeImg
-              src="/assets/cms/petra-yuzme-kursu-afis.png"
-              alt="Petra Yaşam Merkezi Yüzme Kursu Afişi — Kayıtlarımız Başlamıştır"
-              fallback="/assets/cms/petra-yuzme-kursu-afis.png"
-              width={600}
-              height={800}
-              className="w-full h-auto object-cover block"
-            />
-          </figure>
+            <h3
+              style={{
+                fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+                fontSize: "19px",
+                fontWeight: 700,
+                color: "var(--ink, #0D0F0A)",
+                margin: "0 0 6px",
+              }}
+            >
+              🏊‍♂️ Neden Petra Yüzme Eğitimi?
+            </h3>
+            
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, flexShrink: 0, fontSize: "13px" }}>✓</div>
+              <div>
+                <b style={{ display: "block", fontSize: "14px", color: "var(--ink, #0D0F0A)" }}>Uzman & Lisanslı Antrenörler</b>
+                <p style={{ margin: "2px 0 0", fontSize: "12.5px", color: "#667085", lineHeight: 1.5 }}>
+                  Çocuk psikolojisine ve pedagojisine hakim, suya alıştırma ve teknik stillerde deneyimli eğitmenler.
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, flexShrink: 0, fontSize: "13px" }}>✓</div>
+              <div>
+                <b style={{ display: "block", fontSize: "14px", color: "var(--ink, #0D0F0A)" }}>Ayrı Çocuk Havuzu Güvenliği</b>
+                <p style={{ margin: "2px 0 0", fontSize: "12.5px", color: "#667085", lineHeight: 1.5 }}>
+                  Tesis bünyesinde miniklerin güvenle, derinlik korkusu yaşamadan çalışabileceği kontrollü çocuk havuzu.
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, flexShrink: 0, fontSize: "13px" }}>✓</div>
+              <div>
+                <b style={{ display: "block", fontSize: "14px", color: "var(--ink, #0D0F0A)" }}>Hijyen ve Günlük Su Analizi</b>
+                <p style={{ margin: "2px 0 0", fontSize: "12.5px", color: "#667085", lineHeight: 1.5 }}>
+                  Düzenli filtreleme, klor-pH ölçümü ve her gün kapanış sonrası dezenfeksiyon standartları.
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(217, 164, 65, 0.15)", color: "#B8842C", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, flexShrink: 0, fontSize: "13px" }}>✓</div>
+              <div>
+                <b style={{ display: "block", fontSize: "14px", color: "var(--ink, #0D0F0A)" }}>Butik Gruplar & Birebir İlgi</b>
+                <p style={{ margin: "2px 0 0", fontSize: "12.5px", color: "#667085", lineHeight: 1.5 }}>
+                  Kalabalık olmayan seanslar sayesinde her öğrencinin gelişimini yakından takip eden eğitim modeli.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
