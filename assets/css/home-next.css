@@ -4809,5 +4809,124 @@ html body .site-shop .page-hakkimizda .about-cta-card p,
   }
 }
 
+/* ==========================================================================
+   HAVUZ & PLAJ ÖZELLİK KARTLARI — TUTARLI TASARIM SİSTEMİ
+   ========================================================================== */
+.havuz-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.havuz-feature-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 360px;
+  max-height: 380px;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1.5px solid var(--line, rgba(13, 15, 10, 0.09));
+  border-radius: var(--r-lg, 22px);
+  overflow: hidden;
+  box-shadow: 0 8px 24px -8px rgba(13, 15, 10, 0.08);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.havuz-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px -10px rgba(13, 15, 10, 0.15);
+  border-color: rgba(217, 164, 65, 0.45);
+}
+
+.havuz-card-img-wrap {
+  width: 100%;
+  height: 200px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+  background: #16190F;
+  flex-shrink: 0;
+}
+
+.havuz-card-img-wrap img,
+.havuz-card-img-wrap picture,
+.havuz-card-img-wrap .safe-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.havuz-feature-card:hover .havuz-card-img-wrap img,
+.havuz-feature-card:hover .havuz-card-img-wrap .safe-img {
+  transform: scale(1.05);
+}
+
+.havuz-card-content {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: flex-start;
+  background: #FFFFFF;
+}
+
+.havuz-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brass-lo, #B8842C);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.havuz-card-title {
+  font-family: var(--f-head, 'Playfair Display', Georgia, serif);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink, #0D0F0A);
+  margin: 0 0 8px;
+}
+
+.havuz-card-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted, #6E6A5C);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+  .havuz-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .havuz-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .havuz-feature-card {
+    max-width: 360px;
+    margin-inline: auto;
+  }
+}
+
+
 
 

@@ -286,10 +286,34 @@ export const DEFAULT_CONTENT: SiteContent = {
     ctaLabel: "Havuz & rezervasyon",
     ctaHref: "#rezervasyon",
     gorseller: [
-      { src: "/assets/cms/hero-ic.webp", alt: "Salon ve sofra" },
-      { src: "/assets/cms/galeri-cephe.webp", alt: "Petra Yaşam Merkezi" },
-      { src: "/assets/cms/hero-cephe.webp", alt: "Cephe" },
-      { src: "/assets/cms/hero-ic.webp", alt: "İç mekân" },
+      {
+        src: "/assets/cms/petra-pool-beach-loca.jpg",
+        alt: "Pool & Beach & VIP Hasır Localar",
+        desc: "Güneşlenme şezlongları, yetişkin havuzu ve konforlu hasır localarla gün boyu lüks tatil ve serinlik atmosferi.",
+        tag: "Açık Yüzme Havuzu",
+        position: "center 40%",
+      },
+      {
+        src: "/assets/cms/petra-nargile-havuz-gece.jpg",
+        alt: "Gece Havuz Kenarı Lounge & Nargile",
+        desc: "Işıklı su havuzu manzarası eşliğinde premium nargile çeşitleri, kokteyller ve ferah açık hava oturma alanı.",
+        tag: "Teras & Akşam Keyfi",
+        position: "center center",
+      },
+      {
+        src: "/assets/cms/petra-restoran-salon-organizasyon.jpg",
+        alt: "Özel Günler & Restoran Salonu",
+        desc: "Doğum günleri, evlilik teklifleri ve kurumsal davetler için havuz manzaralı şık masa düzeni ve zengin dünya mutfağı.",
+        tag: "Kutlama & Davet",
+        position: "center center",
+      },
+      {
+        src: "/assets/cms/hero-cephe.webp",
+        alt: "Petra Yaşam Merkezi & Tesis Alanı",
+        desc: "Taşdelen'de açık yetişkin havuzu, ayrı çocuk havuzu, modern fitness salonu ve zengin restoranı bir arada sunan yaşam alanı.",
+        tag: "Sosyal Yaşam Alanı",
+        position: "center center",
+      },
     ],
   },
   makaleler: [

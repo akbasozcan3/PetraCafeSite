@@ -124,72 +124,67 @@ export default async function HavuzPlajPage() {
       </header>
 
       {/* 2. HAVUZ & YAŞAM MERKEZİ FOTOĞRAF VİTRİNİ */}
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "22px",
-          marginTop: "16px",
-          marginBottom: "10px",
-        }}
-      >
+      <section className="havuz-cards-grid" aria-label="Havuz ve Yaşam Alanları">
         {((p.gorseller && p.gorseller.length > 0)
           ? p.gorseller
           : [
               {
                 src: "/assets/cms/petra-pool-beach-loca.jpg",
                 alt: "Pool & Beach & VIP Hasır Localar",
+                desc: "Güneşlenme şezlongları, yetişkin havuzu ve konforlu hasır localarla gün boyu lüks tatil ve serinlik keyfi.",
+                tag: "Açık Yüzme Havuzu",
+                position: "center 40%",
               },
               {
                 src: "/assets/cms/petra-nargile-havuz-gece.jpg",
-                alt: "Gece Havuz Kenarı Nargile & Lounge",
+                alt: "Gece Havuz Kenarı Lounge & Nargile",
+                desc: "Işıklı su havuzu manzarası eşliğinde premium nargile çeşitleri, kokteyller ve ferah açık hava oturma alanı.",
+                tag: "Teras & Akşam Keyfi",
+                position: "center center",
               },
               {
                 src: "/assets/cms/petra-restoran-salon-organizasyon.jpg",
                 alt: "Özel Günler & Restoran Salonu",
+                desc: "Doğum günleri, evlilik teklifleri ve kurumsal davetler için havuz manzaralı şık masa düzeni ve zengin dünya mutfağı.",
+                tag: "Kutlama & Davet",
+                position: "center center",
+              },
+              {
+                src: "/assets/cms/hero-cephe.webp",
+                alt: "Petra Yaşam Merkezi & Tesis Alanı",
+                desc: "Taşdelen'de açık yetişkin havuzu, ayrı çocuk havuzu, modern fitness salonu ve zengin restoranı bir arada sunan yaşam alanı.",
+                tag: "Sosyal Yaşam Alanı",
+                position: "center center",
               },
             ]
         ).map((g: any, gi: number) => (
-          <figure
-            key={gi}
-            className="havuz-showcase-fig"
-            style={{
-              margin: 0,
-              borderRadius: "22px",
-              overflow: "hidden",
-              border: "1.5px solid rgba(217, 164, 65, 0.28)",
-              boxShadow: "0 12px 32px -8px rgba(13, 15, 10, 0.16)",
-              background: "#16190F",
-              position: "relative",
-              height: "340px",
-            }}
-          >
-            <SafeImg
-              src={resolveMediaUrl(g.src) || "/assets/cms/hero-cephe.webp"}
-              alt={g.alt || "Petra Havuz & Plaj"}
-              fallback={SITE_PHOTOS.facade}
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-            />
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                padding: "18px 20px",
-                background:
-                  "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 65%, transparent 100%)",
-                color: "#FFFFFF",
-              }}
-            >
-              <b style={{ fontSize: "15px", display: "block", marginBottom: "3px" }}>
-                {cleanRawText(g.alt || "Petra Pool & Beach")}
-              </b>
-              <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.85)" }}>
-                Keyif, konfor ve serinlik Petra'da bir arada
-              </span>
+          <article key={gi} className="havuz-feature-card">
+            <div className="havuz-card-img-wrap">
+              <SafeImg
+                src={resolveMediaUrl(g.src) || "/assets/cms/hero-cephe.webp"}
+                alt={g.alt || "Petra Havuz & Plaj"}
+                fallback={SITE_PHOTOS.facade}
+                style={{ objectPosition: g.position || "center" }}
+              />
             </div>
-          </figure>
+            <div className="havuz-card-content">
+              {g.tag ? (
+                <span className="havuz-card-badge">
+                  <Sparkles size={12} />
+                  {cleanRawText(g.tag)}
+                </span>
+              ) : null}
+              <h3 className="havuz-card-title">
+                {cleanRawText(g.alt || "Petra Pool & Beach")}
+              </h3>
+              <p className="havuz-card-desc">
+                {cleanRawText(
+                  g.desc ||
+                    "Petra Yaşam Merkezi'nde konforlu şezlonglar, temiz yüzme havuzu ve ferah açık hava dinlenme alanı."
+                )}
+              </p>
+            </div>
+          </article>
         ))}
       </section>
 

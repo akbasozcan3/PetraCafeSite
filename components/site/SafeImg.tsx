@@ -8,6 +8,7 @@ export default function SafeImg({
   alt,
   fallback = SITE_PHOTOS.interior,
   className,
+  style,
   loading,
   width,
   height,
@@ -16,6 +17,7 @@ export default function SafeImg({
   alt: string;
   fallback?: string;
   className?: string;
+  style?: React.CSSProperties;
   loading?: "eager" | "lazy";
   width?: number;
   height?: number;
@@ -30,6 +32,7 @@ export default function SafeImg({
       src={url}
       alt={alt}
       className={className}
+      style={style}
       loading={loading}
       decoding="async"
       width={width}

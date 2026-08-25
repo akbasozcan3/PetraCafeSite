@@ -224,7 +224,13 @@ export interface PastaContent {
   body: string;
   ctaLabel: string;
   ctaHref: string;
-  gorseller: { src: string; alt: string }[];
+  gorseller: {
+    src: string;
+    alt: string;
+    desc?: string;
+    tag?: string;
+    position?: string;
+  }[];
   yuzmeKursu?: {
     baslik?: string;
     rozet?: string;

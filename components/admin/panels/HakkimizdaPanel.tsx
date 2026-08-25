@@ -1896,49 +1896,90 @@ export function PastaPanel() {
             </Button>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {(p.gorseller || []).map((img, i) => (
               <div
                 key={i}
-                className="space-y-2 rounded-xl border border-white/10 bg-[#162234] p-3 shadow-md relative"
+                className="space-y-2 rounded-xl border border-white/10 bg-[#162234] p-3 shadow-md relative flex flex-col justify-between"
               >
-                <div className="relative h-32 w-full overflow-hidden rounded-lg bg-black border border-white/10">
-                  <img
-                    src={img.src}
-                    alt={img.alt || "Önizleme"}
-                    className="h-full w-full object-cover"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const gorseller = (p.gorseller || []).filter((_, j) => j !== i);
+                <div className="space-y-2">
+                  <div className="relative h-28 w-full overflow-hidden rounded-lg bg-black border border-white/10">
+                    <img
+                      src={img.src}
+                      alt={img.alt || "Önizleme"}
+                      className="h-full w-full object-cover"
+                      style={{ objectPosition: img.position || "center" }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const gorseller = (p.gorseller || []).filter((_, j) => j !== i);
+                        setContent({ ...content, pasta: { ...p, gorseller } });
+                      }}
+                      className="absolute top-1.5 right-1.5 rounded-full bg-red-600/90 p-1 text-white hover:bg-red-500 shadow"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                  <Input
+                    label="Görsel Yolu (URL / CMS)"
+                    value={img.src}
+                    onChange={(e) => {
+                      const gorseller = [...(p.gorseller || [])];
+                      gorseller[i] = { ...gorseller[i], src: e.target.value };
                       setContent({ ...content, pasta: { ...p, gorseller } });
                     }}
-                    className="absolute top-1.5 right-1.5 rounded-full bg-red-600/90 p-1 text-white hover:bg-red-500 shadow"
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </button>
+                    placeholder="/assets/cms/..."
+                  />
+                  <div className="grid grid-cols-2 gap-2">
+                    <Input
+                      label="Rozet (Tag)"
+                      value={img.tag || ""}
+                      onChange={(e) => {
+                        const gorseller = [...(p.gorseller || [])];
+                        gorseller[i] = { ...gorseller[i], tag: e.target.value };
+                        setContent({ ...content, pasta: { ...p, gorseller } });
+                      }}
+                      placeholder="Açık Havuz"
+                    />
+                    <Input
+                      label="Kadraj (Position)"
+                      value={img.position || "center center"}
+                      onChange={(e) => {
+                        const gorseller = [...(p.gorseller || [])];
+                        gorseller[i] = { ...gorseller[i], position: e.target.value };
+                        setContent({ ...content, pasta: { ...p, gorseller } });
+                      }}
+                      placeholder="center center"
+                    />
+                  </div>
+                  <Input
+                    label="Kart Başlığı"
+                    value={img.alt}
+                    onChange={(e) => {
+                      const gorseller = [...(p.gorseller || [])];
+                      gorseller[i] = { ...gorseller[i], alt: e.target.value };
+                      setContent({ ...content, pasta: { ...p, gorseller } });
+                    }}
+                    placeholder="Pool & Beach VIP Localar"
+                  />
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-[#8A9BB0]">
+                      Kısa Açıklama
+                    </label>
+                    <textarea
+                      value={img.desc || ""}
+                      onChange={(e) => {
+                        const gorseller = [...(p.gorseller || [])];
+                        gorseller[i] = { ...gorseller[i], desc: e.target.value };
+                        setContent({ ...content, pasta: { ...p, gorseller } });
+                      }}
+                      rows={2}
+                      className={fieldClass}
+                      placeholder="Güneşlenme şezlongları ve havuz keyfi..."
+                    />
+                  </div>
                 </div>
-                <Input
-                  label="Görsel Yolu (URL / CMS)"
-                  value={img.src}
-                  onChange={(e) => {
-                    const gorseller = [...(p.gorseller || [])];
-                    gorseller[i] = { ...gorseller[i], src: e.target.value };
-                    setContent({ ...content, pasta: { ...p, gorseller } });
-                  }}
-                  placeholder="/assets/cms/..."
-                />
-                <Input
-                  label="Görsel Başlığı / Alt Yazı"
-                  value={img.alt}
-                  onChange={(e) => {
-                    const gorseller = [...(p.gorseller || [])];
-                    gorseller[i] = { ...gorseller[i], alt: e.target.value };
-                    setContent({ ...content, pasta: { ...p, gorseller } });
-                  }}
-                  placeholder="Pool & Beach VIP Localar"
-                />
               </div>
             ))}
           </div>
