@@ -133,110 +133,64 @@ export default async function HavuzPlajPage() {
           marginBottom: "10px",
         }}
       >
-        <figure
-          className="havuz-showcase-fig"
-          style={{
-            margin: 0,
-            borderRadius: "22px",
-            overflow: "hidden",
-            border: "1.5px solid rgba(217, 164, 65, 0.28)",
-            boxShadow: "0 12px 32px -8px rgba(13, 15, 10, 0.16)",
-            background: "#16190F",
-            position: "relative",
-            height: "340px",
-          }}
-        >
-          <SafeImg
-            src="/assets/cms/petra-pool-beach-loca.jpg"
-            alt="Petra Pool & Beach Hasır Localar"
-            fallback={SITE_PHOTOS.facade}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-          />
-          <div
+        {((p.gorseller && p.gorseller.length > 0)
+          ? p.gorseller
+          : [
+              {
+                src: "/assets/cms/petra-pool-beach-loca.jpg",
+                alt: "Pool & Beach & VIP Hasır Localar",
+              },
+              {
+                src: "/assets/cms/petra-nargile-havuz-gece.jpg",
+                alt: "Gece Havuz Kenarı Nargile & Lounge",
+              },
+              {
+                src: "/assets/cms/petra-restoran-salon-organizasyon.jpg",
+                alt: "Özel Günler & Restoran Salonu",
+              },
+            ]
+        ).map((g: any, gi: number) => (
+          <figure
+            key={gi}
+            className="havuz-showcase-fig"
             style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              padding: "18px 20px",
-              background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 65%, transparent 100%)",
-              color: "#FFFFFF",
+              margin: 0,
+              borderRadius: "22px",
+              overflow: "hidden",
+              border: "1.5px solid rgba(217, 164, 65, 0.28)",
+              boxShadow: "0 12px 32px -8px rgba(13, 15, 10, 0.16)",
+              background: "#16190F",
+              position: "relative",
+              height: "340px",
             }}
           >
-            <b style={{ fontSize: "15px", display: "block", marginBottom: "3px" }}>Pool & Beach & VIP Hasır Localar</b>
-            <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.85)" }}>Serinletici havuz keyfi ve güneşlenme alanı</span>
-          </div>
-        </figure>
-
-        <figure
-          className="havuz-showcase-fig"
-          style={{
-            margin: 0,
-            borderRadius: "22px",
-            overflow: "hidden",
-            border: "1.5px solid rgba(217, 164, 65, 0.28)",
-            boxShadow: "0 12px 32px -8px rgba(13, 15, 10, 0.16)",
-            background: "#16190F",
-            position: "relative",
-            height: "340px",
-          }}
-        >
-          <SafeImg
-            src="/assets/cms/petra-nargile-havuz-gece.jpg"
-            alt="Gece Havuz Kenarı Nargile & Lounge"
-            fallback={SITE_PHOTOS.facade}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              padding: "18px 20px",
-              background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 65%, transparent 100%)",
-              color: "#FFFFFF",
-            }}
-          >
-            <b style={{ fontSize: "15px", display: "block", marginBottom: "3px" }}>Gece Havuz Kenarı Nargile & Lounge</b>
-            <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.85)" }}>Işıklı atmosfer ve ferah teras keyfi</span>
-          </div>
-        </figure>
-
-        <figure
-          className="havuz-showcase-fig"
-          style={{
-            margin: 0,
-            borderRadius: "22px",
-            overflow: "hidden",
-            border: "1.5px solid rgba(217, 164, 65, 0.28)",
-            boxShadow: "0 12px 32px -8px rgba(13, 15, 10, 0.16)",
-            background: "#16190F",
-            position: "relative",
-            height: "340px",
-          }}
-        >
-          <SafeImg
-            src="/assets/cms/petra-restoran-salon-organizasyon.jpg"
-            alt="Petra Restoran Salonu ve Özel Davet Alanı"
-            fallback={SITE_PHOTOS.facade}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              padding: "18px 20px",
-              background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 65%, transparent 100%)",
-              color: "#FFFFFF",
-            }}
-          >
-            <b style={{ fontSize: "15px", display: "block", marginBottom: "3px" }}>Özel Günler & Restoran Salonu</b>
-            <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.85)" }}>Doğum günü, kutlama ve davet masaları</span>
-          </div>
-        </figure>
+            <SafeImg
+              src={resolveMediaUrl(g.src) || "/assets/cms/hero-cephe.webp"}
+              alt={g.alt || "Petra Havuz & Plaj"}
+              fallback={SITE_PHOTOS.facade}
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                padding: "18px 20px",
+                background:
+                  "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 65%, transparent 100%)",
+                color: "#FFFFFF",
+              }}
+            >
+              <b style={{ fontSize: "15px", display: "block", marginBottom: "3px" }}>
+                {cleanRawText(g.alt || "Petra Pool & Beach")}
+              </b>
+              <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.85)" }}>
+                Keyif, konfor ve serinlik Petra'da bir arada
+              </span>
+            </div>
+          </figure>
+        ))}
       </section>
 
       {/* 3. ÖNE ÇIKAN BİLGİ KARTLARI (Saatler, Derinlik, Hijyen, Konum) */}

@@ -1854,6 +1854,101 @@ export function PastaPanel() {
           onClick={() =>
             setContent({
               ...content,
+              pasta: {
+                ...p,
+                kurallar: [...(p.kurallar || []), ""],
+              },
+            })
+          }
+        >
+          <Plus className="h-4 w-4" /> Kural satırı
+        </Button>
+
+        {/* FOTOĞRAF VİTRİNİ YÖNETİMİ */}
+        <div className="rounded-xl border border-white/[0.08] bg-[#0E1B2A]/90 p-4 space-y-4 pt-4">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <div>
+              <h4 className="font-semibold text-[#F8F8F8] flex items-center gap-2">
+                📸 Havuz & Plaj Fotoğraf Vitrini
+              </h4>
+              <p className="text-xs text-[#94A3B8] mt-0.5">
+                Sayfanın üstünde 340px boyutunda sergilenen yüksek çözünürlüklü mekan fotoğrafları.
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const currentImgs = p.gorseller || [];
+                setContent({
+                  ...content,
+                  pasta: {
+                    ...p,
+                    gorseller: [
+                      ...currentImgs,
+                      { src: "/assets/cms/petra-pool-beach-loca.jpg", alt: "Yeni Fotoğraf" },
+                    ],
+                  },
+                });
+              }}
+            >
+              <Plus className="h-4 w-4" /> Yeni Fotoğraf Ekle
+            </Button>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+            {(p.gorseller || []).map((img, i) => (
+              <div
+                key={i}
+                className="space-y-2 rounded-xl border border-white/10 bg-[#162234] p-3 shadow-md relative"
+              >
+                <div className="relative h-32 w-full overflow-hidden rounded-lg bg-black border border-white/10">
+                  <img
+                    src={img.src}
+                    alt={img.alt || "Önizleme"}
+                    className="h-full w-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const gorseller = (p.gorseller || []).filter((_, j) => j !== i);
+                      setContent({ ...content, pasta: { ...p, gorseller } });
+                    }}
+                    className="absolute top-1.5 right-1.5 rounded-full bg-red-600/90 p-1 text-white hover:bg-red-500 shadow"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+                <Input
+                  label="Görsel Yolu (URL / CMS)"
+                  value={img.src}
+                  onChange={(e) => {
+                    const gorseller = [...(p.gorseller || [])];
+                    gorseller[i] = { ...gorseller[i], src: e.target.value };
+                    setContent({ ...content, pasta: { ...p, gorseller } });
+                  }}
+                  placeholder="/assets/cms/..."
+                />
+                <Input
+                  label="Görsel Başlığı / Alt Yazı"
+                  value={img.alt}
+                  onChange={(e) => {
+                    const gorseller = [...(p.gorseller || [])];
+                    gorseller[i] = { ...gorseller[i], alt: e.target.value };
+                    setContent({ ...content, pasta: { ...p, gorseller } });
+                  }}
+                  placeholder="Pool & Beach VIP Localar"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            setContent({
+              ...content,
               pasta: { ...p, kurallar: [...(p.kurallar || []), ""] },
             })
           }
