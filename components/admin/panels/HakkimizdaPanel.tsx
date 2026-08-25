@@ -955,11 +955,20 @@ export default function HakkimizdaPanel() {
             <Upload
               uploadKey="aboutInterior"
               accept="image/*"
-              onComplete={async () => {
+              enableCrop
+              onComplete={async (results) => {
                 try {
-                  const res = await api.getAdminContent();
-                  setContent(res.data);
-                  setMessage("Görsel başarıyla yüklendi.");
+                  const url = results?.[0]?.url;
+                  if (url) {
+                    const images = { ...content.images, aboutInterior: url };
+                    const res = await api.updateContent({ images });
+                    setContent(res.data);
+                    setMessage("Görsel başarıyla yüklendi.");
+                  } else {
+                    const res = await api.getAdminContent();
+                    setContent(res.data);
+                    setMessage("Görsel başarıyla yüklendi.");
+                  }
                 } catch (err) {
                   setMessage(
                     err instanceof Error

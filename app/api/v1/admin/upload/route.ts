@@ -230,22 +230,36 @@ export async function POST(request: Request) {
       bytes = Buffer.from(clean);
     }
 
-    let publicPath: string;
+    let publicPath: string = "";
 
     if (blobToken) {
-      const folder = key ? "site" : "menu";
-      const result = await put(`${folder}/${filename}`, bytes, {
-        access: "public",
-        token: blobToken,
-        contentType: mime === "image/svg+xml" ? "image/svg+xml; charset=utf-8" : mime,
-      });
-      publicPath = result.url;
-    } else if (process.env.VERCEL) {
-      // Vercel üzerinde Blob bağlanmamışsa Data URI olarak anında kaydet (sıfır hata)
-      publicPath = `data:${mime};base64,${bytes.toString("base64")}`;
-    } else {
-      await writeUploadFile("site", filename, bytes);
-      publicPath = `/uploads/site/${filename}`;
+      try {
+        const folder = key ? "site" : "menu";
+        const result = await put(`${folder}/${filename}`, bytes, {
+          access: "public",
+          token: blobToken,
+          contentType: mime === "image/svg+xml" ? "image/svg+xml; charset=utf-8" : mime,
+        });
+        if (result?.url) {
+          publicPath = result.url;
+        }
+      } catch (blobErr) {
+        console.warn("[Upload] Vercel Blob failed, falling back to data URI:", blobErr);
+      }
+    }
+
+    if (!publicPath) {
+      if (process.env.VERCEL || process.env.NODE_ENV === "production") {
+        // Vercel üzerinde Blob bağlanmamışsa veya token süresi bitmişse Data URI olarak anında kaydet (sıfır hata)
+        publicPath = `data:${mime};base64,${bytes.toString("base64")}`;
+      } else {
+        try {
+          await writeUploadFile("site", filename, bytes);
+          publicPath = `/uploads/site/${filename}`;
+        } catch {
+          publicPath = `data:${mime};base64,${bytes.toString("base64")}`;
+        }
+      }
     }
 
     // If the caller provided a known image key, save it into content.images
@@ -266,7 +280,7 @@ export async function POST(request: Request) {
       email: session.email,
       name: session.name,
       action: "media.upload",
-      detail: key ? `${key} → ${publicPath}` : publicPath,
+      detail: key ? `${key} → ${publicPath.slice(0, 80)}` : publicPath.slice(0, 80),
     });
 
     revalidatePublicSite();
@@ -284,6 +298,7 @@ export async function POST(request: Request) {
       return errorResponse(error.message, 400);
     }
     console.error("[Upload Error]", error);
-    return errorResponse("Görsel yüklenemedi.", 500);
+    const detail = error instanceof Error ? error.message : "Görsel yüklenemedi.";
+    return errorResponse(detail, 500);
   }
 }
