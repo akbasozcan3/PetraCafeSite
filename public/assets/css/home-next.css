@@ -293,8 +293,8 @@ html.scene-ready.scene-painted #scene {
 }
 
 /* Ana sayfa Hero modunda navbar gizli */
-.site-home .nav.is-hero:not(.is-menu),
-.site-home:not(.nav-revealed) .nav.site-nav:not(.is-solid):not(.is-menu) {
+.site-home:not(.site-shop):not(.site-page) .nav.is-hero:not(.is-menu),
+.site-home:not(.site-shop):not(.site-page):not(.nav-revealed) .nav.site-nav:not(.is-solid):not(.is-menu) {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
@@ -304,6 +304,7 @@ html.scene-ready.scene-painted #scene {
 /* Hero geçilince veya iç sayfalarda tepeye iner ve görünür */
 .site-home .nav.is-solid,
 .site-home.nav-revealed .nav.site-nav,
+.site-page .nav.site-nav,
 .site-shop .nav.site-nav,
 .nav.site-nav.is-solid {
   position: fixed !important;

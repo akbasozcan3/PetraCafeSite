@@ -19,7 +19,7 @@ export default async function SiteShell({
   const logo = liveMedia(content.images?.logo, SITE_PHOTOS.mark) || SITE_PHOTOS.mark;
 
   return (
-    <div className="site-home site-shop" style={themeToCssVars(content.theme)}>
+    <div className="site-page site-shop" style={themeToCssVars(content.theme)}>
       <ThemeDocument vars={themeCssCustomProperties(content.theme)} />
       <link
         rel="stylesheet"
@@ -49,7 +49,6 @@ export default async function SiteShell({
       </div>
 
       <SiteFooter content={content} />
-      <HomeMotion />
     </div>
   );
 }

@@ -305,20 +305,20 @@ export default function SiteNav({
         .mobile-menu {
           top: ${navHeight}px !important;
         }
-        /* Ana sayfada hero alanında navbar gizli */
-        .site-home header.nav.site-nav.is-hero:not(.is-menu),
-        .site-home:not(.nav-revealed) header.nav.site-nav:not(.is-solid):not(.is-menu) {
+        /* Sadece ana sayfada hero gecilmediginde navbar gizlidir */
+        .site-home:not(.site-shop):not(.site-page):not(.nav-revealed) header.nav.site-nav:not(.is-solid):not(.is-menu),
+        .site-home:not(.site-shop):not(.site-page) header.nav.site-nav.is-hero:not(.is-menu) {
           transform: translateY(-110%) !important;
           opacity: 0 !important;
           visibility: hidden !important;
           pointer-events: none !important;
         }
-        /* Hero geçilince veya iç sayfalarda tepeye iner ve solid görünür */
+        /* Hero gecilince veya butun alt sayfalarda (menu, spor-salonu, blog, vs.) navbar kalici olarak gorunur */
         header.nav.site-nav.is-solid,
-        .site-home.nav-revealed header.nav.site-nav,
-        .site-home header.nav.site-nav.is-solid,
+        .site-page header.nav.site-nav,
         .site-shop header.nav.site-nav,
-        .page header.nav.site-nav {
+        .page header.nav.site-nav,
+        .site-home.nav-revealed header.nav.site-nav {
           transform: translateY(0) !important;
           opacity: 1 !important;
           visibility: visible !important;
@@ -783,7 +783,7 @@ export default function SiteNav({
       `}</style>
 
       <header
-        className={`nav site-nav ${solid ? "is-solid" : "is-hero"}${open ? " is-menu" : ""}`}
+        className={`nav site-nav ${!isHome || solid ? "is-solid" : "is-hero"}${open ? " is-menu" : ""}`}
         id="nav"
         hidden={open}
         style={open ? { display: "none" } : undefined}
