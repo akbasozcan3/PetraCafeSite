@@ -404,10 +404,6 @@ export default async function HakkimizdaPage() {
                 height={900}
                 loading="eager"
               />
-              <div className="about-photo-card__status">
-                <span className="about-photo-card__dot" />
-                <span>08:00 – 02:00 AÇIK</span>
-              </div>
               <div className="about-photo-card__badge">
                 <b>{cleanRawText(h.badgeBaslik) || brandName}</b>
                 <span>
@@ -423,14 +419,71 @@ export default async function HakkimizdaPage() {
       {/* ═══════════════════════════════════════════════════════
           3. RAKAMLARLA PETRA (İstatistikler)
           ═══════════════════════════════════════════════════════ */}
-      <section className="about-stats-sec" aria-label="Rakamlarla Petra">
-        <div className="about-stats-grid">
+      <section
+        className="about-stats-sec"
+        aria-label="Rakamlarla Petra"
+        style={{
+          padding: "clamp(24px, 3.5vw, 36px)",
+          background: "var(--cream-2, #F3EDE0)",
+          borderRadius: "24px",
+          border: "1px solid rgba(13, 15, 10, 0.08)",
+        }}
+      >
+        <div
+          className="about-stats-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: "16px",
+          }}
+        >
           {statsList.map((st: any, i: number) => (
-            <div className="about-stat-item" key={i}>
-              <b>{cleanRawText(st.b)}</b>
-              <span>{cleanRawText(st.span)}</span>
+            <div
+              className="about-stat-item"
+              key={i}
+              style={{
+                background: "#FFFFFF",
+                border: "1px solid rgba(13, 15, 10, 0.08)",
+                borderRadius: "16px",
+                padding: "24px 18px",
+                textAlign: "center",
+                boxShadow: "0 4px 14px -6px rgba(13, 15, 10, 0.06)",
+              }}
+            >
+              <b
+                style={{
+                  display: "block",
+                  fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+                  fontSize: "clamp(22px, 2.6vw, 32px)",
+                  fontWeight: 700,
+                  color: "var(--ink, #0D0F0A)",
+                  letterSpacing: "-0.02em",
+                  marginBottom: "4px",
+                }}
+              >
+                {cleanRawText(st.b)}
+              </b>
+              <span
+                style={{
+                  fontSize: "13.5px",
+                  fontWeight: 600,
+                  color: "var(--muted, #6E6A5C)",
+                  display: "block",
+                  lineHeight: 1.4,
+                }}
+              >
+                {cleanRawText(st.span)}
+              </span>
               {st.sub ? (
-                <small style={{ display: "block", fontSize: "11.5px", color: "var(--muted, #6E6A5C)", marginTop: "4px", fontWeight: 500 }}>
+                <small
+                  style={{
+                    display: "block",
+                    fontSize: "11.5px",
+                    color: "var(--brass-lo, #B8842C)",
+                    marginTop: "6px",
+                    fontWeight: 600,
+                  }}
+                >
                   {cleanRawText(st.sub)}
                 </small>
               ) : null}
@@ -451,35 +504,99 @@ export default async function HakkimizdaPage() {
           </p>
         </div>
 
-        <div className="about-exp-grid">
+        <div
+          className="about-exp-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "20px",
+            marginTop: "32px",
+          }}
+        >
           {experiences.map((item: any, i: number) => {
             const IconComp = expIcons[i % expIcons.length];
             return (
-              <article className="about-exp-card" key={i}>
+              <article
+                className="about-exp-card"
+                key={i}
+                style={{
+                  background: "#FFFFFF",
+                  border: "1.5px solid rgba(13, 15, 10, 0.1)",
+                  borderRadius: "22px",
+                  padding: "26px 22px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  boxShadow: "0 8px 24px -12px rgba(13, 15, 10, 0.08)",
+                }}
+              >
                 <div>
-                  <div className="about-exp-card__top">
-                    <span className="about-exp-card__n">{item.n || `0${i + 1}`}</span>
-                    <div className="about-exp-card__ico" aria-hidden="true">
+                  <div className="about-exp-card__top" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+                    <span className="about-exp-card__n" style={{ fontFamily: "var(--f-head, serif)", fontSize: "20px", fontWeight: 700, color: "rgba(13, 15, 10, 0.25)" }}>
+                      {item.n || `0${i + 1}`}
+                    </span>
+                    <div
+                      className="about-exp-card__ico"
+                      aria-hidden="true"
+                      style={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "12px",
+                        background: "rgba(217, 164, 65, 0.12)",
+                        color: "var(--brass-lo, #B8842C)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
                       <IconComp size={22} />
                     </div>
                   </div>
                   {item.tag && (
-                    <span className="about-exp-card__tag">{cleanRawText(item.tag)}</span>
+                    <span
+                      className="about-exp-card__tag"
+                      style={{
+                        display: "inline-block",
+                        background: "rgba(124, 139, 79, 0.12)",
+                        color: "var(--olive-lo, #5A6838)",
+                        fontSize: "11px",
+                        fontWeight: 700,
+                        padding: "3px 10px",
+                        borderRadius: "999px",
+                        marginBottom: "10px",
+                        letterSpacing: "0.03em",
+                      }}
+                    >
+                      {cleanRawText(item.tag)}
+                    </span>
                   )}
-                  <h3>{cleanRawText(item.title)}</h3>
+                  <h3
+                    style={{
+                      fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+                      fontSize: "19px",
+                      fontWeight: 600,
+                      color: "var(--ink, #0D0F0A)",
+                      margin: "0 0 8px",
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {cleanRawText(item.title)}
+                  </h3>
                   {item.hours ? (
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "12px", color: "var(--brass-lo, #B8842C)", fontWeight: 700, marginBottom: "8px" }}>
-                      <Clock size={12} />
+                    <div style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "12px", color: "var(--brass-lo, #B8842C)", fontWeight: 700, marginBottom: "10px" }}>
+                      <Clock size={13} />
                       <span>{cleanRawText(item.hours)}</span>
                     </div>
                   ) : null}
-                  <p>{cleanRawText(item.desc)}</p>
+                  <p style={{ fontSize: "14px", lineHeight: 1.65, color: "#555A4C", margin: "0 0 16px" }}>
+                    {cleanRawText(item.desc)}
+                  </p>
                 </div>
                 {Array.isArray(item.features) && item.features.length > 0 && (
-                  <ul className="about-exp-card__feats">
+                  <ul className="about-exp-card__feats" style={{ listStyle: "none", padding: 0, margin: 0, borderTop: "1px solid rgba(13, 15, 10, 0.08)", paddingTop: "12px", display: "flex", flexDirection: "column", gap: "6px" }}>
                     {item.features.map((feat: string, fi: number) => (
-                      <li key={fi}>
-                        <CheckCircle2 size={14} color="var(--olive-lo, #5A6838)" />
+                      <li key={fi} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12.5px", color: "var(--ink, #0D0F0A)", fontWeight: 500 }}>
+                        <CheckCircle2 size={14} color="var(--olive-lo, #5A6838)" style={{ flexShrink: 0 }} />
                         <span>{cleanRawText(feat)}</span>
                       </li>
                     ))}
@@ -495,7 +612,16 @@ export default async function HakkimizdaPage() {
           4.5. BİR GÜNÜN AKIŞI (24 Saat Zaman Çizelgesi - Timeline)
           ═══════════════════════════════════════════════════════ */}
       {timeline.length > 0 && (
-        <section className="about-timeline-sec" aria-labelledby="about-timeline-heading">
+        <section
+          className="about-timeline-sec"
+          aria-labelledby="about-timeline-heading"
+          style={{
+            padding: "clamp(28px, 4vw, 44px)",
+            background: "var(--cream-2, #F3EDE0)",
+            borderRadius: "24px",
+            border: "1px solid rgba(13, 15, 10, 0.08)",
+          }}
+        >
           <div className="section__head" style={{ marginBottom: 0 }}>
             <p className="eyebrow">ZAMAN ÇİZELGESİ</p>
             <h2 id="about-timeline-heading" className="h2">Bir Günün Petra'daki Akışı</h2>
@@ -503,15 +629,64 @@ export default async function HakkimizdaPage() {
               Sabahın ilk ışıklarından gece yarısına kadar Petra Yaşam Merkezi'nde gününüzü nasıl geçirebileceğinizi keşfedin.
             </p>
           </div>
-          <div className="about-timeline-grid">
+          <div
+            className="about-timeline-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "18px",
+              marginTop: "28px",
+            }}
+          >
             {timeline.map((step: any, sIdx: number) => (
-              <div className="about-timeline-card" key={sIdx}>
-                <div className="about-timeline-card__time">
+              <div
+                className="about-timeline-card"
+                key={sIdx}
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: "18px",
+                  border: "1px solid rgba(13, 15, 10, 0.08)",
+                  padding: "22px 18px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  boxShadow: "0 4px 16px -6px rgba(13, 15, 10, 0.06)",
+                }}
+              >
+                <div
+                  className="about-timeline-card__time"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    background: "rgba(217, 164, 65, 0.12)",
+                    color: "var(--brass-lo, #B8842C)",
+                    border: "1px solid rgba(217, 164, 65, 0.3)",
+                    padding: "4px 12px",
+                    borderRadius: "999px",
+                    fontSize: "11.5px",
+                    fontWeight: 700,
+                    width: "fit-content",
+                  }}
+                >
                   <Clock size={12} />
                   <span>{cleanRawText(step.time)}</span>
                 </div>
-                <h3>{cleanRawText(step.title)}</h3>
-                <p>{cleanRawText(step.desc)}</p>
+                <h3
+                  style={{
+                    fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+                    fontSize: "17px",
+                    fontWeight: 600,
+                    lineHeight: 1.3,
+                    color: "var(--ink, #0D0F0A)",
+                    margin: 0,
+                  }}
+                >
+                  {cleanRawText(step.title)}
+                </h3>
+                <p style={{ fontSize: "13.5px", lineHeight: 1.6, color: "#555A4C", margin: 0 }}>
+                  {cleanRawText(step.desc)}
+                </p>
               </div>
             ))}
           </div>
@@ -530,16 +705,61 @@ export default async function HakkimizdaPage() {
               Misafirlerimize her zaman en yüksek kalite, hijyen ve kusursuz misafirperverlik sunma taahhüdümüz.
             </p>
           </div>
-          <div className="about-values-grid">
+          <div
+            className="about-values-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "20px",
+              marginTop: "28px",
+            }}
+          >
             {values.map((val: any, vIdx: number) => {
               const ValIcon = valIcons[vIdx % valIcons.length];
               return (
-                <div className="about-values-card" key={vIdx}>
-                  <div className="about-values-card__icon">
+                <div
+                  className="about-values-card"
+                  key={vIdx}
+                  style={{
+                    background: "#FFFFFF",
+                    border: "1.5px solid rgba(13, 15, 10, 0.08)",
+                    borderRadius: "20px",
+                    padding: "24px 20px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "12px",
+                    boxShadow: "0 4px 16px -6px rgba(13, 15, 10, 0.05)",
+                  }}
+                >
+                  <div
+                    className="about-values-card__icon"
+                    style={{
+                      width: "42px",
+                      height: "42px",
+                      borderRadius: "12px",
+                      background: "rgba(124, 139, 79, 0.12)",
+                      color: "var(--olive-lo, #5A6838)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
                     <ValIcon size={20} />
                   </div>
-                  <h3>{cleanRawText(val.title)}</h3>
-                  <p>{cleanRawText(val.desc)}</p>
+                  <h3
+                    style={{
+                      fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+                      fontSize: "18px",
+                      fontWeight: 600,
+                      color: "var(--ink, #0D0F0A)",
+                      margin: 0,
+                    }}
+                  >
+                    {cleanRawText(val.title)}
+                  </h3>
+                  <p style={{ fontSize: "13.5px", lineHeight: 1.65, color: "#555A4C", margin: 0 }}>
+                    {cleanRawText(val.desc)}
+                  </p>
                 </div>
               );
             })}
