@@ -973,19 +973,26 @@ export default async function HakkimizdaPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          7. SSS / SIKÇA SORULAN SORULAR (Varsa)
+          7. SSS / SIKÇA SORULAN SORULAR (Ana Sayfayla Birebir Aynı Lüks Tasarım)
           ═══════════════════════════════════════════════════════ */}
       {faqs.length > 0 && (
-        <section className="section" id="sss" style={{ padding: 0 }} aria-labelledby="about-faq-heading">
-          <div className="section__head">
+        <section className="about-faq-sec" id="sss" style={{ padding: "0" }} aria-labelledby="about-faq-heading">
+          <div className="section__head" style={{ marginBottom: 24 }}>
             <p className="eyebrow">MERAK EDİLENLER</p>
-            <h2 id="about-faq-heading" className="h2">Sıkça Sorulan Sorular</h2>
+            <h2 id="about-faq-heading" className="h2" style={{ margin: 0 }}>Sıkça Sorulan Sorular</h2>
           </div>
-          <div className="faq">
+          <div className="faq" id="sss-liste">
             {faqs.map((faq: any, i: number) => (
-              <details className="faq__item" key={i}>
-                <summary>{cleanRawText(faq.q || faq.soru)}</summary>
-                <p>{cleanRawText(faq.a || faq.cevap)}</p>
+              <details className="faq__item" key={i} open={i === 0}>
+                <summary>
+                  <span>{cleanRawText(faq.q || faq.soru)}</span>
+                  <svg className="faq__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </summary>
+                <div className="faq__a">
+                  <p>{cleanRawText(faq.a || faq.cevap)}</p>
+                </div>
               </details>
             ))}
           </div>

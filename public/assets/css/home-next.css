@@ -1255,60 +1255,74 @@ html.no-motion [data-stagger] > * {
   content: none !important;
   display: none !important;
 }
-.site-home .faq__item {
+.faq {
+  display: grid !important;
+  gap: 14px !important;
+  border-top: none !important;
+}
+.site-home .faq__item,
+.page-hakkimizda .faq__item,
+.faq__item {
   margin: 0 !important;
-  padding: 0 18px;
-  background: #fff;
+  padding: 0 22px !important;
+  background: #FFFFFF !important;
   border: 1px solid rgba(13, 15, 10, 0.1) !important;
   border-top: 1px solid rgba(13, 15, 10, 0.1) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 10px 28px -22px rgba(13, 15, 10, 0.35);
+  border-radius: 18px !important;
+  box-shadow: 0 6px 20px -8px rgba(13, 15, 10, 0.06) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
-.site-home .faq__item summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  cursor: pointer;
-  list-style: none;
-  padding: 18px 0;
-  font-family: var(--f-head, "Playfair Display", Georgia, serif);
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--ink, #0d0f0a);
-  position: relative;
+.faq__item:hover {
+  border-color: rgba(184, 132, 44, 0.35) !important;
+  box-shadow: 0 10px 28px -10px rgba(184, 132, 44, 0.15) !important;
 }
-.site-home .faq__item summary::-webkit-details-marker {
-  display: none;
+.site-home .faq__item summary,
+.page-hakkimizda .faq__item summary,
+.faq__item summary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  cursor: pointer !important;
+  list-style: none !important;
+  padding: 20px 0 !important;
+  font-family: var(--f-head, "Playfair Display", Georgia, serif) !important;
+  font-size: clamp(17px, 1.8vw, 19.5px) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
+  color: var(--ink, #0D0F0A) !important;
+  position: relative !important;
 }
-.site-home .faq__item summary::marker {
-  display: none;
-  content: "";
+.faq__item summary::-webkit-details-marker {
+  display: none !important;
 }
-.site-home .faq__item summary:after {
+.faq__item summary::marker {
+  display: none !important;
+  content: "" !important;
+}
+.faq__item summary:after {
   content: none !important;
   display: none !important;
 }
-.site-home .faq__chev {
-  flex: 0 0 auto;
-  color: var(--brass-lo, #b8842c);
-  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+.faq__chev {
+  flex: 0 0 auto !important;
+  color: var(--brass-lo, #B8842C) !important;
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
 }
-.site-home .faq__item[open] .faq__chev {
-  transform: rotate(180deg);
+.faq__item[open] .faq__chev {
+  transform: rotate(180deg) !important;
 }
-.site-home .faq__a {
-  padding: 0 0 18px;
+.faq__a {
+  padding: 0 0 20px !important;
   border-top: 0 !important;
 }
-.site-home .faq__item p,
-.site-home .faq__a p {
-  margin: 0;
-  max-width: 62ch;
-  color: var(--muted, #6e6a5c);
-  font-size: 0.95rem;
-  line-height: 1.6;
+.faq__item p,
+.faq__a p {
+  margin: 0 !important;
+  max-width: 68ch !important;
+  color: #4A4E40 !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
 }
 .site-home #sss.faq-sec {
   padding: clamp(72px, 9vw, 120px) 0;
