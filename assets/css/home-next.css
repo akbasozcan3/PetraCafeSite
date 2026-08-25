@@ -3359,20 +3359,44 @@ html[data-theme="dark"] .site-home .section--dark .ozet__i span,
   color: #E2DBD0 !important;
 }
 
-/* 3.1 Açık Mod Bölümleri (Light Mod / Petra Gold vb.) - .gate, #pasta ve .foot KAPSAM DIŞIDIR */
-html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) .h2,
-html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h1,
-html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h2,
-html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h3,
-html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) .h2,
-html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h1,
-html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h2,
-html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h3,
-.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) .h2,
-.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h1,
-.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h2,
-.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h3 {
+/* 3.1 Açık Mod Bölümleri (Light Mod / Petra Gold vb.) - .gate, #pasta, #spor-salonu ve .foot KAPSAM DIŞIDIR */
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) .h2,
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h1,
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h2,
+html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h3,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) .h2,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h1,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h2,
+html[data-theme="light"] .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h3,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) .h2,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h1,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h2,
+.theme-light .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(#spor-salonu):not(.section--gym-showcase):not(.section--dark):not(.about-events-sec):not(.about-cta-sec) h3 {
   color: var(--ink, #0D0F0A) !important;
+}
+
+#spor-salonu h1,
+#spor-salonu h2,
+#spor-salonu h3,
+.page-spor .spor-dark-cta h1,
+.page-spor .spor-dark-cta h2,
+.page-spor .spor-dark-cta h3,
+.gym-card-clean h1,
+.gym-card-clean h2,
+.gym-card-clean h3,
+.gym-clean-title,
+.spor-cta-title {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+
+#spor-salonu p,
+.page-spor .spor-dark-cta p,
+.gym-card-clean p,
+.gym-clean-lead,
+.spor-cta-lead {
+  color: #E2DBD0 !important;
+  -webkit-text-fill-color: #E2DBD0 !important;
 }
 
 html:not([data-theme="dark"]):not(.theme-dark) .site-home section:not(.gate):not(#pasta):not(.pasta-sec):not(.section--dark) .lead,

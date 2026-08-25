@@ -422,6 +422,7 @@ export default async function SporSalonuPage() {
 
       {/* 4. SOSYAL MEDYA & CTA */}
       <section
+        className="section--dark spor-dark-cta"
         style={{
           background: "#111610",
           color: "#F4EEE1",
@@ -436,7 +437,18 @@ export default async function SporSalonuPage() {
             <p className="eyebrow" style={{ color: "#D9A441", margin: "0 0 10px", fontWeight: 700, letterSpacing: "0.15em" }}>
               PETRA YAŞAM KÜLTÜRÜ
             </p>
-            <h2 style={{ color: "#FFFFFF", fontFamily: "var(--f-head, serif)", fontSize: "clamp(24px, 3vw, 34px)", fontWeight: 700, margin: "0 0 14px", lineHeight: 1.2 }}>
+            <h2
+              className="spor-cta-title"
+              style={{
+                color: "#FFFFFF !important" as any,
+                WebkitTextFillColor: "#FFFFFF !important" as any,
+                fontFamily: "var(--f-head, serif)",
+                fontSize: "clamp(24px, 3vw, 34px)",
+                fontWeight: 700,
+                margin: "0 0 14px",
+                lineHeight: 1.2,
+              }}
+            >
               {cleanRawText(s.ctaTitle) || "Hedeflerinize Petra ile Ulaşın"}
             </h2>
             <p style={{ color: "#DDD6C8", fontSize: "14.5px", lineHeight: 1.7, opacity: 0.9, margin: "0 0 22px" }}>
