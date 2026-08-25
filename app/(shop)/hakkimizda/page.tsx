@@ -183,6 +183,13 @@ export default async function HakkimizdaPage() {
 
   const expIcons = [UtensilsCrossed, Coffee, Waves, PartyPopper];
 
+  /* ─── Zaman Çizelgesi (Timeline / Bir Günün Akışı) ─── */
+  const timeline: any[] = (h.timeline as any[])?.length > 0 ? (h.timeline as any[]) : [];
+
+  /* ─── Temel Değerler (Values) ─── */
+  const values: any[] = (h.values as any[])?.length > 0 ? (h.values as any[]) : [];
+  const valIcons = [ShieldCheck, Sparkles, Coffee, UtensilsCrossed];
+
   /* ─── Tesis İmkânları / Amenities ─── */
   const rawAmenities: any = h.amenities;
   const amenitiesList: string[] = Array.isArray(rawAmenities)
@@ -483,6 +490,62 @@ export default async function HakkimizdaPage() {
           })}
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          4.5. BİR GÜNÜN AKIŞI (24 Saat Zaman Çizelgesi - Timeline)
+          ═══════════════════════════════════════════════════════ */}
+      {timeline.length > 0 && (
+        <section className="about-timeline-sec" aria-labelledby="about-timeline-heading">
+          <div className="section__head" style={{ marginBottom: 0 }}>
+            <p className="eyebrow">ZAMAN ÇİZELGESİ</p>
+            <h2 id="about-timeline-heading" className="h2">Bir Günün Petra'daki Akışı</h2>
+            <p className="lead">
+              Sabahın ilk ışıklarından gece yarısına kadar Petra Yaşam Merkezi'nde gününüzü nasıl geçirebileceğinizi keşfedin.
+            </p>
+          </div>
+          <div className="about-timeline-grid">
+            {timeline.map((step: any, sIdx: number) => (
+              <div className="about-timeline-card" key={sIdx}>
+                <div className="about-timeline-card__time">
+                  <Clock size={12} />
+                  <span>{cleanRawText(step.time)}</span>
+                </div>
+                <h3>{cleanRawText(step.title)}</h3>
+                <p>{cleanRawText(step.desc)}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════
+          4.6. TEMEL DEĞERLERİMİZ & STANDARTLARIMIZ (Values)
+          ═══════════════════════════════════════════════════════ */}
+      {values.length > 0 && (
+        <section className="about-values-sec" aria-labelledby="about-values-heading">
+          <div className="section__head" style={{ marginBottom: 0 }}>
+            <p className="eyebrow">STANDARTLARIMIZ</p>
+            <h2 id="about-values-heading" className="h2">Temel Değerlerimiz</h2>
+            <p className="lead">
+              Misafirlerimize her zaman en yüksek kalite, hijyen ve kusursuz misafirperverlik sunma taahhüdümüz.
+            </p>
+          </div>
+          <div className="about-values-grid">
+            {values.map((val: any, vIdx: number) => {
+              const ValIcon = valIcons[vIdx % valIcons.length];
+              return (
+                <div className="about-values-card" key={vIdx}>
+                  <div className="about-values-card__icon">
+                    <ValIcon size={20} />
+                  </div>
+                  <h3>{cleanRawText(val.title)}</h3>
+                  <p>{cleanRawText(val.desc)}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* ═══════════════════════════════════════════════════════
           5. TESİS İMKÂNLARI & AYRICALIKLAR

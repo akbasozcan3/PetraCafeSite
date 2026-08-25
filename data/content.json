@@ -161,33 +161,151 @@
     "metin": ""
   },
   "hakkimizda": {
-    "eyebrow": "Hakkımızda",
+    "eyebrow": "HAKKIMIZDA & YAŞAM MERKEZİ",
     "baslik": "Petra Yaşam Merkezi'nde cafe & restaurant",
-    "answerBaslik": "Kısaca",
-    "answerMetin": "Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve, nargile ve havuz–plaj sunar.",
-    "lead": "Keyif, konfor ve kalite — kahvaltıdan akşam yemeğine, havuz kenarından organizasyona.",
+    "answerBaslik": "Sadece bir restoran değil, özel bir yaşam alanı.",
+    "answerMetin": "Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, zengin serpme kahvaltı, İtalyan tatlı ve kokteylleri, artisan kahve, premium nargile ve açık havuz–plaj deneyimi sunar.",
+    "lead": "Keyif, konfor ve kalite — kahvaltıdan akşam yemeğine, havuz kenarından özel organizasyonlara uzanan seçkin bir buluşma noktası.",
     "body": [
-      "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de, Petra Yaşam Merkezi içerisinde lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Günün her saatine eşlik eden zengin menüsü, ferah atmosferi ve havuz başı deneyimiyle Petra; yalnızca yemek yemek için değil, sevdiklerinizle unutulmaz anlar biriktirmek için tasarlandı.",
-      "Günün ilk ışıklarında zengin serpme kahvaltımız ve çıtır lezzetlerimizle güne harika bir başlangıç yapabilir; öğle ve akşam saatlerinde dünya mutfağının seçkin lezzetlerini, taş fırın pizzalarımızı ve ızgaralarımızı tadabilirsiniz."
+      "## Lezzet ve Keyfin Buluşma Noktası\nPetra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Zengin menümüz, sıcak atmosferimiz ve ferah açık havuz alanımızla misafirlerimize sadece bir restoran değil, her anı değerli kılan unutulmaz bir buluşma noktası vadediyoruz.",
+      "### Usta Şeflerden Dünya Mutfağı & Marine Izgaralar\nGünün her saatine uygun lezzetlerimizle hizmetinizdeyiz. Sabahları taze köy ürünleri ve sıcak pişilerle zengin serpme kahvaltımızla güne enerjik bir başlangıç yapabilir; öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dünya mutfağından seçkin lezzetlerin, marine dana ızgaraların ve taş fırından çıkan çıtır pizzaların tadını çıkarabilirsiniz.",
+      "### Açık Havuz & Pool Kulübü ile Yaz Keyfi\nYaz aylarında açık yüzme havuzumuz ve pool & beach kulübümüzle serinliğin ve güneşin tadını çıkarabilirsiniz. Doğum günleri, evlilik teklifleri, özel kutlamalar ve kurumsal davetler için sunduğumuz özel organizasyon masaları ve menü seçenekleriyle en değerli anlarınızı kusursuz kılıyoruz.",
+      "> \"Petra'da her tabak bir tutku, her köşe keyifli bir anıdır. Misafirlerimize yalnızca lezzet değil, kendilerini özel hissedecekleri huzurlu bir yaşam alanı sunuyoruz.\""
     ],
-    "ozet": [
+    "stats": [
       {
-        "b": "08:00–02:00",
-        "span": "cafe her gün"
+        "b": "08:00 – 02:00",
+        "span": "Hizmet Saatleri",
+        "sub": "Haftanın 7 günü kesintisiz açık"
       },
       {
-        "b": "09:00–18:00",
-        "span": "havuz"
+        "b": "240+",
+        "span": "Zengin Menü Çeşidi",
+        "sub": "Dünya mutfağı, kahvaltı ve kokteyller"
       },
       {
-        "b": "Kahvaltı",
-        "span": "serpme servis"
+        "b": "1000+ m²",
+        "span": "Sosyal Yaşam Alanı",
+        "sub": "Açık havuz, teras ve klimalı salon"
       },
       {
-        "b": "Dünya",
-        "span": "mutfağı"
+        "b": "09:00 – 18:00",
+        "span": "Pool & Beach",
+        "sub": "Yaz sezonu boyunca havuz keyfi"
       }
     ],
+    "experiences": [
+      {
+        "title": "Dünya Mutfağı & Izgaralar",
+        "desc": "Marine dana antrikot, taş fırında çıtır İtalyan pizzaları, taze el yapımı makarnalar ve Akdeniz salataları.",
+        "hours": "11:30 – 01:30",
+        "tag": "Usta Şeflerden",
+        "features": [
+          "Taş Fırın Pizza",
+          "Marine Izgara Etler",
+          "El Yapımı Makarna",
+          "Taze Deniz Mahsulleri"
+        ]
+      },
+      {
+        "title": "Zengin Serpme Kahvaltı",
+        "desc": "Sıcak kabarmış pişiler, Ezine peynirleri, sahanda sucuklu köy yumurtası, bal-kaymak ve sınırsız taze demlik çay.",
+        "hours": "08:00 – 14:00",
+        "tag": "Her Sabah Taze",
+        "features": [
+          "Sınırsız Demlik Çay",
+          "Taş Fırın Sıcak Pişi",
+          "Yöresel Doğal Ürünler",
+          "Özel Kahvaltı Tabağı"
+        ]
+      },
+      {
+        "title": "Pool & Beach Kulübü",
+        "desc": "Tertemiz yetişkin ve çocuk yüzme havuzu, konforlu güneşlenme şezlongları, VIP localar ve profesyonel cankurtaran desteği.",
+        "hours": "09:00 – 18:00",
+        "tag": "Yaz Sezonu Boyunca",
+        "features": [
+          "Yetişkin & Çocuk Havuzu",
+          "VIP Loca & Şezlong",
+          "Günlük Hijyenik Su Analizi",
+          "Özel Yüzme Dersleri"
+        ]
+      },
+      {
+        "title": "Özel Gün & Organizasyon",
+        "desc": "Doğum günleri, evlilik teklifleri, mezuniyet kutlamaları ve şirket davetleri için profesyonel masa süslemesi ve özel menü.",
+        "hours": "Tüm Gün Rezervasyonlu",
+        "tag": "Unutulmaz Anlar",
+        "features": [
+          "Kişiye Özel Masa Süsleme",
+          "Özel Kutlama Menüsü",
+          "Pasta & Volkan Servisi",
+          "Ses & Müzik Düzeni"
+        ]
+      }
+    ],
+    "timeline": [
+      {
+        "time": "08:00 – 11:30",
+        "title": "Güne Zinde ve Lezzetli Başlangıç",
+        "desc": "Kuş cıvıltıları ve ferah havuz manzarası eşliğinde taze demlenmiş çay, sıcak pişiler ve zengin serpme kahvaltı keyfi."
+      },
+      {
+        "time": "12:00 – 17:00",
+        "title": "Güneş, Havuz & Öğle Molası",
+        "desc": "Pool & Beach alanında güneşlenip serinlerken çıtır atıştırmalıklar, buz gibi mocktail ve taze limonatalar."
+      },
+      {
+        "time": "18:00 – 22:00",
+        "title": "Usta Şeflerden Akşam Yemeği",
+        "desc": "Taş fırından yeni çıkmış çıtır pizzalar, ızgara etler ve şık masa düzeniyle günün yorgunluğunu unutturan akşam ziyafeti."
+      },
+      {
+        "time": "22:00 – 02:00",
+        "title": "Lounge, Nargile & Gece Sohbetleri",
+        "desc": "Premium tütün çeşitleriyle hazırlanan özel nargileler, artisan kahveler ve sıcak açık hava terasında keyifli sohbetler."
+      }
+    ],
+    "values": [
+      {
+        "title": "Tavizsiz Hijyen & Kalite",
+        "desc": "Tüm mutfak, restoran ve havuz alanlarımızda en yüksek hijyen standartları ve günlük su analizleri titizlikle uygulanır."
+      },
+      {
+        "title": "Taze & Doğal Malzemeler",
+        "desc": "Tabaklarımızda kullandığımız tüm etler, sebzeler ve şarküteri ürünleri güvenilir yöresel üreticilerden günlük temin edilir."
+      },
+      {
+        "title": "Samimi Misafirperverlik",
+        "desc": "Petra'ya adım attığınız andan itibaren kendinizi evinizde gibi hissedeceğiniz profesyonel ve güler yüzlü bir hizmet anlayışı."
+      },
+      {
+        "title": "Kapsayıcı Yaşam Alanı",
+        "desc": "Aileler, çocuklar, arkadaş grupları ve iş yemekleri için ayrı ayrı tasarlanmış ferah ve konforlu kullanım alanları."
+      }
+    ],
+    "amenities": [
+      "Açık Yüzme & Çocuk Havuzu",
+      "Açık Teras & Klimalı Salonlar",
+      "Geniş Ücretsiz Otopark",
+      "Yüksek Hızlı Ücretsiz Wi-Fi",
+      "Premium Nargile & Lounge Alanı",
+      "Özel Organizasyon & Davet Masaları",
+      "Bebek Bakım & Aile Alanı",
+      "Temassız Dijital QR Menü"
+    ],
+    "eventsTitle": "Unutulmaz Anlar İçin Özel Organizasyon Masaları",
+    "eventsLead": "Doğum günleri, evlilik teklifleri, mezuniyet ve kurumsal davetlerinizde; havuz başı terasımız veya klimalı şık salonlarımızda profesyonel masa düzeni, özel menü planlaması ve pasta servisi sunuyoruz.",
+    "eventsTags": [
+      "Doğum Günü Kutlamaları",
+      "Evlilik Teklifi & Yıldönümü",
+      "Kurumsal Şirket Yemekleri",
+      "Özel Mezuniyet Kutlamaları"
+    ],
+    "ctaTitle": "Petra'da kendi hikayenizi yazın.",
+    "ctaLead": "Sevdiklerinizle lezzet, konfor ve keyif dolu anlar için hemen yerinizi ayırtın.",
+    "ctaBtn1": "Masa Rezervasyonu Yap",
+    "ctaBtn2": "Menüyü İncele",
     "badgeBaslik": "Petra",
     "badgeAlt": "Cafe · Restaurant · Pool"
   },
