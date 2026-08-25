@@ -100,9 +100,9 @@ export default function SiteNav({
   phoneHref?: string;
 }) {
   const pathname = usePathname() || "";
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === "";
   const [open, setOpen] = useState(false);
-  const [solid, setSolid] = useState(true);
+  const [solid, setSolid] = useState(!isHome);
 
   const bookHref = resolveHref(
     navbar.ctaHref && !/^tel:/i.test(navbar.ctaHref) && !/wa\.me/i.test(navbar.ctaHref)
@@ -137,7 +137,7 @@ export default function SiteNav({
   }
   const links = rawLinks;
 
-  const logoSize = Math.max(32, Math.min(120, Number(navbar.logoSize) || 64));
+  const logoSize = Math.max(32, Math.min(140, Number(navbar?.logoSize) || 64));
   const hideText = navbar.logoTextGizle !== false;
   const showPhone = navbar.showPhone !== false && Boolean(phone || phoneHref);
 
@@ -181,22 +181,29 @@ export default function SiteNav({
 
   const isPastHomeHero = () => {
     if (typeof window === "undefined") return false;
-    const hero = document.getElementById("hero");
-    if (!hero) return true;
-    const rect = hero.getBoundingClientRect();
-    const threshold = 18;
-    return rect.bottom < threshold;
+    const hero =
+      document.getElementById("top") ||
+      document.querySelector(".gate") ||
+      document.getElementById("hero");
+    if (hero) {
+      const rect = hero.getBoundingClientRect();
+      return rect.bottom <= 80;
+    }
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+    return y > 150;
   };
 
   const syncHomeNavReveal = (active: boolean) => {
     if (typeof document === "undefined") return;
+    document.querySelector(".site-home")?.classList.toggle("nav-revealed", active);
     const navEl = document.querySelector("header.nav.site-nav");
     if (!navEl) return;
     if (active) {
       navEl.classList.add("is-solid", "nav--revealed");
-      navEl.classList.remove("nav--hidden");
+      navEl.classList.remove("is-hero", "nav--hidden");
     } else {
       navEl.classList.remove("is-solid", "nav--revealed");
+      navEl.classList.add("is-hero");
     }
   };
 
@@ -233,11 +240,18 @@ export default function SiteNav({
       return;
     }
     const onScroll = () => {
-      setSolid(isPastHomeHero());
+      const past = isPastHomeHero();
+      setSolid(past);
+      syncHomeNavReveal(past);
     };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isHome]);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [isHome, pathname]);
 
   useEffect(() => {
     const onEscape = (e: KeyboardEvent) => {
@@ -281,30 +295,46 @@ export default function SiteNav({
           box-sizing: border-box !important;
           width: 100% !important;
           height: 72px !important;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background-color 0.3s ease, box-shadow 0.3s ease !important;
+        }
+        /* Ana sayfada hero alanında navbar gizli */
+        .site-home header.nav.site-nav.is-hero:not(.is-menu),
+        .site-home:not(.nav-revealed) header.nav.site-nav:not(.is-solid):not(.is-menu) {
+          transform: translateY(-110%) !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+        }
+        /* Hero geçilince veya iç sayfalarda tepeye iner ve solid görünür */
+        header.nav.site-nav.is-solid,
+        .site-home.nav-revealed header.nav.site-nav,
+        .site-home header.nav.site-nav.is-solid,
+        .site-shop header.nav.site-nav,
+        .page header.nav.site-nav {
+          transform: translateY(0) !important;
           opacity: 1 !important;
           visibility: visible !important;
           pointer-events: auto !important;
-        }
-        .site-home header.nav.site-nav,
-        .site-shop header.nav.site-nav,
-        .page header.nav.site-nav,
-        header.nav.site-nav,
-        header.nav.site-nav.is-solid {
           background: #FBF8F1 !important;
           background-color: #FBF8F1 !important;
           backdrop-filter: blur(14px) saturate(1.3) !important;
           -webkit-backdrop-filter: blur(14px) saturate(1.3) !important;
           box-shadow: 0 1px 0 rgba(13, 15, 10, 0.12) !important;
           color: #0D0F0A !important;
-          opacity: 1 !important;
-          visibility: visible !important;
-          transform: none !important;
-          pointer-events: auto !important;
         }
         header.nav.site-nav .nav__logo {
           margin-right: 0 !important;
           flex-shrink: 0 !important;
           z-index: 10 !important;
+          display: flex !important;
+          align-items: center !important;
+        }
+        header.nav.site-nav .nav__logo-img {
+          height: var(--nav-logo-size, 64px) !important;
+          max-height: 96px !important;
+          width: auto !important;
+          object-fit: contain !important;
+          display: block !important;
         }
         header.nav.site-nav .nav__actions {
           margin-left: auto !important;
@@ -744,7 +774,7 @@ export default function SiteNav({
       `}</style>
 
       <header
-        className={`nav site-nav is-solid${open ? " is-menu" : ""}`}
+        className={`nav site-nav ${solid ? "is-solid" : "is-hero"}${open ? " is-menu" : ""}`}
         id="nav"
         hidden={open}
         style={open ? { display: "none" } : undefined}
