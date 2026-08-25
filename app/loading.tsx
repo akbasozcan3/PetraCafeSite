@@ -1,12 +1,15 @@
 import LuxuryLoader from "@/components/site/LuxuryLoader";
+import { getPublicContent } from "@/lib/db/content";
 
-export default function Loading() {
+export default async function Loading() {
+  const content = await getPublicContent().catch(() => null);
+
   return (
     <LuxuryLoader
-      label="Petra Yaşam Merkezi"
-      sublabel="Cafe · Restaurant · Pool & Beach · Spor Salonu"
+      config={content?.loader}
       fullScreen={true}
     />
   );
 }
+
 

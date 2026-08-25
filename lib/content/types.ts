@@ -591,9 +591,22 @@ export interface SporSalonuContent {
   ctaLead?: string;
 }
 
+export interface LoaderContent {
+  aktif?: boolean;
+  tema?: "light" | "dark";
+  baslik?: string;
+  sublabel?: string;
+  logoBoyut?: number;
+  arkaplanRenk?: string;
+  halkaRenk?: string;
+  yaziRenk?: string;
+  koseSusleri?: boolean;
+}
+
 export interface SiteContent {
   images: Record<string, string>;
   navbar: NavbarContent;
+  loader?: LoaderContent;
   sporSalonu?: SporSalonuContent;
   hero: {
     fallbackMark: string;

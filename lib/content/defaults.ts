@@ -33,6 +33,17 @@ export const DEFAULT_CONTENT: SiteContent = {
       { label: "İletişim", href: "#iletisim" },
     ],
   },
+  loader: {
+    aktif: true,
+    tema: "light",
+    baslik: "PETRA YAŞAM MERKEZİ",
+    sublabel: "Cafe · Restaurant · Pool & Beach · Spor Salonu",
+    logoBoyut: 84,
+    arkaplanRenk: "#FAF7F0",
+    halkaRenk: "#D9A441",
+    yaziRenk: "#1A1D16",
+    koseSusleri: true,
+  },
   hero: {
     fallbackMark: "PETRA",
     fallbackTagline: "Cafe · Restaurant · Pool & Beach",

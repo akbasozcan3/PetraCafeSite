@@ -1,18 +1,33 @@
 "use client";
 
 import React from "react";
+import type { LoaderContent } from "@/lib/content/types";
 
 interface LuxuryLoaderProps {
   label?: string;
   sublabel?: string;
   fullScreen?: boolean;
+  config?: LoaderContent;
 }
 
 export default function LuxuryLoader({
-  label = "Petra Yaşam Merkezi",
-  sublabel = "Cafe · Restaurant · Pool & Beach · Spor Salonu",
+  label,
+  sublabel,
   fullScreen = true,
+  config,
 }: LuxuryLoaderProps) {
+  const isDark = config?.tema === "dark";
+  const finalTitle = label || config?.baslik || "PETRA YAŞAM MERKEZİ";
+  const finalSub = sublabel ?? config?.sublabel ?? "Cafe · Restaurant · Pool & Beach · Spor Salonu";
+  const logoSize = Number(config?.logoBoyut || 86);
+  const ringSize = logoSize + 56;
+  const wrapSize = logoSize + 22;
+  const brassColor = config?.halkaRenk || "#D9A441";
+  const bgColor = config?.arkaplanRenk || (isDark ? "#090C08" : "#FAF7F0");
+  const textColor = config?.yaziRenk || (isDark ? "#FFFFFF" : "#1A1D16");
+  const subColor = isDark ? "#A8B0A2" : "#7A7466";
+  const showCorners = config?.koseSusleri !== false;
+
   return (
     <div
       className={
@@ -20,17 +35,21 @@ export default function LuxuryLoader({
           ? "luxury-loader-fullscreen"
           : "luxury-loader-inline"
       }
+      style={{
+        backgroundColor: bgColor,
+        background: isDark
+          ? `radial-gradient(circle at 50% 48%, rgba(217, 164, 65, 0.12) 0%, rgba(9, 12, 8, 0.98) 65%, ${bgColor} 100%)`
+          : `radial-gradient(circle at 50% 48%, rgba(217, 164, 65, 0.16) 0%, rgba(250, 247, 240, 0.98) 65%, ${bgColor} 100%)`,
+      }}
       role="status"
       aria-live="polite"
-      aria-label={label}
+      aria-label={finalTitle}
     >
       <style>{`
         .luxury-loader-fullscreen {
           position: fixed;
           inset: 0;
           z-index: 99999;
-          background: #FAF7F0;
-          background: radial-gradient(circle at 50% 48%, rgba(217, 164, 65, 0.15) 0%, rgba(250, 247, 240, 0.98) 65%, #FAF7F0 100%);
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -41,6 +60,7 @@ export default function LuxuryLoader({
           font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
         .luxury-loader-inline {
+          position: relative;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -49,25 +69,26 @@ export default function LuxuryLoader({
           padding: 48px 24px;
           min-height: 48vh;
           width: 100%;
-          background: #FAF7F0;
           border-radius: 24px;
+          overflow: hidden;
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
         .luxury-corner {
           position: absolute;
-          width: 28px;
-          height: 28px;
-          opacity: 0.55;
+          width: 30px;
+          height: 30px;
+          opacity: 0.6;
           pointer-events: none;
         }
-        .luxury-corner-tl { top: 22px; left: 22px; border-top: 1.5px solid #D9A441; border-left: 1.5px solid #D9A441; }
-        .luxury-corner-tr { top: 22px; right: 22px; border-top: 1.5px solid #D9A441; border-right: 1.5px solid #D9A441; }
-        .luxury-corner-bl { bottom: 22px; left: 22px; border-bottom: 1.5px solid #D9A441; border-left: 1.5px solid #D9A441; }
-        .luxury-corner-br { bottom: 22px; right: 22px; border-bottom: 1.5px solid #D9A441; border-right: 1.5px solid #D9A441; }
+        .luxury-corner-tl { top: 22px; left: 22px; border-top: 1.5px solid ${brassColor}; border-left: 1.5px solid ${brassColor}; }
+        .luxury-corner-tr { top: 22px; right: 22px; border-top: 1.5px solid ${brassColor}; border-right: 1.5px solid ${brassColor}; }
+        .luxury-corner-bl { bottom: 22px; left: 22px; border-bottom: 1.5px solid ${brassColor}; border-left: 1.5px solid ${brassColor}; }
+        .luxury-corner-br { bottom: 22px; right: 22px; border-bottom: 1.5px solid ${brassColor}; border-right: 1.5px solid ${brassColor}; }
         
         .luxury-loader-bg-glow {
           position: absolute;
-          width: 440px;
-          height: 440px;
+          width: 480px;
+          height: 480px;
           border-radius: 50%;
           background: radial-gradient(circle, rgba(217, 164, 65, 0.22) 0%, rgba(124, 139, 79, 0.08) 45%, transparent 70%);
           pointer-events: none;
@@ -75,8 +96,6 @@ export default function LuxuryLoader({
         }
         .luxury-loader-ring-wrapper {
           position: relative;
-          width: 108px;
-          height: 108px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -86,34 +105,30 @@ export default function LuxuryLoader({
           inset: 0;
           border-radius: 50%;
           border: 2.5px solid rgba(217, 164, 65, 0.18);
-          border-top-color: #D9A441;
-          border-right-color: rgba(217, 164, 65, 0.6);
+          border-top-color: ${brassColor};
+          border-right-color: rgba(217, 164, 65, 0.65);
           animation: ringSpinClockwise 1.1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-          box-shadow: 0 0 16px rgba(217, 164, 65, 0.3);
+          box-shadow: 0 0 20px rgba(217, 164, 65, 0.35);
         }
         .luxury-loader-ring-inner {
           position: absolute;
-          inset: 9px;
+          inset: 10px;
           border-radius: 50%;
-          border: 1.5px dashed rgba(124, 139, 79, 0.45);
+          border: 1.5px dashed rgba(124, 139, 79, 0.5);
           animation: ringSpinCounter 2.2s linear infinite;
         }
         .luxury-loader-logo-wrap {
-          width: 64px;
-          height: 64px;
           border-radius: 50%;
-          background: #FFFFFF;
+          background: ${isDark ? "#121710" : "#FFFFFF"};
           display: flex;
           align-items: center;
           justify-content: center;
           position: relative;
           z-index: 2;
-          box-shadow: 0 10px 28px -4px rgba(217, 164, 65, 0.28), 0 0 0 1px rgba(217, 164, 65, 0.2);
+          box-shadow: 0 12px 32px -4px rgba(217, 164, 65, 0.35), 0 0 0 1.5px rgba(217, 164, 65, 0.25);
           animation: logoFloatBreathe 2.4s ease-in-out infinite;
         }
         .luxury-loader-logo {
-          width: 48px;
-          height: 48px;
           border-radius: 50%;
           object-fit: contain;
         }
@@ -128,26 +143,26 @@ export default function LuxuryLoader({
         }
         .luxury-loader-title {
           font-family: var(--f-head, 'Playfair Display', Georgia, serif);
-          font-size: clamp(16px, 2.2vw, 19px);
+          font-size: clamp(17px, 2.4vw, 21px);
           font-weight: 700;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #1A1D16;
+          color: ${textColor};
           margin: 0;
           position: relative;
         }
         .luxury-loader-subtitle {
-          font-size: 11px;
+          font-size: 11.5px;
           font-weight: 600;
           letter-spacing: 0.16em;
-          color: #7A7466;
+          color: ${subColor};
           margin: 0;
           text-transform: uppercase;
         }
         .luxury-loader-progress-bar {
-          width: 150px;
+          width: 160px;
           height: 3px;
-          background: rgba(0, 0, 0, 0.06);
+          background: ${isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.06)"};
           border-radius: 999px;
           overflow: hidden;
           position: relative;
@@ -159,10 +174,10 @@ export default function LuxuryLoader({
           left: 0;
           height: 100%;
           width: 45%;
-          background: linear-gradient(90deg, transparent, #D9A441, #B3862A, #D9A441, transparent);
+          background: linear-gradient(90deg, transparent, ${brassColor}, #FFF0C8, ${brassColor}, transparent);
           border-radius: 999px;
           animation: progressBeamLight 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-          box-shadow: 0 0 8px rgba(217, 164, 65, 0.6);
+          box-shadow: 0 0 10px rgba(217, 164, 65, 0.7);
         }
         @keyframes ringSpinClockwise {
           0% { transform: rotate(0deg); }
@@ -173,8 +188,8 @@ export default function LuxuryLoader({
           100% { transform: rotate(0deg); }
         }
         @keyframes logoFloatBreathe {
-          0%, 100% { transform: scale(0.96); box-shadow: 0 8px 20px -4px rgba(217, 164, 65, 0.2); }
-          50% { transform: scale(1.03); box-shadow: 0 14px 34px -2px rgba(217, 164, 65, 0.4); }
+          0%, 100% { transform: scale(0.97); }
+          50% { transform: scale(1.03); }
         }
         @keyframes pulseWarmGlow {
           0% { transform: scale(0.88); opacity: 0.5; }
@@ -187,7 +202,7 @@ export default function LuxuryLoader({
         }
       `}</style>
 
-      {fullScreen && (
+      {showCorners && (
         <>
           <div className="luxury-corner luxury-corner-tl" aria-hidden="true" />
           <div className="luxury-corner-tr" aria-hidden="true" />
@@ -198,22 +213,29 @@ export default function LuxuryLoader({
 
       <div className="luxury-loader-bg-glow" aria-hidden="true" />
 
-      <div className="luxury-loader-ring-wrapper">
+      <div
+        className="luxury-loader-ring-wrapper"
+        style={{ width: ringSize, height: ringSize }}
+      >
         <div className="luxury-loader-ring-outer" aria-hidden="true" />
         <div className="luxury-loader-ring-inner" aria-hidden="true" />
-        <div className="luxury-loader-logo-wrap">
+        <div
+          className="luxury-loader-logo-wrap"
+          style={{ width: wrapSize, height: wrapSize }}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/cms/logo.png"
             alt="Petra"
             className="luxury-loader-logo"
+            style={{ width: logoSize, height: logoSize }}
           />
         </div>
       </div>
 
       <div className="luxury-loader-text-wrap">
-        <h2 className="luxury-loader-title">{label}</h2>
-        {sublabel && <p className="luxury-loader-subtitle">{sublabel}</p>}
+        <h2 className="luxury-loader-title">{finalTitle}</h2>
+        {finalSub && <p className="luxury-loader-subtitle">{finalSub}</p>}
         <div className="luxury-loader-progress-bar" aria-hidden="true">
           <div className="luxury-loader-progress-line" />
         </div>
@@ -221,3 +243,4 @@ export default function LuxuryLoader({
     </div>
   );
 }
+
