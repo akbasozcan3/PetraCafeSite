@@ -328,10 +328,11 @@ export default function SiteNav({
           z-index: 10 !important;
           display: flex !important;
           align-items: center !important;
+          max-height: 56px !important;
         }
         header.nav.site-nav .nav__logo-img {
-          height: var(--nav-logo-size, 64px) !important;
-          max-height: 96px !important;
+          height: clamp(34px, var(--nav-logo-size, 48px), 52px) !important;
+          max-height: 52px !important;
           width: auto !important;
           object-fit: contain !important;
           display: block !important;
@@ -798,10 +799,13 @@ export default function SiteNav({
             className="nav__logo-img"
             src={logoUrl}
             alt={`${navbar.logoText || "PETRA"} logosu`}
-            height={logoSize}
+            height={Math.min(52, Math.max(34, logoSize))}
             style={
               {
-                ["--nav-logo-size"]: `${logoSize}px`,
+                ["--nav-logo-size"]: `${Math.min(52, Math.max(34, logoSize))}px`,
+                maxHeight: "52px",
+                width: "auto",
+                objectFit: "contain",
               } as CSSProperties
             }
           />
