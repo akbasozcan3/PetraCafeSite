@@ -331,6 +331,16 @@ async function pgGetContent(): Promise<SiteContent> {
       menu: file.menu,
       makaleler: file.makaleler,
       hizmetler: file.hizmetler,
+      hakkimizda: {
+        ...(file.hakkimizda || {}),
+        ...(raw.hakkimizda || {}),
+        // Eğer DB'de timeline veya values boşsa dosyadan zengin olanı al
+        timeline: (raw.hakkimizda as any)?.timeline?.length ? (raw.hakkimizda as any).timeline : file.hakkimizda?.timeline,
+        values: (raw.hakkimizda as any)?.values?.length ? (raw.hakkimizda as any).values : file.hakkimizda?.values,
+        stats: (raw.hakkimizda as any)?.stats?.length ? (raw.hakkimizda as any).stats : file.hakkimizda?.stats,
+        experiences: (raw.hakkimizda as any)?.experiences?.length ? (raw.hakkimizda as any).experiences : file.hakkimizda?.experiences,
+        amenities: (raw.hakkimizda as any)?.amenities?.length ? (raw.hakkimizda as any).amenities : file.hakkimizda?.amenities,
+      },
       bolumlar: file.bolumlar ?? raw.bolumlar,
       sayfalar: file.sayfalar ?? raw.sayfalar,
       images: {
