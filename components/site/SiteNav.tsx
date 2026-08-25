@@ -137,7 +137,8 @@ export default function SiteNav({
   }
   const links = rawLinks;
 
-  const logoSize = Math.max(32, Math.min(140, Number(navbar?.logoSize) || 64));
+  const logoSize = Math.max(36, Math.min(140, Number(navbar?.logoSize) || 64));
+  const navHeight = Math.max(72, logoSize + 16);
   const hideText = navbar.logoTextGizle !== false;
   const showPhone = navbar.showPhone !== false && Boolean(phone || phoneHref);
 
@@ -280,6 +281,9 @@ export default function SiteNav({
   return (
     <>
       <style>{`
+        :root {
+          --nav-h: ${navHeight}px !important;
+        }
         header.nav.site-nav {
           position: fixed !important;
           inset: 0 0 auto !important;
@@ -294,8 +298,12 @@ export default function SiteNav({
           padding-right: clamp(16px, 3vw, 32px) !important;
           box-sizing: border-box !important;
           width: 100% !important;
-          height: 72px !important;
+          height: ${navHeight}px !important;
+          min-height: ${navHeight}px !important;
           transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background-color 0.3s ease, box-shadow 0.3s ease !important;
+        }
+        .mobile-menu {
+          top: ${navHeight}px !important;
         }
         /* Ana sayfada hero alanında navbar gizli */
         .site-home header.nav.site-nav.is-hero:not(.is-menu),
@@ -328,11 +336,11 @@ export default function SiteNav({
           z-index: 10 !important;
           display: flex !important;
           align-items: center !important;
-          max-height: 56px !important;
+          height: 100% !important;
         }
         header.nav.site-nav .nav__logo-img {
-          height: clamp(34px, var(--nav-logo-size, 48px), 52px) !important;
-          max-height: 52px !important;
+          height: ${logoSize}px !important;
+          max-height: ${logoSize}px !important;
           width: auto !important;
           object-fit: contain !important;
           display: block !important;
@@ -799,11 +807,12 @@ export default function SiteNav({
             className="nav__logo-img"
             src={logoUrl}
             alt={`${navbar.logoText || "PETRA"} logosu`}
-            height={Math.min(52, Math.max(34, logoSize))}
+            height={logoSize}
             style={
               {
-                ["--nav-logo-size"]: `${Math.min(52, Math.max(34, logoSize))}px`,
-                maxHeight: "52px",
+                ["--nav-logo-size"]: `${logoSize}px`,
+                height: `${logoSize}px`,
+                maxHeight: `${logoSize}px`,
                 width: "auto",
                 objectFit: "contain",
               } as CSSProperties
