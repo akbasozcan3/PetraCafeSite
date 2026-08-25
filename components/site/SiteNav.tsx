@@ -137,7 +137,7 @@ export default function SiteNav({
   }
   const links = rawLinks;
 
-  const logoSize = Math.max(36, Math.min(140, Number(navbar?.logoSize) || 64));
+  const logoSize = Math.max(36, Math.min(200, Number(navbar?.logoSize) || 64));
   const navHeight = Math.max(72, logoSize + 16);
   const hideText = navbar.logoTextGizle !== false;
   const showPhone = navbar.showPhone !== false && Boolean(phone || phoneHref);

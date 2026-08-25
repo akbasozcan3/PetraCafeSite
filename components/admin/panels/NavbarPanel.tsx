@@ -172,15 +172,18 @@ export default function NavbarPanel() {
             />
           </div>
           <div className="space-y-4">
-            <div className="overflow-hidden rounded-xl border border-white/[0.06] bg-white">
-              <div className="flex h-[72px] items-center gap-3 px-4">
+            <div className="overflow-hidden rounded-xl border border-white/[0.06] bg-white transition-all">
+              <div
+                className="flex items-center gap-3 px-4 transition-all"
+                style={{ minHeight: Math.max(72, (nav.logoSize || 64) + 16) }}
+              >
                 <BrandLogo
                   src={logoSrc}
                   alt=""
-                  height={Math.min(56, nav.logoSize || 64)}
-                  className="max-w-[200px]"
+                  height={nav.logoSize || 64}
+                  className="max-w-[300px]"
                 />
-                <span className="ml-auto rounded-full bg-[#D9A441] px-3 py-1 text-[11px] font-bold text-[#16190F]">
+                <span className="ml-auto rounded-full bg-[#D9A441] px-3.5 py-1.5 text-xs font-bold text-[#16190F]">
                   {nav.ctaLabel || "Rezervasyon"}
                 </span>
               </div>
@@ -193,8 +196,8 @@ export default function NavbarPanel() {
               </div>
               <input
                 type="range"
-                min={40}
-                max={96}
+                min={36}
+                max={200}
                 step={2}
                 value={nav.logoSize ?? 64}
                 onChange={(e) =>
@@ -206,7 +209,7 @@ export default function NavbarPanel() {
                 className="w-full accent-[#C8703A]"
               />
               <p className="text-[11px] text-[#6B7A94]">
-                40–96 px · Geniş SVG’ler orantılı ölçeklenir · Kaydet ile yayınlanır
+                36–200 px · Navbar yüksekliği logoyla beraber dinamik büyür · Kaydet ile yayınlanır
               </p>
             </div>
 
