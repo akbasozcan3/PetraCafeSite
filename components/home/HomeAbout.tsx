@@ -93,18 +93,18 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
               marginBottom: "1.5rem"
             }}
           >
-            <div
-              style={{
+            <div 
+              style={{ 
                 display: "flex", 
                 flexDirection: "column", 
                 gap: "14px",
                 maskImage: isTruncated 
-                  ? "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.35) 85%, rgba(0,0,0,0) 100%)" 
+                  ? "linear-gradient(to bottom, #000 0%, #000 65%, rgba(0,0,0,0.4) 85%, transparent 100%)" 
                   : "none",
                 WebkitMaskImage: isTruncated 
-                  ? "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.35) 85%, rgba(0,0,0,0) 100%)" 
+                  ? "linear-gradient(to bottom, #000 0%, #000 65%, rgba(0,0,0,0.4) 85%, transparent 100%)" 
                   : "none",
-                paddingBottom: isTruncated ? "24px" : "0"
+                paddingBottom: isTruncated ? "16px" : "0"
               }}
             >
               {displayParagraphs.map((paragraph, pIdx) => (
@@ -123,7 +123,7 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
               ))}
             </div>
 
-            {/* Yumuşak Blur & Arka Plan Erimesi Katmanı */}
+            {/* Yumuşak ve Pürüzsüz Arka Plan Erimesi (Bozuk Blur Olmadan) */}
             {isTruncated && (
               <div 
                 style={{
@@ -131,11 +131,9 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  height: "80px",
-                  background: "linear-gradient(180deg, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.6) 50%, rgba(251, 248, 241, 0.95) 100%)",
+                  height: "70px",
+                  background: "linear-gradient(to bottom, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.7) 60%, rgba(251, 248, 241, 1) 100%)",
                   pointerEvents: "none",
-                  backdropFilter: "blur(2px)",
-                  WebkitBackdropFilter: "blur(2px)"
                 }}
               />
             )}
