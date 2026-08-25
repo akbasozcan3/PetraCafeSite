@@ -325,12 +325,10 @@ export default async function HakkimizdaPage() {
       {/* ═══════════════════════════════════════════════════════
           1. EDİTORYAL BAŞLIK (Tek H1 — SEO Standartlarına Uygun)
           ═══════════════════════════════════════════════════════ */}
-      <div style={{ margin: "12px 0 20px" }}>
-        <Breadcrumbs items={[{ label: "Hakkımızda" }]} />
-      </div>
-
       <header className="about-head-sec" style={{ borderBottom: "none" }}>
-        <div className="about-head-sec__badge" style={{ display: "inline-flex", width: "fit-content" }}>
+        <Breadcrumbs items={[{ label: "Hakkımızda" }]} />
+
+        <div className="about-head-sec__badge" style={{ display: "inline-flex", width: "fit-content", marginTop: "4px" }}>
           <Sparkles size={14} />
           <span>{cleanRawText(h.eyebrow) || "PETRA YAŞAM MERKEZİ"}</span>
         </div>

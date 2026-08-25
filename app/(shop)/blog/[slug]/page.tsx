@@ -115,18 +115,15 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 1. BREADCRUMBS */}
-      <div style={{ margin: "12px 0 24px" }}>
+      {/* 2. EDİTORYAL BAŞLIK ALANI (Geniş & Ferah) */}
+      <header className="article__head" style={{ marginBottom: "28px", maxWidth: "920px" }}>
         <Breadcrumbs
           items={[
             { label: "Blog", href: "/blog" },
             { label: cleanRawText(post.baslik) },
           ]}
         />
-      </div>
 
-      {/* 2. EDİTORYAL BAŞLIK ALANI (Geniş & Ferah) */}
-      <header className="article__head" style={{ marginBottom: "32px", maxWidth: "920px" }}>
         {post.kategori ? (
           <div
             style={{
@@ -141,7 +138,8 @@ export default async function BlogPostPage({ params }: Props) {
               fontWeight: 700,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
-              marginBottom: "16px",
+              marginTop: "8px",
+              marginBottom: "14px",
             }}
           >
             <Bookmark size={13} />

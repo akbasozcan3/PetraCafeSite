@@ -56,14 +56,11 @@ export default async function BlogIndexPage() {
 
   return (
     <div className="page-hakkimizda page-blog" style={{ maxWidth: "1140px", margin: "0 auto", padding: "0 clamp(16px, 3vw, 24px) 60px" }}>
-      {/* 1. BREADCRUMBS (En Üst Navigasyon) */}
-      <div style={{ margin: "12px 0 20px" }}>
+      {/* 1. EDİTORYAL BAŞLIK ALANI (Breadcrumbs + Rozet + Başlık) */}
+      <header className="about-head-sec" style={{ paddingBottom: 0, marginBottom: "20px", borderBottom: "none" }}>
         <Breadcrumbs items={[{ label: "Blog & Gastronomi" }]} />
-      </div>
 
-      {/* 2. EDİTORYAL BAŞLIK ALANI */}
-      <header className="about-head-sec" style={{ paddingBottom: 0, marginBottom: "32px", borderBottom: "none" }}>
-        <div className="about-head-sec__badge" style={{ display: "inline-flex", width: "fit-content" }}>
+        <div className="about-head-sec__badge" style={{ display: "inline-flex", width: "fit-content", marginTop: "4px" }}>
           <BookOpen size={14} />
           <span>{cleanRawText(b?.eyebrow || "") || "PETRA DEFTERİ"}</span>
         </div>
@@ -72,7 +69,7 @@ export default async function BlogIndexPage() {
           {cleanRawText(b?.baslik || "") || "Lezzet, Kahvaltı & Yaşam Rehberi"}
         </h1>
 
-        <p className="about-head-sec__lead" style={{ maxWidth: "62ch" }}>
+        <p className="about-head-sec__lead" style={{ maxWidth: "62ch", marginBottom: 0 }}>
           {cleanRawText(b?.lead || "") ||
             "Taşdelen'in gözde buluşma noktasından şefin tarif sırları, mevsimsel lezzet kartları, masa rezervasyonu ve havuz rehberi."}
         </p>
