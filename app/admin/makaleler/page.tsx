@@ -1,2 +1,2 @@
-import { MakalelerPanel } from "@/components/admin/panels/ContentListsPanel";
-export default function Page() { return <MakalelerPanel />; }
+import BlogAdminPanel from "@/components/admin/panels/BlogAdminPanel";
+export default function Page() { return <BlogAdminPanel />; }
