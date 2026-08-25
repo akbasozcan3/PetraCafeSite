@@ -124,43 +124,116 @@ export default async function HavuzPlajPage() {
       </header>
 
       {/* 2. HAVUZ & YAŞAM MERKEZİ FOTOĞRAF VİTRİNİ */}
-      <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
-        <figure style={{ margin: 0, borderRadius: "20px", overflow: "hidden", border: "1.5px solid rgba(13, 15, 10, 0.08)", boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.1)", background: "#16190F", position: "relative", height: "300px" }}>
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "18px",
+          marginTop: "10px",
+        }}
+      >
+        <figure
+          style={{
+            margin: 0,
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1.5px solid rgba(217, 164, 65, 0.25)",
+            boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.12)",
+            background: "#16190F",
+            position: "relative",
+            aspectRatio: "16 / 10",
+            maxHeight: "260px",
+          }}
+        >
           <SafeImg
             src="/assets/cms/petra-pool-beach-loca.jpg"
             alt="Petra Pool & Beach Hasır Localar"
             fallback={SITE_PHOTOS.facade}
             className="w-full h-full object-cover"
           />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "14px 16px", background: "linear-gradient(to top, rgba(0,0,0,0.85), transparent)", color: "#FFFFFF" }}>
-            <b style={{ fontSize: "14px", display: "block" }}>Pool & Beach & VIP Hasır Localar</b>
-            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)" }}>Serinletici havuz keyfi ve güneşlenme</span>
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              padding: "12px 16px",
+              background: "linear-gradient(to top, rgba(0,0,0,0.88), transparent)",
+              color: "#FFFFFF",
+            }}
+          >
+            <b style={{ fontSize: "13.5px", display: "block" }}>Pool & Beach & VIP Hasır Localar</b>
+            <span style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.85)" }}>Serinletici havuz keyfi ve güneşlenme</span>
           </div>
         </figure>
 
-        <figure style={{ margin: 0, borderRadius: "20px", overflow: "hidden", border: "1.5px solid rgba(13, 15, 10, 0.08)", boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.1)", background: "#16190F", position: "relative", height: "300px" }}>
+        <figure
+          style={{
+            margin: 0,
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1.5px solid rgba(217, 164, 65, 0.25)",
+            boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.12)",
+            background: "#16190F",
+            position: "relative",
+            aspectRatio: "16 / 10",
+            maxHeight: "260px",
+          }}
+        >
           <SafeImg
             src="/assets/cms/petra-nargile-havuz-gece.jpg"
             alt="Gece Havuz Kenarı Nargile & Lounge"
             fallback={SITE_PHOTOS.facade}
             className="w-full h-full object-cover"
           />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "14px 16px", background: "linear-gradient(to top, rgba(0,0,0,0.85), transparent)", color: "#FFFFFF" }}>
-            <b style={{ fontSize: "14px", display: "block" }}>Gece Havuz Kenarı Nargile & Lounge</b>
-            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)" }}>Işıklı atmosfer ve premium tütünler</span>
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              padding: "12px 16px",
+              background: "linear-gradient(to top, rgba(0,0,0,0.88), transparent)",
+              color: "#FFFFFF",
+            }}
+          >
+            <b style={{ fontSize: "13.5px", display: "block" }}>Gece Havuz Kenarı Nargile & Lounge</b>
+            <span style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.85)" }}>Işıklı atmosfer ve ferah teras keyfi</span>
           </div>
         </figure>
 
-        <figure style={{ margin: 0, borderRadius: "20px", overflow: "hidden", border: "1.5px solid rgba(13, 15, 10, 0.08)", boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.1)", background: "#16190F", position: "relative", height: "300px" }}>
+        <figure
+          style={{
+            margin: 0,
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1.5px solid rgba(217, 164, 65, 0.25)",
+            boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.12)",
+            background: "#16190F",
+            position: "relative",
+            aspectRatio: "16 / 10",
+            maxHeight: "260px",
+          }}
+        >
           <SafeImg
             src="/assets/cms/petra-restoran-salon-organizasyon.jpg"
             alt="Petra Restoran Salonu ve Özel Davet Alanı"
             fallback={SITE_PHOTOS.facade}
             className="w-full h-full object-cover"
           />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "14px 16px", background: "linear-gradient(to top, rgba(0,0,0,0.85), transparent)", color: "#FFFFFF" }}>
-            <b style={{ fontSize: "14px", display: "block" }}>Özel Günler & Restoran Salonu</b>
-            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)" }}>Doğum günü, kutlama ve davet masaları</span>
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              padding: "12px 16px",
+              background: "linear-gradient(to top, rgba(0,0,0,0.88), transparent)",
+              color: "#FFFFFF",
+            }}
+          >
+            <b style={{ fontSize: "13.5px", display: "block" }}>Özel Günler & Restoran Salonu</b>
+            <span style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.85)" }}>Doğum günü, kutlama ve davet masaları</span>
           </div>
         </figure>
       </section>
@@ -168,7 +241,7 @@ export default async function HavuzPlajPage() {
       {/* 3. ÖNE ÇIKAN BİLGİ KARTLARI (Saatler, Derinlik, Hijyen, Konum) */}
       <section
         style={{
-          padding: "clamp(24px, 3.5vw, 36px)",
+          padding: "clamp(20px, 3vw, 28px)",
           background: "var(--cream-2, #F3EDE0)",
           borderRadius: "24px",
           border: "1px solid rgba(13, 15, 10, 0.08)",
@@ -177,27 +250,27 @@ export default async function HavuzPlajPage() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "16px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gap: "14px",
           }}
         >
           <div
             style={{
               background: "#FFFFFF",
               borderRadius: "16px",
-              padding: "22px 18px",
+              padding: "18px 16px",
               textAlign: "center",
               border: "1px solid rgba(13, 15, 10, 0.08)",
               boxShadow: "0 4px 14px -6px rgba(13, 15, 10, 0.06)",
             }}
           >
             <div style={{ display: "inline-flex", padding: 8, borderRadius: 10, background: "rgba(217, 164, 65, 0.12)", color: "var(--brass-lo, #B8842C)", marginBottom: 8 }}>
-              <Clock size={20} />
+              <Clock size={18} />
             </div>
-            <b style={{ display: "block", fontSize: "18px", color: "var(--ink, #0D0F0A)", marginBottom: 4 }}>
+            <b style={{ display: "block", fontSize: "16px", color: "var(--ink, #0D0F0A)", marginBottom: 3 }}>
               {havuzSaat}
             </b>
-            <span style={{ fontSize: "13px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
+            <span style={{ fontSize: "12px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
               Havuz Hizmet Saatleri
             </span>
           </div>
@@ -206,20 +279,20 @@ export default async function HavuzPlajPage() {
             style={{
               background: "#FFFFFF",
               borderRadius: "16px",
-              padding: "22px 18px",
+              padding: "18px 16px",
               textAlign: "center",
               border: "1px solid rgba(13, 15, 10, 0.08)",
               boxShadow: "0 4px 14px -6px rgba(13, 15, 10, 0.06)",
             }}
           >
             <div style={{ display: "inline-flex", padding: 8, borderRadius: 10, background: "rgba(124, 139, 79, 0.12)", color: "var(--olive-lo, #5A6838)", marginBottom: 8 }}>
-              <Waves size={20} />
+              <Waves size={18} />
             </div>
-            <b style={{ display: "block", fontSize: "18px", color: "var(--ink, #0D0F0A)", marginBottom: 4 }}>
+            <b style={{ display: "block", fontSize: "16px", color: "var(--ink, #0D0F0A)", marginBottom: 3 }}>
               {derinlik}
             </b>
-            <span style={{ fontSize: "13px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
-              Yetişkin Havuz Derinliği
+            <span style={{ fontSize: "12px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
+              Kademeli Havuz Derinliği
             </span>
           </div>
 
@@ -227,20 +300,20 @@ export default async function HavuzPlajPage() {
             style={{
               background: "#FFFFFF",
               borderRadius: "16px",
-              padding: "22px 18px",
+              padding: "18px 16px",
               textAlign: "center",
               border: "1px solid rgba(13, 15, 10, 0.08)",
               boxShadow: "0 4px 14px -6px rgba(13, 15, 10, 0.06)",
             }}
           >
             <div style={{ display: "inline-flex", padding: 8, borderRadius: 10, background: "rgba(217, 164, 65, 0.12)", color: "var(--brass-lo, #B8842C)", marginBottom: 8 }}>
-              <Sun size={20} />
+              <Sun size={18} />
             </div>
-            <b style={{ display: "block", fontSize: "18px", color: "var(--ink, #0D0F0A)", marginBottom: 4 }}>
-              Şezlong & Loca
+            <b style={{ display: "block", fontSize: "16px", color: "var(--ink, #0D0F0A)", marginBottom: 3 }}>
+              Şezlong & Şemsiye
             </b>
-            <span style={{ fontSize: "13px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
-              Güneşlenme Alanı
+            <span style={{ fontSize: "12px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
+              Güneşlenme Alanı Dahil
             </span>
           </div>
 
@@ -248,121 +321,207 @@ export default async function HavuzPlajPage() {
             style={{
               background: "#FFFFFF",
               borderRadius: "16px",
-              padding: "22px 18px",
+              padding: "18px 16px",
               textAlign: "center",
               border: "1px solid rgba(13, 15, 10, 0.08)",
               boxShadow: "0 4px 14px -6px rgba(13, 15, 10, 0.06)",
             }}
           >
             <div style={{ display: "inline-flex", padding: 8, borderRadius: 10, background: "rgba(124, 139, 79, 0.12)", color: "var(--olive-lo, #5A6838)", marginBottom: 8 }}>
-              <ShieldCheck size={20} />
+              <ShieldCheck size={18} />
             </div>
-            <b style={{ display: "block", fontSize: "18px", color: "var(--ink, #0D0F0A)", marginBottom: 4 }}>
-              Günlük Analiz
+            <b style={{ display: "block", fontSize: "16px", color: "var(--ink, #0D0F0A)", marginBottom: 3 }}>
+              Çocuk Havuzu
             </b>
-            <span style={{ fontSize: "13px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
-              Hijyen & Su Kontrolü
+            <span style={{ fontSize: "12px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
+              Ayrı Güvenli Alan & Hijyen
             </span>
           </div>
         </div>
       </section>
 
-      {/* 3. FİYAT TARİFESİ & GİRİŞ ÜCRETLERİ */}
-      <section className="about-exp-sec" aria-labelledby="havuz-fiyat-heading">
-        <div className="section__head" style={{ marginBottom: 0 }}>
-          <p className="eyebrow">2026 SEZONU GİRİŞ TARİFESİ</p>
-          <h2 id="havuz-fiyat-heading" className="h2">{cleanRawText(p.fiyatBaslik || "") || "GÜNLÜK HAVUZ GİRİŞ ÜCRETLERİMİZ"}</h2>
-          <p className="lead">
-            Haftanın her günü geçerli günlük havuz kullanımı, güneşlenme şezlongu ve şemsiye dahil giriş tarifesi.
+      {/* 4. 2026 GÜNCEL FİYAT LİSTESİ (Kompakt, Karşılaştırmalı ve Boşluksuz) */}
+      <section
+        style={{
+          background: "#FFFFFF",
+          borderRadius: "24px",
+          border: "1.5px solid rgba(13, 15, 10, 0.08)",
+          padding: "clamp(24px, 3.5vw, 36px)",
+          boxShadow: "0 10px 30px -10px rgba(13, 15, 10, 0.06)",
+        }}
+        aria-labelledby="havuz-fiyat-heading"
+      >
+        <div style={{ marginBottom: "20px" }}>
+          <span
+            style={{
+              display: "inline-block",
+              fontSize: "11.5px",
+              fontWeight: 700,
+              color: "#B8842C",
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+              marginBottom: "4px",
+            }}
+          >
+            2026 SEZONU GİRİŞ TARİFESİ
+          </span>
+          <h2
+            id="havuz-fiyat-heading"
+            style={{
+              fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+              fontSize: "clamp(24px, 3.5vw, 32px)",
+              fontWeight: 700,
+              color: "var(--ink, #0D0F0A)",
+              margin: "0 0 6px",
+            }}
+          >
+            {cleanRawText(p.fiyatBaslik || "") || "Günlük Havuz Giriş Ücretlerimiz"}
+          </h2>
+          <p style={{ margin: 0, fontSize: "14.5px", color: "#555A4C", lineHeight: 1.6 }}>
+            Haftanın her günü geçerli günlük havuz kullanımı, yetişkin havuzu, ayrı çocuk havuzu, şezlong ve şemsiye dahil giriş tarifesi.
           </p>
         </div>
 
+        {/* 4 Kartlı Karşılaştırmalı Fiyat Tablosu */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "28px",
-            alignItems: "center",
-            marginTop: "28px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "16px",
+            marginBottom: "20px",
           }}
         >
-          {/* Sol Kolon: Fiyat Kartları */}
-          <div style={{ display: "grid", gap: "14px" }}>
-            {fiyatlar.map((f: any, fi: number) => (
+          {fiyatlar.map((f: any, fi: number) => {
+            const isFree = f.haftaIci === "Ücretsiz" || f.kategori?.includes("0–2");
+            return (
               <div
                 key={fi}
                 style={{
-                  background: "#FFFFFF",
+                  background: isFree ? "rgba(124, 139, 79, 0.06)" : "var(--cream-2, #F8F5EE)",
                   borderRadius: "18px",
-                  border: "1.5px solid rgba(13, 15, 10, 0.08)",
-                  padding: "18px 24px",
+                  border: isFree
+                    ? "1.5px solid rgba(124, 139, 79, 0.25)"
+                    : "1.5px solid rgba(217, 164, 65, 0.22)",
+                  padding: "20px 18px",
                   display: "flex",
-                  alignItems: "center",
+                  flexDirection: "column",
                   justifyContent: "space-between",
-                  boxShadow: "0 4px 16px -6px rgba(13, 15, 10, 0.06)",
+                  transition: "transform 0.2s ease, box-shadow 0.2s ease",
                 }}
               >
                 <div>
-                  <b style={{ display: "block", fontSize: "16px", color: "var(--ink, #0D0F0A)" }}>
-                    {cleanRawText(f.kategori || "")}
-                  </b>
-                  <span style={{ fontSize: "12px", color: "var(--muted, #6E6A5C)" }}>
-                    Şezlong, şemsiye & havuz kullanımı dahil
-                  </span>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <span
+                  <div
                     style={{
-                      fontFamily: "var(--f-head, serif)",
-                      fontSize: "22px",
+                      display: "inline-block",
+                      padding: "3px 8px",
+                      borderRadius: "6px",
+                      fontSize: "11px",
                       fontWeight: 700,
-                      color: f.haftaIci === "Ücretsiz" ? "var(--olive-lo, #5A6838)" : "var(--brass-lo, #B8842C)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                      background: isFree ? "#7C8B4F" : "#D9A441",
+                      color: "#FFFFFF",
+                      marginBottom: "10px",
                     }}
                   >
-                    {cleanRawText(f.haftaIci || "")}
-                  </span>
+                    {isFree ? "Ücretsiz" : "2026 Sezonu"}
+                  </div>
+                  <h3
+                    style={{
+                      fontFamily: "var(--f-head, serif)",
+                      fontSize: "19px",
+                      fontWeight: 700,
+                      color: "var(--ink, #0D0F0A)",
+                      margin: "0 0 6px",
+                    }}
+                  >
+                    {cleanRawText(f.kategori || "")}
+                  </h3>
+                  <p style={{ margin: "0 0 16px", fontSize: "12px", color: "#667085", lineHeight: 1.4 }}>
+                    Şezlong, şemsiye & havuz kullanımı dahil
+                  </p>
+                </div>
+
+                <div
+                  style={{
+                    background: "#FFFFFF",
+                    borderRadius: "12px",
+                    padding: "12px 14px",
+                    border: "1px solid rgba(13, 15, 10, 0.08)",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                    <span style={{ fontSize: "12.5px", color: "#667085" }}>Hafta İçi:</span>
+                    <b style={{ fontSize: "16px", color: isFree ? "#5A6838" : "#B8842C" }}>
+                      {cleanRawText(f.haftaIci || "")}
+                    </b>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "12.5px", color: "#667085" }}>Hafta Sonu:</span>
+                    <b style={{ fontSize: "16px", color: isFree ? "#5A6838" : "#B8842C" }}>
+                      {cleanRawText(f.haftaSonu || f.haftaIci || "")}
+                    </b>
+                  </div>
                 </div>
               </div>
-            ))}
+            );
+          })}
+        </div>
 
-            <div
+        {/* Fiyat Notu & Butonlar */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "16px",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "16px 20px",
+            background: "rgba(217, 164, 65, 0.08)",
+            borderRadius: "16px",
+            border: "1px solid rgba(217, 164, 65, 0.25)",
+          }}
+        >
+          <div style={{ flex: "1 1 300px" }}>
+            <p style={{ margin: 0, fontSize: "13px", color: "#5A4E30", lineHeight: 1.5 }}>
+              <b>💡 Hijyen & Güvenlik Kuralı:</b> 0–2 yaş ücretsizdir. Havuz alanı <b>09:00 – 18:00</b> saatleri arasında açıktır. Dışarıdan yiyecek & içecek getirilmez. Mayo ve bone zorunludur.
+            </p>
+          </div>
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn"
               style={{
-                padding: "14px 18px",
-                background: "rgba(217, 164, 65, 0.1)",
-                borderRadius: "14px",
-                border: "1px solid rgba(217, 164, 65, 0.3)",
+                background: "#25D366",
+                color: "#FFFFFF",
+                fontWeight: 700,
+                padding: "10px 18px",
+                borderRadius: "12px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
                 fontSize: "13px",
-                color: "#5A4E30",
-                lineHeight: 1.5,
               }}
             >
-              <b>Keyif, Konfor ve Kalite Petra'da Bir Arada!</b>
-              <p style={{ margin: "4px 0 0", fontSize: "12px" }}>
-                0–2 yaş ücretsizdir. Dışarıdan yiyecek & içecek getirilmez. Mayo ve bone zorunludur.
-              </p>
-            </div>
+              <MessageCircle size={15} />
+              WhatsApp Rezervasyon
+            </a>
+            <a
+              href={`tel:${telHref}`}
+              className="btn btn--ghost"
+              style={{
+                padding: "10px 16px",
+                borderRadius: "12px",
+                fontWeight: 600,
+                fontSize: "13px",
+              }}
+            >
+              <Phone size={14} />
+              {tel}
+            </a>
           </div>
-
-          {/* Sağ Kolon: Resmi Fiyat Listesi Afişi */}
-          <figure
-            style={{
-              margin: 0,
-              borderRadius: "22px",
-              overflow: "hidden",
-              border: "1.5px solid rgba(13, 15, 10, 0.1)",
-              boxShadow: "0 12px 32px -10px rgba(13, 15, 10, 0.15)",
-              background: "#16190F",
-              maxWidth: "420px",
-              marginInline: "auto",
-            }}
-          >
-            <SafeImg
-              src="/assets/cms/petra-havuz-fiyat-listesi-2026.jpg"
-              alt="Petra Havuz 2026 Günlük Giriş Fiyat Listesi"
-              fallback={SITE_PHOTOS.facade}
-              className="w-full h-auto object-cover block"
-            />
-          </figure>
         </div>
       </section>
 
