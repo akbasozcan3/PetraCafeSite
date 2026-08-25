@@ -1,0 +1,453 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { getPublicContent } from "@/lib/db/content";
+import { phoneToTelHref, buildWhatsappUrl } from "@/lib/content/contact-utils";
+import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
+import { resolveMediaUrl } from "@/lib/admin/media-url";
+import { cleanRawText } from "@/lib/content/markdown-parser";
+import {
+  Waves,
+  Sun,
+  ShieldCheck,
+  Clock,
+  Phone,
+  MessageCircle,
+  CheckCircle2,
+  AlertCircle,
+  GraduationCap,
+} from "lucide-react";
+
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getPublicContent().catch(() => null);
+  const p = content?.pasta;
+  const brand = content?.brand?.displayName || "Petra Cafe Restaurant";
+  const title = `Havuz & Plaj (Pool & Beach) | ${brand}`;
+  const description =
+    cleanRawText(p?.lead || "") ||
+    "Çekmeköy Taşdelen'de açık yüzme havuzu, çocuk havuzu, güneşlenme şezlongları, yüzme kursu ve havuz başı kafe-restoran.";
+  const canonicalUrl = "https://petra-cafe-site.vercel.app/havuz-plaj";
+  const ogImg = resolveMediaUrl(
+    liveMedia(p?.gorseller?.[0]?.src || content?.images?.heroCephe, SITE_PHOTOS.facade)
+  );
+
+  return {
+    title,
+    description,
+    alternates: { canonical: canonicalUrl },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      type: "website",
+      siteName: brand,
+      locale: "tr_TR",
+      images: [{ url: ogImg || "/assets/cms/hero-cephe.webp", width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImg || "/assets/cms/hero-cephe.webp"],
+    },
+  };
+}
+
+export default async function HavuzPlajPage() {
+  const content = await getPublicContent();
+  const p = content.pasta || ({} as any);
+
+  const tel = content.iletisim?.telefon || "0530 608 90 51";
+  const telHref = phoneToTelHref(tel);
+  const waHref = buildWhatsappUrl(
+    content.iletisim?.whatsapp || tel,
+    "Merhaba, Petra Havuz & Plaj hakkında bilgi ve rezervasyon için yazıyorum."
+  );
+
+  const havuzSaat = p.cafeSaat || "09:00 – 18:00";
+  const derinlik = p.derinlik || "1.45 m – 1.95 m";
+  const kurallar = (p.kurallar as string[]) || [
+    "Dışarıdan yiyecek ve içecek getirilmez.",
+    "0–2 yaş havuz girişi ücretsizdir.",
+    "Havuz kullanımı için mayo ve bone zorunludur.",
+    "Cankurtaran talimatlarına ve havuz kurallarına uyulmalıdır.",
+  ];
+  const fiyatlar = (p.fiyatlar as any[]) || [
+    { kategori: "0–2 yaş", haftaIci: "Ücretsiz", haftaSonu: "Ücretsiz" },
+    { kategori: "2–10 yaş", haftaIci: "400 TL", haftaSonu: "450 TL" },
+    { kategori: "10–18 yaş", haftaIci: "600 TL", haftaSonu: "650 TL" },
+    { kategori: "Yetişkin", haftaIci: "800 TL", haftaSonu: "850 TL" },
+  ];
+
+  return (
+    <article className="page-hakkimizda page-havuz">
+      {/* 1. EDİTORYAL BAŞLIK */}
+      <header className="about-head-sec">
+        <nav className="crumbs" aria-label="Breadcrumb">
+          <Link href="/">Ana Sayfa</Link>
+          <span>/</span>
+          <span aria-current="page">Havuz & Plaj</span>
+        </nav>
+
+        <div className="about-head-sec__badge">
+          <Waves size={14} />
+          <span>{cleanRawText(p.eyebrow) || "POOL & BEACH KULÜBÜ"}</span>
+        </div>
+
+        <h1 className="about-head-sec__title">
+          {cleanRawText(p.baslik) || "Petra Pool & Beach"}
+        </h1>
+
+        <p className="about-head-sec__lead">
+          {cleanRawText(p.lead) ||
+            "Petra Yaşam Merkezi'nde tertemiz açık yüzme havuzu, çocuk havuzu, güneşlenme şezlongları ve havuz başı dünya mutfağı lezzetleri."}
+        </p>
+
+        <div className="about-head-sec__actions">
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--light"
+          >
+            <MessageCircle size={16} />
+            Havuz Rezervasyonu & Bilgi
+          </a>
+          <a href={`tel:${telHref}`} className="btn">
+            <Phone size={15} />
+            {tel}
+          </a>
+        </div>
+      </header>
+
+      {/* 2. ÖNE ÇIKAN BİLGİ KARTLARI (Saatler, Derinlik, Hijyen, Konum) */}
+      <section
+        style={{
+          padding: "clamp(24px, 3.5vw, 36px)",
+          background: "var(--cream-2, #F3EDE0)",
+          borderRadius: "24px",
+          border: "1px solid rgba(13, 15, 10, 0.08)",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: "16px",
+          }}
+        >
+          <div
+            style={{
+              background: "#FFFFFF",
+              borderRadius: "16px",
+              padding: "22px 18px",
+              textAlign: "center",
+              border: "1px solid rgba(13, 15, 10, 0.08)",
+              boxShadow: "0 4px 14px -6px rgba(13, 15, 10, 0.06)",
+            }}
+          >
+            <div style={{ display: "inline-flex", padding: 8, borderRadius: 10, background: "rgba(217, 164, 65, 0.12)", color: "var(--brass-lo, #B8842C)", marginBottom: 8 }}>
+              <Clock size={20} />
+            </div>
+            <b style={{ display: "block", fontSize: "18px", color: "var(--ink, #0D0F0A)", marginBottom: 4 }}>
+              {havuzSaat}
+            </b>
+            <span style={{ fontSize: "13px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
+              Havuz Hizmet Saatleri
+            </span>
+          </div>
+
+          <div
+            style={{
+              background: "#FFFFFF",
+              borderRadius: "16px",
+              padding: "22px 18px",
+              textAlign: "center",
+              border: "1px solid rgba(13, 15, 10, 0.08)",
+              boxShadow: "0 4px 14px -6px rgba(13, 15, 10, 0.06)",
+            }}
+          >
+            <div style={{ display: "inline-flex", padding: 8, borderRadius: 10, background: "rgba(124, 139, 79, 0.12)", color: "var(--olive-lo, #5A6838)", marginBottom: 8 }}>
+              <Waves size={20} />
+            </div>
+            <b style={{ display: "block", fontSize: "18px", color: "var(--ink, #0D0F0A)", marginBottom: 4 }}>
+              {derinlik}
+            </b>
+            <span style={{ fontSize: "13px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
+              Yetişkin Havuz Derinliği
+            </span>
+          </div>
+
+          <div
+            style={{
+              background: "#FFFFFF",
+              borderRadius: "16px",
+              padding: "22px 18px",
+              textAlign: "center",
+              border: "1px solid rgba(13, 15, 10, 0.08)",
+              boxShadow: "0 4px 14px -6px rgba(13, 15, 10, 0.06)",
+            }}
+          >
+            <div style={{ display: "inline-flex", padding: 8, borderRadius: 10, background: "rgba(217, 164, 65, 0.12)", color: "var(--brass-lo, #B8842C)", marginBottom: 8 }}>
+              <Sun size={20} />
+            </div>
+            <b style={{ display: "block", fontSize: "18px", color: "var(--ink, #0D0F0A)", marginBottom: 4 }}>
+              Şezlong & Loca
+            </b>
+            <span style={{ fontSize: "13px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
+              Güneşlenme Alanı
+            </span>
+          </div>
+
+          <div
+            style={{
+              background: "#FFFFFF",
+              borderRadius: "16px",
+              padding: "22px 18px",
+              textAlign: "center",
+              border: "1px solid rgba(13, 15, 10, 0.08)",
+              boxShadow: "0 4px 14px -6px rgba(13, 15, 10, 0.06)",
+            }}
+          >
+            <div style={{ display: "inline-flex", padding: 8, borderRadius: 10, background: "rgba(124, 139, 79, 0.12)", color: "var(--olive-lo, #5A6838)", marginBottom: 8 }}>
+              <ShieldCheck size={20} />
+            </div>
+            <b style={{ display: "block", fontSize: "18px", color: "var(--ink, #0D0F0A)", marginBottom: 4 }}>
+              Günlük Analiz
+            </b>
+            <span style={{ fontSize: "13px", color: "var(--muted, #6E6A5C)", fontWeight: 600 }}>
+              Hijyen & Su Kontrolü
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. FİYAT TARİFESİ & GİRİŞ ÜCRETLERİ */}
+      <section className="about-exp-sec" aria-labelledby="havuz-fiyat-heading">
+        <div className="section__head" style={{ marginBottom: 0 }}>
+          <p className="eyebrow">GİRİŞ & KULLANIM TARİFESİ</p>
+          <h2 id="havuz-fiyat-heading" className="h2">{cleanRawText(p.fiyatBaslik || "") || "Havuz Giriş Tarifesi"}</h2>
+          <p className="lead">
+            Hafta içi ve hafta sonu geçerli şezlong ve havuz kullanım ücretleri.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "18px",
+            marginTop: "28px",
+          }}
+        >
+          {fiyatlar.map((f: any, fi: number) => (
+            <div
+              key={fi}
+              style={{
+                background: "#FFFFFF",
+                borderRadius: "20px",
+                border: "1.5px solid rgba(13, 15, 10, 0.08)",
+                padding: "24px 20px",
+                textAlign: "center",
+                boxShadow: "0 6px 20px -8px rgba(13, 15, 10, 0.06)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+              }}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  padding: "4px 12px",
+                  background: "rgba(217, 164, 65, 0.12)",
+                  color: "var(--brass-lo, #B8842C)",
+                  borderRadius: "999px",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  width: "fit-content",
+                  margin: "0 auto",
+                }}
+              >
+                {cleanRawText(f.kategori || "")}
+              </span>
+              <div style={{ padding: "8px 0", borderTop: "1px solid rgba(13, 15, 10, 0.06)", borderBottom: "1px solid rgba(13, 15, 10, 0.06)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "var(--muted, #6E6A5C)", marginBottom: 4 }}>
+                  <span>Hafta İçi:</span>
+                  <b style={{ color: "var(--ink, #0D0F0A)" }}>{cleanRawText(f.haftaIci || "")}</b>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "var(--muted, #6E6A5C)" }}>
+                  <span>Hafta Sonu:</span>
+                  <b style={{ color: "var(--brass-lo, #B8842C)" }}>{cleanRawText(f.haftaSonu || "")}</b>
+                </div>
+              </div>
+              <span style={{ fontSize: "11.5px", color: "var(--muted, #6E6A5C)" }}>Şezlong ve havuz girişi dahil</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. YÜZME DERSLERİ & KURSLAR */}
+      <section
+        style={{
+          background: "#FFFFFF",
+          borderRadius: "24px",
+          border: "1.5px solid rgba(13, 15, 10, 0.08)",
+          padding: "clamp(28px, 4vw, 44px)",
+          boxShadow: "0 10px 30px -10px rgba(13, 15, 10, 0.06)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+          <GraduationCap size={24} color="var(--brass-lo, #B8842C)" />
+          <h2 style={{ fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 600, color: "var(--ink, #0D0F0A)", margin: 0 }}>
+            {cleanRawText(p.dersBaslik || "") || "Havuz Yüzme Derslerimiz"}
+          </h2>
+        </div>
+        <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#555A4C", maxWidth: "68ch", margin: "0 0 24px" }}>
+          {cleanRawText(p.dersLead || "") ||
+            "Sağlıklı bir yaşam, güvenli eğitim ve profesyonel lisanslı antrenörler eşliğinde her yaş grubuna özel birebir ve grup yüzme dersleri."}
+        </p>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "18px",
+          }}
+        >
+          <div
+            style={{
+              background: "var(--cream-2, #F3EDE0)",
+              borderRadius: "18px",
+              padding: "22px 20px",
+              border: "1px solid rgba(13, 15, 10, 0.08)",
+            }}
+          >
+            <span style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--brass-lo, #B8842C)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Kişiye Özel Program
+            </span>
+            <h3 style={{ fontFamily: "var(--f-head, serif)", fontSize: "18px", fontWeight: 600, color: "var(--ink, #0D0F0A)", margin: "6px 0 8px" }}>
+              Birebir Özel Yüzme Dersi
+            </h3>
+            <p style={{ fontSize: "13.5px", color: "#555A4C", lineHeight: 1.6, margin: 0 }}>
+              Kişisel seviyenize uygun antrenman takvimi, stil geliştirme ve hızlı adaptasyon.
+            </p>
+          </div>
+
+          <div
+            style={{
+              background: "var(--cream-2, #F3EDE0)",
+              borderRadius: "18px",
+              padding: "22px 20px",
+              border: "1px solid rgba(13, 15, 10, 0.08)",
+            }}
+          >
+            <span style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--olive-lo, #5A6838)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Eğlenerek Öğren
+            </span>
+            <h3 style={{ fontFamily: "var(--f-head, serif)", fontSize: "18px", fontWeight: 600, color: "var(--ink, #0D0F0A)", margin: "6px 0 8px" }}>
+              Çocuk & Yetişkin Grup Dersleri
+            </h3>
+            <p style={{ fontSize: "13.5px", color: "#555A4C", lineHeight: 1.6, margin: 0 }}>
+              Sosyal ve motive edici bir atmosferde yüzme tekniklerini öğrenme imkânı.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. HAVUZ KURALLARI & DİKKAT EDİLMESİ GEREKENLER */}
+      <section
+        style={{
+          background: "rgba(217, 164, 65, 0.08)",
+          borderRadius: "20px",
+          border: "1.5px solid rgba(217, 164, 65, 0.25)",
+          padding: "24px 28px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+          <AlertCircle size={20} color="var(--brass-lo, #B8842C)" />
+          <h3 style={{ margin: 0, fontSize: "17px", fontWeight: 700, color: "var(--ink, #0D0F0A)" }}>
+            Havuz Kuralları & Güvenlik Standartları
+          </h3>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "10px" }}>
+          {kurallar.map((k, ki) => (
+            <div key={ki} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "13.5px", color: "#383C30" }}>
+              <CheckCircle2 size={15} color="var(--olive-lo, #5A6838)" style={{ flexShrink: 0 }} />
+              <span>{cleanRawText(k)}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 6. SON CTA — REZERVASYON ÇAĞRISI */}
+      <section className="section--dark about-cta-sec" aria-label="Havuz Rezervasyon">
+        <div
+          className="about-cta-card"
+          style={{
+            backgroundColor: "#16190F",
+            color: "#F4EEE1",
+          }}
+        >
+          <p
+            className="eyebrow"
+            style={{
+              color: "#D9A441",
+              margin: 0,
+              fontWeight: 700,
+              letterSpacing: "0.15em",
+            }}
+          >
+            POOL & BEACH
+          </p>
+          <h2
+            style={{
+              color: "#FFFFFF",
+              fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+              fontSize: "clamp(24px, 3.4vw, 38px)",
+              fontWeight: 600,
+              margin: 0,
+            }}
+          >
+            Güneşin ve Serinliğin Tadını Çıkarın
+          </h2>
+          <p
+            style={{
+              color: "#F4EEE1",
+              fontSize: "15.5px",
+              lineHeight: 1.6,
+              maxWidth: "54ch",
+              margin: 0,
+              opacity: 0.95,
+            }}
+          >
+            Hafta sonu yoğunluğu öncesinde yerinizi ayırtın, havuz başı lezzetler ve şezlong keyfiyle günün tadını çıkarın.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--light"
+            >
+              <MessageCircle size={16} />
+              WhatsApp Havuz Rezervasyonu
+            </a>
+            <Link
+              href="/menu"
+              className="btn btn--ghost"
+              style={{
+                background: "rgba(244, 238, 225, 0.12)",
+                color: "#FFFFFF",
+                border: "1.5px solid rgba(244, 238, 225, 0.4)",
+              }}
+            >
+              Havuz Başı Menüsü
+            </Link>
+          </div>
+        </div>
+      </section>
+    </article>
+  );
+}

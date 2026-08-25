@@ -68,9 +68,9 @@ export default function HomeAbout({ content }: { content: SiteContent }) {
           <p className="eyebrow" data-fade="">
             {cleanRawText(h.eyebrow || "Hakkımızda")}
           </p>
-          <h1 className="h2" data-split="">
+          <h2 className="h2" data-split="">
             {cleanRawText(h.baslik || "Petra Yaşam Merkezi'nde cafe & restaurant")}
-          </h1>
+          </h2>
           
           {(h.answerBaslik || h.answerMetin) && (
             <div className="answer" data-fade="">
