@@ -16,10 +16,10 @@ export default function LuxuryLoader({
   fullScreen = true,
   config,
 }: LuxuryLoaderProps) {
-  const isDark = config?.tema === "dark";
-  const finalTitle = label || config?.baslik || "PETRA YAŞAM MERKEZİ";
-  const finalSub = sublabel ?? config?.sublabel ?? "Cafe · Restaurant · Pool & Beach · Spor Salonu";
-  const logoSize = Number(config?.logoBoyut || 86);
+  const isDark = config ? config.tema !== "light" : true;
+  const finalTitle = label || config?.baslik || "PETRA";
+  const finalSub = sublabel ?? config?.sublabel ?? "ÇEKMEKÖY · YAŞAM MERKEZİ";
+  const logoSize = Number(config?.logoBoyut || 100);
   const ringSize = logoSize + 56;
   const wrapSize = logoSize + 22;
   const brassColor = config?.halkaRenk || "#D9A441";

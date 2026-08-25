@@ -23,13 +23,13 @@ function themesEqual(a: ThemeContent, b: ThemeContent) {
 
 const defaultLoaderConfig: LoaderContent = {
   aktif: true,
-  tema: "light",
-  baslik: "PETRA YAŞAM MERKEZİ",
-  sublabel: "Cafe · Restaurant · Pool & Beach · Spor Salonu",
-  logoBoyut: 84,
-  arkaplanRenk: "#FAF7F0",
+  tema: "dark",
+  baslik: "PETRA",
+  sublabel: "ÇEKMEKÖY · YAŞAM MERKEZİ",
+  logoBoyut: 100,
+  arkaplanRenk: "#090C08",
   halkaRenk: "#D9A441",
-  yaziRenk: "#1A1D16",
+  yaziRenk: "#FFFFFF",
   koseSusleri: true,
 };
 
