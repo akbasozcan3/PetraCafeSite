@@ -77,8 +77,9 @@ export const DEFAULT_GALLERY = [
 ];
 
 export const DEFAULT_PASTA_PHOTOS = [
-  { src: SITE_PHOTOS.interior, alt: "Salon ve sofra" },
-  { src: SITE_PHOTOS.gallery, alt: "Petra Yaşam Merkezi" },
-  { src: SITE_PHOTOS.facade, alt: "Cephe" },
-  { src: SITE_PHOTOS.interior, alt: "İç mekân" },
+  { src: "/assets/cms/petra-nargile-havuz-gece.jpg", alt: "Gece Işıklı Havuz & Lounge Alanı" },
+  { src: "/assets/cms/petra-pool-beach-loca.jpg", alt: "Pool & Beach Şezlong & VIP Loca" },
+  { src: "/assets/cms/petra-restoran-salon-organizasyon.jpg", alt: "Petra Restoran & Salon Atmosferi" },
+  { src: "/assets/cms/hero-cephe.webp", alt: "Petra Yaşam Kompleksi" },
 ];
+
