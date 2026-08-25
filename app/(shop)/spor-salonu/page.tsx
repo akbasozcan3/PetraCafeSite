@@ -5,12 +5,11 @@ import { phoneToTelHref, buildWhatsappUrl } from "@/lib/content/contact-utils";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import { cleanRawText } from "@/lib/content/markdown-parser";
 import SafeImg from "@/components/site/SafeImg";
-import SiteIcon from "@/components/site/SiteIcon";
+import SiteIcon, { WhatsAppIcon } from "@/components/site/SiteIcon";
 import {
   Dumbbell,
   Clock,
   Phone,
-  MessageCircle,
   CheckCircle2,
   Sparkles,
   Flame,
@@ -240,7 +239,7 @@ export default async function SporSalonuPage() {
                 boxShadow: "none",
               }}
             >
-              <MessageCircle size={17} />
+              <WhatsAppIcon size={17} />
               Ön Kayıt & Bilgi Al
             </a>
 
@@ -464,7 +463,7 @@ export default async function SporSalonuPage() {
                 className="btn"
                 style={{ background: "#25D366", color: "#0B140C", fontWeight: 700, padding: "11px 20px", borderRadius: "12px", boxShadow: "none" }}
               >
-                <MessageCircle size={16} />
+                <WhatsAppIcon size={16} />
                 WhatsApp'tan Yazın
               </a>
               <a

@@ -7,13 +7,13 @@ import { resolveMediaUrl } from "@/lib/admin/media-url";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import { cleanRawText } from "@/lib/content/markdown-parser";
 import SafeImg from "@/components/site/SafeImg";
+import { WhatsAppIcon } from "@/components/site/SiteIcon";
 import {
   Waves,
   Sun,
   ShieldCheck,
   Clock,
   Phone,
-  MessageCircle,
   CheckCircle2,
   AlertCircle,
   GraduationCap,
@@ -113,7 +113,7 @@ export default async function HavuzPlajPage() {
             rel="noopener noreferrer"
             className="btn btn--light"
           >
-            <MessageCircle size={16} />
+            <WhatsAppIcon size={18} />
             Havuz Rezervasyonu & Bilgi
           </a>
           <a href={`tel:${telHref}`} className="btn">
@@ -456,11 +456,11 @@ export default async function HavuzPlajPage() {
                 borderRadius: "12px",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "6px",
+                gap: "8px",
                 fontSize: "13px",
               }}
             >
-              <MessageCircle size={15} />
+              <WhatsAppIcon size={16} />
               WhatsApp Rezervasyon
             </a>
             <a
@@ -647,7 +647,7 @@ export default async function HavuzPlajPage() {
                   boxShadow: "0 6px 18px rgba(37, 211, 102, 0.25)",
                 }}
               >
-                <MessageCircle size={18} />
+                <WhatsAppIcon size={18} />
                 WhatsApp ile Kursa Kayıt Ol
               </a>
 
@@ -812,7 +812,7 @@ export default async function HavuzPlajPage() {
               rel="noopener noreferrer"
               className="btn btn--light"
             >
-              <MessageCircle size={16} />
+              <WhatsAppIcon size={18} />
               WhatsApp Havuz Rezervasyonu
             </a>
             <Link

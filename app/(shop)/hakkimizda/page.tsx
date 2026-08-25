@@ -12,6 +12,7 @@ import {
   parseArticleContent,
   renderSemanticBlocks,
 } from "@/lib/content/markdown-parser";
+import { WhatsAppIcon } from "@/components/site/SiteIcon";
 import {
   UtensilsCrossed,
   Waves,
@@ -20,7 +21,6 @@ import {
   CheckCircle2,
   CalendarCheck,
   Phone,
-  MessageCircle,
   Sparkles,
   MapPin,
   Clock,
@@ -929,7 +929,7 @@ export default async function HakkimizdaPage() {
                 className="btn"
                 style={{ background: "#25D366", color: "#0B140C", fontWeight: 700 }}
               >
-                <MessageCircle size={16} />
+                <WhatsAppIcon size={16} />
                 WhatsApp Rezervasyon
               </a>
               <a

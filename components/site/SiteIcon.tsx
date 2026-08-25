@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { iconFromLabel, type SiteIconId } from "@/lib/content/site-icons";
 
-function InstagramMark({
+export function InstagramIcon({
   size = 22,
   strokeWidth = 1.75,
   className,
@@ -47,7 +47,7 @@ function InstagramMark({
   );
 }
 
-function WhatsAppMark({
+export function WhatsAppIcon({
   size = 22,
   className,
 }: {
@@ -64,6 +64,7 @@ function WhatsAppMark({
       fill="currentColor"
       stroke="none"
       aria-hidden="true"
+      style={{ display: "inline-block", verticalAlign: "middle", flexShrink: 0 }}
     >
       <path
         fill="currentColor"
@@ -121,7 +122,7 @@ function TikTokMark({
 
 const MAP: Record<
   SiteIconId | "check",
-  LucideIcon | typeof InstagramMark | typeof WhatsAppMark | typeof FacebookMark | typeof TikTokMark
+  LucideIcon | typeof InstagramIcon | typeof WhatsAppIcon | typeof FacebookMark | typeof TikTokMark
 > = {
   utensils: UtensilsCrossed,
   chef: ChefHat,
@@ -132,8 +133,8 @@ const MAP: Record<
   cake: CakeSlice,
   flame: Flame,
   phone: Phone,
-  whatsapp: WhatsAppMark,
-  instagram: InstagramMark,
+  whatsapp: WhatsAppIcon,
+  instagram: InstagramIcon,
   facebook: FacebookMark,
   tiktok: TikTokMark,
   mail: Mail,
