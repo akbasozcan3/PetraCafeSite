@@ -4285,7 +4285,7 @@ html .site-shop .foot__bar a,
   background: #FFFFFF !important;
   font-size: 13.5px;
   font-weight: 700;
-  color: #0D0F0A !important;
+  color: #FFFFFF !important;
   text-decoration: none !important;
   box-shadow: 0 2px 8px rgba(13, 15, 10, 0.05);
   transition: all 0.2s ease;
@@ -4300,13 +4300,21 @@ html .site-shop .foot__bar a,
 }
 
 /* Koyu arka planda özel görünürlük */
+.about-events-tags span,
 .about-events-sec .about-story-pills span,
 .about-events-box .about-story-pills span,
 .section--dark .about-story-pills span {
-  background: rgba(244, 238, 225, 0.14) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 8px 18px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.15) !important;
   color: #FFFFFF !important;
-  border: 1px solid rgba(244, 238, 225, 0.35) !important;
-  box-shadow: none;
+  border: 1.5px solid rgba(217, 164, 65, 0.5) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
 }
 
 /* Fotoğraf Kartı (Temiz, Zarif, Çerçeveli, Sticky) */

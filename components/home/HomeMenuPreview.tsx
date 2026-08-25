@@ -90,6 +90,7 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
           {cats.map((g, i) => {
             const slug = getCategorySlug(g);
             const dishes = (g.urunler || []).filter(isProductActive);
+            const displayedDishes = dishes.slice(0, 4);
             return (
               <div
                 key={slug}
@@ -101,8 +102,8 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
                   {g.aciklama ? <p>{g.aciklama}</p> : null}
                 </div>
                 <ul className="rmenu__list">
-                  {dishes.length ? (
-                    dishes.map((u) => {
+                  {displayedDishes.length ? (
+                    displayedDishes.map((u) => {
                     const pSlug = getProductSlug(u);
                     const href = productHref(pSlug, slug);
                     const price = formatPriceLabel(u.fiyat);

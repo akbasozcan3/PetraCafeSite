@@ -860,15 +860,21 @@ export default async function HakkimizdaPage() {
               {eventsLead}
             </p>
 
-            <div className="about-story-pills" style={{ marginBottom: 28 }}>
+            <div className="about-events-tags" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 28 }}>
               {eventsTags.map((tag: string, ti: number) => (
                 <span
                   key={ti}
                   style={{
-                    backgroundColor: "rgba(244, 238, 225, 0.12)",
-                    color: WHITE,
-                    borderColor: "rgba(244, 238, 225, 0.3)",
-                    border: "1px solid rgba(244, 238, 225, 0.3)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    padding: "8px 18px",
+                    borderRadius: "999px",
+                    backgroundColor: "rgba(255, 255, 255, 0.15)",
+                    color: "#FFFFFF",
+                    border: "1.5px solid rgba(217, 164, 65, 0.5)",
+                    fontSize: "13.5px",
+                    fontWeight: 700,
+                    textShadow: "0 1px 3px rgba(0, 0, 0, 0.6)",
                   }}
                 >
                   {cleanRawText(tag)}
