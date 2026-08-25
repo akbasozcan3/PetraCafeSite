@@ -88,7 +88,9 @@ export default async function HavuzPlajPage() {
     <article className="page-hakkimizda page-havuz">
       {/* 1. EDİTORYAL BAŞLIK */}
       <header className="about-head-sec">
-        <Breadcrumbs items={[{ label: "Havuz & Plaj" }]} />
+        <div style={{ marginBottom: "14px", display: "block" }}>
+          <Breadcrumbs items={[{ label: "Havuz & Plaj" }]} />
+        </div>
 
         <div className="about-head-sec__badge">
           <Waves size={14} />

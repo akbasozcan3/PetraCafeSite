@@ -116,34 +116,38 @@ export default async function BlogPostPage({ params }: Props) {
       />
 
       {/* 2. EDİTORYAL BAŞLIK ALANI (Geniş & Ferah) */}
-      <header className="article__head" style={{ marginBottom: "28px", maxWidth: "920px" }}>
-        <Breadcrumbs
-          items={[
-            { label: "Blog", href: "/blog" },
-            { label: cleanRawText(post.baslik) },
-          ]}
-        />
+      <header className="article__head" style={{ marginBottom: "28px", maxWidth: "920px", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+        {/* Satır 1: Breadcrumb */}
+        <div style={{ marginBottom: "10px", width: "100%", display: "block" }}>
+          <Breadcrumbs
+            items={[
+              { label: "Blog", href: "/blog" },
+              { label: cleanRawText(post.baslik) },
+            ]}
+          />
+        </div>
 
+        {/* Satır 2: Kategori Rozeti */}
         {post.kategori ? (
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              padding: "5px 14px",
-              borderRadius: "999px",
-              background: "rgba(217, 164, 65, 0.12)",
-              color: "var(--brass-lo, #B8842C)",
-              fontSize: "12px",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              marginTop: "8px",
-              marginBottom: "14px",
-            }}
-          >
-            <Bookmark size={13} />
-            <span>{cleanRawText(post.kategori)}</span>
+          <div style={{ marginBottom: "16px", display: "block" }}>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "5px 14px",
+                borderRadius: "999px",
+                background: "rgba(217, 164, 65, 0.12)",
+                color: "var(--brass-lo, #B8842C)",
+                fontSize: "12px",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+              }}
+            >
+              <Bookmark size={13} />
+              <span>{cleanRawText(post.kategori)}</span>
+            </div>
           </div>
         ) : null}
 
