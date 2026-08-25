@@ -316,6 +316,65 @@ export const DEFAULT_CONTENT: SiteContent = {
       },
     ],
   },
+  sporSalonu: {
+    eyebrow: "PETRA YAŞAM MERKEZİ",
+    baslik: "Petra Spor Salonu",
+    lead: "Çekmeköy Taşdelen Megakent Sitesi içerisinde; modern kardiyo ve serbest ağırlık ekipmanları, ferah antrenman alanları ve sağlıklı yaşam kültürüyle formunuzu zirveye taşıyın.",
+    saatler: "Haftanın 7 Günü: 07:00 – 23:00",
+    telefon: "0530 608 90 51",
+    telefon2: "+90 216 706 80 51",
+    instagram: "@petrasporsalonu",
+    instagramUrl: "https://www.instagram.com/petrasporsalonu",
+    ozellikler: [
+      {
+        baslik: "%35 Ön Kayıt Avantajı",
+        alt: "Erken dönem üyelik indirimi",
+        ikon: "sparkles",
+      },
+      {
+        baslik: "Kardiyo & Serbest Ağırlık",
+        alt: "Modern istasyonlar & dambıllar",
+        ikon: "dumbbell",
+      },
+      {
+        baslik: "Havuz & Teras Entegrasyonu",
+        alt: "Antrenman sonrası serinleme",
+        ikon: "waves",
+      },
+      {
+        baslik: "07:00 – 23:00 Kesintisiz",
+        alt: "Haftanın 7 günü açık salon",
+        ikon: "clock",
+      },
+    ],
+    bentoGorseller: [
+      {
+        src: "/assets/cms/hero-ic.webp",
+        alt: "Petra Fitness & Antrenman Alanı",
+        rozet: "Kardiyo & Serbest Ağırlık",
+      },
+      {
+        src: "/assets/cms/hero-cephe.webp",
+        alt: "Petra Spor ve Yaşam Kompleksi",
+        rozet: "Ferah & Hijyenik Salon",
+      },
+    ],
+    body: [
+      "Petra Spor Salonu; Petra Yaşam Merkezi bünyesinde modern antrenman standartlarını, hijyenik ve havalandırmalı salon konseptiyle buluşturuyor.",
+    ],
+    alanlar: [
+      { baslik: "Kardiyo İstasyonları", kicker: "Kondisyon & Yağ Yakımı", metin: "Koşu bantları ve kondisyon aletleri.", ikon: "flame" },
+      { baslik: "Serbest Ağırlık & Dambıl", kicker: "Güç & Kas Gelişimi", metin: "Dambıl ve sehpalar.", ikon: "dumbbell" },
+    ],
+    imkanlar: [
+      "Modern Kardiyo ve Fitness Ekipmanları",
+      "Havalandırmalı & Ferah Antrenman Salonu",
+      "Hijyenik Soyunma Odaları ve Duşlar",
+      "Açık Havuz & Pool Kulübü Entegrasyonu",
+    ],
+    ctaTitle: "Hedeflerinize Petra ile Ulaşın",
+    ctaLead: "Petra Spor Salonu üyelik paketleri için bize ulaşın.",
+  },
   makaleler: [
     { slug: "rezervasyon-rehberi", baslik: "Masa nasıl ayırtılır? Kahvaltı ve akşam rezervasyonu", ozet: "Hafta sonu kahvaltı, havuz günü ve akşam yemeği için ne zaman yazmalısınız.", kategori: "Rezervasyon", tarih: "12 Ağustos 2026", yayinda: true, statik: false },
     { slug: "havuz-plaj", baslik: "Havuz & plaj 2026: tarife, yüzme dersi, organizasyon", ozet: "Hafta içi / sonu giriş, yaş grupları ve yüzme dersi kontenjanı.", kategori: "Havuz", tarih: "4 Ağustos 2026", yayinda: true, statik: false },

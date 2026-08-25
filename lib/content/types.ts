@@ -545,7 +545,7 @@ export interface SayfalarContent {
 }
 
 export interface SporSalonuContent {
-  eyebrow: string;
+  eyebrow?: string;
   baslik: string;
   lead: string;
   body: string[];
@@ -554,6 +554,16 @@ export interface SporSalonuContent {
   telefon2?: string;
   instagram?: string;
   instagramUrl?: string;
+  ozellikler?: {
+    baslik: string;
+    alt: string;
+    ikon?: string;
+  }[];
+  bentoGorseller?: {
+    src: string;
+    alt: string;
+    rozet?: string;
+  }[];
   gorseller?: { src: string; alt: string }[];
   alanlar?: {
     baslik: string;

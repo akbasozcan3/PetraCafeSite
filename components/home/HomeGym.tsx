@@ -16,6 +16,46 @@ export default function HomeGym({ content }: { content: SiteContent }) {
   const instagramUrl = s?.instagramUrl || "https://www.instagram.com/petrasporsalonu";
   const instagramTag = s?.instagram || "@petrasporsalonu";
 
+  const defaultOzellikler = [
+    {
+      baslik: "%35 Ön Kayıt Avantajı",
+      alt: "Erken dönem üyelik indirimi",
+      ikon: "sparkles",
+    },
+    {
+      baslik: "Kardiyo & Serbest Ağırlık",
+      alt: "Modern istasyonlar & dambıllar",
+      ikon: "dumbbell",
+    },
+    {
+      baslik: "Havuz & Teras Entegrasyonu",
+      alt: "Antrenman sonrası serinleme",
+      ikon: "waves",
+    },
+    {
+      baslik: "07:00 – 23:00 Kesintisiz",
+      alt: "Haftanın 7 günü açık salon",
+      ikon: "clock",
+    },
+  ];
+
+  const ozelliklerList = s?.ozellikler && s.ozellikler.length > 0 ? s.ozellikler : defaultOzellikler;
+
+  const defaultBento = [
+    {
+      src: "/assets/cms/hero-ic.webp",
+      alt: "Petra Fitness & Antrenman Alanı",
+      rozet: "Kardiyo & Serbest Ağırlık",
+    },
+    {
+      src: "/assets/cms/hero-cephe.webp",
+      alt: "Petra Spor ve Yaşam Kompleksi",
+      rozet: "Ferah & Hijyenik Salon",
+    },
+  ];
+
+  const bentoList = s?.bentoGorseller && s.bentoGorseller.length > 0 ? s.bentoGorseller : defaultBento;
+
   return (
     <section
       className="section home-gym-sec"
@@ -34,11 +74,11 @@ export default function HomeGym({ content }: { content: SiteContent }) {
           background: linear-gradient(145deg, #161D15 0%, #0E130D 100%);
           border: 1.5px solid rgba(217, 164, 65, 0.32);
           border-radius: 28px;
-          padding: clamp(28px, 4.5vw, 52px);
+          padding: clamp(28px, 4.5vw, 54px);
           box-shadow: 0 24px 70px -20px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
           position: relative;
           overflow: hidden;
-          max-width: min(1180px, 100%);
+          max-width: min(1200px, 100%);
           margin-inline: auto;
         }
         .gym-card-clean::before {
@@ -53,8 +93,8 @@ export default function HomeGym({ content }: { content: SiteContent }) {
         }
         .gym-grid-layout {
           display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: clamp(32px, 4.5vw, 54px);
+          grid-template-columns: 1.02fr 0.98fr;
+          gap: clamp(32px, 4.5vw, 56px);
           align-items: center;
         }
         @media (max-width: 980px) {
@@ -66,7 +106,7 @@ export default function HomeGym({ content }: { content: SiteContent }) {
           color: #FFFFFF !important;
           -webkit-text-fill-color: #FFFFFF !important;
           font-family: var(--f-head, 'Playfair Display', Georgia, serif);
-          font-size: clamp(28px, 3.8vw, 42px) !important;
+          font-size: clamp(30px, 4vw, 44px) !important;
           font-weight: 700 !important;
           line-height: 1.18;
           margin: 0 0 14px;
@@ -86,30 +126,31 @@ export default function HomeGym({ content }: { content: SiteContent }) {
           -webkit-backdrop-filter: blur(10px);
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 16px;
-          padding: 12px 14px;
+          padding: 13px 15px;
           display: flex;
           align-items: flex-start;
-          gap: 10px;
-          transition: background 0.2s ease, border-color 0.2s ease;
+          gap: 11px;
+          transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
         }
         .gym-glass-card:hover {
-          background: rgba(255, 255, 255, 0.07);
-          border-color: rgba(217, 164, 65, 0.3);
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(217, 164, 65, 0.35);
+          transform: translateY(-2px);
         }
         .gym-bento-wrapper {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 14px;
+          gap: 18px;
           position: relative;
         }
         .gym-bento-img-box {
-          border-radius: 18px;
+          border-radius: 20px;
           overflow: hidden;
-          border: 1.5px solid rgba(217, 164, 65, 0.24);
-          box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+          border: 1.5px solid rgba(217, 164, 65, 0.28);
+          box-shadow: 0 18px 45px -12px rgba(0, 0, 0, 0.65);
           position: relative;
           background: #0E130D;
-          aspect-ratio: 4 / 5;
+          height: 330px;
         }
         .gym-bento-img-box img {
           width: 100%;
@@ -126,11 +167,11 @@ export default function HomeGym({ content }: { content: SiteContent }) {
           bottom: 12px;
           left: 12px;
           right: 12px;
-          padding: 8px 12px;
+          padding: 9px 12px;
           border-radius: 12px;
-          background: rgba(14, 19, 13, 0.88);
+          background: rgba(14, 19, 13, 0.9);
           backdrop-filter: blur(8px);
-          border: 1px solid rgba(217, 164, 65, 0.3);
+          border: 1px solid rgba(217, 164, 65, 0.35);
           color: #F4EEE1;
           font-size: 11.5px;
           font-weight: 600;
@@ -138,55 +179,21 @@ export default function HomeGym({ content }: { content: SiteContent }) {
           align-items: center;
           gap: 6px;
         }
+        @media (max-width: 600px) {
+          .gym-bento-wrapper {
+            grid-template-columns: 1fr;
+          }
+          .gym-bento-img-box {
+            height: 240px;
+          }
+        }
       `}</style>
 
       <div className="wrap" style={{ display: "flex", justifyContent: "center" }}>
         <div className="gym-card-clean">
           <div className="gym-grid-layout">
-            {/* SOL KOLON: YAZILAR, CAM KARTLAR VE BUTONLAR */}
+            {/* SOL KOLON: YAZILAR, 2x2 CAM KARTLAR VE BUTONLAR */}
             <div>
-              {/* ÜST ROZETLER */}
-              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "14px" }}>
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "5px 12px",
-                    borderRadius: "999px",
-                    background: "rgba(217, 164, 65, 0.15)",
-                    color: "#E8B84B",
-                    fontSize: "11.5px",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.06em",
-                    border: "1px solid rgba(217, 164, 65, 0.28)",
-                  }}
-                >
-                  <Dumbbell size={13} />
-                  <span>{cleanRawText(s?.eyebrow || "") || "PETRA YAŞAM MERKEZİ"}</span>
-                </div>
-
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "5px",
-                    padding: "5px 12px",
-                    borderRadius: "999px",
-                    background: "rgba(220, 38, 38, 0.18)",
-                    color: "#FF6B6B",
-                    fontSize: "11.5px",
-                    fontWeight: 700,
-                    letterSpacing: "0.04em",
-                    border: "1px solid rgba(220, 38, 38, 0.3)",
-                  }}
-                >
-                  <Flame size={13} color="#FF6B6B" />
-                  <span>Ön Kayıta Özel %35 İndirim</span>
-                </div>
-              </div>
-
               <h2 className="gym-clean-title">
                 {cleanRawText(s?.baslik || "") || "Petra Spor Salonu"}
               </h2>
@@ -196,54 +203,53 @@ export default function HomeGym({ content }: { content: SiteContent }) {
                   "Çekmeköy Taşdelen Megakent Sitesi içerisinde; modern kardiyo ve serbest ağırlık ekipmanları, ferah antrenman alanları ve sağlıklı yaşam kültürüyle formunuzu zirveye taşıyın."}
               </p>
 
-              {/* 4 ÖZELLİK: CAM EFEKTLİ MİNİK KARTÇIKLAR */}
+              {/* 4 ÖZELLİK: 2x2 CAM EFEKTLİ MİNİK KARTÇIKLAR */}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                  gap: "10px",
+                  gridTemplateColumns: "repeat(2, 1fr)",
+                  gap: "11px",
                   marginBottom: "26px",
                 }}
               >
-                <div className="gym-glass-card">
-                  <div style={{ width: 26, height: 26, borderRadius: 8, background: "rgba(217, 164, 65, 0.16)", color: "#E8B84B", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Sparkles size={14} />
-                  </div>
-                  <div>
-                    <b style={{ display: "block", fontSize: "13px", color: "#FFFFFF" }}>%35 Ön Kayıt Avantajı</b>
-                    <span style={{ fontSize: "11.5px", color: "#A8B0A2" }}>Erken dönem üyelik indirimi</span>
-                  </div>
-                </div>
-
-                <div className="gym-glass-card">
-                  <div style={{ width: 26, height: 26, borderRadius: 8, background: "rgba(217, 164, 65, 0.16)", color: "#E8B84B", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Dumbbell size={14} />
-                  </div>
-                  <div>
-                    <b style={{ display: "block", fontSize: "13px", color: "#FFFFFF" }}>Kardiyo & Serbest Ağırlık</b>
-                    <span style={{ fontSize: "11.5px", color: "#A8B0A2" }}>Modern istasyonlar & dambıllar</span>
-                  </div>
-                </div>
-
-                <div className="gym-glass-card">
-                  <div style={{ width: 26, height: 26, borderRadius: 8, background: "rgba(124, 139, 79, 0.2)", color: "#A4BD63", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Waves size={14} />
-                  </div>
-                  <div>
-                    <b style={{ display: "block", fontSize: "13px", color: "#FFFFFF" }}>Havuz & Teras Entegrasyonu</b>
-                    <span style={{ fontSize: "11.5px", color: "#A8B0A2" }}>Antrenman sonrası serinleme</span>
-                  </div>
-                </div>
-
-                <div className="gym-glass-card">
-                  <div style={{ width: 26, height: 26, borderRadius: 8, background: "rgba(124, 139, 79, 0.2)", color: "#A4BD63", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Clock size={14} />
-                  </div>
-                  <div>
-                    <b style={{ display: "block", fontSize: "13px", color: "#FFFFFF" }}>07:00 – 23:00 Kesintisiz</b>
-                    <span style={{ fontSize: "11.5px", color: "#A8B0A2" }}>Haftanın 7 günü açık salon</span>
-                  </div>
-                </div>
+                {ozelliklerList.map((oz: any, ozi: number) => {
+                  const isGold = ozi % 2 === 0;
+                  return (
+                    <div key={ozi} className="gym-glass-card">
+                      <div
+                        style={{
+                          width: 28,
+                          height: 28,
+                          borderRadius: 8,
+                          background: isGold ? "rgba(217, 164, 65, 0.18)" : "rgba(124, 139, 79, 0.22)",
+                          color: isGold ? "#E8B84B" : "#A4BD63",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        {oz.ikon === "dumbbell" ? (
+                          <Dumbbell size={14} />
+                        ) : oz.ikon === "waves" ? (
+                          <Waves size={14} />
+                        ) : oz.ikon === "clock" ? (
+                          <Clock size={14} />
+                        ) : (
+                          <Sparkles size={14} />
+                        )}
+                      </div>
+                      <div>
+                        <b style={{ display: "block", fontSize: "13px", color: "#FFFFFF", marginBottom: 2 }}>
+                          {cleanRawText(oz.baslik)}
+                        </b>
+                        <span style={{ fontSize: "11.5px", color: "#A8B0A2", lineHeight: 1.35, display: "block" }}>
+                          {cleanRawText(oz.alt)}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* AKSİYON BUTONLARI */}
@@ -309,33 +315,30 @@ export default function HomeGym({ content }: { content: SiteContent }) {
               </div>
             </div>
 
-            {/* SAĞ KOLON: 2 FOTOĞRAFLI MODERN BENTO KOLAJ */}
+            {/* SAĞ KOLON: GENİŞLETİLMİŞ 2 FOTOĞRAFLI MODERN BENTO KOLAJ */}
             <div className="gym-bento-wrapper">
-              <div className="gym-bento-img-box" style={{ marginTop: "0" }}>
-                <SafeImg
-                  src="/assets/cms/hero-ic.webp"
-                  alt="Petra Fitness ve Antrenman Alanı"
-                  fallback="/assets/cms/hero-ic.webp"
-                  className="w-full h-full object-cover"
-                />
-                <div className="gym-floating-badge">
-                  <Dumbbell size={13} color="#E8B84B" />
-                  <span>Kardiyo & Serbest Ağırlık</span>
+              {bentoList.map((b: any, bi: number) => (
+                <div
+                  key={bi}
+                  className="gym-bento-img-box"
+                  style={{ marginTop: bi === 1 ? "24px" : "0" }}
+                >
+                  <SafeImg
+                    src={b.src || "/assets/cms/hero-ic.webp"}
+                    alt={b.alt || "Petra Spor Salonu"}
+                    fallback="/assets/cms/hero-ic.webp"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="gym-floating-badge">
+                    {bi === 0 ? (
+                      <Dumbbell size={13} color="#E8B84B" />
+                    ) : (
+                      <Sparkles size={13} color="#E8B84B" />
+                    )}
+                    <span>{cleanRawText(b.rozet || b.alt || "Petra Fitness")}</span>
+                  </div>
                 </div>
-              </div>
-
-              <div className="gym-bento-img-box" style={{ marginTop: "24px" }}>
-                <SafeImg
-                  src="/assets/cms/hero-cephe.webp"
-                  alt="Petra Spor ve Yaşam Kompleksi"
-                  fallback="/assets/cms/hero-cephe.webp"
-                  className="w-full h-full object-cover"
-                />
-                <div className="gym-floating-badge">
-                  <Sparkles size={13} color="#E8B84B" />
-                  <span>Ferah & Hijyenik Salon</span>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

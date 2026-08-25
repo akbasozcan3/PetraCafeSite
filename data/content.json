@@ -478,6 +478,40 @@
     "telefon2": "+90 216 706 80 51",
     "instagram": "@petrasporsalonu",
     "instagramUrl": "https://www.instagram.com/petrasporsalonu",
+    "ozellikler": [
+      {
+        "baslik": "%35 Ön Kayıt Avantajı",
+        "alt": "Erken dönem üyelik indirimi",
+        "ikon": "sparkles"
+      },
+      {
+        "baslik": "Kardiyo & Serbest Ağırlık",
+        "alt": "Modern istasyonlar & dambıllar",
+        "ikon": "dumbbell"
+      },
+      {
+        "baslik": "Havuz & Teras Entegrasyonu",
+        "alt": "Antrenman sonrası serinleme",
+        "ikon": "waves"
+      },
+      {
+        "baslik": "07:00 – 23:00 Kesintisiz",
+        "alt": "Haftanın 7 günü açık salon",
+        "ikon": "clock"
+      }
+    ],
+    "bentoGorseller": [
+      {
+        "src": "/assets/cms/hero-ic.webp",
+        "alt": "Petra Fitness & Antrenman Alanı",
+        "rozet": "Kardiyo & Serbest Ağırlık"
+      },
+      {
+        "src": "/assets/cms/hero-cephe.webp",
+        "alt": "Petra Spor ve Yaşam Kompleksi",
+        "rozet": "Ferah & Hijyenik Salon"
+      }
+    ],
     "body": [
       "## Çekmeköy'ün Dinamik Spor ve Yaşam Alanı\nPetra Spor Salonu; Petra Yaşam Merkezi bünyesinde modern antrenman standartlarını, hijyenik ve havalandırmalı salon konseptiyle buluşturuyor. Günün her saati zinde kalmak, formunuzu korumak veya hedeflerinize ulaşmak için tasarlanan geniş egzersiz alanlarımızda sağlıklı bir spor deneyimi sunuyoruz.",
       "### Antrenman Alanlarımız\nKardiyo istasyonları, serbest ağırlık dambıl ve barbell alanları, çok fonksiyonlu istasyon makineleri ve esneme / mobilite bölümleriyle tüm vücut kas gruplarınızı dengeli ve güvenli şekilde çalıştırabilirsiniz.",
