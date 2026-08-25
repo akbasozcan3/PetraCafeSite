@@ -384,6 +384,31 @@ export default async function HakkimizdaPage() {
 
             {/* Hap Etiketler / Internal Links */}
             <div className="about-story-pills" style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 24 }}>
+              <style>{`
+                .about-story-pills a,
+                .about-story-pills span,
+                .about-story-pill-btn {
+                  color: #000000 !important;
+                  -webkit-text-fill-color: #000000 !important;
+                  background-color: #FFFFFF !important;
+                  border: 1.5px solid rgba(0, 0, 0, 0.18) !important;
+                  font-weight: 700 !important;
+                  font-size: 13.5px !important;
+                  display: inline-flex !important;
+                  align-items: center !important;
+                  padding: 8px 18px !important;
+                  border-radius: 999px !important;
+                  text-decoration: none !important;
+                  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+                }
+                .about-story-pills a:hover,
+                .about-story-pill-btn:hover {
+                  background-color: #F4EEE1 !important;
+                  color: #B8842C !important;
+                  -webkit-text-fill-color: #B8842C !important;
+                  border-color: #B8842C !important;
+                }
+              `}</style>
               {[
                 { href: "/menu", label: "Dünya Mutfağı" },
                 { href: "/menu#kat-kahvalti", label: "Serpme Kahvaltı" },
@@ -396,17 +421,9 @@ export default async function HakkimizdaPage() {
                   href={pill.href}
                   className="about-story-pill-btn"
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    padding: "8px 18px",
-                    borderRadius: "999px",
+                    color: "#000000",
+                    WebkitTextFillColor: "#000000",
                     backgroundColor: "#FFFFFF",
-                    color: "#0D0F0A",
-                    border: "1.5px solid rgba(13, 15, 10, 0.15)",
-                    fontSize: "13.5px",
-                    fontWeight: 700,
-                    textDecoration: "none",
-                    boxShadow: "0 2px 8px rgba(13, 15, 10, 0.05)",
                   }}
                 >
                   {pill.label}
