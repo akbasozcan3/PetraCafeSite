@@ -357,18 +357,22 @@ export default async function HakkimizdaPage() {
           <div className="about-story-text">
             <p className="eyebrow">BİZİ TANIYIN</p>
             <h2 id="about-story-heading">
-              {cleanRawText(h.answerBaslik) || "Sadece bir restoran değil, bir yaşam alanı."}
+              {cleanRawText(
+                h.answerBaslik && h.answerBaslik.trim().toLocaleLowerCase("tr-TR") !== "kısaca"
+                  ? h.answerBaslik
+                  : "Sadece bir restoran değil, özel bir yaşam alanı."
+              )}
             </h2>
 
             {h.answerMetin && (
-              <div className="answer" style={{ margin: "4px 0" }}>
+              <div className="answer" style={{ margin: "4px 0 10px" }}>
                 <b>Kısaca</b>
                 <p>{cleanRawText(h.answerMetin)}</p>
               </div>
             )}
 
-            {/* Dinamik Semantik HTML Blokları */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {/* Dinamik Semantik HTML Blokları — Makalenin Tamamı */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {renderSemanticBlocks(articleBlocks)}
             </div>
 
