@@ -4,6 +4,7 @@ import { getPublicContent } from "@/lib/db/content";
 import { phoneToTelHref, buildWhatsappUrl } from "@/lib/content/contact-utils";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
+import Breadcrumbs from "@/components/site/Breadcrumbs";
 import { cleanRawText } from "@/lib/content/markdown-parser";
 import {
   Waves,
@@ -85,11 +86,7 @@ export default async function HavuzPlajPage() {
     <article className="page-hakkimizda page-havuz">
       {/* 1. EDİTORYAL BAŞLIK */}
       <header className="about-head-sec">
-        <nav className="crumbs" aria-label="Breadcrumb">
-          <Link href="/">Ana Sayfa</Link>
-          <span>/</span>
-          <span aria-current="page">Havuz & Plaj</span>
-        </nav>
+        <Breadcrumbs items={[{ label: "Havuz & Plaj" }]} />
 
         <div className="about-head-sec__badge">
           <Waves size={14} />

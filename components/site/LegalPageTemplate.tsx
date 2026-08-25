@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SiteIcon from "@/components/site/SiteIcon";
+import Breadcrumbs from "@/components/site/Breadcrumbs";
 
 export interface LegalPageProps {
   currentSlug: "gizlilik-politikasi" | "rezervasyon-kosullari" | "kullanim-kosullari" | "cerez-politikasi" | "ticari-bilgiler";
@@ -134,13 +135,9 @@ export default function LegalPageTemplate({
       `}</style>
 
       {/* 1. Breadcrumbs Navigasyon */}
-      <nav aria-label="Breadcrumb" className="petra-legal-crumbs">
-        <Link href="/" style={{ color: "var(--card-text, #0d0f0a)", textDecoration: "none", fontWeight: 600 }}>
-          Ana Sayfa
-        </Link>
-        <span>/</span>
-        <span style={{ color: "var(--brass, #b8842c)", fontWeight: 700 }}>{title}</span>
-      </nav>
+      <div style={{ marginBottom: "20px" }}>
+        <Breadcrumbs items={[{ label: title }]} />
+      </div>
 
       {/* 2. Mobilde Yatay Kaydırılabilir Hızlı Sekmeler */}
       <div className="petra-legal-mobile-tabs">

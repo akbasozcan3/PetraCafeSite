@@ -11,6 +11,7 @@ import { productHref } from "@/lib/content/slugify";
 import { resolveProductImage } from "@/lib/catalog/product-image";
 import { categoryCover } from "@/lib/content/media-fallbacks";
 import MenuProductCard from "@/components/shop/MenuProductCard";
+import Breadcrumbs from "@/components/site/Breadcrumbs";
 
 export const revalidate = 60;
 
@@ -57,6 +58,9 @@ export default async function MenuPage() {
 
   return (
     <div className="menu-page">
+      <div style={{ margin: "4px 0 16px" }}>
+        <Breadcrumbs items={[{ label: "Menü" }]} />
+      </div>
       <header className="menu-page__hero">
         <p className="menu-page__kicker">{hub?.eyebrow || "Menü"}</p>
         <h1>{title}</h1>

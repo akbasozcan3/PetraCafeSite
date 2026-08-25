@@ -5,79 +5,46 @@ import { phoneToTelHref } from "@/lib/content/contact-utils";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
+import Breadcrumbs from "@/components/site/Breadcrumbs";
+import { cleanRawText } from "@/lib/content/markdown-parser";
+import {
+  Calendar,
+  Clock,
+  ArrowRight,
+  Phone,
+  CalendarCheck,
+  BookOpen,
+  Sparkles,
+} from "lucide-react";
 
-export const revalidate = 60;
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const content = await getPublicContent();
-  const b = content.sayfalar?.blog;
-  const title = b?.baslik || "Blog";
+  const content = await getPublicContent().catch(() => null);
+  const b = content?.sayfalar?.blog;
+  const brand = content?.brand?.displayName || "Petra Cafe Restaurant";
+  const title = `Petra Defteri & Blog | ${brand}`;
   const description =
-    b?.lead ||
-    "Rezervasyon, kahvaltı, havuz ve mekân üzerine kısa yazılar.";
+    cleanRawText(b?.lead || "") ||
+    "Petra Cafe Restaurant lezzet rehberi, serpme kahvaltı, şefin önerileri, havuz & etkinlik ipuçları.";
   return {
     title,
     description,
-    alternates: { canonical: "/blog" },
+    alternates: { canonical: "https://petra-cafe-site.vercel.app/blog" },
     openGraph: {
-      title: `${title} | Petra Cafe Restaurant`,
+      title,
       description,
+      url: "https://petra-cafe-site.vercel.app/blog",
+      type: "website",
+      siteName: brand,
     },
     twitter: {
-      card: "summary",
-      title: `${title} | Petra Cafe Restaurant`,
+      card: "summary_large_image",
+      title,
       description,
     },
   };
-}
-
-function ClockIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
-  );
-}
-
-function CalendarIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-    </svg>
-  );
-}
-
-function ArrowRightIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  );
-}
-
-function CalendarCheckIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-      <path d="m9 16 2 2 4-4" />
-    </svg>
-  );
 }
 
 export default async function BlogIndexPage() {
@@ -85,85 +52,162 @@ export default async function BlogIndexPage() {
   const b = content.sayfalar?.blog;
   const posts = (content.makaleler || []).filter((m) => m.yayinda !== false);
   const tel = content.iletisim?.telefon || "0530 608 90 51";
-  const telHref = phoneToTelHref(
-    content.iletisim?.telefonHam || content.iletisim?.telefon || "05306089051"
-  );
+  const telHref = phoneToTelHref(tel);
 
   return (
-    <div className="shop-blog">
-      <nav className="crumbs" aria-label="Sayfa yolu">
-        <Link href="/">Ana Sayfa</Link>
-        <span>/</span>
-        <span aria-current="page">Blog</span>
-      </nav>
+    <div className="page-hakkimizda page-blog" style={{ maxWidth: "1140px", margin: "0 auto", padding: "0 clamp(16px, 3vw, 24px) 60px" }}>
+      {/* 1. BREADCRUMBS & EDİTORYAL BAŞLIK */}
+      <header className="about-head-sec" style={{ paddingBottom: 0, marginBottom: "32px" }}>
+        <Breadcrumbs items={[{ label: "Blog & Gastronomi" }]} />
 
-      <header className="ys-hero ys-hero--sm">
-        <p className="ys-hero__eyebrow">{b?.eyebrow || "Blog"}</p>
-        <h1>{b?.baslik || "Petra Defteri"}</h1>
-        {b?.lead ? <p>{b.lead}</p> : null}
+        <div className="about-head-sec__badge">
+          <BookOpen size={14} />
+          <span>{cleanRawText(b?.eyebrow || "") || "PETRA DEFTERİ"}</span>
+        </div>
+
+        <h1 className="about-head-sec__title">
+          {cleanRawText(b?.baslik || "") || "Lezzet, Kahvaltı & Yaşam Rehberi"}
+        </h1>
+
+        <p className="about-head-sec__lead" style={{ maxWidth: "62ch" }}>
+          {cleanRawText(b?.lead || "") ||
+            "Taşdelen'in gözde buluşma noktasından şefin tarif sırları, mevsimsel lezzet kartları, masa rezervasyonu ve havuz rehberi."}
+        </p>
       </header>
 
+      {/* 2. MAKALE LİSTESİ — MODERN EDİTORYAL KARTLAR */}
       {!posts.length ? (
-        <div className="shop-card">
-          <p>Henüz yayınlanmış yazı yok.</p>
+        <div
+          style={{
+            background: "#FFFFFF",
+            borderRadius: "20px",
+            border: "1px solid rgba(13, 15, 10, 0.08)",
+            padding: "48px 24px",
+            textAlign: "center",
+            color: "var(--muted, #6E6A5C)",
+          }}
+        >
+          <Sparkles size={32} style={{ margin: "0 auto 12px", opacity: 0.5 }} />
+          <p style={{ margin: 0, fontSize: "16px", fontWeight: 600 }}>Henüz yayınlanmış bir yazı bulunmuyor.</p>
         </div>
       ) : (
-        <div className="blog-list">
-          {posts.map((m) => {
-            const cover = resolveMediaUrl(liveMedia(m.kapak, SITE_PHOTOS.interior));
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "24px",
+            marginTop: "12px",
+          }}
+        >
+          {posts.map((m, idx) => {
+            const cover = resolveMediaUrl(liveMedia(m.kapak, idx % 2 === 0 ? SITE_PHOTOS.interior : SITE_PHOTOS.facade));
             return (
               <Link
-                className="post-magazine-card"
-                href={`/blog/${m.slug}`}
                 key={m.slug}
+                href={`/blog/${m.slug}`}
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: "22px",
+                  border: "1.5px solid rgba(13, 15, 10, 0.08)",
+                  boxShadow: "0 8px 24px -8px rgba(13, 15, 10, 0.06)",
+                  textDecoration: "none",
+                  color: "inherit",
+                  display: "flex",
+                  flexDirection: "column",
+                  overflow: "hidden",
+                  transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+                }}
+                className="blog-card-hover"
               >
+                {/* Kapak Görseli */}
                 {cover ? (
-                  <div className="post-magazine-card__thumb">
+                  <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9.5", overflow: "hidden", background: "#16190F" }}>
                     <SafeImg
                       src={cover}
-                      alt={m.baslik}
+                      alt={cleanRawText(m.baslik || "")}
                       fallback={SITE_PHOTOS.interior}
                       className="w-full h-full object-cover"
                     />
+                    {m.kategori ? (
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: "14px",
+                          left: "14px",
+                          background: "rgba(13, 15, 10, 0.8)",
+                          backdropFilter: "blur(8px)",
+                          color: "#D9A441",
+                          fontSize: "11px",
+                          fontWeight: 700,
+                          padding: "4px 10px",
+                          borderRadius: "999px",
+                          letterSpacing: "0.06em",
+                          textTransform: "uppercase",
+                          border: "1px solid rgba(217, 164, 65, 0.3)",
+                        }}
+                      >
+                        {cleanRawText(m.kategori)}
+                      </span>
+                    ) : null}
                   </div>
                 ) : null}
 
-                <div className="post-magazine-card__body">
+                {/* Kart Gövdesi */}
+                <div style={{ padding: "22px 22px 20px", display: "flex", flexDirection: "column", flex: "1 1 auto", justifyContent: "space-between" }}>
                   <div>
-                    <div className="post-magazine-card__meta">
-                      {m.kategori ? (
-                        <span className="post-magazine-card__badge">
-                          {m.kategori}
-                        </span>
-                      ) : null}
+                    {/* Meta Bilgiler (Tarih + Okuma Süresi) */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "14px", fontSize: "12px", color: "var(--muted, #6E6A5C)", fontWeight: 500, marginBottom: "10px" }}>
                       {m.tarih ? (
-                        <span className="post-magazine-card__info">
-                          <CalendarIcon />
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                          <Calendar size={13} color="var(--brass-lo, #B8842C)" />
                           {m.tarih}
                         </span>
                       ) : null}
                       {m.okumaSuresi ? (
-                        <span className="post-magazine-card__info">
-                          <ClockIcon />
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                          <Clock size={13} color="var(--brass-lo, #B8842C)" />
                           {m.okumaSuresi}
                         </span>
                       ) : null}
                     </div>
 
-                    <h2 className="post-magazine-card__title">
-                      {m.baslik}
+                    {/* Makale Başlığı */}
+                    <h2
+                      style={{
+                        fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+                        fontSize: "clamp(18px, 1.8vw, 21px)",
+                        fontWeight: 600,
+                        lineHeight: 1.3,
+                        color: "var(--ink, #0D0F0A)",
+                        margin: "0 0 10px",
+                      }}
+                    >
+                      {cleanRawText(m.baslik)}
                     </h2>
 
+                    {/* Makale Özeti */}
                     {m.ozet ? (
-                      <p className="post-magazine-card__lead">
-                        {m.ozet}
+                      <p
+                        style={{
+                          fontSize: "13.5px",
+                          lineHeight: 1.6,
+                          color: "#555A4C",
+                          margin: 0,
+                          display: "-webkit-box",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {cleanRawText(m.ozet)}
                       </p>
                     ) : null}
                   </div>
 
-                  <div className="post-magazine-card__footer">
-                    <span className="post-magazine-card__btn">
-                      Yazıyı İncele <ArrowRightIcon />
+                  {/* Devamını Oku Butonu */}
+                  <div style={{ marginTop: "18px", paddingTop: "14px", borderTop: "1px solid rgba(13, 15, 10, 0.06)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <span style={{ fontSize: "13px", fontWeight: 700, color: "var(--brass-lo, #B8842C)", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                      Yazıyı Oku <ArrowRight size={14} />
                     </span>
                   </div>
                 </div>
@@ -173,181 +217,56 @@ export default async function BlogIndexPage() {
         </div>
       )}
 
-      <div className="blog-cta-banner">
-        <h2>{b?.ctaBaslik || "Masa veya Havuz İçin Rezervasyon"}</h2>
-        <p>
-          {b?.ctaMetin ||
-            "Taşdelen'in huzurlu atmosferinde keyifli bir gün için online rezervasyon yapın veya bizi arayın."}
+      {/* 3. REZERVASYON & İLETİŞİM BANNER */}
+      <section
+        style={{
+          marginTop: "48px",
+          background: "var(--cream-2, #F3EDE0)",
+          borderRadius: "24px",
+          border: "1.5px solid rgba(13, 15, 10, 0.08)",
+          padding: "clamp(28px, 4vw, 40px)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
+            fontSize: "clamp(22px, 3vw, 28px)",
+            fontWeight: 600,
+            color: "var(--ink, #0D0F0A)",
+            margin: 0,
+          }}
+        >
+          {cleanRawText(b?.ctaBaslik || "") || "Petra'da Masanızı Hazırlayalım"}
+        </h2>
+        <p style={{ fontSize: "14.5px", color: "#555A4C", maxWidth: "56ch", margin: 0 }}>
+          {cleanRawText(b?.ctaMetin || "") ||
+            "Zengin serpme kahvaltımız, taş fırın lezzetlerimiz ve açık havuzumuzla keyif dolu bir gün için yerinizi ayırtın."}
         </p>
-        <div className="blog-cta-actions">
-          <Link href="/#rezervasyon" className="btn btn--lg btn--light">
-            <CalendarCheckIcon />
-            Rezervasyon Formu
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "6px", justifyContent: "center" }}>
+          <Link href="/#rezervasyon" className="btn btn--light">
+            <CalendarCheck size={16} />
+            Masa Rezervasyonu Yap
           </Link>
-          {telHref ? (
-            <a href={`tel:${telHref}`} className="btn btn--lg btn--ghost">
-              <PhoneIcon />
-              {tel}
-            </a>
-          ) : null}
+          <a href={`tel:${telHref}`} className="btn">
+            <Phone size={15} />
+            {tel}
+          </a>
         </div>
-      </div>
+      </section>
 
       <style>{`
-        .blog-list {
-          display: grid;
-          gap: 24px;
-          margin: 28px 0;
+        .blog-card-hover:hover {
+          transform: translateY(-4px);
+          border-color: rgba(184, 132, 44, 0.4) !important;
+          box-shadow: 0 16px 36px -10px rgba(184, 132, 44, 0.18) !important;
         }
-        .post-magazine-card {
-          display: flex;
-          flex-direction: row;
-          align-items: stretch;
-          gap: 28px;
-          padding: 22px;
-          background: var(--card-bg, #ffffff);
-          border-radius: 22px;
-          border: 1px solid var(--card-border, rgba(13, 15, 10, 0.09));
-          box-shadow: 0 10px 30px rgba(13, 15, 10, 0.05);
-          text-decoration: none !important;
-          color: var(--card-text, #12140E) !important;
-          transition: all 0.2s ease;
-        }
-        .post-magazine-card:hover {
-          border-color: var(--brass, rgba(184, 132, 44, 0.5));
-          box-shadow: 0 14px 36px rgba(184, 132, 44, 0.15);
-          transform: translateY(-2px);
-        }
-        .post-magazine-card__thumb {
-          flex: 0 0 320px;
-          width: 320px;
-          height: 210px;
-          border-radius: 16px;
-          overflow: hidden;
-          background: #141810;
-        }
-        .post-magazine-card__thumb img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-        .post-magazine-card__body {
-          flex: 1 1 auto;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          padding: 4px 0;
-          min-width: 0;
-        }
-        .post-magazine-card__meta {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          gap: 10px 14px;
-          margin-bottom: 10px;
-          font-size: 0.8rem;
-          font-weight: 700;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-        }
-        .post-magazine-card__badge {
-          background: rgba(217, 164, 65, 0.16);
-          color: var(--brass, #B8842C);
-          padding: 3px 10px;
-          border-radius: 6px;
-          font-size: 0.76rem;
-        }
-        .post-magazine-card__info {
-          display: inline-flex;
-          align-items: center;
-          gap: 5px;
-          color: var(--card-muted, #6E6A5C);
-          font-size: 0.78rem;
-        }
-        .post-magazine-card__title {
-          font-family: var(--f-head, "Playfair Display", Georgia, serif);
-          font-size: clamp(1.25rem, 2.2vw, 1.45rem);
-          font-weight: 700;
-          line-height: 1.3;
-          color: var(--card-text, #12140E);
-          margin: 0 0 10px 0;
-        }
-        .post-magazine-card__lead {
-          font-size: 0.96rem;
-          line-height: 1.6;
-          color: var(--card-muted, #5E594D);
-          margin: 0;
-        }
-        .post-magazine-card__footer {
-          margin-top: 16px;
-        }
-        .post-magazine-card__btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 0.88rem;
-          font-weight: 700;
-          color: var(--brass, #B8842C);
-        }
-
-        .blog-cta-banner {
-          background: var(--card-bg, #ffffff);
-          border: 1px solid var(--card-border, rgba(184, 132, 44, 0.25));
-          border-radius: 22px;
-          padding: 32px 28px;
-          margin-top: 40px;
-          box-shadow: 0 10px 30px rgba(13,15,10,0.05);
-          color: var(--card-text, #12140E);
-        }
-        .blog-cta-banner h2 {
-          font-family: var(--f-head, "Playfair Display", Georgia, serif);
-          font-size: 1.45rem;
-          color: var(--card-text, #12140E);
-          font-weight: 700;
-          margin: 0 0 8px 0;
-        }
-        .blog-cta-banner p {
-          color: var(--card-muted, #5E594D);
-          font-size: 0.96rem;
-          line-height: 1.6;
-          margin: 0 0 20px 0;
-        }
-        .blog-cta-actions {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
-        }
-        .blog-cta-actions .btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        @media (max-width: 768px) {
-          .post-magazine-card {
-            flex-direction: column !important;
-            gap: 16px !important;
-            padding: 16px !important;
-          }
-          .post-magazine-card__thumb {
-            flex: none !important;
-            width: 100% !important;
-            height: 200px !important;
-          }
-          .post-magazine-card__body {
-            padding: 0 !important;
-          }
-          .post-magazine-card__title {
-            font-size: 1.25rem !important;
-          }
-          .blog-cta-banner {
-            padding: 22px 18px !important;
-          }
-          .blog-cta-actions .btn {
-            width: 100% !important;
-            justify-content: center !important;
-          }
+        .blog-card-hover:hover img {
+          transform: scale(1.04);
         }
       `}</style>
     </div>

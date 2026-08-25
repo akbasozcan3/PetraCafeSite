@@ -5,6 +5,7 @@ import { phoneToTelHref, buildWhatsappUrl } from "@/lib/content/contact-utils";
 import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
+import Breadcrumbs from "@/components/site/Breadcrumbs";
 import {
   cleanRawText,
   formatInlineText,
@@ -325,11 +326,7 @@ export default async function HakkimizdaPage() {
           1. EDİTORYAL BAŞLIK (Tek H1 — SEO Standartlarına Uygun)
           ═══════════════════════════════════════════════════════ */}
       <header className="about-head-sec">
-        <nav className="crumbs" aria-label="Breadcrumb">
-          <Link href="/">Ana Sayfa</Link>
-          <span>/</span>
-          <span aria-current="page">Hakkımızda</span>
-        </nav>
+        <Breadcrumbs items={[{ label: "Hakkımızda" }]} />
 
         <div className="about-head-sec__badge">
           <Sparkles size={14} />
@@ -385,11 +382,11 @@ export default async function HakkimizdaPage() {
 
             {/* Hap Etiketler / Internal Links */}
             <div className="about-story-pills">
-              <Link href="/menu">Dünya Mutfağı</Link>
-              <Link href="/menu#kat-kahvalti">Serpme Kahvaltı</Link>
-              <Link href="/havuz-plaj">Pool & Beach</Link>
-              <Link href="/#rezervasyon">Özel Davetler</Link>
-              <Link href="/menu#kat-sicak-icecekler">Artisan Kahve</Link>
+              <Link href="/menu" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Dünya Mutfağı</Link>
+              <Link href="/menu#kat-kahvalti" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Serpme Kahvaltı</Link>
+              <Link href="/havuz-plaj" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Pool & Beach</Link>
+              <Link href="/#rezervasyon" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Özel Davetler</Link>
+              <Link href="/menu#kat-sicak-icecekler" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Artisan Kahve</Link>
             </div>
           </div>
 
