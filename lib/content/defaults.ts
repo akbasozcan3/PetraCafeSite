@@ -450,7 +450,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   waFloat: {
     baslik: "WhatsApp Rezervasyon",
     alt: "Hızlı yanıt",
-    onYazi: "Merhaba, Petra Cafe Restaurant’tan bilgi / rezervasyon istiyorum.",
+    onYazi: "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum.",
     ariaLabel: "WhatsApp ile rezervasyon",
   },
   legal: {

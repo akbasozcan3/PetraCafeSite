@@ -13,7 +13,7 @@ export default function HomeContact({ content }: { content: SiteContent }) {
   const telHref = phoneToTelHref(c.telefonHam || c.telefon || "");
   const waHref = buildWhatsappUrl(
     c.whatsapp || c.telefonHam || c.telefon || "",
-    content.waFloat?.onYazi || "Merhaba, masa ayırtmak istiyorum."
+    content.waFloat?.onYazi || "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum."
   );
   const mapDest =
     c.koordinat ||

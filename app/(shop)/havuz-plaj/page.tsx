@@ -66,7 +66,7 @@ export default async function HavuzPlajPage() {
   const telHref = phoneToTelHref(tel);
   const waHref = buildWhatsappUrl(
     content.iletisim?.whatsapp || tel,
-    "Merhaba, Petra Havuz & Plaj hakkında bilgi ve rezervasyon için yazıyorum."
+    "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum."
   );
 
   const havuzSaat = p.cafeSaat || "09:00 – 18:00";

@@ -50,12 +50,15 @@ export function isPhoneTypingKey(key: string, withModifier: boolean): boolean {
   return /^\d$/.test(key);
 }
 
+export const DEFAULT_WA_TEXT =
+  "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum.";
+
 export function buildWhatsappUrl(phoneOrUrl: string, presetText?: string): string {
-  const digits = phoneToWaDigits(phoneOrUrl);
-  if (!digits) return "";
-  const base = `https://wa.me/${digits}`;
-  if (presetText) return `${base}?text=${encodeURIComponent(presetText)}`;
-  return base;
+  const digits = phoneToWaDigits(phoneOrUrl || "0530 608 90 51");
+  const cleanDigits = digits || "905306089051";
+  const text = presetText !== undefined ? presetText : DEFAULT_WA_TEXT;
+  if (!text) return `https://wa.me/${cleanDigits}`;
+  return `https://wa.me/${cleanDigits}?text=${encodeURIComponent(text)}`;
 }
 
 export function buildInstagramUrl(handleOrUrl: string): string {

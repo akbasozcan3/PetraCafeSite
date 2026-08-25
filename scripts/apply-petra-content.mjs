@@ -354,8 +354,8 @@ data.yorumlar = [
 
 let json = JSON.stringify(data, null, 2);
 json = json.replace(/\/urunler/g, "/menu");
-json = json.replace(/0552 340 02 02/g, PHONE);
-json = json.replace(/\+905523400202/g, PHONE_TEL);
+json = json.replace(/0530 608 90 51/g, PHONE);
+json = json.replace(/\+905306089051/g, PHONE_TEL);
 json = json.replace(/firincitasdelenn/g, "petracaferestaurant");
 json = json.replace(/Taşdelen Restoran/g, "Petra Cafe Restaurant");
 

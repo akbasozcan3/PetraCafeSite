@@ -59,10 +59,8 @@ export default function ProductDetailClient({
     if (/wa\.me\//i.test(base) || /whatsapp\.com/i.test(base)) {
       return `${base.replace(/\?.*$/, "")}${sep}text=${text}`;
     }
-    const digits = base.replace(/\D/g, "");
-    return digits
-      ? `https://wa.me/${digits}?text=${text}`
-      : `https://wa.me/?text=${text}`;
+    const digits = base.replace(/\D/g, "") || "905306089051";
+    return `https://wa.me/${digits}?text=${text}`;
   }, [ad, variant, whatsappBase]);
 
   return (

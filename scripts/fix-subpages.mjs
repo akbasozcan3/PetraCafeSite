@@ -48,12 +48,12 @@ function fullFooter(file, depth) {
       <div>
         <img class="foot__mark" data-site="logo" src="${logo}" alt="Logo" width="160" height="160" loading="lazy" decoding="async">
       </div>
-      <div><h4>Fırın</h4><a href="${home}#hakkimizda">Hakkımızda</a><a href="${urunlerHref}">Ürünler</a><a href="${home}#pasta">Özel Pastalar</a><a href="${home}#galeri">Galeri</a><a href="${blogHref}">Blog</a></div>
-      <div><h4>Adres</h4><a href="${home}#iletisim">Turgut Özal Cad. No:108/C</a><a href="${home}#iletisim">Bulvar Rezidans A Blok</a><a href="${home}#iletisim">Çekmeköy / İstanbul</a><a href="${home}#iletisim">7/24 açık</a></div>
-      <div><h4>İletişim</h4><a href="tel:+905523400202">0552 340 02 02</a><a href="https://wa.me/905523400202" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://www.instagram.com/firincitasdelenn/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="mailto:info@firincitasdelen.com.tr">info@firincitasdelen.com.tr</a></div>
+      <div><h4>Petra</h4><a href="${home}#hakkimizda">Hakkımızda</a><a href="/menu">Menü</a><a href="/havuz-plaj">Havuz & Plaj</a><a href="/spor-salonu">Spor Salonu</a><a href="${blogHref}">Blog</a></div>
+      <div><h4>Adres</h4><a href="${home}#iletisim">Megakent Sitesi No:1/O</a><a href="${home}#iletisim">Taşdelen, Çekmeköy / İstanbul</a></div>
+      <div><h4>İletişim</h4><a href="tel:+905306089051">0530 608 90 51</a><a href="https://wa.me/905306089051?text=Merhaba%2C%20Petra%20Ya%C5%9Fam%20Merkezi%20web%20siteniz%20%C3%BCzerinden%20ileti%C5%9Fime%20ge%C3%A7iyorum.%20Bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://www.instagram.com/petracaferestaurant/" target="_blank" rel="noopener noreferrer">Instagram</a></div>
     </div>
   </div>
-  <div class="wrap foot__bar"><span>© <span id="yil">2026</span> Taşdelen Fırıncı</span><span>Tüm hakları saklıdır.</span></div>
+  <div class="wrap foot__bar"><span>© <span id="yil">2026</span> Petra Cafe Restaurant</span><span>Tüm hakları saklıdır.</span></div>
 </footer>`;
 }
 

@@ -9,7 +9,7 @@ import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import { cleanRawText } from "@/lib/content/markdown-parser";
-import { phoneToTelHref } from "@/lib/content/contact-utils";
+import { phoneToTelHref, buildWhatsappUrl } from "@/lib/content/contact-utils";
 import {
   Calendar,
   Clock,
@@ -75,9 +75,10 @@ export default async function BlogPostPage({ params }: Props) {
   const cover = resolveMediaUrl(liveMedia(post.kapak, SITE_PHOTOS.interior));
   const tel = content.iletisim?.telefon || "0530 608 90 51";
   const telHref = phoneToTelHref(tel);
-  const wa = content.iletisim?.whatsapp || "905306089051";
-  const waClean = wa.replace(/\D/g, "");
-  const waHref = `https://wa.me/${waClean}?text=${encodeURIComponent("Merhaba, rezervasyon hakkında bilgi almak istiyorum.")}`;
+  const waHref = buildWhatsappUrl(
+    content.iletisim?.whatsapp || tel,
+    "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum."
+  );
   const adres = content.iletisim?.adresSatir1 || "Taşdelen, Çekmeköy / İstanbul";
 
   // İlgili diğer makaleler (en fazla 2 adet)

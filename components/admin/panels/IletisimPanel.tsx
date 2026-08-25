@@ -171,11 +171,11 @@ export default function IletisimPanel() {
         </div>
         {phoneToWaDigits(content.iletisim?.telefonHam || content.iletisim?.telefon || waPreview) ? (
           <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-sm text-[#C8D0DC]">
-            <span className="text-[#6B7A94]">WhatsApp rezervasyon numarası: </span>
+            <span className="text-[#6B7A94]">WhatsApp iletişim numarası: </span>
             <a
               href={buildWhatsappUrl(
                 content.iletisim?.telefonHam || content.iletisim?.telefon || waPreview,
-                "Merhaba, masa ayırtmak istiyorum."
+                "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum."
               )}
               target="_blank"
               rel="noopener noreferrer"
@@ -184,7 +184,7 @@ export default function IletisimPanel() {
               wa.me/{phoneToWaDigits(content.iletisim?.telefonHam || content.iletisim?.telefon || waPreview)}
             </a>
             <p className="mt-1 text-xs text-[#6B7A94]">
-              Kategori ve menü sayfalarındaki WhatsApp bu numaraya gider. Kaydettikten sonra siteyi yenileyin.
+              Web sitesindeki tüm WhatsApp butonları bu numaraya ve profesyonel hazır karşılama mesajına gider.
             </p>
           </div>
         ) : null}

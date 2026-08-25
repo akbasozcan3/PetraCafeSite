@@ -64,7 +64,7 @@ export default async function SporSalonuPage() {
   const telHref = phoneToTelHref(tel);
   const waHref = buildWhatsappUrl(
     content.iletisim?.whatsapp || tel,
-    "Merhaba, Petra Spor Salonu ön kayıt indirimi ve üyelik hakkında bilgi almak istiyorum."
+    "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum."
   );
 
   const instagramUrl = s.instagramUrl || "https://www.instagram.com/petrasporsalonu";

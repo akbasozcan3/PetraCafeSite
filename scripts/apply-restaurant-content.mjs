@@ -278,7 +278,7 @@ data.hakkimizda = {
   baslik: "Taşdelen'de dünya mutfağı",
   answerBaslik: "Kısaca",
   answerMetin:
-    "Taşdelen Restoran, Çekmeköy Taşdelen'de Akdeniz, Anadolu ve Uzak Doğu mutfaklarını aynı sofrada buluşturan bir restoran. Şefin mevsimsel menüsü, açık ateş ızgarası ve özenli servis ile akşam yemeğini bir ritüele dönüştürür. Adres: Turgut Özal Caddesi No:108/C, Bulvar Rezidans A Blok. Rezervasyon: 0552 340 02 02.",
+    "Taşdelen Restoran, Çekmeköy Taşdelen'de Akdeniz, Anadolu ve Uzak Doğu mutfaklarını aynı sofrada buluşturan bir restoran. Şefin mevsimsel menüsü, açık ateş ızgarası ve özenli servis ile akşam yemeğini bir ritüele dönüştürür. Adres: Turgut Özal Caddesi No:108/C, Bulvar Rezidans A Blok. Rezervasyon: 0530 608 90 51.",
   lead: "Çekmeköy Taşdelen'de, kaliteli malzeme ve klasik tekniklerle dünya mutfağını sade, şık bir salonda sunuyoruz.",
   body: [
     "Menümüz başlangıçlardan ana yemeklere, tatlıdan kadehe uzanır. Her tabak mevsimin en iyi ürünüyle kurulur; ızgara, confit ve deniz mahsulleri şefin imza çizgisini taşır.",
@@ -393,7 +393,7 @@ data.sss = {
     {
       soru: "Rezervasyon nasıl yapılır?",
       cevap:
-        "Sitedeki rezervasyon formundan tarih, saat ve kişi sayısını gönderin; ekibimiz telefonla onaylar. Dilerseniz 0552 340 02 02 veya WhatsApp üzerinden de masa ayırtabilirsiniz.",
+        "Sitedeki rezervasyon formundan tarih, saat ve kişi sayısını gönderin; ekibimiz telefonla onaylar. Dilerseniz 0530 608 90 51 veya WhatsApp üzerinden de masa ayırtabilirsiniz.",
     },
     {
       soru: "Hangi saatlerde açıksınız?",
@@ -466,7 +466,7 @@ data.sayfalar = {
 data.seo = {
   title: "Taşdelen Restoran — Dünya Mutfağı | Çekmeköy Taşdelen",
   description:
-    "Çekmeköy Taşdelen'de dünya mutfağı. Başlangıçlar, ızgara, deniz mahsulleri, tadım menüsü ve online rezervasyon. 0552 340 02 02",
+    "Çekmeköy Taşdelen'de dünya mutfağı. Başlangıçlar, ızgara, deniz mahsulleri, tadım menüsü ve online rezervasyon. 0530 608 90 51",
   ogTitle: "Taşdelen Restoran — Dünya Mutfağı | Çekmeköy",
   ogDescription:
     "Akdeniz'den Uzak Doğu'ya şef sofrası. Menü, tadım ve rezervasyon — Çekmeköy Taşdelen.",
@@ -502,8 +502,8 @@ data.footer = {
     data.footer?.kolonlar?.[2] || {
       baslik: "İletişim",
       links: [
-        { label: "0552 340 02 02", href: "tel:+905523400202" },
-        { label: "WhatsApp", href: "https://wa.me/905523400202" },
+        { label: "0530 608 90 51", href: "tel:+905306089051" },
+        { label: "WhatsApp", href: "https://wa.me/905306089051" },
         { label: "Instagram", href: "https://www.instagram.com/firincitasdelenn/" },
         { label: "info@firincitasdelen.com.tr", href: "mailto:info@firincitasdelen.com.tr" },
       ],
@@ -553,7 +553,7 @@ data.makaleler = [
 <ul><li><strong>Hafta içi 12:00–17:00:</strong> genellikle aynı gün.</li><li><strong>Hafta içi akşam:</strong> bir gün önce rahat eder.</li><li><strong>Cuma–cumartesi akşam:</strong> 48 saat.</li><li><strong>Tadım menüsü:</strong> 48 saat, kişi başı teyit.</li></ul>
 <h2>Formda ne yazmalıyım?</h2>
 <p>Alerji, bebek koltuğu, pencere kenarı veya kutlama notunu rezervasyon formundaki alana ekleyin. Mutfak ciddi alerjiyi önceden bilir; servis masayı ona göre kurar.</p>
-<div class="cta-box"><h2>Şimdi masa ayırtın</h2><p>Online form 30 saniye sürer. Dilerseniz 0552 340 02 02’yi arayın.</p><a href="/#rezervasyon" class="btn btn--lg">Rezervasyon</a></div>`,
+<div class="cta-box"><h2>Şimdi masa ayırtın</h2><p>Online form 30 saniye sürer. Dilerseniz 0530 608 90 51’yi arayın.</p><a href="/#rezervasyon" class="btn btn--lg">Rezervasyon</a></div>`,
   },
   {
     slug: "mevsimsel-menu",

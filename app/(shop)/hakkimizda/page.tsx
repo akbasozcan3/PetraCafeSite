@@ -110,7 +110,7 @@ export default async function HakkimizdaPage() {
       .join(", ") || "Taşdelen, Çekmeköy / İstanbul";
   const waHref = buildWhatsappUrl(
     content.iletisim?.whatsapp || tel,
-    "Merhaba, Petra Cafe Restaurant hakkında bilgi ve rezervasyon için yazıyorum."
+    "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum."
   );
 
   /* ─── Giriş / Lead — Sadece İLK SATIR göster ─── */
