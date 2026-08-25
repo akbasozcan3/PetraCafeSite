@@ -980,6 +980,68 @@ export default function HakkimizdaPanel() {
               onError={(err) => setMessage(err.message)}
             />
           </div>
+
+          <div className="pt-4 border-t border-white/10">
+            <h4 className="mb-2 font-medium text-[#EEE9E0]">Özel Gün & Organizasyon Masaları Görseli</h4>
+            {content.images?.events ? (
+              <div className="mb-3 flex items-center gap-3">
+                <div className="h-28 w-40 overflow-hidden rounded-lg border border-white/10">
+                  <AdminImage src={content.images.events} alt="Özel Gün & Organizasyon" />
+                </div>
+                <Button
+                  variant="ghost"
+                  onClick={async () => {
+                    try {
+                      const images = {
+                        ...content.images,
+                        events: "",
+                      };
+                      const res = await api.updateContent({ images });
+                      setContent(res.data);
+                      setMessage("Organizasyon görseli kaldırıldı.");
+                    } catch (err) {
+                      setMessage(
+                        err instanceof Error ? err.message : "Kaldırılamadı"
+                      );
+                    }
+                  }}
+                >
+                  Kaldır
+                </Button>
+              </div>
+            ) : (
+              <p className="mb-2 text-sm text-[#8A9BB0]">
+                Varsayılan organizasyon masası fotoğrafı kullanılmaktadır.
+              </p>
+            )}
+            <Upload
+              uploadKey="events"
+              accept="image/*"
+              enableCrop
+              onComplete={async (results) => {
+                try {
+                  const url = results?.[0]?.url;
+                  if (url) {
+                    const images = { ...content.images, events: url };
+                    const res = await api.updateContent({ images });
+                    setContent(res.data);
+                    setMessage("Organizasyon görseli başarıyla yüklendi.");
+                  } else {
+                    const res = await api.getAdminContent();
+                    setContent(res.data);
+                    setMessage("Organizasyon görseli başarıyla yüklendi.");
+                  }
+                } catch (err) {
+                  setMessage(
+                    err instanceof Error
+                      ? err.message
+                      : "Yükleme sonrası güncelleme başarısız"
+                  );
+                }
+              }}
+              onError={(err) => setMessage(err.message)}
+            />
+          </div>
         </section>
 
       </div>

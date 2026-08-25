@@ -39,6 +39,10 @@ export const IMAGE_KEYS = {
     label: "Rezervasyon bölüm görseli",
     hint: "Ana sayfa rezervasyon kolonu · 1200×1600 veya kare",
   },
+  events: {
+    label: "Özel Gün & Organizasyon Masaları",
+    hint: "Hakkımızda ve özel etkinlikler bölümü · 1600×1200 veya yatay",
+  },
 } as const;
 
 export type ImageKey = keyof typeof IMAGE_KEYS;
