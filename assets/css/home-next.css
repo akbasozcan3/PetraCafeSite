@@ -3092,12 +3092,13 @@ html.menu-open .site-shop a.nav__cta,
   color: var(--nav-hero-text, #fbf8f1);
 }
 
-/* Ana sayfa: hero bitene kadar navbar yok (Vercel/mobil !important savaşını ezer) */
-.site-home .nav.is-hero:not(.is-menu) {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  transform: translateY(-110%) !important;
+/* Ana sayfa: navbar daima görünür */
+.site-home .nav.is-hero,
+.site-home .nav.is-solid {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none !important;
 }
 
 .mobile-menu:not(.is-open),
@@ -3230,16 +3231,7 @@ html.menu-open .site-shop a.nav__cta,
   }
 }
 
-.site-home:not(.nav-revealed) .nav.site-nav:not(.is-menu) {
-  display: none !important;
-}
-.site-home .nav.is-hero:not(.is-menu) {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  transform: translateY(-110%) !important;
-  position: fixed !important;
-}
+.site-home .nav.site-nav,
 .site-home .nav.is-solid {
   opacity: 1 !important;
   visibility: visible !important;

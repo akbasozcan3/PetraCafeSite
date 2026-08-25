@@ -285,8 +285,10 @@ export default function SiteNav({
           visibility: visible !important;
           pointer-events: auto !important;
         }
+        .site-home header.nav.site-nav,
         .site-shop header.nav.site-nav,
         .page header.nav.site-nav,
+        header.nav.site-nav,
         header.nav.site-nav.is-solid {
           background: #FBF8F1 !important;
           background-color: #FBF8F1 !important;
@@ -297,6 +299,7 @@ export default function SiteNav({
           opacity: 1 !important;
           visibility: visible !important;
           transform: none !important;
+          pointer-events: auto !important;
         }
         header.nav.site-nav .nav__logo {
           margin-right: 0 !important;
@@ -349,12 +352,14 @@ export default function SiteNav({
             font-size: clamp(13px, 0.95vw, 14.5px) !important;
           }
         }
-        header.nav.site-nav.is-solid .nav__links a,
+        header.nav.site-nav .nav__links a,
+        .site-home header.nav.site-nav .nav__links a,
         .site-shop header.nav.site-nav .nav__links a,
         .page header.nav.site-nav .nav__links a {
           color: #0D0F0A !important;
         }
-        header.nav.site-nav.is-solid .nav__logo-text,
+        header.nav.site-nav .nav__logo-text,
+        .site-home header.nav.site-nav .nav__logo-text,
         .site-shop header.nav.site-nav .nav__logo-text,
         .page header.nav.site-nav .nav__logo-text {
           color: #0D0F0A !important;
