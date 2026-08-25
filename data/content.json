@@ -163,14 +163,16 @@
   "hakkimizda": {
     "eyebrow": "HAKKIMIZDA & YAŞAM MERKEZİ",
     "baslik": "Petra Yaşam Merkezi'nde cafe & restaurant",
-    "answerBaslik": "Sadece bir restoran değil, özel bir yaşam alanı.",
-    "answerMetin": "Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, zengin serpme kahvaltı, İtalyan tatlı ve kokteylleri, artisan kahve, premium nargile ve açık havuz–plaj deneyimi sunar.",
-    "lead": "Keyif, konfor ve kalite — kahvaltıdan akşam yemeğine, havuz kenarından özel organizasyonlara uzanan seçkin bir buluşma noktası.",
+    "answerBaslik": "Sadece bir restoran değil, Çekmeköy'ün en seçkin yaşam alanı.",
+    "answerMetin": "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de Petra Yaşam Merkezi (Megakent Sitesi) bünyesinde dünya mutfağı, geleneksel zengin serpme kahvaltı, açık yüzme havuzu (Pool & Beach), VIP localar, premium nargile, artisan kahve ve özel organizasyon davetleriyle haftanın 7 günü 08:00 – 02:00 saatleri arasında kesintisiz hizmet vermektedir.",
+    "lead": "Lezzet, keyif ve konforun tek bir adreste buluştuğu nokta — sabahın ilk ışıklarındaki zengin serpme kahvaltıdan, havuz kenarında serinletici anlara, usta şeflerin hazırladığı dünya mutfağından özel gün kutlamalarına uzanan eşsiz bir deneyim.",
     "body": [
-      "## Lezzet ve Keyfin Buluşma Noktası\nPetra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de lezzet, keyif ve konforu bir araya getiren özel bir yaşam alanıdır. Zengin menümüz, sıcak atmosferimiz ve ferah açık havuz alanımızla misafirlerimize sadece bir restoran değil, her anı değerli kılan unutulmaz bir buluşma noktası vadediyoruz.",
-      "### Usta Şeflerden Dünya Mutfağı & Marine Izgaralar\nGünün her saatine uygun lezzetlerimizle hizmetinizdeyiz. Sabahları taze köy ürünleri ve sıcak pişilerle zengin serpme kahvaltımızla güne enerjik bir başlangıç yapabilir; öğle ve akşam saatlerinde usta şeflerimizin hazırladığı dünya mutfağından seçkin lezzetlerin, marine dana ızgaraların ve taş fırından çıkan çıtır pizzaların tadını çıkarabilirsiniz.",
-      "### Açık Havuz & Pool Kulübü ile Yaz Keyfi\nYaz aylarında açık yüzme havuzumuz ve pool & beach kulübümüzle serinliğin ve güneşin tadını çıkarabilirsiniz. Doğum günleri, evlilik teklifleri, özel kutlamalar ve kurumsal davetler için sunduğumuz özel organizasyon masaları ve menü seçenekleriyle en değerli anlarınızı kusursuz kılıyoruz.",
-      "> \"Petra'da her tabak bir tutku, her köşe keyifli bir anıdır. Misafirlerimize yalnızca lezzet değil, kendilerini özel hissedecekleri huzurlu bir yaşam alanı sunuyoruz.\""
+      "## Çekmeköy Taşdelen'de Yeni Nesil Gastronomi ve Yaşam Alanı\nPetra Cafe Restaurant; İstanbul Çekmeköy Taşdelen Megakent Sitesi içerisinde yer alan, modern gastronomi anlayışını ve sosyal yaşam kültürünü tek bir çatı altında toplayan ayrıcalıklı bir tesistir. Zengin menümüz, sıcak ve samimi atmosferimiz, açık terasımız ve ferah açık yüzme havuzumuzla misafirlerimize yalnızca bir yemek değil; kendilerini özel hissedecekleri huzurlu bir yaşam alanı sunuyoruz.",
+      "### Usta Şeflerin Elinden Dünya Mutfağı & Taş Fırın Lezzetleri\nGünün her saatine hitap eden zengin menümüzde; taş fırından yeni çıkan çıtır İtalyan pizzaları, özenle marine edilmiş dana antrikot ve ızgara spesiyalleri, el yapımı taze makarnalar, enfes burgerler, taze Akdeniz salataları ve çıtır atıştırmalıklar yer almaktadır. Her tabak, en taze yerel malzemeler ve usta şeflerimizin titiz dokunuşlarıyla hazırlanarak masanıza servis edilir.",
+      "### Doğa ve Havuz Manzaralı Geleneksel Serpme Kahvaltı\nGüne enerjik ve keyifli bir başlangıç yapmak isteyenler için hazırladığımız serpme kahvaltımızda; sıcak kabarmış pişiler, Ezine ve yöresel peynir çeşitleri, sahanda sucuklu köy yumurtası, geleneksel menemen, petek bal-kaymak ve sınırsız demlik çay eşliğinde kahvaltı kültürünü bir şölene dönüştürüyoruz.",
+      "### Açık Havuz, Pool & Beach Kulübü ve Yüzme Eğitimleri\nYaz aylarında Petra Yaşam Merkezi açık yüzme havuzumuz; hem yetişkinler hem de çocuklar için tertemiz, hijyenik ve güvenli bir tatil atmosferi sunar. Konforlu güneşlenme şezlongları, VIP havuz locaları, serinletici mocktail ve taze meyve kokteylleri ile sıcak yaz günlerinin tadını çıkarabilir; profesyonel antrenörler eşliğinde yüzme derslerine katılabilirsiniz.",
+      "### Özel Günler, Doğum Günü ve Kutlama Masaları\nDoğum günleri, evlilik teklifleri, yıldönümü yemekleri, baby shower, mezuniyet ve kurumsal şirket davetleriniz için havuz başı terasımızda veya klimalı salonlarımızda kişiye özel romantik masa süslemeleri, pasta ve volkan sunumları ve özel menü seçenekleriyle en unutulmaz anlarınıza ev sahipliği yapıyoruz.",
+      "> \"Petra'da her tabak bir tutku, her köşe samimi bir anıdır. Misafirlerimize yalnızca kaliteli lezzetler değil, aileleri ve sevdikleriyle birlikte keyif alacakları güvenli ve huzurlu bir buluşma noktası vadediyoruz.\""
     ],
     "stats": [
       {
@@ -204,7 +206,7 @@
           "Taş Fırın Pizza",
           "Marine Izgara Etler",
           "El Yapımı Makarna",
-          "Taze Deniz Mahsulleri"
+          "Taze Atıştırmalıklar"
         ]
       },
       {
@@ -466,7 +468,7 @@
   },
   "hikaye": null,
   "menu": {
-    "rev": "printed-20260825-v5",
+    "rev": "printed-20260825-v6",
     "baslik": "Petra Menü",
     "giris": "Kahvaltı, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile. Fiyatlar basılı menü ile aynıdır.",
     "legend": "",
@@ -4335,6 +4337,8 @@
     "instagram": "@petracaferestaurant",
     "instagramUrl": "https://www.instagram.com/petracaferestaurant/",
     "instagramAlt": "Instagram’da Petra",
+    "tiktokUrl": "https://www.tiktok.com/@petrayasammerkezi",
+    "facebookUrl": "https://www.facebook.com/profile.php?id=61590906779525",
     "eposta": "",
     "epostaAlt": "E-posta",
     "adresSatir1": "Megakent Sitesi, Turgut Özal Cad, Selen Sk. No:1/O",
@@ -4394,8 +4398,6 @@
     "etiketTelefon": "Telefon",
     "etiketWhatsapp": "WhatsApp",
     "etiketOzelPasta": "Havuz & organizasyon",
-    "tiktokUrl": "https://www.tiktok.com/@petrayasammerkezi",
-    "facebookUrl": "https://www.facebook.com/profile.php?id=61590906779525",
     "socials": [
       {
         "id": "soc_instagram",
