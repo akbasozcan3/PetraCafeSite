@@ -36,8 +36,8 @@ export const DEFAULT_CONTENT: SiteContent = {
   loader: {
     aktif: true,
     tema: "dark",
-    baslik: "PETRA",
-    sublabel: "ÇEKMEKÖY · YAŞAM MERKEZİ",
+    baslik: "",
+    sublabel: "",
     logoBoyut: 100,
     arkaplanRenk: "#090C08",
     halkaRenk: "#D9A441",

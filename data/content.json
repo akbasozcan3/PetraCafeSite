@@ -55,8 +55,8 @@
   "loader": {
     "aktif": true,
     "tema": "dark",
-    "baslik": "PETRA",
-    "sublabel": "ÇEKMEKÖY · YAŞAM MERKEZİ",
+    "baslik": "",
+    "sublabel": "",
     "logoBoyut": 100,
     "arkaplanRenk": "#090C08",
     "halkaRenk": "#D9A441",
@@ -513,14 +513,14 @@
     ],
     "bentoGorseller": [
       {
-        "src": "/assets/cms/hero-ic.webp",
-        "alt": "Petra Fitness & Antrenman Alanı",
+        "src": "/assets/cms/petra-spor-salonu-afis.jpg",
+        "alt": "Petra Spor Salonu & Antrenman Alanı",
         "rozet": "Kardiyo & Serbest Ağırlık"
       },
       {
-        "src": "/assets/cms/hero-cephe.webp",
+        "src": "/assets/cms/petra-pool-beach-loca.jpg",
         "alt": "Petra Spor ve Yaşam Kompleksi",
-        "rozet": "Ferah & Hijyenik Salon"
+        "rozet": "Havuz & Teras Entegrasyonu"
       }
     ],
     "body": [

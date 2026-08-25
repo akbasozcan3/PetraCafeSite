@@ -24,8 +24,8 @@ function themesEqual(a: ThemeContent, b: ThemeContent) {
 const defaultLoaderConfig: LoaderContent = {
   aktif: true,
   tema: "dark",
-  baslik: "PETRA",
-  sublabel: "ÇEKMEKÖY · YAŞAM MERKEZİ",
+  baslik: "",
+  sublabel: "",
   logoBoyut: 100,
   arkaplanRenk: "#090C08",
   halkaRenk: "#D9A441",
