@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import { publicOrigin } from "@/lib/site/canonical";
 import { getPublicContent } from "@/lib/db/content";
 import { siteFaviconHref } from "@/lib/content/favicon";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
+import TopProgressBar from "@/components/site/TopProgressBar";
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getPublicContent().catch(() => null);
@@ -96,7 +98,12 @@ export default async function RootLayout({
       className={isDark ? "theme-dark" : "theme-light"}
       suppressHydrationWarning
     >
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <Suspense fallback={null}>
+          <TopProgressBar />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 }

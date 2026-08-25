@@ -1,5 +1,5 @@
 export default function AdminSplash({
-  label = "Yükleniyor",
+  label = "Admin Hazırlanıyor",
   compact = false,
 }: {
   label?: string;
@@ -16,21 +16,22 @@ export default function AdminSplash({
       aria-label={label}
     >
       <div className="relative flex h-24 w-24 items-center justify-center">
-        <span className="absolute inset-0 animate-spin rounded-full border-[2px] border-[#C8703A]/25 border-t-[#C8703A]" />
-        <span className="absolute inset-2 rounded-full border border-white/10" />
+        <span className="absolute inset-0 animate-spin rounded-full border-[2px] border-[#D9A441]/25 border-t-[#D9A441] shadow-[0_0_15px_rgba(217,164,65,0.35)]" />
+        <span className="absolute inset-2 animate-spin rounded-full border border-[#7C8B4F]/40 border-b-[#7C8B4F] [animation-direction:reverse] [animation-duration:2s]" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/assets/cms/logo.png"
-          alt=""
-          className="h-14 w-14 rounded-full object-contain"
+          alt="Petra"
+          className="h-14 w-14 rounded-full object-contain filter drop-shadow-[0_0_10px_rgba(217,164,65,0.4)]"
         />
       </div>
       <div className="text-center">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C8703A]">
-          Petra Cafe
+        <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-[#D9A441]">
+          Petra Yaşam Merkezi
         </p>
-        <p className="mt-2 text-sm text-[#8A9BB0]">{label}</p>
+        <p className="mt-1.5 text-xs text-[#8A9BB0] tracking-wide">{label}</p>
       </div>
     </div>
   );
 }
+
