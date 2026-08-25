@@ -152,6 +152,8 @@ export default async function SporSalonuPage() {
           border: 1px solid rgba(13, 15, 10, 0.12);
           box-shadow: none !important;
           background: #000000;
+          max-width: 460px;
+          margin: 0 auto;
         }
         .spor-poster-clean img {
           width: 100%;

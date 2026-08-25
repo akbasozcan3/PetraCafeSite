@@ -304,40 +304,38 @@ export default function SiteNav({
           padding-right: clamp(16px, 3vw, 32px) !important;
           box-sizing: border-box !important;
           width: 100% !important;
+          gap: 16px !important;
         }
         header.nav.site-nav .nav__logo {
           margin-right: 0 !important;
           flex-shrink: 0 !important;
-          z-index: 5 !important;
+          z-index: 10 !important;
         }
         header.nav.site-nav .nav__actions {
           margin-left: auto !important;
           flex-shrink: 0 !important;
-          z-index: 5 !important;
+          z-index: 10 !important;
           display: flex !important;
           align-items: center !important;
-          gap: 16px !important;
+          gap: 14px !important;
         }
-        @media (min-width: 900px) {
+        @media (min-width: 1081px) {
           header.nav.site-nav .nav__links {
-            position: absolute !important;
-            left: 50% !important;
-            top: 50% !important;
-            transform: translate(-50%, -50%) !important;
-            margin: 0 !important;
+            flex: 1 1 auto !important;
+            margin: 0 16px !important;
             padding: 0 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             z-index: 2 !important;
             pointer-events: auto !important;
-            width: auto !important;
+            min-width: 0 !important;
           }
           header.nav.site-nav .nav__links ul {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 4px !important;
+            gap: clamp(4px, 1vw, 12px) !important;
             list-style: none !important;
             margin: 0 !important;
             padding: 0 !important;
@@ -347,6 +345,15 @@ export default function SiteNav({
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
+          }
+          header.nav.site-nav .nav__links ul li a {
+            padding: 6px clamp(6px, 0.8vw, 12px) !important;
+            font-size: clamp(13px, 0.95vw, 14.5px) !important;
+          }
+        }
+        @media (max-width: 1080px) {
+          header.nav.site-nav .nav__links {
+            display: none !important;
           }
         }
         /* ==========================================================================
@@ -371,7 +378,7 @@ export default function SiteNav({
           filter: none !important;
           box-shadow: none !important;
         }
-        @media (max-width: 860px) {
+        @media (max-width: 1080px) {
           header.nav.site-nav {
             display: flex !important;
             justify-content: space-between !important;

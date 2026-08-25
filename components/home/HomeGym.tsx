@@ -54,7 +54,9 @@ export default function HomeGym({ content }: { content: SiteContent }) {
           background: #000000;
           display: flex;
           align-items: center;
-          justifyContent: center;
+          justify-content: center;
+          max-width: 440px;
+          margin: 0 auto;
         }
         .gym-clean-poster-box img {
           width: 100%;
