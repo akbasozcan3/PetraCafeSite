@@ -532,10 +532,138 @@ export default function SayfalarPanel() {
         </div>
       </section>
 
-      <div className="flex justify-end">
+      {/* 404 Sayfası Yönetimi */}
+      <section className="mb-6 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+        <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+          <div>
+            <h2 className="text-lg font-semibold text-[#EEE9E0] flex items-center gap-2">
+              <span className="inline-flex h-6 px-2 items-center rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold">404</span>
+              404 Hata & Bulunamadı Sayfası Yönetimi
+            </h2>
+            <p className="text-xs text-[#8A9BB0] mt-1">
+              Kullanıcılar hatalı veya mevcut olmayan bir URL girdiğinde karşılaştıkları özel tasarım 404 sayfası.
+            </p>
+          </div>
+          <a
+            href="/olmayan-sayfa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-semibold text-[#D9A441] hover:underline flex items-center gap-1 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10"
+          >
+            404 Canlı Test ↗
+          </a>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <Input
+            label="Kırmızı Hata Rozeti (Kicker)"
+            value={sayfalar.notFound?.kicker || "404 · HATALI ADRES"}
+            onChange={(e) =>
+              setSayfalar({
+                ...sayfalar,
+                notFound: {
+                  ...(sayfalar.notFound || {}),
+                  kicker: e.target.value,
+                },
+              })
+            }
+            placeholder="404 · HATALI ADRES"
+          />
+          <Input
+            label="404 Sayfa Başlığı (H1)"
+            value={sayfalar.notFound?.title || "Aradığınız Sayfa Bulunamadı"}
+            onChange={(e) =>
+              setSayfalar({
+                ...sayfalar,
+                notFound: {
+                  ...(sayfalar.notFound || {}),
+                  title: e.target.value,
+                },
+              })
+            }
+            placeholder="Aradığınız Sayfa Bulunamadı"
+          />
+          <div className="md:col-span-2">
+            <label className="mb-2 block text-sm font-medium text-[#8A9BB0]">
+              Açıklama & Yönlendirme Spotu (Lead)
+            </label>
+            <textarea
+              className={fieldClass}
+              rows={2}
+              value={
+                sayfalar.notFound?.lead ||
+                "Girdiğiniz web adresi hatalı yazılmış, sayfa taşınmış veya geçici olarak yayından kaldırılmış olabilir. Aşağıdaki hızlı bağlantılardan dilediğiniz bölüme geçebilirsiniz."
+              }
+              onChange={(e) =>
+                setSayfalar({
+                  ...sayfalar,
+                  notFound: {
+                    ...(sayfalar.notFound || {}),
+                    lead: e.target.value,
+                  },
+                })
+              }
+            />
+          </div>
+          <Input
+            label="Birincil Buton Metni"
+            value={sayfalar.notFound?.primaryLabel || "Ana Sayfaya Dön"}
+            onChange={(e) =>
+              setSayfalar({
+                ...sayfalar,
+                notFound: {
+                  ...(sayfalar.notFound || {}),
+                  primaryLabel: e.target.value,
+                },
+              })
+            }
+          />
+          <Input
+            label="Birincil Buton Hedefi"
+            value={sayfalar.notFound?.primaryHref || "/"}
+            onChange={(e) =>
+              setSayfalar({
+                ...sayfalar,
+                notFound: {
+                  ...(sayfalar.notFound || {}),
+                  primaryHref: e.target.value,
+                },
+              })
+            }
+          />
+          <Input
+            label="İkincil Buton Metni"
+            value={sayfalar.notFound?.secondaryLabel || "Menüyü İncele"}
+            onChange={(e) =>
+              setSayfalar({
+                ...sayfalar,
+                notFound: {
+                  ...(sayfalar.notFound || {}),
+                  secondaryLabel: e.target.value,
+                },
+              })
+            }
+          />
+          <Input
+            label="WhatsApp Buton Metni"
+            value={sayfalar.notFound?.waLabel || "WhatsApp Destek"}
+            onChange={(e) =>
+              setSayfalar({
+                ...sayfalar,
+                notFound: {
+                  ...(sayfalar.notFound || {}),
+                  waLabel: e.target.value,
+                },
+              })
+            }
+          />
+        </div>
+      </section>
+
+      <div className="flex justify-end pb-24">
         <Button onClick={save} disabled={saving}>
           {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-          Kaydet
+          Tüm Sayfa & 404 Ayarlarını Kaydet
         </Button>
       </div>
     </>

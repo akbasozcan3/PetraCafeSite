@@ -477,6 +477,17 @@ export const DEFAULT_CONTENT: SiteContent = {
       ctaBaslik: "Masa veya havuz için yazın",
       ctaMetin: "Rezervasyon, yüzme dersi ve organizasyon için bizi arayın veya formdan yazın.",
     },
+    notFound: {
+      kicker: "404 · HATALI BAĞLANTI",
+      title: "Aradığınız Sayfa Bulunamadı",
+      lead: "Girdiğiniz web adresi hatalı yazılmış, sayfa taşınmış veya geçici olarak yayından kaldırılmış olabilir. Aşağıdaki hızlı bağlantılardan dilediğiniz bölüme geçiş yapabilirsiniz.",
+      primaryLabel: "Ana Sayfaya Dön",
+      primaryHref: "/",
+      secondaryLabel: "Menüyü İncele",
+      secondaryHref: "/menu",
+      waLabel: "WhatsApp'tan Danışın",
+      showQuickLinks: true,
+    },
   },
   seo: {
     title: "Petra Cafe Restaurant — Dünya Mutfağı · Havuz | Çekmeköy",

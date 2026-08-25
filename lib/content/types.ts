@@ -542,6 +542,17 @@ export interface SayfalarContent {
     ctaBaslik: string;
     ctaMetin: string;
   };
+  notFound?: {
+    kicker?: string;
+    title?: string;
+    lead?: string;
+    primaryLabel?: string;
+    primaryHref?: string;
+    secondaryLabel?: string;
+    secondaryHref?: string;
+    waLabel?: string;
+    showQuickLinks?: boolean;
+  };
 }
 
 export interface SporSalonuContent {
