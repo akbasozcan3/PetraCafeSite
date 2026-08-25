@@ -211,13 +211,17 @@ export default async function BlogPostPage({ params }: Props) {
             border: "1.5px solid rgba(13, 15, 10, 0.08)",
             boxShadow: "0 12px 32px -12px rgba(13, 15, 10, 0.1)",
             background: "#16190F",
+            width: "100%",
+            aspectRatio: "16 / 9",
+            maxHeight: "380px",
+            position: "relative",
           }}
         >
           <SafeImg
             src={cover}
             alt={cleanRawText(post.baslik)}
             fallback={SITE_PHOTOS.interior}
-            className="w-full h-auto max-h-[480px] object-cover block"
+            className="w-full h-full object-cover object-center block"
           />
         </figure>
       ) : null}

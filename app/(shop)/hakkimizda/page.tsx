@@ -325,10 +325,12 @@ export default async function HakkimizdaPage() {
       {/* ═══════════════════════════════════════════════════════
           1. EDİTORYAL BAŞLIK (Tek H1 — SEO Standartlarına Uygun)
           ═══════════════════════════════════════════════════════ */}
-      <header className="about-head-sec">
+      <div style={{ margin: "12px 0 20px" }}>
         <Breadcrumbs items={[{ label: "Hakkımızda" }]} />
+      </div>
 
-        <div className="about-head-sec__badge">
+      <header className="about-head-sec" style={{ borderBottom: "none" }}>
+        <div className="about-head-sec__badge" style={{ display: "inline-flex", width: "fit-content" }}>
           <Sparkles size={14} />
           <span>{cleanRawText(h.eyebrow) || "PETRA YAŞAM MERKEZİ"}</span>
         </div>
@@ -381,24 +383,48 @@ export default async function HakkimizdaPage() {
             </div>
 
             {/* Hap Etiketler / Internal Links */}
-            <div className="about-story-pills">
-              <Link href="/menu" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Dünya Mutfağı</Link>
-              <Link href="/menu#kat-kahvalti" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Serpme Kahvaltı</Link>
-              <Link href="/havuz-plaj" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Pool & Beach</Link>
-              <Link href="/#rezervasyon" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Özel Davetler</Link>
-              <Link href="/menu#kat-sicak-icecekler" style={{ color: "#0D0F0A", background: "#FFFFFF" }}>Artisan Kahve</Link>
+            <div className="about-story-pills" style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 24 }}>
+              {[
+                { href: "/menu", label: "Dünya Mutfağı" },
+                { href: "/menu#kat-kahvalti", label: "Serpme Kahvaltı" },
+                { href: "/havuz-plaj", label: "Pool & Beach" },
+                { href: "/#rezervasyon", label: "Özel Davetler" },
+                { href: "/menu#kat-sicak-icecekler", label: "Artisan Kahve" },
+              ].map((pill, pIdx) => (
+                <Link
+                  key={pIdx}
+                  href={pill.href}
+                  className="about-story-pill-btn"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    padding: "8px 18px",
+                    borderRadius: "999px",
+                    backgroundColor: "#FFFFFF",
+                    color: "#0D0F0A",
+                    border: "1.5px solid rgba(13, 15, 10, 0.15)",
+                    fontSize: "13.5px",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    boxShadow: "0 2px 8px rgba(13, 15, 10, 0.05)",
+                  }}
+                >
+                  {pill.label}
+                </Link>
+              ))}
             </div>
           </div>
 
           {/* Sağ: Mekân Fotoğraf Kartı */}
           <div>
-            <div className="about-photo-card">
+            <div className="about-photo-card" style={{ maxHeight: "380px", aspectRatio: "16 / 10", overflow: "hidden", position: "relative" }}>
               <SafeImg
                 src={img}
                 alt={`${brandName} Taşdelen İç Mekân ve Restoran Alanı`}
                 fallback={SITE_PHOTOS.interior}
                 width={1200}
                 height={900}
+                className="w-full h-full object-cover object-center block"
                 loading="eager"
               />
               <div className="about-photo-card__badge">

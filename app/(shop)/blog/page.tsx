@@ -56,11 +56,14 @@ export default async function BlogIndexPage() {
 
   return (
     <div className="page-hakkimizda page-blog" style={{ maxWidth: "1140px", margin: "0 auto", padding: "0 clamp(16px, 3vw, 24px) 60px" }}>
-      {/* 1. BREADCRUMBS & EDİTORYAL BAŞLIK */}
-      <header className="about-head-sec" style={{ paddingBottom: 0, marginBottom: "32px" }}>
+      {/* 1. BREADCRUMBS (En Üst Navigasyon) */}
+      <div style={{ margin: "12px 0 20px" }}>
         <Breadcrumbs items={[{ label: "Blog & Gastronomi" }]} />
+      </div>
 
-        <div className="about-head-sec__badge">
+      {/* 2. EDİTORYAL BAŞLIK ALANI */}
+      <header className="about-head-sec" style={{ paddingBottom: 0, marginBottom: "32px", borderBottom: "none" }}>
+        <div className="about-head-sec__badge" style={{ display: "inline-flex", width: "fit-content" }}>
           <BookOpen size={14} />
           <span>{cleanRawText(b?.eyebrow || "") || "PETRA DEFTERİ"}</span>
         </div>
