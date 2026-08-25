@@ -23,13 +23,13 @@ function themesEqual(a: ThemeContent, b: ThemeContent) {
 
 const defaultLoaderConfig: LoaderContent = {
   aktif: true,
-  tema: "dark",
+  tema: "light",
   baslik: "",
   sublabel: "",
-  logoBoyut: 100,
-  arkaplanRenk: "#090C08",
+  logoBoyut: 108,
+  arkaplanRenk: "#FFFFFF",
   halkaRenk: "#D9A441",
-  yaziRenk: "#FFFFFF",
+  yaziRenk: "#0D0F0A",
   koseSusleri: true,
 };
 

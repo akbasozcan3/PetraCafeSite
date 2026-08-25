@@ -16,15 +16,15 @@ export default function LuxuryLoader({
   fullScreen = true,
   config,
 }: LuxuryLoaderProps) {
-  const isDark = config ? config.tema !== "light" : true;
+  const isDark = config?.tema === "dark";
   const finalTitle = label !== undefined ? label : (config?.baslik || "");
   const finalSub = sublabel !== undefined ? sublabel : (config?.sublabel || "");
-  const logoSize = Number(config?.logoBoyut || 104);
-  const ringSize = logoSize + 52;
+  const logoSize = Number(config?.logoBoyut || 108);
+  const ringSize = logoSize + 54;
   const brassColor = config?.halkaRenk || "#D9A441";
-  const bgColor = config?.arkaplanRenk || (isDark ? "#090C08" : "#FAF7F0");
-  const textColor = config?.yaziRenk || (isDark ? "#FFFFFF" : "#1A1D16");
-  const subColor = isDark ? "#A8B0A2" : "#7A7466";
+  const bgColor = config?.arkaplanRenk || (isDark ? "#090C08" : "#FFFFFF");
+  const textColor = config?.yaziRenk || (isDark ? "#FFFFFF" : "#0D0F0A");
+  const subColor = isDark ? "#A8B0A2" : "#6A6556";
   const showCorners = config?.koseSusleri !== false;
   const hasText = Boolean(finalTitle.trim() || finalSub.trim());
 
@@ -38,8 +38,8 @@ export default function LuxuryLoader({
       style={{
         backgroundColor: bgColor,
         background: isDark
-          ? `radial-gradient(circle at 50% 48%, rgba(217, 164, 65, 0.12) 0%, rgba(9, 12, 8, 0.98) 65%, ${bgColor} 100%)`
-          : `radial-gradient(circle at 50% 48%, rgba(217, 164, 65, 0.16) 0%, rgba(250, 247, 240, 0.98) 65%, ${bgColor} 100%)`,
+          ? `radial-gradient(circle at 50% 50%, rgba(217, 164, 65, 0.12) 0%, rgba(9, 12, 8, 0.98) 65%, ${bgColor} 100%)`
+          : `radial-gradient(circle at 50% 50%, rgba(217, 164, 65, 0.09) 0%, rgba(255, 255, 255, 0.98) 55%, ${bgColor} 100%)`,
       }}
       role="status"
       aria-live="polite"
