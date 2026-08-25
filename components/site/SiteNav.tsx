@@ -114,7 +114,7 @@ export default function SiteNav({
       ? navbar.ctaLabel
       : "Rezervasyon";
 
-  const links = (navbar.links?.length ? navbar.links : DEFAULT_LINKS).filter((l) => {
+  const rawLinks = (navbar.links?.length ? navbar.links : DEFAULT_LINKS).filter((l) => {
     if (/hesab|sepet|profil|giriş|uye|üye|favori|ara|search|kayit|kayıt/i.test(l.label || "")) {
       return false;
     }
@@ -123,6 +123,19 @@ export default function SiteNav({
     if (href === bookHref || href === "/#rezervasyon" || href === "#rezervasyon") return false;
     return true;
   });
+
+  const hasGymLink = rawLinks.some(
+    (l) => /spor/i.test(l.label || "") || /spor-salonu/i.test(l.href || "")
+  );
+  if (!hasGymLink) {
+    const poolIndex = rawLinks.findIndex((l) => /havuz|plaj/i.test(l.label || ""));
+    if (poolIndex !== -1) {
+      rawLinks.splice(poolIndex + 1, 0, { label: "Spor Salonu", href: "/spor-salonu" });
+    } else {
+      rawLinks.push({ label: "Spor Salonu", href: "/spor-salonu" });
+    }
+  }
+  const links = rawLinks;
 
   const logoSize = Math.max(32, Math.min(120, Number(navbar.logoSize) || 64));
   const hideText = navbar.logoTextGizle !== false;
@@ -139,34 +152,66 @@ export default function SiteNav({
       return "/menu";
     }
     if (
-      /^blog$/i.test((label || "").trim()) ||
-      href === "/#blog" ||
-      href === "#blog" ||
-      /\/#blog$/i.test(href)
+      /^spor\s*salonu$/i.test((label || "").trim()) ||
+      href === "/#spor-salonu" ||
+      href === "#spor-salonu" ||
+      /\/#spor-salonu$/i.test(href)
     ) {
-      return "/blog";
+      return "/spor-salonu";
     }
-    if (/iletişim|iletisim/i.test((label || "").trim()) || /#iletisim$/i.test(href)) {
-      return pathname === "/" ? "#iletisim-form" : "/#iletisim-form";
+    if (
+      /^havuz\s*&\s*plaj$/i.test((label || "").trim()) ||
+      href === "/#havuz-plaj" ||
+      href === "#havuz-plaj" ||
+      href === "#pasta" ||
+      href === "/#pasta" ||
+      /\/#havuz-plaj$/i.test(href)
+    ) {
+      return "/havuz-plaj";
     }
-    if (/s\.?\s?s\.?\s?s/i.test((label || "").trim()) || /#sss$/i.test(href)) {
-      return pathname === "/" ? "#sss-liste" : "/#sss-liste";
+    if (isHome) {
+      if (href.startsWith("/#")) return href.slice(1);
+      return href;
     }
-    if (/yorum/i.test((label || "").trim()) || /#yorumlar/i.test(href)) {
-      return pathname === "/" ? "#yorumlar" : "/#yorumlar";
-    }
-    if (/hizmet/i.test((label || "").trim()) || /#hizmetler/i.test(href)) {
-      return pathname === "/" ? "#hizmetler" : "/#hizmetler";
+    if (href.startsWith("#")) {
+      return `/${href}`;
     }
     return href;
   };
 
-  const jumpTo = (e: { preventDefault: () => void }, href: string) => {
-    const hash = href.includes("#") ? href.slice(href.indexOf("#") + 1) : "";
-    if (hash && pathname !== "/") {
-      e.preventDefault();
+  const isPastHomeHero = () => {
+    if (typeof window === "undefined") return false;
+    const hero = document.getElementById("hero");
+    if (!hero) return true;
+    const rect = hero.getBoundingClientRect();
+    const threshold = 18;
+    return rect.bottom < threshold;
+  };
+
+  const syncHomeNavReveal = (active: boolean) => {
+    if (typeof document === "undefined") return;
+    const navEl = document.querySelector("header.nav.site-nav");
+    if (!navEl) return;
+    if (active) {
+      navEl.classList.add("is-solid", "nav--revealed");
+      navEl.classList.remove("nav--hidden");
+    } else {
+      navEl.classList.remove("is-solid", "nav--revealed");
+    }
+  };
+
+  const jumpTo = (e: React.MouseEvent<HTMLAnchorElement>, targetHref: string) => {
+    if (typeof window === "undefined") return;
+    const hash = targetHref.includes("#") ? targetHref.split("#")[1] : "";
+    const isExternalOrOtherPage =
+      targetHref.startsWith("http") ||
+      (targetHref.startsWith("/") && !targetHref.startsWith("/#") && !hash);
+    if (isExternalOrOtherPage) {
       setOpen(false);
-      window.location.assign(`/#${hash}`);
+      return;
+    }
+    if (!isHome && targetHref.startsWith("/#")) {
+      setOpen(false);
       return;
     }
     if (!hash) {
@@ -175,117 +220,45 @@ export default function SiteNav({
     }
     e.preventDefault();
     setOpen(false);
-    window.setTimeout(
-      () => {
-        let el = document.getElementById(hash);
-        if (hash === "rezervasyon" && typeof window !== "undefined" && window.innerWidth <= 860) {
-          const formEl = document.getElementById("rezervasyonForm");
-          if (formEl) el = formEl;
-        }
-        if (!el) return;
-        const navH =
-          Number.parseFloat(
-            getComputedStyle(document.documentElement).getPropertyValue("--nav-h")
-          ) || 72;
-        const rect = el.getBoundingClientRect();
-        const availableHeight = window.innerHeight - navH;
-        let top: number;
-        if (window.innerWidth > 860 && rect.height < availableHeight) {
-          top = rect.top + window.scrollY - navH - Math.max(16, (availableHeight - rect.height) / 2);
-        } else {
-          const offset = window.innerWidth <= 860 ? 14 : 24;
-          top = rect.top + window.scrollY - navH - offset;
-        }
-        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-        history.replaceState(null, "", `#${hash}`);
-        window.dispatchEvent(new Event("hashchange"));
-        setSolid(true);
-        syncHomeNavReveal(true);
-      },
-      open ? 180 : 0
-    );
+    const el = document.getElementById(hash);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      history.replaceState(null, "", `#${hash}`);
+    }
   };
 
   useEffect(() => {
     if (!isHome) {
       setSolid(true);
-      syncHomeNavReveal(true);
       return;
     }
-    syncHomeNavReveal(false);
-    let ticking = false;
-    const apply = () => {
-      if (document.documentElement.classList.contains("menu-open")) return;
-      const next = isPastHomeHero();
-      setSolid(next);
-      syncHomeNavReveal(next);
-    };
     const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        ticking = false;
-        apply();
-      });
+      setSolid(isPastHomeHero());
     };
-    apply();
-    const gate = document.querySelector(".site-home .gate");
-    let io: IntersectionObserver | null = null;
-    if (gate) {
-      io = new IntersectionObserver(() => apply(), {
-        threshold: [0, 0.12, 0.2, 0.4, 0.6, 0.8, 1],
-      });
-      io.observe(gate);
-    }
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      io?.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      syncHomeNavReveal(false);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, [isHome]);
 
   useEffect(() => {
-    if (!open) return;
-    lockScroll();
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onEscape);
+    return () => window.removeEventListener("keydown", onEscape);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("menu-open", open);
     return () => {
-      unlockScroll();
-      window.requestAnimationFrame(() => {
-        setSolid(isPastHomeHero());
-      });
+      document.documentElement.classList.remove("menu-open");
     };
   }, [open]);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 860px)");
-    const closeOnDesktop = () => {
-      if (!mq.matches) setOpen(false);
+    const onPageShow = () => {
+      setOpen(false);
+      document.documentElement.classList.remove("menu-open");
     };
-    closeOnDesktop();
-    mq.addEventListener("change", closeOnDesktop);
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    window.addEventListener("resize", closeOnDesktop);
-    return () => {
-      mq.removeEventListener("change", closeOnDesktop);
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("resize", closeOnDesktop);
-    };
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--nav-h",
-      `${Math.max(72, logoSize + 20)}px`
-    );
-  }, [logoSize]);
-
-  useEffect(() => {
-    const onPageShow = () => unlockScroll();
     window.addEventListener("pageshow", onPageShow);
     return () => window.removeEventListener("pageshow", onPageShow);
   }, []);
@@ -304,7 +277,7 @@ export default function SiteNav({
           padding-right: clamp(16px, 3vw, 32px) !important;
           box-sizing: border-box !important;
           width: 100% !important;
-          gap: 16px !important;
+          height: 72px !important;
         }
         header.nav.site-nav .nav__logo {
           margin-right: 0 !important;
@@ -321,21 +294,26 @@ export default function SiteNav({
         }
         @media (min-width: 1081px) {
           header.nav.site-nav .nav__links {
-            flex: 1 1 auto !important;
-            margin: 0 16px !important;
+            position: absolute !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            margin: 0 !important;
             padding: 0 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            z-index: 2 !important;
+            text-align: center !important;
+            z-index: 5 !important;
             pointer-events: auto !important;
-            min-width: 0 !important;
+            width: auto !important;
           }
           header.nav.site-nav .nav__links ul {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: clamp(4px, 1vw, 12px) !important;
+            text-align: center !important;
+            gap: clamp(6px, 1.1vw, 16px) !important;
             list-style: none !important;
             margin: 0 !important;
             padding: 0 !important;
@@ -345,21 +323,11 @@ export default function SiteNav({
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
+            text-align: center !important;
           }
           header.nav.site-nav .nav__links ul li a {
             padding: 6px clamp(6px, 0.8vw, 12px) !important;
             font-size: clamp(13px, 0.95vw, 14.5px) !important;
-          }
-        }
-        @media (max-width: 1080px) {
-          header.nav.site-nav .nav__links {
-            display: none !important;
-          }
-        }
-        /* ==========================================================================
-           LÜKS MOBİL NAVBAR & MENÜ PERDESİ (FULL SCREEN DRAWER)
-           ========================================================================== */
-        header.nav.is-menu,
         header.nav.is-solid.is-menu,
         .site-nav.is-menu {
           background: #0D0F0A !important;

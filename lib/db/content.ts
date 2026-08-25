@@ -227,11 +227,24 @@ function normalizeContent(raw: Partial<SiteContent>): SiteContent {
       };
     }
     if (merged.navbar.links) {
+      let currentLinks = merged.navbar.links
+        .map((l) => ({ ...l, label: rename(l.label) || l.label }))
+        .filter((l) => !/^(rezervasyon|randevu)$/i.test((l.label || "").trim()));
+
+      const hasGym = currentLinks.some(
+        (l) => /spor/i.test(l.label || "") || /spor-salonu/i.test(l.href || "")
+      );
+      if (!hasGym) {
+        const poolIdx = currentLinks.findIndex((l) => /havuz|plaj/i.test(l.label || ""));
+        if (poolIdx !== -1) {
+          currentLinks.splice(poolIdx + 1, 0, { label: "Spor Salonu", href: "/spor-salonu" });
+        } else {
+          currentLinks.push({ label: "Spor Salonu", href: "/spor-salonu" });
+        }
+      }
       merged.navbar = {
         ...merged.navbar,
-        links: merged.navbar.links
-          .map((l) => ({ ...l, label: rename(l.label) || l.label }))
-          .filter((l) => !/^(rezervasyon|randevu)$/i.test((l.label || "").trim())),
+        links: currentLinks,
       };
     }
   }
