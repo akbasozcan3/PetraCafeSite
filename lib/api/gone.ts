@@ -25,4 +25,7 @@ export function revalidatePublicSite() {
   // Hakkımızda
   revalidatePath("/hakkimizda");
   revalidatePath("/hakkimizda", "page");
+  // Havuz & Plaj
+  revalidatePath("/havuz-plaj");
+  revalidatePath("/havuz-plaj", "page");
 }
