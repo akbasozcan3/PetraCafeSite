@@ -102,7 +102,7 @@ export default function SiteNav({
   const pathname = usePathname() || "";
   const isHome = pathname === "/";
   const [open, setOpen] = useState(false);
-  const [solid, setSolid] = useState(Boolean(pathname && pathname !== "/"));
+  const [solid, setSolid] = useState(true);
 
   const bookHref = resolveHref(
     navbar.ctaHref && !/^tel:/i.test(navbar.ctaHref) && !/wa\.me/i.test(navbar.ctaHref)
@@ -739,7 +739,7 @@ export default function SiteNav({
       `}</style>
 
       <header
-        className={`nav site-nav${solid ? " is-solid" : " is-hero"}${open ? " is-menu" : ""}`}
+        className={`nav site-nav is-solid${open ? " is-menu" : ""}`}
         id="nav"
         hidden={open}
         style={open ? { display: "none" } : undefined}
