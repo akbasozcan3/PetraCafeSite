@@ -476,7 +476,7 @@
   },
   "hikaye": null,
   "menu": {
-    "rev": "printed-20260825-v8",
+    "rev": "printed-20260825-v9",
     "baslik": "Petra Menü",
     "giris": "Kahvaltı, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile. Fiyatlar basılı menü ile aynıdır.",
     "legend": "",
@@ -4242,22 +4242,22 @@
     },
     {
       "src": "/assets/cms/petra-restoran-salon-organizasyon.jpg",
-      "baslik": "Petra Restoran Salonu & Davet Masaları",
+      "baslik": "Petra Salonu & Özel Davet Masaları",
       "boy": "half"
     },
     {
+      "src": "/uploads/site/1787135028402-7fc886bbee092d11.webp",
+      "baslik": "Sıcak & Konforlu Restoran Atmosferi",
+      "boy": "third"
+    },
+    {
+      "src": "/uploads/site/1787059804386-3117dc6067f91a4a.webp",
+      "baslik": "Petra Yaşam Merkezi Giriş Cephesi",
+      "boy": "third"
+    },
+    {
       "src": "/assets/cms/petra-havuz-fiyat-listesi-2026.jpg",
-      "baslik": "2026 Günlük Havuz Giriş Fiyat Listesi",
-      "boy": "third"
-    },
-    {
-      "src": "/assets/cms/galeri-cephe.webp",
-      "baslik": "Petra Yaşam Merkezi Cephe",
-      "boy": "third"
-    },
-    {
-      "src": "/assets/cms/hero-ic.webp",
-      "baslik": "İç Mekân & Sofra Düzeni",
+      "baslik": "2026 Günlük Havuz Giriş Tarifesi",
       "boy": "third"
     }
   ],

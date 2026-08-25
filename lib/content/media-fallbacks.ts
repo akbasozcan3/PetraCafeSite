@@ -68,12 +68,12 @@ export function categoryCover(slug?: string): string {
 }
 
 export const DEFAULT_GALLERY = [
-  { src: SITE_PHOTOS.gallery, baslik: "Cephe · Petra", boy: "wide" as const },
-  { src: SITE_PHOTOS.interior, baslik: "Salon", boy: "half" as const },
-  { src: SITE_PHOTOS.facade, baslik: "Akşam ışığı", boy: "half" as const },
-  { src: SITE_PHOTOS.interior, baslik: "İç mekân", boy: "third" as const },
-  { src: SITE_PHOTOS.gallery, baslik: "Sofra", boy: "third" as const },
-  { src: SITE_PHOTOS.facade, baslik: "Giriş", boy: "third" as const },
+  { src: "/assets/cms/petra-pool-beach-loca.jpg", baslik: "Pool & Beach & VIP Hasır Localar", boy: "wide" as const },
+  { src: "/assets/cms/petra-nargile-havuz-gece.jpg", baslik: "Gece Havuz Kenarı Nargile & Lounge", boy: "half" as const },
+  { src: "/assets/cms/petra-restoran-salon-organizasyon.jpg", baslik: "Petra Salonu & Özel Davet Masaları", boy: "half" as const },
+  { src: "/uploads/site/1787135028402-7fc886bbee092d11.webp", baslik: "Sıcak & Konforlu Restoran Atmosferi", boy: "third" as const },
+  { src: "/uploads/site/1787059804386-3117dc6067f91a4a.webp", baslik: "Petra Yaşam Merkezi Giriş Cephesi", boy: "third" as const },
+  { src: "/assets/cms/petra-havuz-fiyat-listesi-2026.jpg", baslik: "2026 Günlük Havuz Giriş Tarifesi", boy: "third" as const },
 ];
 
 export const DEFAULT_PASTA_PHOTOS = [
