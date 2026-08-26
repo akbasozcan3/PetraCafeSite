@@ -11,7 +11,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export default function HomeServices({ content }: { content: SiteContent }) {
   const bolum = content.bolumlar?.hizmetler;
   const list = (content.hizmetler || []).filter((item) => item.label?.trim());
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -29,40 +28,93 @@ export default function HomeServices({ content }: { content: SiteContent }) {
   }, []);
 
   const total = list.length;
-  const maxIndex = Math.max(0, total - visibleCount);
 
-  // Eyebrow: DB'de yanlış değer gelse de "HİZMETLER" doğru göster
-  const rawEyebrow = bolum?.eyebrow || "";
-  const eyebrowText = (() => {
-    const m = rawEyebrow.match(/^(\d{1,2})\s*[·.\-]\s*(.+)$/);
-    if (m) {
-      const num = m[1].padStart(2, "0");
-      const label = m[2].trim();
-      const clean = /^petra(\s+yaşam(\s+merkezi)?)?$/i.test(label) ? "HİZMETLER" : label;
-      return `${num} · ${clean}`;
-    }
-    if (rawEyebrow.trim()) return rawEyebrow.trim();
-    return "02 · HİZMETLER";
-  })();
+const extendedList = [...list, ...list, ...list];
+const rawEyebrow = bolum?.eyebrow || "";
 
-  useEffect(() => {
-    setCurrentIndex((prev) => Math.min(prev, maxIndex));
-  }, [maxIndex]);
+const eyebrowText = (() => {
+  const m = rawEyebrow.match(/^(\d{1,2})\s*[·.\-]\s*(.+)$/);
 
-  const handleNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-  }, [maxIndex]);
+  if (m) {
+    const num = m[1].padStart(2, "0");
+    const label = m[2].trim();
 
-  const handlePrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
-  }, [maxIndex]);
+    const clean = /^petra(\s+yaşam(\s+merkezi)?)?$/i.test(label)
+      ? "HİZMETLER"
+      : label;
 
-  useEffect(() => {
-    if (isPaused || total <= visibleCount) return;
-    const timer = window.setInterval(handleNext, 4200);
-    return () => window.clearInterval(timer);
-  }, [handleNext, isPaused, total, visibleCount]);
+    return `${num} · ${clean}`;
+  }
 
+  if (rawEyebrow.trim()) return rawEyebrow.trim();
+
+  return "02 · HİZMETLER";
+})();
+const startIndex = total;
+const maxIndex = startIndex + total - 1;
+
+const [currentIndex, setCurrentIndex] = useState(startIndex);
+const [isAnimating, setIsAnimating] = useState(true);
+
+const handleNext = useCallback(() => {
+  if (!total) return;
+
+  setIsAnimating(true);
+  setCurrentIndex((prev) => prev + 1);
+}, [total]);
+
+const handlePrev = useCallback(() => {
+  if (!total) return;
+
+  setIsAnimating(true);
+  setCurrentIndex((prev) =>
+    prev <= startIndex ? maxIndex : prev - 1
+  );
+}, [total, startIndex, maxIndex]);
+
+useEffect(() => {
+  if (!total) return;
+
+  // Sağa doğru son clone bölgesine geldiysek
+  if (currentIndex >= startIndex + total) {
+    const timer = window.setTimeout(() => {
+      setIsAnimating(false);
+      setCurrentIndex(startIndex);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsAnimating(true);
+        });
+      });
+    }, 530);
+
+    return () => window.clearTimeout(timer);
+  }
+
+  // Sola doğru clone bölgesine geldiysek
+  if (currentIndex < startIndex) {
+    const timer = window.setTimeout(() => {
+      setIsAnimating(false);
+      setCurrentIndex(maxIndex);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsAnimating(true);
+        });
+      });
+    }, 530);
+
+    return () => window.clearTimeout(timer);
+  }
+}, [currentIndex, startIndex, total, maxIndex]);
+
+useEffect(() => {
+  if (isPaused || total <= visibleCount) return;
+
+  const timer = window.setInterval(handleNext, 4200);
+
+  return () => window.clearInterval(timer);
+}, [handleNext, isPaused, total, visibleCount]);
   const handleTouchStart = (e: TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
     setTouchEnd(null);
@@ -81,8 +133,9 @@ export default function HomeServices({ content }: { content: SiteContent }) {
 
   if (!total) return null;
 
-  const hasNext = currentIndex < maxIndex;
-  const hasPrev = currentIndex > 0;
+const canSlide = total > visibleCount;
+const hasNext = canSlide;
+const hasPrev = canSlide;
 
   return (
     <>
@@ -120,7 +173,11 @@ export default function HomeServices({ content }: { content: SiteContent }) {
 
             <div className="hs-controls" aria-label="Hizmet slayt kontrolleri">
               <span className="hs-counter" aria-live="polite">
-                <b>{String(currentIndex + 1).padStart(2, "0")}</b>
+<b>
+  {String(
+    ((currentIndex - startIndex) % total + total) % total + 1
+  ).padStart(2, "0")}
+</b>
                 <span>/</span>
                 <span>{String(total).padStart(2, "0")}</span>
               </span>
@@ -152,15 +209,18 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           >
             <div
               className="hs-track"
-              style={{
-                transform: `translate3d(-${currentIndex * (100 / visibleCount)}%, 0, 0)`,
-              }}
+             style={{
+  transform: `translate3d(-${currentIndex * (100 / visibleCount)}%, 0, 0)`,
+  transition: isAnimating
+    ? "transform .52s cubic-bezier(.22,.61,.36,1)"
+    : "none",
+}}
             >
-              {list.map((item, idx) => (
+              {extendedList.map((item, idx) => (
                 <ServiceSlide
                   key={`${item.label}-${idx}`}
                   item={item}
-                  index={idx}
+                  index={idx % total}
                   visibleCount={visibleCount}
                 />
               ))}
@@ -170,14 +230,19 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           {/* ── DOTS ── */}
           {total > visibleCount && (
             <div className="hs-dots" role="tablist" aria-label="Hizmet slaytları">
-              {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+              {Array.from({ length: total }).map((_, i) => (
                 <button
                   key={i}
                   role="tab"
                   type="button"
-                  onClick={() => setCurrentIndex(i)}
+                  onClick={() => {
+                  setIsAnimating(true);
+                  setCurrentIndex(startIndex + i);
+                  }}
                   aria-label={`Slayt ${i + 1}`}
-                  aria-selected={currentIndex === i}
+aria-selected={
+  ((currentIndex - startIndex) % total + total) % total === i
+}
                 />
               ))}
             </div>
