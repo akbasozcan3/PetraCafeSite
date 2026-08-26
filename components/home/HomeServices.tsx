@@ -38,7 +38,11 @@ export default function HomeServices({ content }: { content: SiteContent }) {
   const eyebrowText = bolum?.eyebrow || "02 · HİZMETLER";
   const eyebrowMatch = eyebrowText.match(/^(\d{2})\s*[·.-]\s*(.+)$/);
   const eyebrowNumber = eyebrowMatch?.[1] || "02";
-  const eyebrowLabel = eyebrowMatch?.[2] || eyebrowText;
+  const parsedEyebrowLabel = eyebrowMatch?.[2]?.trim();
+  const eyebrowLabel =
+    parsedEyebrowLabel && !/^petra(\s+yaşam\s+merkezi)?$/i.test(parsedEyebrowLabel)
+      ? parsedEyebrowLabel
+      : "HİZMETLER";
 
   useEffect(() => {
     setCurrentIndex((prev) => Math.min(prev, maxIndex));
