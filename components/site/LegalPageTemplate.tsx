@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SiteIcon from "@/components/site/SiteIcon";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
+import MasaCTA from "@/components/site/MasaCTA";
 
 export interface LegalPageProps {
   currentSlug: "gizlilik-politikasi" | "rezervasyon-kosullari" | "kullanim-kosullari" | "cerez-politikasi" | "ticari-bilgiler";
@@ -330,6 +331,13 @@ export default function LegalPageTemplate({
           </div>
         </article>
       </div>
+
+      {/* Masa CTA — tüm yasal sayfalarda */}
+      <MasaCTA
+        baslik="Masa ayırtmak ister misiniz?"
+        metin="Rezervasyon ve sorularınız için bizi arayın veya formdan yazın."
+        btnLabel="Masa Rezervasyonu Yap"
+      />
     </div>
   );
 }

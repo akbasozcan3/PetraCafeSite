@@ -10,6 +10,7 @@ import SafeImg from "@/components/site/SafeImg";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import { cleanRawText } from "@/lib/content/markdown-parser";
 import { phoneToTelHref, buildWhatsappUrl } from "@/lib/content/contact-utils";
+import MasaCTA from "@/components/site/MasaCTA";
 import {
   Calendar,
   Clock,
@@ -486,6 +487,16 @@ export default async function BlogPostPage({ params }: Props) {
           transition: all 0.2s ease !important;
         }
       `}</style>
+
+      {/* MASA CTA */}
+      <MasaCTA
+        tel={tel}
+        telHref={telHref}
+        waHref={waHref}
+        baslik="Masa ayırtmak ister misiniz?"
+        metin="Rezervasyon ve sorularınız için bizi arayın veya formdan yazın."
+        btnLabel="Masa Rezervasyonu Yap"
+      />
     </article>
   );
 }

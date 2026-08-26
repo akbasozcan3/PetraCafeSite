@@ -13,6 +13,7 @@ import { categoryHref, productHref } from "@/lib/content/slugify";
 import { productGallery, resolveProductImage } from "@/lib/catalog/product-image";
 import ProductDetailClient from "@/components/shop/ProductDetailClient";
 import MenuProductCard from "@/components/shop/MenuProductCard";
+import MasaCTA from "@/components/site/MasaCTA";
 
 export const revalidate = 60;
 
@@ -197,6 +198,14 @@ export default async function ProductPage({ params }: Props) {
           </ul>
         </section>
       ) : null}
+
+      <MasaCTA
+        tel={content.iletisim?.telefon || "0530 608 90 51"}
+        telHref={(content.iletisim?.telefon || "0530 608 90 51").replace(/[^\d]/g, "")}
+        baslik="Masa ayırtmak ister misiniz?"
+        metin="Rezervasyon ve sorularınız için bizi arayın veya formdan yazın."
+        btnLabel="Masa Rezervasyonu Yap"
+      />
     </div>
   );
 }

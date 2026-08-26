@@ -10,8 +10,10 @@ import {
 import { productHref } from "@/lib/content/slugify";
 import { resolveProductImage } from "@/lib/catalog/product-image";
 import { categoryCover } from "@/lib/content/media-fallbacks";
+import { phoneToTelHref } from "@/lib/content/contact-utils";
 import MenuProductCard from "@/components/shop/MenuProductCard";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
+import MasaCTA from "@/components/site/MasaCTA";
 
 export const revalidate = 60;
 
@@ -48,6 +50,8 @@ export default async function MenuPage() {
     0
   );
   const hub = content.sayfalar?.urunler;
+  const tel = content.iletisim?.telefon || "0530 608 90 51";
+  const telHref = phoneToTelHref(tel);
   const title =
     hub?.baslikSablon
       ?.replace("{n}", String(cats.length))
@@ -152,6 +156,14 @@ export default async function MenuPage() {
           ) : null}
         </>
       )}
+
+      <MasaCTA
+        tel={tel}
+        telHref={telHref}
+        baslik="Masa ayırtmak ister misiniz?"
+        metin="Rezervasyon ve sorularınız için bizi arayın veya formdan yazın."
+        btnLabel="Masa Rezervasyonu Yap"
+      />
     </div>
   );
 }

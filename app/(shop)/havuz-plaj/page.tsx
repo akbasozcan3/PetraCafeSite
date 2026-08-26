@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/site/Breadcrumbs";
 import { cleanRawText } from "@/lib/content/markdown-parser";
 import SafeImg from "@/components/site/SafeImg";
 import { WhatsAppIcon } from "@/components/site/SiteIcon";
+import MasaCTA from "@/components/site/MasaCTA";
 import {
   Waves,
   Sun,
@@ -208,14 +209,23 @@ export default async function HavuzPlajPage() {
         /* ── 4'lü görsel grid ── */
         .havuz-foto-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto auto;
           gap: 16px;
           margin-bottom: clamp(28px, 4vw, 44px);
+        }
+
+        /* İlk kart tam sol sütun boyunca uzansın */
+        .havuz-foto-card:first-child {
+          grid-row: 1 / 3;
         }
 
         @media (max-width: 640px) {
           .havuz-foto-grid {
             grid-template-columns: 1fr;
+          }
+          .havuz-foto-card:first-child {
+            grid-row: auto;
           }
         }
 
@@ -227,6 +237,11 @@ export default async function HavuzPlajPage() {
           background: #f0ede6;
           aspect-ratio: 16 / 9;
           transition: transform 0.3s ease;
+        }
+
+        .havuz-foto-card:first-child {
+          aspect-ratio: unset;
+          min-height: 360px;
         }
 
         .havuz-foto-card:hover {
@@ -1092,6 +1107,16 @@ export default async function HavuzPlajPage() {
           </div>
         </div>
       </section>
+
+      {/* ─── 8. MASA CTA ─── */}
+      <MasaCTA
+        tel={tel}
+        telHref={telHref}
+        waHref={waHref}
+        baslik="Masa ayırtmak ister misiniz?"
+        metin="Rezervasyon ve sorularınız için bizi arayın veya WhatsApp'tan yazın."
+        btnLabel="Masa Rezervasyonu Yap"
+      />
     </article>
   );
 }

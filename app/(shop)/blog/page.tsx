@@ -7,12 +7,11 @@ import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import { cleanRawText } from "@/lib/content/markdown-parser";
+import MasaCTA from "@/components/site/MasaCTA";
 import {
   Calendar,
   Clock,
   ArrowRight,
-  Phone,
-  CalendarCheck,
   BookOpen,
   Sparkles,
 } from "lucide-react";
@@ -220,46 +219,14 @@ export default async function BlogIndexPage() {
       )}
 
       {/* 3. REZERVASYON & İLETİŞİM BANNER */}
-      <section
-        style={{
-          marginTop: "48px",
-          background: "var(--cream-2, #F3EDE0)",
-          borderRadius: "24px",
-          border: "1.5px solid rgba(13, 15, 10, 0.08)",
-          padding: "clamp(28px, 4vw, 40px)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-          alignItems: "center",
-          textAlign: "center",
-        }}
-      >
-        <h2
-          style={{
-            fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
-            fontSize: "clamp(22px, 3vw, 28px)",
-            fontWeight: 600,
-            color: "var(--ink, #0D0F0A)",
-            margin: 0,
-          }}
-        >
-          {cleanRawText(b?.ctaBaslik || "") || "Petra'da Masanızı Hazırlayalım"}
-        </h2>
-        <p style={{ fontSize: "14.5px", color: "#555A4C", maxWidth: "56ch", margin: 0 }}>
-          {cleanRawText(b?.ctaMetin || "") ||
-            "Zengin serpme kahvaltımız, taş fırın lezzetlerimiz ve açık havuzumuzla keyif dolu bir gün için yerinizi ayırtın."}
-        </p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "6px", justifyContent: "center" }}>
-          <Link href="/#rezervasyon" className="btn btn--light">
-            <CalendarCheck size={16} />
-            Masa Rezervasyonu Yap
-          </Link>
-          <a href={`tel:${telHref}`} className="btn">
-            <Phone size={15} />
-            {tel}
-          </a>
-        </div>
-      </section>
+      <MasaCTA
+        tel={tel}
+        telHref={telHref}
+        baslik={cleanRawText(b?.ctaBaslik || "") || "Masa ayırtmak ister misiniz?"}
+        metin={cleanRawText(b?.ctaMetin || "") || "Rezervasyon ve sorularınız için bizi arayın veya formdan yazın."}
+        btnLabel="Masa Rezervasyonu Yap"
+        style={{ marginTop: "48px" }}
+      />
 
       <style>{`
         .blog-card-hover:hover {

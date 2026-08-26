@@ -6,6 +6,7 @@ import { liveMedia, SITE_PHOTOS } from "@/lib/content/media-fallbacks";
 import { resolveMediaUrl } from "@/lib/admin/media-url";
 import SafeImg from "@/components/site/SafeImg";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
+import MasaCTA from "@/components/site/MasaCTA";
 import {
   cleanRawText,
   formatInlineText,
@@ -1070,6 +1071,16 @@ export default async function HakkimizdaPage() {
           </div>
         </div>
       </section>
+
+      {/* MASA CTA */}
+      <MasaCTA
+        tel={tel}
+        telHref={telHref}
+        waHref={waHref}
+        baslik="Masa ayırtmak ister misiniz?"
+        metin="Rezervasyon ve sorularınız için bizi arayın veya WhatsApp'tan yazın."
+        btnLabel="Masa Rezervasyonu Yap"
+      />
     </article>
   );
 }
