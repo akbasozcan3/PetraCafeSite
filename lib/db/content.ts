@@ -215,6 +215,7 @@ function normalizeContent(raw: Partial<SiteContent>): SiteContent {
     alanlar: merged.sporSalonu?.alanlar?.length ? merged.sporSalonu.alanlar : gymDef.alanlar,
     imkanlar: merged.sporSalonu?.imkanlar?.length ? merged.sporSalonu.imkanlar : gymDef.imkanlar,
     bentoGorseller: merged.sporSalonu?.bentoGorseller?.length ? merged.sporSalonu.bentoGorseller : gymDef.bentoGorseller,
+    paketler: merged.sporSalonu?.paketler?.length ? merged.sporSalonu.paketler : gymDef.paketler,
   };
 
   merged.loader = {

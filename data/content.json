@@ -571,6 +571,43 @@
       "Petra Cafe Sağlıklı İçecekler",
       "Geniş Ücretsiz Otopark"
     ],
+    "paketler": [
+      {
+        "ad": "Günlük",
+        "sure": "Tek seferlik antrenman",
+        "fiyat": "250 TL",
+        "ozellikler": ["Tüm fitness ekipmanları", "Soyunma odası & duş", "Havlu hizmeti"],
+        "populer": false
+      },
+      {
+        "ad": "Aylık",
+        "sure": "Aylık sınırsız üyelik",
+        "fiyat": "540 TL",
+        "ozellikler": ["Sınırsız antrenman", "Tüm ekipman erişimi", "Soyunma odası & duş", "Havuz entegrasyonu", "Petra Cafe indirimi"],
+        "populer": true
+      },
+      {
+        "ad": "3 Aylık",
+        "sure": "3 aylık üyelik",
+        "fiyat": "1.440 TL",
+        "ozellikler": ["Sınırsız antrenman", "Tüm ekipman erişimi", "Soyunma odası & duş", "Havuz entegrasyonu", "Petra Cafe indirimi"],
+        "populer": false
+      },
+      {
+        "ad": "6 Aylık",
+        "sure": "6 Aylık + 1 Ay Hediye",
+        "fiyat": "2.810 TL",
+        "ozellikler": ["Sınırsız antrenman", "Tüm ekipman erişimi", "Soyunma odası & duş", "Havuz entegrasyonu", "Petra Cafe özel indirim", "1 Ay Hediye"],
+        "populer": false
+      },
+      {
+        "ad": "Yıllık",
+        "sure": "Yıllık + 1 Ay Hediye",
+        "fiyat": "4.500 TL",
+        "ozellikler": ["Sınırsız antrenman", "Tüm ekipman erişimi", "Soyunma odası & duş", "Havuz entegrasyonu", "Petra Cafe özel indirim", "PT seansı hediyesi", "1 Ay Hediye"],
+        "populer": false
+      }
+    ],
     "ctaTitle": "Hedeflerinize Petra ile Ulaşın",
     "ctaLead": "Petra Spor Salonu üyelik paketleri, kullanım saatleri ve detaylı bilgi için bize hemen ulaşın veya Instagram'dan takip edin."
   },

@@ -585,6 +585,13 @@ export interface SporSalonuContent {
     ikon?: string;
   }[];
   imkanlar?: string[];
+  paketler?: {
+    ad: string;
+    sure: string;
+    fiyat: string;
+    ozellikler: string[];
+    populer?: boolean;
+  }[];
   deneyimler?: {
     baslik: string;
     metin: string;

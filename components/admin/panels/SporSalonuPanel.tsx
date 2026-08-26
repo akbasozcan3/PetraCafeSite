@@ -20,6 +20,7 @@ import {
   CheckCircle2,
   Image as ImageIcon,
   Layers,
+  CreditCard,
 } from "lucide-react";
 
 export default function SporSalonuPanel() {
@@ -509,6 +510,159 @@ export default function SporSalonuPanel() {
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 6. ÜYELİK PAKETLERİ */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <div>
+              <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-[#E8B84B]" /> 6. Üyelik Paketleri & Fiyatlar
+              </h3>
+              <p className="text-xs text-[#8A9BB0] mt-0.5">
+                /spor-salonu sayfasında gösterilen üyelik paketleri. İndirim bilgisi gösterilmez, sadece fiyat.
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const next = [
+                  ...(s.paketler || []),
+                  { ad: "Yeni Paket", sure: "Süre açıklaması", fiyat: "0 TL", ozellikler: [], populer: false },
+                ];
+                updateSpor({ paketler: next });
+              }}
+              className="border-dashed border-white/20 text-[#D9A441] hover:bg-white/5"
+            >
+              <Plus className="h-4 w-4 mr-1" /> Paket Ekle
+            </Button>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {(s.paketler || []).map((paket: any, pi: number) => (
+              <div
+                key={pi}
+                className={`space-y-3 rounded-xl border p-4 relative ${
+                  paket.populer
+                    ? "border-[#D9A441]/40 bg-[#1A1F0E]"
+                    : "border-white/[0.06] bg-[#0D1117]"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#E8B84B]">Paket #{pi + 1}</span>
+                  <div className="flex items-center gap-2">
+                    <label className="flex items-center gap-1.5 text-xs text-[#8A9BB0] cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={!!paket.populer}
+                        onChange={(e: any) => {
+                          const next = [...(s.paketler || [])];
+                          next[pi] = { ...paket, populer: e.target.checked };
+                          updateSpor({ paketler: next });
+                        }}
+                        className="accent-[#D9A441]"
+                      />
+                      Popüler
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const next = (s.paketler || []).filter((_: any, i: number) => i !== pi);
+                        updateSpor({ paketler: next });
+                      }}
+                      className="text-[#8A9BB0] hover:text-red-400 p-1"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid gap-2 grid-cols-2">
+                  <Input
+                    label="Paket Adı"
+                    value={paket.ad || ""}
+                    onChange={(e: any) => {
+                      const next = [...(s.paketler || [])];
+                      next[pi] = { ...paket, ad: e.target.value };
+                      updateSpor({ paketler: next });
+                    }}
+                    placeholder="Aylık"
+                  />
+                  <Input
+                    label="Fiyat"
+                    value={paket.fiyat || ""}
+                    onChange={(e: any) => {
+                      const next = [...(s.paketler || [])];
+                      next[pi] = { ...paket, fiyat: e.target.value };
+                      updateSpor({ paketler: next });
+                    }}
+                    placeholder="540 TL"
+                  />
+                </div>
+
+                <Input
+                  label="Süre / Alt Başlık"
+                  value={paket.sure || ""}
+                  onChange={(e: any) => {
+                    const next = [...(s.paketler || [])];
+                    next[pi] = { ...paket, sure: e.target.value };
+                    updateSpor({ paketler: next });
+                  }}
+                  placeholder="Aylık sınırsız üyelik"
+                />
+
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-semibold text-[#8A9BB0]">Özellikler</label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const next = [...(s.paketler || [])];
+                        next[pi] = { ...paket, ozellikler: [...(paket.ozellikler || []), ""] };
+                        updateSpor({ paketler: next });
+                      }}
+                      className="text-xs text-[#D9A441] hover:underline flex items-center gap-1"
+                    >
+                      <Plus className="h-3 w-3" /> Ekle
+                    </button>
+                  </div>
+                  <div className="space-y-1.5">
+                    {(paket.ozellikler || []).map((oz: string, oi: number) => (
+                      <div key={oi} className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={oz}
+                          onChange={(e: any) => {
+                            const next = [...(s.paketler || [])];
+                            const ozNext = [...(paket.ozellikler || [])];
+                            ozNext[oi] = e.target.value;
+                            next[pi] = { ...paket, ozellikler: ozNext };
+                            updateSpor({ paketler: next });
+                          }}
+                          className="w-full rounded-lg border border-white/[0.08] bg-[#141E2E] px-3 py-1.5 text-xs text-[#EEE9E0] focus:border-[#E8B84B] focus:outline-none"
+                          placeholder="Sınırsız antrenman"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const next = [...(s.paketler || [])];
+                            const ozNext = (paket.ozellikler || []).filter((_: any, i: number) => i !== oi);
+                            next[pi] = { ...paket, ozellikler: ozNext };
+                            updateSpor({ paketler: next });
+                          }}
+                          className="text-[#8A9BB0] hover:text-red-400 flex-shrink-0"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
           </div>

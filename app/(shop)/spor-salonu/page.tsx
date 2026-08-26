@@ -543,131 +543,87 @@ export default async function SporSalonuPage() {
           <p className="eyebrow">FİYATLANDIRMA</p>
           <h2 className="h2">Üyelik Paketleri</h2>
           <p className="lead">
-            Hedeflerinize ve programınıza göre esnek üyelik seçenekleri. Ön kayıtta <strong>%35 indirim</strong> fırsatını kaçırmayın.
+            Hedeflerinize ve programınıza göre esnek üyelik seçenekleri.
           </p>
         </div>
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
             gap: "18px",
           }}
         >
-          {/* Günlük */}
-          <div
-            style={{
-              background: "#FFFFFF",
-              borderRadius: "20px",
-              border: "1.5px solid rgba(13,15,10,0.09)",
-              padding: "28px 22px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "14px",
-            }}
-          >
-            <div>
-              <span style={{ display: "inline-block", padding: "3px 10px", borderRadius: "6px", background: "rgba(13,15,10,0.07)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "#555A4C" }}>
-                Günlük
-              </span>
-            </div>
-            <div>
-              <p style={{ margin: 0, fontSize: "13px", color: "#667085", lineHeight: 1.4 }}>Tek seferlik antrenman</p>
-              <p style={{ margin: "6px 0 0", fontFamily: "var(--f-head,serif)", fontSize: "32px", fontWeight: 700, color: "var(--ink,#0D0F0A)", lineHeight: 1 }}>
-                {cleanRawText(s.paketGunluk || "") || "250 TL"}
-              </p>
-            </div>
-            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" }}>
-              {["Tüm fitness ekipmanları", "Soyunma odası & duş", "Havlu hizmeti"].map((f, fi) => (
-                <li key={fi} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "13.5px", color: "#383C30" }}>
-                  <CheckCircle2 size={15} color="var(--olive-lo,#5A6838)" style={{ flexShrink: 0 }} />
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <a href={waHref} target="_blank" rel="noopener noreferrer" className="btn btn--ghost" style={{ borderRadius: "12px", fontWeight: 600, marginTop: "auto" }}>
-              <WhatsAppIcon size={15} /> Bilgi Al
-            </a>
-          </div>
-
-          {/* Aylık — Öne çıkan */}
-          <div
-            style={{
-              background: "#111610",
-              borderRadius: "20px",
-              border: "1.5px solid rgba(217,164,65,0.5)",
-              padding: "28px 22px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "14px",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <div style={{ position: "absolute", top: 18, right: 18, padding: "4px 10px", borderRadius: "6px", background: "#D9A441", color: "#0D0F0A", fontSize: "10px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-              Popüler
-            </div>
-            <div>
-              <span style={{ display: "inline-block", padding: "3px 10px", borderRadius: "6px", background: "rgba(217,164,65,0.2)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "#D9A441" }}>
-                Aylık
-              </span>
-            </div>
-            <div>
-              <p style={{ margin: 0, fontSize: "13px", color: "rgba(255,255,255,0.6)", lineHeight: 1.4 }}>Aylık sınırsız üyelik</p>
-              <p style={{ margin: "6px 0 0", fontFamily: "var(--f-head,serif)", fontSize: "32px", fontWeight: 700, color: "#FFFFFF", lineHeight: 1 }}>
-                {cleanRawText(s.paketAylik || "") || "1.500 TL"}
-              </p>
-              <p style={{ margin: "4px 0 0", fontSize: "12px", color: "#D9A441", fontWeight: 600 }}>Ön kayıtta %35 indirim</p>
-            </div>
-            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" }}>
-              {["Sınırsız antrenman", "Tüm ekipman erişimi", "Soyunma odası & duş", "Havuz entegrasyonu", "Petra Cafe indirimi"].map((f, fi) => (
-                <li key={fi} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "13.5px", color: "rgba(255,255,255,0.85)" }}>
-                  <CheckCircle2 size={15} color="#D9A441" style={{ flexShrink: 0 }} />
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <a href={waHref} target="_blank" rel="noopener noreferrer" className="btn btn--light" style={{ borderRadius: "12px", fontWeight: 700, marginTop: "auto", justifyContent: "center" }}>
-              <WhatsAppIcon size={15} /> Ön Kayıt Yap
-            </a>
-          </div>
-
-          {/* Yıllık */}
-          <div
-            style={{
-              background: "#FFFFFF",
-              borderRadius: "20px",
-              border: "1.5px solid rgba(13,15,10,0.09)",
-              padding: "28px 22px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "14px",
-            }}
-          >
-            <div>
-              <span style={{ display: "inline-block", padding: "3px 10px", borderRadius: "6px", background: "rgba(90,104,56,0.12)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "#5A6838" }}>
-                Yıllık
-              </span>
-            </div>
-            <div>
-              <p style={{ margin: 0, fontSize: "13px", color: "#667085", lineHeight: 1.4 }}>En avantajlı seçenek</p>
-              <p style={{ margin: "6px 0 0", fontFamily: "var(--f-head,serif)", fontSize: "32px", fontWeight: 700, color: "var(--ink,#0D0F0A)", lineHeight: 1 }}>
-                {cleanRawText(s.paketYillik || "") || "12.000 TL"}
-              </p>
-              <p style={{ margin: "4px 0 0", fontSize: "12px", color: "#5A6838", fontWeight: 600 }}>Aylık sadece 1.000 TL</p>
-            </div>
-            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" }}>
-              {["Sınırsız antrenman", "Tüm ekipman erişimi", "Soyunma odası & duş", "Havuz entegrasyonu", "Petra Cafe özel indirim", "PT seansı hediyesi"].map((f, fi) => (
-                <li key={fi} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "13.5px", color: "#383C30" }}>
-                  <CheckCircle2 size={15} color="var(--olive-lo,#5A6838)" style={{ flexShrink: 0 }} />
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <a href={waHref} target="_blank" rel="noopener noreferrer" className="btn" style={{ borderRadius: "12px", fontWeight: 700, background: "#0D0F0A", color: "#fff", marginTop: "auto" }}>
-              <WhatsAppIcon size={15} /> Yıllık Üye Ol
-            </a>
-          </div>
+          {(s.paketler || []).map((paket: any, pi: number) => {
+            const isPopuler = !!paket.populer;
+            return (
+              <div
+                key={pi}
+                style={{
+                  background: isPopuler ? "#111610" : "#FFFFFF",
+                  borderRadius: "20px",
+                  border: isPopuler
+                    ? "1.5px solid rgba(217,164,65,0.5)"
+                    : "1.5px solid rgba(13,15,10,0.09)",
+                  padding: "28px 22px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "14px",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                {isPopuler && (
+                  <div style={{ position: "absolute", top: 18, right: 18, padding: "4px 10px", borderRadius: "6px", background: "#D9A441", color: "#0D0F0A", fontSize: "10px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                    Popüler
+                  </div>
+                )}
+                <div>
+                  <span style={{
+                    display: "inline-block",
+                    padding: "3px 10px",
+                    borderRadius: "6px",
+                    background: isPopuler ? "rgba(217,164,65,0.2)" : "rgba(13,15,10,0.07)",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    textTransform: "uppercase" as const,
+                    letterSpacing: "0.05em",
+                    color: isPopuler ? "#D9A441" : "#555A4C",
+                  }}>
+                    {cleanRawText(paket.ad || "")}
+                  </span>
+                </div>
+                <div>
+                  <p style={{ margin: 0, fontSize: "13px", color: isPopuler ? "rgba(255,255,255,0.6)" : "#667085", lineHeight: 1.4 }}>
+                    {cleanRawText(paket.sure || "")}
+                  </p>
+                  <p style={{ margin: "6px 0 0", fontFamily: "var(--f-head,serif)", fontSize: "32px", fontWeight: 700, color: isPopuler ? "#FFFFFF" : "var(--ink,#0D0F0A)", lineHeight: 1 }}>
+                    {cleanRawText(paket.fiyat || "")}
+                  </p>
+                </div>
+                {(paket.ozellikler || []).length > 0 && (
+                  <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    {(paket.ozellikler || []).map((f: string, fi: number) => (
+                      <li key={fi} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "13.5px", color: isPopuler ? "rgba(255,255,255,0.85)" : "#383C30" }}>
+                        <CheckCircle2 size={15} color={isPopuler ? "#D9A441" : "var(--olive-lo,#5A6838)"} style={{ flexShrink: 0 }} />
+                        {cleanRawText(f)}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={isPopuler ? "btn btn--light" : "btn btn--ghost"}
+                  style={{ borderRadius: "12px", fontWeight: 700, marginTop: "auto", justifyContent: "center", ...(isPopuler ? {} : { background: "#0D0F0A", color: "#fff", border: "none" }) }}
+                >
+                  <WhatsAppIcon size={15} />
+                  {isPopuler ? "Ön Kayıt Yap" : "Bilgi Al"}
+                </a>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -716,8 +672,8 @@ export default async function SporSalonuPage() {
         telHref={telHref}
         waHref={waHref}
         baslik="Spor salonumuza katılmak ister misiniz?"
-        metin="Ön kayıt için WhatsApp'tan yazın veya arayın. Açılışa özel %35 indirimli üyelik fırsatını kaçırmayın."
-        btnLabel="WhatsApp ile Ön Kayıt"
+        metin="Üyelik ve detaylı bilgi için WhatsApp'tan yazın veya arayın."
+        btnLabel="WhatsApp ile Bilgi Al"
       />
     </article>
   );
