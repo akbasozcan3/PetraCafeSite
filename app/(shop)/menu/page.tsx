@@ -135,7 +135,7 @@ export default async function MenuPage() {
             );
           })}
 
-          {content.menu?.not ? (
+          {content.menu?.notGoster && content.menu?.not ? (
             <div
               style={{
                 marginTop: 48,

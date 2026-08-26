@@ -348,6 +348,8 @@ export interface MenuContent {
   baslik?: string;
   giris?: string;
   not?: string;
+  /** Menü dipnotunu sitede göster/gizle */
+  notGoster?: boolean;
   kdvDurumu?: string;
   legend?: string;
   hepsiMetin?: string;

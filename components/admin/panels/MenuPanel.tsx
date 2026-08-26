@@ -498,6 +498,17 @@ export default function MenuPanel() {
               className="w-full rounded-xl border border-white/[0.08] bg-[#0D1117] px-3.5 py-2.5 text-sm text-[#EEE9E0] placeholder-[#6B7A94] focus:border-[#C8703A] focus:outline-none"
               placeholder="Fiyatlara KDV dahildir. Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın."
             />
+            <label className="mt-2 flex cursor-pointer items-center gap-2.5 text-sm text-[#EEE9E0]">
+              <input
+                type="checkbox"
+                checked={menu.notGoster ?? false}
+                onChange={(e) => updateMenu({ notGoster: e.target.checked })}
+                className="h-4 w-4 rounded border-white/[0.08] bg-[#0D1117] text-[#C8703A] focus:ring-[#C8703A] focus:ring-offset-0"
+              />
+              <span className="text-sm">
+                📢 Dipnotu sitede göster (kapalıysa sadece adminde görünür)
+              </span>
+            </label>
           </div>
         </div>
       </div>
