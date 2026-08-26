@@ -35,14 +35,8 @@ export default function HomeServices({ content }: { content: SiteContent }) {
 
   const total = list.length;
   const maxIndex = Math.max(0, total - visibleCount);
+  // Eyebrow — HomeAbout ile aynı sade format: "02 · HİZMETLER"
   const eyebrowText = bolum?.eyebrow || "02 · HİZMETLER";
-  const eyebrowMatch = eyebrowText.match(/^(\d{2})\s*[·.-]\s*(.+)$/);
-  const eyebrowNumber = eyebrowMatch?.[1] || "02";
-  const parsedEyebrowLabel = eyebrowMatch?.[2]?.trim();
-  const eyebrowLabel =
-    parsedEyebrowLabel && !/^petra(\s+yaşam\s+merkezi)?$/i.test(parsedEyebrowLabel)
-      ? parsedEyebrowLabel
-      : "HİZMETLER";
 
   useEffect(() => {
     setCurrentIndex((prev) => Math.min(prev, maxIndex));
@@ -97,11 +91,9 @@ export default function HomeServices({ content }: { content: SiteContent }) {
         <div className="wrap hizmet-modern__inner">
           <div className="hizmet-modern__head">
             <div className="hizmet-modern__copy">
-              {/* Diğer section'larla aynı pill badge tasarımı */}
-              <p className="hizmet-modern__eyebrow" data-fade="">
-                <span className="hizmet-modern__eyebrow-num">{eyebrowNumber}</span>
-                <span className="hizmet-modern__eyebrow-dot" aria-hidden="true">·</span>
-                <span>{eyebrowLabel}</span>
+              {/* HomeAbout ile aynı sade eyebrow — "01 HAKKIMIZDA" stili */}
+              <p className="eyebrow" data-fade="">
+                {eyebrowText}
               </p>
               <h2 className="hizmet-modern__title" data-split="">
                 {bolum?.baslik || "Cafe · Restaurant · Pool & Beach"}
@@ -198,49 +190,11 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           max-width: 690px;
         }
 
-        /* ── Eyebrow badge — diğer section'larla aynı pill tasarımı ── */
-        .hizmet-modern__eyebrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 7px;
-          margin: 0 0 16px;
-          padding: 6px 14px 6px 8px;
-          border: 1.5px solid rgba(217, 164, 65, 0.38);
-          border-radius: 999px;
-          background: rgba(217, 164, 65, 0.08);
-          color: var(--brass-lo, #b8842c);
-          font-size: 11.5px;
-          font-weight: 700;
-          letter-spacing: 0.13em;
-          line-height: 1;
-          text-transform: uppercase;
-        }
-
-        .hizmet-modern__eyebrow-num {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 26px;
-          height: 26px;
-          border-radius: 999px;
-          background: rgba(217, 164, 65, 0.18);
-          border: 1px solid rgba(217, 164, 65, 0.3);
-          color: var(--brass, #c9932a);
-          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-          font-size: 10.5px;
-          font-weight: 800;
-          letter-spacing: 0.04em;
-          flex-shrink: 0;
-        }
-
-        .hizmet-modern__eyebrow-dot {
-          color: rgba(184, 132, 44, 0.45);
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 1;
-        }
-
         /* ── Başlık & lead ── */
+        /* #hizmetler .eyebrow rengi — global brass override ile eşleşir */
+        #hizmetler .eyebrow {
+          color: var(--brass-lo, #b8842c);
+        }
         .hizmet-modern__title {
           margin: 0;
           color: #16190f;
