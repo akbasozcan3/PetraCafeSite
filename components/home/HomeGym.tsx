@@ -187,6 +187,25 @@ export default function HomeGym({ content }: { content: SiteContent }) {
         .gym-bento-box:hover img {
           transform: scale(1.08);
         }
+        .gym-floating-badge {
+          position: absolute;
+          bottom: 16px;
+          left: 16px;
+          right: 16px;
+          padding: 11px 16px;
+          border-radius: 16px;
+          background: rgba(10, 15, 9, 0.9);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(217, 164, 65, 0.45);
+          color: #F8F5EE;
+          font-size: 13px;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
         @media (max-width: 640px) {
           .gym-bento-grid {
             grid-template-columns: 1fr;
@@ -379,11 +398,18 @@ export default function HomeGym({ content }: { content: SiteContent }) {
                   fallback="/assets/cms/hero-ic.webp"
                   className="w-full h-full object-cover"
                 />
+                <div className="gym-floating-badge">
+                  {bi === 0 ? (
+                    <Dumbbell size={16} color="#F3C562" />
+                  ) : (
+                    <Waves size={16} color="#F3C562" />
+                  )}
                   <span>{cleanRawText(b.rozet || b.alt || "Petra Fitness")}</span>
                 </div>
+              </div>
             ))}
           </div>
-      </div>
+        </div>
       </div>
     </section>
   );
