@@ -358,22 +358,6 @@ export default async function SporSalonuPage() {
           }}
         />
       )}
-
-      <div
-        style={{
-          width: "42px",
-          height: "42px",
-          borderRadius: "12px",
-          background: "rgba(217, 164, 65, 0.12)",
-          color: "var(--brass-lo, #B8842C)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <IconComp size={22} />
-      </div>
-
       <span
         style={{
           fontSize: "12px",
