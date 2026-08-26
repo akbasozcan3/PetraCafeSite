@@ -244,6 +244,24 @@ function normalizeContent(raw: Partial<SiteContent>): SiteContent {
     };
   }
 
+  // Hizmetler eyebrow'u yanlış kaydedilmişse (ör. "02 · PETRA") düzelt
+  {
+    const hEyebrow = merged.bolumlar?.hizmetler?.eyebrow || "";
+    const m = hEyebrow.match(/^(\d{1,2})\s*[·.\-]\s*(.+)$/);
+    if (m && /^petra(\s+yaşam(\s+merkezi)?)?$/i.test(m[2].trim())) {
+      const def = DEFAULT_CONTENT.bolumlar.hizmetler!;
+      merged.bolumlar = {
+        ...merged.bolumlar,
+        hizmetler: {
+          baslik: def.baslik,
+          lead: def.lead,
+          ...merged.bolumlar.hizmetler,
+          eyebrow: `${m[1].padStart(2, "0")} · HİZMETLER`,
+        },
+      };
+    }
+  }
+
   // Legacy section name → generic Blog (multi-store ready)
   const rename = (label?: string) =>
     label && /^fırın\s*günlüğü$/i.test(label.trim()) ? "Blog" : label;

@@ -98,18 +98,6 @@ export default function HomeServices({ content }: { content: SiteContent }) {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* ── Blur overlay'ler — section'a absolute, wrap dışında ── */}
-        <div
-          className="hs-fade hs-fade--l"
-          aria-hidden="true"
-          data-visible={hasPrev ? "1" : "0"}
-        />
-        <div
-          className="hs-fade hs-fade--r"
-          aria-hidden="true"
-          data-visible={hasNext ? "1" : "0"}
-        />
-
         <div className="wrap hs-inner">
           {/* ── HEADER ── */}
           <div className="hs-head">
@@ -158,6 +146,9 @@ export default function HomeServices({ content }: { content: SiteContent }) {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
+            {/* Blur overlay'ler track-wrap'a relative — tam kart bölgesini örter */}
+            <div className="hs-fade hs-fade--l" aria-hidden="true" data-visible={hasPrev ? "1" : "0"} />
+            <div className="hs-fade hs-fade--r" aria-hidden="true" data-visible={hasNext ? "1" : "0"} />
             <div
               className="hs-track"
               style={{
@@ -196,13 +187,13 @@ export default function HomeServices({ content }: { content: SiteContent }) {
       <style>{`
         /* ═══ Section ═══ */
         .hizmet-sec {
-          position: relative;   /* blur overlay'ler buna absolute */
-          overflow: hidden;     /* taşan kartları keser */
+          position: relative;
+          overflow: hidden;
         }
         .hs-inner {
           max-width: 1240px;
           position: relative;
-          z-index: 1;           /* blur'ün üzerinde */
+          z-index: 1;
         }
 
         /* ═══ Eyebrow ═══ */
@@ -278,24 +269,20 @@ export default function HomeServices({ content }: { content: SiteContent }) {
         .hs-controls button:disabled { opacity: .35; cursor: default; }
 
         /* ═══ Blur fade overlay'ler ═══
-         *
-         * Section'a absolute konumlanır.
-         * Slider'ın sadece yan kenarlarını örter.
-         * top/bottom: section'ın tüm yüksekliğini değil,
-         * sadece kartların bulunduğu bölgeyi kapsar.
-         * data-visible="0"  → opacity: 0  (görünmez)
-         * data-visible="1"  → opacity: 1  (görünür)
+         * Track wrap'a RELATIVE konumlanır (section'a değil).
+         * Böylece tam olarak kartların yanlarını örter.
          * ══════════════════════════════════════════ */
+        .hs-track-wrap {
+          position: relative; /* fade'lere referans noktası */
+        }
         .hs-fade {
           position: absolute;
-          /* Kartların kabaca nerede başladığı:
-             header (~140px) + padding top (~32px) = ~172px */
-          top: 172px;
+          top: 0;
           bottom: 0;
-          z-index: 2;           /* kartların üzerinde */
-          width: clamp(80px, 10vw, 160px);
+          z-index: 3;
+          width: clamp(70px, 9vw, 130px);
           pointer-events: none;
-          transition: opacity .4s ease;
+          transition: opacity .35s ease;
         }
         .hs-fade[data-visible="0"] { opacity: 0; }
         .hs-fade[data-visible="1"] { opacity: 1; }
@@ -305,8 +292,8 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           background: linear-gradient(
             to right,
             var(--paper, #fbf8f1) 0%,
-            var(--paper, #fbf8f1) 25%,
-            rgba(251,248,241,.7) 55%,
+            var(--paper, #fbf8f1) 20%,
+            rgba(251,248,241,.75) 60%,
             rgba(251,248,241,0) 100%
           );
         }
@@ -315,14 +302,15 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           background: linear-gradient(
             to left,
             var(--paper, #fbf8f1) 0%,
-            var(--paper, #fbf8f1) 25%,
-            rgba(251,248,241,.7) 55%,
+            var(--paper, #fbf8f1) 20%,
+            rgba(251,248,241,.75) 60%,
             rgba(251,248,241,0) 100%
           );
         }
 
         /* ═══ Track ═══ */
         .hs-track-wrap {
+          position: relative;
           padding: 14px 0 18px;
           cursor: grab;
           touch-action: pan-y;
@@ -513,14 +501,11 @@ export default function HomeServices({ content }: { content: SiteContent }) {
             align-items: flex-start;
             flex-direction: column;
           }
-          /* Mobilde blur top'u header yüksekliğine göre ayarla */
-          .hs-fade { top: 220px; }
         }
         @media (max-width: 640px) {
           .hs-controls { width: 100%; justify-content: space-between; }
           .hs-counter { margin-right: auto; }
           .hs-card { min-height: 280px; }
-          .hs-fade { top: 260px; }
         }
       `}</style>
     </>
