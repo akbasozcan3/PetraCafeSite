@@ -111,7 +111,7 @@ useEffect(() => {
 useEffect(() => {
   if (isPaused || total <= visibleCount) return;
 
-  const timer = window.setInterval(handleNext, 4200);
+  const timer = window.setInterval(handleNext, 3500);
 
   return () => window.clearInterval(timer);
 }, [handleNext, isPaused, total, visibleCount]);
