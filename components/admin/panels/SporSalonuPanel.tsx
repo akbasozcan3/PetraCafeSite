@@ -408,6 +408,57 @@ export default function SporSalonuPanel() {
                     className="w-full rounded-xl border border-white/[0.08] bg-[#141E2E] px-3 py-2 text-xs text-[#EEE9E0] focus:border-[#E8B84B] focus:outline-none"
                     placeholder="Alan açıklaması..."
                   />
+                  <div className="space-y-2">
+  <label className="text-xs font-semibold text-[#8A9BB0]">
+    Alan Görseli
+  </label>
+
+  <div className="relative h-40 w-full overflow-hidden rounded-xl border border-white/10 bg-[#141E2E]">
+    {alan.gorsel ? (
+      <AdminImage
+        src={resolveMediaUrl(alan.gorsel) || alan.gorsel}
+        alt={alan.baslik || "Antrenman alanı"}
+        className="h-full w-full object-cover"
+      />
+    ) : (
+      <div className="flex h-full items-center justify-center text-xs text-[#6B7A94]">
+        Görsel Seçilmedi
+      </div>
+    )}
+  </div>
+
+  <Upload
+    label="Görsel Seç / Yükle"
+    accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+    uploadKey={`spor-alan-${i}`}
+    enableCrop={true}
+    maxWidth={1600}
+    maxHeight={1200}
+    onComplete={(results) => {
+      const first = results?.[0];
+
+      if (first?.url) {
+        const next = [...(s.alanlar || [])];
+
+        next[i] = {
+          ...alan,
+          gorsel: first.url,
+        };
+
+        updateSpor({
+          alanlar: next,
+        });
+
+        setMessage("Antrenman alanı görseli başarıyla yüklendi.");
+        setMessageType("success");
+      }
+    }}
+    onError={(err) => {
+      setMessage(err.message || "Görsel yüklenemedi");
+      setMessageType("error");
+    }}
+  />
+</div>
                 </div>
               </div>
             ))}

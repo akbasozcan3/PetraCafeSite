@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/site/Breadcrumbs";
 import { cleanRawText } from "@/lib/content/markdown-parser";
 import SafeImg from "@/components/site/SafeImg";
 import SiteIcon, { WhatsAppIcon } from "@/components/site/SiteIcon";
+import { resolveMediaUrl } from "@/lib/admin/media-url";
 import {
   Dumbbell,
   Clock,
@@ -192,6 +193,7 @@ export default async function SporSalonuPage() {
             }}
           >
             <Dumbbell size={14} />
+            <span>{cleanRawText(s.eyebrow) || "PETRA YAŞAM MERKEZİ"}</span>
           </div>
 
           <h1
@@ -320,54 +322,95 @@ export default async function SporSalonuPage() {
           }}
         >
           {alanlar.map((a: any, ai: number) => {
-            const iconsMap: Record<string, any> = {
-              flame: Flame,
-              dumbbell: Dumbbell,
-              activity: Activity,
-              "heart-pulse": HeartPulse,
-            };
-            const IconComp = iconsMap[a.ikon] || Dumbbell;
+  const iconsMap: Record<string, any> = {
+    flame: Flame,
+    dumbbell: Dumbbell,
+    activity: Activity,
+    "heart-pulse": HeartPulse,
+  };
 
-            return (
-              <div
-                key={ai}
-                style={{
-                  background: "#FFFFFF",
-                  borderRadius: "18px",
-                  border: "1px solid rgba(13, 15, 10, 0.08)",
-                  padding: "24px 20px",
-                  boxShadow: "none",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                }}
-              >
-                <div
-                  style={{
-                    width: "42px",
-                    height: "42px",
-                    borderRadius: "12px",
-                    background: "rgba(217, 164, 65, 0.12)",
-                    color: "var(--brass-lo, #B8842C)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <IconComp size={22} />
-                </div>
-                <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--brass-lo, #B8842C)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                  {cleanRawText(a.kicker)}
-                </span>
-                <h3 style={{ fontFamily: "var(--f-head, serif)", fontSize: "19px", fontWeight: 600, color: "var(--ink, #0D0F0A)", margin: 0 }}>
-                  {cleanRawText(a.baslik)}
-                </h3>
-                <p style={{ fontSize: "14px", lineHeight: 1.65, color: "#555A4C", margin: 0 }}>
-                  {cleanRawText(a.metin)}
-                </p>
-              </div>
-            );
-          })}
+  const IconComp = iconsMap[a.ikon] || Dumbbell;
+
+  return (
+    <div
+      key={ai}
+      style={{
+        background: "#FFFFFF",
+        borderRadius: "18px",
+        border: "1px solid rgba(13, 15, 10, 0.08)",
+        padding: "24px 20px",
+        boxShadow: "none",
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+      }}
+    >
+      {a.gorsel && (
+        <img
+          src={resolveMediaUrl(a.gorsel) || a.gorsel}
+          alt={a.baslik || "Antrenman alanı"}
+          style={{
+            width: "100%",
+            height: "180px",
+            objectFit: "cover",
+            borderRadius: "14px",
+            display: "block",
+          }}
+        />
+      )}
+
+      <div
+        style={{
+          width: "42px",
+          height: "42px",
+          borderRadius: "12px",
+          background: "rgba(217, 164, 65, 0.12)",
+          color: "var(--brass-lo, #B8842C)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <IconComp size={22} />
+      </div>
+
+      <span
+        style={{
+          fontSize: "12px",
+          fontWeight: 700,
+          color: "var(--brass-lo, #B8842C)",
+          textTransform: "uppercase",
+          letterSpacing: "0.05em",
+        }}
+      >
+        {cleanRawText(a.kicker)}
+      </span>
+
+      <h3
+        style={{
+          fontFamily: "var(--f-head, serif)",
+          fontSize: "19px",
+          fontWeight: 600,
+          color: "var(--ink, #0D0F0A)",
+          margin: 0,
+        }}
+      >
+        {cleanRawText(a.baslik)}
+      </h3>
+
+      <p
+        style={{
+          fontSize: "14px",
+          lineHeight: 1.65,
+          color: "#555A4C",
+          margin: 0,
+        }}
+      >
+        {cleanRawText(a.metin)}
+      </p>
+    </div>
+  );
+})}
         </div>
       </section>
 
