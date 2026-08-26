@@ -98,6 +98,10 @@ export default function HomeServices({ content }: { content: SiteContent }) {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
+        {/* Blur: section'a absolute, tam üstten alta — section arka rengiyle seamless */}
+        <div className="hs-fade hs-fade--l" aria-hidden="true" data-visible={hasPrev ? "1" : "0"} />
+        <div className="hs-fade hs-fade--r" aria-hidden="true" data-visible={hasNext ? "1" : "0"} />
+
         <div className="wrap hs-inner">
           {/* ── HEADER ── */}
           <div className="hs-head">
@@ -146,9 +150,6 @@ export default function HomeServices({ content }: { content: SiteContent }) {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* Blur overlay'ler track-wrap'a relative — tam kart bölgesini örter */}
-            <div className="hs-fade hs-fade--l" aria-hidden="true" data-visible={hasPrev ? "1" : "0"} />
-            <div className="hs-fade hs-fade--r" aria-hidden="true" data-visible={hasNext ? "1" : "0"} />
             <div
               className="hs-track"
               style={{
@@ -269,48 +270,45 @@ export default function HomeServices({ content }: { content: SiteContent }) {
         .hs-controls button:disabled { opacity: .35; cursor: default; }
 
         /* ═══ Blur fade overlay'ler ═══
-         * Track wrap'a RELATIVE konumlanır (section'a değil).
-         * Böylece tam olarak kartların yanlarını örter.
-         * ══════════════════════════════════════════ */
-        .hs-track-wrap {
-          position: relative; /* fade'lere referans noktası */
-        }
+         * Blur, section'a absolute olarak konumlanır.
+         * top:0 / bottom:0 → section'ın TAM üstünden altına kadar uzanır.
+         * z-index:2 → kartların üstünde ama içerik önünde değil.
+         * Gradient: section arka rengiyle tam eşleşir → çizgi yok.
+         * ════════════════════════════════════════════════════════ */
         .hs-fade {
           position: absolute;
           top: 0;
           bottom: 0;
-          z-index: 3;
-          width: clamp(70px, 9vw, 130px);
+          z-index: 2;
+          width: clamp(80px, 10vw, 150px);
           pointer-events: none;
-          transition: opacity .35s ease;
+          transition: opacity .3s ease;
         }
         .hs-fade[data-visible="0"] { opacity: 0; }
         .hs-fade[data-visible="1"] { opacity: 1; }
 
+        /* Sol fade — section'ın tam sol kenarından başlar */
         .hs-fade--l {
           left: 0;
           background: linear-gradient(
             to right,
             var(--paper, #fbf8f1) 0%,
-            var(--paper, #fbf8f1) 20%,
-            rgba(251,248,241,.75) 60%,
             rgba(251,248,241,0) 100%
           );
         }
+
+        /* Sağ fade — section'ın tam sağ kenarına yapışır */
         .hs-fade--r {
           right: 0;
           background: linear-gradient(
             to left,
             var(--paper, #fbf8f1) 0%,
-            var(--paper, #fbf8f1) 20%,
-            rgba(251,248,241,.75) 60%,
             rgba(251,248,241,0) 100%
           );
         }
 
         /* ═══ Track ═══ */
         .hs-track-wrap {
-          position: relative;
           padding: 14px 0 18px;
           cursor: grab;
           touch-action: pan-y;

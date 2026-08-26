@@ -425,9 +425,15 @@ export default async function HavuzPlajPage() {
 
         .havuz-kurs-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          grid-template-columns: 1fr 1fr;
           gap: clamp(24px, 4vw, 44px);
           align-items: start;
+        }
+
+        @media (max-width: 860px) {
+          .havuz-kurs-grid {
+            grid-template-columns: 1fr;
+          }
         }
 
         .havuz-kurs-avantajlar {

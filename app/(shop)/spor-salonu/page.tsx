@@ -135,8 +135,8 @@ export default async function SporSalonuPage() {
       <style>{`
         .spor-hero-grid {
           display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: clamp(24px, 4vw, 40px);
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(24px, 4vw, 48px);
           align-items: center;
           margin-bottom: clamp(32px, 4vw, 48px);
         }
@@ -149,17 +149,15 @@ export default async function SporSalonuPage() {
           border-radius: 20px;
           overflow: hidden;
           border: 1px solid rgba(13, 15, 10, 0.12);
-          box-shadow: none !important;
-          background: #000000;
-          max-width: 460px;
-          margin: 0 auto;
+          background: #000;
+          width: 100%;
+          max-width: 100%;
         }
         .spor-poster-clean img {
           width: 100%;
           height: auto;
           display: block;
           object-fit: cover;
-          border-radius: 20px;
         }
       `}</style>
 
