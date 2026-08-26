@@ -1705,7 +1705,7 @@ export function BolumlarPanel() {
                   ...content,
                   hizmetler: [
                     ...hizmetler,
-                    { label: "", emoji: "", icon: "utensils", badge: "", href: "", aciklama: "" },
+                    { label: "", emoji: "", icon: "utensils", href: "", aciklama: "" },
                   ],
                 })
               }
@@ -1718,7 +1718,7 @@ export function BolumlarPanel() {
             {hizmetler.map((item, i) => (
               <div
                 key={i}
-                className="grid gap-2 rounded-xl border border-white/[0.06] p-3 md:grid-cols-[140px_90px_1fr_1fr_140px_auto]"
+                className="grid gap-2 rounded-xl border border-white/[0.06] p-3 md:grid-cols-[140px_90px_1fr_1fr_auto]"
               >
                 <label className="block text-sm font-medium text-[#8A9BB0]">
                   İkon
@@ -1768,16 +1768,6 @@ export function BolumlarPanel() {
                   }}
                   placeholder="/menu/kahve veya #pasta"
                 />
-                <Input
-                  label="Rozet"
-                  value={item.badge || ""}
-                  onChange={(e) => {
-                    const next = [...hizmetler];
-                    next[i] = { ...item, badge: e.target.value };
-                    setContent({ ...content, hizmetler: next });
-                  }}
-                  placeholder="Günlük Taze"
-                />
                 <button
                   type="button"
                   className="mt-6 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.08] text-[#8A9BB0] hover:text-red-400"
@@ -1789,7 +1779,7 @@ export function BolumlarPanel() {
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
-                <div className="md:col-span-6">
+                <div className="md:col-span-5">
                   <Input
                     label="Kısa açıklama"
                     value={item.aciklama || ""}

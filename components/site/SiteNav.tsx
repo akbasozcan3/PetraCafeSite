@@ -8,7 +8,7 @@ import { resolveHref } from "@/lib/site/resolveHref";
 import BrandLogo from "@/components/site/BrandLogo";
 
 const DEFAULT_LINKS: NavLink[] = [
-  { label: "Hakkımızda", href: "/hakkimizda" },
+  { label: "Hakkımızda", href: "#hakkimizda" },
   { label: "Hizmetler", href: "#hizmetler" },
   { label: "Menü", href: "/menu" },
   { label: "Havuz & Plaj", href: "/havuz-plaj" },
@@ -19,6 +19,59 @@ const DEFAULT_LINKS: NavLink[] = [
   { label: "S.S.S.", href: "#sss" },
   { label: "İletişim", href: "#iletisim" },
 ];
+
+const ORDERED_NAV_LINKS = [
+  { key: "hakkimizda", label: "Hakkımızda", href: "#hakkimizda" },
+  { key: "hizmetler", label: "Hizmetler", href: "#hizmetler" },
+  { key: "menu", label: "Menü", href: "/menu" },
+  { key: "havuz", label: "Havuz & Plaj", href: "/havuz-plaj" },
+  { key: "spor", label: "Spor Salonu", href: "/spor-salonu" },
+  { key: "galeri", label: "Galeri", href: "#galeri" },
+  { key: "blog", label: "Blog", href: "/blog" },
+  { key: "yorumlar", label: "Yorumlar", href: "#yorumlar" },
+  { key: "sss", label: "S.S.S.", href: "#sss" },
+  { key: "iletisim", label: "İletişim", href: "#iletisim" },
+] satisfies Array<NavLink & { key: string }>;
+
+function navLinkKey(link: NavLink) {
+  const text = `${link.label || ""} ${link.href || ""}`.toLocaleLowerCase("tr-TR");
+  if (/hakk|about|#hakkimizda|#hakkımızda/.test(text)) return "hakkimizda";
+  if (/hizmet|service|#hizmetler/.test(text)) return "hizmetler";
+  if (/menü|menu|\/menu|#menu/.test(text)) return "menu";
+  if (/havuz|plaj|pool|beach|\/havuz-plaj|#pasta/.test(text)) return "havuz";
+  if (/spor|fitness|gym|\/spor-salonu|#spor-salonu/.test(text)) return "spor";
+  if (/galeri|gallery|#galeri/.test(text)) return "galeri";
+  if (/blog|makale|\/blog/.test(text)) return "blog";
+  if (/yorum|review|#yorumlar/.test(text)) return "yorumlar";
+  if (/s\.?s\.?s|sss|sık sorulan|sik sorulan|faq|#sss/.test(text)) return "sss";
+  if (/iletişim|iletisim|contact|#iletisim|#iletişim/.test(text)) return "iletisim";
+  return "";
+}
+
+function orderedNavLinks(input: NavLink[]) {
+  const byKey = new Map<string, NavLink>();
+  const extras: NavLink[] = [];
+
+  for (const link of input) {
+    const key = navLinkKey(link);
+    if (key) {
+      if (!byKey.has(key)) byKey.set(key, link);
+    } else {
+      extras.push(link);
+    }
+  }
+
+  return [
+    ...ORDERED_NAV_LINKS.map((fallback) => {
+      const existing = byKey.get(fallback.key);
+      return {
+        label: existing?.label?.trim() || fallback.label,
+        href: fallback.href,
+      };
+    }),
+    ...extras,
+  ];
+}
 
 let menuScrollY = 0;
 
@@ -114,7 +167,8 @@ export default function SiteNav({
       ? navbar.ctaLabel
       : "Rezervasyon";
 
-  const rawLinks = (navbar.links?.length ? navbar.links : DEFAULT_LINKS).filter((l) => {
+  const sourceLinks = navbar.links?.length ? navbar.links : DEFAULT_LINKS;
+  const rawLinks = sourceLinks.filter((l) => {
     if (/hesab|sepet|profil|giriş|uye|üye|favori|ara|search|kayit|kayıt/i.test(l.label || "")) {
       return false;
     }
@@ -123,19 +177,7 @@ export default function SiteNav({
     if (href === bookHref || href === "/#rezervasyon" || href === "#rezervasyon") return false;
     return true;
   });
-
-  const hasGymLink = rawLinks.some(
-    (l) => /spor/i.test(l.label || "") || /spor-salonu/i.test(l.href || "")
-  );
-  if (!hasGymLink) {
-    const poolIndex = rawLinks.findIndex((l) => /havuz|plaj/i.test(l.label || ""));
-    if (poolIndex !== -1) {
-      rawLinks.splice(poolIndex + 1, 0, { label: "Spor Salonu", href: "/spor-salonu" });
-    } else {
-      rawLinks.push({ label: "Spor Salonu", href: "/spor-salonu" });
-    }
-  }
-  const links = rawLinks;
+  const links = orderedNavLinks(rawLinks);
 
   const logoSize = Math.max(36, Math.min(200, Number(navbar?.logoSize) || 64));
   const navHeight = Math.max(72, logoSize + 16);
@@ -374,7 +416,7 @@ export default function SiteNav({
             align-items: center !important;
             justify-content: center !important;
             text-align: center !important;
-            gap: clamp(6px, 1.1vw, 16px) !important;
+            gap: clamp(7px, 1vw, 15px) !important;
             list-style: none !important;
             margin: 0 !important;
             padding: 0 !important;
@@ -387,8 +429,14 @@ export default function SiteNav({
             text-align: center !important;
           }
           header.nav.site-nav .nav__links ul li a {
-            padding: 6px clamp(6px, 0.8vw, 12px) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-height: 40px !important;
+            padding: 0 clamp(7px, 0.8vw, 12px) !important;
             font-size: clamp(13px, 0.95vw, 14.5px) !important;
+            line-height: 1 !important;
+            border-radius: 999px !important;
           }
         }
         header.nav.site-nav .nav__links a,

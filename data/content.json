@@ -22,12 +22,12 @@
     "ctaHref": "#rezervasyon",
     "links": [
       {
-        "label": "Hizmetler",
-        "href": "#hizmetler"
+        "label": "Hakkımızda",
+        "href": "#hakkimizda"
       },
       {
-        "label": "Hakkımızda",
-        "href": "/hakkimizda"
+        "label": "Hizmetler",
+        "href": "#hizmetler"
       },
       {
         "label": "Menü",
@@ -48,6 +48,14 @@
       {
         "label": "Blog",
         "href": "/blog"
+      },
+      {
+        "label": "Yorumlar",
+        "href": "#yorumlar"
+      },
+      {
+        "label": "S.S.S.",
+        "href": "#sss"
       },
       {
         "label": "İletişim",
@@ -169,7 +177,7 @@
     "metin": ""
   },
   "hakkimizda": {
-    "eyebrow": "HAKKIMIZDA & YAŞAM MERKEZİ",
+    "eyebrow": "01 · HAKKIMIZDA",
     "baslik": "Petra Yaşam Merkezi'nde cafe & restaurant",
     "answerBaslik": "Sadece bir restoran değil, Çekmeköy'ün en seçkin yaşam alanı.",
     "answerMetin": "Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve, nargile ve havuz–plaj sunar. 0530 608 90 51.",
@@ -330,7 +338,7 @@
   },
   "bolumlar": {
     "menu": {
-      "eyebrow": "Menümüz",
+      "eyebrow": "03 · MENÜ",
       "baslik": "Kahvaltı, dünya mutfağı, kahve",
       "lead": "Serpme kahvaltı, dünya mutfağı, İtalyan tatlı ve kokteyller, kahve, nargile ve havuz kenarı.",
       "ctaLabel": "Masa ayırtın",
@@ -339,35 +347,35 @@
       "cta2Href": "/menu"
     },
     "galeri": {
-      "eyebrow": "Galeri",
+      "eyebrow": "06 · GALERİ",
       "baslik": "Salon, sofra ve havuz",
       "lead": "Petra Cafe Restaurant ve Petra Yaşam Merkezi’nden kareler."
     },
     "yorumlar": {
-      "eyebrow": "Misafir Yorumları",
+      "eyebrow": "07 · YORUMLAR",
       "baslik": "Petralovers",
       "lead": "Kahvaltı, akşam yemeği ve havuz gününden notlar."
     },
     "sss": {
-      "eyebrow": "Sık Sorulanlar",
+      "eyebrow": "08 · S.S.S.",
       "baslik": "Rezervasyon, havuz ve menü",
       "lead": "Masa, havuz tarifesi, yüzme dersi ve organizasyon.",
       "ctaLabel": "Masa ayırtın",
       "ctaHref": "#rezervasyon"
     },
     "rezervasyon": {
-      "eyebrow": "Rezervasyon",
+      "eyebrow": "09 · REZERVASYON",
       "baslik": "Masanızı ayırtın",
       "lead": "Tarih, saat ve kişi sayısını bırakın; ekibimiz telefonla onaylar. Cuma–cumartesi kahvaltı ve havuz için önceden rezervasyon önerilir."
     },
     "hizmetler": {
-      "eyebrow": "01 · PETRA YAŞAM MERKEZİ",
+      "eyebrow": "02 · HİZMETLER",
       "baslik": "Cafe · Restaurant · Pool & Beach",
       "lead": "Dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, taze kahve ve nargile — havuz kenarında veya salonda."
     }
   },
   "pasta": {
-    "eyebrow": "Havuz & Plaj",
+    "eyebrow": "04 · HAVUZ & PLAJ",
     "baslik": "Pool & Beach",
     "lead": "Petra Yaşam Merkezi’nde temiz bakımlı havuz, çocuk havuzu, güneşlenme şezlongları, VIP hasır localar, yüzme eğitimleri ve havuz başı kafe-restoran.",
     "maddeler": [
@@ -481,7 +489,7 @@
     "instagramHref": "https://www.instagram.com/petracaferestaurant/"
   },
   "sporSalonu": {
-    "eyebrow": "PETRA YAŞAM MERKEZİ",
+    "eyebrow": "05 · SPOR SALONU",
     "baslik": "Petra Spor Salonu",
     "lead": "Çekmeköy Taşdelen Megakent Sitesi içerisinde; modern kardiyo ve serbest ağırlık ekipmanları, ferah antrenman alanları ve sağlıklı yaşam kültürüyle formunuzu zirveye taşıyın.",
     "saatler": "Haftanın 7 Günü: 07:00 – 23:00",
@@ -4711,7 +4719,7 @@
     "baslik": "Masa, havuz ve organizasyon",
     "giris": "Rezervasyon, havuz, yüzme dersi ve özel günler için arayın veya yazın.",
     "metin": "Kahvaltı ve hafta sonu için önceden masa ayırtmanızı öneririz.",
-    "eyebrow": "İletişim",
+    "eyebrow": "10 · İLETİŞİM",
     "telefon": "0530 608 90 51",
     "telefonHam": "+905306089051",
     "telefonAlt": "Cafe & Restaurant / Rezervasyon",
@@ -5054,7 +5062,6 @@
       "label": "Dünya Mutfağı",
       "emoji": "👨‍🍳",
       "icon": "chef",
-      "badge": "Gurme Lezzetler",
       "href": "/menu",
       "aciklama": "Usta şeflerimizin hazırladığı seçkin dünya mutfağı lezzetleri, et spesiyalleri, taze makarna ve gurme burgerler."
     },
@@ -5062,7 +5069,6 @@
       "label": "Serpme Kahvaltı",
       "emoji": "🍳",
       "icon": "sunrise",
-      "badge": "Her Sabah Taze",
       "href": "/menu/kahvalti",
       "aciklama": "Zengin yöresel peynirler, sıcak ikramlar, taze hamur işleri ve sınırsız çay ile havuz başında güne eşsiz başlangıç."
     },
@@ -5070,7 +5076,6 @@
       "label": "POOL & BEACH",
       "emoji": "🏝️",
       "icon": "waves",
-      "badge": "09:00 – 18:00",
       "href": "/havuz-plaj",
       "aciklama": "Açık yetişkin havuzu, güvenli çocuk havuzu, güneşlenme şezlongları ve VIP hasır localarla gün boyu serinlik ve tatil konforu."
     },
@@ -5078,7 +5083,6 @@
       "label": "COFFEE & FOOD",
       "emoji": "🌴",
       "icon": "coffee",
-      "badge": "Özel Harman",
       "href": "/menu/kahve",
       "aciklama": "Taze çekilmiş 3. nesil aromatik kahveler, lezzetli atıştırmalıklar, sandviçler ve gün boyu ferah kafe keyfi."
     },
@@ -5086,7 +5090,6 @@
       "label": "İtalyan Kokteylleri",
       "emoji": "🍸",
       "icon": "wine",
-      "badge": "İmza Reçeteler",
       "href": "/menu/kokteyller",
       "aciklama": "Klasik İtalyan kokteylleri, taze meyveli mocktailler, buz gibi frozenlar ve profesyonel barmenlerden özel sunumlar."
     },
@@ -5094,7 +5097,6 @@
       "label": "İtalyan Tatlı Çeşitleri",
       "emoji": "🍰",
       "icon": "cake",
-      "badge": "Günlük Taze",
       "href": "/menu/tatlilar",
       "aciklama": "Otantik İtalyan tiramisu, San Sebastian cheesecake, sufle, profiterol ve günlük hazırlanan zengin tatlı vitrini."
     },
@@ -5102,7 +5104,6 @@
       "label": "En İyi Nargile Çeşitleri",
       "emoji": "🏖️",
       "icon": "flame",
-      "badge": "Premium Tütün",
       "href": "/menu/nargile",
       "aciklama": "Seçkin tütün harmanları, taze meyve çanaklı özel nargileler ve ışıklı havuz kenarında akşam nargile keyfi."
     }

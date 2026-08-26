@@ -207,11 +207,11 @@ export default async function HomePage() {
       {isHomeSectionOn(content, "marquee") ? (
         <HomeMarquee items={content.marquee || []} />
       ) : null}
-      {isHomeSectionOn(content, "hizmetler") ? (
-        <HomeServices content={content} />
-      ) : null}
       {isHomeSectionOn(content, "hakkimizda") ? (
         <HomeAbout content={content} />
+      ) : null}
+      {isHomeSectionOn(content, "hizmetler") ? (
+        <HomeServices content={content} />
       ) : null}
       {isHomeSectionOn(content, "ziyaret") ? (
         <HomeVisit content={content} />

@@ -6,7 +6,7 @@ import type { SiteContent, HizmetItem } from "@/lib/content/types";
 import { iconFromLabel, type SiteIconId } from "@/lib/content/site-icons";
 import { resolveHref } from "@/lib/site/resolveHref";
 import SiteIcon from "@/components/site/SiteIcon";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function HomeServices({ content }: { content: SiteContent }) {
   const bolum = content.bolumlar?.hizmetler;
@@ -35,6 +35,10 @@ export default function HomeServices({ content }: { content: SiteContent }) {
 
   const total = list.length;
   const maxIndex = Math.max(0, total - visibleCount);
+  const eyebrowText = bolum?.eyebrow || "02 · HİZMETLER";
+  const eyebrowMatch = eyebrowText.match(/^(\d{2})\s*[·.-]\s*(.+)$/);
+  const eyebrowNumber = eyebrowMatch?.[1] || "02";
+  const eyebrowLabel = eyebrowMatch?.[2] || eyebrowText;
 
   useEffect(() => {
     setCurrentIndex((prev) => Math.min(prev, maxIndex));
@@ -90,8 +94,8 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           <div className="hizmet-modern__head">
             <div className="hizmet-modern__copy">
               <p className="hizmet-modern__eyebrow" data-fade="">
-                <Sparkles aria-hidden="true" size={15} />
-                <span>{bolum?.eyebrow || "01 · PETRA YAŞAM MERKEZİ"}</span>
+                <span className="hizmet-modern__eyebrow-num">{eyebrowNumber}</span>
+                <span>{eyebrowLabel}</span>
               </p>
               <h2 className="hizmet-modern__title" data-split="">
                 {bolum?.baslik || "Cafe · Restaurant · Pool & Beach"}
@@ -119,6 +123,8 @@ export default function HomeServices({ content }: { content: SiteContent }) {
 
           <div
             className="hizmet-slider"
+            data-has-prev={currentIndex > 0 ? "true" : undefined}
+            data-has-next={currentIndex < maxIndex ? "true" : undefined}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -192,6 +198,20 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           text-transform: uppercase;
         }
 
+        .hizmet-modern__eyebrow-num {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 28px;
+          min-height: 22px;
+          border-right: 1px solid rgba(184, 132, 44, 0.32);
+          padding-right: 9px;
+          color: #6e4b14;
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+          font-size: 11px;
+          letter-spacing: 0.08em;
+        }
+
         .hizmet-modern__title {
           margin: 0;
           color: #16190f;
@@ -261,10 +281,41 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           position: relative;
           margin: -12px -10px 0;
           padding: 12px 10px;
-          overflow: hidden;
+          overflow: visible;
           cursor: grab;
           touch-action: pan-y;
           user-select: none;
+        }
+
+        .hizmet-slider::before,
+        .hizmet-slider::after {
+          content: "";
+          position: absolute;
+          top: 12px;
+          bottom: 12px;
+          z-index: 4;
+          width: clamp(58px, 7vw, 112px);
+          border-radius: 24px;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.28s var(--ease);
+          backdrop-filter: blur(10px) saturate(1.05);
+          -webkit-backdrop-filter: blur(10px) saturate(1.05);
+        }
+
+        .hizmet-slider::before {
+          left: -38px;
+          background: linear-gradient(90deg, var(--paper, #fbf8f1) 0%, rgba(251, 248, 241, 0.78) 42%, rgba(251, 248, 241, 0) 100%);
+        }
+
+        .hizmet-slider::after {
+          right: -38px;
+          background: linear-gradient(270deg, var(--paper, #fbf8f1) 0%, rgba(251, 248, 241, 0.78) 42%, rgba(251, 248, 241, 0) 100%);
+        }
+
+        .hizmet-slider[data-has-prev="true"]::before,
+        .hizmet-slider[data-has-next="true"]::after {
+          opacity: 1;
         }
 
         .hizmet-slider:active {
@@ -318,7 +369,7 @@ export default function HomeServices({ content }: { content: SiteContent }) {
         .hizmet-card__top {
           position: relative;
           z-index: 1;
-          display: flex;
+          display: block;
           align-items: center;
           justify-content: space-between;
           gap: 14px;
@@ -348,21 +399,6 @@ export default function HomeServices({ content }: { content: SiteContent }) {
         .hizmet-card__emoji {
           font-size: 25px;
           line-height: 1;
-        }
-
-        .hizmet-card__badge {
-          max-width: 140px;
-          padding: 6px 10px;
-          border: 1px solid rgba(217, 164, 65, 0.32);
-          border-radius: 999px;
-          background: rgba(217, 164, 65, 0.14);
-          color: #9e6e19;
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: 0.08em;
-          line-height: 1.2;
-          text-align: center;
-          text-transform: uppercase;
         }
 
         .hizmet-card__title {
@@ -503,11 +539,6 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           .hizmet-card__top {
             align-items: flex-start;
           }
-
-          .hizmet-card__badge {
-            max-width: 120px;
-            font-size: 10px;
-          }
         }
       `}</style>
     </>
@@ -526,6 +557,7 @@ function ServiceSlide({
   const icon = (item.icon || iconFromLabel(item.label)) as SiteIconId;
   const formattedIndex = String(index + 1).padStart(2, "0");
   const href = item.href?.trim() ? resolveHref(item.href) : "";
+  const footLabel = href ? "Detayları incele" : "Petra hizmeti";
   const cardContent = (
     <>
       <span className="hizmet-card__watermark" aria-hidden="true">
@@ -542,7 +574,6 @@ function ServiceSlide({
             </span>
           ) : null}
         </span>
-        {item.badge ? <span className="hizmet-card__badge">{item.badge}</span> : null}
       </span>
       <span>
         <strong className="hizmet-card__title">{item.label}</strong>
@@ -551,7 +582,7 @@ function ServiceSlide({
       <span className="hizmet-card__foot">
         <span className="hizmet-card__signal">
           <i aria-hidden="true" />
-          <span>Petra Deneyimi</span>
+          <span>{footLabel}</span>
         </span>
         <span className="hizmet-card__index">#{formattedIndex}</span>
       </span>
