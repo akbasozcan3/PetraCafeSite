@@ -16,6 +16,9 @@ export const SITE_ICON_OPTIONS = [
   { id: "clock", label: "Saatler" },
   { id: "calendar", label: "Rezervasyon" },
   { id: "globe", label: "Dünya" },
+  { id: "dumbbell", label: "Spor / Jimnastik" },
+  { id: "music", label: "Canlı Müzik / Karaoke" },
+  { id: "store", label: "Market / Alışveriş" },
   { id: "tiktok", label: "TikTok" },
   { id: "facebook", label: "Facebook" },
 ] as const;
@@ -24,6 +27,9 @@ export type SiteIconId = (typeof SITE_ICON_OPTIONS)[number]["id"];
 
 export function iconFromLabel(label: string): SiteIconId {
   const t = (label || "").toLocaleLowerCase("tr-TR");
+  if (/spor|jimnastik|fitness|gym/.test(t)) return "dumbbell";
+  if (/müzik|muzik|karaoke|canlı müzik|canli muzik/.test(t)) return "music";
+  if (/market|bakkal|alışveriş|alisveris|mağaza|magaza/.test(t)) return "store";
   if (/tiktok/.test(t)) return "tiktok";
   if (/facebook|fb/.test(t)) return "facebook";
   if (/whatsapp/.test(t)) return "whatsapp";
@@ -33,14 +39,14 @@ export function iconFromLabel(label: string): SiteIconId {
   if (/saat/.test(t)) return "clock";
   if (/rezerv|masa/.test(t)) return "calendar";
   if (/yüzme|yuzme/.test(t)) return "calendar";
-  if (/havuz|plaj|pool|beach/.test(t)) return "waves";
+  if (/havuz|plaj|pool|beach|loca/.test(t)) return "waves";
   if (/konum|adres|çekmek|petra yaşam/.test(t)) return "map";
   if (/nargile/.test(t)) return "flame";
   if (/kahve|coffee/.test(t)) return "coffee";
-  if (/kokteyl|içki|şarap|spritz/.test(t)) return "wine";
-  if (/tatlı|dessert|cake/.test(t)) return "cake";
+  if (/kokteyl|içki|şarap|spritz|içecek|icecek/.test(t)) return "wine";
+  if (/tatlı|tatli|dessert|cake/.test(t)) return "cake";
   if (/kahvalt|serpme|breakfast/.test(t)) return "sunrise";
-  if (/dünya|şef|chef/.test(t)) return "chef";
+  if (/dünya|dunya|şef|chef/.test(t)) return "chef";
   if (/restoran|yemek|mutfak/.test(t)) return "utensils";
   return "utensils";
 }

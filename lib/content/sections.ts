@@ -15,6 +15,7 @@ export const HOME_SECTION_META: {
   { id: "ziyaret", label: "Ziyaret şeridi", href: "/#ziyaret", admin: "/admin/bolumlar", description: "Saat, telefon, havuz, konum kartları" },
   { id: "menu", label: "Menü önizleme", href: "/#menu", admin: "/admin/menu", description: "Ana sayfa menü sekmeleri ve şef önerileri" },
   { id: "pasta", label: "Havuz & Plaj", href: "/#pasta", admin: "/admin/pasta", description: "Tarife, maddeler ve görseller" },
+  { id: "sporSalonu", label: "Spor Salonu & Fitness", href: "/#sporSalonu", admin: "/admin/spor-salonu", description: "Fitness kulübü, olanaklar ve görseller" },
   { id: "galeri", label: "Galeri", href: "/#galeri", admin: "/admin/galeri", description: "Fotoğraflar ve başlık" },
   { id: "yorumlar", label: "Yorumlar", href: "/#yorumlar", admin: "/admin/yorumlar", description: "Misafir yorumları ve Google rozeti" },
   { id: "sss", label: "S.S.S.", href: "/#sss", admin: "/admin/sss", description: "Soru-cevap ve görsel" },

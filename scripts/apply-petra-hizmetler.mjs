@@ -62,14 +62,42 @@ if (data.navbar?.links && !data.navbar.links.some((l) => l.href === "#hizmetler"
 }
 
 data.hizmetler = [
-  { label: "Restoran", emoji: "🍽️", href: "/menu", aciklama: "Salon ve teras servisi" },
-  { label: "Dünya Mutfağı", emoji: "👨‍🍳", href: "/menu/ana-yemekler", aciklama: "Ana yemekler" },
-  { label: "Serpme Kahvaltı", emoji: "🍳", href: "/menu/kahvalti", aciklama: "Sabah servisi" },
-  { label: "POOL & BEACH", emoji: "🏝️", href: "#pasta", aciklama: "Havuz ve plaj" },
-  { label: "COFFEE & FOOD", emoji: "🌴", href: "/menu/kahve", aciklama: "Kahve ve yemek" },
-  { label: "İtalyan Kokteylleri", emoji: "🍸", href: "/menu/italyan-kokteyller", aciklama: "Aperitivo" },
-  { label: "İtalyan Tatlı çeşitleri", emoji: "🍰", href: "/menu/tatlilar", aciklama: "Tatlı menüsü" },
-  { label: "En İyi Nargile Çeşitleri", emoji: "⛱️", href: "/menu/nargile", aciklama: "Nargile köşesi" },
+  {
+    label: "Spor ve Jimnastik",
+    href: "/spor-salonu",
+    aciklama: "Spor salonu ve jimnastik imkanları",
+    icon: "dumbbell",
+  },
+  {
+    label: "Dünya Mutfağı ve Serpme Kahvaltı",
+    href: "/menu",
+    aciklama: "Geniş içerikli serpme kahvaltının yanı sıra dünya mutfağından seçkin lezzetler",
+    icon: "chef",
+  },
+  {
+    label: "Canlı Müzik ve Karaoke",
+    href: "/#rezervasyon",
+    aciklama: "Belirli günlerde düzenlenen canlı müzik geceleri ve karaoke eğlenceleri",
+    icon: "music",
+  },
+  {
+    label: "İçecek ve Tatlı Çeşitleri",
+    href: "/menu/tatlilar",
+    aciklama: "Özel İtalyan tatlıları, özel kahveler ve alkolsüz kokteyl çeşitleri",
+    icon: "cake",
+  },
+  {
+    label: "Havuz Locaları ve Nargile",
+    href: "/havuz-plaj",
+    aciklama: "Havuz kenarında dinlenebileceğiniz özel localar ve nargile hizmeti",
+    icon: "waves",
+  },
+  {
+    label: "Market",
+    href: "/#iletisim",
+    aciklama: "Tesis içinde gün boyu temel ihtiyaçlarınızı karşılayabileceğiniz bir market alanı",
+    icon: "store",
+  },
 ];
 
 data.bolumlar = {

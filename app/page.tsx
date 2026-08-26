@@ -196,10 +196,10 @@ export default async function HomePage() {
         <HomeDuyuru
           aktif={content.duyuru?.aktif}
           metin={content.duyuru?.metin}
-          stil={(content.duyuru as any)?.stil}
-          ikon={(content.duyuru as any)?.ikon}
-          butonMetin={(content.duyuru as any)?.butonMetin}
-          butonLink={(content.duyuru as any)?.butonLink}
+          stil={content.duyuru?.stil}
+          ikon={content.duyuru?.ikon}
+          butonMetin={content.duyuru?.butonMetin}
+          butonLink={content.duyuru?.butonLink}
         />
       ) : null}
 
@@ -222,7 +222,9 @@ export default async function HomePage() {
       {isHomeSectionOn(content, "pasta") ? (
         <HomePasta pasta={content.pasta} />
       ) : null}
-      <HomeGym content={content} />
+      {isHomeSectionOn(content, "sporSalonu") ? (
+        <HomeGym content={content} />
+      ) : null}
       {isHomeSectionOn(content, "galeri") ? (
         <HomeGallery bolum={content.bolumlar?.galeri} items={content.galeri || []} />
       ) : null}

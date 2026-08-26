@@ -54,7 +54,12 @@ export function AdminAlert({
 }
 
 export function AdminLoading() {
-  return <AdminSplash compact label="İçerik yükleniyor" />;
+  return (
+    <div className="flex h-32 items-center justify-center text-sm text-[#8A9BB0] gap-2.5">
+      <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#D9A441] border-t-transparent" />
+      <span>İçerik yükleniyor…</span>
+    </div>
+  );
 }
 
 export function AdminError({

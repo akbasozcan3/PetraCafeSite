@@ -1231,31 +1231,40 @@ export default function MenuPanel() {
 
               <div>
                 <label className="block text-xs font-semibold text-white/80 mb-1.5">
-                  Görsel Yükle veya Görsel URL
+                  Fotoğraf (Vercel Blob)
                 </label>
-                <div className="flex gap-2 items-center">
-                  <input
-                    type="text"
-                    placeholder="Görsel URL veya alttan yükleyin (/assets/...)"
-                    value={dishModal.image}
-                    onChange={(e) => setDishModal({ ...dishModal, image: e.target.value })}
-                    className="w-full rounded-xl border border-white/10 bg-[#0D1117] px-3.5 py-2 text-xs text-white focus:border-[#D9A441] focus:outline-none"
-                  />
-                </div>
-                <div className="mt-2">
-                  <Upload
-                    label="Fotoğraf Seç / Yükle"
-                    accept="image/*"
-                    uploadKey="menu-new-dish"
-                    onComplete={(results) => {
-                      const first = results?.[0];
-                      if (first?.url) {
-                        setDishModal({ ...dishModal, image: first.url });
-                      }
-                    }}
-                    onError={(err) => showMessage(err.message, "error")}
-                  />
-                </div>
+                {dishModal.image && (
+                  <div className="relative mb-2 h-28 w-full overflow-hidden rounded-xl border border-white/10 bg-black/50">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={resolveMediaUrl(dishModal.image)}
+                      alt="Seçilen tabak görseli"
+                      className="h-full w-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setDishModal({ ...dishModal, image: "" })}
+                      className="absolute top-2 right-2 rounded-full bg-red-600/90 p-1 text-white hover:bg-red-500 shadow"
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </button>
+                    <span className="absolute bottom-2 left-2 rounded bg-black/70 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
+                      ✓ Yüklendi
+                    </span>
+                  </div>
+                )}
+                <Upload
+                  label="Fotoğraf Seç / Yükle (Vercel Blob)"
+                  accept="image/*"
+                  uploadKey="menu-new-dish"
+                  onComplete={(results) => {
+                    const first = results?.[0];
+                    if (first?.url) {
+                      setDishModal({ ...dishModal, image: first.url });
+                    }
+                  }}
+                  onError={(err) => showMessage(err.message, "error")}
+                />
               </div>
 
               <div className="flex items-center gap-2 pt-1">

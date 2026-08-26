@@ -196,4 +196,10 @@ export const api = {
     }
     return results;
   },
+  deleteUpload: async (url: string) => {
+    return fetchApi<{ success: boolean; url: string }>("/admin/upload", {
+      method: "DELETE",
+      body: JSON.stringify({ url }),
+    });
+  },
 };

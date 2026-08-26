@@ -7,6 +7,9 @@ import Input from "@/components/admin/ui/Input";
 import Button from "@/components/admin/ui/Button";
 import SaveBar from "@/components/admin/ui/SaveBar";
 import { api } from "@/lib/api/client";
+import Upload from "@/components/admin/ui/Upload";
+import AdminImage from "@/components/admin/ui/AdminImage";
+import { resolveMediaUrl } from "@/lib/admin/media-url";
 import {
   Dumbbell,
   Plus,
@@ -264,23 +267,44 @@ export default function SporSalonuPanel() {
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-[#E8B84B]">Fotoğraf #{i + 1}</span>
+                  {b.src && (
+                    <span className="text-[10px] font-semibold text-emerald-400">✓ Yayında</span>
+                  )}
                 </div>
-                <div className="relative h-36 w-full overflow-hidden rounded-lg bg-black border border-white/10">
-                  <img
-                    src={b.src || "/assets/cms/hero-ic.webp"}
-                    alt={b.alt || "Önizleme"}
-                    className="h-full w-full object-cover"
-                  />
+                <div className="relative h-40 w-full overflow-hidden rounded-lg bg-black/50 border border-white/10">
+                  {b.src ? (
+                    <AdminImage
+                      src={resolveMediaUrl(b.src) || b.src}
+                      alt={b.alt || "Önizleme"}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-xs text-[#6B7A94]">
+                      Fotoğraf Seçilmedi
+                    </div>
+                  )}
                 </div>
-                <Input
-                  label="Görsel Yolu (URL / CMS)"
-                  value={b.src || ""}
-                  onChange={(e: any) => {
-                    const next = [...(s.bentoGorseller || [])];
-                    next[i] = { ...b, src: e.target.value };
-                    updateSpor({ bentoGorseller: next });
+                <Upload
+                  label="Fotoğraf Seç / Yükle (Vercel Blob)"
+                  accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+                  uploadKey={`spor-bento-${i}`}
+                  enableCrop={true}
+                  maxWidth={1600}
+                  maxHeight={1200}
+                  onComplete={(results) => {
+                    const first = results?.[0];
+                    if (first?.url) {
+                      const next = [...(s.bentoGorseller || [])];
+                      next[i] = { ...b, src: first.url };
+                      updateSpor({ bentoGorseller: next });
+                      setMessage("Görsel Vercel Blob'a başarıyla yüklendi.");
+                      setMessageType("success");
+                    }
                   }}
-                  placeholder="/assets/cms/hero-ic.webp"
+                  onError={(err) => {
+                    setMessage(err.message || "Görsel yüklenemedi");
+                    setMessageType("error");
+                  }}
                 />
                 <Input
                   label="Yüzen Rozet Metni (Badge)"

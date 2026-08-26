@@ -3,11 +3,12 @@ import { requirePermission } from "@/lib/auth";
 import { getContentAsync, saveContentAsync } from "@/lib/db/content";
 import { IMAGE_KEYS, type ImageKey } from "@/lib/content/image-keys";
 import { jsonResponse, errorResponse, assertSameOrigin } from "@/lib/api/helpers";
-import { put } from "@vercel/blob";
+import { put, del } from "@vercel/blob";
 import { appendActivity } from "@/lib/db/activity";
 import { revalidatePublicSite } from "@/lib/api/gone";
 import { revalidatePath } from "next/cache";
 import { writeUploadFile } from "@/lib/uploads/fs";
+import { getBlobReadWriteToken, isVercelBlobUrl } from "@/lib/uploads/blob";
 
 export const runtime = "nodejs";
 
@@ -195,10 +196,7 @@ export async function POST(request: Request) {
       return errorResponse("Boş dosya yüklenemez.", 400);
     }
 
-    const blobToken = (
-      process.env.BLOB_READ_WRITE_TOKEN ||
-      "vercel_blob_rw_btLAJs5K3NHvDAz2_NhObQGRousuv7unAA0i9e7sj5g1mWi"
-    ).trim();
+    const blobToken = getBlobReadWriteToken();
 
     let bytes = Buffer.from(await file.arrayBuffer());
     const mime = resolveMime(file, bytes);
@@ -234,7 +232,14 @@ export async function POST(request: Request) {
 
     if (blobToken) {
       try {
-        const folder = key ? "site" : "menu";
+        const folder =
+          key && (key.includes("pasta") || key.includes("havuz"))
+            ? "pasta"
+            : key && key.includes("spor")
+              ? "spor-salonu"
+              : key && key in IMAGE_KEYS
+                ? "site"
+                : key || "media";
         const result = await put(`${folder}/${filename}`, bytes, {
           access: "public",
           token: blobToken,
@@ -244,21 +249,25 @@ export async function POST(request: Request) {
           publicPath = result.url;
         }
       } catch (blobErr) {
-        console.warn("[Upload] Vercel Blob failed, falling back to data URI:", blobErr);
+        console.warn("[Upload] Vercel Blob failed:", blobErr);
       }
     }
 
     if (!publicPath) {
-      if (process.env.VERCEL || process.env.NODE_ENV === "production") {
-        // Vercel üzerinde Blob bağlanmamışsa veya token süresi bitmişse Data URI olarak anında kaydet (sıfır hata)
-        publicPath = `data:${mime};base64,${bytes.toString("base64")}`;
-      } else {
-        try {
-          await writeUploadFile("site", filename, bytes);
-          publicPath = `/uploads/site/${filename}`;
-        } catch {
-          publicPath = `data:${mime};base64,${bytes.toString("base64")}`;
-        }
+      const isProd = process.env.VERCEL || process.env.NODE_ENV === "production";
+      if (isProd) {
+        return errorResponse(
+          blobToken
+            ? "Vercel Blob'a yükleme başarısız. Lütfen tekrar deneyin."
+            : "BLOB_READ_WRITE_TOKEN tanımlı değil. Vercel Blob yapılandırmasını kontrol edin.",
+          503
+        );
+      }
+      try {
+        await writeUploadFile("site", filename, bytes);
+        publicPath = `/uploads/site/${filename}`;
+      } catch {
+        return errorResponse("Görsel yüklenemedi.", 500);
       }
     }
 
@@ -300,5 +309,48 @@ export async function POST(request: Request) {
     console.error("[Upload Error]", error);
     const detail = error instanceof Error ? error.message : "Görsel yüklenemedi.";
     return errorResponse(detail, 500);
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const session = await requirePermission("media:write");
+    assertSameOrigin(request);
+
+    const body = (await request.json().catch(() => ({}))) as { url?: string };
+    const url = String(body.url || "").trim();
+
+    if (!url) {
+      return errorResponse("URL gerekli.", 400);
+    }
+
+    const blobToken = getBlobReadWriteToken();
+
+    if (isVercelBlobUrl(url) && blobToken) {
+      try {
+        await del(url, { token: blobToken });
+      } catch (delErr) {
+        console.warn("[Upload Delete] Blob deletion warning:", delErr);
+      }
+    }
+
+    await appendActivity({
+      userId: session.id,
+      email: session.email,
+      name: session.name,
+      action: "media.delete",
+      detail: url.slice(0, 80),
+    });
+
+    return jsonResponse({ success: true, url });
+  } catch (error) {
+    if (error instanceof Error && /unauthorized/i.test(error.message)) {
+      return errorResponse("Unauthorized", 401);
+    }
+    if (error instanceof Error && /forbidden/i.test(error.message)) {
+      return errorResponse("Bu işlem için yetkiniz yok.", 403);
+    }
+    console.error("[Upload Delete Error]", error);
+    return errorResponse("Görsel silinemedi.", 500);
   }
 }

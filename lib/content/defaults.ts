@@ -240,9 +240,9 @@ export const DEFAULT_CONTENT: SiteContent = {
       lead: "Tarih, saat ve kişi sayısını bırakın; ekibimiz telefonla onaylar. Cuma–cumartesi kahvaltı ve havuz için önceden rezervasyon önerilir.",
     },
     hizmetler: {
-      eyebrow: "Petra",
-      baslik: "Cafe · Restaurant · Pool & Beach",
-      lead: "Kahvaltı, pizza, burger, tatlı, kahve ve nargile — havuz kenarında veya salonda.",
+      eyebrow: "Petra Yaşam Merkezi",
+      baslik: "Hizmetlerimiz & Sosyal Yaşam Alanları",
+      lead: "Spor salonu ve jimnastikten dünya mutfağına, havuz localarından canlı müzik ve markete kadar tüm ayrıcalıklar.",
     },
   },
   pasta: {
@@ -680,15 +680,42 @@ Yiyecek & İçecek Hizmetleri, Cafe & Restoran İşletmeciliği, Açık Yüzme H
     { k: "Konum", v: "Petra Yaşam Merkezi", n: "Taşdelen · Çekmeköy / İstanbul", href: "https://maps.google.com/?q=Petra+Yaşam+Merkezi+Taşdelen+Çekmeköy" },
   ],
   hizmetler: [
-    { label: "Restoran", icon: "utensils", href: "/menu", aciklama: "Salon ve teras servisi" },
-    { label: "Serpme Kahvaltı", icon: "sunrise", href: "/menu/kahvalti", aciklama: "Tabak ve 2 kişilik serpme" },
-    { label: "Pizzalar", icon: "chef", href: "/menu/pizzalar", aciklama: "Fırın pizza" },
-    { label: "POOL & BEACH", icon: "waves", href: "#pasta", aciklama: "Havuz 09:00–18:00" },
-    { label: "Yüzme dersleri", icon: "calendar", href: "#yuzme", aciklama: "Birebir ve grup" },
-    { label: "Kahve", icon: "coffee", href: "/menu/kahve", aciklama: "Sıcak ve soğuk kahve" },
-    { label: "Kokteyller", icon: "wine", href: "/menu/kokteyller", aciklama: "Mocktail ve frozen" },
-    { label: "Tatlılar", icon: "cake", href: "/menu/tatlilar", aciklama: "Tatlı menüsü" },
-    { label: "Nargile", icon: "flame", href: "/menu/nargile", aciklama: "Nakhla, El Fakher, Adalya" },
+    {
+      label: "Spor ve Jimnastik",
+      icon: "dumbbell",
+      href: "/spor-salonu",
+      aciklama: "Spor salonu ve jimnastik imkanları",
+    },
+    {
+      label: "Dünya Mutfağı ve Serpme Kahvaltı",
+      icon: "chef",
+      href: "/menu",
+      aciklama: "Geniş içerikli serpme kahvaltının yanı sıra dünya mutfağından seçkin lezzetler",
+    },
+    {
+      label: "Canlı Müzik ve Karaoke",
+      icon: "music",
+      href: "/#rezervasyon",
+      aciklama: "Belirli günlerde düzenlenen canlı müzik geceleri ve karaoke eğlenceleri",
+    },
+    {
+      label: "İçecek ve Tatlı Çeşitleri",
+      icon: "cake",
+      href: "/menu/tatlilar",
+      aciklama: "Özel İtalyan tatlıları, özel kahveler ve alkolsüz kokteyl çeşitleri",
+    },
+    {
+      label: "Havuz Locaları ve Nargile",
+      icon: "waves",
+      href: "/havuz-plaj",
+      aciklama: "Havuz kenarında dinlenebileceğiniz özel localar ve nargile hizmeti",
+    },
+    {
+      label: "Market",
+      icon: "store",
+      href: "/#iletisim",
+      aciklama: "Tesis içinde gün boyu temel ihtiyaçlarınızı karşılayabileceğiniz bir market alanı",
+    },
   ],
   rezervasyon: {
     minKisi: 1,
@@ -747,6 +774,7 @@ Yiyecek & İçecek Hizmetleri, Cafe & Restoran İşletmeciliği, Açık Yüzme H
     ziyaret: true,
     menu: true,
     pasta: true,
+    sporSalonu: true,
     galeri: true,
     yorumlar: true,
     sss: true,
@@ -772,6 +800,20 @@ export function mergeContent(partial: Partial<SiteContent>, current: SiteContent
     ...partial,
     images: partial.images ? { ...current.images, ...partial.images } : current.images,
     navbar: partial.navbar ? { ...current.navbar, ...partial.navbar, links: partial.navbar.links ?? current.navbar.links } : current.navbar,
+    loader: partial.loader
+      ? { ...(current.loader || DEFAULT_CONTENT.loader), ...partial.loader }
+      : current.loader || DEFAULT_CONTENT.loader,
+    sporSalonu: partial.sporSalonu
+      ? {
+          ...(current.sporSalonu || DEFAULT_CONTENT.sporSalonu!),
+          ...partial.sporSalonu,
+          body: partial.sporSalonu.body ?? current.sporSalonu?.body ?? DEFAULT_CONTENT.sporSalonu!.body,
+          ozellikler: partial.sporSalonu.ozellikler ?? current.sporSalonu?.ozellikler ?? DEFAULT_CONTENT.sporSalonu!.ozellikler,
+          alanlar: partial.sporSalonu.alanlar ?? current.sporSalonu?.alanlar ?? DEFAULT_CONTENT.sporSalonu!.alanlar,
+          imkanlar: partial.sporSalonu.imkanlar ?? current.sporSalonu?.imkanlar ?? DEFAULT_CONTENT.sporSalonu!.imkanlar,
+          bentoGorseller: partial.sporSalonu.bentoGorseller ?? current.sporSalonu?.bentoGorseller ?? DEFAULT_CONTENT.sporSalonu!.bentoGorseller,
+        }
+      : current.sporSalonu || DEFAULT_CONTENT.sporSalonu,
     hero: partial.hero
       ? {
           ...current.hero,
@@ -786,7 +828,9 @@ export function mergeContent(partial: Partial<SiteContent>, current: SiteContent
             : current.hero.textStylesMobile,
         }
       : current.hero,
-    duyuru: partial.duyuru ? { ...current.duyuru, ...partial.duyuru } : current.duyuru,
+    duyuru: partial.duyuru
+      ? { ...(current.duyuru || DEFAULT_CONTENT.duyuru), ...partial.duyuru }
+      : current.duyuru || DEFAULT_CONTENT.duyuru,
     hakkimizda: partial.hakkimizda ? { ...current.hakkimizda, ...partial.hakkimizda } : current.hakkimizda,
     bolumlar: partial.bolumlar
       ? {
@@ -811,6 +855,12 @@ export function mergeContent(partial: Partial<SiteContent>, current: SiteContent
           fiyatlar: partial.pasta.fiyatlar ?? current.pasta.fiyatlar,
           dersler: partial.pasta.dersler ?? current.pasta.dersler,
           kurallar: partial.pasta.kurallar ?? current.pasta.kurallar,
+          yuzmeKursu: partial.pasta.yuzmeKursu
+            ? {
+                ...(current.pasta?.yuzmeKursu || DEFAULT_CONTENT.pasta.yuzmeKursu!),
+                ...partial.pasta.yuzmeKursu,
+              }
+            : current.pasta?.yuzmeKursu ?? DEFAULT_CONTENT.pasta.yuzmeKursu,
         }
       : current.pasta,
     iletisim: partial.iletisim ? { ...current.iletisim, ...partial.iletisim } : current.iletisim,
@@ -846,6 +896,12 @@ export function mergeContent(partial: Partial<SiteContent>, current: SiteContent
             ...partial.sayfalar.urunKategori,
           },
           blog: { ...(current.sayfalar?.blog || DEFAULT_CONTENT.sayfalar!.blog), ...partial.sayfalar.blog },
+          notFound: partial.sayfalar.notFound
+            ? {
+                ...(current.sayfalar?.notFound || DEFAULT_CONTENT.sayfalar!.notFound!),
+                ...partial.sayfalar.notFound,
+              }
+            : current.sayfalar?.notFound ?? DEFAULT_CONTENT.sayfalar!.notFound,
         }
       : current.sayfalar || DEFAULT_CONTENT.sayfalar,
     brand: partial.brand

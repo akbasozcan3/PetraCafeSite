@@ -9,11 +9,13 @@ export default function AdminImage({
   alt,
   className = "h-full w-full object-cover",
   contain,
+  style,
 }: {
   src?: string | null;
   alt: string;
   className?: string;
   contain?: boolean;
+  style?: React.CSSProperties;
 }) {
   const isDataOrBlob = src?.startsWith("data:") || src?.startsWith("blob:");
   const resolved = src ? resolveMediaUrl(src) : "";
@@ -51,6 +53,7 @@ export default function AdminImage({
       <video
         src={url}
         className={contain || isVector ? `${className} object-contain bg-transparent` : className}
+        style={style}
         autoPlay
         muted
         loop
@@ -66,6 +69,7 @@ export default function AdminImage({
       src={url}
       alt={alt}
       className={contain || isVector ? `${className} object-contain` : className}
+      style={style}
       onError={() => setFailed(true)}
     />
   );

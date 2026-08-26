@@ -1487,8 +1487,14 @@ export function BolumlarPanel() {
       <AdminPageHeader
         title="Bölüm Başlıkları"
         description="Ana sayfa bölüm başlıkları, Instagram hizmet kartları ve ziyaret şeridi. Hepsi sitede görünür."
+        actions={
+          <Button onClick={save} disabled={saving} className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-4 py-2.5 rounded-xl shadow-md">
+            <span>{saving ? "Kaydediliyor…" : "💾 Bölüm Ayarlarını Kaydet"}</span>
+          </Button>
+        }
       />
       <AdminAlert message={message} />
+      <SaveBar saving={saving} onSave={save} label="Bölüm Başlıkları ve Kartları Kaydet" />
       <div className="space-y-4">
         {keys.map((key) => {
           const b = content.bolumlar[key] || emptyBolum;

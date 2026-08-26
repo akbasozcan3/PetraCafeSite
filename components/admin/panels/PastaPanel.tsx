@@ -7,6 +7,10 @@ import Input from "@/components/admin/ui/Input";
 import Button from "@/components/admin/ui/Button";
 import SaveBar from "@/components/admin/ui/SaveBar";
 import { api } from "@/lib/api/client";
+import Upload from "@/components/admin/ui/Upload";
+import AdminImage from "@/components/admin/ui/AdminImage";
+import { resolveMediaUrl } from "@/lib/admin/media-url";
+import { isVercelBlobUrl } from "@/lib/uploads/blob";
 import {
   Waves,
   Plus,
@@ -98,6 +102,44 @@ export default function PastaPanel() {
     body: "Bilgi ve rezervasyon: 0530 608 90 51 · Instagram @petracaferestaurant.",
     ctaLabel: "Havuz Rezervasyonu",
     ctaHref: "#rezervasyon",
+  };
+
+  const deleteBlobIfNeeded = async (url?: string) => {
+    if (isVercelBlobUrl(url)) {
+      try {
+        await api.deleteUpload(url!);
+      } catch {
+        /* Blob silme başarısız olsa da içerik kaydı tamamlanmış olur */
+      }
+    }
+  };
+
+  const savePasta = async (
+    patch: Partial<typeof p>,
+    opts?: { deleteUrls?: (string | undefined)[]; successMsg?: string }
+  ) => {
+    const nextPasta = { ...p, ...patch };
+    setSaving(true);
+    setMessage("");
+    try {
+      const res = await api.updateContent({ pasta: nextPasta });
+      setContent(res.data);
+      const toDelete = (opts?.deleteUrls ?? []).filter(
+        (u): u is string => !!u && isVercelBlobUrl(u)
+      );
+      await Promise.all(toDelete.map((u) => deleteBlobIfNeeded(u)));
+      if (opts?.successMsg) {
+        setMessage(opts.successMsg);
+        setMessageType("success");
+      }
+      return res.data;
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : "Kayıt başarısız");
+      setMessageType("error");
+      throw err;
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleSave = async () => {
@@ -325,6 +367,65 @@ export default function PastaPanel() {
               placeholder="0–2 yaş ücretsizdir. Dışarıdan yiyecek getirilmez..."
             />
           </div>
+
+          <div className="space-y-2 pt-3 border-t border-white/10">
+            <label className="text-xs font-semibold text-[#8A9BB0]">
+              Fiyat Listesi Görseli (Opsiyonel)
+            </label>
+            <div className="grid gap-3 sm:grid-cols-[140px_1fr] items-center">
+              <div className="h-24 overflow-hidden rounded-xl border border-white/10 bg-[#0D1117] relative">
+                {p.fiyatGorsel ? (
+                  <AdminImage src={p.fiyatGorsel} alt="Fiyat listesi" />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-xs text-[#6B7A94]">
+                    Görsel Yok
+                  </div>
+                )}
+              </div>
+              <div className="space-y-2">
+                {p.fiyatGorsel && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() =>
+                      void savePasta(
+                        { fiyatGorsel: "" },
+                        {
+                          deleteUrls: [p.fiyatGorsel],
+                          successMsg: "Fiyat listesi görseli kaldırıldı.",
+                        }
+                      )
+                    }
+                  >
+                    Görseli Kaldır
+                  </Button>
+                )}
+                <Upload
+                  label="Fiyat Listesi Görseli Yükle"
+                  accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+                  uploadKey="pasta-fiyat-gorsel"
+                  enableCrop={false}
+                  onComplete={(results) => {
+                    const first = results?.[0];
+                    if (!first?.url) return;
+                    const oldUrl = p.fiyatGorsel;
+                    void savePasta(
+                      { fiyatGorsel: first.url },
+                      {
+                        deleteUrls: oldUrl && oldUrl !== first.url ? [oldUrl] : [],
+                        successMsg: "Fiyat listesi görseli yüklendi ve kaydedildi.",
+                      }
+                    );
+                  }}
+                  onError={(err) => {
+                    setMessage(err.message);
+                    setMessageType("error");
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* 3. YÜZME KURSU PROGRAMI & ÜCRETLERİ */}
@@ -435,6 +536,66 @@ export default function PastaPanel() {
               placeholder="Uzman eğitmenlerimiz eşliğinde çocuklarınızın suya olan güvenini artırıyoruz..."
             />
           </div>
+
+          {/* Yüzme Kursu Tanıtım Afişi / Fotoğrafı */}
+          <div className="space-y-2 pt-3 border-t border-white/10">
+            <label className="text-xs font-semibold text-[#8A9BB0]">
+              Yüzme Kursu Tanıtım Afişi / Fotoğrafı (Opsiyonel)
+            </label>
+            <div className="grid gap-3 sm:grid-cols-[140px_1fr] items-center">
+              <div className="h-24 overflow-hidden rounded-xl border border-white/10 bg-[#0D1117] relative">
+                {p.yuzmeKursu?.afisGorsel ? (
+                  <AdminImage src={p.yuzmeKursu.afisGorsel} alt="Yüzme Kursu Afişi" />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-xs text-[#6B7A94]">Afiş Yok</div>
+                )}
+              </div>
+              <div className="space-y-2">
+                {p.yuzmeKursu?.afisGorsel && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      const yk = p.yuzmeKursu || ({} as NonNullable<typeof p.yuzmeKursu>);
+                      void savePasta(
+                        { yuzmeKursu: { ...yk, afisGorsel: "" } },
+                        {
+                          deleteUrls: [p.yuzmeKursu?.afisGorsel],
+                          successMsg: "Yüzme kursu afişi kaldırıldı.",
+                        }
+                      );
+                    }}
+                  >
+                    Görseli Kaldır
+                  </Button>
+                )}
+                <Upload
+                  label="Afiş Fotoğrafı Yükle"
+                  accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+                  uploadKey="pasta-yuzme-afis"
+                  enableCrop={false}
+                  onComplete={(results) => {
+                    const first = results?.[0];
+                    if (!first?.url) return;
+                    const yk = p.yuzmeKursu || ({} as NonNullable<typeof p.yuzmeKursu>);
+                    const oldUrl = yk.afisGorsel;
+                    void savePasta(
+                      { yuzmeKursu: { ...yk, afisGorsel: first.url } },
+                      {
+                        deleteUrls: oldUrl && oldUrl !== first.url ? [oldUrl] : [],
+                        successMsg: "Yüzme kursu afişi yüklendi ve kaydedildi.",
+                      }
+                    );
+                  }}
+                  onError={(err) => {
+                    setMessage(err.message);
+                    setMessageType("error");
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* 4. 4'LÜ GÖRSEL VİTRİNİ KARTLARI (16:9) */}
@@ -445,7 +606,7 @@ export default function PastaPanel() {
                 <ImageIcon className="h-5 w-5 text-[#D9A441]" /> 4. Görsel Vitrini Kartları (16:9 Oranlı)
               </h3>
               <p className="text-xs text-[#8A9BB0] mt-0.5">
-                Sayfanın üstünde eşit boyutta 16:9 görsel ve altında başlık/açıklama içeren 4 vitrin kartı.
+                Bilgisayarınızdan fotoğraf seçin; doğrudan Vercel Blob’a yüklenir ve canlı sitede yayınlanır.
               </p>
             </div>
             <Button
@@ -456,7 +617,7 @@ export default function PastaPanel() {
                 const next = [
                   ...(p.gorseller || []),
                   {
-                    src: "/assets/cms/hero-ic.webp",
+                    src: "",
                     alt: "Yeni Mekan Kartı",
                     desc: "Petra Yaşam Merkezi'nde konforlu ve ferah alanlar.",
                     tag: "Mekan",
@@ -478,34 +639,90 @@ export default function PastaPanel() {
                 className="space-y-3 rounded-xl border border-white/10 bg-[#0D1117] p-3 shadow-md relative flex flex-col justify-between"
               >
                 <div className="space-y-2.5">
-                  <div className="relative h-28 w-full overflow-hidden rounded-lg bg-black border border-white/10">
-                    <img
-                      src={img.src}
-                      alt={img.alt || "Önizleme"}
-                      className="h-full w-full object-cover"
-                      style={{ objectPosition: img.position || "center" }}
-                    />
+                  <div className="relative h-32 w-full overflow-hidden rounded-lg bg-black/50 border border-white/10 group">
+                    {img.src ? (
+                      <AdminImage
+                        src={resolveMediaUrl(img.src) || img.src}
+                        alt={img.alt || "Önizleme"}
+                        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                        style={{ objectPosition: img.position || "center" }}
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-xs text-[#6B7A94]">
+                        Görsel Seçilmedi
+                      </div>
+                    )}
                     <button
                       type="button"
                       onClick={() => {
+                        const removed = (p.gorseller || [])[i];
                         const next = (p.gorseller || []).filter((_, j) => j !== i);
-                        updatePasta({ gorseller: next });
+                        void savePasta(
+                          { gorseller: next },
+                          {
+                            deleteUrls: [removed?.src],
+                            successMsg: "Görsel kartı silindi.",
+                          }
+                        );
                       }}
-                      className="absolute top-1.5 right-1.5 rounded-full bg-red-600/90 p-1 text-white hover:bg-red-500 shadow"
+                      className="absolute top-2 right-2 rounded-full bg-red-600/90 p-1.5 text-white hover:bg-red-500 shadow-md transition"
+                      title="Kartı Sil"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
+                    {img.src && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const oldUrl = img.src;
+                          const next = [...(p.gorseller || [])];
+                          next[i] = { ...next[i], src: "" };
+                          void savePasta(
+                            { gorseller: next },
+                            {
+                              deleteUrls: [oldUrl],
+                              successMsg: "Görsel kaldırıldı.",
+                            }
+                          );
+                        }}
+                        className="absolute top-2 left-2 rounded-md bg-black/70 backdrop-blur-sm px-2 py-0.5 text-[10px] font-semibold text-[#EEE9E0] border border-white/20 hover:bg-black/90 transition"
+                        title="Yalnızca görseli kaldır"
+                      >
+                        Kaldır
+                      </button>
+                    )}
+                    {img.src && (
+                      <span className="absolute bottom-2 left-2 rounded-md bg-black/70 backdrop-blur-sm px-2 py-0.5 text-[10px] font-semibold text-emerald-400 border border-emerald-500/30">
+                        ✓ Yayında
+                      </span>
+                    )}
                   </div>
 
-                  <Input
-                    label="Görsel Yolu (URL / CMS)"
-                    value={img.src}
-                    onChange={(e) => {
+                  <Upload
+                    label="Görsel Seç / Yükle (16:9)"
+                    accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+                    uploadKey={`pasta-card-${i}`}
+                    enableCrop={true}
+                    maxWidth={1920}
+                    maxHeight={1080}
+                    onComplete={(results) => {
+                      const first = results?.[0];
+                      if (!first?.url) return;
+                      const oldUrl = img.src;
                       const next = [...(p.gorseller || [])];
-                      next[i] = { ...next[i], src: e.target.value };
-                      updatePasta({ gorseller: next });
+                      next[i] = { ...next[i], src: first.url };
+                      void savePasta(
+                        { gorseller: next },
+                        {
+                          deleteUrls: oldUrl && oldUrl !== first.url ? [oldUrl] : [],
+                          successMsg: "Görsel yüklendi ve kaydedildi.",
+                        }
+                      );
                     }}
-                    placeholder="/assets/cms/..."
+                    onError={(err) => {
+                      setMessage(err.message || "Görsel yüklenemedi");
+                      setMessageType("error");
+                    }}
                   />
 
                   <div className="grid grid-cols-2 gap-2">

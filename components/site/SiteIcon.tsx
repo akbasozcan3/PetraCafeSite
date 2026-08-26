@@ -15,6 +15,9 @@ import {
   UtensilsCrossed,
   Waves,
   Wine,
+  Dumbbell,
+  Music,
+  Store,
 } from "lucide-react";
 import { iconFromLabel, type SiteIconId } from "@/lib/content/site-icons";
 
@@ -142,6 +145,9 @@ const MAP: Record<
   clock: Clock,
   calendar: CalendarCheck,
   globe: Globe,
+  dumbbell: Dumbbell,
+  music: Music,
+  store: Store,
   check: Check,
 };
 

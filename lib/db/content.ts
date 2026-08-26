@@ -201,7 +201,42 @@ function normalizeContent(raw: Partial<SiteContent>): SiteContent {
     fiyatlar: merged.pasta?.fiyatlar?.length ? merged.pasta.fiyatlar : pastaDef.fiyatlar,
     dersler: merged.pasta?.dersler?.length ? merged.pasta.dersler : pastaDef.dersler,
     kurallar: merged.pasta?.kurallar?.length ? merged.pasta.kurallar : pastaDef.kurallar,
+    yuzmeKursu: merged.pasta?.yuzmeKursu
+      ? { ...pastaDef.yuzmeKursu, ...merged.pasta.yuzmeKursu }
+      : pastaDef.yuzmeKursu,
   };
+
+  const gymDef = DEFAULT_CONTENT.sporSalonu!;
+  merged.sporSalonu = {
+    ...gymDef,
+    ...(merged.sporSalonu || {}),
+    body: merged.sporSalonu?.body?.length ? merged.sporSalonu.body : gymDef.body,
+    ozellikler: merged.sporSalonu?.ozellikler?.length ? merged.sporSalonu.ozellikler : gymDef.ozellikler,
+    alanlar: merged.sporSalonu?.alanlar?.length ? merged.sporSalonu.alanlar : gymDef.alanlar,
+    imkanlar: merged.sporSalonu?.imkanlar?.length ? merged.sporSalonu.imkanlar : gymDef.imkanlar,
+    bentoGorseller: merged.sporSalonu?.bentoGorseller?.length ? merged.sporSalonu.bentoGorseller : gymDef.bentoGorseller,
+  };
+
+  merged.loader = {
+    ...DEFAULT_CONTENT.loader,
+    ...(merged.loader || {}),
+  };
+
+  merged.sayfalar = {
+    ...DEFAULT_CONTENT.sayfalar!,
+    ...(merged.sayfalar || {}),
+    notFound: {
+      ...DEFAULT_CONTENT.sayfalar!.notFound,
+      ...(merged.sayfalar?.notFound || {}),
+    },
+  };
+
+  merged.bolumGoster = {
+    ...DEFAULT_CONTENT.bolumGoster,
+    ...(merged.bolumGoster || {}),
+    sporSalonu: merged.bolumGoster?.sporSalonu !== false,
+  };
+
   if (!merged.bolumlar?.hizmetler) {
     merged.bolumlar = {
       ...merged.bolumlar,
@@ -596,6 +631,8 @@ function collectReferencedFiles(content: SiteContent) {
   for (const v of Object.values(content.images || {})) addIfUpload(v);
   for (const g of content.galeri || []) addIfUpload(g.src);
   for (const p of content.pasta?.gorseller ?? []) addIfUpload(p.src);
+  addIfUpload(content.pasta?.fiyatGorsel);
+  addIfUpload(content.pasta?.yuzmeKursu?.afisGorsel);
   for (const grup of content.menu?.gruplar ?? []) {
     addIfUpload(grup.image);
     addIfUpload(grup.banner);

@@ -183,6 +183,7 @@ export type HomeSectionId =
   | "ziyaret"
   | "menu"
   | "pasta"
+  | "sporSalonu"
   | "galeri"
   | "yorumlar"
   | "sss"
@@ -214,6 +215,7 @@ export interface PastaContent {
   fiyatBaslik?: string;
   fiyatlar?: PastaFiyatSatir[];
   fiyatNot?: string;
+  fiyatGorsel?: string;
   dersBaslik?: string;
   dersLead?: string;
   dersler?: PastaDers[];
@@ -603,6 +605,17 @@ export interface LoaderContent {
   koseSusleri?: boolean;
 }
 
+export type DuyuruStil = "gold" | "blue" | "green" | "red" | "dark";
+
+export interface DuyuruContent {
+  aktif: boolean;
+  metin: string;
+  stil?: DuyuruStil;
+  ikon?: string;
+  butonMetin?: string;
+  butonLink?: string;
+}
+
 export interface SiteContent {
   images: Record<string, string>;
   navbar: NavbarContent;
@@ -635,7 +648,7 @@ export interface SiteContent {
     textStylesMobile?: HeroTextMap;
   };
   marquee: string[];
-  duyuru: { aktif: boolean; metin: string };
+  duyuru: DuyuruContent;
   hakkimizda: HakkimizdaContent;
   bolumlar: {
     menu: BolumBaslik;

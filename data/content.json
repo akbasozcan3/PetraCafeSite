@@ -22,6 +22,10 @@
     "ctaHref": "#rezervasyon",
     "links": [
       {
+        "label": "Hizmetler",
+        "href": "#hizmetler"
+      },
+      {
         "label": "Hakkımızda",
         "href": "/hakkimizda"
       },
@@ -75,7 +79,7 @@
     "welcomeKutuOpaklik": 58,
     "welcomeEyebrow": "Çekmeköy · Petra Yaşam Merkezi",
     "welcomeTitle": "Petra Cafe Restaurant",
-    "welcomeLead": "Lezzet, keyif ve serinliğin buluştuğu yer — dünya mutfağı, serpme kahvaltı, İtalyan tatlı & kokteyl, kahve, nargile ve havuz başı.",
+    "welcomeLead": "Dünya mutfağı, serpme kahvaltı, İtalyan tatlı & kokteyl, kahve, nargile ve havuz başı. Keyif, konfor ve kalite.",
     "doorUv": {
       "u0": 0.4214720336264993,
       "u1": 0.5788714961125881,
@@ -168,16 +172,12 @@
     "eyebrow": "HAKKIMIZDA & YAŞAM MERKEZİ",
     "baslik": "Petra Yaşam Merkezi'nde cafe & restaurant",
     "answerBaslik": "Sadece bir restoran değil, Çekmeköy'ün en seçkin yaşam alanı.",
-    "answerMetin": "Petra Cafe Restaurant; İstanbul Çekmeköy Taşdelen'de Petra Yaşam Merkezi (Megakent Sitesi) bünyesinde dünya mutfağı, geleneksel zengin serpme kahvaltı, açık yüzme havuzu (Pool & Beach), VIP localar, premium nargile, artisan kahve ve özel organizasyon davetleriyle haftanın 7 günü 08:00 – 02:00 saatleri arasında kesintisiz hizmet vermektedir.",
+    "answerMetin": "Petra Cafe Restaurant, Çekmeköy Taşdelen’de Petra Yaşam Merkezi içinde dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve, nargile ve havuz–plaj sunar. 0530 608 90 51.",
     "lead": "Lezzet, keyif ve konforun tek bir adreste buluştuğu nokta — sabahın ilk ışıklarındaki zengin serpme kahvaltıdan, havuz kenarında serinletici anlara, usta şeflerin hazırladığı dünya mutfağından özel gün kutlamalarına uzanan eşsiz bir deneyim.",
     "body": [
-      "## Çekmeköy Taşdelen'de Yeni Nesil Gastronomi ve Yaşam Alanı\nPetra Cafe Restaurant; İstanbul Çekmeköy Taşdelen Megakent Sitesi içerisinde yer alan, modern gastronomi anlayışını ve sosyal yaşam kültürünü tek bir çatı altında toplayan seçkin bir merkezdir. Tesisimiz Megakent Sitesi içerisinde konumlanmış olmakla birlikte, site yönetiminden tamamen bağımsız ve dışarıdan tüm misafirlerin ziyaretine açık özel bir mülk statüsünde işletilmektedir.",
+      "Menümüzde serpme kahvaltı, dünya mutfağı, İtalyan tatlı ve kokteyller, kahve ve nargile bulunur. Havuz kenarında veya salonda servis edilir.",
       "### Misyonumuz: Şehir İçinde Tatil Konsepti\nTemel vizyonumuz, misafirlerimize şehrin karmaşasından uzaklaşıp nefes alabilecekleri \"şehir içinde tatil konsepti\" sunmaktır. Sevdiklerinizle huzurlu, keyifli anlar paylaşabileceğiniz, hem doyasıya dinlenip hem de dünya mutfağı lezzetleriyle buluşabileceğiniz samimi bir kaçamak noktası vadediyoruz.",
-      "### En Temel İlke: Hijyen ve Konfor\n\"Petra ailesi sizin hijyeninizi ve konforunuzu önemser\" mottosuyla hareket ediyoruz. Havuzun su kalitesi, şezlonglar, masalar ve soyunma odaları her gün misafirler tesisten ayrıldıktan sonra profesyonel temizlik ve dezenfeksiyon süreçlerinden geçirilerek bir sonraki güne hazırlanır. Hijyen standartlarından ödün vermemek en katı kurallarımızdandır.",
-      "### Usta Şeflerin Elinden Dünya Mutfağı & Taş Fırın Lezzetleri\nGünün her saatine hitap eden zengin menümüzde; taş fırından yeni çıkan çıtır İtalyan pizzaları, özenle marine edilmiş dana antrikot ve ızgara spesiyalleri, el yapımı taze makarnalar, enfes burgerler, taze Akdeniz salataları ve çıtır atıştırmalıklar yer almaktadır. Ayrıca Migros Yemek üzerinden online paket servisimiz de mevcuttur.",
-      "### Açık Havuz, Çocuk Havuzu ve Profesyonel Yüzme Kursları\nYaz aylarında açık yüzme havuzumuz (derinlik 1.45 m – 1.95 m) ve çocukların güvenle zaman geçirebileceği ayrı çocuk havuzumuzla serinliğin tadını çıkarabilirsiniz. Havuz alanımızda yaş sınırı olmaksızın profesyonel antrenörler eşliğinde birebir ve grup yüzme kursu eğitimi verilmektedir.",
-      "### Özel Günler, Doğum Günü ve Havuz Başı Kutlamalar\nDoğum günleri, nişan, özel davetler, evlilik teklifleri ve kurumsal şirket yemekleriniz için havuz başı terasımızda veya klimalı salonlarımızda kişiye özel masa süslemeleri, pasta ve volkan sunumları ve özel menü seçenekleriyle unutulmaz anlarınıza ev sahipliği yapıyoruz.",
-      "> \"Petra'da her an özeldir. Misafirlerimize yalnızca kaliteli lezzetler ve serinlik değil, sevdikleriyle birlikte güvenle vakit geçirebilecekleri ücretsiz otoparklı, konforlu ve huzurlu bir yaşam alanı sunuyoruz.\""
+      "### En Temel İlke: Hijyen ve Konfor\n\"Petra ailesi sizin hijyeninizi ve konforunuzu önemser\" mottosuyla hareket ediyoruz. Havuzun su kalitesi, şezlonglar, masalar ve soyunma odaları her gün misafirler tesisten ayrıldıktan sonra profesyonel temizlik ve dezenfeksiyon süreçlerinden geçirilerek bir sonraki güne hazırlanır. Hijyen standartlarından ödün vermemek en katı kurallarımızdandır."
     ],
     "stats": [
       {
@@ -331,8 +331,8 @@
   "bolumlar": {
     "menu": {
       "eyebrow": "Menümüz",
-      "baslik": "Kahvaltı, pizza, burger, kahve",
-      "lead": "Basılı menünün tamamı sitede: serpme kahvaltı, pizza, burger, tatlı, kokteyl, kahve ve nargile.",
+      "baslik": "Kahvaltı, dünya mutfağı, kahve",
+      "lead": "Serpme kahvaltı, dünya mutfağı, İtalyan tatlı ve kokteyller, kahve, nargile ve havuz kenarı.",
       "ctaLabel": "Masa ayırtın",
       "ctaHref": "#rezervasyon",
       "cta2Label": "Tüm menü",
@@ -363,7 +363,7 @@
     "hizmetler": {
       "eyebrow": "Petra",
       "baslik": "Cafe · Restaurant · Pool & Beach",
-      "lead": "Kahvaltı, pizza, burger, tatlı, kahve ve nargile — havuz kenarında veya salonda."
+      "lead": "Dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve ve nargile — havuz kenarında veya salonda."
     }
   },
   "pasta": {
@@ -607,9 +607,9 @@
   },
   "hikaye": null,
   "menu": {
-    "rev": "printed-20260825-v16",
+    "rev": "printed-20260826-v17",
     "baslik": "Petra Menü",
-    "giris": "Kahvaltı, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile. Fiyatlar basılı menü ile aynıdır.",
+    "giris": "Serpme kahvaltı, dünya mutfağı, İtalyan tatlı ve kokteyl, kahve ve nargile. Havuz kenarında veya salonda.",
     "legend": "",
     "hepsiMetin": "Tüm menüyü inceleyin →",
     "hepsiLink": "/menu",
@@ -2116,11 +2116,11 @@
         "aktif": true
       },
       {
-        "ad": "Tatlılar",
+        "ad": "İtalyan Tatlı çeşitleri",
         "slug": "tatlilar",
         "link": "/menu/tatlilar",
         "tumLink": "/menu/tatlilar",
-        "aciklama": "İtalyan ve ev tatlıları.",
+        "aciklama": "İtalyan tatlı çeşitleri ve ev yapımı tatlılar.",
         "image": "/assets/img/covers/tatli.svg",
         "home": true,
         "urunler": [
@@ -2196,8 +2196,8 @@
           },
           {
             "ad": "Tiramisu",
-            "fiyat": "400",
-            "aciklama": "",
+            "fiyat": "250",
+            "aciklama": "Espresso, mascarpone, kakao ve savoiardi.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -2206,7 +2206,8 @@
             "id": "p_tiramisu",
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.642Z",
-            "updatedAt": "2026-08-19T17:09:45.642Z"
+            "updatedAt": "2026-08-19T17:09:45.642Z",
+            "alerjen": "Süt, yumurta, gluten"
           },
           {
             "ad": "Brownie",
@@ -2361,17 +2362,61 @@
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.642Z",
             "updatedAt": "2026-08-19T17:09:45.642Z"
+          },
+          {
+            "ad": "Panna Cotta",
+            "slug": "panna-cotta",
+            "fiyat": "240",
+            "aciklama": "Vanilyalı krema, orman meyvesi sosu.",
+            "fav": true,
+            "aktif": true,
+            "alerjen": "Süt",
+            "not": "",
+            "link": "/menu/tatlilar/panna-cotta"
+          },
+          {
+            "ad": "Cannoli",
+            "slug": "cannoli",
+            "fiyat": "260",
+            "aciklama": "Kızarmış hamur, ricotta, antep fıstığı ve portakal kabuğu.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "Gluten, süt, yumurta, kuruyemiş",
+            "not": "",
+            "link": "/menu/tatlilar/cannoli"
+          },
+          {
+            "ad": "Affogato",
+            "slug": "affogato",
+            "fiyat": "180",
+            "aciklama": "Vanilyalı gelato üzerine sıcak espresso.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "Süt",
+            "not": "",
+            "link": "/menu/tatlilar/affogato"
+          },
+          {
+            "ad": "Fıstıklı Gelato",
+            "slug": "fistikli-gelato",
+            "fiyat": "190",
+            "aciklama": "Antep fıstıklı İtalyan dondurma, kırık fıstık.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "Süt, kuruyemiş",
+            "not": "",
+            "link": "/menu/tatlilar/fistikli-gelato"
           }
         ],
-        "adet": "17 çeşit",
+        "adet": "21 çeşit",
         "aktif": true
       },
       {
-        "ad": "Kahve ve Sıcak İçecekler",
+        "ad": "Kahve",
         "slug": "kahve",
         "link": "/menu/kahve",
         "tumLink": "/menu/kahve",
-        "aciklama": "Çay, Türk kahvesi ve espresso bazlı sıcaklar.",
+        "aciklama": "Espresso, Türk kahvesi, latte ve soğuk kahve — Coffee & Food.",
         "image": "/assets/img/covers/kahve.svg",
         "home": true,
         "urunler": [
@@ -2418,10 +2463,10 @@
             "updatedAt": "2026-08-19T17:09:45.642Z"
           },
           {
-            "ad": "Türk kahvesi",
-            "fiyat": "150",
-            "aciklama": "",
-            "fav": true,
+            "ad": "Türk Kahvesi",
+            "fiyat": "70",
+            "aciklama": "Közde, orta şeker veya sade.",
+            "fav": false,
             "aktif": true,
             "not": "",
             "slug": "turk-kahvesi",
@@ -2429,7 +2474,8 @@
             "id": "p_turk-kahvesi",
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.642Z",
-            "updatedAt": "2026-08-19T17:09:45.642Z"
+            "updatedAt": "2026-08-19T17:09:45.642Z",
+            "alerjen": ""
           },
           {
             "ad": "Damla sakızlı Türk kahvesi",
@@ -2517,8 +2563,8 @@
           },
           {
             "ad": "Espresso",
-            "fiyat": "150",
-            "aciklama": "",
+            "fiyat": "80",
+            "aciklama": "Çift shot, koyu kavrum.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -2527,7 +2573,8 @@
             "id": "p_espresso",
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.642Z",
-            "updatedAt": "2026-08-19T17:09:45.642Z"
+            "updatedAt": "2026-08-19T17:09:45.642Z",
+            "alerjen": ""
           },
           {
             "ad": "Espresso macchiato",
@@ -2601,8 +2648,8 @@
           },
           {
             "ad": "Cappuccino",
-            "fiyat": "250",
-            "aciklama": "",
+            "fiyat": "110",
+            "aciklama": "Espresso, süt köpüğü.",
             "fav": false,
             "aktif": true,
             "not": "",
@@ -2611,7 +2658,8 @@
             "id": "p_cappuccino",
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.642Z",
-            "updatedAt": "2026-08-19T17:09:45.642Z"
+            "updatedAt": "2026-08-19T17:09:45.642Z",
+            "alerjen": "Süt"
           },
           {
             "ad": "Nescafe sade",
@@ -2640,9 +2688,64 @@
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.642Z",
             "updatedAt": "2026-08-19T17:09:45.642Z"
+          },
+          {
+            "ad": "Latte",
+            "slug": "latte",
+            "fiyat": "110",
+            "aciklama": "Espresso, buharlanmış süt.",
+            "fav": true,
+            "aktif": true,
+            "alerjen": "Süt",
+            "not": "",
+            "link": "/menu/kahve/latte"
+          },
+          {
+            "ad": "Filtre Kahve",
+            "slug": "filtre-kahve",
+            "fiyat": "95",
+            "aciklama": "Günün çekirdeği, uzun demleme.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/kahve/filtre-kahve"
+          },
+          {
+            "ad": "Soğuk Brew",
+            "slug": "soguk-brew",
+            "fiyat": "95",
+            "aciklama": "12 saat demleme, buz ve portakal kabuğu.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/kahve/soguk-brew"
+          },
+          {
+            "ad": "Ice Latte",
+            "slug": "ice-latte",
+            "fiyat": "120",
+            "aciklama": "Espresso, soğuk süt, buz.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "Süt",
+            "not": "",
+            "link": "/menu/kahve/ice-latte"
+          },
+          {
+            "ad": "Mocha",
+            "slug": "mocha",
+            "fiyat": "130",
+            "aciklama": "Espresso, kakao, süt.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "Süt",
+            "not": "",
+            "link": "/menu/kahve/mocha"
           }
         ],
-        "adet": "19 çeşit",
+        "adet": "24 çeşit",
         "aktif": true
       },
       {
@@ -2661,8 +2764,8 @@
             "fav": false,
             "aktif": true,
             "not": "",
-            "slug": "ice-latte",
-            "link": "/menu/soguk-kahveler/ice-latte",
+            "slug": "ice-latte-2",
+            "link": "/menu/soguk-kahveler/ice-latte-2",
             "id": "p_ice-latte",
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.642Z",
@@ -2787,8 +2890,8 @@
             "fav": false,
             "aktif": true,
             "not": "",
-            "slug": "affogato",
-            "link": "/menu/soguk-kahveler/affogato",
+            "slug": "affogato-2",
+            "link": "/menu/soguk-kahveler/affogato-2",
             "id": "p_affogato",
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.642Z",
@@ -3736,7 +3839,7 @@
         "slug": "icecekler",
         "link": "/menu/icecekler",
         "tumLink": "/menu/icecekler",
-        "aciklama": "Su, gazlı içecek ve ayran.",
+        "aciklama": "Şarap, limonata ve alkolsüz seçkiler. Kokteyller ayrı bölümde.",
         "image": "/assets/img/covers/icecek.svg",
         "home": false,
         "urunler": [
@@ -4084,7 +4187,7 @@
         "slug": "nargile",
         "link": "/menu/nargile",
         "tumLink": "/menu/nargile",
-        "aciklama": "Nakhla, El Fakher, Adalya ve premium aromalar.",
+        "aciklama": "En iyi nargile çeşitleri — elma, karpuz-nane, üzüm ve özel karışımlar.",
         "image": "/assets/img/covers/nargile.svg",
         "home": true,
         "urunler": [
@@ -4353,10 +4456,152 @@
             "source": "local",
             "createdAt": "2026-08-19T17:09:45.642Z",
             "updatedAt": "2026-08-19T17:09:45.642Z"
+          },
+          {
+            "ad": "Elma",
+            "slug": "nargile-elma",
+            "fiyat": "350",
+            "aciklama": "Klasik elma aroması.",
+            "fav": true,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/nargile/nargile-elma"
+          },
+          {
+            "ad": "Karpuz Nane",
+            "slug": "nargile-karpuz-nane",
+            "fiyat": "350",
+            "aciklama": "Karpuz ve taze nane.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/nargile/nargile-karpuz-nane"
+          },
+          {
+            "ad": "Üzüm",
+            "slug": "nargile-uzum",
+            "fiyat": "350",
+            "aciklama": "Tatlı üzüm.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/nargile/nargile-uzum"
+          },
+          {
+            "ad": "Nane Limon",
+            "slug": "nargile-nane-limon",
+            "fiyat": "350",
+            "aciklama": "Nane ve limon, ferah.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/nargile/nargile-nane-limon"
+          },
+          {
+            "ad": "Love 66",
+            "slug": "nargile-love-66",
+            "fiyat": "380",
+            "aciklama": "Kavun, karpuz, nane ve karışık meyve.",
+            "fav": true,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/nargile/nargile-love-66"
+          },
+          {
+            "ad": "Petra Special",
+            "slug": "nargile-petra-special",
+            "fiyat": "400",
+            "aciklama": "Evin özel karışımı — servise sorun.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/nargile/nargile-petra-special"
           }
         ],
-        "adet": "19 çeşit",
+        "adet": "25 çeşit",
         "aktif": true
+      },
+      {
+        "ad": "İtalyan Kokteylleri",
+        "slug": "italyan-kokteyller",
+        "link": "/menu/italyan-kokteyller",
+        "tumLink": "/menu/italyan-kokteyller",
+        "aciklama": "Aperitivo — spritz, klasik İtalyan kokteyller ve espresso martini.",
+        "urunler": [
+          {
+            "ad": "Aperol Spritz",
+            "slug": "aperol-spritz",
+            "fiyat": "280",
+            "aciklama": "Aperol, prosecco, soda ve portakal.",
+            "fav": true,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/italyan-kokteyller/aperol-spritz"
+          },
+          {
+            "ad": "Negroni",
+            "slug": "negroni",
+            "fiyat": "290",
+            "aciklama": "Gin, Campari, kırmızı vermut, portakal kabuğu.",
+            "fav": true,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/italyan-kokteyller/negroni"
+          },
+          {
+            "ad": "Bellini",
+            "slug": "bellini",
+            "fiyat": "260",
+            "aciklama": "Prosecco ve şeftali püresi.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/italyan-kokteyller/bellini"
+          },
+          {
+            "ad": "Limoncello Spritz",
+            "slug": "limoncello-spritz",
+            "fiyat": "270",
+            "aciklama": "Limoncello, prosecco, soda, limon.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/italyan-kokteyller/limoncello-spritz"
+          },
+          {
+            "ad": "Hugo",
+            "slug": "hugo",
+            "fiyat": "270",
+            "aciklama": "Elderflower, prosecco, nane ve lime.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/italyan-kokteyller/hugo"
+          },
+          {
+            "ad": "Espresso Martini",
+            "slug": "espresso-martini",
+            "fiyat": "290",
+            "aciklama": "Vodka, espresso, kahve likörü.",
+            "fav": false,
+            "aktif": true,
+            "alerjen": "",
+            "not": "",
+            "link": "/menu/italyan-kokteyller/espresso-martini"
+          }
+        ],
+        "adet": "6 çeşit"
       }
     ]
   },
@@ -4590,7 +4835,7 @@
     "urunler": {
       "eyebrow": "Menü",
       "baslikSablon": "{n} bölümde {m} tabak",
-      "lead": "Kahvaltı, sandviç, pizza, burger, ızgara, tatlı, kahve, kokteyl ve nargile — basılı menü fiyatlarıyla.",
+      "lead": "Serpme kahvaltı, dünya mutfağı, İtalyan tatlı ve kokteyl, kahve ve nargile. Masa ayırtmak için rezervasyon formunu kullanın.",
       "altNot": "Fiyatlara KDV dahildir. Kahvaltı ekstraları ve boş bırakılan limonata fiyatları için servise sorun. Alerjen için danışın."
     },
     "urunKategori": {
@@ -4638,7 +4883,7 @@
   "footer": {
     "markaAdi": "Petra Cafe Restaurant",
     "yasalMetin": "Tüm hakları saklıdır.",
-    "slogan": "Petra Yaşam Merkezi — Şehir içinde tatil konsepti, dünya mutfağı, açık yüzme havuzu, spor salonu ve havuz başı davetler.",
+    "slogan": "Keyif, konfor ve kalite.\nDünya mutfağı · serpme kahvaltı · İtalyan tatlı & kokteyl · nargile · pool & beach.",
     "aciklama": "İstanbul Çekmeköy Taşdelen Megakent Sitesi içerisinde site yönetiminden bağımsız özel bir mülk olarak hizmet veren seçkin yaşam merkezi.",
     "adres": "Sultançiftliği Mahallesi, Selen Sokak, Megakent Sitesi İçi No: 1/O, Taşdelen, Çekmeköy / İstanbul",
     "telefon": "0530 608 90 51",
@@ -4806,58 +5051,40 @@
   ],
   "hizmetler": [
     {
-      "label": "Restoran",
+      "label": "Spor ve Jimnastik",
+      "href": "/spor-salonu",
+      "aciklama": "Spor salonu ve jimnastik imkanları",
+      "icon": "dumbbell"
+    },
+    {
+      "label": "Dünya Mutfağı ve Serpme Kahvaltı",
       "href": "/menu",
-      "aciklama": "Salon ve teras servisi",
-      "icon": "utensils"
-    },
-    {
-      "label": "Serpme Kahvaltı",
-      "href": "/menu/kahvalti",
-      "aciklama": "Tabak ve 2 kişilik serpme",
-      "icon": "sunrise"
-    },
-    {
-      "label": "Pizzalar",
-      "href": "/menu/pizzalar",
-      "aciklama": "Fırın pizza",
+      "aciklama": "Geniş içerikli serpme kahvaltının yanı sıra dünya mutfağından seçkin lezzetler",
       "icon": "chef"
     },
     {
-      "label": "POOL & BEACH",
-      "href": "/havuz-plaj",
-      "aciklama": "Havuz 09:00–18:00",
-      "icon": "waves"
+      "label": "Canlı Müzik ve Karaoke",
+      "href": "/#rezervasyon",
+      "aciklama": "Belirli günlerde düzenlenen canlı müzik geceleri ve karaoke eğlenceleri",
+      "icon": "music"
     },
     {
-      "label": "Yüzme dersleri",
-      "href": "/havuz-plaj#dersler",
-      "aciklama": "Birebir ve grup",
-      "icon": "calendar"
-    },
-    {
-      "label": "Kahve",
-      "href": "/menu/sicak-kahveler",
-      "aciklama": "Sıcak ve soğuk kahve",
-      "icon": "coffee"
-    },
-    {
-      "label": "Kokteyller",
-      "href": "/menu/alkolsuz-kokteyller",
-      "aciklama": "Mocktail ve frozen",
-      "icon": "wine"
-    },
-    {
-      "label": "Tatlılar",
+      "label": "İçecek ve Tatlı Çeşitleri",
       "href": "/menu/tatlilar",
-      "aciklama": "Tatlı menüsü",
+      "aciklama": "Özel İtalyan tatlıları, özel kahveler ve alkolsüz kokteyl çeşitleri",
       "icon": "cake"
     },
     {
-      "label": "Nargile",
-      "href": "/menu/nargile",
-      "aciklama": "Nakhla, El Fakher, Adalya",
-      "icon": "flame"
+      "label": "Havuz Locaları ve Nargile",
+      "href": "/havuz-plaj",
+      "aciklama": "Havuz kenarında dinlenebileceğiniz özel localar ve nargile hizmeti",
+      "icon": "waves"
+    },
+    {
+      "label": "Market",
+      "href": "/#iletisim",
+      "aciklama": "Tesis içinde gün boyu temel ihtiyaçlarınızı karşılayabileceğiniz bir market alanı",
+      "icon": "store"
     }
   ],
   "rezervasyon": {
