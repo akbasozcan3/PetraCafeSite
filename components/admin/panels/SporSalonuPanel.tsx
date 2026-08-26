@@ -171,6 +171,57 @@ export default function SporSalonuPanel() {
               placeholder="@petrasporsalonu"
             />
           </div>
+
+          {/* Hero Afiş Görseli */}
+          <div className="pt-2 border-t border-white/10 space-y-3">
+            <h4 className="text-sm font-bold text-[#F8F8F8] flex items-center gap-2">
+              <ImageIcon className="h-4 w-4 text-[#E8B84B]" /> Hero Afiş Görseli (Sağ Kolon)
+            </h4>
+            <div className="relative h-52 w-full overflow-hidden rounded-xl border border-white/10 bg-[#0D1117]">
+              {s.posterImg ? (
+                <AdminImage
+                  src={resolveMediaUrl(s.posterImg) || s.posterImg}
+                  alt="Spor Salonu Afiş"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center text-xs text-[#6B7A94]">
+                  Görsel Seçilmedi — Varsayılan: petra-spor-salonu-afis.jpg
+                </div>
+              )}
+            </div>
+            <div className="flex gap-3 items-center">
+              <Upload
+                label="Görsel Seç / Yükle"
+                accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+                uploadKey="spor-poster"
+                enableCrop={true}
+                maxWidth={1400}
+                maxHeight={1400}
+                onComplete={(results) => {
+                  const first = results?.[0];
+                  if (first?.url) {
+                    updateSpor({ posterImg: first.url });
+                    setMessage("Afiş görseli başarıyla yüklendi.");
+                    setMessageType("success");
+                  }
+                }}
+                onError={(err) => {
+                  setMessage(err.message || "Görsel yüklenemedi");
+                  setMessageType("error");
+                }}
+              />
+              {s.posterImg && (
+                <button
+                  type="button"
+                  onClick={() => updateSpor({ posterImg: "" })}
+                  className="text-xs text-red-400 hover:text-red-300 flex items-center gap-1 mt-4"
+                >
+                  <Trash2 className="h-3.5 w-3.5" /> Görseli Kaldır
+                </button>
+              )}
+            </div>
+          </div>
         </section>
 
         {/* 2. ANASAYFA 4 CAM EFEKTLİ ÖZELLİK KARTÇIĞI */}
@@ -360,6 +411,32 @@ export default function SporSalonuPanel() {
             </Button>
           </div>
 
+          {/* Section başlıkları */}
+          <div className="grid gap-3 md:grid-cols-3">
+            <Input
+              label="Eyebrow (Küçük Üst Yazı)"
+              value={s.alanlarEyebrow || ""}
+              onChange={(e: any) => updateSpor({ alanlarEyebrow: e.target.value })}
+              placeholder="EGZERSİZ ALANLARI"
+            />
+            <Input
+              label="Bölüm Başlığı (H2)"
+              value={s.alanlarBaslik || ""}
+              onChange={(e: any) => updateSpor({ alanlarBaslik: e.target.value })}
+              placeholder="Antrenman Alanlarımız"
+            />
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[#8A9BB0]">Bölüm Lead</label>
+              <textarea
+                value={s.alanlarLead || ""}
+                onChange={(e: any) => updateSpor({ alanlarLead: e.target.value })}
+                rows={2}
+                className="w-full rounded-xl border border-white/[0.08] bg-[#0D1117] px-3 py-2 text-xs text-[#EEE9E0] focus:border-[#E8B84B] focus:outline-none"
+                placeholder="Hedeflerinize yönelik tasarlanmış kardiyo, serbest ağırlık ve fonksiyonel fitness istasyonları."
+              />
+            </div>
+          </div>
+
           <div className="grid gap-4 md:grid-cols-2">
             {(s.alanlar || []).map((alan: any, i: number) => (
               <div key={i} className="space-y-3 rounded-xl border border-white/[0.06] bg-[#0D1117] p-4">
@@ -486,6 +563,26 @@ export default function SporSalonuPanel() {
             </Button>
           </div>
 
+          {/* Bölüm başlıkları */}
+          <div className="grid gap-3 md:grid-cols-2">
+            <Input
+              label="Bölüm Başlığı (H2)"
+              value={s.imkanlarBaslik || ""}
+              onChange={(e: any) => updateSpor({ imkanlarBaslik: e.target.value })}
+              placeholder="Ekipman ve Tesis İmkanları"
+            />
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[#8A9BB0]">Bölüm Lead</label>
+              <textarea
+                value={s.imkanlarLead || ""}
+                onChange={(e: any) => updateSpor({ imkanlarLead: e.target.value })}
+                rows={2}
+                className="w-full rounded-xl border border-white/[0.08] bg-[#0D1117] px-3 py-2 text-xs text-[#EEE9E0] focus:border-[#E8B84B] focus:outline-none"
+                placeholder="Petra Spor Salonu, antrenman konforunuz ve güvenliğiniz için eksiksiz donatılmıştır."
+              />
+            </div>
+          </div>
+
           <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
             {(s.imkanlar || []).map((imkan: string, idx: number) => (
               <div key={idx} className="flex items-center gap-2 rounded-xl border border-white/[0.06] bg-[#0D1117] p-2.5">
@@ -541,6 +638,28 @@ export default function SporSalonuPanel() {
             >
               <Plus className="h-4 w-4 mr-1" /> Paket Ekle
             </Button>
+          </div>
+
+          {/* Bölüm başlıkları */}
+          <div className="grid gap-3 md:grid-cols-3">
+            <Input
+              label="Eyebrow"
+              value={s.paketlerEyebrow || ""}
+              onChange={(e: any) => updateSpor({ paketlerEyebrow: e.target.value })}
+              placeholder="FİYATLANDIRMA"
+            />
+            <Input
+              label="Bölüm Başlığı (H2)"
+              value={s.paketlerBaslik || ""}
+              onChange={(e: any) => updateSpor({ paketlerBaslik: e.target.value })}
+              placeholder="Üyelik Paketleri"
+            />
+            <Input
+              label="Bölüm Lead"
+              value={s.paketlerLead || ""}
+              onChange={(e: any) => updateSpor({ paketlerLead: e.target.value })}
+              placeholder="Hedeflerinize ve programınıza göre esnek üyelik seçenekleri."
+            />
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -665,6 +784,155 @@ export default function SporSalonuPanel() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* 7. DARK CTA & SOSYAL MEDYA BÖLÜMÜ AYARLARI */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-[#E8B84B]" /> 7. Dark CTA & Sosyal Medya Bölümü
+            </h3>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Input
+              label="Üst Yazı (Eyebrow)"
+              value={s.ctaEyebrow || ""}
+              onChange={(e: any) => updateSpor({ ctaEyebrow: e.target.value })}
+              placeholder="PETRA YAŞAM KÜLTÜRÜ"
+            />
+            <Input
+              label="Instagram URL"
+              value={s.instagramUrl || ""}
+              onChange={(e: any) => updateSpor({ instagramUrl: e.target.value })}
+              placeholder="https://www.instagram.com/petrasporsalonu"
+            />
+          </div>
+          <Input
+            label="CTA Başlık"
+            value={s.ctaTitle || ""}
+            onChange={(e: any) => updateSpor({ ctaTitle: e.target.value })}
+            placeholder="Hedeflerinize Petra ile Ulaşın"
+          />
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-[#8A9BB0]">CTA Açıklama (Lead)</label>
+            <textarea
+              value={s.ctaLead || ""}
+              onChange={(e: any) => updateSpor({ ctaLead: e.target.value })}
+              rows={2}
+              className="w-full rounded-xl border border-white/[0.08] bg-[#0D1117] px-4 py-2.5 text-sm text-[#EEE9E0] placeholder:text-[#6B7A94] focus:border-[#E8B84B] focus:outline-none"
+              placeholder="Petra Spor Salonu; antrenmanlarınızı açık yüzme havuzu ve Petra Cafe ile birleştiren benzersiz bir yaşam alanı."
+            />
+          </div>
+        </section>
+
+        {/* 8. İSTATİSTİK KARTLARI */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <div>
+              <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+                <Clock className="h-5 w-5 text-[#E8B84B]" /> 8. İstatistik Kartları
+              </h3>
+              <p className="text-xs text-[#8A9BB0] mt-0.5">
+                Sayfa alt bölümünde gösterilen istatistikler. Boş bırakılırsa bölüm gizlenir.
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const next = [...(s.istatistikler || []), { deger: "", etiket: "", ikon: "dumbbell" }];
+                updateSpor({ istatistikler: next });
+              }}
+              className="border-dashed border-white/20 text-[#D9A441] hover:bg-white/5"
+            >
+              <Plus className="h-4 w-4 mr-1" /> İstatistik Ekle
+            </Button>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+            {(s.istatistikler || []).map((istat: any, ii: number) => (
+              <div key={ii} className="space-y-2 rounded-xl border border-white/[0.06] bg-[#0D1117] p-3.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#E8B84B]">#{ii + 1}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const next = (s.istatistikler || []).filter((_: any, i: number) => i !== ii);
+                      updateSpor({ istatistikler: next });
+                    }}
+                    className="text-[#8A9BB0] hover:text-red-400"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+                <Input
+                  label="Değer"
+                  value={istat.deger || ""}
+                  onChange={(e: any) => {
+                    const next = [...(s.istatistikler || [])];
+                    next[ii] = { ...istat, deger: e.target.value };
+                    updateSpor({ istatistikler: next });
+                  }}
+                  placeholder="50+"
+                />
+                <Input
+                  label="Etiket"
+                  value={istat.etiket || ""}
+                  onChange={(e: any) => {
+                    const next = [...(s.istatistikler || [])];
+                    next[ii] = { ...istat, etiket: e.target.value };
+                    updateSpor({ istatistikler: next });
+                  }}
+                  placeholder="Ekipman & Alet"
+                />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-[#8A9BB0]">İkon</label>
+                  <select
+                    value={istat.ikon || "dumbbell"}
+                    onChange={(e: any) => {
+                      const next = [...(s.istatistikler || [])];
+                      next[ii] = { ...istat, ikon: e.target.value };
+                      updateSpor({ istatistikler: next });
+                    }}
+                    className="w-full rounded-xl border border-white/[0.08] bg-[#141E2E] px-3 py-2 text-xs text-[#EEE9E0] focus:border-[#E8B84B] focus:outline-none"
+                  >
+                    <option value="dumbbell">🏋️ dumbbell</option>
+                    <option value="users">👥 users</option>
+                    <option value="clock">🕐 clock</option>
+                    <option value="trophy">🏆 trophy</option>
+                    <option value="zap">⚡ zap</option>
+                    <option value="star">⭐ star</option>
+                    <option value="activity">📈 activity</option>
+                  </select>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 9. ALT REZERVASYON CTA */}
+        <section className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#141E2E]/80 p-6 shadow-md">
+          <div className="border-b border-white/10 pb-3">
+            <h3 className="text-base font-bold text-[#F8F8F8] flex items-center gap-2">
+              <CheckCircle2 className="h-5 w-5 text-[#7C8B4F]" /> 9. Alt Rezervasyon / Bilgi CTA
+            </h3>
+            <p className="text-xs text-[#8A9BB0] mt-0.5">Sayfanın en altındaki çağrı bölümü.</p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Input
+              label="Başlık"
+              value={s.masaCtaBaslik || ""}
+              onChange={(e: any) => updateSpor({ masaCtaBaslik: e.target.value })}
+              placeholder="Spor salonumuza katılmak ister misiniz?"
+            />
+            <Input
+              label="Açıklama"
+              value={s.masaCtaMetin || ""}
+              onChange={(e: any) => updateSpor({ masaCtaMetin: e.target.value })}
+              placeholder="Üyelik ve detaylı bilgi için WhatsApp'tan yazın veya arayın."
+            />
           </div>
         </section>
       </div>

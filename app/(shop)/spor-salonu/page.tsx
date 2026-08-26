@@ -72,9 +72,10 @@ export default async function SporSalonuPage() {
     "Merhaba, Petra Yaşam Merkezi web siteniz üzerinden iletişime geçiyorum. Bilgi almak istiyorum."
   );
 
+  const posterImg = resolveMediaUrl(s.posterImg) || "/assets/cms/petra-spor-salonu-afis.jpg";
+
   const instagramUrl = s.instagramUrl || "https://www.instagram.com/petrasporsalonu";
   const instagramTag = s.instagram || "@petrasporsalonu";
-  const posterImg = "/assets/cms/petra-spor-salonu-afis.jpg";
 
   const alanlar = s.alanlar || [
     {
@@ -181,26 +182,6 @@ export default async function SporSalonuPage() {
             <Breadcrumbs items={[{ label: "Spor Salonu" }]} />
           </div>
 
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "5px 14px",
-              borderRadius: "999px",
-              background: "rgba(217, 164, 65, 0.15)",
-              color: "var(--brass-lo, #B8842C)",
-              fontSize: "12px",
-              fontWeight: 700,
-              marginBottom: "14px",
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-            }}
-          >
-            <Dumbbell size={14} />
-            <span>{cleanRawText(s.eyebrow) || "PETRA YAŞAM MERKEZİ"}</span>
-          </div>
-
           <h1
             style={{
               fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)",
@@ -284,11 +265,11 @@ export default async function SporSalonuPage() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "8px 14px", borderRadius: "12px", background: "var(--cream-2, #F3EDE0)", fontSize: "13.5px", fontWeight: 600, color: "var(--ink, #0D0F0A)" }}>
               <Clock size={16} color="var(--brass-lo, #B8842C)" />
-              <span>07:00 – 23:00 (Hergün)</span>
+              <span>{cleanRawText(s.saatler) || "07:00 – 23:00 (Hergün)"}</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "8px 14px", borderRadius: "12px", background: "var(--cream-2, #F3EDE0)", fontSize: "13.5px", fontWeight: 600, color: "var(--ink, #0D0F0A)" }}>
               <MapPin size={16} color="var(--olive-lo, #5A6838)" />
-              <span>Megakent Sitesi No:1/O</span>
+              <span>{content.iletisim?.adresSatir1 || "Megakent Sitesi No:1/O"}</span>
             </div>
           </div>
         </div>
@@ -312,10 +293,10 @@ export default async function SporSalonuPage() {
       {/* 2. ANTRENMAN ALANLARIMIZ */}
       <section style={{ marginBottom: "44px" }}>
         <div className="section__head" style={{ marginBottom: "26px" }}>
-          <p className="eyebrow">EGZERSİZ ALANLARI</p>
-          <h2 className="h2">Antrenman Alanlarımız</h2>
+          <p className="eyebrow">{cleanRawText(s.alanlarEyebrow) || "EGZERSİZ ALANLARI"}</p>
+          <h2 className="h2">{cleanRawText(s.alanlarBaslik) || "Antrenman Alanlarımız"}</h2>
           <p className="lead">
-            Hedeflerinize yönelik tasarlanmış kardiyo, serbest ağırlık ve fonksiyonel fitness istasyonları.
+            {cleanRawText(s.alanlarLead) || "Hedeflerinize yönelik tasarlanmış kardiyo, serbest ağırlık ve fonksiyonel fitness istasyonları."}
           </p>
         </div>
 
@@ -417,11 +398,11 @@ export default async function SporSalonuPage() {
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
           <Sparkles size={22} color="var(--brass-lo, #B8842C)" />
           <h2 style={{ fontFamily: "var(--f-head, 'Playfair Display', Georgia, serif)", fontSize: "clamp(22px, 2.8vw, 28px)", fontWeight: 600, color: "var(--ink, #0D0F0A)", margin: 0 }}>
-            Ekipman ve Tesis İmkanları
+            {cleanRawText(s.imkanlarBaslik) || "Ekipman ve Tesis İmkanları"}
           </h2>
         </div>
         <p style={{ fontSize: "14.5px", lineHeight: 1.7, color: "#555A4C", maxWidth: "68ch", margin: "0 0 22px" }}>
-          Petra Spor Salonu, antrenman konforunuz ve güvenliğiniz için eksiksiz donatılmıştır.
+          {cleanRawText(s.imkanlarLead) || "Petra Spor Salonu, antrenman konforunuz ve güvenliğiniz için eksiksiz donatılmıştır."}
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "12px" }}>
@@ -463,7 +444,7 @@ export default async function SporSalonuPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "32px", alignItems: "center" }}>
           <div>
             <p className="eyebrow" style={{ color: "#D9A441", margin: "0 0 10px", fontWeight: 700, letterSpacing: "0.15em" }}>
-              PETRA YAŞAM KÜLTÜRÜ
+              {cleanRawText(s.ctaEyebrow) || "PETRA YAŞAM KÜLTÜRÜ"}
             </p>
             <h2
               className="spor-cta-title"
@@ -538,12 +519,13 @@ export default async function SporSalonuPage() {
       </section>
 
       {/* 5. ÜYELİK PAKETLERİ */}
+      {(s.paketler || []).length > 0 && (
       <section style={{ marginBottom: "44px", marginTop: "44px" }}>
         <div className="section__head" style={{ marginBottom: "26px" }}>
-          <p className="eyebrow">FİYATLANDIRMA</p>
-          <h2 className="h2">Üyelik Paketleri</h2>
+          <p className="eyebrow">{cleanRawText(s.paketlerEyebrow) || "FİYATLANDIRMA"}</p>
+          <h2 className="h2">{cleanRawText(s.paketlerBaslik) || "Üyelik Paketleri"}</h2>
           <p className="lead">
-            Hedeflerinize ve programınıza göre esnek üyelik seçenekleri.
+            {cleanRawText(s.paketlerLead) || "Hedeflerinize ve programınıza göre esnek üyelik seçenekleri."}
           </p>
         </div>
 
@@ -626,8 +608,10 @@ export default async function SporSalonuPage() {
           })}
         </div>
       </section>
+      )}
 
       {/* 6. İSTATİSTİKLER */}
+      {(s.istatistikler || []).length > 0 && (
       <section
         style={{
           background: "var(--cream-2, #F3EDE0)",
@@ -645,34 +629,33 @@ export default async function SporSalonuPage() {
             textAlign: "center",
           }}
         >
-          {[
-            { ikon: <Dumbbell size={26} color="var(--brass-lo,#B8842C)" />, deger: "50+", etiket: "Ekipman & Alet" },
-            { ikon: <Users size={26} color="var(--olive-lo,#5A6838)" />, deger: "200+", etiket: "Aktif Üye" },
-            { ikon: <Clock size={26} color="var(--brass-lo,#B8842C)" />, deger: "16 Saat", etiket: "Günlük Açık" },
-            { ikon: <Trophy size={26} color="var(--olive-lo,#5A6838)" />, deger: "5 Yıl", etiket: "Deneyim" },
-            { ikon: <Zap size={26} color="var(--brass-lo,#B8842C)" />, deger: "PT Desteği", etiket: "Kişisel Antrenör" },
-            { ikon: <Star size={26} color="var(--olive-lo,#5A6838)" />, deger: "4.9 ★", etiket: "Kullanıcı Puanı" },
-          ].map((stat, si) => (
-            <div key={si} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-              <div style={{ padding: "12px", borderRadius: "14px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.07)" }}>
-                {stat.ikon}
+          {(s.istatistikler || []).map((stat: any, si: number) => {
+            const ikonRenk = si % 2 === 0 ? "var(--brass-lo,#B8842C)" : "var(--olive-lo,#5A6838)";
+            const ikonMap: Record<string, any> = { dumbbell: Dumbbell, users: Users, clock: Clock, trophy: Trophy, zap: Zap, star: Star, activity: Activity };
+            const IkonComp = ikonMap[stat.ikon || ""] || Dumbbell;
+            return (
+              <div key={si} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+                <div style={{ padding: "12px", borderRadius: "14px", background: "#FFFFFF", border: "1px solid rgba(13,15,10,0.07)" }}>
+                  <IkonComp size={26} color={ikonRenk} />
+                </div>
+                <b style={{ fontSize: "22px", fontWeight: 800, color: "var(--ink,#0D0F0A)", fontFamily: "var(--f-head,serif)" }}>
+                  {cleanRawText(stat.deger || "")}
+                </b>
+                <span style={{ fontSize: "12px", color: "#667085", fontWeight: 600 }}>{cleanRawText(stat.etiket || "")}</span>
               </div>
-              <b style={{ fontSize: "22px", fontWeight: 800, color: "var(--ink,#0D0F0A)", fontFamily: "var(--f-head,serif)" }}>
-                {stat.deger}
-              </b>
-              <span style={{ fontSize: "12px", color: "#667085", fontWeight: 600 }}>{stat.etiket}</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
+      )}
 
       {/* 7. MASA / REZERVASYON CTA */}
       <MasaCTA
         tel={tel}
         telHref={telHref}
         waHref={waHref}
-        baslik="Spor salonumuza katılmak ister misiniz?"
-        metin="Üyelik ve detaylı bilgi için WhatsApp'tan yazın veya arayın."
+        baslik={cleanRawText(s.masaCtaBaslik) || "Spor salonumuza katılmak ister misiniz?"}
+        metin={cleanRawText(s.masaCtaMetin) || "Üyelik ve detaylı bilgi için WhatsApp'tan yazın veya arayın."}
         btnLabel="WhatsApp ile Bilgi Al"
       />
     </article>

@@ -557,6 +557,12 @@ export interface SayfalarContent {
   };
 }
 
+export interface SporIstatistik {
+  deger: string;
+  etiket: string;
+  ikon?: string;
+}
+
 export interface SporSalonuContent {
   eyebrow?: string;
   baslik: string;
@@ -567,6 +573,8 @@ export interface SporSalonuContent {
   telefon2?: string;
   instagram?: string;
   instagramUrl?: string;
+  /** Hero afiş görseli (sağ kolon) */
+  posterImg?: string;
   ozellikler?: {
     baslik: string;
     alt: string;
@@ -578,12 +586,20 @@ export interface SporSalonuContent {
     rozet?: string;
   }[];
   gorseller?: { src: string; alt: string }[];
+  /** Antrenman Alanları section başlıkları */
+  alanlarEyebrow?: string;
+  alanlarBaslik?: string;
+  alanlarLead?: string;
   alanlar?: {
     baslik: string;
     kicker: string;
     metin: string;
     ikon?: string;
+    gorsel?: string;
   }[];
+  /** Ekipman/İmkanlar section başlıkları */
+  imkanlarBaslik?: string;
+  imkanlarLead?: string;
   imkanlar?: string[];
   paketler?: {
     ad: string;
@@ -592,12 +608,23 @@ export interface SporSalonuContent {
     ozellikler: string[];
     populer?: boolean;
   }[];
+  /** Paketler section başlıkları */
+  paketlerEyebrow?: string;
+  paketlerBaslik?: string;
+  paketlerLead?: string;
   deneyimler?: {
     baslik: string;
     metin: string;
   }[];
+  /** Dark CTA bölümü */
+  ctaEyebrow?: string;
   ctaTitle?: string;
   ctaLead?: string;
+  /** İstatistik kartları */
+  istatistikler?: SporIstatistik[];
+  /** Alt MasaCTA */
+  masaCtaBaslik?: string;
+  masaCtaMetin?: string;
 }
 
 export interface LoaderContent {

@@ -22,7 +22,6 @@ import {
   ArrowRight,
   Users,
   Star,
-  CalendarDays,
 } from "lucide-react";
 
 export const revalidate = 0;
@@ -144,11 +143,9 @@ export default async function HavuzPlajPage() {
     : ["5–8 Yaş", "9–12 Yaş"];
   const kursuGrupFiyat = cleanRawText(yk.grupFiyat || "") || "7.000 TL";
   const kursuOzelFiyat = cleanRawText(yk.ozelFiyat || "") || "9.000 TL";
-  const kursuAfis = yk.afisGorsel || "/assets/cms/petra-pool-beach-loca.jpg";
 
   const instagramHref =
     p.instagramHref || content.iletisim?.instagramUrl || "https://www.instagram.com/petracaferestaurant/";
-  const instagramEtiket = p.instagramEtiket || content.iletisim?.instagram || "@petracaferestaurant";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -494,23 +491,6 @@ export default async function HavuzPlajPage() {
         .havuz-cta-sec {
           border-radius: 24px;
           overflow: hidden;
-        }
-
-        /* ── Kurs afiş ── */
-        .havuz-kurs-afis {
-          border-radius: 18px;
-          overflow: hidden;
-          border: 1.5px solid rgba(217, 164, 65, 0.3);
-          background: #090C08;
-          aspect-ratio: 4 / 3;
-          position: relative;
-        }
-
-        .havuz-kurs-afis img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
         }
 
         /* ── Program & fiyat kartçıkları ── */
@@ -930,7 +910,7 @@ export default async function HavuzPlajPage() {
             </div>
           </div>
 
-          {/* Sağ: Avantajlar + Afiş */}
+          {/* Sağ: Avantajlar */}
           <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
             {/* Avantajlar kartı */}
             <div className="havuz-kurs-avantajlar">
@@ -978,35 +958,6 @@ export default async function HavuzPlajPage() {
               ))}
             </div>
 
-            {/* Afiş görsel */}
-            <div className="havuz-kurs-afis">
-              <SafeImg
-                src={resolveMediaUrl(kursuAfis) || "/assets/cms/petra-pool-beach-loca.jpg"}
-                alt={kursuBaslik}
-                fallback={SITE_PHOTOS.facade}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 14,
-                  left: 14,
-                  right: 14,
-                  padding: "10px 14px",
-                  borderRadius: "12px",
-                  background: "rgba(10, 15, 9, 0.88)",
-                  border: "1px solid rgba(217, 164, 65, 0.4)",
-                  color: "#F8F5EE",
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                }}
-              >
-                <CalendarDays size={15} color="#D9A441" />
-                <span>{kursuGunler} · {kursuSaat}</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
