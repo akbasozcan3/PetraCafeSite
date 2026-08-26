@@ -235,18 +235,18 @@ export default function PastaPanel() {
             />
           </div>
 
-          <div className="grid gap-4 md:grid-cols-4 pt-2">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 pt-2">
+            <Input
+              label="Havuz Hizmet Saatleri"
+              value={p.havuzSaat || p.cafeSaat || ""}
+              onChange={(e) => updatePasta({ havuzSaat: e.target.value, cafeSaat: e.target.value })}
+              placeholder="09:00 – 18:00"
+            />
             <Input
               label="Kafe / Teras Saatleri"
               value={p.cafeSaat || ""}
               onChange={(e) => updatePasta({ cafeSaat: e.target.value })}
               placeholder="08:00 – 02:00"
-            />
-            <Input
-              label="Havuz Hizmet Saatleri"
-              value={p.havuzSaat || ""}
-              onChange={(e) => updatePasta({ havuzSaat: e.target.value })}
-              placeholder="09:00 – 18:00"
             />
             <Input
               label="Havuz Derinliği"
@@ -259,6 +259,20 @@ export default function PastaPanel() {
               value={p.instagramEtiket || ""}
               onChange={(e) => updatePasta({ instagramEtiket: e.target.value })}
               placeholder="@petracaferestaurant"
+            />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 pt-1">
+            <Input
+              label="Instagram URL"
+              value={p.instagramHref || ""}
+              onChange={(e) => updatePasta({ instagramHref: e.target.value })}
+              placeholder="https://www.instagram.com/petracaferestaurant/"
+            />
+            <Input
+              label="Fiyat Notu (Kısa Bilgilendirme)"
+              value={p.fiyatNot || ""}
+              onChange={(e) => updatePasta({ fiyatNot: e.target.value })}
+              placeholder="0–2 yaş ücretsiz. Mayo ve bone zorunludur..."
             />
           </div>
         </section>
