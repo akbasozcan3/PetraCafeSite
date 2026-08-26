@@ -97,8 +97,10 @@ export default function HomeServices({ content }: { content: SiteContent }) {
         <div className="wrap hizmet-modern__inner">
           <div className="hizmet-modern__head">
             <div className="hizmet-modern__copy">
+              {/* Diğer section'larla aynı pill badge tasarımı */}
               <p className="hizmet-modern__eyebrow" data-fade="">
                 <span className="hizmet-modern__eyebrow-num">{eyebrowNumber}</span>
+                <span className="hizmet-modern__eyebrow-dot" aria-hidden="true">·</span>
                 <span>{eyebrowLabel}</span>
               </p>
               <h2 className="hizmet-modern__title" data-split="">
@@ -125,27 +127,36 @@ export default function HomeServices({ content }: { content: SiteContent }) {
             </div>
           </div>
 
-          <div
-            className="hizmet-slider"
-            data-has-prev={currentIndex > 0 ? "true" : undefined}
-            data-has-next={currentIndex < maxIndex ? "true" : undefined}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
+          {/* Slider wrapper — overflow: hidden ile kırpmayı önle */}
+          <div className="hizmet-slider-wrap">
             <div
-              className="hizmet-slider__track"
-              style={{ transform: `translate3d(-${currentIndex * (100 / visibleCount)}%, 0, 0)` }}
+              className="hizmet-slider"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
-              {list.map((item, idx) => (
-                <ServiceSlide
-                  key={`${item.label}-${idx}`}
-                  item={item}
-                  index={idx}
-                  visibleCount={visibleCount}
-                />
-              ))}
+              <div
+                className="hizmet-slider__track"
+                style={{ transform: `translate3d(-${currentIndex * (100 / visibleCount)}%, 0, 0)` }}
+              >
+                {list.map((item, idx) => (
+                  <ServiceSlide
+                    key={`${item.label}-${idx}`}
+                    item={item}
+                    index={idx}
+                    visibleCount={visibleCount}
+                  />
+                ))}
+              </div>
             </div>
+
+            {/* Kenar solma efektleri — sadece gizlenecek tarafta */}
+            {currentIndex > 0 && (
+              <span className="hizmet-slider-fade hizmet-slider-fade--left" aria-hidden="true" />
+            )}
+            {currentIndex < maxIndex && (
+              <span className="hizmet-slider-fade hizmet-slider-fade--right" aria-hidden="true" />
+            )}
           </div>
 
           {total > visibleCount ? (
@@ -165,6 +176,7 @@ export default function HomeServices({ content }: { content: SiteContent }) {
       </section>
 
       <style>{`
+        /* ── Section wrapper ── */
         .hizmet-modern {
           overflow: hidden;
         }
@@ -173,6 +185,7 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           max-width: 1240px;
         }
 
+        /* ── Header row ── */
         .hizmet-modern__head {
           display: flex;
           align-items: flex-end;
@@ -185,20 +198,21 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           max-width: 690px;
         }
 
+        /* ── Eyebrow badge — diğer section'larla aynı pill tasarımı ── */
         .hizmet-modern__eyebrow {
           display: inline-flex;
           align-items: center;
-          gap: 9px;
-          margin: 0 0 14px;
-          padding: 7px 12px;
-          border: 1px solid rgba(217, 164, 65, 0.32);
+          gap: 7px;
+          margin: 0 0 16px;
+          padding: 6px 14px 6px 8px;
+          border: 1.5px solid rgba(217, 164, 65, 0.38);
           border-radius: 999px;
-          background: rgba(217, 164, 65, 0.1);
-          color: #9e6e19;
-          font-size: 12px;
+          background: rgba(217, 164, 65, 0.08);
+          color: var(--brass-lo, #b8842c);
+          font-size: 11.5px;
           font-weight: 700;
-          letter-spacing: 0.14em;
-          line-height: 1.2;
+          letter-spacing: 0.13em;
+          line-height: 1;
           text-transform: uppercase;
         }
 
@@ -206,16 +220,27 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-width: 28px;
-          min-height: 22px;
-          border-right: 1px solid rgba(184, 132, 44, 0.32);
-          padding-right: 9px;
-          color: #6e4b14;
+          width: 26px;
+          height: 26px;
+          border-radius: 999px;
+          background: rgba(217, 164, 65, 0.18);
+          border: 1px solid rgba(217, 164, 65, 0.3);
+          color: var(--brass, #c9932a);
           font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-          font-size: 11px;
-          letter-spacing: 0.08em;
+          font-size: 10.5px;
+          font-weight: 800;
+          letter-spacing: 0.04em;
+          flex-shrink: 0;
         }
 
+        .hizmet-modern__eyebrow-dot {
+          color: rgba(184, 132, 44, 0.45);
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 1;
+        }
+
+        /* ── Başlık & lead ── */
         .hizmet-modern__title {
           margin: 0;
           color: #16190f;
@@ -234,6 +259,7 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           line-height: 1.65;
         }
 
+        /* ── Kontroller ── */
         .hizmet-modern__controls {
           display: flex;
           align-items: center;
@@ -278,48 +304,43 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           border-radius: 14px;
           background: #fff;
           color: #16190f;
-          transition: background 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+          transition: background 0.25s var(--ease, ease), border-color 0.25s var(--ease, ease), transform 0.25s var(--ease, ease);
         }
 
+        /* ── Slider wrapper: kenar fade'leri için relative+overflow:hidden ── */
+        .hizmet-slider-wrap {
+          position: relative;
+          overflow: hidden;
+          border-radius: 8px;
+        }
+
+        /* ── Kenar solma efektleri ── */
+        .hizmet-slider-fade {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          z-index: 4;
+          width: clamp(48px, 6vw, 80px);
+          pointer-events: none;
+        }
+
+        .hizmet-slider-fade--left {
+          left: 0;
+          background: linear-gradient(90deg, var(--paper, #fbf8f1) 0%, rgba(251, 248, 241, 0) 100%);
+        }
+
+        .hizmet-slider-fade--right {
+          right: 0;
+          background: linear-gradient(270deg, var(--paper, #fbf8f1) 0%, rgba(251, 248, 241, 0) 100%);
+        }
+
+        /* ── Slider ── */
         .hizmet-slider {
           position: relative;
-          margin: -12px -10px 0;
-          padding: 12px 10px;
-          overflow: visible;
+          padding: 12px 0;
           cursor: grab;
           touch-action: pan-y;
           user-select: none;
-        }
-
-        .hizmet-slider::before,
-        .hizmet-slider::after {
-          content: "";
-          position: absolute;
-          top: 12px;
-          bottom: 12px;
-          z-index: 4;
-          width: clamp(58px, 7vw, 112px);
-          border-radius: 24px;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.28s var(--ease);
-          backdrop-filter: blur(10px) saturate(1.05);
-          -webkit-backdrop-filter: blur(10px) saturate(1.05);
-        }
-
-        .hizmet-slider::before {
-          left: -38px;
-          background: linear-gradient(90deg, var(--paper, #fbf8f1) 0%, rgba(251, 248, 241, 0.78) 42%, rgba(251, 248, 241, 0) 100%);
-        }
-
-        .hizmet-slider::after {
-          right: -38px;
-          background: linear-gradient(270deg, var(--paper, #fbf8f1) 0%, rgba(251, 248, 241, 0.78) 42%, rgba(251, 248, 241, 0) 100%);
-        }
-
-        .hizmet-slider[data-has-prev="true"]::before,
-        .hizmet-slider[data-has-next="true"]::after {
-          opacity: 1;
         }
 
         .hizmet-slider:active {
@@ -330,7 +351,7 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           display: flex !important;
           align-items: stretch;
           width: 100%;
-          transition: transform 0.5s var(--ease);
+          transition: transform 0.5s var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1));
           will-change: transform;
         }
 
@@ -338,8 +359,10 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           flex: 0 0 auto;
           min-width: 0;
           padding: 0 10px;
+          box-sizing: border-box;
         }
 
+        /* ── Hizmet kartı ── */
         .hizmet-card {
           position: relative;
           display: flex;
@@ -354,7 +377,7 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           background: rgba(255, 255, 255, 0.92);
           color: inherit;
           text-decoration: none;
-          transition: border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease);
+          transition: border-color 0.25s var(--ease, ease), background 0.25s var(--ease, ease), transform 0.25s var(--ease, ease);
         }
 
         .hizmet-card__watermark {
@@ -374,9 +397,6 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           position: relative;
           z-index: 1;
           display: block;
-          align-items: center;
-          justify-content: space-between;
-          gap: 14px;
           margin-bottom: 23px;
         }
 
@@ -457,6 +477,7 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           flex: 0 0 7px;
           border-radius: 999px;
           background: #d9a441;
+          display: block;
         }
 
         .hizmet-card__index {
@@ -473,9 +494,10 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           height: 3px;
           background: linear-gradient(90deg, transparent, #d9a441, transparent);
           opacity: 0;
-          transition: opacity 0.25s var(--ease);
+          transition: opacity 0.25s var(--ease, ease);
         }
 
+        /* ── Dots ── */
         .hizmet-slider__dots {
           display: flex;
           align-items: center;
@@ -489,7 +511,8 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           height: 9px;
           border-radius: 999px;
           background: rgba(22, 25, 15, 0.18);
-          transition: width 0.25s var(--ease), background 0.25s var(--ease);
+          transition: width 0.25s var(--ease, ease), background 0.25s var(--ease, ease);
+          padding: 0;
         }
 
         .hizmet-slider__dots button[aria-current="true"] {
@@ -497,10 +520,12 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           background: #d9a441;
         }
 
+        /* ── Hover ── */
         @media (hover: hover) {
           .hizmet-modern__controls button:hover {
             border-color: #d9a441;
             background: #d9a441;
+            color: #fff;
             transform: translateY(-2px);
           }
 
@@ -519,6 +544,7 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           }
         }
 
+        /* ── Responsive ── */
         @media (max-width: 860px) {
           .hizmet-modern__head {
             align-items: flex-start;
@@ -537,11 +563,7 @@ export default function HomeServices({ content }: { content: SiteContent }) {
           }
 
           .hizmet-card {
-            min-height: 286px;
-          }
-
-          .hizmet-card__top {
-            align-items: flex-start;
+            min-height: 270px;
           }
         }
       `}</style>
