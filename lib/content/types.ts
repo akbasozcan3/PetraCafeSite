@@ -116,6 +116,7 @@ export interface HizmetItem {
   label: string;
   icon?: string;
   emoji?: string;
+  badge?: string;
   href?: string;
   aciklama?: string;
 }

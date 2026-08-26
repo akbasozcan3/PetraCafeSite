@@ -1,54 +1,573 @@
+"use client";
+
 import Link from "next/link";
-import type { SiteContent } from "@/lib/content/types";
-import { resolveHref } from "@/lib/site/resolveHref";
+import { useCallback, useEffect, useState, type TouchEvent } from "react";
+import type { SiteContent, HizmetItem } from "@/lib/content/types";
 import { iconFromLabel, type SiteIconId } from "@/lib/content/site-icons";
+import { resolveHref } from "@/lib/site/resolveHref";
 import SiteIcon from "@/components/site/SiteIcon";
+import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 
 export default function HomeServices({ content }: { content: SiteContent }) {
   const bolum = content.bolumlar?.hizmetler;
   const list = (content.hizmetler || []).filter((item) => item.label?.trim());
-  if (!list.length) return null;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [visibleCount, setVisibleCount] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setVisibleCount(1);
+      } else if (window.innerWidth < 1024) {
+        setVisibleCount(2);
+      } else {
+        setVisibleCount(3);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const total = list.length;
+  const maxIndex = Math.max(0, total - visibleCount);
+
+  useEffect(() => {
+    setCurrentIndex((prev) => Math.min(prev, maxIndex));
+  }, [maxIndex]);
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  }, [maxIndex]);
+
+  const handlePrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  }, [maxIndex]);
+
+  useEffect(() => {
+    if (isPaused || total <= visibleCount) return;
+    const timer = window.setInterval(handleNext, 4200);
+    return () => window.clearInterval(timer);
+  }, [handleNext, isPaused, total, visibleCount]);
+
+  const handleTouchStart = (e: TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+    setTouchEnd(null);
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart === null || touchEnd === null) return;
+    const distance = touchStart - touchEnd;
+    if (distance > 50) {
+      handleNext();
+    } else if (distance < -50) {
+      handlePrev();
+    }
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
+  if (!total) return null;
 
   return (
-    <section className="section section--warm hizmet" id="hizmetler" aria-label="Hizmetler">
-      <div className="wrap">
-        <div className="section__head">
-          <p className="eyebrow" data-fade="">
-            {bolum?.eyebrow || "Petra"}
-          </p>
-          <h2 className="h2" data-split="">
-            {bolum?.baslik || "Cafe · Restaurant · Pool & Beach"}
-          </h2>
-          <p className="lead" data-fade="">
-            {bolum?.lead ||
-              "Dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve ve nargile — havuz kenarında veya salonda."}
-          </p>
+    <>
+      <section
+        className="section section--warm hizmet hizmet-modern"
+        id="hizmetler"
+        aria-label="Hizmetler"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <div className="wrap hizmet-modern__inner">
+          <div className="hizmet-modern__head">
+            <div className="hizmet-modern__copy">
+              <p className="hizmet-modern__eyebrow" data-fade="">
+                <Sparkles aria-hidden="true" size={15} />
+                <span>{bolum?.eyebrow || "01 · PETRA YAŞAM MERKEZİ"}</span>
+              </p>
+              <h2 className="hizmet-modern__title" data-split="">
+                {bolum?.baslik || "Cafe · Restaurant · Pool & Beach"}
+              </h2>
+              <p className="hizmet-modern__lead" data-fade="">
+                {bolum?.lead ||
+                  "Dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, taze kahve ve nargile — havuz kenarında veya salonda."}
+              </p>
+            </div>
+
+            <div className="hizmet-modern__controls" aria-label="Hizmet slayt kontrolleri">
+              <span className="hizmet-modern__counter" aria-live="polite">
+                <b>{String(currentIndex + 1).padStart(2, "0")}</b>
+                <span>/</span>
+                <span>{String(total).padStart(2, "0")}</span>
+              </span>
+              <button type="button" onClick={handlePrev} aria-label="Önceki hizmet">
+                <ChevronLeft aria-hidden="true" size={21} />
+              </button>
+              <button type="button" onClick={handleNext} aria-label="Sonraki hizmet">
+                <ChevronRight aria-hidden="true" size={21} />
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="hizmet-slider"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className="hizmet-slider__track"
+              style={{ transform: `translate3d(-${currentIndex * (100 / visibleCount)}%, 0, 0)` }}
+            >
+              {list.map((item, idx) => (
+                <ServiceSlide
+                  key={`${item.label}-${idx}`}
+                  item={item}
+                  index={idx}
+                  visibleCount={visibleCount}
+                />
+              ))}
+            </div>
+          </div>
+
+          {total > visibleCount ? (
+            <div className="hizmet-slider__dots" aria-label="Hizmet slaytları">
+              {Array.from({ length: maxIndex + 1 }).map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => setCurrentIndex(dotIdx)}
+                  aria-label={`Slayt ${dotIdx + 1}`}
+                  aria-current={currentIndex === dotIdx ? "true" : undefined}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
-        <div className="hizmet__grid" data-stagger="">
-          {list.map((item) => {
-            const href = item.href?.trim() ? resolveHref(item.href) : "";
-            const icon = (item.icon || iconFromLabel(item.label)) as SiteIconId;
-            const inner = (
-              <>
-                <span className="hizmet__ico" aria-hidden="true">
-                  <SiteIcon name={icon} size={26} />
-                </span>
-                <strong>{item.label}</strong>
-                {item.aciklama ? <span className="hizmet__note">{item.aciklama}</span> : null}
-              </>
-            );
-            return href ? (
-              <Link key={item.label} href={href} className="hizmet__card">
-                {inner}
-              </Link>
-            ) : (
-              <div key={item.label} className="hizmet__card hizmet__card--static">
-                {inner}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+      </section>
+
+      <style>{`
+        .hizmet-modern {
+          overflow: hidden;
+        }
+
+        .hizmet-modern__inner {
+          max-width: 1240px;
+        }
+
+        .hizmet-modern__head {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 28px;
+          margin-bottom: clamp(34px, 4vw, 54px);
+        }
+
+        .hizmet-modern__copy {
+          max-width: 690px;
+        }
+
+        .hizmet-modern__eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          margin: 0 0 14px;
+          padding: 7px 12px;
+          border: 1px solid rgba(217, 164, 65, 0.32);
+          border-radius: 999px;
+          background: rgba(217, 164, 65, 0.1);
+          color: #9e6e19;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          line-height: 1.2;
+          text-transform: uppercase;
+        }
+
+        .hizmet-modern__title {
+          margin: 0;
+          color: #16190f;
+          font-family: var(--f-head), Georgia, serif;
+          font-size: clamp(32px, 4vw, 52px);
+          font-weight: 700;
+          letter-spacing: 0;
+          line-height: 1.12;
+        }
+
+        .hizmet-modern__lead {
+          max-width: 62ch;
+          margin: 14px 0 0;
+          color: #5a5f52;
+          font-size: clamp(15px, 1.35vw, 18px);
+          line-height: 1.65;
+        }
+
+        .hizmet-modern__controls {
+          display: flex;
+          align-items: center;
+          gap: 11px;
+          flex: 0 0 auto;
+        }
+
+        .hizmet-modern__counter {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          min-height: 42px;
+          padding: 0 13px;
+          border: 1px solid rgba(22, 25, 15, 0.08);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.78);
+          color: #7c8173;
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .hizmet-modern__counter b {
+          color: #b8842c;
+        }
+
+        .hizmet-modern__controls button,
+        .hizmet-slider__dots button {
+          appearance: none;
+          border: 0;
+          cursor: pointer;
+          font: inherit;
+        }
+
+        .hizmet-modern__controls button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 44px;
+          height: 44px;
+          border: 1px solid rgba(22, 25, 15, 0.1);
+          border-radius: 14px;
+          background: #fff;
+          color: #16190f;
+          transition: background 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+        }
+
+        .hizmet-slider {
+          position: relative;
+          margin: -12px -10px 0;
+          padding: 12px 10px;
+          overflow: hidden;
+          cursor: grab;
+          touch-action: pan-y;
+          user-select: none;
+        }
+
+        .hizmet-slider:active {
+          cursor: grabbing;
+        }
+
+        .hizmet-slider__track {
+          display: flex !important;
+          align-items: stretch;
+          width: 100%;
+          transition: transform 0.5s var(--ease);
+          will-change: transform;
+        }
+
+        .hizmet-slider__item {
+          flex: 0 0 auto;
+          min-width: 0;
+          padding: 0 10px;
+        }
+
+        .hizmet-card {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-height: 292px;
+          height: 100%;
+          overflow: hidden;
+          padding: clamp(22px, 2.4vw, 30px);
+          border: 1px solid rgba(22, 25, 15, 0.08);
+          border-radius: var(--r-lg, 22px);
+          background: rgba(255, 255, 255, 0.92);
+          color: inherit;
+          text-decoration: none;
+          transition: border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease);
+        }
+
+        .hizmet-card__watermark {
+          position: absolute;
+          right: 18px;
+          bottom: -5px;
+          color: rgba(22, 25, 15, 0.035);
+          font-family: var(--f-head), Georgia, serif;
+          font-size: clamp(58px, 6vw, 82px);
+          font-weight: 700;
+          line-height: 1;
+          pointer-events: none;
+          user-select: none;
+        }
+
+        .hizmet-card__top {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 14px;
+          margin-bottom: 23px;
+        }
+
+        .hizmet-card__icons {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          min-width: 0;
+        }
+
+        .hizmet-card__icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 48px;
+          height: 48px;
+          flex: 0 0 48px;
+          border: 1px solid rgba(217, 164, 65, 0.32);
+          border-radius: 14px;
+          background: linear-gradient(135deg, #faf7f0, #efe8d8);
+          color: #b8842c;
+        }
+
+        .hizmet-card__emoji {
+          font-size: 25px;
+          line-height: 1;
+        }
+
+        .hizmet-card__badge {
+          max-width: 140px;
+          padding: 6px 10px;
+          border: 1px solid rgba(217, 164, 65, 0.32);
+          border-radius: 999px;
+          background: rgba(217, 164, 65, 0.14);
+          color: #9e6e19;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          line-height: 1.2;
+          text-align: center;
+          text-transform: uppercase;
+        }
+
+        .hizmet-card__title {
+          position: relative;
+          z-index: 1;
+          display: block;
+          margin: 0;
+          color: #16190f;
+          font-family: var(--f-head), Georgia, serif;
+          font-size: clamp(21px, 2vw, 27px);
+          font-weight: 700;
+          letter-spacing: 0;
+          line-height: 1.18;
+        }
+
+        .hizmet-card__text {
+          position: relative;
+          z-index: 1;
+          display: block;
+          margin: 12px 0 0;
+          color: #5a5f52;
+          font-size: 15px;
+          line-height: 1.62;
+        }
+
+        .hizmet-card__foot {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 14px;
+          margin-top: 24px;
+          padding-top: 17px;
+          border-top: 1px solid rgba(22, 25, 15, 0.07);
+          color: #7c8173;
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .hizmet-card__signal {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #9e6e19;
+          min-width: 0;
+        }
+
+        .hizmet-card__signal i {
+          width: 7px;
+          height: 7px;
+          flex: 0 0 7px;
+          border-radius: 999px;
+          background: #d9a441;
+        }
+
+        .hizmet-card__index {
+          color: rgba(22, 25, 15, 0.45);
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+          font-size: 11px;
+        }
+
+        .hizmet-card__line {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          height: 3px;
+          background: linear-gradient(90deg, transparent, #d9a441, transparent);
+          opacity: 0;
+          transition: opacity 0.25s var(--ease);
+        }
+
+        .hizmet-slider__dots {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 30px;
+        }
+
+        .hizmet-slider__dots button {
+          width: 9px;
+          height: 9px;
+          border-radius: 999px;
+          background: rgba(22, 25, 15, 0.18);
+          transition: width 0.25s var(--ease), background 0.25s var(--ease);
+        }
+
+        .hizmet-slider__dots button[aria-current="true"] {
+          width: 32px;
+          background: #d9a441;
+        }
+
+        @media (hover: hover) {
+          .hizmet-modern__controls button:hover {
+            border-color: #d9a441;
+            background: #d9a441;
+            transform: translateY(-2px);
+          }
+
+          .hizmet-card:hover {
+            border-color: rgba(217, 164, 65, 0.5);
+            background: #fff;
+            transform: translateY(-4px);
+          }
+
+          .hizmet-card:hover .hizmet-card__title {
+            color: #9e6e19;
+          }
+
+          .hizmet-card:hover .hizmet-card__line {
+            opacity: 1;
+          }
+        }
+
+        @media (max-width: 860px) {
+          .hizmet-modern__head {
+            align-items: flex-start;
+            flex-direction: column;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .hizmet-modern__controls {
+            width: 100%;
+            justify-content: space-between;
+          }
+
+          .hizmet-modern__counter {
+            margin-right: auto;
+          }
+
+          .hizmet-card {
+            min-height: 286px;
+          }
+
+          .hizmet-card__top {
+            align-items: flex-start;
+          }
+
+          .hizmet-card__badge {
+            max-width: 120px;
+            font-size: 10px;
+          }
+        }
+      `}</style>
+    </>
+  );
+}
+
+function ServiceSlide({
+  item,
+  index,
+  visibleCount,
+}: {
+  item: HizmetItem;
+  index: number;
+  visibleCount: number;
+}) {
+  const icon = (item.icon || iconFromLabel(item.label)) as SiteIconId;
+  const formattedIndex = String(index + 1).padStart(2, "0");
+  const href = item.href?.trim() ? resolveHref(item.href) : "";
+  const cardContent = (
+    <>
+      <span className="hizmet-card__watermark" aria-hidden="true">
+        {formattedIndex}
+      </span>
+      <span className="hizmet-card__top">
+        <span className="hizmet-card__icons">
+          <span className="hizmet-card__icon" aria-hidden="true">
+            <SiteIcon name={icon} size={24} />
+          </span>
+          {item.emoji ? (
+            <span className="hizmet-card__emoji" aria-hidden="true">
+              {item.emoji}
+            </span>
+          ) : null}
+        </span>
+        {item.badge ? <span className="hizmet-card__badge">{item.badge}</span> : null}
+      </span>
+      <span>
+        <strong className="hizmet-card__title">{item.label}</strong>
+        {item.aciklama ? <span className="hizmet-card__text">{item.aciklama}</span> : null}
+      </span>
+      <span className="hizmet-card__foot">
+        <span className="hizmet-card__signal">
+          <i aria-hidden="true" />
+          <span>Petra Deneyimi</span>
+        </span>
+        <span className="hizmet-card__index">#{formattedIndex}</span>
+      </span>
+      <span className="hizmet-card__line" aria-hidden="true" />
+    </>
+  );
+
+  return (
+    <div className="hizmet-slider__item" style={{ width: `${100 / visibleCount}%` }}>
+      {href ? (
+        <Link href={href} className="hizmet-card hizmet-card--link" aria-label={`${item.label} detaylarını aç`}>
+          {cardContent}
+        </Link>
+      ) : (
+        <span className="hizmet-card">{cardContent}</span>
+      )}
+    </div>
   );
 }

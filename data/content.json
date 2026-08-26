@@ -361,9 +361,9 @@
       "lead": "Tarih, saat ve kişi sayısını bırakın; ekibimiz telefonla onaylar. Cuma–cumartesi kahvaltı ve havuz için önceden rezervasyon önerilir."
     },
     "hizmetler": {
-      "eyebrow": "Petra",
+      "eyebrow": "01 · PETRA YAŞAM MERKEZİ",
       "baslik": "Cafe · Restaurant · Pool & Beach",
-      "lead": "Dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, kahve ve nargile — havuz kenarında veya salonda."
+      "lead": "Dünya mutfağı, serpme kahvaltı, İtalyan tatlı ve kokteyl, taze kahve ve nargile — havuz kenarında veya salonda."
     }
   },
   "pasta": {
@@ -5051,40 +5051,60 @@
   ],
   "hizmetler": [
     {
-      "label": "Spor ve Jimnastik",
-      "href": "/spor-salonu",
-      "aciklama": "Spor salonu ve jimnastik imkanları",
-      "icon": "dumbbell"
-    },
-    {
-      "label": "Dünya Mutfağı ve Serpme Kahvaltı",
+      "label": "Dünya Mutfağı",
+      "emoji": "👨‍🍳",
+      "icon": "chef",
+      "badge": "Gurme Lezzetler",
       "href": "/menu",
-      "aciklama": "Geniş içerikli serpme kahvaltının yanı sıra dünya mutfağından seçkin lezzetler",
-      "icon": "chef"
+      "aciklama": "Usta şeflerimizin hazırladığı seçkin dünya mutfağı lezzetleri, et spesiyalleri, taze makarna ve gurme burgerler."
     },
     {
-      "label": "Canlı Müzik ve Karaoke",
-      "href": "/#rezervasyon",
-      "aciklama": "Belirli günlerde düzenlenen canlı müzik geceleri ve karaoke eğlenceleri",
-      "icon": "music"
+      "label": "Serpme Kahvaltı",
+      "emoji": "🍳",
+      "icon": "sunrise",
+      "badge": "Her Sabah Taze",
+      "href": "/menu/kahvalti",
+      "aciklama": "Zengin yöresel peynirler, sıcak ikramlar, taze hamur işleri ve sınırsız çay ile havuz başında güne eşsiz başlangıç."
     },
     {
-      "label": "İçecek ve Tatlı Çeşitleri",
-      "href": "/menu/tatlilar",
-      "aciklama": "Özel İtalyan tatlıları, özel kahveler ve alkolsüz kokteyl çeşitleri",
-      "icon": "cake"
-    },
-    {
-      "label": "Havuz Locaları ve Nargile",
+      "label": "POOL & BEACH",
+      "emoji": "🏝️",
+      "icon": "waves",
+      "badge": "09:00 – 18:00",
       "href": "/havuz-plaj",
-      "aciklama": "Havuz kenarında dinlenebileceğiniz özel localar ve nargile hizmeti",
-      "icon": "waves"
+      "aciklama": "Açık yetişkin havuzu, güvenli çocuk havuzu, güneşlenme şezlongları ve VIP hasır localarla gün boyu serinlik ve tatil konforu."
     },
     {
-      "label": "Market",
-      "href": "/#iletisim",
-      "aciklama": "Tesis içinde gün boyu temel ihtiyaçlarınızı karşılayabileceğiniz bir market alanı",
-      "icon": "store"
+      "label": "COFFEE & FOOD",
+      "emoji": "🌴",
+      "icon": "coffee",
+      "badge": "Özel Harman",
+      "href": "/menu/kahve",
+      "aciklama": "Taze çekilmiş 3. nesil aromatik kahveler, lezzetli atıştırmalıklar, sandviçler ve gün boyu ferah kafe keyfi."
+    },
+    {
+      "label": "İtalyan Kokteylleri",
+      "emoji": "🍸",
+      "icon": "wine",
+      "badge": "İmza Reçeteler",
+      "href": "/menu/kokteyller",
+      "aciklama": "Klasik İtalyan kokteylleri, taze meyveli mocktailler, buz gibi frozenlar ve profesyonel barmenlerden özel sunumlar."
+    },
+    {
+      "label": "İtalyan Tatlı Çeşitleri",
+      "emoji": "🍰",
+      "icon": "cake",
+      "badge": "Günlük Taze",
+      "href": "/menu/tatlilar",
+      "aciklama": "Otantik İtalyan tiramisu, San Sebastian cheesecake, sufle, profiterol ve günlük hazırlanan zengin tatlı vitrini."
+    },
+    {
+      "label": "En İyi Nargile Çeşitleri",
+      "emoji": "🏖️",
+      "icon": "flame",
+      "badge": "Premium Tütün",
+      "href": "/menu/nargile",
+      "aciklama": "Seçkin tütün harmanları, taze meyve çanaklı özel nargileler ve ışıklı havuz kenarında akşam nargile keyfi."
     }
   ],
   "rezervasyon": {
