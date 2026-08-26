@@ -192,7 +192,6 @@ export default async function SporSalonuPage() {
             }}
           >
             <Dumbbell size={14} />
-            <span>{cleanRawText(s.eyebrow) || "PETRA YAŞAM MERKEZİ"}</span>
           </div>
 
           <h1
