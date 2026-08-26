@@ -11,3 +11,12 @@ body {
   margin: 0;
   padding: 0;
 }
+
+/* ===== GLOBAL: Tüm gölgeler (shadow) kaldırıldı ===== */
+*,
+*::before,
+*::after {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
