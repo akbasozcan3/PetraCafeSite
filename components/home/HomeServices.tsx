@@ -11,11 +11,70 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export default function HomeServices({ content }: { content: SiteContent }) {
   const bolum = content.bolumlar?.hizmetler;
   const list = (content.hizmetler || []).filter((item) => item.label?.trim());
-  const [isPaused, setIsPaused] = useState(false);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [visibleCount, setVisibleCount] = useState(3);
+const [isPaused, setIsPaused] = useState(false);
+const [touchStart, setTouchStart] = useState<number | null>(null);
+const [touchEnd, setTouchEnd] = useState<number | null>(null);
+const [visibleCount, setVisibleCount] = useState(3);
 
+const [isDragging, setIsDragging] = useState(false);
+const [startX, setStartX] = useState(0);
+const [currentX, setCurrentX] = useState(0);
+
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth < 640) {
+      setVisibleCount(1);
+    } else if (window.innerWidth < 1024) {
+      setVisibleCount(2);
+    } else {
+      setVisibleCount(3);
+    }
+  };
+
+  handleResize();
+  window.addEventListener("resize", handleResize);
+
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
+const total = list.length;
+
+const extendedList = [...list, ...list, ...list];
+
+const startIndex = total;
+const maxIndex = startIndex + total - 1;
+
+const [currentIndex, setCurrentIndex] = useState(startIndex);
+const [isAnimating, setIsAnimating] = useState(true);
+
+const handleMouseDown = (e: React.MouseEvent) => {
+  if (!canSlide) return;
+
+  setIsDragging(true);
+  setStartX(e.clientX);
+  setCurrentX(0);
+  setIsPaused(true);
+};
+
+const handleMouseMove = (e: React.MouseEvent) => {
+  if (!isDragging) return;
+
+  setCurrentX(e.clientX - startX);
+};
+
+const handleMouseUp = () => {
+  if (!isDragging) return;
+
+  if (currentX > 60) {
+    handlePrev();
+  } else if (currentX < -60) {
+    handleNext();
+  }
+
+  setIsDragging(false);
+  setCurrentX(0);
+  setIsPaused(false);
+};
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) setVisibleCount(1);
@@ -27,9 +86,6 @@ export default function HomeServices({ content }: { content: SiteContent }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const total = list.length;
-
-const extendedList = [...list, ...list, ...list];
 const rawEyebrow = bolum?.eyebrow || "";
 
 const eyebrowText = (() => {
@@ -50,12 +106,6 @@ const eyebrowText = (() => {
 
   return "02 · HİZMETLER";
 })();
-const startIndex = total;
-const maxIndex = startIndex + total - 1;
-
-const [currentIndex, setCurrentIndex] = useState(startIndex);
-const [isAnimating, setIsAnimating] = useState(true);
-
 const handleNext = useCallback(() => {
   if (!total) return;
 
@@ -202,11 +252,15 @@ const hasPrev = canSlide;
 
           {/* ── SLIDER ── */}
           <div
-            className="hs-track-wrap"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
+  className="hs-track-wrap"
+  onTouchStart={handleTouchStart}
+  onTouchMove={handleTouchMove}
+  onTouchEnd={handleTouchEnd}
+  onMouseDown={handleMouseDown}
+  onMouseMove={handleMouseMove}
+  onMouseUp={handleMouseUp}
+  onMouseLeave={handleMouseUp}
+>
             <div
               className="hs-track"
              style={{
