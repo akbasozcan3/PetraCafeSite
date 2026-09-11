@@ -89,14 +89,8 @@ export function buildNotifyEmail(opts: {
                   </td>
                 </tr>
                 <tr>
-                  <td align="center" style="padding-top:14px;text-align:center;">
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin:0 auto;background-color:#FBF7EF;border-radius:999px;border:1px solid #EADBCA;">
-                      <tr>
-                        <td align="center" style="padding:5px 16px;color:#A1782A;font-size:11px;font-weight:700;letter-spacing:0.20em;text-transform:uppercase;font-family:'Inter',system-ui,sans-serif;white-space:nowrap;">
-                          Petra Cafe &bull; Restaurant &bull; Pool
-                        </td>
-                      </tr>
-                    </table>
+                  <td align="center" style="padding-top:12px;color:#A1782A;font-size:11px;font-weight:700;letter-spacing:0.20em;text-transform:uppercase;font-family:'Inter',system-ui,-apple-system,sans-serif;white-space:nowrap;text-align:center;">
+                    Petra Cafe &bull; Restaurant &bull; Pool
                   </td>
                 </tr>
               </table>
