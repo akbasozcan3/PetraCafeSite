@@ -5,5 +5,10 @@ export function isVercelBlobUrl(url?: string | null): boolean {
 
 /** Server-side only — never expose to client bundles. */
 export function getBlobReadWriteToken(): string {
-  return (process.env.BLOB_READ_WRITE_TOKEN || "").trim();
+  return (
+    process.env.BLOB_READ_WRITE_TOKEN ||
+    process.env.PETRA_CAFE_SITE_BLOB_READ_WRITE_TOKEN ||
+    process.env.VERCEL_BLOB_READ_WRITE_TOKEN ||
+    ""
+  ).trim();
 }

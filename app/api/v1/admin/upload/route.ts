@@ -240,11 +240,21 @@ export async function POST(request: Request) {
               : key && key in IMAGE_KEYS
                 ? "site"
                 : key || "media";
-        const result = await put(`${folder}/${filename}`, bytes, {
-          access: "public",
-          token: blobToken,
-          contentType: mime === "image/svg+xml" ? "image/svg+xml; charset=utf-8" : mime,
-        });
+        let result;
+        try {
+          result = await put(`${folder}/${filename}`, bytes, {
+            access: "public",
+            token: blobToken,
+            contentType: mime === "image/svg+xml" ? "image/svg+xml; charset=utf-8" : mime,
+          });
+        } catch (pubErr) {
+          // If store is private, upload with private access
+          result = await put(`${folder}/${filename}`, bytes, {
+            access: "private",
+            token: blobToken,
+            contentType: mime === "image/svg+xml" ? "image/svg+xml; charset=utf-8" : mime,
+          });
+        }
         if (result?.url) {
           publicPath = result.url;
         }
