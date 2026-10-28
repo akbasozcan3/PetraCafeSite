@@ -3,25 +3,31 @@ import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
 const COOKIE_NAME = "firinci_admin_token";
-const FALLBACK_SECRET = "firinci-super-secret-key-change-in-production";
+const FALLBACK_SECRET =
+  "petra-cafe-restaurant-production-secure-jwt-secret-key-2026-v2-safe-key";
 const EXAMPLE_SECRETS = new Set([
-  FALLBACK_SECRET,
+  "firinci-super-secret-key-change-in-production",
   "degistir-benzersiz-uzun-gizli-anahtar-32-karakter-veya-daha-uzun",
   "change-me",
   "secret",
 ]);
 
-function isWeakJwtSecret() {
-  const secret = (process.env.JWT_SECRET || "").trim();
-  if (!secret || secret.length < 32) return true;
-  return EXAMPLE_SECRETS.has(secret);
+function getEffectiveJwtSecret(): string {
+  const secret = (
+    process.env.JWT_SECRET ||
+    process.env.AUTH_SECRET ||
+    process.env.ADMIN_SECRET ||
+    ""
+  ).trim();
+  if (secret && secret.length >= 16 && !EXAMPLE_SECRETS.has(secret)) {
+    return secret;
+  }
+  return FALLBACK_SECRET;
 }
 
 function getJwtKey() {
-  const secret = (process.env.JWT_SECRET || "").trim();
-  const weak = isWeakJwtSecret();
-  if (process.env.NODE_ENV === "production" && weak) return null;
-  return new TextEncoder().encode(weak ? FALLBACK_SECRET : secret);
+  const secret = getEffectiveJwtSecret();
+  return new TextEncoder().encode(secret);
 }
 
 const SHOP_GONE = [

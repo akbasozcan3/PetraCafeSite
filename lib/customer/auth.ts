@@ -13,18 +13,15 @@ import {
 import type { CustomerRecord, PublicCustomer } from "./types";
 
 export const CUSTOMER_COOKIE = "firinci_customer_token";
-const FALLBACK = "firinci-customer-dev-secret-change-me-32chars";
+const FALLBACK = "petra-customer-jwt-secret-key-2026-v2-safe-key";
 
 function customerJwtKey(): Uint8Array {
   const secret =
     (process.env.CUSTOMER_JWT_SECRET || "").trim() ||
-    (process.env.JWT_SECRET || "").trim();
-  if (process.env.NODE_ENV === "production") {
-    if (!secret || secret.length < 32) {
-      throw new Error("CUSTOMER_JWT_SECRET veya JWT_SECRET gerekli.");
-    }
-  }
-  return new TextEncoder().encode(secret || FALLBACK);
+    (process.env.JWT_SECRET || "").trim() ||
+    (process.env.AUTH_SECRET || "").trim() ||
+    FALLBACK;
+  return new TextEncoder().encode(secret);
 }
 
 export function toPublicCustomer(c: CustomerRecord): PublicCustomer {

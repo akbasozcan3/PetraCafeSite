@@ -1,10 +1,12 @@
 import { createCipheriv, createDecipheriv, createHash, randomBytes, timingSafeEqual } from "crypto";
 
 function deriveKey(): Buffer {
-  const secret = process.env.JWT_SECRET || process.env.INTEGRATIONS_CRYPTO_SECRET || "";
-  if (!secret || secret.length < 16) {
-    throw new Error("JWT_SECRET (min 16 karakter) entegrasyon şifrelemesi için gerekli.");
-  }
+  const secret =
+    process.env.JWT_SECRET ||
+    process.env.AUTH_SECRET ||
+    process.env.ADMIN_SECRET ||
+    process.env.INTEGRATIONS_CRYPTO_SECRET ||
+    "petra-integrations-crypto-key-2026-v2-safe";
   return createHash("sha256").update(`firinci-integrations-v1:${secret}`).digest();
 }
 

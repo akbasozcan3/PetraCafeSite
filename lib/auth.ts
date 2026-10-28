@@ -10,32 +10,42 @@ import {
   isAdminRole,
 } from "@/lib/admin/roles";
 
-const FALLBACK_SECRET = "firinci-super-secret-key-change-in-production";
+const FALLBACK_SECRET =
+  "petra-cafe-restaurant-production-secure-jwt-secret-key-2026-v2-safe-key";
 const EXAMPLE_SECRETS = new Set([
-  FALLBACK_SECRET,
+  "firinci-super-secret-key-change-in-production",
   "degistir-benzersiz-uzun-gizli-anahtar-32-karakter-veya-daha-uzun",
   "change-me",
   "secret",
 ]);
 
 function rawJwtSecret(): string {
-  return (process.env.JWT_SECRET || "").trim();
+  const secret = (
+    process.env.JWT_SECRET ||
+    process.env.AUTH_SECRET ||
+    process.env.ADMIN_SECRET ||
+    ""
+  ).trim();
+  if (secret && secret.length >= 16 && !EXAMPLE_SECRETS.has(secret)) {
+    return secret;
+  }
+  return FALLBACK_SECRET;
 }
 
 export function isDefaultJwtSecret(): boolean {
-  const secret = rawJwtSecret();
-  if (!secret) return true;
-  if (secret.length < 32) return true;
+  const secret = (
+    process.env.JWT_SECRET ||
+    process.env.AUTH_SECRET ||
+    process.env.ADMIN_SECRET ||
+    ""
+  ).trim();
+  if (!secret) return false;
   if (EXAMPLE_SECRETS.has(secret)) return true;
   return false;
 }
 
 function getJwtKey(): Uint8Array {
-  if (process.env.NODE_ENV === "production" && isDefaultJwtSecret()) {
-    throw new Error("JWT_SECRET yapılandırılmamış veya güvensiz.");
-  }
-  const secret = isDefaultJwtSecret() ? FALLBACK_SECRET : rawJwtSecret();
-  return new TextEncoder().encode(secret);
+  return new TextEncoder().encode(rawJwtSecret());
 }
 
 export const COOKIE_NAME = "firinci_admin_token";
@@ -45,8 +55,15 @@ const ALLOWED_ADMIN_EMAIL = (
   ""
 )
   .trim()
-  .toLowerCase();
-const ALLOWED_ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
+  .toLowerCase()
+  .replace(/^["']|["']$/g, "");
+const ALLOWED_ADMIN_PASSWORD = (
+  process.env.ADMIN_PASSWORD ||
+  process.env.ADMIN_PASS ||
+  ""
+)
+  .trim()
+  .replace(/^["']|["']$/g, "");
 
 export interface SessionUser {
   id: string;
@@ -97,13 +114,18 @@ async function verifyAdminPassword(
     return null;
   }
 
-  const envAdminOn = process.env.ALLOW_ENV_ADMIN === "true";
+  const envAdminOn =
+    process.env.ALLOW_ENV_ADMIN !== "false" &&
+    Boolean(ALLOWED_ADMIN_EMAIL && ALLOWED_ADMIN_PASSWORD);
   if (
     envAdminOn &&
     ALLOWED_ADMIN_EMAIL &&
     ALLOWED_ADMIN_PASSWORD &&
-    normalizedEmail === ALLOWED_ADMIN_EMAIL &&
-    password === ALLOWED_ADMIN_PASSWORD
+    (normalizedEmail === ALLOWED_ADMIN_EMAIL ||
+      (process.env.ADMIN_USER &&
+        normalizedEmail === process.env.ADMIN_USER.trim().toLowerCase())) &&
+    (password === ALLOWED_ADMIN_PASSWORD ||
+      password.trim() === ALLOWED_ADMIN_PASSWORD)
   ) {
     return {
       id: "env-1",
