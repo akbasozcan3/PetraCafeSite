@@ -229,6 +229,7 @@ export async function POST(request: Request) {
     }
 
     let publicPath: string = "";
+    let blobErrorMessage = "";
 
     if (blobToken) {
       try {
@@ -248,7 +249,7 @@ export async function POST(request: Request) {
             contentType: mime === "image/svg+xml" ? "image/svg+xml; charset=utf-8" : mime,
           });
         } catch (pubErr) {
-          // If store is private, upload with private access
+          // If store is private or public fails, try private
           result = await put(`${folder}/${filename}`, bytes, {
             access: "private",
             token: blobToken,
@@ -259,25 +260,32 @@ export async function POST(request: Request) {
           publicPath = result.url;
         }
       } catch (blobErr) {
-        console.warn("[Upload] Vercel Blob failed:", blobErr);
+        blobErrorMessage = blobErr instanceof Error ? blobErr.message : String(blobErr);
+        console.warn("[Upload] Vercel Blob failed:", blobErrorMessage);
       }
     }
 
     if (!publicPath) {
-      const isProd = process.env.VERCEL || process.env.NODE_ENV === "production";
-      if (isProd) {
-        return errorResponse(
-          blobToken
-            ? "Vercel Blob'a yükleme başarısız. Lütfen tekrar deneyin."
-            : "BLOB_READ_WRITE_TOKEN tanımlı değil. Vercel Blob yapılandırmasını kontrol edin.",
-          503
-        );
-      }
-      try {
-        await writeUploadFile("site", filename, bytes);
-        publicPath = `/uploads/site/${filename}`;
-      } catch {
-        return errorResponse("Görsel yüklenemedi.", 500);
+      // If Vercel Blob failed or not configured, but file is within 3MB (e.g. logo, icons, banners),
+      // fallback to inline data URI so site branding works immediately!
+      if (bytes.length <= 3 * 1024 * 1024) {
+        publicPath = `data:${mime};base64,${bytes.toString("base64")}`;
+      } else {
+        const isProd = process.env.VERCEL || process.env.NODE_ENV === "production";
+        if (isProd) {
+          return errorResponse(
+            blobToken
+              ? `Vercel Blob yükleme hatası: ${blobErrorMessage || "Lütfen tekrar deneyin."}`
+              : "BLOB_READ_WRITE_TOKEN tanımlı değil. Vercel Blob yapılandırmasını kontrol edin.",
+            503
+          );
+        }
+        try {
+          await writeUploadFile("site", filename, bytes);
+          publicPath = `/uploads/site/${filename}`;
+        } catch {
+          return errorResponse("Görsel yüklenemedi.", 500);
+        }
       }
     }
 
