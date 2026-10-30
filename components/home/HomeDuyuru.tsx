@@ -105,7 +105,7 @@ export default function HomeDuyuru({
 
       {butonMetin && (
         <a
-          href={butonLink || "#rezervasyon"}
+          href={butonLink || "/#iletisim"}
           style={{
             display: "inline-flex",
             alignItems: "center",

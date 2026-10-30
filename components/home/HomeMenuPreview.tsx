@@ -146,12 +146,21 @@ export default function HomeMenuPreview({ content }: { content: SiteContent }) {
         ) : null}
 
         <div className="rmenu__cta" data-fade="">
-          <a className="btn btn--lg" href={bolum?.ctaHref || "#rezervasyon"}>
-            {bolum?.ctaLabel || "Masa ayırtın"}
-          </a>
-          <Link className="btn btn--lg btn--light" href={bolum?.cta2Href || "/menu"}>
-            {bolum?.cta2Label || "Tüm menü"}
+          <Link className="btn btn--lg" href={bolum?.cta2Href || "/menu"}>
+            {bolum?.cta2Label || "Menüyü İnceleyin"}
           </Link>
+          <a
+            className="btn btn--lg btn--light"
+            href={
+              bolum?.ctaHref && bolum.ctaHref !== "#rezervasyon"
+                ? bolum.ctaHref
+                : "/#iletisim"
+            }
+          >
+            {bolum?.ctaLabel && !/rezervasyon/i.test(bolum.ctaLabel)
+              ? bolum.ctaLabel
+              : "İletişime Geçin"}
+          </a>
         </div>
       </div>
     </section>

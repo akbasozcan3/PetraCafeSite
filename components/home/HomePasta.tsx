@@ -153,7 +153,14 @@ export default function HomePasta({ pasta }: { pasta: PastaContent | null | unde
 
           <div className="pasta-cta" data-fade="">
             {pasta.ctaLabel ? (
-              <a className="btn btn--lg" href={resolveHref(pasta.ctaHref || "#rezervasyon")}>
+              <a
+                className="btn btn--lg"
+                href={resolveHref(
+                  pasta.ctaHref && pasta.ctaHref !== "#rezervasyon"
+                    ? pasta.ctaHref
+                    : "/havuz-plaj"
+                )}
+              >
                 {pasta.ctaLabel}
               </a>
             ) : null}

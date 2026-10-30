@@ -17,8 +17,15 @@ export default function HomeFaq({
   if (!list.length) return null;
 
   const img = resolveMediaUrl(liveMedia(image, SITE_PHOTOS.interior));
-  const ctaHref = resolveHref(bolum?.ctaHref || "#rezervasyon");
-  const ctaLabel = bolum?.ctaLabel || "Masa ayırtın";
+  const ctaHref = resolveHref(
+    bolum?.ctaHref && bolum.ctaHref !== "#rezervasyon"
+      ? bolum.ctaHref
+      : "/#iletisim"
+  );
+  const ctaLabel =
+    bolum?.ctaLabel && !/rezervasyon/i.test(bolum.ctaLabel)
+      ? bolum.ctaLabel
+      : "Bize Ulaşın";
 
   return (
     <section className="section faq-sec" id="sss" aria-labelledby="sssBaslik">
