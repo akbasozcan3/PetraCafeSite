@@ -179,10 +179,7 @@ function normalizeContent(raw: Partial<SiteContent>): SiteContent {
       ? program.map((d) => ({ ...d, kapanis: "24:00" }))
       : program;
     const saatlerRaw = merged.iletisim.saatler?.trim() || "";
-    const saatler =
-      !saatlerRaw || /22:00/.test(saatlerRaw) || !/havuz/i.test(saatlerRaw)
-        ? DEFAULT_CONTENT.iletisim.saatler
-        : saatlerRaw;
+    const saatler = saatlerRaw || DEFAULT_CONTENT.iletisim.saatler;
     merged.iletisim = {
       ...merged.iletisim,
       eposta: /firinci/i.test(merged.iletisim.eposta || "")
@@ -285,17 +282,6 @@ function normalizeContent(raw: Partial<SiteContent>): SiteContent {
         .map((l) => ({ ...l, label: rename(l.label) || l.label }))
         .filter((l) => !/^(rezervasyon|randevu)$/i.test((l.label || "").trim()));
 
-      const hasGym = currentLinks.some(
-        (l) => /spor/i.test(l.label || "") || /spor-salonu/i.test(l.href || "")
-      );
-      if (!hasGym) {
-        const poolIdx = currentLinks.findIndex((l) => /havuz|plaj/i.test(l.label || ""));
-        if (poolIdx !== -1) {
-          currentLinks.splice(poolIdx + 1, 0, { label: "Spor Salonu", href: "/spor-salonu" });
-        } else {
-          currentLinks.push({ label: "Spor Salonu", href: "/spor-salonu" });
-        }
-      }
       merged.navbar = {
         ...merged.navbar,
         links: currentLinks,
@@ -388,40 +374,6 @@ async function pgGetContent(): Promise<SiteContent> {
       [JSON.stringify(seed)]
     );
     return seed;
-  }
-  const file = getContent();
-  const fileRev = file.menu?.rev || "";
-  const dbRev = (raw.menu as { rev?: string } | undefined)?.rev || "";
-  if (fileRev && fileRev !== dbRev && file.menu?.gruplar?.length) {
-    const next = normalizeContent({
-      ...raw,
-      menu: file.menu,
-      makaleler: file.makaleler,
-      hizmetler: file.hizmetler,
-      hakkimizda: {
-        ...(file.hakkimizda || {}),
-        ...(raw.hakkimizda || {}),
-        // Eğer DB'de timeline veya values boşsa dosyadan zengin olanı al
-        timeline: (raw.hakkimizda as any)?.timeline?.length ? (raw.hakkimizda as any).timeline : file.hakkimizda?.timeline,
-        values: (raw.hakkimizda as any)?.values?.length ? (raw.hakkimizda as any).values : file.hakkimizda?.values,
-        stats: (raw.hakkimizda as any)?.stats?.length ? (raw.hakkimizda as any).stats : file.hakkimizda?.stats,
-        experiences: (raw.hakkimizda as any)?.experiences?.length ? (raw.hakkimizda as any).experiences : file.hakkimizda?.experiences,
-        amenities: (raw.hakkimizda as any)?.amenities?.length ? (raw.hakkimizda as any).amenities : file.hakkimizda?.amenities,
-      },
-      bolumlar: file.bolumlar ?? raw.bolumlar,
-      sayfalar: file.sayfalar ?? raw.sayfalar,
-      images: {
-        ...(raw.images || {}),
-        ...(/\.(mp4|webm)(\?|$)/i.test(String(raw.images?.logo || "")) && file.images?.logo
-          ? { logo: file.images.logo }
-          : {}),
-      },
-    });
-    await pool.query(
-      `UPDATE site_content SET data = $1::jsonb WHERE key = 'main'`,
-      [JSON.stringify(next)]
-    );
-    return next;
   }
   return normalizeContent(raw);
 }
