@@ -1,234 +1,131 @@
-# Taşdelen Fırıncı — Production Kurulum
+# Selçuklu Pilavcısı — Restaurant Platform & Headless CMS
 
-Next.js 16 App Router: SSR ana sayfa (`/`), katalog (`/urunler`), blog (`/blog`), admin (`/admin`).  
-Sipariş: WhatsApp / telefon — web sepet ve üyelik yok.
+A modern, high-performance web platform and headless administration panel designed for restaurant, cafe, and food service businesses. Built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS**, and **PostgreSQL** with zero-config JSON fallback.
 
-**CMS:** Tüm metin, menü, görsel, hero, iletişim admin’den (`/admin`) yönetilir.  
-Canlı JS yalnızca `hero/` (3B kapı) + GSAP motion; eski `cms-ext` / `main.js` kaldırıldı.  
-Yayın adımları: **[PUBLISH.md](./docs/PUBLISH.md)**.
+---
 
-## Gereksinimler
+## 🚀 Key Features
 
-- Node.js 20+
-- npm
+- **Next.js 16 App Router**: Server-Side Rendered (SSR) homepage, catalog, blog, and dynamic menu pages.
+- **Unified Headless CMS (`/admin`)**: Real-time management of brand identity, menu categories, products, prices, hero banners, gallery, customer reviews, and business hours.
+- **Flexible Data Layer**: Hybrid storage engine using **PostgreSQL** (Neon / Supabase / Vercel Postgres) for cloud deployment and safe **JSON file fallback** for local offline development.
+- **Enterprise Security**: JWT authentication with `jose` and `bcryptjs`, HttpOnly cookies, secure CORS / same-origin assertion, and rate-limiting.
+- **Asset Storage**: Integrated with **Vercel Blob** for cloud media uploads, with automatic inline base64 fallback.
+- **SEO & Social Optimization**: Dynamic Schema.org structured data (JSON-LD), OpenGraph cards, Twitter Cards, auto-generated `sitemap.xml`, and `robots.txt`.
+- **Zero-Friction Ordering**: Direct phone & WhatsApp order links without requiring customer login or cart drop-off.
 
-## Kurulum
+---
 
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 16** | Fullstack React framework (App Router) |
+| **React 19** | Component architecture & modern hooks |
+| **TypeScript 5** | Strict type safety and maintainability |
+| **Tailwind CSS 4** | Utility-first responsive styling |
+| **PostgreSQL / pg** | Persistent relational database |
+| **Vercel Blob** | Cloud object storage for media & uploads |
+| **Lucide Icons** | Clean, modern iconography |
+
+---
+
+## 📋 Prerequisites
+
+- **Node.js**: `v20.0.0` or higher (recommended: Node 22 LTS)
+- **Package Manager**: `npm` (included with Node.js)
+- **Database (Optional for local, recommended for production)**: PostgreSQL / Neon connection string
+
+---
+
+## ⚡ Quickstart
+
+### 1. Clone & Install
+```bash
+git clone https://github.com/akbasozcan3/PetraCafeSite.git
+cd PetraCafeSite
+npm install
+```
+
+### 2. Environment Configuration
+Copy the template environment file:
 ```bash
 cp .env.example .env.local
-# JWT_SECRET değiştirin (production'da zorunlu, ≥32 karakter)
+```
+Configure your secrets in `.env.local` (e.g., `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `DATABASE_URL`).
 
-npm install
-npm run init-admin -- ozcanakbas38@gmail.com Sifre123!
-npm run seed-content    # galeri, yorumlar, makaleler (ilk kurulum)
-npm run import-menu     # menüyü içe aktar (gerekirse)
+### 3. Initialize Admin Account
+Create your first administrative user:
+```bash
+npm run init-admin -- your-email@example.com YourSecurePassword123!
+```
+
+### 4. Start Development Server
+```bash
 npm run dev
 ```
+Open **[http://localhost:3010](http://localhost:3010)** in your browser.
 
-| Adres | URL |
-|-------|-----|
-| **Site** | http://localhost:3010/ |
-| **Admin** | http://localhost:3010/admin/login |
+- **Public Website:** `http://localhost:3010/`
+- **Admin Dashboard:** `http://localhost:3010/admin/login`
 
-> Port **3010** kullanılır. `3000` başka projeler için ayrılmış olabilir.
+---
 
-## Admin giriş
+## 📁 Project Architecture
 
-| Alan | Değer |
-|------|-------|
-| E-posta | `data/auth.json` veya `init-admin` ile oluşturulan |
-| Şifre | `init-admin` ile belirlenen |
-
-```bash
-npm run init-admin -- email@domain.com YeniSifre123!
+```text
+├── app/                  # Next.js 16 App Router pages and API routes
+│   ├── (shop)/           # Public-facing shop & content pages (menu, about, legal)
+│   ├── admin/            # CMS Dashboard panels & authentication screens
+│   ├── api/              # Secure backend REST API endpoints
+│   ├── layout.tsx        # Root HTML layout and global providers
+│   ├── page.tsx          # Homepage server component
+│   ├── robots.ts         # Automated robots.txt generator
+│   └── sitemap.ts        # Automated sitemap.xml generator
+├── assets/               # Source media, vendor bundles, and branding assets
+├── components/           # Reusable modular UI components
+│   ├── admin/            # CMS management forms, inputs, tables, and dialogs
+│   ├── home/             # Homepage feature sections (Hero, Menu, Gallery, FAQ)
+│   ├── shop/             # Product cards and category filters
+│   └── site/             # Navigation, footer, and brand shells
+├── data/                 # Seed data, initial content JSON, and database migrations
+├── docs/                 # Production deployment and integration documentation
+├── lib/                  # Application core libraries (Auth, DB, Security, Mail)
+├── public/               # Static web assets (icons, favicons, fonts)
+└── scripts/              # Automated build, sync, and database management scripts
 ```
 
-Panelden **Ayarlar → Şifre Değiştir** ile şifre güncellenebilir.
+---
 
-## Admin paneli (13 bölüm)
+## 📦 Available Scripts
 
-| Sekme | İşlev |
-|-------|-------|
-| Özet | Dashboard, hızlı erişim |
-| Menü / Ürünler | 14 kategori, ürün CRUD, favori yıldız, linkler |
-| Navbar | Logo, menü linkleri, telefon CTA |
-| Görseller | Hero, hakkımızda, OG görselleri (yükleme) |
-| Metinler | Hero, marquee, hakkımızda |
-| Bölümler | Menü, galeri, yorumlar, SSS başlıkları |
-| Pastalar | Özel pasta bölümü metin + görseller |
-| Galeri | Ana sayfa galeri kartları |
-| Yorumlar | Müşteri yorumları |
-| Makaleler | Blog kartları (slug → `/blog/slug/slug`) |
-| Duyuru | Üst duyuru bandı |
-| İletişim | Telefon, adres, WhatsApp, Instagram |
-| Ayarlar | Şifre değiştir |
+| Script | Command | Description |
+|--------|---------|-------------|
+| **Development** | `npm run dev` | Starts Next.js development server on port 3010 |
+| **Type Check** | `npm run typecheck` | Validates TypeScript compilation with 0 errors |
+| **Production Build** | `npm run build:vercel` | Synchronizes product pages and compiles production bundle |
+| **Preflight** | `npm run preflight` | Runs type checking followed by full production build |
+| **Start** | `npm start` | Runs production server on port 3010 |
+| **Admin Init** | `npm run init-admin` | Seeds an administrator account into DB and JSON |
+| **DB Migrate** | `npm run db:migrate` | Runs database schema migrations |
 
-## API
+---
 
-| Uç | Açıklama |
-|----|----------|
-| `GET /api/content` | Public site içeriği (rewrite → v1) |
-| `GET /api/v1/content` | Public site içeriği |
-| `GET /api/v1/health` | Sağlık kontrolü |
-| `POST /api/v1/auth/login` | Admin giriş (rate limit: 8/dk) |
-| `GET /api/v1/auth/session` | Oturum kontrolü |
-| `POST /api/v1/auth/session` | Çıkış |
-| `GET /api/v1/admin/content` | Admin içerik (auth) |
-| `PUT /api/v1/admin/content` | İçerik güncelle (auth) |
-| `POST /api/v1/admin/upload` | Görsel yükle (auth) |
-| `PUT /api/v1/admin/settings` | Şifre değiştir (auth) |
-| `GET /api/static-html/[...path]` | Uzantısız HTML sayfaları (`/urunler/*`, `/blog/*`) |
+## 🚢 Production Deployment (Vercel)
 
-## Mimari
+1. Push your repository to **GitHub** (public or private).
+2. Import the project into **Vercel**.
+3. In **Settings → Environment Variables**, configure:
+   - `DATABASE_URL`: PostgreSQL connection string (e.g. from Vercel Storage → Neon).
+   - `ADMIN_EMAIL` & `ADMIN_PASSWORD`: Your initial dashboard login credentials.
+   - `BLOB_READ_WRITE_TOKEN`: Token from Vercel Storage → Blob Store.
+4. Set Build Command: `npm run build:vercel`.
+5. Deploy!
 
-```
-public/          → Next.js tarafından sunulan statik dosyalar
-  app/page.tsx   → Ana sayfa (/)
-  urunler/       → Ürün kategori sayfaları (uzantısız HTML)
-  blog/          → Blog sayfaları
-  assets/        → CSS, JS, görseller (junction → /assets)
-data/
-  content.json   → CMS veritabanı (JSON)
-  auth.json      → Admin hesabı (bcrypt)
-app/             → Next.js admin + API
-proxy.ts         → Admin auth + uzantısız HTML Content-Type düzeltmesi
-```
+For in-depth publishing details, see **[docs/PUBLISH.md](./docs/PUBLISH.md)**.
 
-**CMS akışı:** Admin kaydeder → `data/content.json` → statik sayfalar `GET /api/content` ile yükler → `cms-ext.js` + `content.js` DOM'u günceller.
+---
 
-**Uzantısız sayfalar:** `/urunler/ekmek-cesitleri/ekmek-cesitleri` gibi linkler `proxy.ts` üzerinden `text/html` olarak sunulur (indirme sorunu giderildi).
+## 📄 License
 
-## Production (VPS)
-
-```bash
-cp .env.example .env.local
-# JWT_SECRET doldurun (min 32 karakter, benzersiz)
-# SITE_URL=https://www.firincitasdelen.com.tr
-
-npm install
-npm run init-admin -- admin@firincitasdelen.com.tr GuvenliSifre!
-npm run build
-PORT=3010 NODE_ENV=production npm start
-```
-
-Standalone (önerilen):
-
-```bash
-npm run build
-# Çıktı: .next/standalone (+ public + static otomatik kopyalanır)
-cd .next/standalone
-PORT=3010 NODE_ENV=production node server.js
-```
-
-PM2:
-
-```bash
-pm2 start npm --name firinci -- start -- -p 3010
-# veya standalone:
-pm2 start .next/standalone/server.js --name firinci --cwd .next/standalone
-pm2 save
-```
-
-**Kalıcı dosyalar** (volume mount):
-- `data/content.json`
-- `data/auth.json`
-- `public/uploads/`
-
-### Yayın öncesi kontrol
-
-- [ ] `JWT_SECRET` dolu (≥32 karakter)
-- [ ] `npm run typecheck` temiz
-- [ ] `npm run build` başarılı
-- [ ] `GET /api/v1/health` → `{"ok":true}`
-- [ ] `GET /api/content` menü/görseller geliyor
-- [ ] Admin login çalışıyor (`/admin/login`)
-- [ ] Ana sayfa: `https://DOMAIN/`
-- [ ] HTTPS + Nginx reverse proxy
-
-### Nginx
-
-```nginx
-server {
-  listen 80;
-  server_name www.firincitasdelen.com.tr;
-
-  location / {
-    proxy_pass http://127.0.0.1:3010;
-    proxy_http_version 1.1;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-  }
-}
-```
-
-## Vercel (demo / yayın)
-
-Bu proje Vercel'e hazırdır. Windows junction'ları build öncesi gerçek dosyaya çevrilir.
-
-### 1) GitHub'a yükle
-
-```bash
-git init
-git add .
-git commit -m "Fırın CMS — Vercel demo ready"
-# GitHub'da boş repo oluştur, sonra:
-git remote add origin https://github.com/KULLANICI/REPO.git
-git push -u origin main
-```
-
-### 2) Vercel import
-
-1. [vercel.com](https://vercel.com) → **Add New Project** → GitHub repo
-2. Framework: **Next.js** (otomatik)
-3. Build Command: `npm run build:vercel` (vercel.json'da tanımlı)
-4. Environment Variables:
-
-| Değişken | Örnek | Zorunlu |
-|----------|--------|---------|
-| `JWT_SECRET` | 48+ hex karakter | Evet |
-| `ADMIN_EMAIL` | `demo@firinci.com` | Evet (demo giriş) |
-| `ADMIN_PASSWORD` | güçlü şifre | Evet |
-| `SITE_URL` | `https://xxx.vercel.app` | Evet |
-| `ALLOW_ENV_ADMIN` | `true` | Önerilir |
-| `DATABASE_URL` | Neon Postgres URL | Admin **kayıt** için |
-| `BLOB_READ_WRITE_TOKEN` | Vercel Blob | Görsel yükleme için |
-
-5. Deploy → site: `https://xxx.vercel.app` · admin: `/admin/login`
-
-### Demo notları
-
-- **Sadece göstermek:** JSON içerik yeter; fırıncılara link atıp gezdirirsiniz.
-- **Admin'den değiştirmek:** Neon (ücretsiz) bağla → `npm run db:setup` + `npm run db:migrate` (lokal, DATABASE_URL ile) → Vercel'e aynı `DATABASE_URL`'i ekle.
-- **Görsel yükleme:** Vercel → Storage → Blob → token'ı env'e ekle.
-
-### Yayın öncesi kontrol
-
-- [ ] `npm run typecheck` temiz
-- [ ] `npm run build:vercel` başarılı
-- [ ] `GET /api/v1/health` → ok
-- [ ] Ana sayfa + `/admin/login` açılıyor
-- [ ] Telefon / WhatsApp / Instagram admin'den değişiyor (Postgres varken)
-
-## Güvenlik
-
-- `JWT_SECRET` production'da benzersiz olmalı
-- `data/auth.json` repoya eklenmemeli (.gitignore)
-- Admin `/admin` — robots.txt ile indexlenmez
-- Login rate limit: 8 deneme / dakika
-
-## Yardımcı scriptler
-
-```bash
-npm run init-admin -- email sifre   # Admin hesabı oluştur
-npm run seed-content               # Boş galeri/yorum/makale doldur
-npm run import-menu                # Menüyü CMS'e aktar
-npm run build:vercel               # Vercel build (standalone yok)
-npm run preflight                  # typecheck + vercel build
-```
-
-## Notlar
-
-- `npm run sync-public` build öncesi `assets` / `urunler` / `blog` klasörlerini `public/` altına gerçek kopya olarak yazar (Vercel uyumu).
-- Eski Express sunucusu kaldırıldı; tüm backend Next.js üzerinden çalışır.
+Private and proprietary. All rights reserved.

@@ -1,8 +1,8 @@
 {
-  "name": "firincitasdelen",
+  "name": "selcuklu-pilavcisi",
   "version": "2.0.0",
   "private": true,
-  "description": "Petra Cafe Restaurant — Next.js web + admin",
+  "description": "Selçuklu Pilavcısı — Modern Restaurant Web Platform & Headless CMS",
   "scripts": {
     "dev": "next dev -p 3010",
     "build": "node scripts/sync-product-pages.mjs && node scripts/sync-public.mjs && next build && node scripts/prepare-standalone.mjs",
@@ -21,7 +21,7 @@
     "db:setup": "node -r ./scripts/load-env.cjs scripts/db-setup.mjs",
     "db:migrate": "node -r ./scripts/load-env.cjs scripts/db-migrate.mjs",
     "telegram:chat-id": "node scripts/telegram-chat-id.mjs",
-    "menu:printed": "node scripts/apply-printed-menu.mjs"
+    "menu:printed": "node scripts/seed-printed-menu.mjs"
   },
   "engines": {
     "node": ">=20"
