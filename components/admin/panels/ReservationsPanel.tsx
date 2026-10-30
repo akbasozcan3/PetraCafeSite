@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import type { Reservation } from "@/lib/db/inbox";
 import AdminPageHeader, { AdminAlert, AdminLoading } from "@/components/admin/AdminPageHeader";
 import { Check, X, Ban, Phone, Mail, Search, RefreshCw, Trash2 } from "lucide-react";
+import { useAdminContent } from "@/lib/context/AdminContentContext";
+import { api } from "@/lib/api/client";
 
 type FilterStatus = "all" | "pending" | "confirmed" | "rejected" | "cancelled";
 type DateFilter = "all" | "today" | "week" | "past";
@@ -27,15 +29,45 @@ function isoWeekAgo() {
 }
 
 export default function ReservationsPanel() {
+  const { content, setContent } = useAdminContent();
   const [items, setItems] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [toggling, setToggling] = useState(false);
   const [filter, setFilter] = useState<FilterStatus>("all");
   const [dateFilter, setDateFilter] = useState<DateFilter>("all");
   const [search, setSearch] = useState("");
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<"success" | "error">("success");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+
+  const isReservationEnabled = content?.bolumGoster?.rezervasyon === true;
+
+  const handleToggleActive = async () => {
+    setToggling(true);
+    const nextVal = !isReservationEnabled;
+    try {
+      const payload = {
+        bolumGoster: {
+          ...(content?.bolumGoster || {}),
+          rezervasyon: nextVal,
+        },
+      };
+      const res = await api.updateContent(payload);
+      setContent(res.data);
+      setMessage(
+        nextVal
+          ? "Rezervasyon özelliği web sitesinde YAYINA ALINDI (Açık)."
+          : "Rezervasyon özelliği web sitesinde KAPATILDI (Gizlendi)."
+      );
+      setMessageType("success");
+    } catch (e) {
+      setMessage(e instanceof Error ? e.message : "Güncellenemedi");
+      setMessageType("error");
+    } finally {
+      setToggling(false);
+    }
+  };
 
   const fetchItems = async () => {
     try {
@@ -146,6 +178,44 @@ export default function ReservationsPanel() {
         description="Siteden gelen masa talepleri — onay, red veya iptal."
       />
       <AdminAlert message={message} type={messageType} />
+
+      {/* Rezervasyon Aç/Kapa Durum Kartı */}
+      <div className={`mb-5 rounded-2xl border p-4 sm:p-5 transition ${
+        isReservationEnabled
+          ? "border-emerald-500/30 bg-emerald-500/10"
+          : "border-amber-500/30 bg-amber-500/10"
+      }`}>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className={`inline-block h-2.5 w-2.5 rounded-full ${isReservationEnabled ? "bg-emerald-400 animate-pulse" : "bg-amber-400"}`} />
+              <h4 className="font-semibold text-white">
+                Web Sitesi Rezervasyon Sistemi:{" "}
+                <span className={isReservationEnabled ? "text-emerald-400" : "text-amber-300"}>
+                  {isReservationEnabled ? "AÇIK (Web Sitede Görünüyor)" : "KAPALI (Web Sitede Gizli)"}
+                </span>
+              </h4>
+            </div>
+            <p className="mt-1 text-xs text-white/70 max-w-xl">
+              {isReservationEnabled
+                ? "Masa rezervasyon formu, tarih/saat seçimi ve masa planı sitede ziyaretçilere açık ve aktiftir."
+                : "Rezervasyon sistemi şu anda web sitesinde gizlidir. Ziyaretçiler formu görmez ve boşuna veri çekilmez/eklenmez. İstediğiniz zaman bu butondan tekrar açabilirsiniz."}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={handleToggleActive}
+            disabled={toggling}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm whitespace-nowrap cursor-pointer ${
+              isReservationEnabled
+                ? "bg-amber-600 hover:bg-amber-700 text-white"
+                : "bg-emerald-600 hover:bg-emerald-700 text-white"
+            }`}
+          >
+            {toggling ? "Kaydediliyor..." : isReservationEnabled ? "Sistemi Kapat (Gizle)" : "Sistemi Aç (Yayınla)"}
+          </button>
+        </div>
+      </div>
 
       {/* Özet Banner */}
       {(todayCount > 0 || pendingCount > 0) && (

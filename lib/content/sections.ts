@@ -27,6 +27,9 @@ export function isHomeSectionOn(
   content: Pick<SiteContent, "bolumGoster"> | null | undefined,
   id: HomeSectionId
 ): boolean {
+  if (content?.bolumGoster && typeof content.bolumGoster[id] === "boolean") {
+    return content.bolumGoster[id];
+  }
   if (id === "rezervasyon") return false;
-  return content?.bolumGoster?.[id] !== false;
+  return true;
 }

@@ -15,6 +15,7 @@ import { notifyTelegramReservation } from "@/lib/telegram";
 import { sanitizePhoneDigits } from "@/lib/content/contact-utils";
 import { publicOrigin } from "@/lib/site/canonical";
 import { isAllowedReservationTime, localIsoDate, addDaysIso } from "@/lib/content/hours";
+import { isHomeSectionOn } from "@/lib/content/sections";
 
 export const runtime = "nodejs";
 
@@ -23,9 +24,21 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const date = searchParams.get("date") || localIsoDate();
     const time = searchParams.get("time")?.trim() || "";
+
+    const content = await getPublicContent();
+    if (!isHomeSectionOn(content, "rezervasyon")) {
+      return jsonResponse({
+        enabled: false,
+        date,
+        time,
+        bookedTimes: [],
+        bookedTables: [],
+      });
+    }
+
     const bookedTimes = await getReservedTimesForDate(date, true);
     const bookedTables = time ? await getBookedTablesForSlot(date, time) : [];
-    return jsonResponse({ date, time, bookedTimes, bookedTables });
+    return jsonResponse({ enabled: true, date, time, bookedTimes, bookedTables });
   } catch {
     return errorResponse("Saatler ve masa durumu alınamadı", 500);
   }
@@ -37,6 +50,11 @@ export async function POST(request: Request) {
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
     if (!rateLimit(`reservation:${ip}`, 5, 10 * 60_000)) {
       return errorResponse("Çok fazla deneme. Lütfen biraz sonra tekrar deneyin.", 429);
+    }
+
+    const content = await getPublicContent();
+    if (!isHomeSectionOn(content, "rezervasyon")) {
+      return errorResponse("Rezervasyon sistemi şu anda aktif değildir.", 403);
     }
 
     const body = await parseBody<{
@@ -85,7 +103,6 @@ export async function POST(request: Request) {
     if (date > addDaysIso(today, 90)) {
       return errorResponse("En fazla 90 gün ileriye rezervasyon alınır.", 400);
     }
-    const content = await getPublicContent().catch(() => null);
     if (!isAllowedReservationTime(date, time, content?.iletisim)) {
       return errorResponse(
         "Bu saat artık seçilemez. Lütfen ileri bir saat veya başka bir gün seçin.",
