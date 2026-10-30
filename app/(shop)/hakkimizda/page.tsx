@@ -349,9 +349,9 @@ export default async function HakkimizdaPage() {
         </p>
 
         <div className="about-head-sec__actions">
-          <Link href="/#rezervasyon" className="btn btn--light">
+          <Link href="/#iletisim" className="btn btn--light">
             <CalendarCheck size={16} />
-            Masa Rezervasyonu
+            Bize Ulaşın
           </Link>
           <Link href="/menu" className="btn">
             Menüyü İncele
@@ -419,7 +419,7 @@ export default async function HakkimizdaPage() {
                 { href: "/menu#kat-kahvalti", label: "Serpme Kahvaltı" },
                 { href: "/havuz-plaj", label: "Pool & Beach" },
                 { href: "/spor-salonu", label: "Spor Salonu" },
-                { href: "/#rezervasyon", label: "Özel Davetler" },
+                { href: "/#iletisim", label: "Özel Davetler" },
                 { href: "/menu#kat-sicak-icecekler", label: "Artisan Kahve" },
               ].map((pill, pIdx) => (
                 <Link
@@ -1053,9 +1053,9 @@ export default async function HakkimizdaPage() {
             {ctaLead}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
-            <Link href="/#rezervasyon" className="btn btn--light">
+            <Link href="/#iletisim" className="btn btn--light">
               <CalendarCheck size={16} />
-              {ctaBtn1}
+              {ctaBtn1 && !/rezervasyon/i.test(ctaBtn1) ? ctaBtn1 : "Bize Ulaşın"}
             </Link>
             <Link
               href="/menu"

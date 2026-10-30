@@ -18,8 +18,8 @@
     "logoSize": 74,
     "logoTextGizle": true,
     "mobileLabel": "Menü",
-    "ctaLabel": "Rezervasyon",
-    "ctaHref": "#rezervasyon",
+    "ctaLabel": "Bize Ulaşın",
+    "ctaHref": "/#iletisim",
     "links": [
       {
         "label": "Hakkımızda",
@@ -341,10 +341,10 @@
       "eyebrow": "03 · MENÜ",
       "baslik": "Kahvaltı, dünya mutfağı, kahve",
       "lead": "Serpme kahvaltı, dünya mutfağı, İtalyan tatlı ve kokteyller, kahve, nargile ve havuz kenarı.",
-      "ctaLabel": "Masa ayırtın",
-      "ctaHref": "#rezervasyon",
-      "cta2Label": "Tüm menü",
-      "cta2Href": "/menu"
+      "ctaLabel": "Menüyü İnceleyin",
+      "ctaHref": "/menu",
+      "cta2Label": "İletişime Geçin",
+      "cta2Href": "/#iletisim"
     },
     "galeri": {
       "eyebrow": "06 · GALERİ",
@@ -358,15 +358,15 @@
     },
     "sss": {
       "eyebrow": "08 · S.S.S.",
-      "baslik": "Rezervasyon, havuz ve menü",
-      "lead": "Masa, havuz tarifesi, yüzme dersi ve organizasyon.",
-      "ctaLabel": "Masa ayırtın",
-      "ctaHref": "#rezervasyon"
+      "baslik": "İletişim, havuz ve menü",
+      "lead": "Saatler, havuz tarifesi, yüzme dersi ve etkinlikler.",
+      "ctaLabel": "Bize Ulaşın",
+      "ctaHref": "/#iletisim"
     },
     "rezervasyon": {
       "eyebrow": "09 · REZERVASYON",
-      "baslik": "Masanızı ayırtın",
-      "lead": "Tarih, saat ve kişi sayısını bırakın; ekibimiz telefonla onaylar. Cuma–cumartesi kahvaltı ve havuz için önceden rezervasyon önerilir."
+      "baslik": "Bize Ulaşın",
+      "lead": "Sorularınız ve özel organizasyonlar için bize her zaman ulaşabilirsiniz."
     },
     "hizmetler": {
       "eyebrow": "02 · HİZMETLER",
@@ -386,9 +386,9 @@
       "Ferah ve konforlu açık hava ortamı",
       "Profesyonel yüzme kursu ve eğitimleri"
     ],
-    "body": "Bilgi ve rezervasyon: 0530 608 90 51 · Instagram @petracaferestaurant.",
-    "ctaLabel": "Havuz Rezervasyonu",
-    "ctaHref": "#rezervasyon",
+    "body": "Bilgi ve iletişim: 0530 608 90 51 · Instagram @petracaferestaurant.",
+    "ctaLabel": "Havuz Detayları & Bilgi",
+    "ctaHref": "/havuz-plaj",
     "fiyatBaslik": "GÜNLÜK HAVUZ GİRİŞ ÜCRETLERİMİZ",
     "fiyatGorsel": "/assets/cms/petra-havuz-fiyat-listesi-2026.jpg",
     "gorseller": [
@@ -5191,6 +5191,22 @@
     "googleUrl": "https://www.google.com/maps/search/?api=1&query=Petra+Cafe+Restaurant+Ta%C5%9Fdelen+%C3%87ekmek%C3%B6y",
     "badgeCta": "Google’da Gör",
     "unvanVarsayilan": "Misafir"
+  },
+  "bolumGoster": {
+    "duyuru": true,
+    "hero": true,
+    "marquee": true,
+    "hakkimizda": true,
+    "hizmetler": true,
+    "ziyaret": true,
+    "menu": true,
+    "pasta": true,
+    "sporSalonu": true,
+    "galeri": true,
+    "yorumlar": true,
+    "sss": true,
+    "rezervasyon": false,
+    "iletisim": true
   },
   "yorumlarSource": "manual",
   "yorumlarApi": ""

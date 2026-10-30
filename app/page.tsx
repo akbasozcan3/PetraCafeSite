@@ -14,7 +14,6 @@ import HomeGym from "@/components/home/HomeGym";
 import HomeGallery from "@/components/home/HomeGallery";
 import HomeReviews from "@/components/home/HomeReviews";
 import HomeFaq from "@/components/home/HomeFaq";
-import HomeReservation from "@/components/home/HomeReservation";
 import HomeContact from "@/components/home/HomeContact";
 import { publicOrigin, parseGeo } from "@/lib/site/canonical";
 import { siteFaviconHref } from "@/lib/content/favicon";
@@ -118,7 +117,7 @@ export default async function HomePage() {
     "@id": `${canonical.replace(/\/$/, "")}/#restaurant`,
     servesCuisine: cuisineList.length ? cuisineList : undefined,
     priceRange: content.seo?.priceRange || undefined,
-    acceptsReservations: content.seo?.acceptsReservations !== false,
+    acceptsReservations: false,
     name: brand,
     url: canonical,
     image: logo,
@@ -240,15 +239,6 @@ export default async function HomePage() {
           bolum={content.bolumlar?.sss}
           items={faqItems}
           image={content.images?.faq || content.images?.aboutInterior}
-        />
-      ) : null}
-      {isHomeSectionOn(content, "rezervasyon") ? (
-        <HomeReservation
-          contactPhone={content.iletisim?.telefon || tel}
-          iletisim={content.iletisim}
-          bolum={content.bolumlar?.rezervasyon}
-          copy={content.rezervasyon}
-          image={content.images?.reservation || content.images?.aboutInterior}
         />
       ) : null}
       {isHomeSectionOn(content, "iletisim") ? (

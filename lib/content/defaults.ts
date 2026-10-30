@@ -20,8 +20,8 @@ export const DEFAULT_CONTENT: SiteContent = {
     logoSize: 64,
     logoTextGizle: true,
     mobileLabel: "Menü",
-    ctaLabel: "Rezervasyon",
-    ctaHref: "#rezervasyon",
+    ctaLabel: "Bize Ulaşın",
+    ctaHref: "/#iletisim",
     showPhone: true,
     links: [
       { label: "Hakkımızda", href: "#hakkimizda" },
@@ -797,7 +797,7 @@ Yiyecek & İçecek Hizmetleri, Cafe & Restoran İşletmeciliği, Açık Yüzme H
     galeri: true,
     yorumlar: true,
     sss: true,
-    rezervasyon: true,
+    rezervasyon: false,
     iletisim: true,
   },
   yorumlarMeta: {

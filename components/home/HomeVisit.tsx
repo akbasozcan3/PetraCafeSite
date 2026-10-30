@@ -10,7 +10,7 @@ export default function HomeVisit({ content }: { content: SiteContent }) {
   
   const defaultItems = [
     { k: "Saatler", v: hours || "Cafe 08:00–24:00 · havuz 09:00–18:00", n: "Cafe her gün açık · havuz sezonluk" },
-    { k: "Rezervasyon", v: c?.telefon || "0530 608 90 51", n: "Masa, havuz, yüzme dersi" },
+    { k: "İletişim & Bilgi", v: c?.telefon || "0530 608 90 51", n: "Masa, havuz ve etkinlik bilgisi" },
     { k: "Havuz & Plaj", v: "09:00–18:00", n: "Derinlik 1.45–1.95 m" },
     { k: "Konum", v: "Petra Yaşam Merkezi", n: "Taşdelen · Çekmeköy" },
   ];

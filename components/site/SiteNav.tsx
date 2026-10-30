@@ -158,14 +158,19 @@ export default function SiteNav({
   const [solid, setSolid] = useState(!isHome);
 
   const bookHref = resolveHref(
-    navbar.ctaHref && !/^tel:/i.test(navbar.ctaHref) && !/wa\.me/i.test(navbar.ctaHref)
+    navbar.ctaHref &&
+    !/^tel:/i.test(navbar.ctaHref) &&
+    !/wa\.me/i.test(navbar.ctaHref) &&
+    !/#rezervasyon/i.test(navbar.ctaHref)
       ? navbar.ctaHref
-      : "#rezervasyon"
+      : "/#iletisim"
   );
   const bookLabel =
-    navbar.ctaLabel && !/^\+?\d[\d\s]{8,}$/.test(navbar.ctaLabel.trim())
+    navbar.ctaLabel &&
+    !/^\+?\d[\d\s]{8,}$/.test(navbar.ctaLabel.trim()) &&
+    !/rezervasyon/i.test(navbar.ctaLabel)
       ? navbar.ctaLabel
-      : "Rezervasyon";
+      : "Bize Ulaşın";
 
   const sourceLinks = navbar.links?.length ? navbar.links : DEFAULT_LINKS;
   const rawLinks = sourceLinks.filter((l) => {
@@ -174,7 +179,7 @@ export default function SiteNav({
     }
     if (/^(rezervasyon|randevu)$/i.test((l.label || "").trim())) return false;
     const href = resolveHref(l.href);
-    if (href === bookHref || href === "/#rezervasyon" || href === "#rezervasyon") return false;
+    if (href === bookHref || /#rezervasyon/i.test(href)) return false;
     return true;
   });
   const links = orderedNavLinks(rawLinks);

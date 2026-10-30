@@ -73,9 +73,9 @@ export default function SiteFault({
       icon: <Dumbbell size={18} className="text-[#E8B84B]" />,
     },
     {
-      title: "Masa & Loca Rezervasyonu",
-      desc: "Online masa ayırtma ve özel organizasyonlar",
-      href: "/#rezervasyon",
+      title: "İletişim & Konum",
+      desc: "Adres, harita ve çalışma saatleri",
+      href: "/#iletisim",
       icon: <Calendar size={18} className="text-[#A4BD63]" />,
     },
   ];

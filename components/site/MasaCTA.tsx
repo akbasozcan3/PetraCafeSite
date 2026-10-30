@@ -22,10 +22,10 @@ export default function MasaCTA({
   tel = "0530 608 90 51",
   telHref = "05306089051",
   waHref,
-  baslik = "Masa ayırtmak ister misiniz?",
-  metin = "Rezervasyon ve sorularınız için bizi arayın veya formdan yazın.",
-  btnLabel = "Masa Rezervasyonu Yap",
-  btnHref = "/#rezervasyon",
+  baslik = "Bize Ulaşın & Bilgi Alın",
+  metin = "Sorularınız, paket sipariş ve detaylı bilgi için bizi arayabilir ya da WhatsApp'tan yazabilirsiniz.",
+  btnLabel = "Menüyü İnceleyin",
+  btnHref = "/menu",
   style,
 }: MasaCTAProps) {
   return (
@@ -89,12 +89,12 @@ export default function MasaCTA({
             style={{ fontWeight: 700 }}
           >
             <WhatsAppIcon size={17} />
-            {btnLabel}
+            {/rezervasyon/i.test(btnLabel) ? "WhatsApp İletişim" : btnLabel}
           </a>
         ) : (
-          <Link href={btnHref} className="btn btn--light" style={{ fontWeight: 700 }}>
+          <Link href={btnHref === "/#rezervasyon" ? "/menu" : btnHref} className="btn btn--light" style={{ fontWeight: 700 }}>
             <CalendarCheck size={16} />
-            {btnLabel}
+            {/rezervasyon/i.test(btnLabel) ? "Menüyü İnceleyin" : btnLabel}
           </Link>
         )}
 

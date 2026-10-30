@@ -58,7 +58,7 @@ export default async function MenuPage() {
       .replace("{m}", String(total)) || "Petra Cafe Restaurant Menü";
   const lead =
     hub?.lead ||
-    `${cats.length} bölüm · ${total} tabak. Masa için rezervasyon formunu kullanın.`;
+    `${cats.length} bölüm · ${total} tabak. Günün her saati taze ve enfes lezzetler.`;
 
   return (
     <div className="menu-page">

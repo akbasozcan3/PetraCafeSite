@@ -280,16 +280,16 @@ export default async function BlogPostPage({ params }: Props) {
           >
             <div>
               <h3 style={{ fontFamily: "var(--f-head, serif)", fontSize: "20px", fontWeight: 700, margin: "0 0 6px", color: "var(--ink, #0D0F0A)" }}>
-                Petra'da Masanızı Ayırtın
+                Petra'da Keyifli Bir Mola
               </h3>
               <p style={{ margin: 0, fontSize: "14px", color: "#5E594D", maxWidth: "46ch" }}>
                 Günün her saatinde zengin menümüz ve huzurlu açık alanımızla hizmetinizdeyiz.
               </p>
             </div>
             <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-              <Link href="/#rezervasyon" className="btn btn--light" style={{ minHeight: "44px", fontSize: "14px" }}>
+              <Link href="/#iletisim" className="btn btn--light" style={{ minHeight: "44px", fontSize: "14px" }}>
                 <CalendarCheck size={16} />
-                Masa Rezervasyonu
+                Bize Ulaşın
               </Link>
               <a href={waHref} target="_blank" rel="noopener noreferrer" className="btn" style={{ minHeight: "44px", fontSize: "14px", background: "#25D366", color: "#0B140C" }}>
                 <MessageCircle size={16} />

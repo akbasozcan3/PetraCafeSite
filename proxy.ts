@@ -37,6 +37,7 @@ const SHOP_GONE = [
   "/hesabim",
   "/admin/musteriler",
   "/admin/web-siparisler",
+  "/rezervasyon-kosullari",
 ];
 
 const API_GONE = ["/api/v1/customer", "/api/v1/admin/web-shop"];
@@ -67,6 +68,9 @@ export async function proxy(request: NextRequest) {
       (p) => pathname === p || pathname.startsWith(`${p}/`)
     )
   ) {
+    if (pathname === "/rezervasyon-kosullari") {
+      return NextResponse.redirect(new URL("/kullanim-kosullari", request.url));
+    }
     const dest = pathname.startsWith("/admin") ? "/admin" : "/menu";
     return NextResponse.redirect(new URL(dest, request.url));
   }

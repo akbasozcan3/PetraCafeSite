@@ -272,11 +272,11 @@ function normalizeContent(raw: Partial<SiteContent>): SiteContent {
       /^tel:/i.test(merged.navbar.ctaHref || "") ||
       /wa\.me/i.test(merged.navbar.ctaHref || "") ||
       /^\+?\d[\d\s]{8,}$/.test((merged.navbar.ctaLabel || "").trim());
-    if (ctaIsTel) {
+    if (ctaIsTel || merged.navbar.ctaHref === "#rezervasyon" || merged.navbar.ctaLabel === "Rezervasyon") {
       merged.navbar = {
         ...merged.navbar,
-        ctaLabel: "Rezervasyon",
-        ctaHref: "#rezervasyon",
+        ctaLabel: "Bize Ulaşın",
+        ctaHref: "/#iletisim",
         showPhone: merged.navbar.showPhone !== false,
       };
     }
