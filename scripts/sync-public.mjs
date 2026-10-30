@@ -295,7 +295,6 @@ if (fs.existsSync(logoPng)) {
   copyFile(logoPng, path.join(root, "public", "icon.png"));
   copyFile(logoPng, path.join(root, "public", "apple-touch-icon.png"));
   copyFile(logoPng, path.join(root, "public", "favicon.ico"));
-  copyFile(logoPng, path.join(root, "favicon.ico"));
 }
 if (fs.existsSync(petraSvg)) {
   copyFile(petraSvg, path.join(root, "public", "favicon.svg"));

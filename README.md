@@ -5,7 +5,7 @@ Sipariş: WhatsApp / telefon — web sepet ve üyelik yok.
 
 **CMS:** Tüm metin, menü, görsel, hero, iletişim admin’den (`/admin`) yönetilir.  
 Canlı JS yalnızca `hero/` (3B kapı) + GSAP motion; eski `cms-ext` / `main.js` kaldırıldı.  
-Yayın adımları: **[PUBLISH.md](./PUBLISH.md)**.
+Yayın adımları: **[PUBLISH.md](./docs/PUBLISH.md)**.
 
 ## Gereksinimler
 
